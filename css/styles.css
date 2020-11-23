@@ -1,0 +1,50 @@
+.jumbotron{
+  background-image: url(../images/puzzles.jpg);
+  padding: 100px;
+}
+.display-4{
+  color: white;
+  font-weight: bold;
+}
+.container{
+  margin-top: 10px;
+}
+
+h1{
+  color: #00587a;
+  text-decoration: underline overline;
+  }
+table th{
+        border: 1px solid black;
+        }
+table{
+  border-collapse: collapse;
+  text-align: center;
+  }
+tr:hover {
+          background-color: #fcf876;
+          }
+a:hover{
+        color: blue;
+        }
+body{
+      background-color: #e8ffff;
+      }
+.crown{
+      height: 50px;
+      }
+.content{
+         max-width: 500px;
+         margin: auto;
+        }
+.table-content th{
+               background-color:  #00587a;
+               color: yellow;
+               }
+.table-content th,
+.table-content td{
+                  padding: 12px 5px;
+                  }
+.table-content2 td{
+              padding: 12px; 
+             }
