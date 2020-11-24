@@ -48,3 +48,7 @@ body{
 .table-content2 td{
               padding: 12px; 
              }
+
+.zoom:hover{
+  transform: scale(1.2)
+}
