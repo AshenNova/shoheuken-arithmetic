@@ -52,3 +52,7 @@ body{
 .zoom:hover{
   transform: scale(1.2)
 }
+
+.crown:hover{
+  transform: scale(1.2)
+}
