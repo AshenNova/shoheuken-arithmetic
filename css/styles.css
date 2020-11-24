@@ -21,7 +21,7 @@ table{
   border-collapse: collapse;
   text-align: center;
   }
-tr:hover {
+.table-content tr:hover {
           background-color: #fcf876;
           }
 a:hover{
