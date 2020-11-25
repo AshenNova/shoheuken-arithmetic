@@ -51,14 +51,18 @@ body{
 .table-content2 td{
               padding: 12px; 
              }
+.table-content{
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .zoom:hover{
-  transform: scale(1.2)
+  transform: scale(1.1);
 }
 .zoom{
   font-weight: bold;
 }
 
 .crown:hover{
-  transform: scale(1.2)
+  transform: scale(1.2);
 }
