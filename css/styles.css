@@ -14,6 +14,9 @@ h1{
   color: #00587a;
   text-decoration: underline overline;
   }
+html{
+  scroll-behavior: smooth;
+}
 table th{
         border: 1px solid black;
         }
