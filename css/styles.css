@@ -55,6 +55,9 @@ body{
 .zoom:hover{
   transform: scale(1.2)
 }
+.zoom{
+  font-weight: bold;
+}
 
 .crown:hover{
   transform: scale(1.2)
