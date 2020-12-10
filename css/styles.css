@@ -1,11 +1,4 @@
-.jumbotron{
-  background-image: url(../images/puzzles.jpg);
-  padding: 100px;
-}
-.display-4{
-  color: white;
-  font-weight: bold;
-}
+
 .container{
   margin-top: 10px;
 }
@@ -65,4 +58,20 @@ body{
 
 .crown:hover{
   transform: scale(1.2);
+}
+/* title */
+#title{
+  background-image: url(../images/puzzles.jpg);
+  margin: 1% 20.75% 3%;
+  text-align: center;
+  padding-top: 3%;
+}
+.display-4{
+  color: white;
+  font-weight: bold;
+}
+
+/* navigation bar */
+.navbar-style{
+ margin-top: 20px;
 }
