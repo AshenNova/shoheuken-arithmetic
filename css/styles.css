@@ -75,3 +75,14 @@ body{
 .navbar-style{
  margin-top: 20px;
 }
+
+.nav-button{
+margin: 0 5px;
+}
+/* Rules ctrl+K+U */
+.rules{
+  display: block;
+  margin: 5% auto;
+  width: 80%;
+  border-style: solid;
+}
