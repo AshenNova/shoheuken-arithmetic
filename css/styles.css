@@ -79,10 +79,27 @@ body{
 .nav-button{
 margin: 0 5px;
 }
-/* Rules ctrl+K+U */
+/* images from rules.html ctrl+K+U */
 .rules{
   display: block;
-  margin: 5% auto;
+  margin: 0% auto 5%;
   width: 80%;
   border-style: solid;
+}
+
+.comparison{
+  display: block;
+  margin: 0% auto 5%;
+  width: 40%;
+  border-style: solid;
+}
+
+/* Sequence-section */
+.sequences-section{
+  text-align: center;
+}
+
+.h2-sequence-section{
+  margin-top: 1%;
+  margin-bottom: 1%;
 }
