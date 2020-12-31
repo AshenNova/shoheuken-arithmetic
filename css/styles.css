@@ -79,6 +79,9 @@ body{
 .nav-button{
 margin: 0 5px;
 }
+.rules-navbar{
+  position: fixed;
+}
 
 /* images from rules.html ctrl+K+U */
 .rules{
