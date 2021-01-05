@@ -101,9 +101,23 @@ margin: 0 5px;
 /* Sequence-section */
 .sequences-section{
   text-align: center;
+  margin-bottom: 1%;
 }
 
 .h2-sequence-section{
   margin-top: 1%;
   margin-bottom: 1%;
+}
+
+/* Media-Query */
+@media (max-width: 1000px){
+  .rules{
+    width: 1000px
+  }
+  .comparison{
+    width: 1000px
+  } 
+  .excess-and-shortage{
+    width: 1000px
+  }
 }
