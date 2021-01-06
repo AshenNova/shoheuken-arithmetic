@@ -83,6 +83,12 @@ margin: 0 5px;
   position: fixed;
   background-color: #e8e9a1;
 }
+
+.navbar-brand {
+  color: black !important;
+  font-weight: bold;
+}
+
 .nav-link{
   color: #e5707e;
 }
