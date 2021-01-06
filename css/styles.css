@@ -81,6 +81,10 @@ margin: 0 5px;
 }
 .rules-navbar{
   position: fixed;
+  background-color: #e8e9a1;
+}
+.nav-link{
+  color: #e5707e;
 }
 
 /* images from rules.html ctrl+K+U */
