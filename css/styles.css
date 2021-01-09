@@ -119,6 +119,12 @@ margin: 0 5px;
   margin-bottom: 1%;
 }
 
+/* Exam paper section */
+.exam-papers{
+  text-align: left;
+  margin-top: 100px;
+}
+
 /* Media-Query */
 @media (max-width: 1000px){
   .rules{
