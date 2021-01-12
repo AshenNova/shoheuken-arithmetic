@@ -122,7 +122,7 @@ margin: 0 5px;
 /* Exam paper section */
 .exam-papers{
   text-align: left;
-  margin-top: 100px;
+  margin: 100px 0;
 }
 
 /* Media-Query */
