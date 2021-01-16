@@ -113,6 +113,14 @@ margin: 0 5px;
   width: 40%;
   border-style: solid;
 }
+.img_3_identities{
+  width: 40%;
+  border-style: solid;
+}
+.img_s2n{
+  width: 40%;
+  border-style: solid; 
+}
 
 /* Sequence-section */
 .sequences-section{
@@ -145,7 +153,7 @@ margin: 0 5px;
   .img_overlapping_value{
     width: 1000px;
   }
-  .img_overlapping_value_decimals{
+  .img_overlapping_value_decimals, .img_3_identities, .img_s2n{
     width: 1000px;
   }
 }
