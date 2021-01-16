@@ -117,7 +117,7 @@ margin: 0 5px;
   width: 40%;
   border-style: solid;
 }
-.img_s2n{
+.img_s2n, .img_f2d{
   width: 40%;
   border-style: solid; 
 }
@@ -153,7 +153,7 @@ margin: 0 5px;
   .img_overlapping_value{
     width: 1000px;
   }
-  .img_overlapping_value_decimals, .img_3_identities, .img_s2n{
+  .img_overlapping_value_decimals, .img_3_identities, .img_s2n, .img_f2d{
     width: 1000px;
   }
 }
