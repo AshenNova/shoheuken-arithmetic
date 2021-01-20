@@ -139,6 +139,11 @@ margin: 0 5px;
   margin: 100px 0;
 }
 
+.homework-video{
+  display: block;
+  margin: auto;
+}
+
 /* Media-Query */
 @media (max-width: 1000px){
   .rules{
