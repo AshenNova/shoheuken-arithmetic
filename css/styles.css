@@ -124,6 +124,10 @@ margin: 0 5px;
 }
 
 /* homework */
+#homework-procedure{
+  text-align: left;
+}
+
 #movie-videos{
   text-align: center;
 }

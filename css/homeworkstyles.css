@@ -1,0 +1,8 @@
+a img {
+  display:none; 
+}
+
+a:hover img {
+  display:block;
+  max-width: 50%;
+}
