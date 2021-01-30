@@ -162,3 +162,9 @@ height: 100%;
     width: 1000px;
   }
 }
+
+@media (max-width: 1670px){
+  .rules-navbar{
+  opacity: 0.5;
+  }
+}
