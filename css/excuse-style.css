@@ -29,6 +29,9 @@
 .lightbox-gallery .intro{
   margin-bottom: 0;
 }
+.img-fluid{
+  border: 2px solid black;
+}
 
 .lightbox-gallery .row .item p{
   margin-top: 15px;
