@@ -111,9 +111,15 @@ margin: 0 5px;
   font-size: 15px;
   font-family: 'Montserrat', sans-serif;
 }
-.img_overlapping_value, .comparison, .img_overlapping_value_decimals, .img_3_identities, .img_s2n, .img_f2d, .excess-and-shortage, .rules-img, .science-img-size{
+.img_overlapping_value, .comparison, .img_overlapping_value_decimals, .img_3_identities, .img_s2n, .img_f2d, .excess-and-shortage, .rules-img,{
  width: 100%;
  border-style: solid;
+}
+
+.science-img-size{
+  Width: 100%;
+  border-style: solid;
+  margin-bottom: 10px;
 }
 
 /* Sequence-section */
