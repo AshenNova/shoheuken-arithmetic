@@ -179,7 +179,7 @@ height: 100%;
   .img_overlapping_value{
     width: 1000px;
   }
-  .img_overlapping_value_decimals, .img_3_identities, .img_s2n, .img_f2d, science-img-size, .rules-img{
+  .img_overlapping_value_decimals, .img_3_identities, .img_s2n, .img_f2d, .science-img-size, .rules-img{
     width: 1000px;
   }
 }
