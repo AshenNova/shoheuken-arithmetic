@@ -111,7 +111,7 @@ margin: 0 5px;
   font-size: 15px;
   font-family: 'Montserrat', sans-serif;
 }
-.img_overlapping_value, .comparison, .img_overlapping_value_decimals, .img_3_identities, .img_s2n, .img_f2d, .excess-and-shortage, .rules-img,{
+.rules-img{
  width: 100%;
  border-style: solid;
 }
@@ -139,8 +139,7 @@ margin: 0 5px;
 .carousel-control-next-icon {
   background-image: none;
 }
-.carousel-control-next-icon:after
-{
+.carousel-control-next-icon:after{
   content: '>';
   font-size: 55px;
   color: red;
