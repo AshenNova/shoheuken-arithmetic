@@ -199,8 +199,18 @@ height: 100%;
 }
 /* Science section */
 
+/* Online section */
+.img-online{
+  max-width: 50%;
+  border: solid;
+  margin: 10px 0px;
+}
+
 /* Media-Query */
 @media (max-width: 1000px){
+  .img-online{
+    width: 100%;
+  }
   .rules{
     width: 1000px;
   }
@@ -216,6 +226,7 @@ height: 100%;
   .img_overlapping_value_decimals, .img_3_identities, .img_s2n, .img_f2d, .science-img-size, .rules-img{
     width: 1000px;
   }
+
 }
 
 @media (max-width: 1670px){
