@@ -201,9 +201,12 @@ height: 100%;
 
 /* Online section */
 .img-online{
-  max-width: 60%;
+  max-width: 50%;
   border: solid;
   margin: 10px 0px;
+}
+.online-list{
+  font-size: 2rem;
 }
 
 /* Media-Query */
