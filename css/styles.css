@@ -201,16 +201,13 @@ height: 100%;
 
 /* Online section */
 .img-online{
-  max-width: 50%;
+  max-width: 60%;
   border: solid;
   margin: 10px 0px;
 }
 
 /* Media-Query */
-@media (max-width: 1000px){
-  .img-online{
-    width: 100%;
-  }
+@media(max-width: 1000px){
   .rules{
     width: 1000px;
   }
@@ -232,5 +229,11 @@ height: 100%;
 @media (max-width: 1670px){
   .rules-navbar{
   opacity: 0.5;
+  }
+}
+
+@media all and (max-width: 1000px){
+  .img-online{
+    max-width: 100%;
   }
 }
