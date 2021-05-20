@@ -209,6 +209,11 @@ height: 100%;
   font-size: 2rem;
 }
 
+#online .nav-link{
+  font-family: "Times New Roman", Times, serif;
+  color: whitesmoke;
+}
+
 /* Media-Query */
 @media(max-width: 1000px){
   .rules{
