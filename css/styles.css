@@ -199,6 +199,18 @@ height: 100%;
 }
 /* Science section */
 
+/* FAQ section */
+
+#FAQ td{
+  text-align: left;
+  vertical-align: text-top;
+
+}
+
+#FAQ .FAQstyle{
+  font-weight: bold;
+}
+
 /* Online section */
 .img-online{
   max-width: 50%;
@@ -213,6 +225,8 @@ height: 100%;
   font-family: "Times New Roman", Times, serif;
   color: whitesmoke;
 }
+
+
 
 /* Media-Query */
 @media(max-width: 1000px){
