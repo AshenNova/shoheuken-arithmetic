@@ -162,6 +162,12 @@ margin: 0 5px;
   font-size: 55px;
   color: red;
 }
+
+/* Footer section */
+#sticky-footer{
+  position: relative;
+}
+
 /* Sequence-section */
 .sequences-section{
   text-align: center;
