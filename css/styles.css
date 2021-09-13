@@ -65,13 +65,24 @@ body{
   margin: 1% 20.75% 3%;
   text-align: center;
   padding-top: 3%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .display-4{
   color: white;
   font-weight: bold;
 }
 
+/* arithmetic */
+.star{
+  width: 40px;
+}
+
+
 /* navigation bar */
+
+
 .navbar-style{
  margin-top: 20px;
 }
@@ -79,6 +90,7 @@ body{
 .nav-button{
 margin: 0 5px;
 }
+
 .rules-navbar{
   position: fixed;
   background-color: #e8e9a1;
@@ -91,35 +103,69 @@ margin: 0 5px;
 
 .nav-link{
   color: #e5707e;
+  font-weight: bold;
+}
+
+/* Countdown timer */
+#demo, #demo2 {
+  text-align: center;
+  font-weight: bold;
 }
 
 /* images from rules.html ctrl+K+U */
 .rules{
 
-  width: 80%;
+  width: 100%;
   border-style: solid;
 }
-.img_overlapping_value{
- width: 40%;
+
+.rules-navigation-section{
+  font-size: 15px;
+  font-family: 'Montserrat', sans-serif;
+}
+.rules-img{
+ width: 100%;
  border-style: solid;
 }
 
-.comparison{
-  width: 40%;
+.science-img-size{
+  Width: 100%;
   border-style: solid;
+  margin-bottom: 10px;
+}
+/* points-section */
+
+#points{
+  text-align: center;
 }
 
-.img_overlapping_value_decimals{
-  width: 40%;
-  border-style: solid;
+.points-image{
+    width: 15%;
+    border-radius: 10%;
+    margin: 20px;
 }
-.img_3_identities{
-  width: 40%;
-  border-style: solid;
+.carousel-control-prev{
+  color: black;
 }
-.img_s2n, .img_f2d{
-  width: 40%;
-  border-style: solid; 
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-image: none;
+}
+.carousel-control-next-icon:after{
+  content: '>';
+  font-size: 55px;
+  color: red;
+}
+
+.carousel-control-prev-icon:after {
+  content: '<';
+  font-size: 55px;
+  color: red;
+}
+
+/* Footer section */
+#sticky-footer{
+  position: relative;
 }
 
 /* Sequence-section */
@@ -134,13 +180,73 @@ margin: 0 5px;
 }
 
 /* Exam paper section */
+.exam-navbrand{
+  color: white !important;
+}
+
 .exam-papers{
   text-align: left;
   margin: 100px 0;
 }
 
+/* homework */
+#homework-procedure{
+  text-align: left;
+}
+
+#movie-videos{
+  text-align: center;
+}
+.video{
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+}
+.video iframe{
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+}
+/* Science section */
+
+/* FAQ section */
+
+#FAQ td{
+  text-align: left;
+  vertical-align: text-top;
+
+}
+
+#FAQ .FAQstyle{
+  font-weight: bold;
+}
+
+/* Online section */
+.img-online{
+  max-width: 50%;
+  border: solid;
+  margin: 10px 0px;
+}
+.online-list{
+  font-size: 2rem;
+}
+
+#online .nav-link{
+  font-family: "Times New Roman", Times, serif;
+  color: whitesmoke;
+}
+
+/* epicmind 3.0 */
+.epicmind3-image{
+  width: 100%;
+  border-style: solid;
+  margin: 50px 0;
+ }
+
 /* Media-Query */
-@media (max-width: 1000px){
+@media(max-width: 1000px){
   .rules{
     width: 1000px;
   }
@@ -153,7 +259,20 @@ margin: 0 5px;
   .img_overlapping_value{
     width: 1000px;
   }
-  .img_overlapping_value_decimals, .img_3_identities, .img_s2n, .img_f2d{
+  .img_overlapping_value_decimals, .img_3_identities, .img_s2n, .img_f2d, .science-img-size, .rules-img{
     width: 1000px;
+  }
+
+}
+
+@media (max-width: 1670px){
+  .rules-navbar{
+  opacity: 0.5;
+  }
+}
+
+@media all and (max-width: 1000px){
+  .img-online{
+    max-width: 600px;
   }
 }
