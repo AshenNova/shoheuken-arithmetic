@@ -11,38 +11,25 @@
 <body>
 
   <div class="main-container">
+
     <div class="title-box">
       <h1>Welcome to my Arithmetic Game!</h1>
     </div>
     <div class="main-box">
         <div class="score-board">
-          <div id="current-score">0</div>
-          <div id="timer">0</div>
+          <p class="label-score">Score:<span id="current-score">0</span></p>
+          <p class="mistakes-score">Mistakes:<span id="current-mistake">0</span></p>
+          <p class="time-clock">Time:<span id="timer">0</span></p>
         </div>
         
-        <div class="number-statement">
-          <div class="box-1">
-            <input type="text" id="box1text" class="box1">
-          </div>
-          <div class="symbol">
-            <p>+</p>
-          </div>
-          <div class="box-2">
-            <input type="text" id="box2text" class="box2">
-          </div>
-          <div class="symbol">
-            <p>=</p>
-          </div>
-          <div class="ans-box">
-            <input type="text" id="anstext">
-          </div> 
-          </div>  
-            <button class="btn" onclick="Game()">Enter</button>
-          </div> 
+        <form action="" class="our-form">
+          <p class="display-problems"></p>
+          <input type="number" id="user-input" autocomplete="off">
+          <button>Submit</button>
+        </form>
     </div>
   </div>
 
   <script src="javascript/script.js"></script>
 </body>
 </html>
-

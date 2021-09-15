@@ -17,6 +17,7 @@
 }
 .title-box{
   margin-bottom: 25px;
+
 }
 .main-box{
   width: 400px;
@@ -31,13 +32,18 @@
   display: flex;
 }
 
-.number-statement{
-  display: flex;
-  flex-direction: row;
-  margin-top: 100px;
-  margin-bottom: 100px;
+.label-score, .mistakes-score, .time-clock{
+  margin: 10px 10px;
 }
-.box1, .box2, #anstext{
+
+.display-problems{
+  text-align: center;
+  font-size: 50px;
+  font-weight: 600;
+  margin: 100px 0;
+}
+
+#anstext{
   width: 76px;
   font-size: 20px;
   font-weight: 600;
@@ -53,7 +59,7 @@
   
 }
 
-.symbol{
+.symbol, .box1, .box2{
   margin: 13px 20px 12px 21px;
   font-size: 25px;
   font-weight: 600;
