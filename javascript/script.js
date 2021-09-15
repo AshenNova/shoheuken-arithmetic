@@ -3,12 +3,39 @@ const ourForm = document.querySelector(".our-form")
 const userInput = document.getElementById("user-input")
 const currentScore = document.getElementById("current-score")
 const currentMistake = document.getElementById("current-mistake")
+const buttonStart = document.querySelector(".start-button")
+const starto = document.querySelector('.starto');
+const startBox = document.querySelector('.start-box');
 
 // Storing of question
 let state = {
   score: 0,
   mistake: 0
 }
+
+function clickStart(){
+  console.log("start button clicked");
+  starto.classList.add('hidden');
+  startBox.classList.add('hidden');
+
+    // Timer
+  let time = 0;
+  const countDown = setInterval(function(){
+
+  time++;
+  document.getElementById('timer').innerHTML = time;
+  console.log(state.score);
+
+  if (state.score >= 100){
+    clearInterval(countDown);
+    document.getElementById('timer').innerHTML = time;
+  }
+
+  }, 1000);
+}
+
+buttonStart.addEventListener('click', clickStart)
+
 
 // 1. generate new problem and store the question in state object
 // 2. Also to visual update the HTML
@@ -33,9 +60,9 @@ function handleSubmit(e){
   if (p.operator == "-") correctAnswer = p.numOne - p.numTwo
   console.log(correctAnswer, userInput.value)
     if (parseInt(userInput.value,10) == correctAnswer){
+      console.log("correct")
       state.score++
       currentScore.textContent = state.score
-      console.log("correct")
       currentScore.classList.add("animate-right")
       setTimeout(() => currentScore.classList.remove("animate-right"), 331)
       updateProblems()
@@ -64,18 +91,3 @@ function genProblems(){
     operator: ["+","-"][genNumbers(2)]
   }
 }
-
-// Timer
-let time = 0;
-const countDown = setInterval(function(){
-
-time++;
-document.getElementById('timer').innerHTML = time;
-console.log(state.score);
-
-if (state.score >= 100){
-  clearInterval(countDown);
-  document.getElementById('timer').innerHTML = time;
-}
-
-}, 1000);
