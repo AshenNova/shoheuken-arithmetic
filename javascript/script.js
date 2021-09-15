@@ -60,3 +60,18 @@ function genProblems(){
     operator: ["+","-"][genNumbers(2)]
   }
 }
+
+// Timer
+let time = 0;
+const countDown = setInterval(function(){
+
+time++;
+document.getElementById('timer').innerHTML = time;
+console.log(state.score);
+
+if (state.score >= 100){
+  clearInterval(countDown);
+  document.getElementById('timer').innerHTML = time;
+}
+
+}, 1000);

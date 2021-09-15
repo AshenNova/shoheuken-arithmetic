@@ -42,25 +42,13 @@
   font-weight: 600;
   margin: 100px 0;
 }
-
-#anstext{
-  width: 76px;
-  font-size: 20px;
-  font-weight: 600;
-  height: 55px;
-  padding: 0px 10px;
-  text-align: center;
-  border: none;
-  box-shadow: 1px 1px 0px #999,
-              2px 2px 0px #999,
-              3px 2px 0px #999,
-              4px 4px 0px #999,
-              5px 5px 0px #999;
-  
+.input-box{
+  height: 50px;
+  width: 100px;
+  font-size: 50px;
 }
 
-.symbol, .box1, .box2{
-  margin: 13px 20px 12px 21px;
-  font-size: 25px;
-  font-weight: 600;
+button {
+  margin: auto;
+  display: block;
 }
