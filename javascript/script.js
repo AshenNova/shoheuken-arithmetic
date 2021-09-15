@@ -36,12 +36,16 @@ function handleSubmit(e){
       state.score++
       currentScore.textContent = state.score
       console.log("correct")
+      currentScore.classList.add("animate-right")
+      setTimeout(() => currentScore.classList.remove("animate-right"), 331)
       updateProblems()
       console.log("new questions generated")
     } else {
       console.log("incorrect")
       state.mistake++
       currentMistake.textContent = state.mistake
+      currentMistake.classList.add("animate-wrong")
+      setTimeout(() => currentMistake.classList.remove("animate-wrong"), 331)
       userInput.value = ""
     }
   
