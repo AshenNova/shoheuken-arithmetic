@@ -6,6 +6,8 @@ const currentMistake = document.getElementById("current-mistake")
 const buttonStart = document.querySelector(".start-button")
 const starto = document.querySelector('.starto');
 const startBox = document.querySelector('.start-box');
+const countDownTimer = document.querySelector('.countDownTimer');
+const timerD = document.getElementById('timerD');
 
 // Storing of question
 let state = {
@@ -15,24 +17,48 @@ let state = {
 
 function clickStart(){
   console.log("start button clicked");
-  starto.classList.add('hidden');
+  // starto.classList.add('hidden');
   startBox.classList.add('hidden');
+  countDownTimer.classList.remove('hidden');
+    
+  // Timer1
+    let time = 3;
+    const countDownOne = setInterval(function(){
+      
+      console.log(time);
+      time--;
+      timerD.innerHTML = time;
+    
+      if (time < 0){
+        clearInterval(countDownOne);
+        timerD.innerHTML = time;
+        starto.classList.add('hidden');
+        countDownTimer.classList.add('hidden');
+        userInput.focus()
+        timer2()
+        updateProblems()
+      }
+    }, 1000);
+    
+  }
 
-    // Timer
-  let time = 0;
-  const countDown = setInterval(function(){
+    // Timer2
+function timer2(){
+    time = 0;
+  const countDownTwo = setInterval(function(){
 
   time++;
   document.getElementById('timer').innerHTML = time;
   console.log(state.score);
 
   if (state.score >= 100){
-    clearInterval(countDown);
+    clearInterval(countDownTwo);
     document.getElementById('timer').innerHTML = time;
   }
 
   }, 1000);
 }
+
 
 buttonStart.addEventListener('click', clickStart)
 
@@ -47,7 +73,7 @@ function updateProblems(){
   userInput.focus()
 }
 
-updateProblems()
+// updateProblems()
 
 ourForm.addEventListener('submit', handleSubmit)
 
