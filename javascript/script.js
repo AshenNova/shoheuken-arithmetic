@@ -8,6 +8,8 @@ const starto = document.querySelector('.starto');
 const startBox = document.querySelector('.start-box');
 const countDownTimer = document.querySelector('.countDownTimer');
 const timerD = document.getElementById('timerD');
+const finalBox = document.querySelector('.finalBox');
+const finalText = document.getElementById('finalText');
 
 // Storing of question
 let state = {
@@ -17,7 +19,6 @@ let state = {
 
 function clickStart(){
   console.log("start button clicked");
-  // starto.classList.add('hidden');
   startBox.classList.add('hidden');
   countDownTimer.classList.remove('hidden');
     
@@ -54,6 +55,9 @@ function timer2(){
   if (state.score >= 100){
     clearInterval(countDownTwo);
     document.getElementById('timer').innerHTML = time;
+    starto.classList.remove('hidden');
+    finalText.innerHTML = time;
+    finalBox.classList.remove('hidden');
   }
 
   }, 1000);
