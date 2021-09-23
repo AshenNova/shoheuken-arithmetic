@@ -23,7 +23,7 @@ const level2dot1 = document.querySelector('.level2Dot1');
 const level3 = document.querySelector('.level3');
 const level4 = document.querySelector('.level4');
 const level5 = document.querySelector('.level5');
-const level6 = document.querySelector('.level6');
+const level6dot2 = document.querySelector('.level6Dot2');
 const level7 = document.querySelector('.level7');
 
 let level = 0;
@@ -111,7 +111,7 @@ function updateProblems(){
     }
   }
 
-  if (level == 1.2 || level == 3){
+  if (level == 1.2 || level == 3.2 || level == 6.2){
     console.log(p.operator);
     if (p.operator == "x" ) displayProblem.innerHTML = `${p.numThree} ${p.operator} ${p.numFour}` 
     if (p.operator == "+") displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
@@ -177,7 +177,7 @@ function handleSubmit(e){
       }        
     }
 
-    if (level == 3.3 || level == 1.3 ){
+    if (level == 3.2 || level == 1.2 || level == 6.2){
       if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
       if (p.operator == "-") {
         if (p.numOne >= p.numTwo) {
@@ -260,8 +260,8 @@ function genProblems(){
 
   if (level == 2.1){
     return {
-      numThree: genNumbers(4)+7,
-      numFour: genNumbers(4)+7,
+      numThree: genNumbers(6)+5,
+      numFour: genNumbers(6)+5,
       operator: ["x","÷"][genNumbers(2)]
     }
   }
@@ -273,6 +273,17 @@ function genProblems(){
       operator: ["+","-"][genNumbers(2)]
     }
   }
+
+  if (level == 6.2){
+    return {
+      numOne: genNumbers(500)+500,
+      numTwo: genNumbers(500)+500,
+      numThree: genNumbers(7)+6,
+      numFour: genNumbers(7)+6,
+      operator: ["+","-","x","÷"][genNumbers(4)]
+    }
+  }
+
   if (level == 7){
     return {
       numOne: genNumbers(10)-4,
@@ -356,6 +367,16 @@ level3.addEventListener('click', function(){
   startBox.classList.remove('hidden')
   levelLabel.innerHTML = `You are attempting Level ${level}`
   scoreNeeded = 50;
+  scoreNeededCl.textContent = scoreNeeded;
+})
+
+level6dot2.addEventListener('click', function(){
+  level = 6.2
+  console.log('Level ${level} selected')
+  levelSetting.classList.add('hidden')
+  startBox.classList.remove('hidden')
+  levelLabel.innerHTML = `You are attempting Level ${level}`
+  scoreNeeded = 100;
   scoreNeededCl.textContent = scoreNeeded;
 })
 
