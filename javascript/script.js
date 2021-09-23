@@ -10,6 +10,7 @@ const countDownTimer = document.querySelector('.countDownTimer');
 const timerD = document.getElementById('timerD');
 const finalBox = document.querySelector('.finalBox');
 const finalText = document.getElementById('finalText');
+const scoreNeededCl = document.querySelector('.score-needed');
 
 const levelSetting = document.querySelector('.level-setting');
 const levelLabel = document.querySelector('.level-label');
@@ -30,7 +31,8 @@ let level = 0;
 // Storing of question
 let state = {
   score: 0,
-  mistake: 0
+  mistake: 0,
+  scoreNeeded: 0
 }
 
 function clickStart(){
@@ -68,7 +70,7 @@ function timer2(){
   document.getElementById('timer').innerHTML = time;
   console.log(state.score);
 
-  if (state.score >= 100){
+  if (state.score >= scoreNeeded){
     clearInterval(countDownTwo);
     document.getElementById('timer').innerHTML = time;
     starto.classList.remove('hidden');
@@ -90,7 +92,7 @@ function updateProblems(){
   const p = state.currentProblem
 
   // generating display -> Turn this into a function!
-  if (level == 1){
+  if (level == 1 || level == 3){
     if (p.numOne >= p.numTwo){
       displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`  
     } else {
@@ -143,7 +145,7 @@ function handleSubmit(e){
   const p = state.currentProblem
   
   // Determining answer -> Turn this into a function!
-    if (level == 1){
+    if (level == 1 || level == 3){
       if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
       if (p.operator == "-") {
         if (p.numOne >= p.numTwo) {
@@ -175,7 +177,7 @@ function handleSubmit(e){
       }        
     }
 
-    if (level == 3 || level == 1.3 ){
+    if (level == 3.3 || level == 1.3 ){
       if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
       if (p.operator == "-") {
         if (p.numOne >= p.numTwo) {
@@ -266,11 +268,9 @@ function genProblems(){
 
   if (level == 3){
     return {
-      numOne: genNumbers(50),
-      numTwo: genNumbers(50)+10,
-      numThree: genNumbers(10)+1,
-      numFour: genNumbers(10)+1,
-      operator: ["+","-","x","÷"][genNumbers(4)]
+      numOne: genNumbers(150)+100,
+      numTwo: genNumbers(150)+100,
+      operator: ["+","-"][genNumbers(2)]
     }
   }
   if (level == 7){
@@ -301,56 +301,70 @@ function genProblems(){
 
 level1.addEventListener('click', function(){
   level = 1
-  console.log('Level 1 selected')
+  console.log('Level ${level} selected')
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
   levelLabel.innerHTML = `You are attempting Level ${level}`
+  scoreNeeded = 50;
+  scoreNeededCl.textContent = scoreNeeded;
 })
 
 level1dot1.addEventListener('click', function(){
   level = 1.1
-  console.log('Level 1.1 selected')
+  console.log('Level ${level} selected')
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
   levelLabel.innerHTML = `You are attempting Level ${level}`
+  scoreNeeded = 50;
+  scoreNeededCl.textContent = scoreNeeded;
 })
 
 level1dot2.addEventListener('click', function(){
   level = 1.2
-  console.log('Level 1.2 selected')
+  console.log('Level ${level} selected')
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
   levelLabel.innerHTML = `You are attempting Level ${level}`
+  scoreNeeded = 100;
+  scoreNeededCl.textContent = scoreNeeded;
 })
 
 level2.addEventListener('click', function(){
   level = 2
-  console.log('Level 2 selected')
+  console.log('Level ${level} selected')
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
   levelLabel.innerHTML = `You are attempting Level ${level}`
+  scoreNeeded = 50;
+  scoreNeededCl.textContent = scoreNeeded;
 })
 
 level2dot1.addEventListener('click', function(){
   level = 2.1
-  console.log('Level 2.1 selected')
+  console.log('Level ${level} selected')
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
   levelLabel.innerHTML = `You are attempting Level ${level}`
+  scoreNeeded = 50;
+  scoreNeededCl.textContent = scoreNeeded;
 })
 
 level3.addEventListener('click', function(){
   level = 3
-  console.log('Level 3 selected')
+  console.log('Level ${level} selected')
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
   levelLabel.innerHTML = `You are attempting Level ${level}`
+  scoreNeeded = 50;
+  scoreNeededCl.textContent = scoreNeeded;
 })
 
 level7.addEventListener('click', function(){
   level = 7
-  console.log('Level 7 selected')
+  console.log('Level ${level} selected')
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
   levelLabel.innerHTML = `You are attempting Level ${level}`
+  scoreNeeded = 100;
+  scoreNeededCl.textContent = scoreNeeded;
 })
