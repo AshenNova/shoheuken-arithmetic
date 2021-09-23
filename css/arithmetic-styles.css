@@ -30,6 +30,9 @@
   z-index: 9;
   text-align: center;
 }
+.level-setting .btn{
+  margin: 5% 0;
+}
 .start-box{
   position: absolute;
   margin: auto;
@@ -88,6 +91,7 @@
 }
 .title-box{
   margin-bottom: 25px;
+  text-align: center;
 
 }
 .main-box{
@@ -124,7 +128,7 @@ table{
   text-align: center;
   font-size: 50px;
   font-weight: 600;
-  margin: 100px 0;
+  margin: 50px 0;
 }
 .input-box{
   height: 50px;

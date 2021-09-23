@@ -12,10 +12,13 @@ const finalBox = document.querySelector('.finalBox');
 const finalText = document.getElementById('finalText');
 
 const levelSetting = document.querySelector('.level-setting');
+const levelLabel = document.querySelector('.level-label');
 const level1 = document.querySelector('.level1');
+const level1dot1 = document.querySelector('.level1Dot1');
 const level1dot2 = document.querySelector('.level1Dot2');
-
 const level2 = document.querySelector('.level2');
+const level2dot1 = document.querySelector('.level2Dot1');
+
 const level3 = document.querySelector('.level3');
 const level4 = document.querySelector('.level4');
 const level5 = document.querySelector('.level5');
@@ -94,7 +97,7 @@ function updateProblems(){
       displayProblem.innerHTML = `${p.numTwo} ${p.operator} ${p.numOne}`
     }
   }
-  if (level == 1.2){
+  if (level == 1.1 || level == 2.1 ){
     if (p.operator == "x" ) displayProblem.innerHTML = `${p.numThree} ${p.operator} ${p.numFour}`
     if (p.operator == "÷") displayProblem.innerHTML = `${p.numThree*p.numFour} ${p.operator} ${p.numThree}` 
   }
@@ -106,7 +109,7 @@ function updateProblems(){
     }
   }
 
-  if (level == 3){
+  if (level == 1.2 || level == 3){
     console.log(p.operator);
     if (p.operator == "x" ) displayProblem.innerHTML = `${p.numThree} ${p.operator} ${p.numFour}` 
     if (p.operator == "+") displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
@@ -151,6 +154,11 @@ function handleSubmit(e){
       }        
     }
 
+    if (level == 1.1 || level == 2.1 ){
+      if (p.operator == "x") correctAnswer = p.numThree * p.numFour
+      if (p.operator == "÷") correctAnswer = (p.numThree*p.numFour)/p.numThree
+    }
+
     if (level == 1.2){
       if (p.operator == "x") correctAnswer = p.numThree * p.numFour
       if (p.operator == "÷") correctAnswer = (p.numThree*p.numFour)/p.numThree
@@ -167,8 +175,7 @@ function handleSubmit(e){
       }        
     }
 
-    if (level == 3){
-      console.log(p.numOne, p.numTwo, p.numThree, p.numFour, p.operator)
+    if (level == 3 || level == 1.3 ){
       if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
       if (p.operator == "-") {
         if (p.numOne >= p.numTwo) {
@@ -223,7 +230,7 @@ function genProblems(){
     }
   }
 
-  if (level == 1.2){
+  if (level == 1.1){
     return {
       numThree: genNumbers(5)+1,
       numFour: genNumbers(4)+1,
@@ -231,13 +238,32 @@ function genProblems(){
     }
   }
 
+  if (level == 1.2){
+    return {
+      numOne: genNumbers(5),
+      numTwo: genNumbers(5),
+      numThree: genNumbers(5)+1,
+      numFour: genNumbers(4)+1,
+      operator: ["+","-","x","÷"][genNumbers(4)]
+    }
+  }
+
   if (level == 2){
     return {
-      numOne: genNumbers(50),
-      numTwo: genNumbers(50)+10,
+      numOne: genNumbers(40)+10,
+      numTwo: genNumbers(40)+10,
       operator: ["+","-"][genNumbers(2)]
     }
   }
+
+  if (level == 2.1){
+    return {
+      numThree: genNumbers(4)+7,
+      numFour: genNumbers(4)+7,
+      operator: ["x","÷"][genNumbers(2)]
+    }
+  }
+
   if (level == 3){
     return {
       numOne: genNumbers(50),
@@ -278,12 +304,23 @@ level1.addEventListener('click', function(){
   console.log('Level 1 selected')
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
+  levelLabel.innerHTML = `You are attempting Level ${level}`
 })
+
+level1dot1.addEventListener('click', function(){
+  level = 1.1
+  console.log('Level 1.1 selected')
+  levelSetting.classList.add('hidden')
+  startBox.classList.remove('hidden')
+  levelLabel.innerHTML = `You are attempting Level ${level}`
+})
+
 level1dot2.addEventListener('click', function(){
   level = 1.2
   console.log('Level 1.2 selected')
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
+  levelLabel.innerHTML = `You are attempting Level ${level}`
 })
 
 level2.addEventListener('click', function(){
@@ -291,6 +328,15 @@ level2.addEventListener('click', function(){
   console.log('Level 2 selected')
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
+  levelLabel.innerHTML = `You are attempting Level ${level}`
+})
+
+level2dot1.addEventListener('click', function(){
+  level = 2.1
+  console.log('Level 2.1 selected')
+  levelSetting.classList.add('hidden')
+  startBox.classList.remove('hidden')
+  levelLabel.innerHTML = `You are attempting Level ${level}`
 })
 
 level3.addEventListener('click', function(){
@@ -298,6 +344,7 @@ level3.addEventListener('click', function(){
   console.log('Level 3 selected')
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
+  levelLabel.innerHTML = `You are attempting Level ${level}`
 })
 
 level7.addEventListener('click', function(){
@@ -305,4 +352,5 @@ level7.addEventListener('click', function(){
   console.log('Level 7 selected')
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
+  levelLabel.innerHTML = `You are attempting Level ${level}`
 })
