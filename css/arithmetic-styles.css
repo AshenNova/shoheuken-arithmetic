@@ -31,8 +31,13 @@
   text-align: center;
 }
 .level-setting .btn{
-  margin: 5% 0;
+  margin: 7% 0;
 }
+
+table{
+margin-top: 2%;
+}
+
 .start-box{
   position: absolute;
   margin: auto;
