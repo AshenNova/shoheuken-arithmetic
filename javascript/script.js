@@ -330,7 +330,7 @@ level1.addEventListener('click', function(){
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
   levelLabel.innerHTML = `You are attempting Level ${level}`
-  scoreNeeded = 5;
+  scoreNeeded = 50;
   scoreNeededCl.textContent = scoreNeeded;
 })
 
