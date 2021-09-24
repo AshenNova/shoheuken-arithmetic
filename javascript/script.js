@@ -27,6 +27,8 @@ const level5 = document.querySelector('.level5');
 const level6dot2 = document.querySelector('.level6Dot2');
 const level7 = document.querySelector('.level7');
 
+const mistakesCountCl = document.querySelector('.mistakesCount');
+
 let level = 0;
 
 // Storing of question
@@ -77,6 +79,7 @@ function timer2(){
     starto.classList.remove('hidden');
     finalText.innerHTML = time;
     finalBox.classList.remove('hidden');
+    mistakesCountCl.innerHTML = state.mistake;
   }
 
   }, 1000);
@@ -327,7 +330,7 @@ level1.addEventListener('click', function(){
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
   levelLabel.innerHTML = `You are attempting Level ${level}`
-  scoreNeeded = 50;
+  scoreNeeded = 5;
   scoreNeededCl.textContent = scoreNeeded;
 })
 

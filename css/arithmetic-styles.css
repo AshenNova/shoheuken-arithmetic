@@ -29,9 +29,10 @@
   background-color: white;
   z-index: 9;
   text-align: center;
+  border-style: solid;
 }
 .level-setting .btn{
-  margin: 7% 0;
+  margin: 5px 0;
 }
 
 table{
@@ -48,6 +49,7 @@ margin-top: 2%;
   background-color: white;
   z-index: 9;
   text-align: center;
+  border-style: solid;
 }
 .start-text{
   position: relative;
@@ -82,10 +84,12 @@ margin-top: 2%;
   background-color: white;
   z-index: 9;
   text-align: center;
+  border-style: solid;
 }
 .finalTextBox{
   position: relative;
   top: 25%;
+  font-size: 2em;
 }
 
 .main-container{
@@ -164,4 +168,9 @@ button {
 .animate-wrong{
   color: red;
   transform: scale(1.5);
+}
+
+.mistakesCount{
+  color: red;
+  font-weight: strong;
 }
