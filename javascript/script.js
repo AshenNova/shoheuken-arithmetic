@@ -20,10 +20,9 @@ const level1dot2 = document.querySelector('.level1Dot2');
 const level2 = document.querySelector('.level2');
 const level2dot1 = document.querySelector('.level2Dot1');
 const level4dot2 = document.querySelector('.level4Dot2');
-
 const level3 = document.querySelector('.level3');
 const level4 = document.querySelector('.level4');
-const level5 = document.querySelector('.level5');
+const level5dot2 = document.querySelector('.level5Dot2');
 const level6dot2 = document.querySelector('.level6Dot2');
 const level7 = document.querySelector('.level7');
 
@@ -115,7 +114,7 @@ function updateProblems(){
     }
   }
 
-  if (level == 1.2 || level == 3.2 || level == 4.2 || level == 6.2){
+  if (level == 1.2 || level == 3.2 || level == 4.2 || level == 5.2 || level == 6.2){
     console.log(p.operator);
     if (p.operator == "x" ) displayProblem.innerHTML = `${p.numThree} ${p.operator} ${p.numFour}` 
     if (p.operator == "+") displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
@@ -181,7 +180,7 @@ function handleSubmit(e){
       }        
     }
 
-    if (level == 3.2 || level == 1.2 || level == 4.2 || level == 6.2){
+    if (level == 3.2 || level == 1.2 || level == 4.2 || level == 5.2 || level == 6.2){
       if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
       if (p.operator == "-") {
         if (p.numOne >= p.numTwo) {
@@ -288,6 +287,16 @@ function genProblems(){
     }
   }
 
+  if (level == 5.2){
+    return {
+    numOne: genNumbers(500)+500,
+    numTwo: genNumbers(500)+500,
+    numThree: genNumbers(6)+5,
+    numFour: genNumbers(6)+5,
+    operator: ["+","-","x","÷"][genNumbers(4)]
+    }
+  }
+
   if (level == 6.2){
     return {
       numOne: genNumbers(500)+500,
@@ -386,6 +395,16 @@ level3.addEventListener('click', function(){
 
 level4dot2.addEventListener('click', function(){
   level = 4.2
+  console.log('Level ${level} selected')
+  levelSetting.classList.add('hidden')
+  startBox.classList.remove('hidden')
+  levelLabel.innerHTML = `You are attempting Level ${level}`
+  scoreNeeded = 100;
+  scoreNeededCl.textContent = scoreNeeded;
+})
+
+level5dot2.addEventListener('click', function(){
+  level = 5.2
   console.log('Level ${level} selected')
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
