@@ -141,9 +141,14 @@ table{
   letter-spacing: 2px;
 }
 .input-box{
+  position: absolute;
   height: 50px;
   width: 150px;
   font-size: 50px;
+  top: 70%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 button {
