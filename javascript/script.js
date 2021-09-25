@@ -21,6 +21,7 @@ const level2 = document.querySelector('.level2');
 const level2dot1 = document.querySelector('.level2Dot1');
 const level4dot2 = document.querySelector('.level4Dot2');
 const level3 = document.querySelector('.level3');
+const level3dot2 = document.querySelector('.level3Dot2');
 const level4 = document.querySelector('.level4');
 const level5dot2 = document.querySelector('.level5Dot2');
 const level6dot2 = document.querySelector('.level6Dot2');
@@ -277,6 +278,16 @@ function genProblems(){
     }
   }
 
+  if (level == 3.2){
+    return {
+      numOne: genNumbers(150)+100,
+      numTwo: genNumbers(150)+100,
+      numThree: genNumbers(6)+5,
+      numFour: genNumbers(6)+5,
+      operator: ["+","-","x","÷"][genNumbers(4)]
+    }
+  }
+
   if (level == 4.2){
     return {
     numOne: genNumbers(150)+100,
@@ -392,6 +403,17 @@ level3.addEventListener('click', function(){
   scoreNeeded = 50;
   scoreNeededCl.textContent = scoreNeeded;
 })
+
+level3dot2.addEventListener('click', function(){
+  level = 3.2
+  console.log('Level ${level} selected')
+  levelSetting.classList.add('hidden')
+  startBox.classList.remove('hidden')
+  levelLabel.innerHTML = `You are attempting Level ${level}`
+  scoreNeeded = 100;
+  scoreNeededCl.textContent = scoreNeeded;
+})
+
 
 level4dot2.addEventListener('click', function(){
   level = 4.2
