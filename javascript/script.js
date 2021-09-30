@@ -19,10 +19,11 @@ const level1dot1 = document.querySelector('.level1Dot1');
 const level1dot2 = document.querySelector('.level1Dot2');
 const level2 = document.querySelector('.level2');
 const level2dot1 = document.querySelector('.level2Dot1');
-const level4dot2 = document.querySelector('.level4Dot2');
+const level2dot2 = document.querySelector('.level2Dot2');
 const level3 = document.querySelector('.level3');
 const level3dot2 = document.querySelector('.level3Dot2');
 const level4 = document.querySelector('.level4');
+const level4dot2 = document.querySelector('.level4Dot2');
 const level5dot2 = document.querySelector('.level5Dot2');
 const level6dot2 = document.querySelector('.level6Dot2');
 const level7 = document.querySelector('.level7');
@@ -30,12 +31,13 @@ const level7 = document.querySelector('.level7');
 const mistakesCountCl = document.querySelector('.mistakesCount');
 
 let level = 0;
+let player = 1;
 
 // Storing of question
 let state = {
   score: 0,
   mistake: 0,
-  scoreNeeded: 0
+  scoreNeeded: 0,
 }
 
 function clickStart(){
@@ -80,6 +82,7 @@ function timer2(){
     finalText.innerHTML = time;
     finalBox.classList.remove('hidden');
     mistakesCountCl.innerHTML = state.mistake;
+    player = 0;
   }
 
   }, 1000);
@@ -115,7 +118,7 @@ function updateProblems(){
     }
   }
 
-  if (level == 1.2 || level == 3.2 || level == 4.2 || level == 5.2 || level == 6.2){
+  if (level == 1.2 || level == 2.2 || level == 3.2 || level == 4.2 || level == 5.2 || level == 6.2){
     console.log(p.operator);
     if (p.operator == "x" ) displayProblem.innerHTML = `${p.numThree} ${p.operator} ${p.numFour}` 
     if (p.operator == "+") displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
@@ -143,80 +146,82 @@ ourForm.addEventListener('submit', handleSubmit)
 
 function handleSubmit(e){
   e.preventDefault()
-  if (userInput.value == "") alert("Please input a value")
-  let correctAnswer
-  // let divAnswer
-  const p = state.currentProblem
-  
-  // Determining answer -> Turn this into a function!
-    if (level == 1 || level == 3){
-      if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
-      if (p.operator == "-") {
-        if (p.numOne >= p.numTwo) {
-          correctAnswer = p.numOne - p.numTwo
-        } else {
-          correctAnswer = p.numTwo - p.numOne
-        }
-      }        
-    }
+  if ( player == 1 ){
+    if (userInput.value == "") alert("Please input a value")
+    let correctAnswer
+    // let divAnswer
+    const p = state.currentProblem
+    
+    // Determining answer -> Turn this into a function!
+      if (level == 1 || level == 3){
+        if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
+        if (p.operator == "-") {
+          if (p.numOne >= p.numTwo) {
+            correctAnswer = p.numOne - p.numTwo
+          } else {
+            correctAnswer = p.numTwo - p.numOne
+          }
+        }        
+      }
 
-    if (level == 1.1 || level == 2.1 ){
-      if (p.operator == "x") correctAnswer = p.numThree * p.numFour
-      if (p.operator == "÷") correctAnswer = (p.numThree*p.numFour)/p.numThree
-    }
+      if (level == 1.1 || level == 2.1 ){
+        if (p.operator == "x") correctAnswer = p.numThree * p.numFour
+        if (p.operator == "÷") correctAnswer = (p.numThree*p.numFour)/p.numThree
+      }
 
-    if (level == 1.2){
-      if (p.operator == "x") correctAnswer = p.numThree * p.numFour
-      if (p.operator == "÷") correctAnswer = (p.numThree*p.numFour)/p.numThree
-    }
+      if (level == 1.2){
+        if (p.operator == "x") correctAnswer = p.numThree * p.numFour
+        if (p.operator == "÷") correctAnswer = (p.numThree*p.numFour)/p.numThree
+      }
 
-    if (level == 2){
-      if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
-      if (p.operator == "-") {
-        if (p.numOne >= p.numTwo) {
-          correctAnswer = p.numOne - p.numTwo
-        } else {
-          correctAnswer = p.numTwo - p.numOne
-        }
-      }        
-    }
+      if (level == 2){
+        if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
+        if (p.operator == "-") {
+          if (p.numOne >= p.numTwo) {
+            correctAnswer = p.numOne - p.numTwo
+          } else {
+            correctAnswer = p.numTwo - p.numOne
+          }
+        }        
+      }
 
-    if (level == 3.2 || level == 1.2 || level == 4.2 || level == 5.2 || level == 6.2){
-      if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
-      if (p.operator == "-") {
-        if (p.numOne >= p.numTwo) {
-          correctAnswer = p.numOne - p.numTwo
-        } else {
-          correctAnswer = p.numTwo - p.numOne
-        }
-      } 
-      if (p.operator == "x") correctAnswer = p.numThree * p.numFour
-      if (p.operator == "÷") correctAnswer = (p.numThree*p.numFour)/p.numThree
-    }
+      if (level == 3.2 || level == 2.2 || level == 1.2 || level == 4.2 || level == 5.2 || level == 6.2){
+        if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
+        if (p.operator == "-") {
+          if (p.numOne >= p.numTwo) {
+            correctAnswer = p.numOne - p.numTwo
+          } else {
+            correctAnswer = p.numTwo - p.numOne
+          }
+        } 
+        if (p.operator == "x") correctAnswer = p.numThree * p.numFour
+        if (p.operator == "÷") correctAnswer = (p.numThree*p.numFour)/p.numThree
+      }
 
-    if (level == 7){
-      if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
-      if (p.operator == "-") correctAnswer = p.numOne - p.numTwo
-    }
+      if (level == 7){
+        if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
+        if (p.operator == "-") correctAnswer = p.numOne - p.numTwo
+      }
 
-  console.log(correctAnswer, userInput.value)
-    if (parseInt(userInput.value,10) == correctAnswer){
-      console.log("correct")
-      state.score++
-      currentScore.textContent = state.score
-      currentScore.classList.add("animate-right")
-      setTimeout(() => currentScore.classList.remove("animate-right"), 331)
-      updateProblems()
-      console.log("new questions generated")
-    } else {
-      console.log("incorrect")
-      state.mistake++
-      currentMistake.textContent = state.mistake
-      currentMistake.classList.add("animate-wrong")
-      setTimeout(() => currentMistake.classList.remove("animate-wrong"), 331)
-      userInput.value = ""
-    }
-  
+    console.log(correctAnswer, userInput.value)
+      if (parseInt(userInput.value,10) == correctAnswer){
+        console.log("correct")
+        state.score++
+        currentScore.textContent = state.score
+        currentScore.classList.add("animate-right")
+        setTimeout(() => currentScore.classList.remove("animate-right"), 331)
+        updateProblems()
+        console.log("new questions generated")
+      } else {
+        console.log("incorrect")
+        state.mistake++
+        currentMistake.textContent = state.mistake
+        currentMistake.classList.add("animate-wrong")
+        setTimeout(() => currentMistake.classList.remove("animate-wrong"), 331)
+        userInput.value = ""
+      }
+    
+  }
 }
 
 // generate number
@@ -267,6 +272,16 @@ function genProblems(){
       numThree: genNumbers(6)+5,
       numFour: genNumbers(6)+5,
       operator: ["x","÷"][genNumbers(2)]
+    }
+  }
+
+  if (level == 2.2){
+    return {
+      numOne: genNumbers(40)+10,
+      numTwo: genNumbers(40)+10,
+      numThree: genNumbers(6)+5,
+      numFour: genNumbers(6)+5,
+      operator: ["+","-","x","÷"][genNumbers(4)]
     }
   }
 
@@ -346,7 +361,7 @@ function genProblems(){
 
 level1.addEventListener('click', function(){
   level = 1
-  console.log('Level ${level} selected')
+  console.log(`Level ${level} selected`)
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
   levelLabel.innerHTML = `You are attempting Level ${level}`
@@ -356,7 +371,7 @@ level1.addEventListener('click', function(){
 
 level1dot1.addEventListener('click', function(){
   level = 1.1
-  console.log('Level ${level} selected')
+  console.log(`Level ${level} selected`)
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
   levelLabel.innerHTML = `You are attempting Level ${level}`
@@ -366,7 +381,7 @@ level1dot1.addEventListener('click', function(){
 
 level1dot2.addEventListener('click', function(){
   level = 1.2
-  console.log('Level ${level} selected')
+  console.log(`Level ${level} selected`)
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
   levelLabel.innerHTML = `You are attempting Level ${level}`
@@ -376,7 +391,7 @@ level1dot2.addEventListener('click', function(){
 
 level2.addEventListener('click', function(){
   level = 2
-  console.log('Level ${level} selected')
+  console.log(`Level ${level} selected`)
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
   levelLabel.innerHTML = `You are attempting Level ${level}`
@@ -384,9 +399,19 @@ level2.addEventListener('click', function(){
   scoreNeededCl.textContent = scoreNeeded;
 })
 
+level2dot2.addEventListener('click', function(){
+  level = 2.2
+  console.log(`Level ${level} selected`)
+  levelSetting.classList.add('hidden')
+  startBox.classList.remove('hidden')
+  levelLabel.innerHTML = `You are attempting Level ${level}`
+  scoreNeeded = 100;
+  scoreNeededCl.textContent = scoreNeeded;
+})
+
 level2dot1.addEventListener('click', function(){
   level = 2.1
-  console.log('Level ${level} selected')
+  console.log(`Level ${level} selected`)
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
   levelLabel.innerHTML = `You are attempting Level ${level}`
@@ -396,7 +421,7 @@ level2dot1.addEventListener('click', function(){
 
 level3.addEventListener('click', function(){
   level = 3
-  console.log('Level ${level} selected')
+  console.log(`Level ${level} selected`)
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
   levelLabel.innerHTML = `You are attempting Level ${level}`
@@ -406,7 +431,7 @@ level3.addEventListener('click', function(){
 
 level3dot2.addEventListener('click', function(){
   level = 3.2
-  console.log('Level ${level} selected')
+  console.log(`Level ${level} selected`)
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
   levelLabel.innerHTML = `You are attempting Level ${level}`
@@ -417,7 +442,7 @@ level3dot2.addEventListener('click', function(){
 
 level4dot2.addEventListener('click', function(){
   level = 4.2
-  console.log('Level ${level} selected')
+  console.log(`Level ${level} selected`)
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
   levelLabel.innerHTML = `You are attempting Level ${level}`
@@ -427,7 +452,7 @@ level4dot2.addEventListener('click', function(){
 
 level5dot2.addEventListener('click', function(){
   level = 5.2
-  console.log('Level ${level} selected')
+  console.log(`Level ${level} selected`)
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
   levelLabel.innerHTML = `You are attempting Level ${level}`
@@ -437,7 +462,7 @@ level5dot2.addEventListener('click', function(){
 
 level6dot2.addEventListener('click', function(){
   level = 6.2
-  console.log('Level ${level} selected')
+  console.log(`Level ${level} selected`)
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
   levelLabel.innerHTML = `You are attempting Level ${level}`
@@ -447,7 +472,7 @@ level6dot2.addEventListener('click', function(){
 
 level7.addEventListener('click', function(){
   level = 7
-  console.log('Level ${level} selected')
+  console.log(`Level ${level} selected`)
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
   levelLabel.innerHTML = `You are attempting Level ${level}`
