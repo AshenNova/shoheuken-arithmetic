@@ -145,7 +145,7 @@ table{
   letter-spacing: 2px;
 }
 .input-box{
-  position: absolute;
+  position: relative;
   height: 50px;
   width: 150px;
   font-size: 50px;
