@@ -415,7 +415,7 @@ level2dot1.addEventListener('click', function(){
   levelSetting.classList.add('hidden')
   startBox.classList.remove('hidden')
   levelLabel.innerHTML = `You are attempting Level ${level}`
-  scoreNeeded = 50;
+  scoreNeeded = 25;
   scoreNeededCl.textContent = scoreNeeded;
 })
 
