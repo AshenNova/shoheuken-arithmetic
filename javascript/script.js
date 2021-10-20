@@ -361,7 +361,7 @@ function genProblems(){
 
 level1.addEventListener('click', function(){
     level = 1
-    scoreNeeded = 50;
+    scoreNeeded = 1;
     scoreNeededCl.textContent = scoreNeeded;
     levelBox();
 })
