@@ -30,9 +30,38 @@ const level7 = document.querySelector('.level7');
 
 const mistakesCountCl = document.querySelector('.mistakesCount');
 const buttonSuccess = document.querySelectorAll('.btn-success');
-;
+
+const highScoreName = document.querySelector('.highScoreName');
+const highScoreTime = document.querySelector('.highScoreTime');
+const highScoreMistakes = document.querySelector('.highScoreMistakes');
+
 let level = 0;
 let player = 1;
+
+function HighScore(name, date, time, mistake) {
+  this.name = name
+  this.date = date
+  this.time = time
+  this.mistake = mistake
+}
+
+const highScore1 = new HighScore("Jayden Cheong", "16 October 2021", 140, 1)
+const highScore1dot1 = new HighScore("Jayden Cheong", "16 October 2021", 823, 12)
+const highScore1dot2 = new HighScore("Nil", "16 October 2021", 0, 0)
+const highScore2 = new HighScore("Nil", "16 October 2021", 0, 0)
+const highScore2dot1 = new HighScore("JingKai Ng", "16 October 2021", 823, 24)
+const highScore2dot2 = new HighScore("Shawn Low", "16 October 2021", 1544, 24)
+const highScore3 = new HighScore("Jayden Cheong", "16 October 2021", 140, 1)
+const highScore3dot2 = new HighScore("Shanice Lee", "16 October 2021", 907, 9)
+const highScore4dot2 = new HighScore("Jadee Wong", "2 October 2021", 641, 1)
+const highScore5dot2 = new HighScore("Jayden Goo", "20 October 2021", 364, 2)
+const highScore6dot2 = new HighScore("Yixin", "29 September 2021", 366, 8)
+
+
+
+
+
+
 
 // Storing of question
 let state = {
@@ -457,62 +486,94 @@ for (let i = 0; i < buttonSuccess.length; i++){
 
   buttonSuccess[i].addEventListener("click", function(){
     buttonLevel = this.innerHTML
-    console.log(this.innerHTML);
   
   switch (buttonLevel) {
     case "Level 1":
       level = 1;
       scoreNeeded = 50;
+      highScoreName.innerHTML = highScore1.name
+      highScoreTime.innerHTML = highScore1.time
+      highScoreMistakes.innerHTML = highScore1.mistake
       break;
 
     case "Level 1.1":
       level = 1.1;
       scoreNeeded = 50;
+      highScoreName.innerHTML = highScore1dot1.name
+      highScoreTime.innerHTML = highScore1dot1.time
+      highScoreMistakes.innerHTML = highScore1dot1.mistake
       break;
 
     case "Level 1.2":
       level = 1.2;
       scoreNeeded = 100;
+      highScoreName.innerHTML = highScore1dot2.name
+      highScoreTime.innerHTML = highScore1dot2.time
+      highScoreMistakes.innerHTML = highScore1dot2.mistake
       break;
 
     case "Level 2":
       level = 2;
       scoreNeeded = 50;
+      highScoreName.innerHTML = highScore2.name
+      highScoreTime.innerHTML = highScore2.time
+      highScoreMistakes.innerHTML = highScore2.mistake
       break;
 
     case "Level 2.1":
       level = 2.1;
       scoreNeeded = 25;
+      highScoreName.innerHTML = highScore2dot1.name
+      highScoreTime.innerHTML = highScore2dot1.time
+      highScoreMistakes.innerHTML = highScore2dot1.mistake
       break;
 
     case "Level 2.2":
       level = 2.2;
       scoreNeeded = 100;
+      highScoreName.innerHTML = highScore2dot2.name
+      highScoreTime.innerHTML = highScore2dot2.time
+      highScoreMistakes.innerHTML = highScore2dot2.mistake
       break;
 
     case "Level 3":
       level = 3;
       scoreNeeded = 50;
+      highScoreName.innerHTML = highScore3.name
+      highScoreTime.innerHTML = highScore3.time
+      highScoreMistakes.innerHTML = highScore3.mistake
       break;
 
     case "Level 3.2":
       level = 3.2;
       scoreNeeded = 100;
+      highScoreName.innerHTML = highScore3dot2.name
+      highScoreTime.innerHTML = highScore3dot2.time
+      highScoreMistakes.innerHTML = highScore3dot2.mistake
       break;
 
     case "Level 4.2":
       level = 4.2;
       scoreNeeded = 100;
+      highScoreName.innerHTML = highScore4dot2.name
+      highScoreTime.innerHTML = highScore4dot2.time
+      highScoreMistakes.innerHTML = highScore4dot2.mistake
       break;
 
     case "Level 5.2":
       level = 5.2;
       scoreNeeded = 100;
+      highScoreName.innerHTML = highScore5dot2.name
+      highScoreTime.innerHTML = highScore5dot2.time
+      highScoreMistakes.innerHTML = highScore5dot2.mistake
       break;
 
     case "Level 6.2":
       level = 6.2;
       scoreNeeded = 100;
+      highScoreName.innerHTML = highScore6dot2.name
+      highScoreTime.innerHTML = highScore6dot2.time
+      highScoreMistakes.innerHTML = highScore6dot2.mistake
       break;
     
     case "Level 7":
@@ -522,6 +583,7 @@ for (let i = 0; i < buttonSuccess.length; i++){
 
 
     default:
+      console.log(this.innerHTML);
     }
 
     levelBox();
