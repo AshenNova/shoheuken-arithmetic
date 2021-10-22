@@ -29,6 +29,7 @@ const level6dot2 = document.querySelector('.level6Dot2');
 const level7 = document.querySelector('.level7');
 
 const mistakesCountCl = document.querySelector('.mistakesCount');
+const buttonSuccess = document.querySelectorAll('.btn-success');
 ;
 let level = 0;
 let player = 1;
@@ -359,94 +360,171 @@ function genProblems(){
 //   }
 // }
 
-level1.addEventListener('click', function(){
-    level = 1
-    scoreNeeded = 50;
-    scoreNeededCl.textContent = scoreNeeded;
-    levelBox();
-})
+// level1.addEventListener('click', function(){
+//     level = 1
+//     scoreNeeded = 50;
+//     scoreNeededCl.textContent = scoreNeeded;
+//     levelBox();
+// })
 
-level1dot1.addEventListener('click', function(){
-    level = 1.1
-    scoreNeeded = 50;
-    scoreNeededCl.textContent = scoreNeeded;
-    levelBox();
-})
+// level1dot1.addEventListener('click', function(){
+//     level = 1.1
+//     scoreNeeded = 50;
+//     scoreNeededCl.textContent = scoreNeeded;
+//     levelBox();
+// })
 
-level1dot2.addEventListener('click', function(){
-    level = 1.2
-    levelBox();
-    scoreNeeded = 100;
-    scoreNeededCl.textContent = scoreNeeded;
-})
+// level1dot2.addEventListener('click', function(){
+//     level = 1.2
+//     levelBox();
+//     scoreNeeded = 100;
+//     scoreNeededCl.textContent = scoreNeeded;
+// })
 
-level2.addEventListener('click', function(){
-    level = 2
-    levelBox();
-    scoreNeeded = 50;
-    scoreNeededCl.textContent = scoreNeeded;
-})
+// level2.addEventListener('click', function(){
+//     level = 2
+//     levelBox();
+//     scoreNeeded = 50;
+//     scoreNeededCl.textContent = scoreNeeded;
+// })
 
-level2dot2.addEventListener('click', function(){
-    level = 2.2
-    levelBox();
-    scoreNeeded = 100;
-    scoreNeededCl.textContent = scoreNeeded;
-})
+// level2dot2.addEventListener('click', function(){
+//     level = 2.2
+//     levelBox();
+//     scoreNeeded = 100;
+//     scoreNeededCl.textContent = scoreNeeded;
+// })
 
-level2dot1.addEventListener('click', function(){
-    level = 2.1
-    levelBox();
-    scoreNeeded = 25;
-    scoreNeededCl.textContent = scoreNeeded;
-})
+// level2dot1.addEventListener('click', function(){
+//     level = 2.1
+//     levelBox();
+//     scoreNeeded = 25;
+//     scoreNeededCl.textContent = scoreNeeded;
+// })
 
-level3.addEventListener('click', function(){
-    level = 3
-    levelBox();
-    scoreNeeded = 50;
-    scoreNeededCl.textContent = scoreNeeded;
-})
+// level3.addEventListener('click', function(){
+//     level = 3
+//     levelBox();
+//     scoreNeeded = 50;
+//     scoreNeededCl.textContent = scoreNeeded;
+// })
 
-level3dot2.addEventListener('click', function(){
-    level = 3.2
-    levelBox();
-    scoreNeeded = 100;
-    scoreNeededCl.textContent = scoreNeeded;
-})
+// level3dot2.addEventListener('click', function(){
+//     level = 3.2
+//     levelBox();
+//     scoreNeeded = 100;
+//     scoreNeededCl.textContent = scoreNeeded;
+// })
 
 
-level4dot2.addEventListener('click', function(){
-    level = 4.2
-    levelBox();
-    scoreNeeded = 100;
-    scoreNeededCl.textContent = scoreNeeded;
-})
+// level4dot2.addEventListener('click', function(){
+//     level = 4.2
+//     levelBox();
+//     scoreNeeded = 100;
+//     scoreNeededCl.textContent = scoreNeeded;
+// })
 
-level5dot2.addEventListener('click', function(){
-    level = 5.2
-    levelBox();
-    scoreNeeded = 100;
-    scoreNeededCl.textContent = scoreNeeded;
-})
+// level5dot2.addEventListener('click', function(){
+//     level = 5.2
+//     levelBox();
+//     scoreNeeded = 100;
+//     scoreNeededCl.textContent = scoreNeeded;
+// })
 
-level6dot2.addEventListener('click', function(){
-    level = 6.2
-    levelBox();
-    scoreNeeded = 100;
-    scoreNeededCl.textContent = scoreNeeded;
-})
+// level6dot2.addEventListener('click', function(){
+//     level = 6.2
+//     levelBox();
+//     scoreNeeded = 100;
+//     scoreNeededCl.textContent = scoreNeeded;
+// })
 
-level7.addEventListener('click', function(){
-    level = 7
-    scoreNeeded = 100;
-    scoreNeededCl.textContent = scoreNeeded;
-    levelBox();
-})
+// level7.addEventListener('click', function(){
+//     level = 7
+//     scoreNeeded = 100;
+//     scoreNeededCl.textContent = scoreNeeded;
+//     levelBox();
+// })
 
 function levelBox(){
+    scoreNeededCl.textContent = scoreNeeded;
     console.log(`Level ${level} selected`)
     levelSetting.classList.add('hidden')
     startBox.classList.remove('hidden')
     levelLabel.innerHTML = `You are attempting Level ${level}`
+}
+
+for (let i = 0; i < buttonSuccess.length; i++){
+
+  buttonSuccess[i].addEventListener("click", function(){
+    buttonLevel = this.innerHTML
+    console.log(this.innerHTML);
+  
+  switch (buttonLevel) {
+    case "Level 1":
+      level = 1;
+      scoreNeeded = 50;
+      break;
+
+    case "Level 1.1":
+      level = 1.1;
+      scoreNeeded = 50;
+      break;
+
+    case "Level 1.2":
+      level = 1.2;
+      scoreNeeded = 100;
+      break;
+
+    case "Level 2":
+      level = 2;
+      scoreNeeded = 50;
+      break;
+
+    case "Level 2.1":
+      level = 2.1;
+      scoreNeeded = 25;
+      break;
+
+    case "Level 2.2":
+      level = 2.2;
+      scoreNeeded = 100;
+      break;
+
+    case "Level 3":
+      level = 3;
+      scoreNeeded = 50;
+      break;
+
+    case "Level 3.2":
+      level = 3.2;
+      scoreNeeded = 100;
+      break;
+
+    case "Level 4.2":
+      level = 4.2;
+      scoreNeeded = 100;
+      break;
+
+    case "Level 5.2":
+      level = 5.2;
+      scoreNeeded = 100;
+      break;
+
+    case "Level 6.2":
+      level = 6.2;
+      scoreNeeded = 100;
+      break;
+    
+    case "Level 7":
+      level = 7;
+      scoreNeeded = 100;
+      break;
+
+
+    default:
+    }
+
+    levelBox();
+    });
+
 }
