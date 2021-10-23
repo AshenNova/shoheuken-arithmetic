@@ -21,6 +21,7 @@ const level2 = document.querySelector('.level2');
 const level2dot1 = document.querySelector('.level2Dot1');
 const level2dot2 = document.querySelector('.level2Dot2');
 const level3 = document.querySelector('.level3');
+const level3dot1 = document.querySelector('.level3Dot1');
 const level3dot2 = document.querySelector('.level3Dot2');
 const level4 = document.querySelector('.level4');
 const level4dot2 = document.querySelector('.level4Dot2');
@@ -52,6 +53,7 @@ const highScore2 = new HighScore("Nil", "16 October 2021", 0, 0)
 const highScore2dot1 = new HighScore("JingKai Ng", "16 October 2021", 823, 24)
 const highScore2dot2 = new HighScore("Shawn Low", "16 October 2021", 1544, 24)
 const highScore3 = new HighScore("Jayden Cheong", "16 October 2021", 140, 1)
+const highScore3dot1 = new HighScore("Nil", "16 October 2021", 0, 0)
 const highScore3dot2 = new HighScore("Shanice Lee", "16 October 2021", 907, 9)
 const highScore4dot2 = new HighScore("Jadee Wong", "2 October 2021", 641, 1)
 const highScore5dot2 = new HighScore("Jayden Goo", "20 October 2021", 364, 2)
@@ -136,7 +138,7 @@ function updateProblems(){
       displayProblem.innerHTML = `${p.numTwo} ${p.operator} ${p.numOne}`
     }
   }
-  if (level == 1.1 || level == 2.1 ){
+  if (level == 1.1 || level == 2.1 || level == 3.1 ){
     if (p.operator == "x" ) displayProblem.innerHTML = `${p.numThree} ${p.operator} ${p.numFour}`
     if (p.operator == "÷") displayProblem.innerHTML = `${p.numThree*p.numFour} ${p.operator} ${p.numThree}` 
   }
@@ -194,7 +196,7 @@ function handleSubmit(e){
         }        
       }
 
-      if (level == 1.1 || level == 2.1 ){
+      if (level == 1.1 || level == 2.1 || level == 3.1){
         if (p.operator == "x") correctAnswer = p.numThree * p.numFour
         if (p.operator == "÷") correctAnswer = (p.numThree*p.numFour)/p.numThree
       }
@@ -299,7 +301,7 @@ function genProblems(){
 
   if (level == 2.1){
     return {
-      numThree: genNumbers(6)+5,
+      numThree: genNumbers(6)+1,
       numFour: genNumbers(6)+5,
       operator: ["x","÷"][genNumbers(2)]
     }
@@ -309,7 +311,7 @@ function genProblems(){
     return {
       numOne: genNumbers(40)+10,
       numTwo: genNumbers(40)+10,
-      numThree: genNumbers(6)+5,
+      numThree: genNumbers(6)+1,
       numFour: genNumbers(6)+5,
       operator: ["+","-","x","÷"][genNumbers(4)]
     }
@@ -320,6 +322,14 @@ function genProblems(){
       numOne: genNumbers(150)+100,
       numTwo: genNumbers(150)+100,
       operator: ["+","-"][genNumbers(2)]
+    }
+  }
+
+  if (level == 3.1){
+    return {
+      numThree: genNumbers(6)+5,
+      numFour: genNumbers(6)+5,
+      operator: ["x","÷"][genNumbers(2)]
     }
   }
 
@@ -542,6 +552,14 @@ for (let i = 0; i < buttonSuccess.length; i++){
       highScoreName.innerHTML = highScore3.name
       highScoreTime.innerHTML = highScore3.time
       highScoreMistakes.innerHTML = highScore3.mistake
+      break;
+
+    case "Level 3.1":
+      level = 3.1;
+      scoreNeeded = 50;
+      highScoreName.innerHTML = highScore3dot1.name
+      highScoreTime.innerHTML = highScore3dot1.time
+      highScoreMistakes.innerHTML = highScore3dot1.mistake
       break;
 
     case "Level 3.2":
