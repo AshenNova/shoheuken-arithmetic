@@ -36,7 +36,21 @@
   text-align: center;
   border-style: solid;
 }
-.level-setting .btn{
+
+.multiples-setting{
+  position: absolute;
+  margin: auto;
+  top: 31%;
+  height: 400px;
+  width: 400px;
+  border-radius: 10px;
+  background-color: yellow;
+  z-index: 10;
+  text-align: center;
+  border-style: solid;
+}
+
+.level-setting .btn, .multiples-setting .btn{
   margin: 5px 0;
 }
 

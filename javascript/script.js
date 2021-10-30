@@ -11,6 +11,7 @@ const timerD = document.getElementById('timerD');
 const finalBox = document.querySelector('.finalBox');
 const finalText = document.getElementById('finalText');
 const scoreNeededCl = document.querySelector('.score-needed');
+const multiplesSettingCl = document.querySelector('.multiples-setting');
 
 const levelSetting = document.querySelector('.level-setting');
 const levelLabel = document.querySelector('.level-label');
@@ -31,6 +32,7 @@ const level7 = document.querySelector('.level7');
 
 const mistakesCountCl = document.querySelector('.mistakesCount');
 const buttonSuccess = document.querySelectorAll('.btn-success');
+const toMultiplesBtn = document.querySelector('.toMultiples');
 
 const highScoreName = document.querySelector('.highScoreName');
 const highScoreTime = document.querySelector('.highScoreTime');
@@ -65,11 +67,13 @@ let state = {
   score: 0,
   mistake: 0,
   scoreNeeded: 0,
+  numSix: 0
 }
 
 function clickStart(){
   console.log("start button clicked");
   startBox.classList.add('hidden');
+  multiplesSettingCl.classList.add('hidden');
   countDownTimer.classList.remove('hidden');
     
   // Timer1 countdown
@@ -118,6 +122,11 @@ function timer2(){
 
 buttonStart.addEventListener('click', clickStart)
 
+toMultiplesBtn.addEventListener('click', function(){
+  multiplesSettingCl.classList.remove('hidden');
+  levelSetting.classList.add('hidden');
+})
+
 
 // 1. generate new problem and store the question in state object
 // 2. Also to visual update the HTML
@@ -161,6 +170,10 @@ function updateProblems(){
 
   if (level == 7){
     displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
+  }
+
+  if (mulLevel == "multiples"){
+    displayProblem.innerHTML = `${p.numFive} ${p.operator} ${state.numSix}`
   }
 
   userInput.value = ""
@@ -230,6 +243,10 @@ function handleSubmit(e){
         if (p.operator == "-") correctAnswer = p.numOne - p.numTwo
       }
 
+      if (mulLevel == "multiples"){
+        correctAnswer = p.numFive * state.numSix
+      }
+
     console.log(correctAnswer, userInput.value)
       if (parseInt(userInput.value,10) == correctAnswer){
         console.log("correct")
@@ -237,8 +254,10 @@ function handleSubmit(e){
         currentScore.textContent = state.score
         currentScore.classList.add("animate-right")
         setTimeout(() => currentScore.classList.remove("animate-right"), 331)
+        state.numSix++
         updateProblems()
         console.log("new questions generated")
+      
       } else {
         console.log("incorrect")
         state.mistake++
@@ -375,6 +394,90 @@ function genProblems(){
       operator: ["+","-"][genNumbers(2)]
     }  
   }
+
+  if (level == "1 times table"){
+    return {
+      numFive: 1,
+      operator: ["x"][genNumbers(1)]
+    }  
+  }
+
+  if (level == "2 times table"){
+    return {
+      numFive: 2,
+      operator: ["x"][genNumbers(1)]
+    }  
+  }
+
+  if (level == "3 times table"){
+    return {
+      numFive: 3,
+      operator: ["x"][genNumbers(1)]
+    }  
+  }
+
+  if (level == "4 times table"){
+    return {
+      numFive: 4,
+      operator: ["x"][genNumbers(1)]
+    }  
+  }
+
+  if (level == "5 times table"){
+    return {
+      numFive: 5,
+      operator: ["x"][genNumbers(1)]
+    }  
+  }
+
+  if (level == "6 times table"){
+    return {
+      numFive: 6,
+      operator: ["x"][genNumbers(1)]
+    }  
+  }
+
+  if (level == "7 times table"){
+    return {
+      numFive: 7,
+      operator: ["x"][genNumbers(1)]
+    }  
+  }
+
+  if (level == "8 times table"){
+    return {
+      numFive: 8,
+      operator: ["x"][genNumbers(1)]
+    }  
+  }
+
+  if (level == "9 times table"){
+    return {
+      numFive: 9,
+      operator: ["x"][genNumbers(1)]
+    }  
+  }
+
+  if (level == "10 times table"){
+    return {
+      numFive: 10,
+      operator: ["x"][genNumbers(1)]
+    }
+  }
+
+  if (level == "11 times table"){
+    return {
+      numFive: 11,
+      operator: ["x"][genNumbers(1)]
+    }
+  }
+
+  if (level == "12 times table"){
+    return {
+      numFive: 12,
+      operator: ["x"][genNumbers(1)]
+    }  
+  }
 }
 
 // function genAnswer(){
@@ -483,6 +586,7 @@ function levelBox(){
     scoreNeededCl.textContent = scoreNeeded;
     console.log(`Level ${level} selected`)
     levelSetting.classList.add('hidden')
+    multiplesSettingCl.classList.add('hidden');
     startBox.classList.remove('hidden')
     levelLabel.innerHTML = `You are attempting Level ${level}`
 }
@@ -594,6 +698,76 @@ for (let i = 0; i < buttonSuccess.length; i++){
       scoreNeeded = 100;
       break;
 
+    case "Multiples 1":
+      level = "1 times table";
+      mulLevel = "multiples"
+      scoreNeeded = 13;
+      break;
+     
+    case "Multiples 2":
+      level = "2 times table";
+      mulLevel = "multiples"
+      scoreNeeded = 13;
+      break;
+      
+    case "Multiples 3":
+      level = "3 times table";
+      mulLevel = "multiples"
+      scoreNeeded = 13;
+      break;   
+
+    case "Multiples 4":
+      level = "4 times table";
+      mulLevel = "multiples"
+      scoreNeeded = 13;
+      break;   
+
+    case "Multiples 5":
+      level = "5 times table";
+      mulLevel = "multiples"
+      scoreNeeded = 13;
+      break;   
+      case "Multiples 6":
+      level = "6 times table";
+      mulLevel = "multiples"
+      scoreNeeded = 13;
+      break;
+     
+    case "Multiples 7":
+      level = "7 times table";
+      mulLevel = "multiples"
+      scoreNeeded = 13;
+      break;
+      
+    case "Multiples 8":
+      level = "8 times table";
+      mulLevel = "multiples"
+      scoreNeeded = 13;
+      break;   
+
+    case "Multiples 9":
+      level = "9 times table";
+      mulLevel = "multiples"
+      scoreNeeded = 13;
+      break;   
+
+    case "Multiples 10":
+      level = "10 times table";
+      mulLevel = "multiples"
+      scoreNeeded = 13;
+      break;
+
+    case "Multiples 11":
+      level = "11 times table";
+      mulLevel = "multiples"
+      scoreNeeded = 13;
+      break;
+
+    case "Multiples 12":
+      level = "12 times table";
+      mulLevel = "multiples"
+      scoreNeeded = 13;
+      break;              
 
     default:
       console.log(this.innerHTML);
