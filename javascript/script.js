@@ -133,7 +133,6 @@ toMultiplesBtn.addEventListener('click', function(){
 function updateProblems(){
   state.currentProblem = genProblems()
   const p = state.currentProblem
-  let mulLevel = "Nil"
 
   // generating display -> Turn this into a function!
   if (level == 1 || level == 3){
@@ -191,7 +190,6 @@ function handleSubmit(e){
     if (userInput.value == "") alert("Please input a value")
     let correctAnswer
 
-    // let divAnswer
     const p = state.currentProblem
     
     // Determining answer -> Turn this into a function!
@@ -245,9 +243,9 @@ function handleSubmit(e){
         if (p.operator == "-") correctAnswer = p.numOne - p.numTwo
       }
 
-      // if (mulLevel == "multiples"){
-      //   correctAnswer = p.numFive * state.numSix
-      // }
+      if (mulLevel == "multiples"){
+        correctAnswer = p.numFive * state.numSix
+      }
 
     console.log(correctAnswer, userInput.value)
       if (parseInt(userInput.value,10) == correctAnswer){
@@ -397,89 +395,89 @@ function genProblems(){
     }  
   }
 
-  // if (level == "1 times table"){
-  //   return {
-  //     numFive: 1,
-  //     operator: ["x"][genNumbers(1)]
-  //   }  
-  // }
+  if (level == "1 times table"){
+    return {
+      numFive: 1,
+      operator: ["x"][genNumbers(1)]
+    }  
+  }
 
-  // if (level == "2 times table"){
-  //   return {
-  //     numFive: 2,
-  //     operator: ["x"][genNumbers(1)]
-  //   }  
-  // }
+  if (level == "2 times table"){
+    return {
+      numFive: 2,
+      operator: ["x"][genNumbers(1)]
+    }  
+  }
 
-  // if (level == "3 times table"){
-  //   return {
-  //     numFive: 3,
-  //     operator: ["x"][genNumbers(1)]
-  //   }  
-  // }
+  if (level == "3 times table"){
+    return {
+      numFive: 3,
+      operator: ["x"][genNumbers(1)]
+    }  
+  }
 
-  // if (level == "4 times table"){
-  //   return {
-  //     numFive: 4,
-  //     operator: ["x"][genNumbers(1)]
-  //   }  
-  // }
+  if (level == "4 times table"){
+    return {
+      numFive: 4,
+      operator: ["x"][genNumbers(1)]
+    }  
+  }
 
-  // if (level == "5 times table"){
-  //   return {
-  //     numFive: 5,
-  //     operator: ["x"][genNumbers(1)]
-  //   }  
-  // }
+  if (level == "5 times table"){
+    return {
+      numFive: 5,
+      operator: ["x"][genNumbers(1)]
+    }  
+  }
 
-  // if (level == "6 times table"){
-  //   return {
-  //     numFive: 6,
-  //     operator: ["x"][genNumbers(1)]
-  //   }  
-  // }
+  if (level == "6 times table"){
+    return {
+      numFive: 6,
+      operator: ["x"][genNumbers(1)]
+    }  
+  }
 
-  // if (level == "7 times table"){
-  //   return {
-  //     numFive: 7,
-  //     operator: ["x"][genNumbers(1)]
-  //   }  
-  // }
+  if (level == "7 times table"){
+    return {
+      numFive: 7,
+      operator: ["x"][genNumbers(1)]
+    }  
+  }
 
-  // if (level == "8 times table"){
-  //   return {
-  //     numFive: 8,
-  //     operator: ["x"][genNumbers(1)]
-  //   }  
-  // }
+  if (level == "8 times table"){
+    return {
+      numFive: 8,
+      operator: ["x"][genNumbers(1)]
+    }  
+  }
 
-  // if (level == "9 times table"){
-  //   return {
-  //     numFive: 9,
-  //     operator: ["x"][genNumbers(1)]
-  //   }  
-  // }
+  if (level == "9 times table"){
+    return {
+      numFive: 9,
+      operator: ["x"][genNumbers(1)]
+    }  
+  }
 
-  // if (level == "10 times table"){
-  //   return {
-  //     numFive: 10,
-  //     operator: ["x"][genNumbers(1)]
-  //   }
-  // }
+  if (level == "10 times table"){
+    return {
+      numFive: 10,
+      operator: ["x"][genNumbers(1)]
+    }
+  }
 
-  // if (level == "11 times table"){
-  //   return {
-  //     numFive: 11,
-  //     operator: ["x"][genNumbers(1)]
-  //   }
-  // }
+  if (level == "11 times table"){
+    return {
+      numFive: 11,
+      operator: ["x"][genNumbers(1)]
+    }
+  }
 
-  // if (level == "12 times table"){
-  //   return {
-  //     numFive: 12,
-  //     operator: ["x"][genNumbers(1)]
-  //   }  
-  // }
+  if (level == "12 times table"){
+    return {
+      numFive: 12,
+      operator: ["x"][genNumbers(1)]
+    }  
+  }
 
 }
 
@@ -598,6 +596,7 @@ for (let i = 0; i < buttonSuccess.length; i++){
 
   buttonSuccess[i].addEventListener("click", function(){
     buttonLevel = this.innerHTML
+    mulLevel = "nil"
 
   switch (buttonLevel) {
     case "Level 1":
