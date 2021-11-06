@@ -315,8 +315,8 @@ function genProblems(){
 
   if (level == 2.1){
     return {
-      numThree: genNumbers(6)+1,
-      numFour: genNumbers(6)+5,
+      numThree: genNumbers(5)+1,
+      numFour: genNumbers(5)+5,
       operator: ["x","÷"][genNumbers(2)]
     }
   }
@@ -325,8 +325,8 @@ function genProblems(){
     return {
       numOne: genNumbers(40)+10,
       numTwo: genNumbers(40)+10,
-      numThree: genNumbers(6)+1,
-      numFour: genNumbers(6)+5,
+      numThree: genNumbers(5)+1,
+      numFour: genNumbers(5)+5,
       operator: ["+","-","x","÷"][genNumbers(4)]
     }
   }
