@@ -57,7 +57,7 @@ const highScore2dot2 = new HighScore("Shawn Low", "30 October 2021", 1236, 7)
 const highScore3 = new HighScore("Shanice Lee", "30 October 2021", 614, 7)
 const highScore3dot1 = new HighScore("Shanice Lee", "30 October 2021", 162, 5)
 const highScore3dot2 = new HighScore("Shanice Lee", "6 November 2021", 662, 4)
-const highScore4dot2 = new HighScore("Jadee Wong", "5 November 2021", 532, 2)
+const highScore4dot2 = new HighScore("Jadee Wong", "12 November 2021", 509, 2)
 const highScore5dot2 = new HighScore("Jayden Goo", "20 October 2021", 364, 2)
 const highScore6dot2 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
