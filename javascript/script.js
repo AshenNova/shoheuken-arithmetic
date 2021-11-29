@@ -261,7 +261,9 @@ function handleSubmit(e){
       } else {
         console.log("incorrect")
         state.mistake++
-        state.score--
+        if (state.score > 0){
+          state.score--
+        }
         currentScore.textContent = state.score
         currentMistake.textContent = state.mistake
         currentMistake.classList.add("animate-wrong")
