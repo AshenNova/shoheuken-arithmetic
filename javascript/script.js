@@ -263,6 +263,8 @@ function handleSubmit(e){
         state.mistake++
         if (state.score > 0){
           state.score--
+          currentScore.classList.add("animate-wrong")
+          setTimeout(() => currentScore.classList.remove("animate-wrong"), 331)
         }
         currentScore.textContent = state.score
         currentMistake.textContent = state.mistake
