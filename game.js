@@ -16,9 +16,16 @@ function nextSequence(){
     $("h1").text("Level "+gameLevel);
 }
 
+$(".buttonStart").click(function(){
+  $(".buttonStart").addClass("hidden");
+  gameStart = 1;
+
+})
+
 $(document).on("keydown", function(event){
   if (gameStart == 0){  
     gameStart = 1;
+      $(".buttonStart").addClass("hidden");
       $("h1").text("Level "+gameLevel);
       if (event.key) {
         nextSequence();
@@ -62,7 +69,6 @@ function checkAnswer(){
             setTimeout(function () {
               $("body").removeClass("game-over");
             }, 200);
-            $("h1").text("Game Over, Press Any key to Restart")
             startOver();
         }
     }
@@ -94,5 +100,6 @@ function startOver(){
   }
   gameStart = 0;
   gameLevel = 0;
-  $("h1").text("Press A Key to Start")
+  $("h1").text("Game Over, Press A Key to Start or Click Start")
+  $(".buttonStart").removeClass("hidden");
 }
