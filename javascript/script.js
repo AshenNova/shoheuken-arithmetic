@@ -17,17 +17,18 @@ const levelSetting = document.querySelector('.level-setting');
 const levelLabel = document.querySelector('.level-label');
 const level1 = document.querySelector('.level1');
 const level1dot1 = document.querySelector('.level1Dot1');
-const level1dot2 = document.querySelector('.level1Dot2');
+const level1dot2 = document.querySelector('.level1Dot2'); 
+const level1dot3 = document.querySelector('.level1Dot3');
 const level2 = document.querySelector('.level2');
 const level2dot1 = document.querySelector('.level2Dot1');
-const level2dot2 = document.querySelector('.level2Dot2');
+const level2dot3 = document.querySelector('.level2Dot3');
 const level3 = document.querySelector('.level3');
 const level3dot1 = document.querySelector('.level3Dot1');
-const level3dot2 = document.querySelector('.level3Dot2');
+const level3dot3 = document.querySelector('.level3Dot3');
 const level4 = document.querySelector('.level4');
-const level4dot2 = document.querySelector('.level4Dot2');
-const level5dot2 = document.querySelector('.level5Dot2');
-const level6dot2 = document.querySelector('.level6Dot2');
+const level4dot3 = document.querySelector('.level4Dot3');
+const level5dot3 = document.querySelector('.level5Dot3');
+const level6dot3 = document.querySelector('.level6Dot3');
 const level7 = document.querySelector('.level7');
 
 const mistakesCountCl = document.querySelector('.mistakesCount');
@@ -51,15 +52,16 @@ function HighScore(name, date, time, mistake) {
 const highScore1 = new HighScore("Jayden Cheong", "16 October 2021", 140, 1)
 const highScore1dot1 = new HighScore("Jayden Cheong", "16 October 2021", 823, 12)
 const highScore1dot2 = new HighScore("Nil", "16 October 2021", 0, 0)
+const highScore1dot3 = new HighScore("Nil", "16 October 2021", 0, 0)
 const highScore2 = new HighScore("Nil", "16 October 2021", 0, 0)
 const highScore2dot1 = new HighScore("JingKai Ng", "16 October 2021", 823, 24)
-const highScore2dot2 = new HighScore("Jingkai Ng", "30 October 2021", 853, 23)
+const highScore2dot3 = new HighScore("Jingkai Ng", "30 October 2021", 853, 23)
 const highScore3 = new HighScore("Shanice Lee", "30 October 2021", 614, 7)
 const highScore3dot1 = new HighScore("Shanice Lee", "30 October 2021", 162, 5)
-const highScore3dot2 = new HighScore("Shanice Lee", "6 November 2021", 662, 4)
-const highScore4dot2 = new HighScore("Jadee Wong", "10 December 2021", 460, 2)
-const highScore5dot2 = new HighScore("Jayden Goo", "8 December 2021", 357, 1)
-const highScore6dot2 = new HighScore("Yixin", "29 September 2021", 366, 8)
+const highScore3dot3 = new HighScore("Shanice Lee", "6 November 2021", 662, 4)
+const highScore4dot3 = new HighScore("Jadee Wong", "10 December 2021", 460, 2)
+const highScore5dot3 = new HighScore("Jayden Goo", "8 December 2021", 357, 1)
+const highScore6dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
 
 // Storing of question
@@ -135,7 +137,7 @@ function updateProblems(){
   const p = state.currentProblem
 
   // generating display -> Turn this into a function!
-  if (level == 1 || level == 3){
+  if (level == 1 || level == 3 || level == 1.2){
     if (p.numOne >= p.numTwo){
       displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`  
     } else {
@@ -154,7 +156,7 @@ function updateProblems(){
     }
   }
 
-  if (level == 1.2 || level == 2.2 || level == 3.2 || level == 4.2 || level == 5.2 || level == 6.2){
+  if (level == 1.3 || level == 2.3 || level == 3.3 || level == 4.3 || level == 5.3 || level == 6.3){
     console.log(p.operator);
     if (p.operator == "x" ) displayProblem.innerHTML = `${p.numThree} ${p.operator} ${p.numFour}` 
     if (p.operator == "+") displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
@@ -193,7 +195,7 @@ function handleSubmit(e){
     const p = state.currentProblem
     
     // Determining answer -> Turn this into a function!
-      if (level == 1 || level == 3){
+      if (level == 1 || level == 3 || level == 1.2){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") {
           if (p.numOne >= p.numTwo) {
@@ -209,10 +211,10 @@ function handleSubmit(e){
         if (p.operator == "÷") correctAnswer = (p.numThree*p.numFour)/p.numThree
       }
 
-      if (level == 1.2){
-        if (p.operator == "x") correctAnswer = p.numThree * p.numFour
-        if (p.operator == "÷") correctAnswer = (p.numThree*p.numFour)/p.numThree
-      }
+      // if (level == 1.1){
+      //   if (p.operator == "x") correctAnswer = p.numThree * p.numFour
+      //   if (p.operator == "÷") correctAnswer = (p.numThree*p.numFour)/p.numThree
+      // }
 
       if (level == 2){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
@@ -225,7 +227,7 @@ function handleSubmit(e){
         }        
       }
 
-      if (level == 3.2 || level == 2.2 || level == 1.2 || level == 4.2 || level == 5.2 || level == 6.2){
+      if (level == 3.3 || level == 2.3 || level == 1.3 || level == 4.3 || level == 5.3 || level == 6.3){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") {
           if (p.numOne >= p.numTwo) {
@@ -303,8 +305,16 @@ function genProblems(){
 
   if (level == 1.2){
     return {
-      numOne: genNumbers(5),
-      numTwo: genNumbers(5),
+      numOne: genNumbers(10)+5,
+      numTwo: genNumbers(4)+1,
+      operator: ["+","-"][genNumbers(2)]
+    }
+  }
+
+  if (level == 1.3){
+    return {
+      numOne: genNumbers(10)+5,
+      numTwo: genNumbers(4)+1,
       numThree: genNumbers(5)+1,
       numFour: genNumbers(4)+1,
       operator: ["+","-","x","÷"][genNumbers(4)]
@@ -327,7 +337,7 @@ function genProblems(){
     }
   }
 
-  if (level == 2.2){
+  if (level == 2.3){
     return {
       numOne: genNumbers(40)+10,
       numTwo: genNumbers(40)+10,
@@ -353,7 +363,7 @@ function genProblems(){
     }
   }
 
-  if (level == 3.2){
+  if (level == 3.3){
     return {
       numOne: genNumbers(150)+100,
       numTwo: genNumbers(150)+100,
@@ -363,7 +373,7 @@ function genProblems(){
     }
   }
 
-  if (level == 4.2){
+  if (level == 4.3){
     return {
     numOne: genNumbers(150)+100,
     numTwo: genNumbers(150)+100,
@@ -373,7 +383,7 @@ function genProblems(){
     }
   }
 
-  if (level == 5.2){
+  if (level == 5.3){
     return {
     numOne: genNumbers(500)+500,
     numTwo: genNumbers(500)+500,
@@ -383,7 +393,7 @@ function genProblems(){
     }
   }
 
-  if (level == 6.2){
+  if (level == 6.3){
     return {
       numOne: genNumbers(500)+500,
       numTwo: genNumbers(500)+500,
@@ -623,10 +633,18 @@ for (let i = 0; i < buttonSuccess.length; i++){
 
     case "Level 1.2":
       level = 1.2;
-      scoreNeeded = 100;
+      scoreNeeded = 50;
       highScoreName.innerHTML = highScore1dot2.name
       highScoreTime.innerHTML = highScore1dot2.time
       highScoreMistakes.innerHTML = highScore1dot2.mistake
+      break;
+
+    case "Level 1.3":
+      level = 1.3;
+      scoreNeeded = 100;
+      highScoreName.innerHTML = highScore1dot3.name
+      highScoreTime.innerHTML = highScore1dot3.time
+      highScoreMistakes.innerHTML = highScore1dot3.mistake
       break;
 
     case "Level 2":
@@ -645,12 +663,12 @@ for (let i = 0; i < buttonSuccess.length; i++){
       highScoreMistakes.innerHTML = highScore2dot1.mistake
       break;
 
-    case "Level 2.2":
-      level = 2.2;
+    case "Level 2.3":
+      level = 2.3;
       scoreNeeded = 100;
-      highScoreName.innerHTML = highScore2dot2.name
-      highScoreTime.innerHTML = highScore2dot2.time
-      highScoreMistakes.innerHTML = highScore2dot2.mistake
+      highScoreName.innerHTML = highScore2dot3.name
+      highScoreTime.innerHTML = highScore2dot3.time
+      highScoreMistakes.innerHTML = highScore2dot3.mistake
       break;
 
     case "Level 3":
@@ -669,12 +687,12 @@ for (let i = 0; i < buttonSuccess.length; i++){
       highScoreMistakes.innerHTML = highScore3dot1.mistake
       break;
 
-    case "Level 3.2":
-      level = 3.2;
+    case "Level 3.3":
+      level = 3.3;
       scoreNeeded = 100;
-      highScoreName.innerHTML = highScore3dot2.name
-      highScoreTime.innerHTML = highScore3dot2.time
-      highScoreMistakes.innerHTML = highScore3dot2.mistake
+      highScoreName.innerHTML = highScore3dot3.name
+      highScoreTime.innerHTML = highScore3dot3.time
+      highScoreMistakes.innerHTML = highScore3dot3.mistake
       break;
 
     case "Level 4.2":
@@ -685,20 +703,20 @@ for (let i = 0; i < buttonSuccess.length; i++){
       highScoreMistakes.innerHTML = highScore4dot2.mistake
       break;
 
-    case "Level 5.2":
-      level = 5.2;
+    case "Level 5.3":
+      level = 5.3;
       scoreNeeded = 100;
-      highScoreName.innerHTML = highScore5dot2.name
-      highScoreTime.innerHTML = highScore5dot2.time
-      highScoreMistakes.innerHTML = highScore5dot2.mistake
+      highScoreName.innerHTML = highScore5dot3.name
+      highScoreTime.innerHTML = highScore5dot3.time
+      highScoreMistakes.innerHTML = highScore5dot3.mistake
       break;
 
-    case "Level 6.2":
-      level = 6.2;
+    case "Level 6.3":
+      level = 6.3;
       scoreNeeded = 100;
-      highScoreName.innerHTML = highScore6dot2.name
-      highScoreTime.innerHTML = highScore6dot2.time
-      highScoreMistakes.innerHTML = highScore6dot2.mistake
+      highScoreName.innerHTML = highScore6dot3.name
+      highScoreTime.innerHTML = highScore6dot3.time
+      highScoreMistakes.innerHTML = highScore6dot3.mistake
       break;
     
     case "Level 7":
