@@ -698,9 +698,9 @@ for (let i = 0; i < buttonSuccess.length; i++){
     case "Level 4.3":
       level = 4.3;
       scoreNeeded = 100;
-      highScoreName.innerHTML = highScore4dot2.name
-      highScoreTime.innerHTML = highScore4dot2.time
-      highScoreMistakes.innerHTML = highScore4dot2.mistake
+      highScoreName.innerHTML = highScore4dot3.name
+      highScoreTime.innerHTML = highScore4dot3.time
+      highScoreMistakes.innerHTML = highScore4dot3.mistake
       break;
 
     case "Level 5.3":
