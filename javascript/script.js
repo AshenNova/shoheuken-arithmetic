@@ -695,8 +695,8 @@ for (let i = 0; i < buttonSuccess.length; i++){
       highScoreMistakes.innerHTML = highScore3dot3.mistake
       break;
 
-    case "Level 4.2":
-      level = 4.2;
+    case "Level 4.3":
+      level = 4.3;
       scoreNeeded = 100;
       highScoreName.innerHTML = highScore4dot2.name
       highScoreTime.innerHTML = highScore4dot2.time
