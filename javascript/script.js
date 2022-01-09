@@ -137,13 +137,19 @@ function updateProblems(){
   const p = state.currentProblem
 
   // generating display -> Turn this into a function!
-  if (level == 1 || level == 3 || level == 1.2){
+  if (level == 1 || level == 3){
     if (p.numOne >= p.numTwo){
       displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`  
     } else {
       displayProblem.innerHTML = `${p.numTwo} ${p.operator} ${p.numOne}`
     }
   }
+  if (level == 1.2){
+    if (p.numOne <= 9) p.operator = "+"
+    if (p.numOne > 9) p.operator = "-"
+      displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}` 
+  }
+
   if (level == 1.1 || level == 2.1 || level == 3.1 ){
     if (p.operator == "x" ) displayProblem.innerHTML = `${p.numThree} ${p.operator} ${p.numFour}`
     if (p.operator == "÷") displayProblem.innerHTML = `${p.numThree*p.numFour} ${p.operator} ${p.numThree}` 
@@ -195,7 +201,7 @@ function handleSubmit(e){
     const p = state.currentProblem
     
     // Determining answer -> Turn this into a function!
-      if (level == 1 || level == 3 || level == 1.2){
+      if (level == 1 || level == 3){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") {
           if (p.numOne >= p.numTwo) {
@@ -206,15 +212,19 @@ function handleSubmit(e){
         }        
       }
 
+      if (level == 1.2){
+        if (p.operator == "+") {
+          correctAnswer = p.numOne + p.numTwo
+        };
+        if (p.operator == "-") {
+          correctAnswer = p.numOne - p.numTwo
+        };
+      }
+
       if (level == 1.1 || level == 2.1 || level == 3.1){
         if (p.operator == "x") correctAnswer = p.numThree * p.numFour
         if (p.operator == "÷") correctAnswer = (p.numThree*p.numFour)/p.numThree
       }
-
-      // if (level == 1.1){
-      //   if (p.operator == "x") correctAnswer = p.numThree * p.numFour
-      //   if (p.operator == "÷") correctAnswer = (p.numThree*p.numFour)/p.numThree
-      // }
 
       if (level == 2){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
@@ -306,7 +316,7 @@ function genProblems(){
   if (level == 1.2){
     return {
       numOne: genNumbers(10)+5,
-      numTwo: genNumbers(4)+1,
+      numTwo: genNumbers(4)+5,
       operator: ["+","-"][genNumbers(2)]
     }
   }
