@@ -150,10 +150,25 @@ function updateProblems(){
       displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}` 
   }
 
+  if (level == 1.3){
+    if (p.operator == "x" ) {
+      displayProblem.innerHTML = `${p.numThree} ${p.operator} ${p.numFour}`;
+    } else if (p.operator == "÷"){
+       displayProblem.innerHTML = `${p.numThree*p.numFour} ${p.operator} ${p.numThree}`;
+    } else if (p.numOne <= 9) {
+      p.operator = "+";
+      displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`;
+    } else if (p.numOne > 9) {
+      p.operator = "-";
+      displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`;
+    }  
+  }
+
   if (level == 1.1 || level == 2.1 || level == 3.1 ){
     if (p.operator == "x" ) displayProblem.innerHTML = `${p.numThree} ${p.operator} ${p.numFour}`
     if (p.operator == "÷") displayProblem.innerHTML = `${p.numThree*p.numFour} ${p.operator} ${p.numThree}` 
   }
+
   if (level == 2){
     if (p.numOne >= p.numTwo){
       displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`  
@@ -162,7 +177,7 @@ function updateProblems(){
     }
   }
 
-  if (level == 1.3 || level == 2.3 || level == 3.3 || level == 4.3 || level == 5.3 || level == 6.3){
+  if (level == 2.3 || level == 3.3 || level == 4.3 || level == 5.3 || level == 6.3){
     console.log(p.operator);
     if (p.operator == "x" ) displayProblem.innerHTML = `${p.numThree} ${p.operator} ${p.numFour}` 
     if (p.operator == "+") displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
@@ -226,6 +241,18 @@ function handleSubmit(e){
         if (p.operator == "÷") correctAnswer = (p.numThree*p.numFour)/p.numThree
       }
 
+      if (level == 1.3){
+        if (p.operator == "+") {
+          correctAnswer = p.numOne + p.numTwo
+        };
+        if (p.operator == "-") {
+          correctAnswer = p.numOne - p.numTwo
+        };
+        if (p.operator == "x") correctAnswer = p.numThree * p.numFour
+        if (p.operator == "÷") correctAnswer = (p.numThree*p.numFour)/p.numThree
+      }
+
+
       if (level == 2){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") {
@@ -237,7 +264,7 @@ function handleSubmit(e){
         }        
       }
 
-      if (level == 3.3 || level == 2.3 || level == 1.3 || level == 4.3 || level == 5.3 || level == 6.3){
+      if (level == 3.3 || level == 2.3 || level == 4.3 || level == 5.3 || level == 6.3){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") {
           if (p.numOne >= p.numTwo) {
@@ -324,7 +351,7 @@ function genProblems(){
   if (level == 1.3){
     return {
       numOne: genNumbers(10)+5,
-      numTwo: genNumbers(4)+1,
+      numTwo: genNumbers(4)+5,
       numThree: genNumbers(5)+1,
       numFour: genNumbers(4)+1,
       operator: ["+","-","x","÷"][genNumbers(4)]
