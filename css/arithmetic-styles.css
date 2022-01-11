@@ -189,6 +189,10 @@ button {
   transform: scale(1.5);
 }
 
+.animate-wrong-container{
+  background-color: red;
+}
+
 .mistakesCount{
   color: red;
   font-weight: strong;

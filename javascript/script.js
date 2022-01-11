@@ -12,6 +12,7 @@ const finalBox = document.querySelector('.finalBox');
 const finalText = document.getElementById('finalText');
 const scoreNeededCl = document.querySelector('.score-needed');
 const multiplesSettingCl = document.querySelector('.multiples-setting');
+const mainContainer= document.querySelector('.main-container');
 
 const levelSetting = document.querySelector('.level-setting');
 const levelLabel = document.querySelector('.level-label');
@@ -304,11 +305,15 @@ function handleSubmit(e){
           state.score--
           currentScore.classList.add("animate-wrong")
           setTimeout(() => currentScore.classList.remove("animate-wrong"), 331)
+          mainContainer.classList.add("animate-wrong-container")
+          setTimeout(() => mainContainer.classList.remove("animate-wrong-container"), 331)
         }
         currentScore.textContent = state.score
         currentMistake.textContent = state.mistake
         currentMistake.classList.add("animate-wrong")
         setTimeout(() => currentMistake.classList.remove("animate-wrong"), 331)
+        mainContainer.classList.add("animate-wrong-container")
+        setTimeout(() => mainContainer.classList.remove("animate-wrong-container"), 331)
         userInput.value = ""
       }
     
