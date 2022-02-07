@@ -28,6 +28,7 @@ const level3 = document.querySelector('.level3');
 const level3dot1 = document.querySelector('.level3Dot1');
 const level3dot3 = document.querySelector('.level3Dot3');
 const level3dot4 = document.querySelector('.level3Dot4');
+const level3dot5 = document.querySelector('.level3Dot5');
 const level4 = document.querySelector('.level4');
 const level4dot3 = document.querySelector('.level4Dot3');
 const level5dot3 = document.querySelector('.level5Dot3');
@@ -63,6 +64,7 @@ const highScore3 = new HighScore("Shanice Lee", "30 October 2021", 614, 7)
 const highScore3dot1 = new HighScore("Shanice Lee", "30 October 2021", 162, 5)
 const highScore3dot3 = new HighScore("Shanice Lee", "6 November 2021", 662, 4)
 const highScore3dot4 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3dot5 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot3 = new HighScore("Jadee Wong", "10 December 2021", 460, 2)
 const highScore5dot3 = new HighScore("Jayden Goo", "8 December 2021", 357, 1)
 const highScore6dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
@@ -224,6 +226,37 @@ function updateProblems(){
     secondUnitMeasurement.textContent = p.secondUnitMeasurement;
   }
 
+  if (level == 3.5){
+    p.numTwo = 1000;
+    if (p.unitMeasurement == "$"){
+      p.numTwo = 100;
+      p.secondUnitMeasurement = "¢";
+      p.numFive = Math.round((p.numOne+p.numThree/100)*100)/100;
+      console.log(p.numThree);
+      if (p.numThree%10 == 0 && p.numThree != 100 ){
+        displayProblem.innerHTML = `${p.unitMeasurement}${p.numFive}0`;
+      } else {
+      displayProblem.innerHTML = `${p.unitMeasurement}${p.numFive}`;
+      }
+    } else if (p.unitMeasurement == "m"){
+      p.numTwo = 100;
+      p.secondUnitMeasurement = "cm";
+      displayProblem.innerHTML = `${p.numOne} ${p.unitMeasurement} ${p.numThree} ${p.secondUnitMeasurement} =`
+    } else {
+      if (p.unitMeasurement == "km"){
+        p.secondUnitMeasurement = "m";
+      }
+      if (p.unitMeasurement == "ℓ") {
+        p.secondUnitMeasurement = "mℓ";
+      }
+      if (p.unitMeasurement == "kg" ){
+        p.secondUnitMeasurement = "g";
+      }
+    displayProblem.innerHTML = `${p.numOne} ${p.unitMeasurement} ${p.numFour} ${p.secondUnitMeasurement} =`
+    } 
+    secondUnitMeasurement.textContent = p.secondUnitMeasurement;
+  }
+
   if (level == 7){
     displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
   }
@@ -285,7 +318,6 @@ function handleSubmit(e){
         if (p.operator == "÷") correctAnswer = (p.numThree*p.numFour)/p.numThree
       }
 
-
       if (level == 2){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") {
@@ -310,13 +342,21 @@ function handleSubmit(e){
         if (p.operator == "÷") correctAnswer = (p.numThree*p.numFour)/p.numThree
       }
 
+      if ( level == 3.4){
+        correctAnswer = p.numOne * p.numTwo
+      }
+
+      if ( level == 3.5){
+        if ( p.unitMeasurement == "kg" || p.unitMeasurement == "ℓ" || p.unitMeasurement == "km"){
+          correctAnswer = (p.numOne*p.numTwo)+p.numFour
+        } else {
+          correctAnswer = (p.numOne*p.numTwo)+p.numThree
+        }
+      }
+      
       if (level == 7){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") correctAnswer = p.numOne - p.numTwo
-      }
-
-      if ( level == 3.4){
-        correctAnswer = p.numOne * p.numTwo
       }
 
       if (mulLevel == "multiples"){
@@ -455,6 +495,17 @@ function genProblems(){
     return {
       numOne: genNumbers(10)+1,
       numTwo: 1000,
+      unitMeasurement: ["$","m","kg","km","ℓ"][genNumbers(5)],
+      secondUnitMeasurement: 0
+    }
+  }
+
+  if (level == 3.5){
+    return {
+      numOne: genNumbers(10),
+      numTwo: 1000,
+      numThree: genNumbers(100)+1,
+      numFour: genNumbers(1000)+1,
       unitMeasurement: ["$","m","kg","km","ℓ"][genNumbers(5)],
       secondUnitMeasurement: 0
     }
@@ -782,12 +833,20 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreMistakes.innerHTML = highScore3dot3.mistake
       break;
 
-      case "Level 3.4":
-        level = 3.4;
+    case "Level 3.4":
+      level = 3.4;
+      scoreNeeded = 50;
+      highScoreName.innerHTML = highScore3dot4.name
+      highScoreTime.innerHTML = highScore3dot4.time
+      highScoreMistakes.innerHTML = highScore3dot4.mistake
+      break;
+
+      case "Level 3.5":
+        level = 3.5;
         scoreNeeded = 50;
-        highScoreName.innerHTML = highScore3dot4.name
-        highScoreTime.innerHTML = highScore3dot4.time
-        highScoreMistakes.innerHTML = highScore3dot4.mistake
+        highScoreName.innerHTML = highScore3dot5.name
+        highScoreTime.innerHTML = highScore3dot5.time
+        highScoreMistakes.innerHTML = highScore3dot5.mistake
         break;
 
     case "Level 4.3":
