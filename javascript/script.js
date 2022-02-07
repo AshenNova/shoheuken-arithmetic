@@ -35,7 +35,7 @@ const level6dot3 = document.querySelector('.level6Dot3');
 const level7 = document.querySelector('.level7');
 
 const mistakesCountCl = document.querySelector('.mistakesCount');
-const buttonSuccess = document.querySelectorAll('.btn-success');
+const settingButton = document.querySelectorAll('.settingButton');
 const toMultiplesBtn = document.querySelector('.toMultiples');
 
 const highScoreName = document.querySelector('.highScoreName');
@@ -695,9 +695,9 @@ function levelBox(){
     levelLabel.innerHTML = `You are attempting Level ${level}`
 }
 
-for (let i = 0; i < buttonSuccess.length; i++){
+for (let i = 0; i <  settingButton.length; i++){
 
-  buttonSuccess[i].addEventListener("click", function(){
+  settingButton[i].addEventListener("click", function(){
     buttonLevel = this.innerHTML
     mulLevel = "nil"
 
