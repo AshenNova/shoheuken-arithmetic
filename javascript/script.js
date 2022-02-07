@@ -13,6 +13,7 @@ const finalText = document.getElementById('finalText');
 const scoreNeededCl = document.querySelector('.score-needed');
 const multiplesSettingCl = document.querySelector('.multiples-setting');
 const mainContainer= document.querySelector('.main-container');
+const secondUnitMeasurement= document.querySelector('.secondUnitMeasurement');
 
 const levelSetting = document.querySelector('.level-setting');
 const levelLabel = document.querySelector('.level-label');
@@ -26,6 +27,7 @@ const level2dot3 = document.querySelector('.level2Dot3');
 const level3 = document.querySelector('.level3');
 const level3dot1 = document.querySelector('.level3Dot1');
 const level3dot3 = document.querySelector('.level3Dot3');
+const level3dot4 = document.querySelector('.level3Dot4');
 const level4 = document.querySelector('.level4');
 const level4dot3 = document.querySelector('.level4Dot3');
 const level5dot3 = document.querySelector('.level5Dot3');
@@ -60,6 +62,7 @@ const highScore2dot3 = new HighScore("Jingkai Ng", "30 October 2021", 853, 23)
 const highScore3 = new HighScore("Shanice Lee", "30 October 2021", 614, 7)
 const highScore3dot1 = new HighScore("Shanice Lee", "30 October 2021", 162, 5)
 const highScore3dot3 = new HighScore("Shanice Lee", "6 November 2021", 662, 4)
+const highScore3dot4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot3 = new HighScore("Jadee Wong", "10 December 2021", 460, 2)
 const highScore5dot3 = new HighScore("Jayden Goo", "8 December 2021", 357, 1)
 const highScore6dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
@@ -131,6 +134,7 @@ toMultiplesBtn.addEventListener('click', function(){
 })
 
 
+// Step 3: Updating, storing and then displaying the problem
 // 1. generate new problem and store the question in state object
 // 2. Also to visual update the HTML
 function updateProblems(){
@@ -190,6 +194,34 @@ function updateProblems(){
       }
     }
     if (p.operator == "÷") displayProblem.innerHTML = `${p.numThree*p.numFour} ${p.operator} ${p.numThree}` 
+  }
+
+  if (level == 3.4){
+    console.log(p.unitMeasurement);
+    p.numTwo = 1000;
+    if (p.unitMeasurement == "$"){
+      p.numTwo = 100;
+      p.secondUnitMeasurement = "¢";
+      displayProblem.innerHTML = `${p.unitMeasurement}${p.numOne} =`
+    }
+    if (p.unitMeasurement == "m"){
+      p.numTwo = 100;
+      p.secondUnitMeasurement = "cm";
+      displayProblem.innerHTML = `${p.numOne} ${p.unitMeasurement} =`
+    }
+    if (p.unitMeasurement == "km"){
+      p.secondUnitMeasurement = "m";
+      displayProblem.innerHTML = `${p.numOne} ${p.unitMeasurement} =`
+    }
+    if (p.unitMeasurement == "ℓ") {
+      p.secondUnitMeasurement = "mℓ";
+      displayProblem.innerHTML = `${p.numOne} ${p.unitMeasurement} =`
+    }
+    if (p.unitMeasurement == "kg" ){
+      p.secondUnitMeasurement = "g";
+      displayProblem.innerHTML = `${p.numOne} ${p.unitMeasurement} =`
+    }
+    secondUnitMeasurement.textContent = p.secondUnitMeasurement;
   }
 
   if (level == 7){
@@ -283,6 +315,10 @@ function handleSubmit(e){
         if (p.operator == "-") correctAnswer = p.numOne - p.numTwo
       }
 
+      if ( level == 3.4){
+        correctAnswer = p.numOne * p.numTwo
+      }
+
       if (mulLevel == "multiples"){
         correctAnswer = p.numFive * state.numSix
       }
@@ -320,12 +356,12 @@ function handleSubmit(e){
   }
 }
 
-// generate number
+// Step 1: generate number
 function genNumbers(max){
   return Math.trunc(Math.random()*max)
 }
 
-// generate problem
+// Step 2: Generate Problem
 function genProblems(){
   console.log(level);
 
@@ -412,6 +448,15 @@ function genProblems(){
       numThree: genNumbers(6)+5,
       numFour: genNumbers(6)+5,
       operator: ["+","-","x","÷"][genNumbers(4)]
+    }
+  }
+
+  if (level == 3.4){
+    return {
+      numOne: genNumbers(10)+1,
+      numTwo: 1000,
+      unitMeasurement: ["$","m","kg","km","ℓ"][genNumbers(5)],
+      secondUnitMeasurement: 0
     }
   }
 
@@ -736,6 +781,14 @@ for (let i = 0; i < buttonSuccess.length; i++){
       highScoreTime.innerHTML = highScore3dot3.time
       highScoreMistakes.innerHTML = highScore3dot3.mistake
       break;
+
+      case "Level 3.4":
+        level = 3.4;
+        scoreNeeded = 50;
+        highScoreName.innerHTML = highScore3dot4.name
+        highScoreTime.innerHTML = highScore3dot4.time
+        highScoreMistakes.innerHTML = highScore3dot4.mistake
+        break;
 
     case "Level 4.3":
       level = 4.3;
