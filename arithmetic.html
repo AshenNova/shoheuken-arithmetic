@@ -31,6 +31,7 @@
           <td><button class="level2Dot1 btn btn-success settingButton">Level 2.1</button></td>
           <td></td>
           <td><button class="level2Dot3 btn btn-success settingButton">Level 2.3</button></td>
+          <td><button class="level2Dot4 btn btn-warning settingButton">Level 2.4</button></td>
         </tr>   
         <tr>
           <td><button class="level3 btn btn-success settingButton">Level 3</button></td>
@@ -99,6 +100,7 @@
       <span>High Score Holder</span></br>
       <span class="highScoreName">Player 1</br></span>
       <span class="highScoreTime">10</span>s, <span class="highScoreMistakes">0</span> mistakes</p>
+      <p class="instructions">Addition Information</p>
       <button class="start-button">Start</button>
     </div>
 
@@ -135,8 +137,26 @@
         </div>
         
         <form action="" class="our-form">
-          <div class="container">
+          <div class="container whole-numbers-container">
             <p class="display-problems"></p>
+            <!-- <p class="display-problems-two"></p> -->
+          </div>
+          <div class="container fractions-container hidden">
+            <p class="fraction-choice">Choices...</p>
+            <div class="display-problems-two">
+              <table>
+                <tr>
+                  <td class="line numeratorOne">?</td>
+                  <td> vs </td>
+                  <td class="line numeratorTwo">?</td>
+                </tr>
+                <tr>
+                  <td class="denominatorOne">?</td>
+                  <td></td>
+                  <td class="denominatorTwo">?</td>
+                </tr>
+              </table>
+            </div>
           </div>
           <div class="container">
             <p><input type="number" class="input-box" id="user-input" autocomplete="off" step="1" max="99999"></span></p>

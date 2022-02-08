@@ -1,3 +1,4 @@
+const instructions = document.querySelector(".instructions")
 const displayProblem = document.querySelector(".display-problems")
 const ourForm = document.querySelector(".our-form")
 const userInput = document.getElementById("user-input")
@@ -43,6 +44,14 @@ const highScoreName = document.querySelector('.highScoreName');
 const highScoreTime = document.querySelector('.highScoreTime');
 const highScoreMistakes = document.querySelector('.highScoreMistakes');
 
+const fractionChoice = document.querySelector(".fraction-choice")
+const wnContainer = document.querySelector(".whole-numbers-container")
+const fractionsContainer = document.querySelector(".fractions-container")
+const numeratorOne = document.querySelector(".numeratorOne")
+const numeratorTwo = document.querySelector(".numeratorTwo")
+const denominatorOne = document.querySelector(".denominatorOne")
+const denominatorTwo = document.querySelector(".denominatorTwo")
+
 let level = 0;
 let player = 1;
 
@@ -60,6 +69,7 @@ const highScore1dot3 = new HighScore("Nil", "16 October 2021", 0, 0)
 const highScore2 = new HighScore("Nil", "16 October 2021", 0, 0)
 const highScore2dot1 = new HighScore("JingKai Ng", "16 October 2021", 823, 24)
 const highScore2dot3 = new HighScore("Jingkai Ng", "30 October 2021", 853, 23)
+const highScore2dot4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3 = new HighScore("Shanice Lee", "30 October 2021", 614, 7)
 const highScore3dot1 = new HighScore("Shanice Lee", "30 October 2021", 162, 5)
 const highScore3dot3 = new HighScore("Shanice Lee", "6 November 2021", 662, 4)
@@ -181,6 +191,34 @@ function updateProblems(){
       displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`  
     } else {
       displayProblem.innerHTML = `${p.numTwo} ${p.operator} ${p.numOne}`
+    }
+  }
+
+  if (level == 2.4){
+    if (p.bigOrSmall == "1"){
+      fractionChoice.innerHTML = "Smaller"
+    } else {
+      fractionChoice.innerHTML = "Larger"  
+    }
+
+    if (p.numFive == p.numSix){
+      p.numSix = p.numSix + 1;
+    }
+    if (p.numThree == p.numFour){
+      p.numFour = p.numFour + 1;
+    }
+
+    if (p.option == "1"){
+      numeratorOne.innerHTML = `${p.numOne}`
+      numeratorTwo.innerHTML = `${p.numOne}`
+      denominatorOne.innerHTML = `${p.numThree}`
+      denominatorTwo.innerHTML = `${p.numFour}`
+    } 
+    if (p.option == "2"){
+      numeratorOne.innerHTML = `${p.numFive}`
+      numeratorTwo.innerHTML = `${p.numSix}`
+      denominatorOne.innerHTML = `${p.numTwo}`
+      denominatorTwo.innerHTML = `${p.numTwo}`
     }
   }
 
@@ -329,6 +367,46 @@ function handleSubmit(e){
         }        
       }
 
+      if (level == 2.4){
+        if (p.option == "1") {
+          a = p.numOne/p.numThree
+          b = p.numOne/p.numFour
+          if (p.bigOrSmall == "1"){
+            if (a > b){
+              correctAnswer = "2"
+            } else {
+              correctAnswer = "1"
+            }
+          }
+          if (p.bigOrSmall == "2"){
+            if (a > b){
+              correctAnswer = "1"
+            } else {
+              correctAnswer = "2"
+            }
+          }
+        }
+        if (p.option == "2") {
+          console.log("option number 2",p.numFive, p.numSix);
+          a = p.numFive/p.numTwo
+          b = p.numSix/p.numTwo
+          if (p.bigOrSmall == "1"){
+            if (a > b){
+              correctAnswer = "2"
+            } else {
+              correctAnswer = "1"
+            }
+          }
+          if (p.bigOrSmall == "2"){
+            if (a > b){
+              correctAnswer = "1"
+            } else {
+              correctAnswer = "2"
+            }
+          }
+        }  
+      }
+
       if (level == 3.3 || level == 2.3 || level == 4.3 || level == 5.3 || level == 6.3){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") {
@@ -462,6 +540,19 @@ function genProblems(){
       numThree: genNumbers(5)+1,
       numFour: genNumbers(5)+5,
       operator: ["+","-","x","÷"][genNumbers(4)]
+    }
+  }
+
+  if (level == 2.4){
+    return {
+      numOne: genNumbers(5)+1,
+      numThree: genNumbers(4)+5,
+      numFour: genNumbers(4)+5,
+      numTwo: genNumbers(10)+6,
+      numFive: genNumbers(5)+1,
+      numSix: genNumbers(5)+1,
+      option: ["1","2"][genNumbers(2)],
+      bigOrSmall: ["1","2"][genNumbers(2)]
     }
   }
 
@@ -807,6 +898,18 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreName.innerHTML = highScore2dot3.name
       highScoreTime.innerHTML = highScore2dot3.time
       highScoreMistakes.innerHTML = highScore2dot3.mistake
+      break;
+
+    case "Level 2.4":
+      level = 2.4;
+      scoreNeeded = 50;
+      highScoreName.innerHTML = highScore2dot4.name
+      highScoreTime.innerHTML = highScore2dot4.time
+      highScoreMistakes.innerHTML = highScore2dot4.mistake
+      wnContainer.classList.add('hidden');
+      fractionsContainer.classList.remove('hidden');
+      instructions.textContent = "Answer using '1' or '2' only"
+
       break;
 
     case "Level 3":
