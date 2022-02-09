@@ -31,7 +31,7 @@
   position: absolute;
   margin: auto;
   top: 31%;
-  height: 400px;
+  height: 500px;
   width: 600px;
   border-radius: 10px;
   background-color: white;
@@ -228,4 +228,8 @@ button {
   font-weight: bold;
   font-size: 40px;
   bottom: 50px;
+}
+
+.settingButton{
+ width: 100px;
 }
