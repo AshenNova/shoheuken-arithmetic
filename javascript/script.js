@@ -281,6 +281,9 @@ function updateProblems(){
       p.secondUnitMeasurement = "cm";
       displayProblem.innerHTML = `${p.numOne} ${p.unitMeasurement} ${p.numThree} ${p.secondUnitMeasurement} =`
     } else {
+      if (p.option == "2"){
+        p.numFour = p.numThree
+      }
       if (p.unitMeasurement == "km"){
         p.secondUnitMeasurement = "m";
       }
@@ -593,11 +596,12 @@ function genProblems(){
 
   if (level == 3.5){
     return {
-      numOne: genNumbers(10),
+      numOne: genNumbers(10)+1,
       numTwo: 1000,
-      numThree: genNumbers(100)+1,
+      numThree: genNumbers(99)+1,
       numFour: genNumbers(1000)+1,
       unitMeasurement: ["$","m","kg","km","ℓ"][genNumbers(5)],
+      option: ["1","2"][genNumbers(2)],
       secondUnitMeasurement: 0
     }
   }
