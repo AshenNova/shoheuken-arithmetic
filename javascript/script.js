@@ -30,6 +30,7 @@ const level3dot1 = document.querySelector('.level3Dot1');
 const level3dot3 = document.querySelector('.level3Dot3');
 const level3dot4 = document.querySelector('.level3Dot4');
 const level3dot5 = document.querySelector('.level3Dot5');
+const level3dot6 = document.querySelector('.level3Dot6');
 const level4 = document.querySelector('.level4');
 const level4dot3 = document.querySelector('.level4Dot3');
 const level5dot3 = document.querySelector('.level5Dot3');
@@ -54,6 +55,10 @@ const denominatorTwo = document.querySelector(".denominatorTwo")
 
 let level = 0;
 let player = 1;
+const arr = [];
+const commonMultipleArr = [];
+const commonMultipleArrTwo = [];
+
 
 function HighScore(name, date, time, mistake) {
   this.name = name
@@ -75,6 +80,7 @@ const highScore3dot1 = new HighScore("Shanice Lee", "30 October 2021", 162, 5)
 const highScore3dot3 = new HighScore("Shanice Lee", "6 November 2021", 662, 4)
 const highScore3dot4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3dot5 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3dot6 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot3 = new HighScore("Jadee Wong", "10 December 2021", 460, 2)
 const highScore5dot3 = new HighScore("Jayden Goo", "8 December 2021", 357, 1)
 const highScore6dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
@@ -298,6 +304,11 @@ function updateProblems(){
     secondUnitMeasurement.textContent = p.secondUnitMeasurement;
   }
 
+  if (level == 3.6){
+    arr.push(p.numOne, p.numTwo, p.numThree);
+    displayProblem.innerHTML = `${p.numOne} , ${p.numTwo} , ${p.numThree}`
+  }
+
   if (level == 7){
     displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
   }
@@ -434,6 +445,30 @@ function handleSubmit(e){
           correctAnswer = (p.numOne*p.numTwo)+p.numThree
         }
       }
+
+      if ( level == 3.6){
+        arr.sort(function(a, b){return b-a});
+        console.log(arr);
+        let i = 0;
+        let a = 0;
+        commonMultipleArr.push(arr[0]);
+        console.log(commonMultipleArr);
+          while ((commonMultipleArr[i]%arr[1]) != 0){
+            const something = arr[0]*(i+2)
+            commonMultipleArr.push(something)
+            i++
+          }
+        commonMultipleArrTwo.push(commonMultipleArr[commonMultipleArr.length-1])
+        console.log(commonMultipleArrTwo);
+          while ((commonMultipleArrTwo[a]%arr[2]) != 0){
+            const somethingTwo = commonMultipleArrTwo[0]*(a+2)
+            commonMultipleArrTwo.push(somethingTwo)
+            console.log(a);
+            a++
+          } 
+        console.log(`The new array has ${commonMultipleArrTwo}`);
+        correctAnswer = commonMultipleArrTwo[commonMultipleArrTwo.length-1];
+      }
       
       if (level == 7){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
@@ -452,6 +487,10 @@ function handleSubmit(e){
         currentScore.classList.add("animate-right")
         setTimeout(() => currentScore.classList.remove("animate-right"), 331)
         state.numSix++
+        arr.length = 0;
+        commonMultipleArr.length = 0;
+        commonMultipleArrTwo.length = 0;
+        console.log(arr, commonMultipleArr, commonMultipleArrTwo);
         updateProblems()
         console.log("new questions generated")
       
@@ -603,6 +642,14 @@ function genProblems(){
       unitMeasurement: ["$","m","kg","km","ℓ"][genNumbers(5)],
       option: ["1","2"][genNumbers(2)],
       secondUnitMeasurement: 0
+    }
+  }
+
+  if (level == 3.6){
+    return {
+      numOne: genNumbers(5)+1,
+      numTwo: genNumbers(4)+2,
+      numThree: genNumbers(5)+1,
     }
   }
 
@@ -948,13 +995,21 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreMistakes.innerHTML = highScore3dot4.mistake
       break;
 
-      case "Level 3.5":
-        level = 3.5;
-        scoreNeeded = 50;
-        highScoreName.innerHTML = highScore3dot5.name
-        highScoreTime.innerHTML = highScore3dot5.time
-        highScoreMistakes.innerHTML = highScore3dot5.mistake
-        break;
+    case "Level 3.5":
+      level = 3.5;
+      scoreNeeded = 50;
+      highScoreName.innerHTML = highScore3dot5.name
+      highScoreTime.innerHTML = highScore3dot5.time
+      highScoreMistakes.innerHTML = highScore3dot5.mistake
+      break;
+
+    case "Level 3.6":
+      level = 3.6;
+      scoreNeeded = 50;
+      highScoreName.innerHTML = highScore3dot6.name
+      highScoreTime.innerHTML = highScore3dot6.time
+      highScoreMistakes.innerHTML = highScore3dot6.mistake
+      break;
 
     case "Level 4.3":
       level = 4.3;
