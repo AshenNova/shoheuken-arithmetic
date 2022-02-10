@@ -1009,6 +1009,7 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreName.innerHTML = highScore3dot6.name
       highScoreTime.innerHTML = highScore3dot6.time
       highScoreMistakes.innerHTML = highScore3dot6.mistake
+      instructions.textContent = "Find the Lowest Common Multiple of the 3 numbers"
       break;
 
     case "Level 4.3":
