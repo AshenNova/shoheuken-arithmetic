@@ -305,6 +305,9 @@ function updateProblems(){
   }
 
   if (level == 3.6){
+    if (p.numOne == p.numTwo && p.numTwo == p.numThree) {
+      p.numOne = p.numOne+1;
+    }
     arr.push(p.numOne, p.numTwo, p.numThree);
     displayProblem.innerHTML = `${p.numOne} , ${p.numTwo} , ${p.numThree}`
   }
