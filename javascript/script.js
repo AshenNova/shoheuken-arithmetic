@@ -15,6 +15,7 @@ const scoreNeededCl = document.querySelector('.score-needed');
 const multiplesSettingCl = document.querySelector('.multiples-setting');
 const mainContainer= document.querySelector('.main-container');
 const secondUnitMeasurement= document.querySelector('.secondUnitMeasurement');
+const inputBox = document.querySelector('.input.box');
 
 const levelSetting = document.querySelector('.level-setting');
 const levelLabel = document.querySelector('.level-label');
@@ -33,6 +34,7 @@ const level3dot5 = document.querySelector('.level3Dot5');
 const level3dot6 = document.querySelector('.level3Dot6');
 const level4 = document.querySelector('.level4');
 const level4dot3 = document.querySelector('.level4Dot3');
+const level4dot4 = document.querySelector('.level4Dot4');
 const level5dot3 = document.querySelector('.level5Dot3');
 const level6dot3 = document.querySelector('.level6Dot3');
 const level7 = document.querySelector('.level7');
@@ -82,6 +84,7 @@ const highScore3dot4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3dot5 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3dot6 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot3 = new HighScore("Jadee Wong", "10 December 2021", 460, 2)
+const highScore4dot4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5dot3 = new HighScore("Jayden Goo", "8 December 2021", 357, 1)
 const highScore6dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
@@ -312,6 +315,20 @@ function updateProblems(){
     displayProblem.innerHTML = `${p.numOne} , ${p.numTwo} , ${p.numThree}`
   }
 
+  if (level == 4.4){
+    if (p.numOne == 1000){
+      p.numThree = 10
+    }
+    if (p.numOne/p.numTwo <= 10){
+      p.numThree = 10
+    }
+
+    if (p.numTwo == 1){
+      p.operator = "÷"
+    }
+    displayProblem.innerHTML = `${p.numOne/p.numTwo} ${p.operator} ${p.numThree}`;
+  }
+
   if (level == 7){
     displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
   }
@@ -451,28 +468,33 @@ function handleSubmit(e){
 
       if ( level == 3.6){
         arr.sort(function(a, b){return b-a});
-        console.log(arr);
         let i = 0;
         let a = 0;
         commonMultipleArr.push(arr[0]);
-        console.log(commonMultipleArr);
           while ((commonMultipleArr[i]%arr[1]) != 0){
             const something = arr[0]*(i+2)
             commonMultipleArr.push(something)
             i++
           }
         commonMultipleArrTwo.push(commonMultipleArr[commonMultipleArr.length-1])
-        console.log(commonMultipleArrTwo);
           while ((commonMultipleArrTwo[a]%arr[2]) != 0){
             const somethingTwo = commonMultipleArrTwo[0]*(a+2)
             commonMultipleArrTwo.push(somethingTwo)
-            console.log(a);
             a++
           } 
-        console.log(`The new array has ${commonMultipleArrTwo}`);
         correctAnswer = commonMultipleArrTwo[commonMultipleArrTwo.length-1];
       }
       
+      if ( level == 4.4 ){
+        if (p.operator == "x"){
+          correctAnswer = Math.round(p.numOne/p.numTwo*p.numThree*10000)/10000
+        } else {
+          correctAnswer = Math.round(p.numOne/p.numTwo/p.numThree*10000)/10000
+        }
+        console.log(`The correct answer is ${correctAnswer}`);
+        console.log(typeof(correctAnswer), typeof(userInput));
+      }
+
       if (level == 7){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") correctAnswer = p.numOne - p.numTwo
@@ -483,7 +505,7 @@ function handleSubmit(e){
       }
 
     console.log(correctAnswer, userInput.value)
-      if (parseInt(userInput.value,10) == correctAnswer){
+      if (userInput.value == correctAnswer){
         console.log("correct")
         state.score++
         currentScore.textContent = state.score
@@ -663,6 +685,15 @@ function genProblems(){
     numThree: genNumbers(6)+5,
     numFour: genNumbers(6)+5,
     operator: ["+","-","x","÷"][genNumbers(4)]
+    }
+  }
+
+  if (level == 4.4){
+    return {
+    numOne: genNumbers(999)+1,
+    numTwo: [1,10,100][genNumbers(3)],
+    numThree: [10,100,1000][genNumbers(3)],
+    operator: ["x","÷"][genNumbers(2)]
     }
   }
 
@@ -1022,6 +1053,15 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreTime.innerHTML = highScore4dot3.time
       highScoreMistakes.innerHTML = highScore4dot3.mistake
       break;
+
+      case "Level 4.4":
+        level = 4.4;
+        scoreNeeded = 50;
+        highScoreName.innerHTML = highScore4dot4.name
+        highScoreTime.innerHTML = highScore4dot4.time
+        highScoreMistakes.innerHTML = highScore4dot4.mistake
+        document.querySelector("#user-input").setAttribute("step","0.000001")
+        break;  
 
     case "Level 5.3":
       level = 5.3;
