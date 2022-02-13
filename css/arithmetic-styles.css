@@ -246,3 +246,9 @@ button {
 .settingButton{
  width: 100px;
 }
+
+@media (max-width: 500px){
+  .level-setting{
+    width: auto;
+  }
+}
