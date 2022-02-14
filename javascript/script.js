@@ -32,6 +32,7 @@ const level3dot3 = document.querySelector('.level3Dot3');
 const level3dot4 = document.querySelector('.level3Dot4');
 const level3dot5 = document.querySelector('.level3Dot5');
 const level3dot6 = document.querySelector('.level3Dot6');
+const level3dot7 = document.querySelector('.level3Dot7');
 const level4 = document.querySelector('.level4');
 const level4dot3 = document.querySelector('.level4Dot3');
 const level4dot4 = document.querySelector('.level4Dot4');
@@ -83,6 +84,7 @@ const highScore3dot3 = new HighScore("Shanice Lee", "6 November 2021", 662, 4)
 const highScore3dot4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3dot5 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3dot6 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3dot7 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot3 = new HighScore("Jadee Wong", "10 December 2021", 460, 2)
 const highScore4dot4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5dot3 = new HighScore("Jayden Goo", "8 December 2021", 357, 1)
@@ -314,6 +316,46 @@ function updateProblems(){
     arr.push(p.numOne, p.numTwo, p.numThree);
     displayProblem.innerHTML = `${p.numOne} , ${p.numTwo} , ${p.numThree}`
   }
+  
+  if (level == 3.7){
+    p.numTwo = 1000;
+    if (p.unitMeasurement == "$"){
+      p.numTwo = 100;
+      p.secondUnitMeasurement = "¢";
+      p.numOne = p.numOne*p.numTwo+p.numThree
+      displayProblem.innerHTML = `${p.numOne}${p.secondUnitMeasurement} =`;
+    } else if (p.unitMeasurement == "m"){
+      p.numTwo = 100;
+      p.secondUnitMeasurement = "cm";
+      p.numOne = p.numOne*p.numTwo+p.numThree
+      displayProblem.innerHTML = `${p.numOne}${p.secondUnitMeasurement} =`;
+   } else {
+      if (p.option == "2"){
+        p.numFour = p.numThree
+      }
+      p.numOne = p.numOne*1000+p.numFour
+      if (p.unitMeasurement == "km"){
+        p.secondUnitMeasurement = "m";
+      }
+      if (p.unitMeasurement == "ℓ") {
+        p.secondUnitMeasurement = "mℓ";
+      }
+      if (p.unitMeasurement == "kg" ){
+        p.secondUnitMeasurement = "g";
+      }
+    displayProblem.innerHTML = `${p.numOne}${p.secondUnitMeasurement} =`
+    }
+    //displaying second unit of measurement
+    if (p.unitMeasurement == "$"){
+      secondUnitMeasurement.textContent = `${p.unitMeasurement}`
+    } else {
+        if (p.unitMeasurement == "ℓ"){
+          p.unitMeasurement = "L"
+          p.secondUnitMeasurement = "ml"
+        }
+        secondUnitMeasurement.textContent = `${p.unitMeasurement}, ${p.secondUnitMeasurement}`
+        }
+  }
 
   if (level == 4.4){
     if (p.numOne == 1000){
@@ -484,15 +526,30 @@ function handleSubmit(e){
           } 
         correctAnswer = commonMultipleArrTwo[commonMultipleArrTwo.length-1];
       }
-      
+
+      if (level == 3.7){
+        console.log(p.numOne, p.numTwo);
+        p.remainder = p.numOne%p.numTwo
+        if (p.unitMeasurement == "$"){
+          correctAnswer = p.unitMeasurement + p.numOne/100
+        } else if (p.unitMeasurement == "m"){
+          correctAnswer = Math.floor(p.numOne/100) + p.unitMeasurement + p.remainder + p.secondUnitMeasurement
+        } else { 
+          if (p.unitMeasurement == "ℓ"){ 
+            correctAnswer = Math.floor(p.numOne/p.numTwo) + "L" + p.remainder + "ml"
+          } else {
+            correctAnswer = Math.floor(p.numOne/p.numTwo) + p.unitMeasurement + p.remainder + p.secondUnitMeasurement
+            console.log(`The correct answer is ${correctAnswer}`);
+            }
+        }
+      }
+
       if ( level == 4.4 ){
         if (p.operator == "x"){
           correctAnswer = Math.round(p.numOne/p.numTwo*p.numThree*10000)/10000
         } else {
           correctAnswer = Math.round(p.numOne/p.numTwo/p.numThree*10000)/10000
         }
-        console.log(`The correct answer is ${correctAnswer}`);
-        console.log(typeof(correctAnswer), typeof(userInput));
       }
 
       if (level == 7){
@@ -675,6 +732,19 @@ function genProblems(){
       numOne: genNumbers(5)+1,
       numTwo: genNumbers(4)+2,
       numThree: genNumbers(5)+1,
+    }
+  }
+
+  if (level == 3.7){
+    return {
+      numOne: genNumbers(10)+1,
+      numTwo: 1000,
+      numThree: genNumbers(99)+1,
+      numFour: genNumbers(1000)+1,
+      unitMeasurement: ["kg","km","ℓ","$","m"][genNumbers(5)],
+      option: ["1","2"][genNumbers(2)],
+      secondUnitMeasurement: 0,
+      remainder: 0
     }
   }
 
@@ -1046,6 +1116,16 @@ for (let i = 0; i <  settingButton.length; i++){
       instructions.textContent = "Find the Lowest Common Multiple of the 3 numbers"
       break;
 
+      case "Level 3.7":
+        level = 3.7;
+        scoreNeeded = 50;
+        highScoreName.innerHTML = highScore3dot7.name
+        highScoreTime.innerHTML = highScore3dot7.time
+        highScoreMistakes.innerHTML = highScore3dot7.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        instructions.textContent = "Do not leave any spaces. Answer using capital 'L' and 'ml' for volume"
+        break;
+
     case "Level 4.3":
       level = 4.3;
       scoreNeeded = 100;
@@ -1161,5 +1241,4 @@ for (let i = 0; i <  settingButton.length; i++){
 
     levelBox();
     });
-
-}
+  }
