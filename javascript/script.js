@@ -16,6 +16,7 @@ const multiplesSettingCl = document.querySelector('.multiples-setting');
 const mainContainer= document.querySelector('.main-container');
 const secondUnitMeasurement= document.querySelector('.secondUnitMeasurement');
 const inputBox = document.querySelector('.input.box');
+const resetButton = document.getElementById('reset');
 
 const levelSetting = document.querySelector('.level-setting');
 const levelLabel = document.querySelector('.level-label');
@@ -156,7 +157,18 @@ toMultiplesBtn.addEventListener('click', function(){
   levelSetting.classList.add('hidden');
 })
 
+resetButton.addEventListener('click', function(){
+  levelSetting.classList.remove('hidden');
+  finalBox.classList.add('hidden');
+  state.score = 0;
+  currentScore.textContent = state.score
+  state.mistake = 0;
+  currentMistake.textContent = state.mistake
+  player = 1;
+  time = 0;
+  document.getElementById('timer').innerHTML = time;
 
+})
 // Step 3: Updating, storing and then displaying the problem
 // 1. generate new problem and store the question in state object
 // 2. Also to visual update the HTML
@@ -316,7 +328,7 @@ function updateProblems(){
     arr.push(p.numOne, p.numTwo, p.numThree);
     displayProblem.innerHTML = `${p.numOne} , ${p.numTwo} , ${p.numThree}`
   }
-  
+
   if (level == 3.7){
     p.numTwo = 1000;
     if (p.unitMeasurement == "$"){
@@ -881,108 +893,6 @@ function genProblems(){
 
 }
 
-// function genAnswer(){
-//   if (level == 7){
-//     if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
-//     if (p.operator == "-") correctAnswer = p.numOne - p.numTwo
-//   }
-//   if (level == 1){
-//     if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
-//     if (p.operator == "-") {
-//       if (p.numOne >= p.numTwo) {
-//         correctAnswer = p.numOne - p.numTwo
-//       } else {
-//         correctAnswer = p.numTwo - p.numOne
-//       }
-//     }        
-//   }
-// }
-
-// level1.addEventListener('click', function(){
-//     level = 1
-//     scoreNeeded = 50;
-//     scoreNeededCl.textContent = scoreNeeded;
-//     levelBox();
-// })
-
-// level1dot1.addEventListener('click', function(){
-//     level = 1.1
-//     scoreNeeded = 50;
-//     scoreNeededCl.textContent = scoreNeeded;
-//     levelBox();
-// })
-
-// level1dot2.addEventListener('click', function(){
-//     level = 1.2
-//     levelBox();
-//     scoreNeeded = 100;
-//     scoreNeededCl.textContent = scoreNeeded;
-// })
-
-// level2.addEventListener('click', function(){
-//     level = 2
-//     levelBox();
-//     scoreNeeded = 50;
-//     scoreNeededCl.textContent = scoreNeeded;
-// })
-
-// level2dot2.addEventListener('click', function(){
-//     level = 2.2
-//     levelBox();
-//     scoreNeeded = 100;
-//     scoreNeededCl.textContent = scoreNeeded;
-// })
-
-// level2dot1.addEventListener('click', function(){
-//     level = 2.1
-//     levelBox();
-//     scoreNeeded = 25;
-//     scoreNeededCl.textContent = scoreNeeded;
-// })
-
-// level3.addEventListener('click', function(){
-//     level = 3
-//     levelBox();
-//     scoreNeeded = 50;
-//     scoreNeededCl.textContent = scoreNeeded;
-// })
-
-// level3dot2.addEventListener('click', function(){
-//     level = 3.2
-//     levelBox();
-//     scoreNeeded = 100;
-//     scoreNeededCl.textContent = scoreNeeded;
-// })
-
-
-// level4dot2.addEventListener('click', function(){
-//     level = 4.2
-//     levelBox();
-//     scoreNeeded = 100;
-//     scoreNeededCl.textContent = scoreNeeded;
-// })
-
-// level5dot2.addEventListener('click', function(){
-//     level = 5.2
-//     levelBox();
-//     scoreNeeded = 100;
-//     scoreNeededCl.textContent = scoreNeeded;
-// })
-
-// level6dot2.addEventListener('click', function(){
-//     level = 6.2
-//     levelBox();
-//     scoreNeeded = 100;
-//     scoreNeededCl.textContent = scoreNeeded;
-// })
-
-// level7.addEventListener('click', function(){
-//     level = 7
-//     scoreNeeded = 100;
-//     scoreNeededCl.textContent = scoreNeeded;
-//     levelBox();
-// })
-
 function levelBox(){
     scoreNeededCl.textContent = scoreNeeded;
     console.log(`Level ${level} selected`)
@@ -1093,7 +1003,7 @@ for (let i = 0; i <  settingButton.length; i++){
 
     case "Level 3.4":
       level = 3.4;
-      scoreNeeded = 50;
+      scoreNeeded = 1;
       highScoreName.innerHTML = highScore3dot4.name
       highScoreTime.innerHTML = highScore3dot4.time
       highScoreMistakes.innerHTML = highScore3dot4.mistake
