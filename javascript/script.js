@@ -170,6 +170,8 @@ resetButton.addEventListener('click', function(){
   wnContainer.classList.remove('hidden');
   secondUnitMeasurement.textContent = ""
   instructions.textContent = ""
+  document.querySelector("#user-input").setAttribute("type","number");
+  document.querySelector("#user-input").setAttribute("step","1");
 })
 
 backButton.addEventListener('click', function(){
@@ -179,6 +181,7 @@ backButton.addEventListener('click', function(){
   levelSetting.classList.remove('hidden');
   startBox.classList.add('hidden');
 })
+
 // Step 3: Updating, storing and then displaying the problem
 // 1. generate new problem and store the question in state object
 // 2. Also to visual update the HTML
@@ -387,7 +390,7 @@ function updateProblems(){
       p.numThree = 10
     }
 
-    if (p.numTwo == 1){
+    if (p.numTwo == 1 || (p.numOne/p.numTwo)%10 == 0 || (p.numOne/p.numTwo)%100 == 0 || (p.numOne/p.numTwo)%1000 == 0){
       p.operator = "÷"
     }
     displayProblem.innerHTML = `${p.numOne/p.numTwo} ${p.operator} ${p.numThree}`;
