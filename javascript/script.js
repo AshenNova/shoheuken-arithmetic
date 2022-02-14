@@ -542,7 +542,12 @@ function handleSubmit(e){
         console.log(p.numOne, p.numTwo);
         p.remainder = p.numOne%p.numTwo
         if (p.unitMeasurement == "$"){
+          if (p.numOne%10 == 0){
+            console.log(p.numTwo);
+            correctAnswer = p.unitMeasurement + p.numOne/100 + 0
+          } else {
           correctAnswer = p.unitMeasurement + p.numOne/100
+          }
         } else if (p.unitMeasurement == "m"){
           correctAnswer = Math.floor(p.numOne/100) + p.unitMeasurement + p.remainder + p.secondUnitMeasurement
         } else { 
