@@ -93,10 +93,18 @@ margin-top: 2%;
 }
 .start-button{
   position: absolute;
-  top: 80%;
+  top: 75%;
   font-size: 25px;
   width: 80%;
-  top: 80%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.back-button{
+  position: absolute;
+  top: 90%;
+  width: auto;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -215,6 +223,11 @@ table{
 button {
   margin: auto;
   display: block;
+}
+
+.instructions{
+  font-size: 1.5em;
+  font-weight: 900;
 }
 
 .animate-right{

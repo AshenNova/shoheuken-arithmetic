@@ -17,6 +17,7 @@ const mainContainer= document.querySelector('.main-container');
 const secondUnitMeasurement= document.querySelector('.secondUnitMeasurement');
 const inputBox = document.querySelector('.input.box');
 const resetButton = document.getElementById('reset');
+const backButton = document.querySelector(".back-button");
 
 const levelSetting = document.querySelector('.level-setting');
 const levelLabel = document.querySelector('.level-label');
@@ -169,7 +170,14 @@ resetButton.addEventListener('click', function(){
   wnContainer.classList.remove('hidden');
   secondUnitMeasurement.textContent = ""
   instructions.textContent = ""
+})
 
+backButton.addEventListener('click', function(){
+  fractionsContainer.classList.add('hidden');
+  wnContainer.classList.remove('hidden');
+  instructions.textContent = ""
+  levelSetting.classList.remove('hidden');
+  startBox.classList.add('hidden');
 })
 // Step 3: Updating, storing and then displaying the problem
 // 1. generate new problem and store the question in state object
