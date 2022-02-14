@@ -164,8 +164,7 @@ resetButton.addEventListener('click', function(){
   currentMistake.textContent = state.mistake
   player = 1;
   document.getElementById('timer').innerHTML = 0;
-  timeTwo = 10;
-  console.log(timeTwo);
+  timerD.innerHTML = 4;
   fractionsContainer.classList.add('hidden');
   wnContainer.classList.remove('hidden');
 
@@ -967,7 +966,7 @@ for (let i = 0; i <  settingButton.length; i++){
 
     case "Level 2.4":
       level = 2.4;
-      scoreNeeded = 50;
+      scoreNeeded = 1;
       highScoreName.innerHTML = highScore2dot4.name
       highScoreTime.innerHTML = highScore2dot4.time
       highScoreMistakes.innerHTML = highScore2dot4.mistake
