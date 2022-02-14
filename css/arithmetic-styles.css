@@ -104,7 +104,6 @@ margin-top: 2%;
 .back-button{
   position: absolute;
   top: 90%;
-  width: auto;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
