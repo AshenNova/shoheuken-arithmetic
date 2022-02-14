@@ -51,7 +51,7 @@ const highScoreTime = document.querySelector('.highScoreTime');
 const highScoreMistakes = document.querySelector('.highScoreMistakes');
 
 const fractionChoice = document.querySelector(".fraction-choice")
-const wnContainer = document.querySelector(".whole-numbers-container")
+const wholeNumberContainer = document.querySelector(".whole-numbers-container")
 const fractionsContainer = document.querySelector(".fractions-container")
 const numeratorOne = document.querySelector(".numeratorOne")
 const numeratorTwo = document.querySelector(".numeratorTwo")
@@ -167,7 +167,7 @@ resetButton.addEventListener('click', function(){
   document.getElementById('timer').innerHTML = 0;
   timerD.innerHTML = 4;
   fractionsContainer.classList.add('hidden');
-  wnContainer.classList.remove('hidden');
+  wholeNumberContainer.classList.remove('hidden');
   secondUnitMeasurement.textContent = ""
   instructions.textContent = ""
   document.querySelector("#user-input").setAttribute("type","number");
@@ -177,7 +177,7 @@ resetButton.addEventListener('click', function(){
 for (let x = 0; x < backButton.length; x++){
   backButton[x].addEventListener('click', function(){
     fractionsContainer.classList.add('hidden');
-    wnContainer.classList.remove('hidden');
+    wholeNumberContainer.classList.remove('hidden');
     instructions.textContent = ""
     levelSetting.classList.remove('hidden');
     startBox.classList.add('hidden');
@@ -991,7 +991,7 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreName.innerHTML = highScore2dot4.name
       highScoreTime.innerHTML = highScore2dot4.time
       highScoreMistakes.innerHTML = highScore2dot4.mistake
-      wnContainer.classList.add('hidden');
+      wholeNumberContainer.classList.add('hidden');
       fractionsContainer.classList.remove('hidden');
       instructions.textContent = "Answer using '1' or '2' only"
 
