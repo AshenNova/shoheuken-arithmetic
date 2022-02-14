@@ -167,6 +167,8 @@ resetButton.addEventListener('click', function(){
   timerD.innerHTML = 4;
   fractionsContainer.classList.add('hidden');
   wnContainer.classList.remove('hidden');
+  secondUnitMeasurement.textContent = ""
+  instructions.textContent = ""
 
 })
 // Step 3: Updating, storing and then displaying the problem
@@ -1032,7 +1034,7 @@ for (let i = 0; i <  settingButton.length; i++){
 
       case "Level 3.7":
         level = 3.7;
-        scoreNeeded = 50;
+        scoreNeeded = 1;
         highScoreName.innerHTML = highScore3dot7.name
         highScoreTime.innerHTML = highScore3dot7.time
         highScoreMistakes.innerHTML = highScore3dot7.mistake
