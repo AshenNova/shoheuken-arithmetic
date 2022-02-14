@@ -107,46 +107,46 @@ function clickStart(){
   countDownTimer.classList.remove('hidden');
     
   // Timer1 countdown
-    let time = 3;
-    const countDownOne = setInterval(function(){
-      
-      console.log(time);
-      time--;
+  let time = 3;
+  const countDownOne = setInterval(function(){
+    
+    console.log(time);
+    time--;
+    timerD.innerHTML = time;
+  
+    if (time < 0){
+      clearInterval(countDownOne);
       timerD.innerHTML = time;
-    
-      if (time < 0){
-        clearInterval(countDownOne);
-        timerD.innerHTML = time;
-        starto.classList.add('hidden');
-        countDownTimer.classList.add('hidden');
-        userInput.focus()
-        timer2()
-        updateProblems()
-      }
-    }, 1000);
-    
-  }
-
-    // Timer2
-function timer2(){
-    time = 0;
-  const countDownTwo = setInterval(function(){
-
-  time++;
-  document.getElementById('timer').innerHTML = time;
-  console.log(state.score);
-
-  if (state.score >= scoreNeeded){
-    clearInterval(countDownTwo);
-    document.getElementById('timer').innerHTML = time;
-    starto.classList.remove('hidden');
-    finalText.innerHTML = time;
-    finalBox.classList.remove('hidden');
-    mistakesCountCl.innerHTML = state.mistake;
-    player = 0;
-  }
-
+      starto.classList.add('hidden');
+      countDownTimer.classList.add('hidden');
+      userInput.focus()
+      timer2()
+      updateProblems()
+    }
   }, 1000);
+  
+}
+
+  // Timer2
+function timer2(){
+  time = 0;
+const countDownTwo = setInterval(function(){
+
+time++;
+document.getElementById('timer').innerHTML = time;
+console.log(state.score);
+
+if (state.score >= scoreNeeded){
+  clearInterval(countDownTwo);
+  document.getElementById('timer').innerHTML = time;
+  starto.classList.remove('hidden');
+  finalText.innerHTML = time;
+  finalBox.classList.remove('hidden');
+  mistakesCountCl.innerHTML = state.mistake;
+  player = 0;
+}
+
+}, 1000);
 }
 
 
@@ -165,8 +165,11 @@ resetButton.addEventListener('click', function(){
   state.mistake = 0;
   currentMistake.textContent = state.mistake
   player = 1;
-  time = 0;
-  document.getElementById('timer').innerHTML = time;
+  document.getElementById('timer').innerHTML = 0;
+  timeTwo = 10;
+  console.log(timeTwo);
+  fractionsContainer.classList.add('hidden');
+  wnContainer.classList.remove('hidden');
 
 })
 // Step 3: Updating, storing and then displaying the problem
@@ -475,7 +478,6 @@ function handleSubmit(e){
           }
         }
         if (p.option == "2") {
-          console.log("option number 2",p.numFive, p.numSix);
           a = p.numFive/p.numTwo
           b = p.numSix/p.numTwo
           if (p.bigOrSmall == "1"){
@@ -967,7 +969,7 @@ for (let i = 0; i <  settingButton.length; i++){
 
     case "Level 2.4":
       level = 2.4;
-      scoreNeeded = 50;
+      scoreNeeded = 1;
       highScoreName.innerHTML = highScore2dot4.name
       highScoreTime.innerHTML = highScore2dot4.time
       highScoreMistakes.innerHTML = highScore2dot4.mistake
