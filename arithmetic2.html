@@ -16,27 +16,34 @@
   <title>Arithmetic Game</title>
 </head>
 <body>
-
-<form action="" class="our-form">
-  <div class="container fractions">
-    <div class="display-problems-two">
-      <table>
-        <tr>
-          <td class="line numeratorOne">1</td>
-          <td> vs </td>
-          <td class="line numeratorTwo">2</td>
-        </tr>
-        <tr>
-          <td class="denominatorOne">3</td>
-          <td></td>
-          <td class="denominatorTwo">4</td>
-        </tr>
+  <div class="container">
+      <table style="border: 1px solid; width: auto;">
+        <col>
+        <col>
+        <tbody>
+          <tr>
+            <th rowspan="2" scope="rowgroup" style="font-size: 2em;">1</th>
+            <th scope="row" class="line">2</th>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+          </tr>
+        </tbody>
+      </table>
+      <table style="width: auto;">
+        <tbody>
+          <tr>
+            <th rowspan="2">1</th>
+            <td class="line">1</td>
+          </tr>
+          <tr>
+            <td>2</td>
+          </tr>
+        </tbody>
       </table>
     </div>
-  </div>
-  <div class="container">
-    <p><input type="number" class="input-box" id="user-input" autocomplete="off" step="1" max="9999"></p>
-  </div>
+
+
 </form>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
