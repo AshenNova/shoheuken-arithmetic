@@ -367,7 +367,12 @@ function updateProblems(){
       p.secondUnitMeasurement = "cm";
       p.numOne = p.numOne*p.numTwo+p.numThree
       displayProblem.innerHTML = `${p.numOne}${p.secondUnitMeasurement} =`;
-   } else {
+    } else if (p.unitMeasurement == "min") {
+      p.numTwo = 60;
+      p.secondUnitMeasurement = "s";
+      p.numOne = p.numOne*p.numTwo+p.numFive;
+      displayProblem.innerHTML = `${p.numOne}${p.secondUnitMeasurement} =`;
+    } else {
       if (p.option == "2"){
         p.numFour = p.numThree
       }
@@ -575,7 +580,9 @@ function handleSubmit(e){
           correctAnswer = p.unitMeasurement + p.numOne/100
           }
         } else if (p.unitMeasurement == "m"){
-          correctAnswer = Math.floor(p.numOne/100) + p.unitMeasurement + p.remainder + p.secondUnitMeasurement
+          correctAnswer = Math.floor(p.numOne/100) + p.unitMeasurement + p.remainder + p.secondUnitMeasurement;
+        } else if (p.unitMeasurement == "min") {
+          correctAnswer = Math.floor(p.numOne/60) + p.unitMeasurement + p.remainder + p.secondUnitMeasurement;
         } else { 
           if (p.unitMeasurement == "ℓ"){ 
             correctAnswer = Math.floor(p.numOne/p.numTwo) + "L" + p.remainder + "ml"
@@ -784,7 +791,8 @@ function genProblems(){
       numTwo: 1000,
       numThree: genNumbers(99)+1,
       numFour: genNumbers(1000)+1,
-      unitMeasurement: ["kg","km","ℓ","$","m"][genNumbers(5)],
+      numFive:  genNumbers(58)+1,
+      unitMeasurement: ["min","kg","km","ℓ","$","m"][genNumbers(6)],
       option: ["1","2"][genNumbers(2)],
       secondUnitMeasurement: 0,
       remainder: 0
