@@ -324,6 +324,11 @@ function updateProblems(){
       p.numTwo = 100;
       p.secondUnitMeasurement = "cm";
       displayProblem.innerHTML = `${p.numOne} ${p.unitMeasurement} ${p.numThree} ${p.secondUnitMeasurement} =`
+    } else if (p.unitMeasurement == "min"){
+      p.secondUnitMeasurement = "secs";
+      p.numTwo = 60;
+      p.numThree = p.numFive;
+      displayProblem.innerHTML = `${p.numOne} ${p.unitMeasurement} ${p.numThree} ${p.secondUnitMeasurement} =`
     } else {
       if (p.option == "2"){
         p.numFour = p.numThree
@@ -758,7 +763,8 @@ function genProblems(){
       numTwo: 1000,
       numThree: genNumbers(99)+1,
       numFour: genNumbers(1000)+1,
-      unitMeasurement: ["$","m","kg","km","ℓ"][genNumbers(5)],
+      numFive: genNumbers(58)+1,
+      unitMeasurement: ["min","$","m","kg","km","ℓ"][genNumbers(6)],
       option: ["1","2"][genNumbers(2)],
       secondUnitMeasurement: 0
     }
