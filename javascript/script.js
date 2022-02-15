@@ -278,6 +278,11 @@ function updateProblems(){
   if (level == 3.4){
     console.log(p.unitMeasurement);
     p.numTwo = 1000;
+    if (p.unitMeasurement == "min"){
+      p.numTwo = 60;
+      p.secondUnitMeasurement = "secs";
+      displayProblem.innerHTML = `${p.numOne} ${p.unitMeasurement} =`
+    }
     if (p.unitMeasurement == "$"){
       p.numTwo = 100;
       p.secondUnitMeasurement = "¢";
@@ -742,7 +747,7 @@ function genProblems(){
     return {
       numOne: genNumbers(10)+1,
       numTwo: 1000,
-      unitMeasurement: ["$","m","kg","km","ℓ"][genNumbers(5)],
+      unitMeasurement: ["min","$","m","kg","km","ℓ"][genNumbers(6)],
       secondUnitMeasurement: 0
     }
   }
@@ -1023,7 +1028,7 @@ for (let i = 0; i <  settingButton.length; i++){
 
     case "Level 3.4":
       level = 3.4;
-      scoreNeeded = 1;
+      scoreNeeded = 50;
       highScoreName.innerHTML = highScore3dot4.name
       highScoreTime.innerHTML = highScore3dot4.time
       highScoreMistakes.innerHTML = highScore3dot4.mistake
