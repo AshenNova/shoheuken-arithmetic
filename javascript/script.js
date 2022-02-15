@@ -393,7 +393,7 @@ function updateProblems(){
       p.numThree = 10
     }
 
-    if (p.numTwo == 1 || (p.numOne/p.numTwo)%10 == 0 || (p.numOne/p.numTwo)%100 == 0 || (p.numOne/p.numTwo)%1000 == 0){
+    if (p.numTwo == 1 || (p.numOne/p.numTwo)%1 == 0){
       p.operator = "÷"
     }
     displayProblem.innerHTML = `${p.numOne/p.numTwo} ${p.operator} ${p.numThree}`;
