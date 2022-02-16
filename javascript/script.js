@@ -628,12 +628,18 @@ function handleSubmit(e){
       } else {
         console.log("incorrect")
         state.mistake++
-        if (state.score > 3){
+        if (state.score > 0 && state.score < 11){
+          state.score = state.score - 1;
+          // currentScore.classList.add("animate-wrong")
+          // setTimeout(() => currentScore.classList.remove("animate-wrong"), 331)
+          // mainContainer.classList.add("animate-wrong-container")
+          // setTimeout(() => mainContainer.classList.remove("animate-wrong-container"), 331)
+        }
+        if (state.score >= 11 && state.score < 21){
+          state.score = state.score - 2;
+        }
+        if (state.score >= 21 && state.score < 30){
           state.score = state.score - 3;
-          currentScore.classList.add("animate-wrong")
-          setTimeout(() => currentScore.classList.remove("animate-wrong"), 331)
-          mainContainer.classList.add("animate-wrong-container")
-          setTimeout(() => mainContainer.classList.remove("animate-wrong-container"), 331)
         }
         currentScore.textContent = state.score
         currentMistake.textContent = state.mistake
