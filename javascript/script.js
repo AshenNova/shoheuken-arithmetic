@@ -39,6 +39,7 @@ const level4 = document.querySelector('.level4');
 const level4dot3 = document.querySelector('.level4Dot3');
 const level4dot4 = document.querySelector('.level4Dot4');
 const level4dot5 = document.querySelector('.level4Dot5');
+const level4dot6 = document.querySelector('.level4Dot6');
 const level5dot3 = document.querySelector('.level5Dot3');
 const level6dot3 = document.querySelector('.level6Dot3');
 const level7 = document.querySelector('.level7');
@@ -91,6 +92,7 @@ const highScore3dot7 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot3 = new HighScore("Jadee Wong", "10 December 2021", 460, 2)
 const highScore4dot4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot5 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4dot6 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5dot3 = new HighScore("Jayden Goo", "8 December 2021", 357, 1)
 const highScore6dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
@@ -448,6 +450,43 @@ function updateProblems(){
     secondUnitMeasurement.textContent = `${p.secondUnitMeasurement}`  
   }
 
+  if ( level == 4.6){
+    if ((p.unitMeasurement == "m" || p.unitMeasurement == "$") && (p.option == "2")){
+      p.numOne = p.numFive
+    }
+    if ((p.unitMeasurement == "m" || p.unitMeasurement == "$") && (p.optionTwo == "2")){
+      p.numThree = p.numFour
+    }
+    if (p.unitMeasurement == "m"){
+      p.secondUnitMeasurement = "cm";
+      displayProblem.innerHTML = `${p.numOne} ${p.unitMeasurement} ${p.numThree} ${p.secondUnitMeasurement}`
+    }
+    if (p.unitMeasurement == "$"){
+      p.secondUnitMeasurement = "¢";
+      displayProblem.innerHTML = `${p.numOne*100+p.numThree}${p.secondUnitMeasurement}`
+    }
+
+    if ((p.unitMeasurement == "ℓ" || p.unitMeasurement == "kg" || p.unitMeasurement == "kg") && (p.option == "2")){
+      p.numTwo = p.numSix
+    }
+    if ((p.unitMeasurement == "ℓ" || p.unitMeasurement == "kg" || p.unitMeasurement == "kg") && (p.optionTwo == "2")){
+      p.numOne = p.numFive
+    }
+    if (p.unitMeasurement == "ℓ"){
+      p.secondUnitMeasurement = "ml";
+      displayProblem.innerHTML =  `${p.numOne} ${p.unitMeasurement} ${p.numTwo}${p.secondUnitMeasurement}`
+    }
+    if (p.unitMeasurement == "km"){
+      p.secondUnitMeasurement = "m";
+      displayProblem.innerHTML =  `${p.numOne} ${p.unitMeasurement} ${p.numTwo}${p.secondUnitMeasurement}`
+    }
+    if (p.unitMeasurement == "kg"){
+      p.secondUnitMeasurement = "g";
+      displayProblem.innerHTML =  `${p.numOne} ${p.unitMeasurement} ${p.numTwo}${p.secondUnitMeasurement}`
+    }
+    secondUnitMeasurement.textContent = `${p.unitMeasurement}`  
+  }
+
   if (level == 7){
     displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
   }
@@ -642,6 +681,22 @@ function handleSubmit(e){
         if (p.unitMeasurement == "ℓ" || p.unitMeasurement == "kg" ||  p.unitMeasurement == "km" ){
           correctAnswer = Math.round(p.numOne*1000+p.numTwo)
         }
+      }
+      if ( level == 4.6 ){
+        if (p.unitMeasurement == "m"){
+          console.log(Math.round(p.numThree)/100);
+          correctAnswer = p.numOne+Math.round(p.numThree)/100
+        }
+        if (p.unitMeasurement == "$"){
+          if (p.numThree%10 == 0){
+            correctAnswer = p.numOne+Math.round(p.numThree)/100+"0"
+          } else {
+            correctAnswer = p.numOne+Math.round(p.numThree)/100
+          }
+        }
+        if (p.unitMeasurement == "ℓ" || p.unitMeasurement == "kg" ||  p.unitMeasurement == "km" ){
+          correctAnswer = p.numOne+Math.round(p.numTwo)/1000
+        }
       } 
 
       if (level == 7){
@@ -700,7 +755,7 @@ function handleSubmit(e){
 
 // Step 1: generate number
 function genNumbers(max){
-  return Math.trunc(Math.random()*max)
+  return Math.floor(Math.random()*max)
 }
 
 // Step 2: Generate Problem
@@ -879,6 +934,21 @@ function genProblems(){
     numSix: genNumbers(98)+1,
     option: ["1","2"][genNumbers(2)],
     unitMeasurement: ["ℓ","kg","km","$","m"][genNumbers(5)],
+    secondUnitMeasurement: 0
+    }
+  }
+
+  if (level == 4.6){
+    return {
+    numOne: genNumbers(98)+1,
+    numTwo: genNumbers(998)+1,
+    numThree: genNumbers(98)+1,
+    numFour:  genNumbers(8)+1,
+    numFive: genNumbers(8)+1,
+    numSix: genNumbers(98)+1,
+    option: ["1","2"][genNumbers(2)],
+    optionTwo: ["1","2"][genNumbers(2)],
+    unitMeasurement: ["m","$","ℓ","km","kg"][genNumbers(5)],
     secondUnitMeasurement: 0
     }
   }
@@ -1162,9 +1232,18 @@ for (let i = 0; i <  settingButton.length; i++){
       scoreNeeded = 30;
       highScoreName.innerHTML = highScore4dot5.name
       highScoreTime.innerHTML = highScore4dot5.time
-      highScoreMistakes.innerHTML = highScore4dot4.mistake
+      highScoreMistakes.innerHTML = highScore4dot5.mistake
       document.querySelector("#user-input").setAttribute("step","0.000001")
-      break;    
+      break;
+     
+    case "Level 4.6":
+      level = 4.6;
+      scoreNeeded = 30;
+      highScoreName.innerHTML = highScore4dot6.name
+      highScoreTime.innerHTML = highScore4dot6.time
+      highScoreMistakes.innerHTML = highScore4dot6.mistake
+      document.querySelector("#user-input").setAttribute("step","0.000001")
+      break;      
 
     case "Level 5.3":
       level = 5.3;
