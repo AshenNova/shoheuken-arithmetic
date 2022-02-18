@@ -685,10 +685,10 @@ function handleSubmit(e){
           state.score = state.score - 3;
         }
         if (state.score >= 31 && state.score < 40){
-          state.score = state.score - 3;
+          state.score = state.score - 4;
         }
         if (state.score >= 41 && state.score < 50){
-          state.score = state.score - 3;
+          state.score = state.score - 5;
         }
         currentScore.textContent = state.score
         currentMistake.textContent = state.mistake
