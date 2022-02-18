@@ -684,18 +684,17 @@ function handleSubmit(e){
       }
       if ( level == 4.6 ){
         if (p.unitMeasurement == "m"){
-          console.log(Math.round(p.numThree)/100);
-          correctAnswer = p.numOne+Math.round(p.numThree)/100
+          correctAnswer = p.numOne+p.numThree/100
         }
         if (p.unitMeasurement == "$"){
           if (p.numThree%10 == 0){
-            correctAnswer = p.numOne+Math.round(p.numThree)/100+"0"
+            correctAnswer = p.numOne+p.numThree/100+"0"
           } else {
-            correctAnswer = p.numOne+Math.round(p.numThree)/100
+            correctAnswer = Math.round((p.numOne+p.numThree/100)*100)/100
           }
         }
         if (p.unitMeasurement == "ℓ" || p.unitMeasurement == "kg" ||  p.unitMeasurement == "km" ){
-          correctAnswer = p.numOne+Math.round(p.numTwo)/1000
+          correctAnswer = Math.round((p.numOne+p.numTwo/1000)*1000)/1000
         }
       } 
 
