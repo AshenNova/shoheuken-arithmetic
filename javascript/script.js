@@ -673,10 +673,6 @@ function handleSubmit(e){
         state.mistake++
         if (state.score > 0 && state.score < 11){
           state.score = state.score - 1;
-          // currentScore.classList.add("animate-wrong")
-          // setTimeout(() => currentScore.classList.remove("animate-wrong"), 331)
-          // mainContainer.classList.add("animate-wrong-container")
-          // setTimeout(() => mainContainer.classList.remove("animate-wrong-container"), 331)
         }
         if (state.score >= 11 && state.score < 21){
           state.score = state.score - 2;
