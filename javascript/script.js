@@ -60,6 +60,11 @@ const numeratorTwo = document.querySelector(".numeratorTwo")
 const denominatorOne = document.querySelector(".denominatorOne")
 const denominatorTwo = document.querySelector(".denominatorTwo")
 
+const fractionsContainerTwo = document.querySelector(".fractions-container-two")
+const twoWholeNumber = document.querySelector(".two-whole-number")
+const twoNumerator = document.querySelector(".two-numerator")
+const twoDenominator = document.querySelector(".two-denominator")
+
 let level = 0;
 let player = 1;
 const arr = [];
@@ -93,6 +98,7 @@ const highScore4dot3 = new HighScore("Jadee Wong", "10 December 2021", 460, 2)
 const highScore4dot4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot5 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot6 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4dot7 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5dot3 = new HighScore("Jayden Goo", "8 December 2021", 357, 1)
 const highScore6dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
@@ -486,6 +492,18 @@ function updateProblems(){
     }
     secondUnitMeasurement.textContent = `${p.unitMeasurement}`  
   }
+  if (level == 4.7) {
+
+    if (p.numTwo == p.numThree){
+      p.numTwo = p.numTwo - 1;
+    }
+    if (p.numTwo > p.numThree){
+      p.numTwo = p.numTwo - 1 - (p.numTwo-p.numThree);
+    }
+    twoWholeNumber.textContent = p.numOne
+    twoNumerator.textContent = p.numTwo
+    twoDenominator.textContent = p.numThree
+  }
 
   if (level == 7){
     displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
@@ -696,7 +714,23 @@ function handleSubmit(e){
         if (p.unitMeasurement == "ℓ" || p.unitMeasurement == "kg" ||  p.unitMeasurement == "km" ){
           correctAnswer = Math.round((p.numOne+p.numTwo/1000)*1000)/1000
         }
-      } 
+      }
+      
+      if (level == 4.7){
+        for (let i = p.numThree; i > 1; i--){
+          if ((p.numTwo % i == 0 ) && (p.numThree % i == 0)){
+            p.numTwo /= i;
+            p.numThree /= i;
+          }
+        }
+        if (p.numTwo == 1){
+          p.numFour = p.numOne*p.numThree+p.numTwo
+          correctAnswer = p.numFour + "/" + p.numThree
+        } else {
+        p.numFour = p.numOne*p.numThree+p.numTwo
+        correctAnswer = p.numFour + "/" + p.numThree
+        }
+      }
 
       if (level == 7){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
@@ -952,6 +986,15 @@ function genProblems(){
     }
   }
 
+  if (level == 4.7){
+    return {
+    numOne: genNumbers(9)+1,
+    numTwo: genNumbers(9)+2,
+    numThree: genNumbers(10)+2,
+    numFour: 0
+    }
+  }
+
   if (level == 5.3){
     return {
     numOne: genNumbers(500)+500,
@@ -1147,7 +1190,6 @@ for (let i = 0; i <  settingButton.length; i++){
       wholeNumberContainer.classList.add('hidden');
       fractionsContainer.classList.remove('hidden');
       instructions.textContent = "Answer using '1' or '2' only"
-
       break;
 
     case "Level 3":
@@ -1242,7 +1284,19 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreTime.innerHTML = highScore4dot6.time
       highScoreMistakes.innerHTML = highScore4dot6.mistake
       document.querySelector("#user-input").setAttribute("step","0.000001")
-      break;      
+      break;
+
+    case "Level 4.7":
+      level = 4.7;
+      scoreNeeded = 30;
+      highScoreName.innerHTML = highScore4dot7.name
+      highScoreTime.innerHTML = highScore4dot7.time
+      highScoreMistakes.innerHTML = highScore4dot7.mistake
+      wholeNumberContainer.classList.add('hidden');
+      fractionsContainerTwo.classList.remove('hidden');
+      document.querySelector("#user-input").setAttribute("type","text");
+      instructions.textContent = "Numerator/Denominator"
+      break;
 
     case "Level 5.3":
       level = 5.3;
