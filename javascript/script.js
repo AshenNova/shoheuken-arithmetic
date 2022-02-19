@@ -177,6 +177,7 @@ resetButton.addEventListener('click', function(){
   document.getElementById('timer').innerHTML = 0;
   timerD.innerHTML = 4;
   fractionsContainer.classList.add('hidden');
+  fractionsContainerTwo.classList.add('hidden');
   wholeNumberContainer.classList.remove('hidden');
   secondUnitMeasurement.textContent = ""
   instructions.textContent = ""
@@ -187,6 +188,7 @@ resetButton.addEventListener('click', function(){
 for (let x = 0; x < backButton.length; x++){
   backButton[x].addEventListener('click', function(){
     fractionsContainer.classList.add('hidden');
+    fractionsContainerTwo.classList.add('hidden');
     wholeNumberContainer.classList.remove('hidden');
     instructions.textContent = ""
     levelSetting.classList.remove('hidden');
