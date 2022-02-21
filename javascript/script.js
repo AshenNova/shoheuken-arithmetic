@@ -375,14 +375,6 @@ function updateProblems(){
   }
 
   if (level == 3.6){
-    if (p.numOne == p.numTwo && p.numTwo == p.numThree) {
-      p.numOne = p.numOne+1;
-    }
-    arr.push(p.numOne, p.numTwo, p.numThree);
-    displayProblem.innerHTML = `${p.numOne} , ${p.numTwo} , ${p.numThree}`
-  }
-
-  if (level == 3.7){
     p.numTwo = 1000;
     if (p.unitMeasurement == "$"){
       p.numTwo = 100;
@@ -425,6 +417,14 @@ function updateProblems(){
         }
         secondUnitMeasurement.textContent = `${p.unitMeasurement}, ${p.secondUnitMeasurement}`
         }
+  }
+
+  if (level == 3.7){
+    if (p.numOne == p.numTwo && p.numTwo == p.numThree) {
+      p.numOne = p.numOne+1;
+    }
+    arr.push(p.numOne, p.numTwo, p.numThree);
+    displayProblem.innerHTML = `${p.numOne} , ${p.numTwo} , ${p.numThree}`
   }
 
   if ( level == 3.9 ){
@@ -730,26 +730,7 @@ function handleSubmit(e){
         }
       }
 
-      if ( level == 3.6){
-        arr.sort(function(a, b){return b-a});
-        let i = 0;
-        let a = 0;
-        commonMultipleArr.push(arr[0]);
-          while ((commonMultipleArr[i]%arr[1]) != 0){
-            const something = arr[0]*(i+2)
-            commonMultipleArr.push(something)
-            i++
-          }
-        commonMultipleArrTwo.push(commonMultipleArr[commonMultipleArr.length-1])
-          while ((commonMultipleArrTwo[a]%arr[2]) != 0){
-            const somethingTwo = commonMultipleArrTwo[0]*(a+2)
-            commonMultipleArrTwo.push(somethingTwo)
-            a++
-          } 
-        correctAnswer = commonMultipleArrTwo[commonMultipleArrTwo.length-1];
-      }
-
-      if (level == 3.7){
+      if (level == 3.6){
         console.log(p.numOne, p.numTwo);
         p.remainder = p.numOne%p.numTwo
         if (p.unitMeasurement == "$"){
@@ -771,6 +752,25 @@ function handleSubmit(e){
             console.log(`The correct answer is ${correctAnswer}`);
             }
         }
+      }
+
+      if ( level == 3.7){
+        arr.sort(function(a, b){return b-a});
+        let i = 0;
+        let a = 0;
+        commonMultipleArr.push(arr[0]);
+          while ((commonMultipleArr[i]%arr[1]) != 0){
+            const something = arr[0]*(i+2)
+            commonMultipleArr.push(something)
+            i++
+          }
+        commonMultipleArrTwo.push(commonMultipleArr[commonMultipleArr.length-1])
+          while ((commonMultipleArrTwo[a]%arr[2]) != 0){
+            const somethingTwo = commonMultipleArrTwo[0]*(a+2)
+            commonMultipleArrTwo.push(somethingTwo)
+            a++
+          } 
+        correctAnswer = commonMultipleArrTwo[commonMultipleArrTwo.length-1];
       }
 
       if ( level == 4.4 ){
@@ -1017,14 +1017,6 @@ function genProblems(){
 
   if (level == 3.6){
     return {
-      numOne: genNumbers(5)+1,
-      numTwo: genNumbers(4)+2,
-      numThree: genNumbers(5)+1,
-    }
-  }
-
-  if (level == 3.7){
-    return {
       numOne: genNumbers(10)+1,
       numTwo: 1000,
       numThree: genNumbers(99)+1,
@@ -1034,6 +1026,14 @@ function genProblems(){
       option: ["1","2"][genNumbers(2)],
       secondUnitMeasurement: 0,
       remainder: 0
+    }
+  }
+
+  if (level == 3.7){
+    return {
+      numOne: genNumbers(5)+1,
+      numTwo: genNumbers(4)+2,
+      numThree: genNumbers(5)+1,
     }
   }
 
@@ -1365,18 +1365,18 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreName.innerHTML = highScore3dot6.name
       highScoreTime.innerHTML = highScore3dot6.time
       highScoreMistakes.innerHTML = highScore3dot6.mistake
-      instructions.textContent = "Find the Lowest Common Multiple of the 3 numbers"
+      document.querySelector("#user-input").setAttribute("type","text");
+      instructions.textContent = "Do not leave any spaces. Answer using capital 'L' and 'ml' for volume"
       break;
 
-      case "Level 3.7":
-        level = 3.7;
-        scoreNeeded = 30;
-        highScoreName.innerHTML = highScore3dot7.name
-        highScoreTime.innerHTML = highScore3dot7.time
-        highScoreMistakes.innerHTML = highScore3dot7.mistake
-        document.querySelector("#user-input").setAttribute("type","text");
-        instructions.textContent = "Do not leave any spaces. Answer using capital 'L' and 'ml' for volume"
-        break;
+    case "Level 3.7":
+      level = 3.7;
+      scoreNeeded = 30;
+      highScoreName.innerHTML = highScore3dot7.name
+      highScoreTime.innerHTML = highScore3dot7.time
+      highScoreMistakes.innerHTML = highScore3dot7.mistake
+      instructions.textContent = "Find the Lowest Common Multiple of the 3 numbers"
+      break;
 
     case "Level 3.9":
       level = 3.9;
