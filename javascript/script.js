@@ -42,6 +42,7 @@ const level3dot6 = document.querySelector('.level3Dot6');
 const level3dot7 = document.querySelector('.level3Dot7');
 const level3dot9 = document.querySelector('.level3dot9');
 const level3dot10 = document.querySelector('.level3dot10');
+const level3dot11 = document.querySelector('.level3dot11');
 
 const level4 = document.querySelector('.level4');
 const level4dot3 = document.querySelector('.level4Dot3');
@@ -112,6 +113,7 @@ const highScore3dot6 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3dot7 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3dot9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3dot10 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3dot11 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot3 = new HighScore("Jadee Wong", "10 December 2021", 460, 2)
 const highScore4dot4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot5 = new HighScore("Nil", "Nil", 0, 0)
@@ -489,8 +491,8 @@ function updateProblems(){
 
   if ( level == 3.9 ){
     threeWholeNumber.textContent = ""
-    threeNumerator.textContent = ""
-    threeDenominator.textContent = ""
+    threeNumerator.textContent = "?"
+    threeDenominator.textContent = "?"
     if (p.numOne >= p.numTwo){
       p.numOne = p.numOne - 1 - ( p.numOne - p.numTwo);
     }
@@ -521,6 +523,43 @@ function updateProblems(){
     } else {
       threeNumerator.textContent = "?"
       threeDenominator.textContent = p.numTwo*p.numMulti
+    }
+  }
+  if ( level == 3.11){
+    if (p.optionFinal == "1"){
+      threeWholeNumber.textContent = ""
+      threeNumerator.textContent = "?"
+      threeDenominator.textContent = "?"
+      if (p.numOne >= p.numTwo){
+        p.numOne = p.numOne - 1 - ( p.numOne - p.numTwo);
+      }
+      twoWholeNumber.textContent = ""
+      twoNumerator.textContent = p.numOne*p.numMulti
+      twoDenominator.textContent = p.numTwo*p.numMulti
+      p.numLargest = p.numTwo*p.numMulti
+    }
+    if (p.optionFinal == "2"){
+      if (p.numOne >= p.numTwo){
+        p.numOne = p.numOne - 1 - (p.numOne - p.numTwo);
+      }
+      for (let i = p.numTwo; i > 1; i--){
+        if (p.numOne%i == 0 && p.numTwo%i == 0){
+          p.numOne /= i;
+          p.numTwo /= i;
+        }
+      }
+      threeWholeNumber.textContent = ""
+      twoWholeNumber.textContent = ""
+      twoNumerator.textContent = p.numOne
+      twoDenominator.textContent = p.numTwo
+  
+      if (p.option == "1"){
+        threeNumerator.textContent = p.numOne*p.numMulti
+        threeDenominator.textContent = "?"
+      } else {
+        threeNumerator.textContent = "?"
+        threeDenominator.textContent = p.numTwo*p.numMulti
+      }
     }
   }
 
@@ -799,6 +838,30 @@ function handleSubmit(e){
           correctAnswer = p.numTwo*p.numMulti
         } else {
           correctAnswer = p.numOne*p.numMulti
+        }
+      }
+
+      if ( level == 3.11){
+        if (p.optionFinal == "1"){
+          for (let i = p.numLargest; i > 1; i--){
+            if ((p.numOne % i == 0) && (p.numTwo % i == 0)){
+              p.numOne /= i;
+              p.numTwo /= i;
+              correctAnswer = p.numOne + "/" + p.numTwo;
+            }
+          }  
+           if ( p.numOne == 1){
+            correctAnswer = p.numOne + "/" + p.numTwo;
+           } else {
+            correctAnswer = p.numOne + "/" + p.numTwo;
+           }
+        }
+        if (p.optionFinal == "2"){
+          if (p.option == "1"){
+            correctAnswer = p.numTwo*p.numMulti
+          } else {
+            correctAnswer = p.numOne*p.numMulti
+          }
         }
       }
 
@@ -1175,6 +1238,17 @@ function genProblems(){
     }
   }
 
+  if (level == 3.11 ){
+    return {
+      numOne: genNumbers(9)+1,
+      numTwo: genNumbers(9)+2,
+      numMulti: genNumbers(6)+2,
+      numLargest: 0,
+      option: ["1","2"][genNumbers(2)],
+      optionFinal: ["1","2"][genNumbers(2)]
+    }
+  }
+
   if (level == 4.3){
     return {
     numOne: genNumbers(150)+100,
@@ -1539,7 +1613,19 @@ for (let i = 0; i <  settingButton.length; i++){
         fractionsContainerTwo.classList.remove('hidden');
         document.querySelector("#user-input").setAttribute("type","text");
         instructions.textContent = ""
-        break;  
+        break;
+    
+    case "Level 3.11":
+      level = 3.11;
+      scoreNeeded = 30;
+      highScoreName.innerHTML = highScore3dot11.name
+      highScoreTime.innerHTML = highScore3dot11.time
+      highScoreMistakes.innerHTML = highScore3dot11.mistake
+      wholeNumberContainer.classList.add('hidden');
+      fractionsContainerTwo.classList.remove('hidden');
+      document.querySelector("#user-input").setAttribute("type","text");
+      instructions.textContent = ""
+      break;      
       
     case "Level 4.3":
       level = 4.3;
