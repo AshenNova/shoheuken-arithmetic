@@ -252,28 +252,28 @@ function updateProblems(){
   if (level == 1.5 ){
     if (p.option == "c"){
       if (p.optionTwo == "1"){
-      displayProblem.innerHTML = `${p.numTwo} more than _____ is ${p.numThree}.`
+      displayProblem.innerHTML = `${p.numTwo} ${p.optionThree} than _____ is ${p.numThree}.`
       }
       if (p.optionTwo == "2"){
-      displayProblem.innerHTML = `${p.numThree} is ${p.numTwo} more than _____.` 
+      displayProblem.innerHTML = `${p.numThree} is ${p.numTwo} ${p.optionThree} than _____.` 
       }
     }
     if (p.option == "d"){
       console.log("difference")
       if (p.optionTwo == "1"){
-        displayProblem.innerHTML = `${p.numThree} is _____ more than ${p.numTwo}.`
+        displayProblem.innerHTML = `${p.numThree} is _____ ${p.optionThree} than ${p.numTwo}.`
       }
       if (p.optionTwo == "2"){
-        displayProblem.innerHTML = `${p.numThree} is _____ less than ${p.numTwo}.`
+        displayProblem.innerHTML = `${p.numThree} is _____ ${p.optionThree} than ${p.numTwo}.`
       }
     }
     if (p.option == "r"){
       console.log("result")
       if (p.optionTwo == "1"){
-        displayProblem.innerHTML = `${p.numTwo} less than ${p.numOne} is _____.	`
+        displayProblem.innerHTML = `${p.numTwo} ${p.optionThree} than ${p.numOne} is _____.	`
       }
       if (p.optionTwo == "2"){
-        displayProblem.innerHTML = `${p.numTwo} more than ${p.numOne} is _____.`
+        displayProblem.innerHTML = `${p.numTwo} ${p.optionThree} than ${p.numOne} is _____.`
       }
     }
   }
@@ -977,7 +977,8 @@ function genProblems(){
       numTwo: genNumbers(99)+1,
       numThree: genNumbers(99)+1,
       option: ["c","d","r"][genNumbers(3)],
-      optionTwo: ["1","2","3"][genNumbers(2)]
+      optionTwo: ["1","2","3"][genNumbers(2)],
+      optionThree: ["more","less"][genNumbers(2)]
     }
   }
 
