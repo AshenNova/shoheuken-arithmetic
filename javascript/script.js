@@ -26,6 +26,7 @@ const level1 = document.querySelector('.level1');
 const level1dot1 = document.querySelector('.level1Dot1');
 const level1dot2 = document.querySelector('.level1Dot2'); 
 const level1dot3 = document.querySelector('.level1Dot3');
+const level1dot5 = document.querySelector('.level1Dot5');
 
 const level2 = document.querySelector('.level2');
 const level2dot1 = document.querySelector('.level2Dot1');
@@ -95,6 +96,7 @@ const highScore1 = new HighScore("Jayden Cheong", "16 October 2021", 140, 1)
 const highScore1dot1 = new HighScore("Jayden Cheong", "16 October 2021", 823, 12)
 const highScore1dot2 = new HighScore("Nil", "16 October 2021", 0, 0)
 const highScore1dot3 = new HighScore("Nil", "16 October 2021", 0, 0)
+const highScore1dot5 = new HighScore("Nil", "Nil", 0, 0)
 const highScore2 = new HighScore("Nil", "16 October 2021", 0, 0)
 const highScore2dot1 = new HighScore("JingKai Ng", "16 October 2021", 823, 24)
 const highScore2dot3 = new HighScore("Jingkai Ng", "30 October 2021", 853, 23)
@@ -245,6 +247,35 @@ function updateProblems(){
       p.operator = "-";
       displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`;
     }  
+  }
+
+  if (level == 1.5 ){
+    if (p.option == "c"){
+      if (p.optionTwo == "1"){
+      displayProblem.innerHTML = `${p.numTwo} more than _____ is ${p.numThree}.`
+      }
+      if (p.optionTwo == "2"){
+      displayProblem.innerHTML = `${p.numThree} is ${p.numTwo} more than _____.` 
+      }
+    }
+    if (p.option == "d"){
+      console.log("difference")
+      if (p.optionTwo == "1"){
+        displayProblem.innerHTML = `${p.numThree} is _____ more than ${p.numTwo}.`
+      }
+      if (p.optionTwo == "2"){
+        displayProblem.innerHTML = `${p.numThree} is _____ less than ${p.numTwo}.`
+      }
+    }
+    if (p.option == "r"){
+      console.log("result")
+      if (p.optionTwo == "1"){
+        displayProblem.innerHTML = `${p.numTwo} less than ${p.numOne} is _____.	`
+      }
+      if (p.optionTwo == "2"){
+        displayProblem.innerHTML = `${p.numTwo} more than ${p.numOne} is _____.`
+      }
+    }
   }
 
   if (level == 1.1 || level == 2.1 || level == 3.1 ){
@@ -632,6 +663,18 @@ function handleSubmit(e){
         if (p.operator == "÷") correctAnswer = (p.numThree*p.numFour)/p.numThree
       }
 
+      if ( level == 1.5){
+        if (p.option == "c"){
+          correctAnswer = "c"
+        }
+        if (p.option == "d"){
+          correctAnswer = "d"
+        }
+        if (p.option == "r"){
+          correctAnswer = "r"
+        }
+      }
+
       if (level == 2){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") {
@@ -925,6 +968,16 @@ function genProblems(){
       numThree: genNumbers(5)+1,
       numFour: genNumbers(4)+1,
       operator: ["+","-","x","÷"][genNumbers(4)]
+    }
+  }
+
+  if (level == 1.5){
+    return {
+      numOne: genNumbers(99)+1,
+      numTwo: genNumbers(99)+1,
+      numThree: genNumbers(99)+1,
+      option: ["c","d","r"][genNumbers(3)],
+      optionTwo: ["1","2","3"][genNumbers(2)]
     }
   }
 
@@ -1282,6 +1335,16 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreName.innerHTML = highScore1dot3.name
       highScoreTime.innerHTML = highScore1dot3.time
       highScoreMistakes.innerHTML = highScore1dot3.mistake
+      break;
+
+    case "Level 1.5":
+      level = 1.5;
+      scoreNeeded = 50;
+      highScoreName.innerHTML = highScore1dot5.name
+      highScoreTime.innerHTML = highScore1dot5.time
+      highScoreMistakes.innerHTML = highScore1dot5.mistake
+      document.querySelector("#user-input").setAttribute("type","text");
+      instructions.textContent = "Answer using 'c', 'd' or 'r' "
       break;
 
     case "Level 2":
