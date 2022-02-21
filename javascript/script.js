@@ -45,6 +45,8 @@ const level4dot3 = document.querySelector('.level4Dot3');
 const level4dot4 = document.querySelector('.level4Dot4');
 const level4dot5 = document.querySelector('.level4Dot5');
 const level4dot6 = document.querySelector('.level4Dot6');
+const level4dot7 = document.querySelector('.level4Dot7');
+const level4dot8 = document.querySelector('.level4Dot8');
 
 const level5dot3 = document.querySelector('.level5Dot3');
 const level6dot3 = document.querySelector('.level6Dot3');
@@ -106,6 +108,7 @@ const highScore4dot4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot5 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot6 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot7 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4dot8 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5dot3 = new HighScore("Jayden Goo", "8 December 2021", 357, 1)
 const highScore6dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
@@ -512,15 +515,21 @@ function updateProblems(){
     secondUnitMeasurement.textContent = `${p.unitMeasurement}`  
   }
   if (level == 4.7) {
-
-    if (p.numTwo == p.numThree){
-      p.numTwo = p.numTwo - 1;
-    }
-    if (p.numTwo > p.numThree){
+    if (p.numTwo >= p.numThree){
       p.numTwo = p.numTwo - 1 - (p.numTwo-p.numThree);
     }
     twoWholeNumber.textContent = p.numOne
     twoNumerator.textContent = p.numTwo
+    twoDenominator.textContent = p.numThree
+  }
+
+  if ( level == 4.8){
+    if (p.numTwo >= p.numThree){
+      p.numTwo = p.numTwo - 1 - (p.numTwo-p.numThree);
+    }
+    twoWholeNumber.textContent = "";
+    p.numTwo = p.numOne*p.numThree+p.numTwo;
+    twoNumerator.textContent = p.numTwo;
     twoDenominator.textContent = p.numThree
   }
 
@@ -764,6 +773,16 @@ function handleSubmit(e){
         p.numFour = p.numOne*p.numThree+p.numTwo
         correctAnswer = p.numFour + "/" + p.numThree
         }
+      }
+
+      if ( level == 4.8 ){
+        for (let i = p.numTwo; i > 1; i--){
+          if ((p.numTwo % i == 0 ) && (p.numThree % i == 0)){
+            p.numTwo /= i;
+            p.numThree /= i;
+          }
+        }
+        correctAnswer = p.numOne + " " + p.numTwo%p.numThree + "/" + p.numThree
       }
 
       if (level == 7){
@@ -1038,6 +1057,15 @@ function genProblems(){
     }
   }
 
+  if (level == 4.8){
+    return {
+    numOne: genNumbers(9)+1,
+    numTwo: genNumbers(9)+2,
+    numThree: genNumbers(10)+2,
+    numFour: 0
+    }
+  }
+
   if (level == 5.3){
     return {
     numOne: genNumbers(500)+500,
@@ -1260,7 +1288,7 @@ for (let i = 0; i <  settingButton.length; i++){
         wholeNumberContainer.classList.add('hidden');
         fractionsContainerTwo.classList.remove('hidden');
         document.querySelector("#user-input").setAttribute("type","text");
-        instructions.textContent = "Numerator/Denominator"
+        instructions.textContent = "Formate: 2/3"
         break;
 
     case "Level 3.3":
@@ -1350,7 +1378,19 @@ for (let i = 0; i <  settingButton.length; i++){
       wholeNumberContainer.classList.add('hidden');
       fractionsContainerTwo.classList.remove('hidden');
       document.querySelector("#user-input").setAttribute("type","text");
-      instructions.textContent = "Numerator/Denominator"
+      instructions.textContent = "Format: 2/3"
+      break;
+
+    case "Level 4.8":
+      level = 4.8;
+      scoreNeeded = 30;
+      highScoreName.innerHTML = highScore4dot8.name
+      highScoreTime.innerHTML = highScore4dot8.time
+      highScoreMistakes.innerHTML = highScore4dot8.mistake
+      wholeNumberContainer.classList.add('hidden');
+      fractionsContainerTwo.classList.remove('hidden');
+      document.querySelector("#user-input").setAttribute("type","text");
+      instructions.textContent = "Format: 2 4/5"
       break;
 
     case "Level 5.3":
