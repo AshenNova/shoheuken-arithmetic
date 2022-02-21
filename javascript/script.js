@@ -791,7 +791,7 @@ function handleSubmit(e){
       }
       if ( level == 4.6 ){
         if (p.unitMeasurement == "m"){
-          correctAnswer = p.numOne+p.numThree/100
+          correctAnswer = Math.round(p.numOne+p.numThree/100)*100)/100;
         }
         if (p.unitMeasurement == "$"){
           if (p.numThree%10 == 0){
