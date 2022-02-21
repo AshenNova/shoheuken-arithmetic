@@ -21,25 +21,31 @@ const backButton = document.querySelectorAll(".back-button");
 
 const levelSetting = document.querySelector('.level-setting');
 const levelLabel = document.querySelector('.level-label');
+
 const level1 = document.querySelector('.level1');
 const level1dot1 = document.querySelector('.level1Dot1');
 const level1dot2 = document.querySelector('.level1Dot2'); 
 const level1dot3 = document.querySelector('.level1Dot3');
+
 const level2 = document.querySelector('.level2');
 const level2dot1 = document.querySelector('.level2Dot1');
 const level2dot3 = document.querySelector('.level2Dot3');
+
 const level3 = document.querySelector('.level3');
 const level3dot1 = document.querySelector('.level3Dot1');
+const level3dot2 = document.querySelector('.level3Dot2');
 const level3dot3 = document.querySelector('.level3Dot3');
 const level3dot4 = document.querySelector('.level3Dot4');
 const level3dot5 = document.querySelector('.level3Dot5');
 const level3dot6 = document.querySelector('.level3Dot6');
 const level3dot7 = document.querySelector('.level3Dot7');
+
 const level4 = document.querySelector('.level4');
 const level4dot3 = document.querySelector('.level4Dot3');
 const level4dot4 = document.querySelector('.level4Dot4');
 const level4dot5 = document.querySelector('.level4Dot5');
 const level4dot6 = document.querySelector('.level4Dot6');
+
 const level5dot3 = document.querySelector('.level5Dot3');
 const level6dot3 = document.querySelector('.level6Dot3');
 const level7 = document.querySelector('.level7');
@@ -89,6 +95,7 @@ const highScore2dot3 = new HighScore("Jingkai Ng", "30 October 2021", 853, 23)
 const highScore2dot4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3 = new HighScore("Shanice Lee", "30 October 2021", 614, 7)
 const highScore3dot1 = new HighScore("Shanice Lee", "30 October 2021", 162, 5)
+const highScore3dot2 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3dot3 = new HighScore("Shanice Lee", "6 November 2021", 662, 4)
 const highScore3dot4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3dot5 = new HighScore("Nil", "Nil", 0, 0)
@@ -285,6 +292,16 @@ function updateProblems(){
       }
     }
     if (p.operator == "÷") displayProblem.innerHTML = `${p.numThree*p.numFour} ${p.operator} ${p.numThree}` 
+  }
+
+  if ( level == 3.2 ){
+    if (p.numOne >= p.numTwo){
+      p.numOne = p.numOne - 1 - ( p.numOne - p.numTwo);
+    }
+    twoWholeNumber.textContent = ""
+    twoNumerator.textContent = p.numOne*p.numMulti
+    twoDenominator.textContent = p.numTwo*p.numMulti
+    p.numLargest = p.numTwo*p.numMulti
   }
 
   if (level == 3.4){
@@ -618,6 +635,21 @@ function handleSubmit(e){
         }  
       }
 
+      if ( level == 3.2){
+        for (let i = p.numLargest; i > 1; i--){
+          if ((p.numOne % i == 0) && (p.numTwo % i == 0)){
+            p.numOne /= i;
+            p.numTwo /= i;
+            correctAnswer = p.numOne + "/" + p.numTwo;
+          }
+        }  
+         if ( p.numOne == 1){
+          correctAnswer = p.numOne + "/" + p.numTwo;
+         } else {
+          correctAnswer = p.numOne + "/" + p.numTwo;
+         }
+      }
+
       if (level == 3.3 || level == 2.3 || level == 4.3 || level == 5.3 || level == 6.3){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") {
@@ -883,6 +915,15 @@ function genProblems(){
       numThree: genNumbers(6)+5,
       numFour: genNumbers(6)+5,
       operator: ["x","÷"][genNumbers(2)]
+    }
+  }
+
+  if (level == 3.2){
+    return {
+      numOne: genNumbers(9)+1,
+      numTwo: genNumbers(9)+2,
+      numMulti: genNumbers(6)+2,
+      numLargest: 0
     }
   }
 
@@ -1209,6 +1250,18 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreTime.innerHTML = highScore3dot1.time
       highScoreMistakes.innerHTML = highScore3dot1.mistake
       break;
+
+      case "Level 3.2":
+        level = 3.2;
+        scoreNeeded = 30;
+        highScoreName.innerHTML = highScore3dot2.name
+        highScoreTime.innerHTML = highScore3dot2.time
+        highScoreMistakes.innerHTML = highScore3dot2.mistake
+        wholeNumberContainer.classList.add('hidden');
+        fractionsContainerTwo.classList.remove('hidden');
+        document.querySelector("#user-input").setAttribute("type","text");
+        instructions.textContent = "Numerator/Denominator"
+        break;
 
     case "Level 3.3":
       level = 3.3;
