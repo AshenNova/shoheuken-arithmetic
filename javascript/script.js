@@ -49,6 +49,7 @@ const level4dot3 = document.querySelector('.level4Dot3');
 const level4dot4 = document.querySelector('.level4Dot4');
 const level4dot5 = document.querySelector('.level4Dot5');
 const level4dot6 = document.querySelector('.level4Dot6');
+const level4dot7 = document.querySelector('.level4Dot7');
 const level4dot9 = document.querySelector('.level4Dot9');
 const level4dot10 = document.querySelector('.level4Dot10');
 const level4dot11 = document.querySelector('.level4Dot11');
@@ -119,6 +120,7 @@ const highScore4dot3 = new HighScore("Jadee Wong", "10 December 2021", 460, 2)
 const highScore4dot4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot5 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot6 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4dot7 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot10 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot11 = new HighScore("Nil", "Nil", 0, 0)
@@ -649,6 +651,80 @@ function updateProblems(){
     }
     secondUnitMeasurement.textContent = `${p.unitMeasurement}`  
   }
+
+  if ( level == 4.7){
+    // level 4.5
+    if (p.optionFinal == "1"){
+      if ((p.unitMeasurement == "m" || p.unitMeasurement == "$") && (p.option == "2")){
+        p.numOne = p.numSix
+      }
+      if (p.unitMeasurement == "m"){
+        p.secondUnitMeasurement = "cm";
+        displayProblem.innerHTML = `${p.numOne+(p.numThree/100)} ${p.unitMeasurement}`
+      }
+      if (p.unitMeasurement == "$"){
+        p.secondUnitMeasurement = "¢";
+        displayProblem.innerHTML = ` ${p.unitMeasurement}${p.numOne+(p.numThree/100)}`
+      }
+  
+  
+      if ((p.unitMeasurement == "ℓ" || p.unitMeasurement == "kg" || p.unitMeasurement == "kg") && (p.option == "2")){
+        p.numTwo = p.numSix
+      }
+      if (p.unitMeasurement == "ℓ"){
+        p.secondUnitMeasurement = "ml";
+        displayProblem.innerHTML =  `${p.numOne+Math.floor((p.numTwo/1000)*1000)/1000} ${p.unitMeasurement}`
+      }
+      if (p.unitMeasurement == "km"){
+        p.secondUnitMeasurement = "m";
+        displayProblem.innerHTML =  `${p.numOne+Math.floor((p.numTwo/1000)*1000)/1000} ${p.unitMeasurement}`
+      }
+      if (p.unitMeasurement == "kg"){
+        p.secondUnitMeasurement = "g";
+        displayProblem.innerHTML =  `${p.numOne+Math.floor((p.numTwo/1000)*1000)/1000} ${p.unitMeasurement}`
+      }
+      secondUnitMeasurement.textContent = `${p.secondUnitMeasurement}`  
+    }
+    // level 4.6
+    if (p.optionFinal == "2"){
+      if ((p.unitMeasurement == "m" || p.unitMeasurement == "$") && (p.option == "2")){
+        p.numOne = p.numFive
+      }
+      if ((p.unitMeasurement == "m" || p.unitMeasurement == "$") && (p.optionTwo == "2")){
+        p.numThree = p.numFour
+      }
+      if (p.unitMeasurement == "m"){
+        p.secondUnitMeasurement = "cm";
+        displayProblem.innerHTML = `${p.numOne} ${p.unitMeasurement} ${p.numThree} ${p.secondUnitMeasurement}`
+      }
+      if (p.unitMeasurement == "$"){
+        p.secondUnitMeasurement = "¢";
+        displayProblem.innerHTML = `${p.numOne*100+p.numThree}${p.secondUnitMeasurement}`
+      }
+  
+      if ((p.unitMeasurement == "ℓ" || p.unitMeasurement == "kg" || p.unitMeasurement == "kg") && (p.option == "2")){
+        p.numTwo = p.numSix
+      }
+      if ((p.unitMeasurement == "ℓ" || p.unitMeasurement == "kg" || p.unitMeasurement == "kg") && (p.optionTwo == "2")){
+        p.numOne = p.numFive
+      }
+      if (p.unitMeasurement == "ℓ"){
+        p.secondUnitMeasurement = "ml";
+        displayProblem.innerHTML =  `${p.numOne} ${p.unitMeasurement} ${p.numTwo}${p.secondUnitMeasurement}`
+      }
+      if (p.unitMeasurement == "km"){
+        p.secondUnitMeasurement = "m";
+        displayProblem.innerHTML =  `${p.numOne} ${p.unitMeasurement} ${p.numTwo}${p.secondUnitMeasurement}`
+      }
+      if (p.unitMeasurement == "kg"){
+        p.secondUnitMeasurement = "g";
+        displayProblem.innerHTML =  `${p.numOne} ${p.unitMeasurement} ${p.numTwo}${p.secondUnitMeasurement}`
+      }
+      secondUnitMeasurement.textContent = `${p.unitMeasurement}`  
+    }
+  }
+
+
   if (level == 4.9) {
     threeWholeNumber.textContent = ""
     threeNumerator.textContent = "?"
@@ -983,6 +1059,7 @@ function handleSubmit(e){
           correctAnswer = Math.round(p.numOne*1000+p.numTwo)
         }
       }
+
       if ( level == 4.6 ){
         if (p.unitMeasurement == "m"){
           correctAnswer = Math.round((p.numOne+p.numThree/100)*100)/100;
@@ -998,7 +1075,33 @@ function handleSubmit(e){
           correctAnswer = Math.round((p.numOne+p.numTwo/1000)*1000)/1000
         }
       }
-      
+      if ( level == 4.7){
+        // level 4.5
+        if (p.optionFinal == "1"){
+          if (p.unitMeasurement == "m" || p.unitMeasurement == "$"){
+            correctAnswer = Math.round(p.numOne*100+p.numThree)
+          }
+          if (p.unitMeasurement == "ℓ" || p.unitMeasurement == "kg" ||  p.unitMeasurement == "km" ){
+            correctAnswer = Math.round(p.numOne*1000+p.numTwo)
+          }
+        }
+        // level 4.6
+        if (p.optionFinal == "2"){
+          if (p.unitMeasurement == "m"){
+            correctAnswer = Math.round((p.numOne+p.numThree/100)*100)/100;
+          }
+          if (p.unitMeasurement == "$"){
+            if (p.numThree%10 == 0){
+              correctAnswer = p.numOne+p.numThree/100+"0"
+            } else {
+              correctAnswer = Math.round((p.numOne+p.numThree/100)*100)/100
+            }
+          }
+          if (p.unitMeasurement == "ℓ" || p.unitMeasurement == "kg" ||  p.unitMeasurement == "km" ){
+            correctAnswer = Math.round((p.numOne+p.numTwo/1000)*1000)/1000
+          }
+        }
+      }
       if (level == 4.9){
         for (let i = p.numThree; i > 1; i--){
           if ((p.numTwo % i == 0 ) && (p.numThree % i == 0)){
@@ -1355,6 +1458,22 @@ function genProblems(){
     numSix: genNumbers(98)+1,
     option: ["1","2"][genNumbers(2)],
     optionTwo: ["1","2"][genNumbers(2)],
+    unitMeasurement: ["m","$","ℓ","km","kg"][genNumbers(5)],
+    secondUnitMeasurement: 0
+    }
+  }
+
+  if (level == 4.7){
+    return {
+    numOne: genNumbers(98)+1,
+    numTwo: genNumbers(998)+1,
+    numThree: genNumbers(98)+1,
+    numFour:  genNumbers(8)+1,
+    numFive: genNumbers(8)+1,
+    numSix: genNumbers(98)+1,
+    option: ["1","2"][genNumbers(2)],
+    optionTwo: ["1","2"][genNumbers(2)],
+    optionFinal:  ["1","2"][genNumbers(2)],
     unitMeasurement: ["m","$","ℓ","km","kg"][genNumbers(5)],
     secondUnitMeasurement: 0
     }
@@ -1734,6 +1853,15 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreMistakes.innerHTML = highScore4dot6.mistake
       document.querySelector("#user-input").setAttribute("step","0.000001")
       break;
+
+    case "Level 4.7":
+      level = 4.7;
+      scoreNeeded = 30;
+      highScoreName.innerHTML = highScore4dot7.name
+      highScoreTime.innerHTML = highScore4dot7.time
+      highScoreMistakes.innerHTML = highScore4dot7.mistake
+      document.querySelector("#user-input").setAttribute("step","0.000001")
+      break;  
 
     case "Level 4.9":
       level = 4.9;
