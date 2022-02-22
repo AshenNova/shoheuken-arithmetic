@@ -51,6 +51,7 @@ const level4dot5 = document.querySelector('.level4Dot5');
 const level4dot6 = document.querySelector('.level4Dot6');
 const level4dot9 = document.querySelector('.level4Dot9');
 const level4dot10 = document.querySelector('.level4Dot10');
+const level4dot11 = document.querySelector('.level4Dot11');
 
 const level5dot3 = document.querySelector('.level5Dot3');
 const level6dot3 = document.querySelector('.level6Dot3');
@@ -120,6 +121,7 @@ const highScore4dot5 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot6 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot10 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4dot11 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5dot3 = new HighScore("Jayden Goo", "8 December 2021", 357, 1)
 const highScore6dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
@@ -526,6 +528,7 @@ function updateProblems(){
     }
   }
   if ( level == 3.11){
+    // Level 3.10
     if (p.optionFinal == "1"){
       threeWholeNumber.textContent = ""
       threeNumerator.textContent = "?"
@@ -538,6 +541,7 @@ function updateProblems(){
       twoDenominator.textContent = p.numTwo*p.numMulti
       p.numLargest = p.numTwo*p.numMulti
     }
+    // Level 3.11
     if (p.optionFinal == "2"){
       if (p.numOne >= p.numTwo){
         p.numOne = p.numOne - 1 - (p.numOne - p.numTwo);
@@ -668,6 +672,34 @@ function updateProblems(){
     p.numTwo = p.numOne*p.numThree+p.numTwo;
     twoNumerator.textContent = p.numTwo;
     twoDenominator.textContent = p.numThree
+  }
+
+  if ( level == 4.11 ){
+    // level 4.9
+    if (p.optionFinal == "1"){
+      threeWholeNumber.textContent = ""
+      threeNumerator.textContent = "?"
+      threeDenominator.textContent = "?"
+      if (p.numTwo >= p.numThree){
+        p.numTwo = p.numTwo - 1 - (p.numTwo-p.numThree);
+      }
+      twoWholeNumber.textContent = p.numOne
+      twoNumerator.textContent = p.numTwo
+      twoDenominator.textContent = p.numThree
+    }
+    // level 4.10
+    if (p.optionFinal == "2"){
+      threeWholeNumber.textContent = "?"
+      threeNumerator.textContent = "?"
+      threeDenominator.textContent = "?"
+      if (p.numTwo >= p.numThree){
+        p.numTwo = p.numTwo - 1 - (p.numTwo-p.numThree);
+      }
+      twoWholeNumber.textContent = "";
+      p.numTwo = p.numOne*p.numThree+p.numTwo;
+      twoNumerator.textContent = p.numTwo;
+      twoDenominator.textContent = p.numThree
+    }
   }
 
   if (level == 7){
@@ -818,53 +850,6 @@ function handleSubmit(e){
         }  
       }
 
-      if ( level == 3.9){
-        for (let i = p.numLargest; i > 1; i--){
-          if ((p.numOne % i == 0) && (p.numTwo % i == 0)){
-            p.numOne /= i;
-            p.numTwo /= i;
-            correctAnswer = p.numOne + "/" + p.numTwo;
-          }
-        }  
-         if ( p.numOne == 1){
-          correctAnswer = p.numOne + "/" + p.numTwo;
-         } else {
-          correctAnswer = p.numOne + "/" + p.numTwo;
-         }
-      }
-
-      if ( level == 3.101){
-        if (p.option == "1"){
-          correctAnswer = p.numTwo*p.numMulti
-        } else {
-          correctAnswer = p.numOne*p.numMulti
-        }
-      }
-
-      if ( level == 3.11){
-        if (p.optionFinal == "1"){
-          for (let i = p.numLargest; i > 1; i--){
-            if ((p.numOne % i == 0) && (p.numTwo % i == 0)){
-              p.numOne /= i;
-              p.numTwo /= i;
-              correctAnswer = p.numOne + "/" + p.numTwo;
-            }
-          }  
-           if ( p.numOne == 1){
-            correctAnswer = p.numOne + "/" + p.numTwo;
-           } else {
-            correctAnswer = p.numOne + "/" + p.numTwo;
-           }
-        }
-        if (p.optionFinal == "2"){
-          if (p.option == "1"){
-            correctAnswer = p.numTwo*p.numMulti
-          } else {
-            correctAnswer = p.numOne*p.numMulti
-          }
-        }
-      }
-
       if (level == 3.3 || level == 2.3 || level == 4.3 || level == 5.3 || level == 6.3){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") {
@@ -933,6 +918,55 @@ function handleSubmit(e){
         correctAnswer = commonMultipleArrTwo[commonMultipleArrTwo.length-1];
       }
 
+      if ( level == 3.9){
+        for (let i = p.numLargest; i > 1; i--){
+          if ((p.numOne % i == 0) && (p.numTwo % i == 0)){
+            p.numOne /= i;
+            p.numTwo /= i;
+            correctAnswer = p.numOne + "/" + p.numTwo;
+          }
+        }  
+         if ( p.numOne == 1){
+          correctAnswer = p.numOne + "/" + p.numTwo;
+         } else {
+          correctAnswer = p.numOne + "/" + p.numTwo;
+         }
+      }
+
+      if ( level == 3.101){
+        if (p.option == "1"){
+          correctAnswer = p.numTwo*p.numMulti
+        } else {
+          correctAnswer = p.numOne*p.numMulti
+        }
+      }
+
+      if ( level == 3.11){
+        // level 3.9
+        if (p.optionFinal == "1"){
+          for (let i = p.numLargest; i > 1; i--){
+            if ((p.numOne % i == 0) && (p.numTwo % i == 0)){
+              p.numOne /= i;
+              p.numTwo /= i;
+              correctAnswer = p.numOne + "/" + p.numTwo;
+            }
+          }  
+           if ( p.numOne == 1){
+            correctAnswer = p.numOne + "/" + p.numTwo;
+           } else {
+            correctAnswer = p.numOne + "/" + p.numTwo;
+           }
+        }
+        // level 3.10
+        if (p.optionFinal == "2"){
+          if (p.option == "1"){
+            correctAnswer = p.numTwo*p.numMulti
+          } else {
+            correctAnswer = p.numOne*p.numMulti
+          }
+        }
+      }
+
       if ( level == 4.4 ){
         if (p.operator == "x"){
           correctAnswer = Math.round(p.numOne/p.numTwo*p.numThree*10000)/10000
@@ -989,6 +1023,35 @@ function handleSubmit(e){
           }
         }
         correctAnswer = p.numOne + " " + p.numTwo%p.numThree + "/" + p.numThree
+      }
+
+      if ( level == 4.11 ){
+        // level 4.9
+        if (p.optionFinal == "1"){
+          for (let i = p.numThree; i > 1; i--){
+            if ((p.numTwo % i == 0 ) && (p.numThree % i == 0)){
+              p.numTwo /= i;
+              p.numThree /= i;
+            }
+          }
+          if (p.numTwo == 1){
+            p.numFour = p.numOne*p.numThree+p.numTwo
+            correctAnswer = p.numFour + "/" + p.numThree
+          } else {
+          p.numFour = p.numOne*p.numThree+p.numTwo
+          correctAnswer = p.numFour + "/" + p.numThree
+          }
+        }
+        if (p.optionFinal == "2"){
+          // level 4.10
+          for (let i = p.numTwo; i > 1; i--){
+            if ((p.numTwo % i == 0 ) && (p.numThree % i == 0)){
+              p.numTwo /= i;
+              p.numThree /= i;
+            }
+          }
+          correctAnswer = p.numOne + " " + p.numTwo%p.numThree + "/" + p.numThree
+        }
       }
 
       if (level == 7){
@@ -1312,6 +1375,16 @@ function genProblems(){
     numTwo: genNumbers(9)+2,
     numThree: genNumbers(10)+2,
     numFour: 0
+    }
+  }
+
+  if (level == 4.11){
+    return {
+    numOne: genNumbers(9)+1,
+    numTwo: genNumbers(9)+2,
+    numThree: genNumbers(10)+2,
+    numFour: 0,
+    optionFinal: ["1","2"][genNumbers(2)]
     }
   }
 
@@ -1685,6 +1758,18 @@ for (let i = 0; i <  settingButton.length; i++){
       document.querySelector("#user-input").setAttribute("type","text");
       instructions.textContent = "Format: 2 4/5"
       break;
+
+      case "Level 4.11":
+        level = 4.11;
+        scoreNeeded = 30;
+        highScoreName.innerHTML = highScore4dot11.name
+        highScoreTime.innerHTML = highScore4dot11.time
+        highScoreMistakes.innerHTML = highScore4dot11.mistake
+        wholeNumberContainer.classList.add('hidden');
+        fractionsContainerTwo.classList.remove('hidden');
+        document.querySelector("#user-input").setAttribute("type","text");
+        instructions.textContent = ""
+        break;
 
     case "Level 5.3":
       level = 5.3;
