@@ -183,8 +183,13 @@ table{
   text-align: center;
   font-size: 50px;
   font-weight: 600;
-  margin: 50px 0;
+  margin: 30px 0;
   letter-spacing: 2px;
+}
+.help-me-text{
+  text-align: center;
+  font-size: 40px;
+  margin: 20px 0 0;
 }
 
 .display-problems-two{

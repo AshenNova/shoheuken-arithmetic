@@ -1,5 +1,6 @@
 const instructions = document.querySelector(".instructions")
 const displayProblem = document.querySelector(".display-problems")
+const helpMe = document.querySelector(".help-me-text")
 const ourForm = document.querySelector(".our-form")
 const userInput = document.getElementById("user-input")
 const currentScore = document.getElementById("current-score")
@@ -46,6 +47,7 @@ const level3dot10 = document.querySelector('.level3dot10');
 const level3dot11 = document.querySelector('.level3dot11');
 
 const level4 = document.querySelector('.level4');
+const level4dot1 = document.querySelector('.level4Dot1');
 const level4dot3 = document.querySelector('.level4Dot3');
 const level4dot4 = document.querySelector('.level4Dot4');
 const level4dot5 = document.querySelector('.level4Dot5');
@@ -118,6 +120,7 @@ const highScore3dot7 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3dot9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3dot10 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3dot11 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4dot1 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot3 = new HighScore("Jadee Wong", "10 December 2021", 460, 2)
 const highScore4dot4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot5 = new HighScore("Nil", "Nil", 0, 0)
@@ -656,6 +659,16 @@ function updateProblems(){
         threeDenominator.textContent = p.numTwo*p.numMulti
       }
     }
+  }
+  if ( level == "4.1" ){
+    if (p.value == "thousands" && p.numOne > 1000){
+      p.numOne = p.numOne + 1000;
+    }
+    if (p.value == "ten thousands" && p.numOne > 10000){
+      p.numOne = p.numOne + 10000;
+    }
+    displayProblem.innerHTML = `${p.numOne} ≈ `
+    helpMe.textContent = `${p.placeValue}`
   }
 
   if (level == 4.4){
@@ -1202,6 +1215,20 @@ function handleSubmit(e){
           }
         }
       }
+      if ( level == "4.1"){
+        if (p.placeValue == "tens"){
+          correctAnswer = Math.round(p.numOne/10)*10
+        }
+        if (p.placeValue == "hundreds"){
+          correctAnswer = Math.round(p.numOne/100)*100
+        }
+        if (p.placeValue == "thousands"){
+          correctAnswer = Math.round(p.numOne/1000)*1000
+        }
+        if (p.placeValue == "ten thousands"){
+          correctAnswer = Math.round(p.numOne/10000)*10000
+        }
+      }
 
       if ( level == 4.4 ){
         if (p.operator == "x"){
@@ -1586,6 +1613,13 @@ function genProblems(){
       numLargest: 0,
       option: ["1","2"][genNumbers(2)],
       optionFinal: ["1","2"][genNumbers(2)]
+    }
+  }
+
+  if (level == "4.1"){
+    return {
+    numOne: genNumbers(99998)+100,
+    placeValue: ["tens","hundreds","thousands","ten thousands"][genNumbers(4)]
     }
   }
 
@@ -2001,7 +2035,15 @@ for (let i = 0; i <  settingButton.length; i++){
       document.querySelector("#user-input").setAttribute("type","text");
       instructions.textContent = ""
       break;      
-      
+    
+    case "Level 4.1":
+      level = "4.1";
+      scoreNeeded = 30;
+      highScoreName.innerHTML = highScore4dot1.name
+      highScoreTime.innerHTML = highScore4dot1.time
+      highScoreMistakes.innerHTML = highScore4dot1.mistake
+      break;  
+
     case "Level 4.3":
       level = 4.3;
       scoreNeeded = 30;
