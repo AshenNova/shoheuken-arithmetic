@@ -85,7 +85,7 @@ const threeDenominator = document.querySelector(".three-denominator")
 
 let level = 0;
 let player = 1;
-const arr = [];
+let arr = [];
 const commonMultipleArr = [];
 const commonMultipleArrTwo = [];
 
@@ -316,8 +316,11 @@ function updateProblems(){
   }
 
   if ( level == 1.6) {
-    console.log(p.numOne, p.numTwo, p.numThree)
     if (p.optionFinal == "1"){
+    arr = [p.numOne, p.numTwo];
+    if (p.numTwo > p.numOne){
+      [p.numTwo, p.numOne] = arr
+    }
       p.numTotal = p.numOne+p.numTwo
       p.numDiff = p.numOne-p.numTwo
       if (p.operator == "+" && p.numTotal > p.numThree){
@@ -335,6 +338,10 @@ function updateProblems(){
      displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo} = ${p.numThree} ${p.operatorTwo} ___`
     }
     if (p.optionFinal == "2"){
+      arr = [p.numOne, p.numTwo];
+      if (p.numTwo > p.numOne){
+        [p.numTwo, p.numOne] = arr
+      }
       p.numTotal = p.numOne+p.numTwo
       p.numDiff = p.numOne-p.numTwo
       if (p.operator == "+" && p.numTotal > p.numFour){
@@ -352,6 +359,10 @@ function updateProblems(){
       displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo} = ___ ${p.operatorTwo} ${p.numFour}`
     }
     if (p.optionFinal == "3"){
+      arr = [p.numThree, p.numFour];
+      if (p.numFour > p.numThree){
+        [p.numFour, p.numThree] = arr
+      }
       p.numTotal = p.numThree+p.numFour
       p.numDiff = p.numThree-p.numFour
       if (p.operatorTwo == "+" && p.numTotal > p.numOne){
@@ -369,6 +380,10 @@ function updateProblems(){
       displayProblem.innerHTML = `${p.numOne} ${p.operator} ___ = ${p.numThree} ${p.operatorTwo} ${p.numFour}`
     }
     if (p.optionFinal == "4"){
+      arr = [p.numThree, p.numFour];
+      if (p.numFour > p.numThree){
+        [p.numFour, p.numThree] = arr
+      }
       p.numTotal = p.numThree+p.numFour
       p.numDiff = p.numThree-p.numFour
       if (p.operatorTwo == "+" && p.numTotal > p.numTwo){
@@ -1423,10 +1438,10 @@ function genProblems(){
 
   if (level == 1.6){
     return {
-      numOne: genNumbers(6)+5,
-      numTwo: genNumbers(5)+1,
-      numThree: genNumbers(6)+5,
-      numFour: genNumbers(5)+1,
+      numOne: genNumbers(9)+1,
+      numTwo: genNumbers(9)+1,
+      numThree: genNumbers(9)+1,
+      numFour: genNumbers(9)+1,
       numTotal: 0,
       numDiff: 0,
       operator: ["+","-"][genNumbers(2)],
