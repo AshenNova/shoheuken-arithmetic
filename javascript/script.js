@@ -695,7 +695,11 @@ function updateProblems(){
     }
     if (p.unitMeasurement == "$"){
       p.secondUnitMeasurement = "¢";
-      displayProblem.innerHTML = ` ${p.unitMeasurement}${p.numOne+(p.numThree/100)}`
+      if (p.numThree%10 == 0){
+        displayProblem.innerHTML = ` ${p.unitMeasurement}${p.numOne+(p.numThree/100)}0`
+      } else {
+        displayProblem.innerHTML = ` ${p.unitMeasurement}${p.numOne+(p.numThree/100)}`
+      }
     }
 
 
@@ -766,7 +770,11 @@ function updateProblems(){
       }
       if (p.unitMeasurement == "$"){
         p.secondUnitMeasurement = "¢";
-        displayProblem.innerHTML = ` ${p.unitMeasurement}${p.numOne+(p.numThree/100)}`
+        if (p.numThree%10 == 0){
+          displayProblem.innerHTML = ` ${p.unitMeasurement}${p.numOne+(p.numThree/100)}0`
+        } else {
+          displayProblem.innerHTML = ` ${p.unitMeasurement}${p.numOne+(p.numThree/100)}`
+        }
       }
   
   
