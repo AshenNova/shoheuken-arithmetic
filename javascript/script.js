@@ -911,9 +911,9 @@ function updateProblems(){
       }
     }
     displayProblem.innerHTML = 
-    `A is ${p.numOne}/${p.numTwo} of ${p.letterBTotal}.
-    ${p.numThree}/${p.numFour} of A was removed.
-    ${p.numFive}/${p.numSix} of B was removed.
+    `A is ${p.numOne}/${p.numTwo} of ${p.letterBTotal}.</br>
+    ${p.numThree}/${p.numFour} of A was removed.</br>
+    ${p.numFive}/${p.numSix} of B was removed.</br>
     What fraction of the total was ${p.letterAB} ${p.letterLeftRemoved}.`
   }
 
