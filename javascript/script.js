@@ -58,6 +58,7 @@ const level4dot10 = document.querySelector('.level4Dot10');
 const level4dot11 = document.querySelector('.level4Dot11');
 
 const level5dot1 = document.querySelector('.level5Dot1');
+const level5dot2 = document.querySelector('.level5Dot2');
 const level5dot3 = document.querySelector('.level5Dot3');
 const level6dot3 = document.querySelector('.level6Dot3');
 const level7 = document.querySelector('.level7');
@@ -131,6 +132,7 @@ const highScore4dot9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot10 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot11 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5dot1 = new HighScore("Nil", "Nil", 0, 0)
+const highScore5dot2 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5dot3 = new HighScore("Jayden Goo", "8 December 2021", 357, 1)
 const highScore6dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
@@ -198,6 +200,19 @@ toMultiplesBtn.addEventListener('click', function(){
   levelSetting.classList.add('hidden');
 })
 
+const resetStuff = function (){
+  fractionsContainer.classList.add('hidden');
+  fractionsContainerTwo.classList.add('hidden');
+  wholeNumberContainer.classList.remove('hidden');
+  secondUnitMeasurement.textContent = ""
+  instructions.textContent = ""
+  document.querySelector("#user-input").setAttribute("type","number");
+  document.querySelector("#user-input").setAttribute("step","1");
+  multiplesSettingCl.classList.add('hidden');
+  displayProblem.style.fontSize = "50px";
+  userInput.style.width = "175px";
+}
+
 resetButton.addEventListener('click', function(){
   levelSetting.classList.remove('hidden');
   finalBox.classList.add('hidden');
@@ -208,26 +223,16 @@ resetButton.addEventListener('click', function(){
   player = 1;
   document.getElementById('timer').innerHTML = 0;
   timerD.innerHTML = 4;
-  fractionsContainer.classList.add('hidden');
-  fractionsContainerTwo.classList.add('hidden');
-  wholeNumberContainer.classList.remove('hidden');
-  secondUnitMeasurement.textContent = ""
-  instructions.textContent = ""
-  document.querySelector("#user-input").setAttribute("type","number");
-  document.querySelector("#user-input").setAttribute("step","1");
-  displayProblem.style.fontSize = "50px";
+
+  resetStuff()
 })
 
 for (let x = 0; x < backButton.length; x++){
   backButton[x].addEventListener('click', function(){
-    fractionsContainer.classList.add('hidden');
-    fractionsContainerTwo.classList.add('hidden');
-    wholeNumberContainer.classList.remove('hidden');
-    instructions.textContent = ""
     levelSetting.classList.remove('hidden');
     startBox.classList.add('hidden');
-    multiplesSettingCl.classList.add('hidden');
-    displayProblem.style.fontSize = "50px";
+
+    resetStuff()
   })
 }
 
@@ -911,13 +916,41 @@ function updateProblems(){
       }
     }
     displayProblem.innerHTML = 
-    `A is ${p.numOne}/${p.numTwo} of ${p.letterBTotal}.</br>
+    `A is ${p.numOne}/${p.numTwo} of A and B.</br>
     ${p.numThree}/${p.numFour} of A was removed.</br>
     ${p.numFive}/${p.numSix} of B was removed.</br>
-    What fraction of the total was ${p.letterAB} ${p.letterLeftRemoved}.`
+    What fraction of the total was ${p.letterAB} ${p.letterLeftRemoved}?`
   }
 
-
+  if ( level == 5.2){
+    if (p.letterChange == "of" && p.letterChangeTwo != "of"){
+      displayProblem.innerHTML =
+      `A is ${p.numOne}% of A and B.</br>
+      ${p.numTwo}% of A was removed.</br>
+      B ${p.letterChangeTwo} by ${p.numThree}%.</br>
+      What percentage of the total is ${p.letterAB} in the end?`
+    }
+    else if (p.letterChange != "of" && p.letterChangeTwo == "of"){
+      displayProblem.innerHTML = 
+      `A is ${p.numOne}% of A and B.</br>
+      A ${p.letterChange} by ${p.numTwo}%.</br>
+      ${p.numThree}% of B was removed.</br>
+      What percentage of the total is ${p.letterAB} in the end?`
+    } 
+    else if (p.letterChange == "of" && p.letterChangeTwo == "of"){
+      displayProblem.innerHTML = 
+      `A is ${p.numOne}% of A and B.</br>
+      ${p.numTwo}% of A was removed.</br>
+      ${p.numThree}% of B was removed.</br>
+      What percentage of the total is ${p.letterAB} in the end?`
+    } else {
+      displayProblem.innerHTML = 
+      `A is ${p.numOne}% of A and B.</br>
+      A ${p.letterChange} by ${p.numTwo}%.</br>
+      B ${p.letterChangeTwo} by ${p.numThree}%.</br>
+      What percentage of the total is ${p.letterAB} in the end?`
+      }
+  }
 
   if (level == 7){
     displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
@@ -1407,6 +1440,29 @@ function handleSubmit(e){
         }
       }
 
+      if ( level == 5.2 ){
+        p.varA = p.numOne
+        p.varB = 100-p.numOne
+        if ( p.letterAB == "A" && p.letterChange == "increase"){
+          correctAnswer = p.varA + "/100x" + (100+p.numTwo)
+        }
+        if ( p.letterAB == "A" && p.letterChange == "decrease"){
+          correctAnswer = p.varA + "/100x" + (100-p.numTwo)
+        }
+        if ( p.letterAB == "A" && p.letterChange == "of"){
+          correctAnswer = p.varA + "/100x" + (100-p.numTwo)
+        }
+        if ( p.letterAB == "B" && p.letterChangeTwo == "increase"){
+          correctAnswer = p.varB + "/100x" + (100+p.numThree)
+        }
+        if ( p.letterAB == "B" && p.letterChangeTwo == "decrease"){
+          correctAnswer = p.varB + "/100x" + (100-p.numThree)
+        }
+        if ( p.letterAB == "B" && p.letterChangeTwo == "of"){
+          correctAnswer = p.varB + "/100x" + (100-p.numThree)
+        }
+      }
+
       if (level == 7){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") correctAnswer = p.numOne - p.numTwo
@@ -1792,6 +1848,19 @@ function genProblems(){
     letterBTotal: ["B","A and B"][genNumbers(2)],
     letterAB: ["A","B"][genNumbers(2)],
     letterLeftRemoved: ["left", "removed"][genNumbers(2)]
+    }
+  }
+
+  if (level == 5.2){
+    return {
+    numOne: (genNumbers(10)+1)*5,
+    numTwo: (genNumbers(18)+1)*5,
+    numThree: (genNumbers(18)+1)*5,
+    varA: 0,
+    varB: 0,
+    letterChange: ["increase", "decrease", "of"][genNumbers(3)],
+    letterChangeTwo: ["increase", "decrease", "of"][genNumbers(3)],
+    letterAB: ["A","B"][genNumbers(2)]
     }
   }
 
@@ -2204,17 +2273,29 @@ for (let i = 0; i <  settingButton.length; i++){
         instructions.textContent = ""
         break;
     
-        case "Level 5.1":
-          level = 5.1;
-          scoreNeeded = 10;
-          highScoreName.innerHTML = highScore5dot1.name
-          highScoreTime.innerHTML = highScore5dot1.time
-          highScoreMistakes.innerHTML = highScore5dot1.mistake
-          document.querySelector("#user-input").setAttribute("type","text");
-          displayProblem.style.fontSize = "25px";
-          instructions.innerHTML = "Form an equation using</br> multiplication of fraction </br> RC = want x from"
-          break;    
-
+    case "Level 5.1":
+      level = 5.1;
+      scoreNeeded = 10;
+      highScoreName.innerHTML = highScore5dot1.name
+      highScoreTime.innerHTML = highScore5dot1.time
+      highScoreMistakes.innerHTML = highScore5dot1.mistake
+      document.querySelector("#user-input").setAttribute("type","text");
+      displayProblem.style.fontSize = "25px";
+      instructions.innerHTML = "Form an equation using</br> multiplication of fraction </br> RC = want x from"
+      break;    
+    
+    case "Level 5.2":
+      level = 5.2;
+      scoreNeeded = 10;
+      highScoreName.innerHTML = highScore5dot2.name
+      highScoreTime.innerHTML = highScore5dot2.time
+      highScoreMistakes.innerHTML = highScore5dot2.mistake
+      document.querySelector("#user-input").setAttribute("type","text");
+      displayProblem.style.fontSize = "25px";
+      instructions.innerHTML = "Form an equation using</br> multiplication of percentage </br> want/100 x end"
+      userInput.style.width = "200px";
+      break;    
+    
     case "Level 5.3":
       level = 5.3;
       scoreNeeded = 30;

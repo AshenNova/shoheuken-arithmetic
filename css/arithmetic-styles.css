@@ -264,6 +264,10 @@ button {
  width: 100px;
 }
 
+.btn-percentage{
+  background-color: orange;
+}
+
 @media (max-width: 500px){
   .level-setting{
     width: auto;
