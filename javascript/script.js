@@ -1964,7 +1964,7 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreTime.innerHTML = highScore1dot4.time
       highScoreMistakes.innerHTML = highScore1dot5.mistake
       document.querySelector("#user-input").setAttribute("type","text");
-      instructions.textContent = "Answer using 'c+', 'c-', 'd-', 'r+' or 'r-' "
+      instructions.innerHTML = "Answer using</br> 'c+', 'c-', 'd-', 'r+' or 'r-' "
       break;
 
     case "Level 1.5":
@@ -1974,7 +1974,7 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreTime.innerHTML = highScore1dot5.time
       highScoreMistakes.innerHTML = highScore1dot5.mistake
       document.querySelector("#user-input").setAttribute("type","text");
-      instructions.textContent = "Answer using 'c+', 'c-', 'd-', 'r+' or 'r-' "
+      instructions.innerHTML = "Answer using</br> 'c+', 'c-', 'd-', 'r+' or 'r-' "
       break;
 
     case "Level 1.6":
@@ -2212,7 +2212,7 @@ for (let i = 0; i <  settingButton.length; i++){
           highScoreMistakes.innerHTML = highScore5dot1.mistake
           document.querySelector("#user-input").setAttribute("type","text");
           displayProblem.style.fontSize = "25px";
-          instructions.textContent = "Form an equation using multiplication of fraction"
+          instructions.innerHTML = "Form an equation using</br> multiplication of fraction </br> RC = want x from"
           break;    
 
     case "Level 5.3":
