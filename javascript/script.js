@@ -916,7 +916,7 @@ function updateProblems(){
       }
     }
     displayProblem.innerHTML = 
-    `A is ${p.numOne}/${p.numTwo} of A and B.</br>
+    `A is ${p.numOne}/${p.numTwo} of ${p.letterBTotal}.</br>
     ${p.numThree}/${p.numFour} of A was removed.</br>
     ${p.numFive}/${p.numSix} of B was removed.</br>
     What fraction of the total was ${p.letterAB} ${p.letterLeftRemoved}?`
@@ -1418,12 +1418,13 @@ function handleSubmit(e){
 
       if ( level == 5.1 ){
         p.varA = p.numOne
-        p.varTotal = p.numTwo
+        p.varB = p.numTwo
+        p.varTotal = p.numOne+p.numTwo
+
         if (p.letterBTotal == "A and B"){
+          console.log("true")
           p.varB = p.numTwo - p.numOne
-        } else {
-          p.varB = p.numTwo
-          p.varTotal = p.varA + p.varB
+          p.varTotal = p.numTwo
         }
 
         if (p.letterAB == "A" && p.letterLeftRemoved == "left"){
