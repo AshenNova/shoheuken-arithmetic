@@ -1386,7 +1386,7 @@ function handleSubmit(e){
       if ( level == 5.1 ){
         p.varA = p.numOne
         p.varTotal = p.numTwo
-        if (p.letterBTotal == "A+B"){
+        if (p.letterBTotal == "A and B"){
           p.varB = p.numTwo - p.numOne
         } else {
           p.varB = p.numTwo
@@ -1789,7 +1789,7 @@ function genProblems(){
     varA: 0,
     varB: 0,
     varTotal: 0,
-    letterBTotal: ["B","A+B"][genNumbers(2)],
+    letterBTotal: ["B","A and B"][genNumbers(2)],
     letterAB: ["A","B"][genNumbers(2)],
     letterLeftRemoved: ["left", "removed"][genNumbers(2)]
     }
