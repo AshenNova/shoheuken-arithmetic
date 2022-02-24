@@ -57,6 +57,7 @@ const level4dot9 = document.querySelector('.level4Dot9');
 const level4dot10 = document.querySelector('.level4Dot10');
 const level4dot11 = document.querySelector('.level4Dot11');
 
+const level5dot1 = document.querySelector('.level5Dot1');
 const level5dot3 = document.querySelector('.level5Dot3');
 const level6dot3 = document.querySelector('.level6Dot3');
 const level7 = document.querySelector('.level7');
@@ -129,6 +130,7 @@ const highScore4dot7 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot10 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot11 = new HighScore("Nil", "Nil", 0, 0)
+const highScore5dot1 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5dot3 = new HighScore("Jayden Goo", "8 December 2021", 357, 1)
 const highScore6dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
@@ -213,6 +215,7 @@ resetButton.addEventListener('click', function(){
   instructions.textContent = ""
   document.querySelector("#user-input").setAttribute("type","number");
   document.querySelector("#user-input").setAttribute("step","1");
+  displayProblem.style.fontSize = "50px";
 })
 
 for (let x = 0; x < backButton.length; x++){
@@ -224,6 +227,7 @@ for (let x = 0; x < backButton.length; x++){
     levelSetting.classList.remove('hidden');
     startBox.classList.add('hidden');
     multiplesSettingCl.classList.add('hidden');
+    displayProblem.style.fontSize = "50px";
   })
 }
 
@@ -887,6 +891,33 @@ function updateProblems(){
       twoDenominator.textContent = p.numThree
     }
   }
+  if ( level == 5.1){
+    for (i = p.numTwo; i > 1; i--){
+      if (p.numOne%i == 0 && p.numTwo%i == 0){
+        p.numOne /= i;
+        p.numTwo /= i;
+      }
+    }
+    for (i = p.numFour; i > 1; i--){
+      if (p.numThree%i == 0 && p.numFour%i == 0){
+        p.numThree /= i;
+        p.numFour /= i;
+      }
+    }
+    for (i = p.numSix; i > 1; i--){
+      if (p.numFive%i == 0 && p.numSix%i == 0){
+        p.numFive /= i;
+        p.numSix /= i;
+      }
+    }
+    displayProblem.innerHTML = 
+    `A is ${p.numOne}/${p.numTwo} of ${p.letterBTotal}.
+    ${p.numThree}/${p.numFour} of A was removed.
+    ${p.numFive}/${p.numSix} of B was removed.
+    What fraction of the total was ${p.letterAB} ${p.letterLeftRemoved}.`
+  }
+
+
 
   if (level == 7){
     displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
@@ -1352,6 +1383,30 @@ function handleSubmit(e){
         }
       }
 
+      if ( level == 5.1 ){
+        p.varA = p.numOne
+        p.varTotal = p.numTwo
+        if (p.letterBTotal == "A+B"){
+          p.varB = p.numTwo - p.numOne
+        } else {
+          p.varB = p.numTwo
+          p.varTotal = p.varA + p.varB
+        }
+
+        if (p.letterAB == "A" && p.letterLeftRemoved == "left"){
+          correctAnswer = (p.numFour-p.numThree) + "/" + p.numFour + "x" + (p.varA) + "/" + p.varTotal
+        }
+        if (p.letterAB == "A" && p.letterLeftRemoved == "removed"){
+          correctAnswer =  p.numThree + "/" + p.numFour + "x" + (p.varA) + "/" + p.varTotal
+        }
+        if (p.letterAB == "B" && p.letterLeftRemoved == "left"){
+          correctAnswer = (p.numSix-p.numFive) + "/" + p.numSix + "x" + (p.varB) + "/" + p.varTotal
+        }
+        if (p.letterAB == "B" && p.letterLeftRemoved == "removed"){
+          correctAnswer = p.numFive + "/" + p.numSix + "x" + (p.varB) + "/" + p.varTotal
+        }
+      }
+
       if (level == 7){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") correctAnswer = p.numOne - p.numTwo
@@ -1720,6 +1775,23 @@ function genProblems(){
     numThree: genNumbers(10)+2,
     numFour: 0,
     optionFinal: ["1","2"][genNumbers(2)]
+    }
+  }
+
+  if (level == 5.1){
+    return {
+    numOne: genNumbers(5)+1,
+    numTwo: genNumbers(5)+6,
+    numThree: genNumbers(5)+1,
+    numFour: genNumbers(5)+6,
+    numFive: genNumbers(5)+1,
+    numSix: genNumbers(5)+6,
+    varA: 0,
+    varB: 0,
+    varTotal: 0,
+    letterBTotal: ["B","A+B"][genNumbers(2)],
+    letterAB: ["A","B"][genNumbers(2)],
+    letterLeftRemoved: ["left", "removed"][genNumbers(2)]
     }
   }
 
@@ -2131,6 +2203,17 @@ for (let i = 0; i <  settingButton.length; i++){
         document.querySelector("#user-input").setAttribute("type","text");
         instructions.textContent = ""
         break;
+    
+        case "Level 5.1":
+          level = 5.1;
+          scoreNeeded = 10;
+          highScoreName.innerHTML = highScore5dot1.name
+          highScoreTime.innerHTML = highScore5dot1.time
+          highScoreMistakes.innerHTML = highScore5dot1.mistake
+          document.querySelector("#user-input").setAttribute("type","text");
+          displayProblem.style.fontSize = "25px";
+          instructions.textContent = "Form an equation using multiplication of fraction"
+          break;    
 
     case "Level 5.3":
       level = 5.3;
