@@ -20,6 +20,15 @@ const inputBox = document.querySelector('.input.box');
 const resetButton = document.getElementById('reset');
 const backButton = document.querySelectorAll(".back-button");
 
+const imageG = document.createElement('img');
+const imageS = document.createElement('img');
+const imageB = document.createElement('img');
+const imageNMP = document.createElement('img');
+imageG.src = 'images/endgame/gold.jpeg'
+imageS.src = 'images/endgame/silver.jpeg'
+imageB.src = 'images/endgame/bronze.jpeg'
+imageNMP.src = 'images/endgame/needmorepractice.jpeg'
+
 const levelSetting = document.querySelector('.level-setting');
 const levelLabel = document.querySelector('.level-label');
 
@@ -90,6 +99,9 @@ const threeDenominator = document.querySelector(".three-denominator")
 let level = 0;
 let player = 1;
 let arr = [];
+let gold = 0;
+let silver = 0
+let bronze = 0
 const commonMultipleArr = [];
 const commonMultipleArrTwo = [];
 
@@ -165,7 +177,7 @@ function clickStart(){
       userInput.focus()
       timer2()
       updateProblems()
-    }
+     }
   }, 1000);
   
 }
@@ -185,6 +197,17 @@ if (state.score >= scoreNeeded){
   starto.classList.remove('hidden');
   finalText.innerHTML = time;
   finalBox.classList.remove('hidden');
+  if (time < gold){
+    document.querySelector('.trophy').appendChild(imageG)
+  }
+  else if (time < silver){
+    document.querySelector('.trophy').appendChild(imageS)
+  }
+  else if (time < bronze){
+    document.querySelector('.trophy').appendChild(imageB)
+  } else {
+    document.querySelector('.trophy').appendChild(imageNMP)
+  }
   mistakesCountCl.innerHTML = state.mistake;
   player = 0;
 }
@@ -1998,6 +2021,9 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 1":
       level = 1;
       scoreNeeded = 50;
+      gold = 100;
+      silver = 120;
+      bronze = 140;
       highScoreName.innerHTML = highScore1.name
       highScoreTime.innerHTML = highScore1.time
       highScoreMistakes.innerHTML = highScore1.mistake
@@ -2006,6 +2032,9 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 1.1":
       level = 1.1;
       scoreNeeded = 50;
+      gold = 100;
+      silver = 110;
+      bronze = 120;
       highScoreName.innerHTML = highScore1dot1.name
       highScoreTime.innerHTML = highScore1dot1.time
       highScoreMistakes.innerHTML = highScore1dot1.mistake
@@ -2013,7 +2042,7 @@ for (let i = 0; i <  settingButton.length; i++){
 
     case "Level 1.2":
       level = 1.2;
-      scoreNeeded = 50;
+      scoreNeeded = 2;
       highScoreName.innerHTML = highScore1dot2.name
       highScoreTime.innerHTML = highScore1dot2.time
       highScoreMistakes.innerHTML = highScore1dot2.mistake

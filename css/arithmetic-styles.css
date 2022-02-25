@@ -130,7 +130,7 @@ margin-top: 2%;
 }
 .finalTextBox{
   position: relative;
-  top: 25%;
+  top: 5%;
   font-size: 2em;
 }
 
@@ -266,6 +266,10 @@ button {
 
 .btn-percentage{
   background-color: orange;
+}
+
+img{
+ height: 100px;
 }
 
 @media (max-width: 500px){
