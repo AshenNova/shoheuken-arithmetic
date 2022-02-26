@@ -46,6 +46,7 @@ const level2dot3 = document.querySelector('.level2Dot3');
 
 const level3 = document.querySelector('.level3');
 const level3dot1 = document.querySelector('.level3Dot1');
+const level3dot2 = document.querySelector('.level3Dot2');
 const level3dot3 = document.querySelector('.level3Dot3');
 const level3dot4 = document.querySelector('.level3Dot4');
 const level3dot5 = document.querySelector('.level3Dot5');
@@ -126,6 +127,7 @@ const highScore2dot3 = new HighScore("Jingkai Ng", "30 October 2021", 853, 23)
 const highScore2dot4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3 = new HighScore("Shanice Lee", "30 October 2021", 614, 7)
 const highScore3dot1 = new HighScore("Shanice Lee", "30 October 2021", 162, 5)
+const highScore3dot2 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3dot3 = new HighScore("Shanice Lee", "6 November 2021", 662, 4)
 const highScore3dot4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3dot5 = new HighScore("Nil", "Nil", 0, 0)
@@ -490,6 +492,28 @@ function updateProblems(){
       }
     }
     if (p.operator == "÷") displayProblem.innerHTML = `${p.numThree*p.numFour} ${p.operator} ${p.numThree}` 
+  }
+  if ( level == 3.2 ){
+    if (p.option == "1"){
+      displayProblem.textContent = `${p.numOne} x ${p.numMulti} = `
+    }
+    if (p.option == "2"){
+      displayProblem.textContent = `${p.numOne} ${p.numPlace} = `
+    }
+    if (p.option == "3"){
+      displayProblem.textContent = `${p.numOne*p.numMulti} ÷ ${p.numMulti} = `
+    }
+    if (p.option == "4"){
+      if (p.numPlace == "tens"){
+      displayProblem.textContent = `${p.numOne*10} = _____ ${p.numPlace}`
+      }
+      if (p.numPlace == "hundreds"){
+        displayProblem.textContent = `${p.numOne*100} = _____ ${p.numPlace}`
+      }
+      if (p.numPlace == "thousands"){
+        displayProblem.textContent = `${p.numOne*1000} = _____ ${p.numPlace}`
+      }
+    }
   }
 
   if (level == 3.4){
@@ -1193,6 +1217,25 @@ function handleSubmit(e){
           }
         }  
       }
+      if ( level == 3.2 ){
+        if (p.option == "1"){
+         correctAnswer = p.numOne*p.numMulti
+        }
+        if (p.option == "2"){
+          if (p.numPlace == "tens"){
+            correctAnswer = p.numOne*10
+          }
+          if (p.numPlace == "hundreds"){
+            correctAnswer = p.numOne*100
+          }
+          if (p.numPlace == "thousands"){
+            correctAnswer = p.numOne*1000
+          }
+        }
+        if (p.option == "3" || p.option == "4"){
+          correctAnswer = p.numOne
+        }
+      }
 
       if (level == 3.3 || level == 2.3 || level == 4.3 || level == 5.3 || level == 6.3){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
@@ -1675,6 +1718,16 @@ function genProblems(){
     }
   }
 
+  if (level == 3.2){
+    return {
+      numOne: genNumbers(97)+2,
+      numMulti: [10, 100, 100][genNumbers(3)],
+      numPlace: ["tens","hundreds","thousands"][genNumbers(3)],
+      operator: ["x","÷"][genNumbers(2)],
+      option: ["1","2","3","4"][genNumbers(4)]
+    }
+  }
+
   if (level == 3.3){
     return {
       numOne: genNumbers(150)+100,
@@ -2135,7 +2188,15 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreTime.innerHTML = highScore3dot1.time
       highScoreMistakes.innerHTML = highScore3dot1.mistake
       break;
-
+    
+    case "Level 3.2":
+      level = 3.2;
+      scoreNeeded = 30;
+      highScoreName.innerHTML = highScore3dot2.name
+      highScoreTime.innerHTML = highScore3dot2.time
+      highScoreMistakes.innerHTML = highScore3dot2.mistake
+      break;
+        
     case "Level 3.3":
       level = 3.3;
       scoreNeeded = 30;
