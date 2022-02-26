@@ -2095,7 +2095,7 @@ for (let i = 0; i <  settingButton.length; i++){
 
     case "Level 1.2":
       level = 1.2;
-      scoreNeeded = 2;
+      scoreNeeded = 50;
       highScoreName.innerHTML = highScore1dot2.name
       highScoreTime.innerHTML = highScore1dot2.time
       highScoreMistakes.innerHTML = highScore1dot2.mistake
