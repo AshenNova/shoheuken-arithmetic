@@ -149,7 +149,7 @@ const highScore4dot10 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot11 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5dot1 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5dot2 = new HighScore("Nil", "Nil", 0, 0)
-const highScore5dot3 = new HighScore("Jayden Goo", "8 December 2021", 357, 1)
+const highScore5dot3 = new HighScore("Nil", "Nil", 0, 0)
 const highScore6dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
 
@@ -495,7 +495,7 @@ function updateProblems(){
     }
   }
 
-  if (level == 2.3 || level == 3.3 || level == 4.3 || level == 5.3 || level == 6.3){
+  if (level == 2.3 || level == 3.3 || level == 4.3 || level == 6.3){
     console.log(p.operator);
     if (p.operator == "x" ) displayProblem.innerHTML = `${p.numThree} ${p.operator} ${p.numFour}` 
     if (p.operator == "+") displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
@@ -1076,6 +1076,42 @@ function updateProblems(){
       What percentage of the total is ${p.letterAB} in the end?`
       }
   }
+  if ( level == 5.3){
+    for (let i = p.numTwo; i > 1; i--){
+      if(p.numOne%i == 0 && p.numTwo%i == 0){
+        p.numOne /= i;
+        p.numTwo /= i;
+      }
+    }
+    if (p.letterChange == "of" && p.letterChangeTwo == "of"){
+      displayProblem.innerHTML = 
+      `A is ${p.numOne}/${p.numTwo} of ${p.letterBTotal}.</br>
+      ${p.numThree}% ${p.letterChange} A was removed.</br>
+      ${p.numFour}% ${p.letterChangeTwo} B was removed.</br>
+      What is ${p.letterAB} in the end?`
+    }
+    if (p.letterChange == "of" && p.letterChangeTwo != "of"){
+      displayProblem.innerHTML = 
+      `A is ${p.numOne}/${p.numTwo} of ${p.letterBTotal}.</br>
+      ${p.numThree}% ${p.letterChange} A was removed.</br>
+      B ${p.letterChangeTwo} by ${p.numFour}%.</br>
+      What is ${p.letterAB} in the end?`
+    }
+    if (p.letterChange != "of" && p.letterChangeTwo == "of"){
+      displayProblem.innerHTML = 
+      `A is ${p.numOne}/${p.numTwo} of ${p.letterBTotal}.</br>
+      A ${p.letterChange} by ${p.numThree}%.</br>
+      ${p.numFour}% ${p.letterChangeTwo} B was removed.</br>
+      What is ${p.letterAB} in the end?`
+    }
+    if (p.letterChange != "of" && p.letterChangeTwo != "of"){
+      displayProblem.innerHTML = 
+      `A is ${p.numOne}/${p.numTwo} of ${p.letterBTotal}.</br>
+      A ${p.letterChange} by ${p.numThree}%.</br>
+      B ${p.letterChangeTwo} by ${p.numFour}%.</br>
+      What is ${p.letterAB} in the end?`
+    }
+  }
 
   if (level == 7){
     displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
@@ -1315,7 +1351,7 @@ function handleSubmit(e){
         }
       }
 
-      if (level == 3.3 || level == 2.3 || level == 4.3 || level == 5.3 || level == 6.3){
+      if (level == 3.3 || level == 2.3 || level == 4.3 || level == 6.3){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") {
           if (p.numOne >= p.numTwo) {
@@ -1584,7 +1620,6 @@ function handleSubmit(e){
         p.varTotal = p.numOne+p.numTwo
 
         if (p.letterBTotal == "A and B"){
-          console.log("true")
           p.varB = p.numTwo - p.numOne
           p.varTotal = p.numTwo
         }
@@ -1623,6 +1658,29 @@ function handleSubmit(e){
         }
         if ( p.letterAB == "B" && p.letterChangeTwo == "of"){
           correctAnswer = p.varB + "/100x" + (100-p.numThree)
+        }
+      }
+      if ( level == 5.3 ){
+        p.varA = p.numOne
+        p.varB = p.numTwo
+        if (p.letterBTotal == "A and B"){
+          p.varB = p.numTwo-p.numOne
+        }
+        if (p.letterAB == "A"){
+          if (p.letterChange == "increase"){
+            correctAnswer = `${p.varA}/100x${100+p.numThree}`
+          }
+          if (p.letterChange == "decrease" || p.letterChange == "of"){
+            correctAnswer = `${p.varA}/100x${100-p.numThree}`
+          }
+        }
+        if (p.letterAB == "B"){
+          if (p.letterChangeTwo == "increase"){
+            correctAnswer = `${p.varB}/100x${100+p.numFour}`
+          }
+          if (p.letterChangeTwo == "decrease" || p.letterChangeTwo == "of"){
+            correctAnswer = `${p.varB}/100x${100-p.numFour}`
+          }
         }
       }
 
@@ -2052,11 +2110,16 @@ function genProblems(){
 
   if (level == 5.3){
     return {
-    numOne: genNumbers(500)+500,
-    numTwo: genNumbers(500)+500,
-    numThree: genNumbers(6)+5,
-    numFour: genNumbers(6)+5,
-    operator: ["+","-","x","÷"][genNumbers(4)]
+      numOne: genNumbers(5)+1,
+      numTwo: genNumbers(5)+6,
+      numThree: (genNumbers(18)+1)*5,
+      numFour: (genNumbers(18)+1)*5,
+      varA: 0,
+      varB: 0,
+      letterBTotal: ["B","A and B"][genNumbers(2)],
+      letterChange: ["increase", "decrease", "of"][genNumbers(3)],
+      letterChangeTwo: ["increase", "decrease", "of"][genNumbers(3)],
+      letterAB: ["A","B"][genNumbers(2)]
     }
   }
 
@@ -2520,10 +2583,12 @@ for (let i = 0; i <  settingButton.length; i++){
     
     case "Level 5.3":
       level = 5.3;
-      scoreNeeded = 30;
+      scoreNeeded = 20;
       highScoreName.innerHTML = highScore5dot3.name
       highScoreTime.innerHTML = highScore5dot3.time
       highScoreMistakes.innerHTML = highScore5dot3.mistake
+      document.querySelector("#user-input").setAttribute("type","text");
+      displayProblem.style.fontSize = "25px";
       break;
 
     case "Level 6.3":
