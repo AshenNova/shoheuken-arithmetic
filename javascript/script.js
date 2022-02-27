@@ -2116,7 +2116,10 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreTime.innerHTML = highScore1dot4.time
       highScoreMistakes.innerHTML = highScore1dot5.mistake
       document.querySelector("#user-input").setAttribute("type","text");
-      instructions.innerHTML = "Answer using</br> 'c+', 'c-', 'd-', 'r+' or 'r-' "
+      instructions.innerHTML = `
+      1 + 2 = 3</br>
+      c ± d = r </br>
+      Use: 'c+', 'c-', 'd-', 'r+' or 'r-' `
       break;
 
     case "Level 1.5":
