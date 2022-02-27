@@ -312,11 +312,9 @@ function updateProblems(){
       console.log(p.numOne, p.numThree)
       if (p.operator == "-" && p.numThree>p.numOne){
         [p.numOne, p.numThree] = [p.numThree, p.numOne]
-        console.log(p.numOne, p.numThree)
       }
       if (p.operator == "+" && p.numOne>p.numThree){
         [p.numOne, p.numThree] = [p.numThree, p.numOne]
-        console.log(p.numOne, p.numThree)
       }
       if (p.optionTwo == "1"){
         displayProblem.innerHTML = `${p.numOne} ${p.operator} ___ = ${p.numThree}`
@@ -328,13 +326,12 @@ function updateProblems(){
     if (p.option == "r"){
       if (p.operator == "-" && p.numThree>p.numOne){
         [p.numOne, p.numThree] = [p.numThree, p.numOne]
-        console.log(p.numOne, p.numThree)
       }
       if (p.optionTwo == "1"){
         displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numThree} = ___`
       }
       if (p.optionTwo == "2"){
-        displayProblem.innerHTML = `___ = ${p.numOne} ${p.operator} ${p.numTwo}`
+        displayProblem.innerHTML = `___ = ${p.numOne} ${p.operator} ${p.numThree}`
       }
     }
   }
