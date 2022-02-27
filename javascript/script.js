@@ -298,14 +298,26 @@ function updateProblems(){
 
   if (level == 1.4 ){
     if (p.option == "c"){
+      if (p.operator == "+" && p.numTwo>p.numThree){
+        [p.numThree, p.numTwo] = [p.numTwo, p.numThree]
+      }
       if (p.optionTwo == "1"){
-      displayProblem.innerHTML = `___ ${p.operator} ${p.numTwo} = ${p.numThree}.`
+      displayProblem.innerHTML = `___ ${p.operator} ${p.numTwo} = ${p.numThree}`
       }
       if (p.optionTwo == "2"){
       displayProblem.innerHTML = `${p.numThree} = ___ ${p.operator} ${p.numTwo}` 
       }
     }
     if (p.option == "d"){
+      console.log(p.numOne, p.numThree)
+      if (p.operator == "-" && p.numThree>p.numOne){
+        [p.numOne, p.numThree] = [p.numThree, p.numOne]
+        console.log(p.numOne, p.numThree)
+      }
+      if (p.operator == "+" && p.numOne>p.numThree){
+        [p.numOne, p.numThree] = [p.numThree, p.numOne]
+        console.log(p.numOne, p.numThree)
+      }
       if (p.optionTwo == "1"){
         displayProblem.innerHTML = `${p.numOne} ${p.operator} ___ = ${p.numThree}`
       }
@@ -314,6 +326,10 @@ function updateProblems(){
       }
     }
     if (p.option == "r"){
+      if (p.operator == "-" && p.numThree>p.numOne){
+        [p.numOne, p.numThree] = [p.numThree, p.numOne]
+        console.log(p.numOne, p.numThree)
+      }
       if (p.optionTwo == "1"){
         displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numThree} = ___`
       }
@@ -2231,7 +2247,9 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreTime.innerHTML = highScore3dot6.time
       highScoreMistakes.innerHTML = highScore3dot6.mistake
       document.querySelector("#user-input").setAttribute("type","text");
-      instructions.textContent = "Do not leave any spaces. Answer using capital 'L' and 'ml' for volume"
+      instructions.innerHTML = 
+      `Do not leave any spaces.</br>
+      Answer using capital 'L' and 'ml' for volume`
       break;
 
     case "Level 3.7":
