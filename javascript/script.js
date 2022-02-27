@@ -1590,16 +1590,16 @@ function handleSubmit(e){
         }
 
         if (p.letterAB == "A" && p.letterLeftRemoved == "left"){
-          correctAnswer = (p.numFour-p.numThree) + "/" + p.numFour + "x" + (p.varA) + "/" + p.varTotal
+          correctAnswer = (p.varA) + "/" + p.varTotal + "x" + (p.numFour-p.numThree) + "/" + p.numFour
         }
         if (p.letterAB == "A" && p.letterLeftRemoved == "removed"){
-          correctAnswer =  p.numThree + "/" + p.numFour + "x" + (p.varA) + "/" + p.varTotal
+          correctAnswer =  (p.varA) + "/" + p.varTotal + "x" + p.numThree + "/" + p.numFour
         }
         if (p.letterAB == "B" && p.letterLeftRemoved == "left"){
-          correctAnswer = (p.numSix-p.numFive) + "/" + p.numSix + "x" + (p.varB) + "/" + p.varTotal
+          correctAnswer = (p.varB) + "/" + p.varTotal + "x" + (p.numSix-p.numFive) + "/" + p.numSix
         }
         if (p.letterAB == "B" && p.letterLeftRemoved == "removed"){
-          correctAnswer = p.numFive + "/" + p.numSix + "x" + (p.varB) + "/" + p.varTotal
+          correctAnswer = (p.varB) + "/" + p.varTotal + "x" + p.numFive + "/" + p.numSix
         }
       }
 
@@ -2503,7 +2503,7 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreMistakes.innerHTML = highScore5dot1.mistake
       document.querySelector("#user-input").setAttribute("type","text");
       displayProblem.style.fontSize = "25px";
-      instructions.innerHTML = "Form an equation using</br> multiplication of fraction </br> RC = want x from"
+      instructions.innerHTML = "Form an equation using</br> multiplication of fraction </br> RC = from x want"
       break;    
     
     case "Level 5.2":
@@ -2514,7 +2514,7 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreMistakes.innerHTML = highScore5dot2.mistake
       document.querySelector("#user-input").setAttribute("type","text");
       displayProblem.style.fontSize = "25px";
-      instructions.innerHTML = "Form an equation using</br> multiplication of percentage </br> want/100 x end"
+      instructions.innerHTML = "Form an equation using</br> multiplication of percentage </br> from/100 x end"
       userInput.style.width = "200px";
       break;    
     
