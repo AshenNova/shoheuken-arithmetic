@@ -1014,6 +1014,9 @@ function updateProblems(){
     }
     // fake x V
     if (p.option == "5"){
+      if (p.unitMeasurement == "km"){
+        p.unitMeasurement = "kg"
+      }
       displayProblem.innerHTML = 
       `B bought ${p.numOne}/${p.numTwo} ${p.unitMeasurement} of something.</br>
       B bought ${p.numSix} more of it.</br>
