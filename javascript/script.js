@@ -120,19 +120,19 @@ const highScore1dot1 = new HighScore("Jayden Cheong", "16 October 2021", 823, 12
 const highScore1dot2 = new HighScore("Nil", "16 October 2021", 0, 0)
 const highScore1dot3 = new HighScore("Nil", "16 October 2021", 0, 0)
 const highScore1dot4 = new HighScore("Nil", "Nil", 0, 0)
-const highScore1dot5 = new HighScore("Nil", "Nil", 0, 0)
+const highScore1dot5 = new HighScore("Shanice Lee", "1 mar 2022", 171, 3)
 const highScore1dot6 = new HighScore("Nil", "Nil", 0, 0)
 const highScore2 = new HighScore("Nil", "16 October 2021", 0, 0)
 const highScore2dot1 = new HighScore("JingKai Ng", "16 October 2021", 823, 24)
 const highScore2dot3 = new HighScore("Jingkai Ng", "30 October 2021", 853, 23)
-const highScore2dot4 = new HighScore("Nil", "Nil", 0, 0)
+const highScore2dot4 = new HighScore("Shanice Lee", "1 mar 2022", 123, 0)
 const highScore3 = new HighScore("Shanice Lee", "30 October 2021", 614, 7)
 const highScore3dot1 = new HighScore("Shanice Lee", "30 October 2021", 162, 5)
 const highScore3dot2 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3dot3 = new HighScore("Shanice Lee", "6 November 2021", 662, 4)
 const highScore3dot4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3dot5 = new HighScore("Nil", "Nil", 0, 0)
-const highScore3dot6 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3dot6 = new HighScore("Shanice Lee", "1 mar 2022", 376, 3)
 const highScore3dot7 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3dot9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3dot10 = new HighScore("Nil", "Nil", 0, 0)
@@ -146,10 +146,10 @@ const highScore4dot7 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot8 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot10 = new HighScore("Nil", "Nil", 0, 0)
-const highScore4dot11 = new HighScore("Nil", "Nil", 0, 0)
-const highScore5dot1 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4dot14 = new HighScore("Izekiel", "1 mar 2022", 114, 1)
+const highScore5dot1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
 const highScore5dot2 = new HighScore("Nil", "Nil", 0, 0)
-const highScore5dot3 = new HighScore("Nil", "Nil", 0, 0)
+const highScore5dot3 = new HighScore("Izekiel", "1 Mar 2022", 238, 3)
 const highScore6dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
 
@@ -238,6 +238,7 @@ const resetStuff = function (){
   multiplesSettingCl.classList.add('hidden');
   displayProblem.style.fontSize = "50px";
   userInput.style.width = "175px";
+  document.querySelector("#user-input").setAttribute("max","99999")
 }
 
 resetButton.addEventListener('click', function(){
@@ -2300,6 +2301,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 1.5":
       level = 1.5;
       scoreNeeded = 30;
+      gold = 171
       highScoreName.innerHTML = highScore1dot5.name
       highScoreTime.innerHTML = highScore1dot5.time
       highScoreMistakes.innerHTML = highScore1dot5.mistake
@@ -2343,6 +2345,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 2.4":
       level = 2.4;
       scoreNeeded = 50;
+      gold = 123
       highScoreName.innerHTML = highScore2dot4.name
       highScoreTime.innerHTML = highScore2dot4.time
       highScoreMistakes.innerHTML = highScore2dot4.mistake
@@ -2402,6 +2405,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 3.6":
       level = 3.6;
       scoreNeeded = 30;
+      gold = 376
       highScoreName.innerHTML = highScore3dot6.name
       highScoreTime.innerHTML = highScore3dot6.time
       highScoreMistakes.innerHTML = highScore3dot6.mistake
@@ -2551,6 +2555,7 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreName.innerHTML = highScore4dot11.name
       highScoreTime.innerHTML = highScore4dot11.time
       highScoreMistakes.innerHTML = highScore4dot11.mistake
+      gold = 114
       document.querySelector("#user-input").setAttribute("type","text");
       document.querySelector("#user-input").style.width = "250px"
       displayProblem.style.fontSize = "25px";
@@ -2565,6 +2570,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 5.1":
       level = 5.1;
       scoreNeeded = 10;
+      gold = 273;
       highScoreName.innerHTML = highScore5dot1.name
       highScoreTime.innerHTML = highScore5dot1.time
       highScoreMistakes.innerHTML = highScore5dot1.mistake
@@ -2588,6 +2594,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 5.3":
       level = 5.3;
       scoreNeeded = 10;
+      gold = 238
       highScoreName.innerHTML = highScore5dot3.name
       highScoreTime.innerHTML = highScore5dot3.time
       highScoreMistakes.innerHTML = highScore5dot3.mistake
