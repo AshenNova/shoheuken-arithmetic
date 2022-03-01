@@ -2442,6 +2442,7 @@ for (let i = 0; i <  settingButton.length; i++){
       instructions.innerHTML = 
       `Do not leave any spaces.</br>
       Answer using capital 'L' and 'ml' for volume`
+      helpMe.textContent = `Include units`
       break;
 
     case "Level 3.7":
