@@ -146,6 +146,7 @@ const highScore4dot7 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot8 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot10 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4dot11 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot14 = new HighScore("Izekiel", "1 mar 2022", 114, 1)
 const highScore5dot1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
 const highScore5dot2 = new HighScore("Nil", "Nil", 0, 0)
@@ -239,6 +240,7 @@ const resetStuff = function (){
   displayProblem.style.fontSize = "50px";
   userInput.style.width = "175px";
   document.querySelector("#user-input").setAttribute("max","99999")
+  displayProblem.style.margin = "30px 0";
 }
 
 resetButton.addEventListener('click', function(){
@@ -959,6 +961,22 @@ function updateProblems(){
       twoDenominator.textContent = p.numThree
     }
   }
+  if ( level == 4.11){
+    if (p.numOne == p.numTwo){
+      p.numOne += 1;
+    }
+    if (p.numOne > p.numTwo) {
+      [p.numOne, p.numTwo] = [p.numTwo, p.numOne]
+    }
+    for (let i = p.numTwo; i > 1; i--){
+      if (p.numOne%i == 0 && p.numTwo%i == 0){
+        p.numOne /= i;
+        p.numTwo /= i;
+      }
+    }
+    displayProblem.innerHTML = `${p.numOne}/${p.numTwo} of a number is ${p.numOne*p.numMulti}.<br>
+    What is the number?`
+  }
 
   if ( level == 4.14){
     // fake - fake
@@ -1599,6 +1617,9 @@ function handleSubmit(e){
           correctAnswer = p.numOne + " " + p.numTwo%p.numThree + "/" + p.numThree
         }
       }
+      if (level == 4.11){
+        correctAnswer = `${p.numMulti*p.numTwo}`
+      }
 
       if ( level == 4.14 ){
         if (p.option == "1"){
@@ -2066,6 +2087,14 @@ function genProblems(){
     numThree: genNumbers(10)+2,
     numFour: 0,
     option: ["1","2"][genNumbers(2)]
+    }
+  }
+
+  if (level == 4.11){
+    return {
+    numOne: genNumbers(8)+1,
+    numTwo: genNumbers(8)+2,
+    numMulti: genNumbers(8)+2,
     }
   }
 
@@ -2547,6 +2576,18 @@ for (let i = 0; i <  settingButton.length; i++){
       fractionsContainerTwo.classList.remove('hidden');
       document.querySelector("#user-input").setAttribute("type","text");
       instructions.textContent = ""
+      break;
+
+    
+    case "Level 4.11":
+      level = "4.11";
+      scoreNeeded = 30;
+      highScoreName.innerHTML = highScore4dot11.name
+      highScoreTime.innerHTML = highScore4dot11.time
+      highScoreMistakes.innerHTML = highScore4dot11.mistake
+      instructions.textContent = ""
+      displayProblem.style.fontSize = "25px";
+      displayProblem.style.marginBottom = "150px";
       break;
 
     case "Level 4.14":
