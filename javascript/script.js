@@ -2462,6 +2462,7 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreName.innerHTML = highScore4dot1.name
       highScoreTime.innerHTML = highScore4dot1.time
       highScoreMistakes.innerHTML = highScore4dot1.mistake
+      document.querySelector("#user-input").setAttribute("max","100000")
       break;  
 
     case "Level 4.3":
