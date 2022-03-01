@@ -959,7 +959,7 @@ function updateProblems(){
     }
   }
 
-  if ( level == 4.11){
+  if ( level == 4.14){
     // fake - fake
     if (p.numOne == p.numTwo){
       p.numTwo += 1
@@ -1599,7 +1599,7 @@ function handleSubmit(e){
         }
       }
 
-      if ( level == 4.11 ){
+      if ( level == 4.14 ){
         if (p.option == "1"){
           correctAnswer = `f-f`
         }
@@ -2068,7 +2068,7 @@ function genProblems(){
     }
   }
 
-  if (level == 4.11){
+  if (level == 4.14){
     return {
     numOne: genNumbers(8)+1,
     numTwo: genNumbers(8)+1,
@@ -2544,8 +2544,8 @@ for (let i = 0; i <  settingButton.length; i++){
       instructions.textContent = ""
       break;
 
-    case "Level 4.11":
-      level = 4.11;
+    case "Level 4.14":
+      level = 4.14;
       scoreNeeded = 20;
       highScoreName.innerHTML = highScore4dot11.name
       highScoreTime.innerHTML = highScore4dot11.time
