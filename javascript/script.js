@@ -208,11 +208,9 @@ if (state.score >= scoreNeeded){
   finalBox.classList.remove('hidden');
   if (time < gold){
     document.querySelector('.trophy').appendChild(imageG)
-  }
-  else if (time < silver){
+  } else if (time < silver){
     document.querySelector('.trophy').appendChild(imageS)
-  }
-  else if (time < bronze){
+  } else if (time < bronze){
     document.querySelector('.trophy').appendChild(imageB)
   } else {
     document.querySelector('.trophy').appendChild(imageNMP)
