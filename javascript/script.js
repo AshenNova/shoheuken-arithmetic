@@ -1072,7 +1072,7 @@ function updateProblems(){
       [p.numOne, p.numTwo] = [p.numTwo, p.numOne]
     }
     if (p.numThree == p.numFour){
-      p.numTwo += 1
+      p.numThree += 1
     }
     if (p.numThree > p.numFour ){
       [p.numThree, p.numFour] = [p.numFour, p.numThree]
