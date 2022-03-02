@@ -2660,6 +2660,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 4.7":
       level = 4.7;
       scoreNeeded = 30;
+      gold = 207;
       highScoreName.innerHTML = highScore4dot7.name
       highScoreTime.innerHTML = highScore4dot7.time
       highScoreMistakes.innerHTML = highScore4dot7.mistake
@@ -2766,7 +2767,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 5.1":
       level = 5.1;
       scoreNeeded = 10;
-      gold = 273;
+      gold = 80;
       highScoreName.innerHTML = highScore5dot1.name
       highScoreTime.innerHTML = highScore5dot1.time
       highScoreMistakes.innerHTML = highScore5dot1.mistake
@@ -2778,6 +2779,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 5.2":
       level = 5.2;
       scoreNeeded = 10;
+      gold = 120;
       highScoreName.innerHTML = highScore5dot2.name
       highScoreTime.innerHTML = highScore5dot2.time
       highScoreMistakes.innerHTML = highScore5dot2.mistake
@@ -2790,7 +2792,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 5.3":
       level = 5.3;
       scoreNeeded = 10;
-      gold = 238
+      gold = 79;
       highScoreName.innerHTML = highScore5dot3.name
       highScoreTime.innerHTML = highScore5dot3.time
       highScoreMistakes.innerHTML = highScore5dot3.mistake
