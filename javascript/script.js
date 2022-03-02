@@ -98,6 +98,7 @@ const twoDenominator = document.querySelector(".two-denominator")
 const threeWholeNumber = document.querySelector(".three-whole-number")
 const threeNumerator = document.querySelector(".three-numerator")
 const threeDenominator = document.querySelector(".three-denominator")
+const equalSymbol = document.querySelector(".equal-symbol")
 
 let level = 0;
 let player = 1;
@@ -149,6 +150,7 @@ const highScore4dot9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot10 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot11 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot12 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4dot13 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot14 = new HighScore("Izekiel", "1 mar 2022", 114, 1)
 const highScore5dot1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
 const highScore5dot2 = new HighScore("Nil", "Nil", 0, 0)
@@ -243,6 +245,9 @@ const resetStuff = function (){
   userInput.style.width = "175px";
   document.querySelector("#user-input").setAttribute("max","99999")
   displayProblem.style.margin = "30px 0";
+  threeNumerator.classList.add('line');
+  equalSymbol.innerHTML = "=";
+  fractionsContainerTwo.style.margin = "0 25px 15px"
 }
 
 resetButton.addEventListener('click', function(){
@@ -1003,6 +1008,60 @@ function updateProblems(){
     How much did A ${p.options}?
     `
   }
+  if ( level == 4.13){
+    if (p.numTwo == p.numThree){
+      p.numTwo += 1
+    }
+    if (p.numTwo > p.numThree){
+      [p.numThree , p.numTwo] = [p.numTwo, p.numThree]
+    }
+    for (let i = p.numThree; i > 1; i--){
+      if (p.numTwo%i == 0 && p.numThree%i == 0){
+        p.numThree /= i;
+        p.numTwo /= i;
+      }
+    }
+
+    if (p.option == "q"){
+      console.log(`optionTwo ${p.optionTwo}`);
+      if (p.optionTwo == 1){
+        equalSymbol.innerHTML = ""
+      }
+      if (p.optionTwo == 2){
+        equalSymbol.innerHTML = p.unitMeasurement
+      }
+      twoNumerator.classList.remove("line");
+      twoWholeNumber.textContent = p.numFour
+      twoNumerator.textContent = ""
+      twoDenominator.textContent = ""
+      fractionsContainerTwo.style.margin = "50px"
+
+    }
+    if (p.option == "r"){
+      fractionsContainerTwo.style.margin = "0 25px 15px"
+      twoNumerator.classList.add("line");
+      if (p.numOne == 0){
+        twoWholeNumber.textContent = ""
+      } else {
+        twoWholeNumber.textContent = p.numOne
+      }
+      twoNumerator.textContent = p.numTwo
+      twoDenominator.textContent = p.numThree
+      equalSymbol.innerHTML = ""
+    }
+    if (p.option == "f"){
+      fractionsContainerTwo.style.margin = "0 25px 15px"
+      twoNumerator.classList.add("line");
+      if (p.numOne == 0){
+        twoWholeNumber.textContent = ""
+      } else {
+        twoWholeNumber.textContent = p.numOne
+      }
+      twoNumerator.textContent = p.numTwo
+      twoDenominator.textContent = p.numThree
+      equalSymbol.innerHTML = p.unitMeasurement
+    }
+  }
 
   if ( level == 4.14){
     // fake - fake
@@ -1656,6 +1715,11 @@ function handleSubmit(e){
         }
       }
 
+      if ( level == 4.13){
+        if (p.option == "r") correctAnswer = "r"
+        if (p.option == "q") correctAnswer = "q"
+        if (p.option == "f") correctAnswer = "f"
+      }
 
       if ( level == 4.14 ){
         if (p.option == "1"){
@@ -2140,6 +2204,18 @@ function genProblems(){
     numTwo: genNumbers(8)+2,
     numMulti: genNumbers(99)+2,
     options: ["have left", "use"][genNumbers(2)]
+    }
+  }
+
+  if (level == 4.13){
+    return {
+    numOne: genNumbers(8),
+    numTwo: genNumbers(8)+1,
+    numThree: genNumbers(8)+1,
+    numFour: genNumbers(999999)+1,
+    unitMeasurement: ["m","ℓ","km","kg"][genNumbers(4)],
+    option: ["r","f","q"][genNumbers(3)],
+    optionTwo: genNumbers(2)+1
     }
   }
 
@@ -2649,6 +2725,26 @@ for (let i = 0; i <  settingButton.length; i++){
         document.querySelector("#user-input").setAttribute("type","text");
         instructions.innerHTML = "Form an equation using</br> multiplication of fraction"
         break;
+
+    case "Level 4.13":
+        level = 4.13;
+        scoreNeeded = 30;
+        highScoreName.innerHTML = highScore4dot13.name
+        highScoreTime.innerHTML = highScore4dot13.time
+        highScoreMistakes.innerHTML = highScore4dot13.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        wholeNumberContainer.classList.add('hidden');
+        fractionsContainerTwo.classList.remove('hidden');
+        equalSymbol.innerHTML = ""
+        instructions.innerHTML =
+        `Answer using</br>
+        r, f, q
+        `
+        threeWholeNumber.textContent = ""
+        threeNumerator.textContent = ""
+        threeDenominator.textContent = ""
+        threeNumerator.classList.remove('line');
+    break;
 
     case "Level 4.14":
       level = 4.14;
