@@ -127,7 +127,7 @@ const highScore1dot6 = new HighScore("Nil", "Nil", 0, 0)
 const highScore2 = new HighScore("Nil", "16 October 2021", 0, 0)
 const highScore2dot1 = new HighScore("JingKai Ng", "16 October 2021", 823, 24)
 const highScore2dot3 = new HighScore("Jingkai Ng", "30 October 2021", 853, 23)
-const highScore2dot4 = new HighScore("Shanice Lee", "1 mar 2022", 123, 0)
+const highScore2dot4 = new HighScore("Jayden Goo", "2 mar 2022", 113, 0)
 const highScore3 = new HighScore("Shanice Lee", "30 October 2021", 614, 7)
 const highScore3dot1 = new HighScore("Shanice Lee", "30 October 2021", 162, 5)
 const highScore3dot2 = new HighScore("Nil", "Nil", 0, 0)
@@ -1717,7 +1717,7 @@ function handleSubmit(e){
 
       if ( level == 4.13){
         if (p.option == "r") correctAnswer = "r"
-        if (p.option == "q") correctAnswer = "q"
+        if (p.option == "v") correctAnswer = "v"
         if (p.option == "f") correctAnswer = "f"
       }
 
@@ -2497,7 +2497,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 2.4":
       level = 2.4;
       scoreNeeded = 50;
-      gold = 123
+      gold = 113
       highScoreName.innerHTML = highScore2dot4.name
       highScoreTime.innerHTML = highScore2dot4.time
       highScoreMistakes.innerHTML = highScore2dot4.mistake
@@ -2738,7 +2738,7 @@ for (let i = 0; i <  settingButton.length; i++){
         equalSymbol.innerHTML = ""
         instructions.innerHTML =
         `Answer using</br>
-        r, f, q
+        r, f, v
         `
         threeWholeNumber.textContent = ""
         threeNumerator.textContent = ""
