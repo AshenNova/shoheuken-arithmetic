@@ -32,47 +32,48 @@ imageNMP.src = 'images/endgame/needmorepractice.jpeg'
 const levelSetting = document.querySelector('.level-setting');
 const levelLabel = document.querySelector('.level-label');
 
-const level1 = document.querySelector('.level1');
-const level1dot1 = document.querySelector('.level1Dot1');
-const level1dot2 = document.querySelector('.level1Dot2'); 
-const level1dot3 = document.querySelector('.level1Dot3');
-const level1dot4 = document.querySelector('.level1Dot4');
-const level1dot5 = document.querySelector('.level1Dot5');
-const level1dot6 = document.querySelector('.level1Dot6');
+// const level1 = document.querySelector('.level1');
+// const level1dot1 = document.querySelector('.level1Dot1');
+// const level1dot2 = document.querySelector('.level1Dot2'); 
+// const level1dot3 = document.querySelector('.level1Dot3');
+// const level1dot4 = document.querySelector('.level1Dot4');
+// const level1dot5 = document.querySelector('.level1Dot5');
+// const level1dot6 = document.querySelector('.level1Dot6');
 
-const level2 = document.querySelector('.level2');
-const level2dot1 = document.querySelector('.level2Dot1');
-const level2dot3 = document.querySelector('.level2Dot3');
+// const level2 = document.querySelector('.level2');
+// const level2dot1 = document.querySelector('.level2Dot1');
+// const level2dot3 = document.querySelector('.level2Dot3');
 
-const level3 = document.querySelector('.level3');
-const level3dot1 = document.querySelector('.level3Dot1');
-const level3dot2 = document.querySelector('.level3Dot2');
-const level3dot3 = document.querySelector('.level3Dot3');
-const level3dot4 = document.querySelector('.level3Dot4');
-const level3dot5 = document.querySelector('.level3Dot5');
-const level3dot6 = document.querySelector('.level3Dot6');
-const level3dot7 = document.querySelector('.level3Dot7');
-const level3dot9 = document.querySelector('.level3dot9');
-const level3dot10 = document.querySelector('.level3dot10');
-const level3dot11 = document.querySelector('.level3dot11');
+// const level3 = document.querySelector('.level3');
+// const level3dot1 = document.querySelector('.level3Dot1');
+// const level3dot2 = document.querySelector('.level3Dot2');
+// const level3dot3 = document.querySelector('.level3Dot3');
+// const level3dot4 = document.querySelector('.level3Dot4');
+// const level3dot5 = document.querySelector('.level3Dot5');
+// const level3dot6 = document.querySelector('.level3Dot6');
+// const level3dot7 = document.querySelector('.level3Dot7');
+// const level3dot9 = document.querySelector('.level3dot9');
+// const level3dot10 = document.querySelector('.level3dot10');
+// const level3dot11 = document.querySelector('.level3dot11');
 
-const level4 = document.querySelector('.level4');
-const level4dot1 = document.querySelector('.level4Dot1');
-const level4dot3 = document.querySelector('.level4Dot3');
-const level4dot4 = document.querySelector('.level4Dot4');
-const level4dot5 = document.querySelector('.level4Dot5');
-const level4dot6 = document.querySelector('.level4Dot6');
-const level4dot7 = document.querySelector('.level4Dot7');
-const level4dot8 = document.querySelector('.level4Dot8');
-const level4dot9 = document.querySelector('.level4Dot9');
-const level4dot10 = document.querySelector('.level4Dot10');
-const level4dot11 = document.querySelector('.level4Dot11');
+// const level4 = document.querySelector('.level4');
+// const level4dot1 = document.querySelector('.level4Dot1');
+// const level4dot3 = document.querySelector('.level4Dot3');
+// const level4dot4 = document.querySelector('.level4Dot4');
+// const level4dot5 = document.querySelector('.level4Dot5');
+// const level4dot6 = document.querySelector('.level4Dot6');
+// const level4dot7 = document.querySelector('.level4Dot7');
+// const level4dot8 = document.querySelector('.level4Dot8');
+// const level4dot9 = document.querySelector('.level4Dot9');
+// const level4dot10 = document.querySelector('.level4Dot10');
+// const level4dot11 = document.querySelector('.level4Dot11');
+// const level4dot12 = document.querySelector('.level4Dot12');
 
-const level5dot1 = document.querySelector('.level5Dot1');
-const level5dot2 = document.querySelector('.level5Dot2');
-const level5dot3 = document.querySelector('.level5Dot3');
-const level6dot3 = document.querySelector('.level6Dot3');
-const level7 = document.querySelector('.level7');
+// const level5dot1 = document.querySelector('.level5Dot1');
+// const level5dot2 = document.querySelector('.level5Dot2');
+// const level5dot3 = document.querySelector('.level5Dot3');
+// const level6dot3 = document.querySelector('.level6Dot3');
+// const level7 = document.querySelector('.level7');
 
 const mistakesCountCl = document.querySelector('.mistakesCount');
 const settingButton = document.querySelectorAll('.settingButton');
@@ -147,6 +148,7 @@ const highScore4dot8 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot10 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot11 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4dot12 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4dot14 = new HighScore("Izekiel", "1 mar 2022", 114, 1)
 const highScore5dot1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
 const highScore5dot2 = new HighScore("Nil", "Nil", 0, 0)
@@ -265,6 +267,9 @@ for (let x = 0; x < backButton.length; x++){
     resetStuff()
   })
 }
+
+
+//////////////////// DISPLAY PROBLEMS ////////////////////
 
 // Step 3: Updating, storing and then displaying the problem
 // 1. generate new problem and store the question in state object
@@ -978,6 +983,27 @@ function updateProblems(){
     What is the number?`
   }
 
+  if ( level == 4.12 ){
+    if (p.numOne == p.numTwo){
+      p.numOne += 1
+    }
+    if (p.numOne > p.numTwo){
+      [p.numOne , p.numTwo] = [p.numTwo, p.numOne]
+    }
+    for (let i = p.numTwo; i > 1; i--){
+      if (p.numOne%i == 0 && p.numTwo%i == 0){
+        p.numOne /= i;
+        p.numTwo /= i;
+      }
+    }
+    displayProblem.innerHTML = 
+    `
+    A has ${p.numTwo*p.numMulti} of something.</br>
+    A used ${p.numOne}/${p.numTwo} of it.</br>
+    How much did A ${p.options}?
+    `
+  }
+
   if ( level == 4.14){
     // fake - fake
     if (p.numOne == p.numTwo){
@@ -1621,6 +1647,16 @@ function handleSubmit(e){
         correctAnswer = `${p.numMulti*p.numTwo}`
       }
 
+      if ( level == 4.12){
+        if (p.options == "use"){
+          correctAnswer = `${p.numTwo*p.numMulti}x${p.numOne}/${p.numTwo}`
+        }
+        if (p.options == "have left"){
+          correctAnswer = `${p.numTwo*p.numMulti}x${p.numTwo-p.numOne}/${p.numTwo}`
+        }
+      }
+
+
       if ( level == 4.14 ){
         if (p.option == "1"){
           correctAnswer = `f-f`
@@ -1767,7 +1803,7 @@ function handleSubmit(e){
 function genNumbers(max){
   return Math.floor(Math.random()*max)
 }
-
+//////////////////////////// SET VALUES //////////////////////////////
 // Step 2: Generate Problem
 function genProblems(){
   console.log(level);
@@ -2098,6 +2134,15 @@ function genProblems(){
     }
   }
 
+  if (level == 4.12){
+    return {
+    numOne: genNumbers(8)+2,
+    numTwo: genNumbers(8)+2,
+    numMulti: genNumbers(99)+2,
+    options: ["have left", "use"][genNumbers(2)]
+    }
+  }
+
   if (level == 4.14){
     return {
     numOne: genNumbers(8)+1,
@@ -2268,6 +2313,8 @@ function levelBox(){
     startBox.classList.remove('hidden')
     levelLabel.innerHTML = `You are attempting Level ${level}`
 }
+
+//////////////////////////// SET CLICK ///////////////////////////////
 
 for (let i = 0; i <  settingButton.length; i++){
 
@@ -2581,7 +2628,7 @@ for (let i = 0; i <  settingButton.length; i++){
 
     
     case "Level 4.11":
-      level = "4.11";
+      level = 4.11;
       scoreNeeded = 30;
       highScoreName.innerHTML = highScore4dot11.name
       highScoreTime.innerHTML = highScore4dot11.time
@@ -2590,6 +2637,18 @@ for (let i = 0; i <  settingButton.length; i++){
       displayProblem.style.fontSize = "25px";
       displayProblem.style.marginBottom = "150px";
       break;
+
+      case "Level 4.12":
+        level = 4.12;
+        scoreNeeded = 30;
+        highScoreName.innerHTML = highScore4dot12.name
+        highScoreTime.innerHTML = highScore4dot12.time
+        highScoreMistakes.innerHTML = highScore4dot12.mistake
+        instructions.textContent = ""
+        displayProblem.style.fontSize = "25px";
+        document.querySelector("#user-input").setAttribute("type","text");
+        instructions.innerHTML = "Form an equation using</br> multiplication of fraction"
+        break;
 
     case "Level 4.14":
       level = 4.14;
@@ -2606,7 +2665,6 @@ for (let i = 0; i <  settingButton.length; i++){
       f-f , r+r , vxr</br>
       fxr , fxv</br>
       `
-
       break;
     
     case "Level 5.1":
