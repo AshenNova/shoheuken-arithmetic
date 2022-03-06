@@ -943,6 +943,7 @@ function updateProblems(){
   }
 
   if ( level == "4.10" ){
+    console.log("yes!")
     // level 4.8
     if (p.optionFinal == "1"){
       threeWholeNumber.textContent = ""
@@ -969,6 +970,7 @@ function updateProblems(){
       twoDenominator.textContent = p.numThree
     }
   }
+
   if ( level == 4.11){
     if (p.numOne == p.numTwo){
       p.numOne += 1;
@@ -1190,28 +1192,28 @@ function updateProblems(){
     }
     if (p.letterChange == "of" && p.letterChangeTwo == "of"){
       displayProblem.innerHTML = 
-      `A is ${p.numOne}/${p.numTwo} of ${p.letterBTotal}.</br>
+      `A is ${p.numOne}${p.option}${p.numTwo} of ${p.letterBTotal}.</br>
       ${p.numThree}% ${p.letterChange} A was removed.</br>
       ${p.numFour}% ${p.letterChangeTwo} B was removed.</br>
       What is ${p.letterAB} in the end?`
     }
     if (p.letterChange == "of" && p.letterChangeTwo != "of"){
       displayProblem.innerHTML = 
-      `A is ${p.numOne}/${p.numTwo} of ${p.letterBTotal}.</br>
+      `A is ${p.numOne}${p.option}${p.numTwo} of ${p.letterBTotal}.</br>
       ${p.numThree}% ${p.letterChange} A was removed.</br>
       B ${p.letterChangeTwo} by ${p.numFour}%.</br>
       What is ${p.letterAB} in the end?`
     }
     if (p.letterChange != "of" && p.letterChangeTwo == "of"){
       displayProblem.innerHTML = 
-      `A is ${p.numOne}/${p.numTwo} of ${p.letterBTotal}.</br>
+      `A is ${p.numOne}${p.option}${p.numTwo} of ${p.letterBTotal}.</br>
       A ${p.letterChange} by ${p.numThree}%.</br>
       ${p.numFour}% ${p.letterChangeTwo} B was removed.</br>
       What is ${p.letterAB} in the end?`
     }
     if (p.letterChange != "of" && p.letterChangeTwo != "of"){
       displayProblem.innerHTML = 
-      `A is ${p.numOne}/${p.numTwo} of ${p.letterBTotal}.</br>
+      `A is ${p.numOne}${p.option}${p.numTwo} of ${p.letterBTotal}.</br>
       A ${p.letterChange} by ${p.numThree}%.</br>
       B ${p.letterChangeTwo} by ${p.numFour}%.</br>
       What is ${p.letterAB} in the end?`
@@ -2184,7 +2186,7 @@ function genProblems(){
     numTwo: genNumbers(9)+2,
     numThree: genNumbers(10)+2,
     numFour: 0,
-    option: ["1","2"][genNumbers(2)]
+    optionFinal: ["1","2"][genNumbers(2)]
     }
   }
 
@@ -2271,7 +2273,8 @@ function genProblems(){
       letterBTotal: ["B","A and B"][genNumbers(2)],
       letterChange: ["increase", "decrease", "of"][genNumbers(3)],
       letterChangeTwo: ["increase", "decrease", "of"][genNumbers(3)],
-      letterAB: ["A","B"][genNumbers(2)]
+      letterAB: ["A","B"][genNumbers(2)],
+      option: [":","/"][genNumbers(2)]
     }
   }
 
