@@ -943,7 +943,6 @@ function updateProblems(){
   }
 
   if ( level == "4.10" ){
-    console.log("yes!")
     // level 4.8
     if (p.optionFinal == "1"){
       threeWholeNumber.textContent = ""
@@ -1022,8 +1021,8 @@ function updateProblems(){
       }
     }
 
-    if (p.option == "q"){
-      console.log(`optionTwo ${p.optionTwo}`);
+    if (p.option == "v"){
+      console.log(p.option)
       if (p.optionTwo == 1){
         equalSymbol.innerHTML = ""
       }
@@ -1035,8 +1034,8 @@ function updateProblems(){
       twoNumerator.textContent = ""
       twoDenominator.textContent = ""
       fractionsContainerTwo.style.margin = "50px"
-
     }
+
     if (p.option == "r"){
       fractionsContainerTwo.style.margin = "0 25px 15px"
       twoNumerator.classList.add("line");
@@ -1716,9 +1715,15 @@ function handleSubmit(e){
       }
 
       if ( level == 4.13){
-        if (p.option == "r") correctAnswer = "r"
-        if (p.option == "v") correctAnswer = "v"
-        if (p.option == "f") correctAnswer = "f"
+        if (p.option == "r") {
+          correctAnswer = "r"
+        }
+        if (p.option == "v") {
+          correctAnswer = "v"
+        }
+        if (p.option == "f") {
+          correctAnswer = "f"
+        }
       }
 
       if ( level == 4.14 ){
@@ -2214,8 +2219,8 @@ function genProblems(){
     numThree: genNumbers(8)+1,
     numFour: genNumbers(999999)+1,
     unitMeasurement: ["m","ℓ","km","kg"][genNumbers(4)],
-    option: ["r","f","q"][genNumbers(3)],
-    optionTwo: genNumbers(2)+1
+    option: ["r","f","v"][genNumbers(3)],
+    optionTwo: genNumbers(1)+1
     }
   }
 
