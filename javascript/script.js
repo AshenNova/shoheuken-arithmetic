@@ -2220,7 +2220,7 @@ function genProblems(){
     numFour: genNumbers(999999)+1,
     unitMeasurement: ["m","ℓ","km","kg"][genNumbers(4)],
     option: ["r","f","v"][genNumbers(3)],
-    optionTwo: genNumbers(1)+1
+    optionTwo: genNumbers(2)+1
     }
   }
 
