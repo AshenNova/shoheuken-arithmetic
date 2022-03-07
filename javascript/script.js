@@ -204,6 +204,7 @@ const resetStuff = function (){
   threeNumerator.classList.add('line');
   equalSymbol.innerHTML = "=";
   fractionsContainerTwo.style.margin = "0 25px 15px"
+  helpMe.textContent = ""
 }
 
 resetButton.addEventListener('click', function(){

@@ -194,7 +194,7 @@ table{
   border-bottom: 5px solid black;
   }
 
-.fraction-choice{
+.fraction-choice, .help-me-text{
   text-align: center;
   font-size: 2em;
   color: white;
