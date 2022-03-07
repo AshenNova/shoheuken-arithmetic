@@ -32,49 +32,6 @@ imageNMP.src = 'images/endgame/needmorepractice.jpeg'
 const levelSetting = document.querySelector('.level-setting');
 const levelLabel = document.querySelector('.level-label');
 
-// const level1 = document.querySelector('.level1');
-// const level1dot1 = document.querySelector('.level1Dot1');
-// const level1dot2 = document.querySelector('.level1Dot2'); 
-// const level1dot3 = document.querySelector('.level1Dot3');
-// const level1dot4 = document.querySelector('.level1Dot4');
-// const level1dot5 = document.querySelector('.level1Dot5');
-// const level1dot6 = document.querySelector('.level1Dot6');
-
-// const level2 = document.querySelector('.level2');
-// const level2dot1 = document.querySelector('.level2Dot1');
-// const level2dot3 = document.querySelector('.level2Dot3');
-
-// const level3 = document.querySelector('.level3');
-// const level3dot1 = document.querySelector('.level3Dot1');
-// const level3dot2 = document.querySelector('.level3Dot2');
-// const level3dot3 = document.querySelector('.level3Dot3');
-// const level3dot4 = document.querySelector('.level3Dot4');
-// const level3dot5 = document.querySelector('.level3Dot5');
-// const level3dot6 = document.querySelector('.level3Dot6');
-// const level3dot7 = document.querySelector('.level3Dot7');
-// const level3dot9 = document.querySelector('.level3dot9');
-// const level3dot10 = document.querySelector('.level3dot10');
-// const level3dot11 = document.querySelector('.level3dot11');
-
-// const level4 = document.querySelector('.level4');
-// const level4dot1 = document.querySelector('.level4Dot1');
-// const level4dot3 = document.querySelector('.level4Dot3');
-// const level4dot4 = document.querySelector('.level4Dot4');
-// const level4dot5 = document.querySelector('.level4Dot5');
-// const level4dot6 = document.querySelector('.level4Dot6');
-// const level4dot7 = document.querySelector('.level4Dot7');
-// const level4dot8 = document.querySelector('.level4Dot8');
-// const level4dot9 = document.querySelector('.level4Dot9');
-// const level4dot10 = document.querySelector('.level4Dot10');
-// const level4dot11 = document.querySelector('.level4Dot11');
-// const level4dot12 = document.querySelector('.level4Dot12');
-
-// const level5dot1 = document.querySelector('.level5Dot1');
-// const level5dot2 = document.querySelector('.level5Dot2');
-// const level5dot3 = document.querySelector('.level5Dot3');
-// const level6dot3 = document.querySelector('.level6Dot3');
-// const level7 = document.querySelector('.level7');
-
 const mistakesCountCl = document.querySelector('.mistakesCount');
 const settingButton = document.querySelectorAll('.settingButton');
 const toMultiplesBtn = document.querySelector('.toMultiples');
@@ -136,6 +93,7 @@ const highScore3DotZero4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero5 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero6 = new HighScore("Shanice Lee", "1 mar 2022", 376, 3)
 const highScore3DotZero7 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3DotZero8 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero10 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero11 = new HighScore("Nil", "Nil", 0, 0)
@@ -506,7 +464,7 @@ function updateProblems(){
     }
   }
 
-  if (level == 2.03 || level == 3.3 || level == 4.03 || level == 6.3){
+  if (level == 2.03 || level == 3.03 || level == 4.03 || level == 6.3){
     console.log(p.operator);
     if (p.operator == "x" ) displayProblem.innerHTML = `${p.numThree} ${p.operator} ${p.numFour}` 
     if (p.operator == "+") displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
@@ -542,7 +500,7 @@ function updateProblems(){
     }
   }
 
-  if (level == 3.4){
+  if (level == 3.04){
     console.log(p.unitMeasurement);
     p.numTwo = 1000;
     if (p.unitMeasurement == "min"){
@@ -575,7 +533,7 @@ function updateProblems(){
     secondUnitMeasurement.textContent = p.secondUnitMeasurement;
   }
 
-  if (level == 3.5){
+  if (level == 3.05){
     p.numTwo = 1000;
     if (p.unitMeasurement == "$"){
       p.numTwo = 100;
@@ -614,7 +572,7 @@ function updateProblems(){
     secondUnitMeasurement.textContent = p.secondUnitMeasurement;
   }
 
-  if (level == 3.6){
+  if (level == 3.06){
     p.numTwo = 1000;
     if (p.unitMeasurement == "$"){
       p.numTwo = 100;
@@ -659,7 +617,7 @@ function updateProblems(){
         }
   }
 
-  if (level == 3.7){
+  if (level == 3.07){
     if (p.numOne == p.numTwo && p.numTwo == p.numThree) {
       p.numOne = p.numOne+1;
     }
@@ -667,7 +625,18 @@ function updateProblems(){
     displayProblem.innerHTML = `${p.numOne} , ${p.numTwo} , ${p.numThree}`
   }
 
-  if ( level == 3.9 ){
+
+  if ( level == 3.08 ){
+    displayProblem.innerHTML = `
+    Pattern 1: ${p.numOne}</br>
+    Pattern 2: ${p.numOne+p.numTwo}</br>
+    Pattern 3: ${p.numOne+p.numTwo*2}</br>
+    ...</br>
+    Pattern ${p.numThree}: ?
+    `
+  }
+
+  if ( level == 3.09 ){
     threeWholeNumber.textContent = ""
     threeNumerator.textContent = "?"
     threeDenominator.textContent = "?"
@@ -1457,7 +1426,7 @@ function handleSubmit(e){
         }
       }
 
-      if (level == 3.3 || level == 2.03 || level == 4.03 || level == 6.3){
+      if (level == 3.03 || level == 2.03 || level == 4.03 || level == 6.3){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") {
           if (p.numOne >= p.numTwo) {
@@ -1470,11 +1439,11 @@ function handleSubmit(e){
         if (p.operator == "÷") correctAnswer = (p.numThree*p.numFour)/p.numThree
       }
 
-      if ( level == 3.4){
+      if ( level == 3.04){
         correctAnswer = p.numOne * p.numTwo
       }
 
-      if ( level == 3.5){
+      if ( level == 3.05){
         if ( p.unitMeasurement == "kg" || p.unitMeasurement == "ℓ" || p.unitMeasurement == "km"){
           correctAnswer = (p.numOne*p.numTwo)+p.numFour
         } else {
@@ -1482,7 +1451,7 @@ function handleSubmit(e){
         }
       }
 
-      if (level == 3.6){
+      if (level == 3.06){
         console.log(p.numOne, p.numTwo);
         p.remainder = p.numOne%p.numTwo
         if (p.unitMeasurement == "$"){
@@ -1506,7 +1475,7 @@ function handleSubmit(e){
         }
       }
 
-      if ( level == 3.7){
+      if ( level == 3.07){
         arr.sort(function(a, b){return b-a});
         let i = 0;
         let a = 0;
@@ -1525,7 +1494,17 @@ function handleSubmit(e){
         correctAnswer = commonMultipleArrTwo[commonMultipleArrTwo.length-1];
       }
 
-      if ( level == 3.9){
+      if ( level == 3.08 ){
+        if (p.numTwo > p.numOne) {
+          correctAnswer = `${p.numTwo}n-${p.numTwo-p.numOne} ${p.numTwo*p.numThree+(p.numOne-p.numTwo)}`
+        } else if (p.numTwo == p.numOne){
+          correctAnswer = `${p.numTwo}n ${p.numTwo*p.numOne}`
+        } else  {
+          correctAnswer = `${p.numTwo}n+${p.numOne-p.numTwo} ${p.numTwo*p.numThree+(p.numOne-p.numTwo)}`
+        }
+      }
+
+      if ( level == 3.09){
         for (let i = p.numLargest; i > 1; i--){
           if ((p.numOne % i == 0) && (p.numTwo % i == 0)){
             p.numOne /= i;
@@ -1549,7 +1528,7 @@ function handleSubmit(e){
       }
 
       if ( level == 3.11){
-        // level 3.9
+        // level 3.09
         if (p.optionFinal == "1"){
           for (let i = p.numLargest; i > 1; i--){
             if ((p.numOne % i == 0) && (p.numTwo % i == 0)){
@@ -2063,6 +2042,14 @@ function genProblems(){
       numOne: genNumbers(5)+1,
       numTwo: genNumbers(4)+2,
       numThree: genNumbers(5)+1,
+    }
+  }
+
+  if (level == 3.08){
+    return {
+      numOne: genNumbers(10)+1,
+      numTwo: genNumbers(5)+2,
+      numThree: genNumbers(5)+5
     }
   }
 
@@ -2582,6 +2569,17 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreMistakes.innerHTML = highScore3DotZero7.mistake
       instructions.textContent = "Find the Lowest Common Multiple of the 3 numbers"
       break;
+    
+    case "Level 3.08":
+      level = 3.08;
+      scoreNeeded = 30;
+      highScoreName.innerHTML = highScore3DotZero8.name
+      highScoreTime.innerHTML = highScore3DotZero8.time
+      highScoreMistakes.innerHTML = highScore3DotZero8.mistake
+      document.querySelector("#user-input").setAttribute("type","text");
+      displayProblem.style.fontSize = "25px";
+      instructions.textContent = "Form an Equation using 'n' from the pattern"
+      break;  
 
     case "Level 3.09":
       level = 3.09;
