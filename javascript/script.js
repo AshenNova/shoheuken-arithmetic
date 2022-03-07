@@ -117,44 +117,44 @@ function HighScore(name, date, time, mistake) {
   this.mistake = mistake
 }
 
-const highScore1 = new HighScore("Jayden Cheong", "16 October 2021", 140, 1)
-const highScore1dot1 = new HighScore("Jayden Cheong", "16 October 2021", 823, 12)
-const highScore1dot2 = new HighScore("Nil", "16 October 2021", 0, 0)
-const highScore1dot3 = new HighScore("Nil", "16 October 2021", 0, 0)
-const highScore1dot4 = new HighScore("Nil", "Nil", 0, 0)
-const highScore1dot5 = new HighScore("Shanice Lee", "1 mar 2022", 171, 3)
-const highScore1dot6 = new HighScore("Nil", "Nil", 0, 0)
-const highScore2 = new HighScore("Nil", "16 October 2021", 0, 0)
-const highScore2dot1 = new HighScore("JingKai Ng", "16 October 2021", 823, 24)
-const highScore2dot3 = new HighScore("Jingkai Ng", "30 October 2021", 853, 23)
-const highScore2dot4 = new HighScore("Jayden Goo", "2 mar 2022", 113, 0)
-const highScore3 = new HighScore("Shanice Lee", "30 October 2021", 614, 7)
-const highScore3dot1 = new HighScore("Shanice Lee", "30 October 2021", 162, 5)
-const highScore3dot2 = new HighScore("Nil", "Nil", 0, 0)
-const highScore3dot3 = new HighScore("Shanice Lee", "6 November 2021", 662, 4)
-const highScore3dot4 = new HighScore("Nil", "Nil", 0, 0)
-const highScore3dot5 = new HighScore("Nil", "Nil", 0, 0)
-const highScore3dot6 = new HighScore("Shanice Lee", "1 mar 2022", 376, 3)
-const highScore3dot7 = new HighScore("Nil", "Nil", 0, 0)
-const highScore3dot9 = new HighScore("Nil", "Nil", 0, 0)
-const highScore3dot10 = new HighScore("Nil", "Nil", 0, 0)
-const highScore3dot11 = new HighScore("Nil", "Nil", 0, 0)
-const highScore4dot1 = new HighScore("Nil", "Nil", 0, 0)
-const highScore4dot3 = new HighScore("Jadee Wong", "10 December 2021", 460, 2)
-const highScore4dot4 = new HighScore("Nil", "Nil", 0, 0)
-const highScore4dot5 = new HighScore("Nil", "Nil", 0, 0)
-const highScore4dot6 = new HighScore("Nil", "Nil", 0, 0)
-const highScore4dot7 = new HighScore("Nil", "Nil", 0, 0)
-const highScore4dot8 = new HighScore("Nil", "Nil", 0, 0)
-const highScore4dot9 = new HighScore("Nil", "Nil", 0, 0)
-const highScore4dot10 = new HighScore("Nil", "Nil", 0, 0)
-const highScore4dot11 = new HighScore("Nil", "Nil", 0, 0)
-const highScore4dot12 = new HighScore("Nil", "Nil", 0, 0)
-const highScore4dot13 = new HighScore("Nil", "Nil", 0, 0)
-const highScore4dot14 = new HighScore("Izekiel", "1 mar 2022", 114, 1)
+const highScore1DotZero = new HighScore("Jayden Cheong", "16 October 2021", 140, 1)
+const highScore1DotZero1 = new HighScore("Jayden Cheong", "16 October 2021", 823, 12)
+const highScore1DotZero2 = new HighScore("Nil", "16 October 2021", 0, 0)
+const highScore1DotZero3 = new HighScore("Nil", "16 October 2021", 0, 0)
+const highScore1DotZero4 = new HighScore("Nil", "Nil", 0, 0)
+const highScore1DotZero5 = new HighScore("Shanice Lee", "1 mar 2022", 171, 3)
+const highScore1DotZero6 = new HighScore("Nil", "Nil", 0, 0)
+const highScore2DotZero = new HighScore("Nil", "16 October 2021", 0, 0)
+const highScore2DotZero1 = new HighScore("JingKai Ng", "16 October 2021", 823, 24)
+const highScore2DotZero3 = new HighScore("Jingkai Ng", "30 October 2021", 853, 23)
+const highScore2DotZero4 = new HighScore("Jayden Goo", "2 mar 2022", 113, 0)
+const highScore3DotZero = new HighScore("Shanice Lee", "30 October 2021", 614, 7)
+const highScore3DotZero1 = new HighScore("Shanice Lee", "30 October 2021", 162, 5)
+const highScore3DotZero2 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3DotZero3 = new HighScore("Shanice Lee", "6 November 2021", 662, 4)
+const highScore3DotZero4 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3DotZero5 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3DotZero6 = new HighScore("Shanice Lee", "1 mar 2022", 376, 3)
+const highScore3DotZero7 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3DotZero9 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3DotZero10 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3DotZero11 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4DotZero1 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4DotZero3 = new HighScore("Jadee Wong", "10 December 2021", 460, 2)
+const highScore4DotZero4 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4DotZero5 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4DotZero6 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4DotZero7 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4DotZero8 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4DotZero9 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4DotZero10 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4DotZero11 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4DotZero12 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4DotZero13 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4DotZero14 = new HighScore("Izekiel", "1 mar 2022", 114, 1)
 const highScore5dot1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
 const highScore5dot2 = new HighScore("Nil", "Nil", 0, 0)
-const highScore5dot3 = new HighScore("Izekiel", "1 Mar 2022", 238, 3)
+const highScore5dot3 = new HighScore("Jayden Goo", "2 Mar 2022", 79, 0)
 const highScore6dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
 
@@ -289,13 +289,13 @@ function updateProblems(){
       displayProblem.innerHTML = `${p.numTwo} ${p.operator} ${p.numOne}`
     }
   }
-  if (level == 1.2){
+  if (level == 1.02){
     if (p.numOne <= 9) p.operator = "+"
     if (p.numOne > 9) p.operator = "-"
       displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}` 
   }
 
-  if (level == 1.3){
+  if (level == 1.03){
     if (p.operator == "x" ) {
       displayProblem.innerHTML = `${p.numThree} ${p.operator} ${p.numFour}`;
     } else if (p.operator == "÷"){
@@ -309,7 +309,7 @@ function updateProblems(){
     }  
   }
 
-  if (level == 1.4 ){
+  if (level == 1.04 ){
     if (p.option == "c"){
       if (p.operator == "+" && p.numTwo>p.numThree){
         [p.numThree, p.numTwo] = [p.numTwo, p.numThree]
@@ -349,7 +349,7 @@ function updateProblems(){
     }
   }
 
-  if (level == 1.5 ){
+  if (level == 1.05 ){
     if (p.option == "c"){
       if (p.optionTwo == "1"){
       displayProblem.innerHTML = `${p.numTwo} ${p.optionThree} than _____ is ${p.numThree}.`
@@ -378,7 +378,7 @@ function updateProblems(){
     }
   }
 
-  if ( level == 1.6) {
+  if ( level == 1.06) {
     if (p.optionFinal == "1"){
     arr = [p.numOne, p.numTwo];
     if (p.numTwo > p.numOne){
@@ -465,7 +465,7 @@ function updateProblems(){
     }
   }
 
-  if (level == 1.1 || level == 2.1 || level == 3.1 ){
+  if (level == 1.01 || level == 2.01 || level == 3.1 ){
     if (p.operator == "x" ) displayProblem.innerHTML = `${p.numThree} ${p.operator} ${p.numFour}`
     if (p.operator == "÷") displayProblem.innerHTML = `${p.numThree*p.numFour} ${p.operator} ${p.numThree}` 
   }
@@ -478,7 +478,7 @@ function updateProblems(){
     }
   }
 
-  if (level == 2.4){
+  if (level == 2.04){
     if (p.bigOrSmall == "1"){
       fractionChoice.innerHTML = "Smaller"
     } else {
@@ -506,7 +506,7 @@ function updateProblems(){
     }
   }
 
-  if (level == 2.3 || level == 3.3 || level == 4.3 || level == 6.3){
+  if (level == 2.03 || level == 3.3 || level == 4.03 || level == 6.3){
     console.log(p.operator);
     if (p.operator == "x" ) displayProblem.innerHTML = `${p.numThree} ${p.operator} ${p.numFour}` 
     if (p.operator == "+") displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
@@ -680,7 +680,7 @@ function updateProblems(){
     p.numLargest = p.numTwo*p.numMulti
   }
 
-  if ( level == 3.101){
+  if ( level == 3.10){
     if (p.numOne >= p.numTwo){
       p.numOne = p.numOne - 1 - (p.numOne - p.numTwo);
     }
@@ -742,7 +742,7 @@ function updateProblems(){
       }
     }
   }
-  if ( level == "4.1" ){
+  if ( level == 4.01 ){
     if (p.value == "thousands" && p.numOne > 1000){
       p.numOne = p.numOne + 1000;
     }
@@ -753,7 +753,7 @@ function updateProblems(){
     helpMe.textContent = `${p.placeValue}`
   }
 
-  if (level == 4.4){
+  if (level == 4.04){
     if (p.numOne == 1000){
       p.numThree = 10
     }
@@ -767,7 +767,7 @@ function updateProblems(){
     displayProblem.innerHTML = `${p.numOne/p.numTwo} ${p.operator} ${p.numThree}`;
   }
 
-  if ( level == 4.5){
+  if ( level == 4.05){
     if ((p.unitMeasurement == "m" || p.unitMeasurement == "$") && (p.option == "2")){
       p.numOne = p.numSix
     }
@@ -803,7 +803,7 @@ function updateProblems(){
     secondUnitMeasurement.textContent = `${p.secondUnitMeasurement}`  
   }
 
-  if ( level == 4.6){
+  if ( level == 4.06){
     if ((p.unitMeasurement == "m" || p.unitMeasurement == "$") && (p.option == "2")){
       p.numOne = p.numFive
     }
@@ -840,8 +840,8 @@ function updateProblems(){
     secondUnitMeasurement.textContent = `${p.unitMeasurement}`  
   }
 
-  if ( level == 4.7){
-    // level 4.5
+  if ( level == 4.07){
+    // level 4.05
     if (p.optionFinal == "1"){
       if ((p.unitMeasurement == "m" || p.unitMeasurement == "$") && (p.option == "2")){
         p.numOne = p.numSix
@@ -877,7 +877,7 @@ function updateProblems(){
       }
       secondUnitMeasurement.textContent = `${p.secondUnitMeasurement}`  
     }
-    // level 4.6
+    // level 4.06
     if (p.optionFinal == "2"){
       if ((p.unitMeasurement == "m" || p.unitMeasurement == "$") && (p.option == "2")){
         p.numOne = p.numFive
@@ -917,7 +917,7 @@ function updateProblems(){
   }
 
 
-  if (level == 4.8) {
+  if (level == 4.08) {
     threeWholeNumber.textContent = ""
     threeNumerator.textContent = "?"
     threeDenominator.textContent = "?"
@@ -929,7 +929,7 @@ function updateProblems(){
     twoDenominator.textContent = p.numThree
   }
 
-  if ( level == 4.9){
+  if ( level == 4.09){
     threeWholeNumber.textContent = "?"
     threeNumerator.textContent = "?"
     threeDenominator.textContent = "?"
@@ -942,8 +942,8 @@ function updateProblems(){
     twoDenominator.textContent = p.numThree
   }
 
-  if ( level == "4.10" ){
-    // level 4.8
+  if ( level == 4.10 ){
+    // level 4.08
     if (p.optionFinal == "1"){
       threeWholeNumber.textContent = ""
       threeNumerator.textContent = "?"
@@ -1127,7 +1127,7 @@ function updateProblems(){
     }
   }
 
-  if ( level == 5.1){
+  if ( level == 5.01){
     for (let i = p.numTwo; i > 1; i--){
       if (p.numOne%i == 0 && p.numTwo%i == 0){
         p.numOne /= i;
@@ -1153,7 +1153,7 @@ function updateProblems(){
     What fraction of the total was ${p.letterAB} ${p.letterLeftRemoved}?`
   }
 
-  if ( level == 5.2){
+  if ( level == 5.02){
     if (p.letterChange == "of" && p.letterChangeTwo != "of"){
       displayProblem.innerHTML =
       `A is ${p.numOne}% of A and B.</br>
@@ -1182,7 +1182,7 @@ function updateProblems(){
       What percentage of the total is ${p.letterAB} in the end?`
       }
   }
-  if ( level == 5.3){
+  if ( level == 5.03){
     for (let i = p.numTwo; i > 1; i--){
       if(p.numOne%i == 0 && p.numTwo%i == 0){
         p.numOne /= i;
@@ -1255,7 +1255,7 @@ function handleSubmit(e){
         }        
       }
 
-      if (level == 1.2){
+      if (level == 1.02){
         if (p.operator == "+") {
           correctAnswer = p.numOne + p.numTwo
         };
@@ -1264,12 +1264,12 @@ function handleSubmit(e){
         };
       }
 
-      if (level == 1.1 || level == 2.1 || level == 3.1){
+      if (level == 1.01 || level == 2.01 || level == 3.1){
         if (p.operator == "x") correctAnswer = p.numThree * p.numFour
         if (p.operator == "÷") correctAnswer = (p.numThree*p.numFour)/p.numThree
       }
 
-      if (level == 1.3){
+      if (level == 1.03){
         if (p.operator == "+") {
           correctAnswer = p.numOne + p.numTwo
         };
@@ -1281,7 +1281,7 @@ function handleSubmit(e){
       }
 
 
-      if ( level == 1.4){
+      if ( level == 1.04){
         if (p.option == "c" && p.operator == "+"){
           correctAnswer = "c-"
         }
@@ -1299,7 +1299,7 @@ function handleSubmit(e){
         }
       }
 
-      if ( level == 1.5){
+      if ( level == 1.05){
         if (p.option == "c" && p.optionThree == "more"){
           correctAnswer = "c-"
         }
@@ -1317,7 +1317,7 @@ function handleSubmit(e){
         }
       }
 
-      if (level == 1.6){
+      if (level == 1.06){
         if (p.optionFinal == "1"){
           if (p.operator == "+" && p.operatorTwo == "+"){
             correctAnswer = p.numOne+p.numTwo-p.numThree
@@ -1399,7 +1399,7 @@ function handleSubmit(e){
         }        
       }
 
-      if (level == 2.4){
+      if (level == 2.04){
         if (p.option == "1") {
           a = p.numOne/p.numThree
           b = p.numOne/p.numFour
@@ -1457,7 +1457,7 @@ function handleSubmit(e){
         }
       }
 
-      if (level == 3.3 || level == 2.3 || level == 4.3 || level == 6.3){
+      if (level == 3.3 || level == 2.03 || level == 4.03 || level == 6.3){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") {
           if (p.numOne >= p.numTwo) {
@@ -1540,7 +1540,7 @@ function handleSubmit(e){
          }
       }
 
-      if ( level == 3.101){
+      if ( level == 3.10){
         if (p.option == "1"){
           correctAnswer = p.numTwo*p.numMulti
         } else {
@@ -1573,7 +1573,7 @@ function handleSubmit(e){
           }
         }
       }
-      if ( level == "4.1"){
+      if ( level == 4.01){
         if (p.placeValue == "tens"){
           correctAnswer = Math.round(p.numOne/10)*10
         }
@@ -1588,7 +1588,7 @@ function handleSubmit(e){
         }
       }
 
-      if ( level == 4.4 ){
+      if ( level == 4.04 ){
         if (p.operator == "x"){
           correctAnswer = Math.round(p.numOne/p.numTwo*p.numThree*10000)/10000
         } else {
@@ -1596,7 +1596,7 @@ function handleSubmit(e){
         }
       }
 
-      if ( level == 4.5 ){
+      if ( level == 4.05 ){
         if (p.unitMeasurement == "m" || p.unitMeasurement == "$"){
           correctAnswer = Math.round(p.numOne*100+p.numThree)
         }
@@ -1605,7 +1605,7 @@ function handleSubmit(e){
         }
       }
 
-      if ( level == 4.6 ){
+      if ( level == 4.06 ){
         if (p.unitMeasurement == "m"){
           correctAnswer = Math.round((p.numOne+p.numThree/100)*100)/100;
         }
@@ -1620,8 +1620,8 @@ function handleSubmit(e){
           correctAnswer = Math.round((p.numOne+p.numTwo/1000)*1000)/1000
         }
       }
-      if ( level == 4.7){
-        // level 4.5
+      if ( level == 4.07){
+        // level 4.05
         if (p.optionFinal == "1"){
           if (p.unitMeasurement == "m" || p.unitMeasurement == "$"){
             correctAnswer = Math.round(p.numOne*100+p.numThree)
@@ -1630,7 +1630,7 @@ function handleSubmit(e){
             correctAnswer = Math.round(p.numOne*1000+p.numTwo)
           }
         }
-        // level 4.6
+        // level 4.06
         if (p.optionFinal == "2"){
           if (p.unitMeasurement == "m"){
             correctAnswer = Math.round((p.numOne+p.numThree/100)*100)/100;
@@ -1647,7 +1647,7 @@ function handleSubmit(e){
           }
         }
       }
-      if (level == 4.8){
+      if (level == 4.08){
         for (let i = p.numThree; i > 1; i--){
           if ((p.numTwo % i == 0 ) && (p.numThree % i == 0)){
             p.numTwo /= i;
@@ -1663,7 +1663,7 @@ function handleSubmit(e){
         }
       }
 
-      if ( level == 4.9 ){
+      if ( level == 4.09 ){
         for (let i = p.numTwo; i > 1; i--){
           if ((p.numTwo % i == 0 ) && (p.numThree % i == 0)){
             p.numTwo /= i;
@@ -1673,8 +1673,8 @@ function handleSubmit(e){
         correctAnswer = p.numOne + " " + p.numTwo%p.numThree + "/" + p.numThree
       }
 
-      if ( level == "4.10" ){
-        // level 4.8
+      if ( level == 4.1 ){
+        // level 4.08
         if (p.optionFinal == "1"){
           for (let i = p.numThree; i > 1; i--){
             if ((p.numTwo % i == 0 ) && (p.numThree % i == 0)){
@@ -1691,7 +1691,7 @@ function handleSubmit(e){
           }
         }
         if (p.optionFinal == "2"){
-          // level 4.9
+          // level 4.09
           for (let i = p.numTwo; i > 1; i--){
             if ((p.numTwo % i == 0 ) && (p.numThree % i == 0)){
               p.numTwo /= i;
@@ -1744,7 +1744,7 @@ function handleSubmit(e){
         }
       }
 
-      if ( level == 5.1 ){
+      if ( level == 5.01 ){
         p.varA = p.numOne
         p.varB = p.numTwo
         p.varTotal = p.numOne+p.numTwo
@@ -1768,7 +1768,7 @@ function handleSubmit(e){
         }
       }
 
-      if ( level == 5.2 ){
+      if ( level == 5.02 ){
         p.varA = p.numOne
         p.varB = 100-p.numOne
         if ( p.letterAB == "A" && p.letterChange == "increase"){
@@ -1790,7 +1790,7 @@ function handleSubmit(e){
           correctAnswer = p.varB + "/100x" + (100-p.numThree)
         }
       }
-      if ( level == 5.3 ){
+      if ( level == 5.03 ){
         p.varA = p.numOne
         p.varB = p.numTwo
         if (p.letterBTotal == "A and B"){
@@ -1877,7 +1877,7 @@ function genNumbers(max){
 function genProblems(){
   console.log(level);
 
-  if (level == 1){
+  if (level == 1.0){
     return {
       numOne: genNumbers(5),
       numTwo: genNumbers(5),
@@ -1885,7 +1885,7 @@ function genProblems(){
     }
   }
 
-  if (level == 1.1){
+  if (level == 1.01){
     return {
       numThree: genNumbers(5)+1,
       numFour: genNumbers(4)+1,
@@ -1893,7 +1893,7 @@ function genProblems(){
     }
   }
 
-  if (level == 1.2){
+  if (level == 1.02){
     return {
       numOne: genNumbers(10)+5,
       numTwo: genNumbers(4)+5,
@@ -1901,7 +1901,7 @@ function genProblems(){
     }
   }
 
-  if (level == 1.3){
+  if (level == 1.03){
     return {
       numOne: genNumbers(10)+5,
       numTwo: genNumbers(4)+5,
@@ -1911,7 +1911,7 @@ function genProblems(){
     }
   }
 
-  if (level == 1.4){
+  if (level == 1.04){
     return {
       numOne: genNumbers(99)+1,
       numTwo: genNumbers(99)+1,
@@ -1922,7 +1922,7 @@ function genProblems(){
     }
   }
 
-  if (level == 1.5){
+  if (level == 1.05){
     return {
       numOne: genNumbers(99)+1,
       numTwo: genNumbers(99)+1,
@@ -1933,7 +1933,7 @@ function genProblems(){
     }
   }
 
-  if (level == 1.6){
+  if (level == 1.06){
     return {
       numOne: genNumbers(9)+1,
       numTwo: genNumbers(9)+1,
@@ -1947,7 +1947,7 @@ function genProblems(){
     }
   }
 
-  if (level == 2){
+  if (level == 2.0){
     return {
       numOne: genNumbers(40)+10,
       numTwo: genNumbers(40)+10,
@@ -1955,7 +1955,7 @@ function genProblems(){
     }
   }
 
-  if (level == 2.1){
+  if (level == 2.01){
     return {
       numThree: genNumbers(5)+1,
       numFour: genNumbers(5)+5,
@@ -1963,7 +1963,7 @@ function genProblems(){
     }
   }
 
-  if (level == 2.3){
+  if (level == 2.03){
     return {
       numOne: genNumbers(40)+10,
       numTwo: genNumbers(40)+10,
@@ -1973,7 +1973,7 @@ function genProblems(){
     }
   }
 
-  if (level == 2.4){
+  if (level == 2.04){
     return {
       numOne: genNumbers(5)+1,
       numThree: genNumbers(4)+5,
@@ -1986,7 +1986,7 @@ function genProblems(){
     }
   }
 
-  if (level == 3){
+  if (level == 3.0){
     return {
       numOne: genNumbers(150)+100,
       numTwo: genNumbers(150)+100,
@@ -1994,7 +1994,7 @@ function genProblems(){
     }
   }
 
-  if (level == 3.1){
+  if (level == 3.01){
     return {
       numThree: genNumbers(6)+5,
       numFour: genNumbers(6)+5,
@@ -2002,7 +2002,7 @@ function genProblems(){
     }
   }
 
-  if (level == 3.2){
+  if (level == 3.02){
     return {
       numOne: genNumbers(97)+2,
       numMulti: [10, 100, 100][genNumbers(3)],
@@ -2012,7 +2012,7 @@ function genProblems(){
     }
   }
 
-  if (level == 3.3){
+  if (level == 3.03){
     return {
       numOne: genNumbers(150)+100,
       numTwo: genNumbers(150)+100,
@@ -2022,7 +2022,7 @@ function genProblems(){
     }
   }
 
-  if (level == 3.4){
+  if (level == 3.04){
     return {
       numOne: genNumbers(10)+1,
       numTwo: 1000,
@@ -2031,7 +2031,7 @@ function genProblems(){
     }
   }
 
-  if (level == 3.5){
+  if (level == 3.05){
     return {
       numOne: genNumbers(10)+1,
       numTwo: 1000,
@@ -2044,7 +2044,7 @@ function genProblems(){
     }
   }
 
-  if (level == 3.6){
+  if (level == 3.06){
     return {
       numOne: genNumbers(10)+1,
       numTwo: 1000,
@@ -2058,7 +2058,7 @@ function genProblems(){
     }
   }
 
-  if (level == 3.7){
+  if (level == 3.07){
     return {
       numOne: genNumbers(5)+1,
       numTwo: genNumbers(4)+2,
@@ -2066,7 +2066,7 @@ function genProblems(){
     }
   }
 
-  if (level == 3.9){
+  if (level == 3.09){
     return {
       numOne: genNumbers(9)+1,
       numTwo: genNumbers(9)+2,
@@ -2075,7 +2075,7 @@ function genProblems(){
     }
   }
 
-  if (level == 3.101 ){
+  if (level == 3.10 ){
     return {
       numOne: genNumbers(9)+1,
       numTwo: genNumbers(9)+2,
@@ -2096,14 +2096,14 @@ function genProblems(){
     }
   }
 
-  if (level == "4.1"){
+  if (level == 4.01){
     return {
     numOne: genNumbers(99998)+100,
     placeValue: ["tens","hundreds","thousands","ten thousands"][genNumbers(4)]
     }
   }
 
-  if (level == 4.3){
+  if (level == 4.03){
     return {
     numOne: genNumbers(150)+100,
     numTwo: genNumbers(150)+100,
@@ -2113,7 +2113,7 @@ function genProblems(){
     }
   }
 
-  if (level == 4.4){
+  if (level == 4.04){
     return {
     numOne: genNumbers(999)+1,
     numTwo: [1,10,100][genNumbers(3)],
@@ -2122,7 +2122,7 @@ function genProblems(){
     }
   }
 
-  if (level == 4.5){
+  if (level == 4.05){
     return {
     numOne: genNumbers(98)+1,
     numTwo: genNumbers(998)+1,
@@ -2136,7 +2136,7 @@ function genProblems(){
     }
   }
 
-  if (level == 4.6){
+  if (level == 4.06){
     return {
     numOne: genNumbers(98)+1,
     numTwo: genNumbers(998)+1,
@@ -2151,7 +2151,7 @@ function genProblems(){
     }
   }
 
-  if (level == 4.7){
+  if (level == 4.07){
     return {
     numOne: genNumbers(98)+1,
     numTwo: genNumbers(998)+1,
@@ -2167,7 +2167,7 @@ function genProblems(){
     }
   }
 
-  if (level == 4.8){
+  if (level == 4.08){
     return {
     numOne: genNumbers(9)+1,
     numTwo: genNumbers(9)+2,
@@ -2176,7 +2176,7 @@ function genProblems(){
     }
   }
 
-  if (level == 4.9){
+  if (level == 4.09){
     return {
     numOne: genNumbers(9)+1,
     numTwo: genNumbers(9)+2,
@@ -2185,7 +2185,7 @@ function genProblems(){
     }
   }
 
-  if (level == "4.10"){
+  if (level == 4.10){
     return {
     numOne: genNumbers(9)+1,
     numTwo: genNumbers(9)+2,
@@ -2237,7 +2237,7 @@ function genProblems(){
     }
   }
 
-  if (level == 5.1){
+  if (level == 5.01){
     return {
     numOne: genNumbers(5)+1,
     numTwo: genNumbers(5)+6,
@@ -2254,7 +2254,7 @@ function genProblems(){
     }
   }
 
-  if (level == 5.2){
+  if (level == 5.02){
     return {
     numOne: (genNumbers(10)+1)*5,
     numTwo: (genNumbers(18)+1)*5,
@@ -2267,7 +2267,7 @@ function genProblems(){
     }
   }
 
-  if (level == 5.3){
+  if (level == 5.03){
     return {
       numOne: genNumbers(5)+1,
       numTwo: genNumbers(5)+6,
@@ -2405,50 +2405,50 @@ for (let i = 0; i <  settingButton.length; i++){
     mulLevel = "nil"
 
   switch (buttonLevel) {
-    case "Level 1":
-      level = 1;
+    case "Level 1.0":
+      level = 1.0;
       scoreNeeded = 50;
       gold = 100;
       silver = 120;
       bronze = 140;
-      highScoreName.innerHTML = highScore1.name
-      highScoreTime.innerHTML = highScore1.time
-      highScoreMistakes.innerHTML = highScore1.mistake
+      highScoreName.innerHTML = highScore1DotZero.name
+      highScoreTime.innerHTML = highScore1DotZero.time
+      highScoreMistakes.innerHTML = highScore1DotZero.mistake
       break;
 
-    case "Level 1.1":
-      level = 1.1;
+    case "Level 1.01":
+      level = 1.01;
       scoreNeeded = 50;
       gold = 100;
       silver = 110;
       bronze = 120;
-      highScoreName.innerHTML = highScore1dot1.name
-      highScoreTime.innerHTML = highScore1dot1.time
-      highScoreMistakes.innerHTML = highScore1dot1.mistake
+      highScoreName.innerHTML = highScore1DotZero1.name
+      highScoreTime.innerHTML = highScore1DotZero1.time
+      highScoreMistakes.innerHTML = highScore1DotZero1.mistake
       break;
 
-    case "Level 1.2":
-      level = 1.2;
+    case "Level 1.02":
+      level = 1.02;
       scoreNeeded = 50;
-      highScoreName.innerHTML = highScore1dot2.name
-      highScoreTime.innerHTML = highScore1dot2.time
-      highScoreMistakes.innerHTML = highScore1dot2.mistake
+      highScoreName.innerHTML = highScore1DotZero2.name
+      highScoreTime.innerHTML = highScore1DotZero2.time
+      highScoreMistakes.innerHTML = highScore1DotZero2.mistake
       break;
 
-    case "Level 1.3":
-      level = 1.3;
+    case "Level 1.03":
+      level = 1.03;
       scoreNeeded = 50;
-      highScoreName.innerHTML = highScore1dot3.name
-      highScoreTime.innerHTML = highScore1dot3.time
-      highScoreMistakes.innerHTML = highScore1dot3.mistake
+      highScoreName.innerHTML = highScore1DotZero3.name
+      highScoreTime.innerHTML = highScore1DotZero3.time
+      highScoreMistakes.innerHTML = highScore1DotZero3.mistake
       break;
     
-    case "Level 1.4":
-      level = 1.4;
+    case "Level 1.04":
+      level = 1.04;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore1dot4.name
-      highScoreTime.innerHTML = highScore1dot4.time
-      highScoreMistakes.innerHTML = highScore1dot5.mistake
+      highScoreName.innerHTML = highScore1DotZero4.name
+      highScoreTime.innerHTML = highScore1DotZero4.time
+      highScoreMistakes.innerHTML = highScore1DotZero5.mistake
       document.querySelector("#user-input").setAttribute("type","text");
       instructions.innerHTML = `
       1 + 2 = 3</br>
@@ -2456,117 +2456,117 @@ for (let i = 0; i <  settingButton.length; i++){
       Use: 'c+', 'c-', 'd-', 'r+' or 'r-' `
       break;
 
-    case "Level 1.5":
-      level = 1.5;
+    case "Level 1.05":
+      level = 1.05;
       scoreNeeded = 30;
       gold = 171
-      highScoreName.innerHTML = highScore1dot5.name
-      highScoreTime.innerHTML = highScore1dot5.time
-      highScoreMistakes.innerHTML = highScore1dot5.mistake
+      highScoreName.innerHTML = highScore1DotZero5.name
+      highScoreTime.innerHTML = highScore1DotZero5.time
+      highScoreMistakes.innerHTML = highScore1DotZero5.mistake
       document.querySelector("#user-input").setAttribute("type","text");
       instructions.innerHTML = "Answer using</br> 'c+', 'c-', 'd-', 'r+' or 'r-' "
       break;
 
-    case "Level 1.6":
-      level = 1.6;
+    case "Level 1.06":
+      level = 1.06;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore1dot6.name
-      highScoreTime.innerHTML = highScore1dot6.time
-      highScoreMistakes.innerHTML = highScore1dot5.mistake
+      highScoreName.innerHTML = highScore1DotZero6.name
+      highScoreTime.innerHTML = highScore1DotZero6.time
+      highScoreMistakes.innerHTML = highScore1DotZero5.mistake
       instructions.textContent = ""
       break;
 
-    case "Level 2":
-      level = 2;
+    case "Level 2.0":
+      level = 2.0;
       scoreNeeded = 50;
-      highScoreName.innerHTML = highScore2.name
-      highScoreTime.innerHTML = highScore2.time
-      highScoreMistakes.innerHTML = highScore2.mistake
+      highScoreName.innerHTML = highScore2DotZero.name
+      highScoreTime.innerHTML = highScore2DotZero.time
+      highScoreMistakes.innerHTML = highScore2DotZero.mistake
       break;
 
-    case "Level 2.1":
-      level = 2.1;
+    case "Level 2.01":
+      level = 2.01;
       scoreNeeded = 50;
-      highScoreName.innerHTML = highScore2dot1.name
-      highScoreTime.innerHTML = highScore2dot1.time
-      highScoreMistakes.innerHTML = highScore2dot1.mistake
+      highScoreName.innerHTML = highScore2DotZero1.name
+      highScoreTime.innerHTML = highScore2DotZero1.time
+      highScoreMistakes.innerHTML = highScore2DotZero1.mistake
       break;
 
-    case "Level 2.3":
-      level = 2.3;
+    case "Level 2.03":
+      level = 2.03;
       scoreNeeded = 50;
-      highScoreName.innerHTML = highScore2dot3.name
-      highScoreTime.innerHTML = highScore2dot3.time
-      highScoreMistakes.innerHTML = highScore2dot3.mistake
+      highScoreName.innerHTML = highScore2DotZero3.name
+      highScoreTime.innerHTML = highScore2DotZero3.time
+      highScoreMistakes.innerHTML = highScore2DotZero3.mistake
       break;
 
-    case "Level 2.4":
-      level = 2.4;
+    case "Level 2.04":
+      level = 2.04;
       scoreNeeded = 50;
       gold = 113
-      highScoreName.innerHTML = highScore2dot4.name
-      highScoreTime.innerHTML = highScore2dot4.time
-      highScoreMistakes.innerHTML = highScore2dot4.mistake
+      highScoreName.innerHTML = highScore2DotZero4.name
+      highScoreTime.innerHTML = highScore2DotZero4.time
+      highScoreMistakes.innerHTML = highScore2DotZero4.mistake
       wholeNumberContainer.classList.add('hidden');
       fractionsContainer.classList.remove('hidden');
       instructions.textContent = "Answer using '1' or '2' only"
       break;
 
-    case "Level 3":
-      level = 3;
+    case "Level 3.0":
+      level = 3.0;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore3.name
-      highScoreTime.innerHTML = highScore3.time
-      highScoreMistakes.innerHTML = highScore3.mistake
+      highScoreName.innerHTML = highScore3DotZero.name
+      highScoreTime.innerHTML = highScore3DotZero.time
+      highScoreMistakes.innerHTML = highScore3DotZero.mistake
       break;
 
-    case "Level 3.1":
-      level = 3.1;
+    case "Level 3.01":
+      level = 3.01;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore3dot1.name
-      highScoreTime.innerHTML = highScore3dot1.time
-      highScoreMistakes.innerHTML = highScore3dot1.mistake
+      highScoreName.innerHTML = highScore3DotZero1.name
+      highScoreTime.innerHTML = highScore3DotZero1.time
+      highScoreMistakes.innerHTML = highScore3DotZero1.mistake
       break;
     
-    case "Level 3.2":
-      level = 3.2;
+    case "Level 3.02":
+      level = 3.02;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore3dot2.name
-      highScoreTime.innerHTML = highScore3dot2.time
-      highScoreMistakes.innerHTML = highScore3dot2.mistake
+      highScoreName.innerHTML = highScore3DotZero2.name
+      highScoreTime.innerHTML = highScore3DotZero2.time
+      highScoreMistakes.innerHTML = highScore3DotZero2.mistake
       break;
         
-    case "Level 3.3":
-      level = 3.3;
+    case "Level 3.03":
+      level = 3.03;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore3dot3.name
-      highScoreTime.innerHTML = highScore3dot3.time
-      highScoreMistakes.innerHTML = highScore3dot3.mistake
+      highScoreName.innerHTML = highScore3DotZero3.name
+      highScoreTime.innerHTML = highScore3DotZero3.time
+      highScoreMistakes.innerHTML = highScore3DotZero3.mistake
       break;
 
-    case "Level 3.4":
-      level = 3.4;
+    case "Level 3.04":
+      level = 3.04;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore3dot4.name
-      highScoreTime.innerHTML = highScore3dot4.time
-      highScoreMistakes.innerHTML = highScore3dot4.mistake
+      highScoreName.innerHTML = highScore3DotZero4.name
+      highScoreTime.innerHTML = highScore3DotZero4.time
+      highScoreMistakes.innerHTML = highScore3DotZero4.mistake
       break;
 
-    case "Level 3.5":
-      level = 3.5;
+    case "Level 3.05":
+      level = 3.05;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore3dot5.name
-      highScoreTime.innerHTML = highScore3dot5.time
-      highScoreMistakes.innerHTML = highScore3dot5.mistake
+      highScoreName.innerHTML = highScore3DotZero5.name
+      highScoreTime.innerHTML = highScore3DotZero5.time
+      highScoreMistakes.innerHTML = highScore3DotZero5.mistake
       break;
 
-    case "Level 3.6":
-      level = 3.6;
+    case "Level 3.06":
+      level = 3.06;
       scoreNeeded = 30;
       gold = 376
-      highScoreName.innerHTML = highScore3dot6.name
-      highScoreTime.innerHTML = highScore3dot6.time
-      highScoreMistakes.innerHTML = highScore3dot6.mistake
+      highScoreName.innerHTML = highScore3DotZero6.name
+      highScoreTime.innerHTML = highScore3DotZero6.time
+      highScoreMistakes.innerHTML = highScore3DotZero6.mistake
       document.querySelector("#user-input").setAttribute("type","text");
       instructions.innerHTML = 
       `Do not leave any spaces.</br>
@@ -2574,21 +2574,21 @@ for (let i = 0; i <  settingButton.length; i++){
       helpMe.textContent = `Include units`
       break;
 
-    case "Level 3.7":
-      level = 3.7;
+    case "Level 3.07":
+      level = 3.07;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore3dot7.name
-      highScoreTime.innerHTML = highScore3dot7.time
-      highScoreMistakes.innerHTML = highScore3dot7.mistake
+      highScoreName.innerHTML = highScore3DotZero7.name
+      highScoreTime.innerHTML = highScore3DotZero7.time
+      highScoreMistakes.innerHTML = highScore3DotZero7.mistake
       instructions.textContent = "Find the Lowest Common Multiple of the 3 numbers"
       break;
 
-    case "Level 3.9":
-      level = 3.9;
+    case "Level 3.09":
+      level = 3.09;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore3dot9.name
-      highScoreTime.innerHTML = highScore3dot9.time
-      highScoreMistakes.innerHTML = highScore3dot9.mistake
+      highScoreName.innerHTML = highScore3DotZero9.name
+      highScoreTime.innerHTML = highScore3DotZero9.time
+      highScoreMistakes.innerHTML = highScore3DotZero9.mistake
       wholeNumberContainer.classList.add('hidden');
       fractionsContainerTwo.classList.remove('hidden');
       document.querySelector("#user-input").setAttribute("type","text");
@@ -2596,11 +2596,11 @@ for (let i = 0; i <  settingButton.length; i++){
       break;
 
     case "Level 3.10":
-        level = 3.101;
+        level = 3.10;
         scoreNeeded = 30;
-        highScoreName.innerHTML = highScore3dot10.name
-        highScoreTime.innerHTML = highScore3dot10.time
-        highScoreMistakes.innerHTML = highScore3dot10.mistake
+        highScoreName.innerHTML = highScore3DotZero10.name
+        highScoreTime.innerHTML = highScore3DotZero10.time
+        highScoreMistakes.innerHTML = highScore3DotZero10.mistake
         wholeNumberContainer.classList.add('hidden');
         fractionsContainerTwo.classList.remove('hidden');
         document.querySelector("#user-input").setAttribute("type","text");
@@ -2610,87 +2610,87 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 3.11":
       level = 3.11;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore3dot11.name
-      highScoreTime.innerHTML = highScore3dot11.time
-      highScoreMistakes.innerHTML = highScore3dot11.mistake
+      highScoreName.innerHTML = highScore3DotZero11.name
+      highScoreTime.innerHTML = highScore3DotZero11.time
+      highScoreMistakes.innerHTML = highScore3DotZero11.mistake
       wholeNumberContainer.classList.add('hidden');
       fractionsContainerTwo.classList.remove('hidden');
       document.querySelector("#user-input").setAttribute("type","text");
       instructions.textContent = ""
       break;      
     
-    case "Level 4.1":
-      level = "4.1";
+    case "Level 4.01":
+      level = "4.01";
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore4dot1.name
-      highScoreTime.innerHTML = highScore4dot1.time
-      highScoreMistakes.innerHTML = highScore4dot1.mistake
+      highScoreName.innerHTML = highScore4DotZero1.name
+      highScoreTime.innerHTML = highScore4DotZero1.time
+      highScoreMistakes.innerHTML = highScore4DotZero1.mistake
       document.querySelector("#user-input").setAttribute("max","100000")
       break;  
 
-    case "Level 4.3":
-      level = 4.3;
+    case "Level 4.03":
+      level = 4.03;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore4dot3.name
-      highScoreTime.innerHTML = highScore4dot3.time
-      highScoreMistakes.innerHTML = highScore4dot3.mistake
+      highScoreName.innerHTML = highScore4DotZero3.name
+      highScoreTime.innerHTML = highScore4DotZero3.time
+      highScoreMistakes.innerHTML = highScore4DotZero3.mistake
       break;
 
-    case "Level 4.4":
-      level = 4.4;
+    case "Level 4.04":
+      level = 4.04;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore4dot4.name
-      highScoreTime.innerHTML = highScore4dot4.time
-      highScoreMistakes.innerHTML = highScore4dot4.mistake
+      highScoreName.innerHTML = highScore4DotZero4.name
+      highScoreTime.innerHTML = highScore4DotZero4.time
+      highScoreMistakes.innerHTML = highScore4DotZero4.mistake
       document.querySelector("#user-input").setAttribute("step","0.000001")
       break;  
 
-    case "Level 4.5":
-      level = 4.5;
+    case "Level 4.05":
+      level = 4.05;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore4dot5.name
-      highScoreTime.innerHTML = highScore4dot5.time
-      highScoreMistakes.innerHTML = highScore4dot5.mistake
+      highScoreName.innerHTML = highScore4DotZero5.name
+      highScoreTime.innerHTML = highScore4DotZero5.time
+      highScoreMistakes.innerHTML = highScore4DotZero5.mistake
       document.querySelector("#user-input").setAttribute("step","0.000001")
       break;
      
-    case "Level 4.6":
-      level = 4.6;
+    case "Level 4.06":
+      level = 4.06;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore4dot6.name
-      highScoreTime.innerHTML = highScore4dot6.time
-      highScoreMistakes.innerHTML = highScore4dot6.mistake
+      highScoreName.innerHTML = highScore4DotZero6.name
+      highScoreTime.innerHTML = highScore4DotZero6.time
+      highScoreMistakes.innerHTML = highScore4DotZero6.mistake
       document.querySelector("#user-input").setAttribute("step","0.000001")
       break;
 
-    case "Level 4.7":
-      level = 4.7;
+    case "Level 4.07":
+      level = 4.07;
       scoreNeeded = 30;
       gold = 207;
-      highScoreName.innerHTML = highScore4dot7.name
-      highScoreTime.innerHTML = highScore4dot7.time
-      highScoreMistakes.innerHTML = highScore4dot7.mistake
+      highScoreName.innerHTML = highScore4DotZero7.name
+      highScoreTime.innerHTML = highScore4DotZero7.time
+      highScoreMistakes.innerHTML = highScore4DotZero7.mistake
       document.querySelector("#user-input").setAttribute("step","0.000001")
       break;  
 
-    case "Level 4.8":
-      level = 4.8;
+    case "Level 4.08":
+      level = 4.08;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore4dot8.name
-      highScoreTime.innerHTML = highScore4dot8.time
-      highScoreMistakes.innerHTML = highScore4dot8.mistake
+      highScoreName.innerHTML = highScore4DotZero8.name
+      highScoreTime.innerHTML = highScore4DotZero8.time
+      highScoreMistakes.innerHTML = highScore4DotZero8.mistake
       wholeNumberContainer.classList.add('hidden');
       fractionsContainerTwo.classList.remove('hidden');
       document.querySelector("#user-input").setAttribute("type","text");
       instructions.textContent = "Format: 9/2"
       break;
 
-    case "Level 4.9":
-      level = 4.9;
+    case "Level 4.09":
+      level = 4.09;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore4dot9.name
-      highScoreTime.innerHTML = highScore4dot9.time
-      highScoreMistakes.innerHTML = highScore4dot9.mistake
+      highScoreName.innerHTML = highScore4DotZero9.name
+      highScoreTime.innerHTML = highScore4DotZero9.time
+      highScoreMistakes.innerHTML = highScore4DotZero9.mistake
       wholeNumberContainer.classList.add('hidden');
       fractionsContainerTwo.classList.remove('hidden');
       document.querySelector("#user-input").setAttribute("type","text");
@@ -2698,11 +2698,11 @@ for (let i = 0; i <  settingButton.length; i++){
       break;
 
     case "Level 4.10":
-      level = "4.10";
+      level = 4.10;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore4dot10.name
-      highScoreTime.innerHTML = highScore4dot10.time
-      highScoreMistakes.innerHTML = highScore4dot10.mistake
+      highScoreName.innerHTML = highScore4DotZero10.name
+      highScoreTime.innerHTML = highScore4DotZero10.time
+      highScoreMistakes.innerHTML = highScore4DotZero10.mistake
       wholeNumberContainer.classList.add('hidden');
       fractionsContainerTwo.classList.remove('hidden');
       document.querySelector("#user-input").setAttribute("type","text");
@@ -2713,9 +2713,9 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 4.11":
       level = 4.11;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore4dot11.name
-      highScoreTime.innerHTML = highScore4dot11.time
-      highScoreMistakes.innerHTML = highScore4dot11.mistake
+      highScoreName.innerHTML = highScore4DotZero11.name
+      highScoreTime.innerHTML = highScore4DotZero11.time
+      highScoreMistakes.innerHTML = highScore4DotZero11.mistake
       instructions.textContent = ""
       displayProblem.style.fontSize = "25px";
       displayProblem.style.marginBottom = "150px";
@@ -2724,9 +2724,9 @@ for (let i = 0; i <  settingButton.length; i++){
       case "Level 4.12":
         level = 4.12;
         scoreNeeded = 30;
-        highScoreName.innerHTML = highScore4dot12.name
-        highScoreTime.innerHTML = highScore4dot12.time
-        highScoreMistakes.innerHTML = highScore4dot12.mistake
+        highScoreName.innerHTML = highScore4DotZero12.name
+        highScoreTime.innerHTML = highScore4DotZero12.time
+        highScoreMistakes.innerHTML = highScore4DotZero12.mistake
         instructions.textContent = ""
         displayProblem.style.fontSize = "25px";
         document.querySelector("#user-input").setAttribute("type","text");
@@ -2736,9 +2736,9 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 4.13":
         level = 4.13;
         scoreNeeded = 30;
-        highScoreName.innerHTML = highScore4dot13.name
-        highScoreTime.innerHTML = highScore4dot13.time
-        highScoreMistakes.innerHTML = highScore4dot13.mistake
+        highScoreName.innerHTML = highScore4DotZero13.name
+        highScoreTime.innerHTML = highScore4DotZero13.time
+        highScoreMistakes.innerHTML = highScore4DotZero13.mistake
         document.querySelector("#user-input").setAttribute("type","text");
         wholeNumberContainer.classList.add('hidden');
         fractionsContainerTwo.classList.remove('hidden');
@@ -2756,9 +2756,9 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 4.14":
       level = 4.14;
       scoreNeeded = 20;
-      highScoreName.innerHTML = highScore4dot11.name
-      highScoreTime.innerHTML = highScore4dot11.time
-      highScoreMistakes.innerHTML = highScore4dot11.mistake
+      highScoreName.innerHTML = highScore4DotZero11.name
+      highScoreTime.innerHTML = highScore4DotZero11.time
+      highScoreMistakes.innerHTML = highScore4DotZero11.mistake
       gold = 114
       document.querySelector("#user-input").setAttribute("type","text");
       document.querySelector("#user-input").style.width = "250px"
@@ -2770,8 +2770,8 @@ for (let i = 0; i <  settingButton.length; i++){
       `
       break;
     
-    case "Level 5.1":
-      level = 5.1;
+    case "Level 5.01":
+      level = 5.01;
       scoreNeeded = 10;
       gold = 80;
       highScoreName.innerHTML = highScore5dot1.name
@@ -2782,8 +2782,8 @@ for (let i = 0; i <  settingButton.length; i++){
       instructions.innerHTML = "Form an equation using</br> multiplication of fraction </br> RC = from x want"
       break;    
     
-    case "Level 5.2":
-      level = 5.2;
+    case "Level 5.02":
+      level = 5.02;
       scoreNeeded = 10;
       gold = 120;
       highScoreName.innerHTML = highScore5dot2.name
@@ -2795,8 +2795,8 @@ for (let i = 0; i <  settingButton.length; i++){
       userInput.style.width = "200px";
       break;    
     
-    case "Level 5.3":
-      level = 5.3;
+    case "Level 5.03":
+      level = 5.03;
       scoreNeeded = 10;
       gold = 79;
       highScoreName.innerHTML = highScore5dot3.name
