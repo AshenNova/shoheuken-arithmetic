@@ -98,7 +98,7 @@ const highScore3DotZero9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero10 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero11 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4DotZero1 = new HighScore("Nil", "Nil", 0, 0)
-const highScore4DotZero3 = new HighScore("Jadee Wong", "10 December 2021", 460, 2)
+const highScore4DotZero3 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4DotZero4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4DotZero5 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4DotZero6 = new HighScore("Nil", "Nil", 0, 0)
@@ -722,6 +722,14 @@ function updateProblems(){
     displayProblem.innerHTML = `${p.numOne} ≈ `
     helpMe.textContent = `${p.placeValue}`
   }
+
+  if ( level == 4.03 ){
+    if (p.numOne%p.numTwo == 0){
+      p.numOne += p.numOne + 1;
+    }
+    displayProblem.textContent = `${p.numOne/p.numTwo} =`
+  }
+
 
   if (level == 4.04){
     if (p.numOne == 1000){
@@ -1567,6 +1575,15 @@ function handleSubmit(e){
           correctAnswer = Math.round(p.numOne/10000)*10000
         }
       }
+      
+      if ( level == 4.03){
+        if (p.numOne/p.numTwo < 1){ 
+          correctAnswer = `${p.numOne}/${p.numTwo}`
+        } else {
+          correctAnswer = Math.floor(p.numOne/p.numTwo) + " " +  p.numOne%p.numTwo + "/" + p.numTwo
+        }
+      }
+
 
       if ( level == 4.04 ){
         if (p.operator == "x"){
@@ -2093,11 +2110,8 @@ function genProblems(){
 
   if (level == 4.03){
     return {
-    numOne: genNumbers(150)+100,
-    numTwo: genNumbers(150)+100,
-    numThree: genNumbers(6)+5,
-    numFour: genNumbers(6)+5,
-    operator: ["+","-","x","÷"][genNumbers(4)]
+    numOne: genNumbers(999)+1,
+    numTwo: [10,100,1000][genNumbers(3)]
     }
   }
 
@@ -2636,6 +2650,7 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreName.innerHTML = highScore4DotZero3.name
       highScoreTime.innerHTML = highScore4DotZero3.time
       highScoreMistakes.innerHTML = highScore4DotZero3.mistake
+      document.querySelector("#user-input").setAttribute("type","text");
       break;
 
     case "Level 4.04":
@@ -2684,7 +2699,9 @@ for (let i = 0; i <  settingButton.length; i++){
       wholeNumberContainer.classList.add('hidden');
       fractionsContainerTwo.classList.remove('hidden');
       document.querySelector("#user-input").setAttribute("type","text");
-      instructions.textContent = "Format: 9/2"
+      instructions.innerHTML = `
+      Mixed to Improper Fraction</br>
+      Format: 9/2`
       break;
 
     case "Level 4.09":
@@ -2696,7 +2713,9 @@ for (let i = 0; i <  settingButton.length; i++){
       wholeNumberContainer.classList.add('hidden');
       fractionsContainerTwo.classList.remove('hidden');
       document.querySelector("#user-input").setAttribute("type","text");
-      instructions.textContent = "Format: 2 4/5"
+      instructions.innerHTML = `
+      Improper to Mixed Fractions </br>
+      Format: 2 4/5`
       break;
 
     case "Level 4.10":
