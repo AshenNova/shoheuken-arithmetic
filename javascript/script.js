@@ -81,6 +81,7 @@ const highScore1DotZero3 = new HighScore("Lucia", "6 March 2022", 432, 5)
 const highScore1DotZero4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore1DotZero5 = new HighScore("Shanice Lee", "1 mar 2022", 171, 3)
 const highScore1DotZero6 = new HighScore("Nil", "Nil", 0, 0)
+const highScore1DotZero7 = new HighScore("Nil", "Nil", 0, 0)
 const highScore2DotZero = new HighScore("Nil", "16 October 2021", 0, 0)
 const highScore2DotZero1 = new HighScore("JingKai Ng", "16 October 2021", 823, 24)
 const highScore2DotZero3 = new HighScore("Jingkai Ng", "30 October 2021", 853, 23)
@@ -423,6 +424,63 @@ function updateProblems(){
       displayProblem.innerHTML = `___ ${p.operator} ${p.numTwo} = ${p.numThree} ${p.operatorTwo} ${p.numFour}`
     }
   }
+
+  if ( level == 1.07){
+    if (p.numOne == p.numThree){
+      p.numOne += 1;
+    }
+    console.log(p.numOne, p.numThree);
+    if (p.numOne > p.numThree){
+      if (p.numThree == 1){
+        if (p.option == "1"){
+          displayProblem.textContent = `
+          ${p.numOne} x ${p.numTwo} = ${p.numTwo} + ${p.numTwo} x ___
+          `
+        }
+        if (p.option == "2"){
+          displayProblem.textContent = `
+          ${p.numOne} x ${p.numTwo} = ${p.numTwo} x ___ + ${p.numTwo}
+          `
+        }
+      } else {
+        if (p.option == "1"){
+          displayProblem.textContent = `
+          ${p.numOne} x ${p.numTwo} = ${p.numTwo} x ${p.numThree} + ${p.numTwo} x ___
+          `
+        }
+        if (p.option == "2"){
+          displayProblem.textContent = `
+          ${p.numOne} x ${p.numTwo} = ${p.numTwo} x ___ + ${p.numTwo} x ${p.numThree}
+          `
+        }
+      }
+    }
+
+    if (p.numOne < p.numThree){
+      if (p.option == "1"){
+        if (p.numThree == 1){
+          displayProblem.textContent = `
+          ${p.numOne} x ${p.numTwo} =  ${p.numThree} - ____ x ${p.numTwo}
+          `
+        } else {
+        displayProblem.textContent = `
+        ${p.numOne} x ${p.numTwo} = ${p.numThree} x ${p.numTwo} - ____ x ${p.numTwo}
+        `
+        }
+      }
+      if (p.option == "2"){
+        if (p.numThree == 1){
+          displayProblem.textContent = `
+          ${p.numOne} x ${p.numTwo} =  ____ x ${p.numTwo} - ${p.numThree}
+          `
+        } else {
+        displayProblem.textContent = `
+        ${p.numOne} x ${p.numTwo} = ____ x ${p.numTwo} - ${p.numThree} x ${p.numTwo}
+        `
+        }
+      }
+    }
+  } 
 
   if (level == 1.01 || level == 2.01 || level == 3.1 ){
     if (p.operator == "x" ) displayProblem.innerHTML = `${p.numThree} ${p.operator} ${p.numFour}`
@@ -1366,6 +1424,18 @@ function handleSubmit(e){
         }
       }
 
+      if ( level == 1.07){
+        if (p.numOne > p.numThree){
+          correctAnswer = p.numOne - p.numThree
+        } else if (p.numThree > p.numOne && p.option == "2") {
+          correctAnswer = p.numThree + p.numOne
+        } else {
+          correctAnswer = p.numThree - p.numOne;
+        }
+
+      }
+
+
       if (level == 2){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") {
@@ -1944,6 +2014,15 @@ function genProblems(){
     }
   }
 
+  if ( level == 1.07 ){
+    return {
+      numOne: genNumbers(9)+1,
+      numTwo: genNumbers(98)+1,
+      numThree: genNumbers(9)+1,
+      option: ["1","2"][genNumbers(2)]
+    }
+  }
+
   if (level == 2.0){
     return {
       numOne: genNumbers(40)+10,
@@ -2478,6 +2557,15 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreMistakes.innerHTML = highScore1DotZero5.mistake
       instructions.textContent = ""
       break;
+
+    case "Level 1.07":
+      level = 1.07;
+      scoreNeeded = 30;
+      highScoreName.innerHTML = highScore1DotZero7.name
+      highScoreTime.innerHTML = highScore1DotZero7.time
+      highScoreMistakes.innerHTML = highScore1DotZero7.mistake
+      displayProblem.style.fontSize = "25px";
+    break  
 
     case "Level 2.0":
       level = 2.0;
