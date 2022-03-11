@@ -201,6 +201,7 @@ const resetStuff = function (){
   multiplesSettingCl.classList.add('hidden');
   displayProblem.style.fontSize = "50px";
   userInput.style.width = "175px";
+  document.querySelector("#user-input").style.marginTop = "0";
   document.querySelector("#user-input").setAttribute("max","99999")
   displayProblem.style.margin = "30px 0";
   threeNumerator.classList.add('line');
@@ -2631,6 +2632,7 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreTime.innerHTML = highScore1DotZero7.time
       highScoreMistakes.innerHTML = highScore1DotZero7.mistake
       displayProblem.style.fontSize = "25px";
+      document.querySelector("#user-input").style.marginTop = "100px";
     break  
 
     case "Level 2.0":
