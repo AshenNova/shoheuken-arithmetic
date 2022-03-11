@@ -482,7 +482,7 @@ function updateProblems(){
     }
   } 
 
-  if (level == 1.01 || level == 2.01 || level == 3.1 ){
+  if (level == 1.01 || level == 2.01 || level == 3.01 ){
     if (p.operator == "x" ) displayProblem.innerHTML = `${p.numThree} ${p.operator} ${p.numFour}`
     if (p.operator == "÷") displayProblem.innerHTML = `${p.numThree*p.numFour} ${p.operator} ${p.numThree}` 
   }
@@ -536,7 +536,7 @@ function updateProblems(){
     }
     if (p.operator == "÷") displayProblem.innerHTML = `${p.numThree*p.numFour} ${p.operator} ${p.numThree}` 
   }
-  if ( level == 3.2 ){
+  if ( level == 3.02 ){
     if (p.option == "1"){
       displayProblem.textContent = `${p.numOne} x ${p.numMulti} = `
     }
@@ -1300,7 +1300,7 @@ function handleSubmit(e){
         };
       }
 
-      if (level == 1.01 || level == 2.01 || level == 3.1){
+      if (level == 1.01 || level == 2.01 || level == 3.01){
         if (p.operator == "x") correctAnswer = p.numThree * p.numFour
         if (p.operator == "÷") correctAnswer = (p.numThree*p.numFour)/p.numThree
       }
@@ -1485,7 +1485,7 @@ function handleSubmit(e){
           }
         }  
       }
-      if ( level == 3.2 ){
+      if ( level == 3.02 ){
         if (p.option == "1"){
          correctAnswer = p.numOne*p.numMulti
         }
