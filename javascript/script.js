@@ -811,7 +811,7 @@ function updateProblems(){
 
 
   if ( level == 4.03 ){
-    if (p.numOne%p.numTwo == 0){
+    if (p.numOne%10 == 0){
       p.numOne += p.numOne + 1;
     }
     displayProblem.textContent = `${p.numOne/p.numTwo} =`
