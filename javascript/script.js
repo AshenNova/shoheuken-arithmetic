@@ -2684,7 +2684,7 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreMistakes.innerHTML = highScore3DotZero8.mistake
       document.querySelector("#user-input").setAttribute("type","text");
       displayProblem.style.fontSize = "25px";
-      instructions.textContent = "Form an Equation using 'n' from the pattern"
+      instructions.textContent = "Form an Equation using 'n' from the pattern and answer"
       break;  
 
     case "Level 3.09":
@@ -2841,7 +2841,6 @@ for (let i = 0; i <  settingButton.length; i++){
         instructions.textContent = ""
         displayProblem.style.fontSize = "25px";
         document.querySelector("#user-input").setAttribute("type","text");
-        instructions.innerHTML = "Form an equation using</br> multiplication of fraction"
         break;
 
     case "Level 4.13":
@@ -2876,7 +2875,7 @@ for (let i = 0; i <  settingButton.length; i++){
       document.querySelector("#user-input").style.width = "250px"
       displayProblem.style.fontSize = "25px";
       instructions.innerHTML = 
-      `Form a multiplication equation using Fractions</br>
+      `Answer using:</br>
       f-f , r+r , vxr</br>
       fxr , fxv</br>
       `
