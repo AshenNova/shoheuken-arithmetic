@@ -99,6 +99,7 @@ const highScore3DotZero9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero10 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero11 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4DotZero1 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4DotZero2 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4DotZero3 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4DotZero4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4DotZero5 = new HighScore("Nil", "Nil", 0, 0)
@@ -780,6 +781,34 @@ function updateProblems(){
     displayProblem.innerHTML = `${p.numOne} ≈ `
     helpMe.textContent = `${p.placeValue}`
   }
+
+  if ( level == 4.02){
+    if (p.placeValue == "Whole Number"){
+      p.numTwo = [10,100,1000][genNumbers(3)];
+    }
+    if (p.placeValue == "1 decimal place"){
+      p.numTwo = [100,1000][genNumbers(2)];
+    }
+    if (p.placeValue == "2 decimal places"){
+      p.numTwo = 1000
+    }  
+    p.numFinal =  p.numOne/p.numTwo
+    while (p.numFinal > 1000){
+      p.numFinal -= 1000;
+    }
+    if (p.placeValue == "1 decimal place" && (p.numFinal*100)%10 == 0){
+      p.numFinal += 0.05;
+    }
+    if (p.placeValue == "2 decimal places" && (p.numFinal*1000)%10 == 0){
+      p.numFinal += 0.005;
+    }
+    if (p.placeValue == "Whole Number"){
+      p.numFinal = Math.floor(p.numFinal*100)/100
+    }
+    helpMe.textContent = `${p.placeValue}`
+    displayProblem.innerHTML = `${p.numFinal} ≈ `
+  }
+
 
   if ( level == 4.03 ){
     if (p.numOne%p.numTwo == 0){
@@ -1646,6 +1675,31 @@ function handleSubmit(e){
         }
       }
       
+      if ( level == 4.02){
+        if (p.placeValue == "Whole Number"){
+          correctAnswer = Math.round(p.numFinal)
+        }
+        if (p.placeValue == "1 decimal place"){
+          p.ansFinal = Math.round(p.numFinal*10)/10
+          if ((p.ansFinal*10)%10 == 0){
+            correctAnswer = p.ansFinal + ".0"
+          } else {
+          correctAnswer = p.ansFinal
+          }
+        }
+        if (p.placeValue == "2 decimal places"){
+          p.ansFinal = Math.round(p.numFinal*100)/100
+          if ((p.ansFinal*100)%100 == 0){
+            correctAnswer = p.ansFinal + ".00"
+          } else if ((p.ansFinal*100)%10 == 0){
+            correctAnswer = p.ansFinal + "0"
+          } else {
+          correctAnswer = p.ansFinal
+          }
+        }
+      }
+
+
       if ( level == 4.03){
         if (p.numOne/p.numTwo < 1){ 
           correctAnswer = `${p.numOne}/${p.numTwo}`
@@ -2184,6 +2238,17 @@ function genProblems(){
     return {
     numOne: genNumbers(99998)+100,
     placeValue: ["tens","hundreds","thousands","ten thousands"][genNumbers(4)]
+    }
+  }
+
+  if ( level == 4.02){
+    return {
+      numOne: genNumbers(99998)+1,
+      numTwo: [10,100,1000][genNumbers(3)],
+      numThree: genNumbers(999)+1,
+      placeValue: ["1 decimal place","2 decimal places","Whole Number"][genNumbers(3)],
+      numFinal: 0,
+      ansFinal: 0
     }
   }
 
@@ -2731,6 +2796,15 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreMistakes.innerHTML = highScore4DotZero1.mistake
       document.querySelector("#user-input").setAttribute("max","100000")
       break;  
+    
+    case "Level 4.02":
+      level = "4.02";
+      scoreNeeded = 30;
+      highScoreName.innerHTML = highScore4DotZero2.name
+      highScoreTime.innerHTML = highScore4DotZero2.time
+      highScoreMistakes.innerHTML = highScore4DotZero2.mistake
+      document.querySelector("#user-input").setAttribute("step","0.000001")
+    break;
 
     case "Level 4.03":
       level = 4.03;
