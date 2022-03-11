@@ -539,23 +539,23 @@ function updateProblems(){
   }
   if ( level == 3.02 ){
     if (p.option == "1"){
-      displayProblem.textContent = `${p.numOne} x ${p.numMulti} = `
+      displayProblem.textContent = `${p.numOne} x ${p.numMulti*p.numMultiTwo} = `
     }
     if (p.option == "2"){
-      displayProblem.textContent = `${p.numOne} ${p.numPlace} = `
+      displayProblem.textContent = `${p.numOne*p.numMultiTwo} ${p.numPlace} = `
     }
     if (p.option == "3"){
-      displayProblem.textContent = `${p.numOne*p.numMulti} ÷ ${p.numMulti} = `
+      displayProblem.textContent = `${p.numOne*p.numMulti*p.numMultiTwo} ÷ ${p.numMulti} = `
     }
     if (p.option == "4"){
       if (p.numPlace == "tens"){
-      displayProblem.textContent = `${p.numOne*10} = _____ ${p.numPlace}`
+      displayProblem.textContent = `${p.numOne*10*p.numMultiTwo} = _____ ${p.numPlace}`
       }
       if (p.numPlace == "hundreds"){
-        displayProblem.textContent = `${p.numOne*100} = _____ ${p.numPlace}`
+        displayProblem.textContent = `${p.numOne*100*p.numMultiTwo} = _____ ${p.numPlace}`
       }
       if (p.numPlace == "thousands"){
-        displayProblem.textContent = `${p.numOne*1000} = _____ ${p.numPlace}`
+        displayProblem.textContent = `${p.numOne*1000*p.numMultiTwo} = _____ ${p.numPlace}`
       }
     }
   }
@@ -1516,21 +1516,21 @@ function handleSubmit(e){
       }
       if ( level == 3.02 ){
         if (p.option == "1"){
-         correctAnswer = p.numOne*p.numMulti
+         correctAnswer = p.numOne*p.numMultiTwo*p.numMulti
         }
         if (p.option == "2"){
           if (p.numPlace == "tens"){
-            correctAnswer = p.numOne*10
+            correctAnswer = p.numOne*10*p.numMultiTwo
           }
           if (p.numPlace == "hundreds"){
-            correctAnswer = p.numOne*100
+            correctAnswer = p.numOne*100*p.numMultiTwo
           }
           if (p.numPlace == "thousands"){
-            correctAnswer = p.numOne*1000
+            correctAnswer = p.numOne*1000*p.numMultiTwo
           }
         }
         if (p.option == "3" || p.option == "4"){
-          correctAnswer = p.numOne
+          correctAnswer = p.numOne*p.numMultiTwo
         }
       }
 
@@ -1606,7 +1606,7 @@ function handleSubmit(e){
         if (p.numTwo > p.numOne) {
           correctAnswer = `${p.numTwo}n-${p.numTwo-p.numOne} ${p.numTwo*p.numThree+(p.numOne-p.numTwo)}`
         } else if (p.numTwo == p.numOne){
-          correctAnswer = `${p.numTwo}n ${p.numTwo*p.numOne}`
+          correctAnswer = `${p.numTwo}n ${p.numTwo*p.numThree}`
         } else  {
           correctAnswer = `${p.numTwo}n+${p.numOne-p.numTwo} ${p.numTwo*p.numThree+(p.numOne-p.numTwo)}`
         }
@@ -2136,6 +2136,7 @@ function genProblems(){
     return {
       numOne: genNumbers(97)+2,
       numMulti: [10, 100, 100][genNumbers(3)],
+      numMultiTwo: [1,10][genNumbers(2)],
       numPlace: ["tens","hundreds","thousands"][genNumbers(3)],
       operator: ["x","÷"][genNumbers(2)],
       option: ["1","2","3","4"][genNumbers(4)]
@@ -2691,6 +2692,7 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreName.innerHTML = highScore3DotZero2.name
       highScoreTime.innerHTML = highScore3DotZero2.time
       highScoreMistakes.innerHTML = highScore3DotZero2.mistake
+      document.querySelector("#user-input").setAttribute("max","9999999")
       break;
         
     case "Level 3.03":
