@@ -98,6 +98,7 @@ const highScore3DotZero8 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero10 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero11 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4DotZero = new HighScore("Nil", "Nil", 0, 0)
 const highScore4DotZero1 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4DotZero2 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4DotZero3 = new HighScore("Nil", "Nil", 0, 0)
@@ -772,6 +773,16 @@ function updateProblems(){
       }
     }
   }
+
+  if ( level == 4.0) {
+    displayProblem.innerHTML = 
+    `List the factors of</br> 
+    ${p.numOne}
+    `
+  }
+
+
+
   if ( level == 4.01 ){
     if (p.value == "thousands" && p.numOne > 1000){
       p.numOne = p.numOne + 1000;
@@ -1661,6 +1672,19 @@ function handleSubmit(e){
           }
         }
       }
+
+      if ( level == 4.0){
+        for (let i = 1; i <= p.numOne/i; i++){
+          if (p.numOne%i == 0){
+            arr.push(`${i}x${p.numOne/i}`);
+            // arr.push(p.numOne/i);
+          }
+        }
+        console.log(arr)
+        correctAnswer = arr.toString()
+      }
+
+
       if ( level == 4.01){
         if (p.placeValue == "tens"){
           correctAnswer = Math.round(p.numOne/10)*10
@@ -1984,7 +2008,10 @@ function handleSubmit(e){
         setTimeout(() => currentMistake.classList.remove("animate-wrong"), 331)
         mainContainer.classList.add("animate-wrong-container")
         setTimeout(() => mainContainer.classList.remove("animate-wrong-container"), 331)
-        userInput.value = ""
+         if ( level != 4.0){
+          userInput.value = ""
+         } 
+         arr.length = 0;
       }
     
   }
@@ -2233,6 +2260,12 @@ function genProblems(){
       numLargest: 0,
       option: ["1","2"][genNumbers(2)],
       optionFinal: ["1","2"][genNumbers(2)]
+    }
+  }
+
+  if ( level == 4.0){
+    return{
+      numOne: genNumbers(59)+3
     }
   }
 
@@ -2792,6 +2825,20 @@ for (let i = 0; i <  settingButton.length; i++){
       instructions.textContent = ""
       break;      
     
+    case "Level 4.0":
+      level = 4.0;
+      scoreNeeded = 10;
+      highScoreName.innerHTML = highScore4DotZero.name
+      highScoreTime.innerHTML = highScore4DotZero.time
+      highScoreMistakes.innerHTML = highScore4DotZero.mistake
+      document.querySelector("#user-input").setAttribute("type","text");
+      displayProblem.style.fontSize = "25px";
+      instructions.innerHTML = 
+      `List the factors in pairs</br>
+      in ascending order.
+      `
+    break;
+
     case "Level 4.01":
       level = "4.01";
       scoreNeeded = 30;
