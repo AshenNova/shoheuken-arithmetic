@@ -2011,7 +2011,9 @@ function handleSubmit(e){
          if ( level != 4.0){
           userInput.value = ""
          } 
-         arr.length = 0;
+         if ( level == 4.0 ){
+           arr.length = 0;
+         }
       }
     
   }
