@@ -212,6 +212,10 @@ const resetStuff = function (){
   gold = 0;
   silver = 0;
   bronze = 0;
+  document.querySelector('.trophy').removeChild(imageG)
+  document.querySelector('.trophy').removeChild(imageS)
+  document.querySelector('.trophy').removeChild(imageB)
+  document.querySelector('.trophy').removeChild(imageNMP)
 }
 
 resetButton.addEventListener('click', function(){
