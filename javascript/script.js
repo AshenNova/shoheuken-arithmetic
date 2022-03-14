@@ -209,6 +209,9 @@ const resetStuff = function (){
   equalSymbol.innerHTML = "=";
   fractionsContainerTwo.style.margin = "0 25px 15px"
   helpMe.textContent = ""
+  gold = 0;
+  silver = 0;
+  bronze = 0;
 }
 
 resetButton.addEventListener('click', function(){
