@@ -94,10 +94,12 @@ const highScore3DotZero4 = new HighScore("Amanda Poon", "12 March 2022", 229, 0)
 const highScore3DotZero5 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero6 = new HighScore("Shanice Lee", "1 mar 2022", 376, 3)
 const highScore3DotZero7 = new HighScore("Sheyanne Cheong", "12 March 2022", 80, 0)
-const highScore3DotZero8 = new HighScore("Javen Chen", "12 March 2022", 471, 4)
 const highScore3DotZero9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero10 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero11 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3DotZero12 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3DotZero13 = new HighScore("Javen Chen", "12 March 2022", 471, 4)
+
 const highScore4DotZero = new HighScore("Adam Poon", "12 March 2022", 813, 4)
 const highScore4DotZero1 = new HighScore("Adam Poon", "12 March 2022", 229, 0)
 const highScore4DotZero2 = new HighScore("Javen Chen", "12 March 2022", 264, 2)
@@ -696,17 +698,6 @@ function updateProblems(){
     displayProblem.innerHTML = `${p.numOne} , ${p.numTwo} , ${p.numThree}`
   }
 
-
-  if ( level == 3.08 ){
-    displayProblem.innerHTML = `
-    Pattern 1: ${p.numOne}</br>
-    Pattern 2: ${p.numOne+p.numTwo}</br>
-    Pattern 3: ${p.numOne+p.numTwo*2}</br>
-    ...</br>
-    Pattern ${p.numThree}: ?
-    `
-  }
-
   if ( level == 3.09 ){
     threeWholeNumber.textContent = ""
     threeNumerator.textContent = "?"
@@ -783,14 +774,33 @@ function updateProblems(){
     }
   }
 
+  if ( level == 3.12 ){
+    displayProblem.innerHTML = `
+    Pattern 1: 1</br>
+    Pattern 2: 3</br>
+    Pattern 3: 6</br>
+    Pattern 4: 10</br>
+    ...</br>
+    Pattern ${p.numOne}: ?
+    `
+  }
+
+  if ( level == 3.13 ){
+    displayProblem.innerHTML = `
+    Pattern 1: ${p.numOne}</br>
+    Pattern 2: ${p.numOne+p.numTwo}</br>
+    Pattern 3: ${p.numOne+p.numTwo*2}</br>
+    ...</br>
+    Pattern ${p.numThree}: ?
+    `
+  }
+
   if ( level == 4.0) {
     displayProblem.innerHTML = 
     `List the factors of</br> 
     ${p.numOne}
     `
   }
-
-
 
   if ( level == 4.01 ){
     if (p.value == "thousands" && p.numOne > 1000){
@@ -818,11 +828,9 @@ function updateProblems(){
     while (p.numFinal > 1000){
       p.numFinal -= 1000;
     }
-    console.log(p.numFinal);
     helpMe.textContent = `${p.placeValue}`
     displayProblem.textContent = `${p.numFinal} ≈ `
   }
-
 
   if ( level == 4.03 ){
     if (p.numOne%10 == 0){
@@ -1616,16 +1624,6 @@ function handleSubmit(e){
         correctAnswer = commonMultipleArrTwo[commonMultipleArrTwo.length-1];
       }
 
-      if ( level == 3.08 ){
-        if (p.numTwo > p.numOne) {
-          correctAnswer = `${p.numTwo}n-${p.numTwo-p.numOne} ${p.numTwo*p.numThree+(p.numOne-p.numTwo)}`
-        } else if (p.numTwo == p.numOne){
-          correctAnswer = `${p.numTwo}n ${p.numTwo*p.numThree}`
-        } else  {
-          correctAnswer = `${p.numTwo}n+${p.numOne-p.numTwo} ${p.numTwo*p.numThree+(p.numOne-p.numTwo)}`
-        }
-      }
-
       if ( level == 3.09){
         for (let i = p.numLargest; i > 1; i--){
           if ((p.numOne % i == 0) && (p.numTwo % i == 0)){
@@ -1672,6 +1670,20 @@ function handleSubmit(e){
           } else {
             correctAnswer = p.numOne*p.numMulti
           }
+        }
+      }
+
+      if ( level == 3.12 ){
+        correctAnswer = p.numOne+1 + "x" + (p.numOne) + "/2"
+      }
+
+      if ( level == 3.13 ){
+        if (p.numTwo > p.numOne) {
+          correctAnswer = `${p.numTwo}n-${p.numTwo-p.numOne} ${p.numTwo*p.numThree+(p.numOne-p.numTwo)}`
+        } else if (p.numTwo == p.numOne){
+          correctAnswer = `${p.numTwo}n ${p.numTwo*p.numThree}`
+        } else  {
+          correctAnswer = `${p.numTwo}n+${p.numOne-p.numTwo} ${p.numTwo*p.numThree+(p.numOne-p.numTwo)}`
         }
       }
 
@@ -2229,14 +2241,6 @@ function genProblems(){
     }
   }
 
-  if (level == 3.08){
-    return {
-      numOne: genNumbers(10)+1,
-      numTwo: genNumbers(5)+2,
-      numThree: genNumbers(5)+5
-    }
-  }
-
   if (level == 3.09){
     return {
       numOne: genNumbers(9)+1,
@@ -2264,6 +2268,20 @@ function genProblems(){
       numLargest: 0,
       option: ["1","2"][genNumbers(2)],
       optionFinal: ["1","2"][genNumbers(2)]
+    }
+  }
+
+  if (level == 3.12){
+    return {
+      numOne: genNumbers(94)+5
+    }
+  }
+
+  if (level == 3.13){
+    return {
+      numOne: genNumbers(10)+1,
+      numTwo: genNumbers(5)+2,
+      numThree: genNumbers(5)+5
     }
   }
 
@@ -2786,18 +2804,6 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreMistakes.innerHTML = highScore3DotZero7.mistake
       instructions.textContent = "Find the Lowest Common Multiple of the 3 numbers"
       break;
-    
-    case "Level 3.08":
-      level = 3.08;
-      scoreNeeded = 20;
-      gold = 471;
-      highScoreName.innerHTML = highScore3DotZero8.name
-      highScoreTime.innerHTML = highScore3DotZero8.time
-      highScoreMistakes.innerHTML = highScore3DotZero8.mistake
-      document.querySelector("#user-input").setAttribute("type","text");
-      displayProblem.style.fontSize = "25px";
-      instructions.textContent = "Form an Equation using 'n' from the pattern and answer"
-      break;  
 
     case "Level 3.09":
       level = 3.09;
@@ -2833,7 +2839,30 @@ for (let i = 0; i <  settingButton.length; i++){
       fractionsContainerTwo.classList.remove('hidden');
       document.querySelector("#user-input").setAttribute("type","text");
       instructions.textContent = ""
-      break;      
+      break;   
+    
+    case "Level 3.12":
+      level = 3.12;
+      scoreNeeded = 20;
+      highScoreName.innerHTML = highScore3DotZero12.name
+      highScoreTime.innerHTML = highScore3DotZero12.time
+      highScoreMistakes.innerHTML = highScore3DotZero12.mistake
+      document.querySelector("#user-input").setAttribute("type","text");
+      displayProblem.style.fontSize = "25px";
+      instructions.textContent = "Form an Equation from the pattern and provide an answer"
+    break;      
+
+    case "Level 3.13":
+      level = 3.13;
+      scoreNeeded = 20;
+      gold = 471;
+      highScoreName.innerHTML = highScore3DotZero13.name
+      highScoreTime.innerHTML = highScore3DotZero13.time
+      highScoreMistakes.innerHTML = highScore3DotZero13.mistake
+      document.querySelector("#user-input").setAttribute("type","text");
+      displayProblem.style.fontSize = "25px";
+      instructions.textContent = "Form an Equation using 'n' from the pattern and provide an answer"
+    break;    
     
     case "Level 4.0":
       level = 4.0;
