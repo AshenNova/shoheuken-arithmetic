@@ -167,15 +167,17 @@ if (state.score >= scoreNeeded){
   starto.classList.remove('hidden');
   finalText.innerHTML = time;
   finalBox.classList.remove('hidden');
+
   if (time < gold){
-    document.querySelector('.trophy').appendChild(imageG)
+    document.querySelector('.trophy').appendChild(imageG);
   } else if (time < silver){
-    document.querySelector('.trophy').appendChild(imageS)
+    document.querySelector('.trophy').appendChild(imageS);
   } else if (time < bronze){
-    document.querySelector('.trophy').appendChild(imageB)
+    document.querySelector('.trophy').appendChild(imageB);
   } else {
-    document.querySelector('.trophy').appendChild(imageNMP)
+    document.querySelector('.trophy').appendChild(imageNMP);
   }
+
   mistakesCountCl.innerHTML = state.mistake;
   player = 0;
 }
@@ -802,6 +804,7 @@ function updateProblems(){
   }
 
   if ( level == 4.02){
+    console.log(p.numOne,p.numThree)
     if (p.placeValue == "Whole Number"){
       p.numTwo = [10,100,1000][genNumbers(3)];
     }
@@ -810,22 +813,14 @@ function updateProblems(){
     }
     if (p.placeValue == "2 decimal places"){
       p.numTwo = 1000
-    }  
-    p.numFinal =  p.numOne/p.numTwo
+    }
+    p.numFinal = p.numOne/p.numTwo
     while (p.numFinal > 1000){
       p.numFinal -= 1000;
     }
-    if (p.placeValue == "1 decimal place" && (p.numFinal*100)%10 == 0){
-      p.numFinal += 0.05;
-    }
-    if (p.placeValue == "2 decimal places" && (p.numFinal*1000)%10 == 0){
-      p.numFinal += 0.005;
-    }
-    if (p.placeValue == "Whole Number"){
-      p.numFinal = Math.floor(p.numFinal*100)/100
-    }
+    console.log(p.numFinal);
     helpMe.textContent = `${p.placeValue}`
-    displayProblem.innerHTML = `${p.numFinal} ≈ `
+    displayProblem.textContent = `${p.numFinal} ≈ `
   }
 
 
@@ -2287,12 +2282,10 @@ function genProblems(){
 
   if ( level == 4.02){
     return {
-      numOne: genNumbers(99998)+1,
-      numTwo: [10,100,1000][genNumbers(3)],
-      numThree: genNumbers(999)+1,
+      numOne: genNumbers(99999)+1,
+      numTwo: 0,
       placeValue: ["1 decimal place","2 decimal places","Whole Number"][genNumbers(3)],
-      numFinal: 0,
-      ansFinal: 0
+      numFinal: 0
     }
   }
 
