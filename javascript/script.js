@@ -2949,6 +2949,7 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreMistakes.innerHTML = highScore3DotZero12.mistake
       document.querySelector("#user-input").setAttribute("type","text");
       displayProblem.style.fontSize = "25px";
+      displayProblem.style.marginTop = "0";
       instructions.textContent = "Form an Equation from the pattern"
     break;      
 
@@ -2961,6 +2962,7 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreMistakes.innerHTML = highScore3DotZero13.mistake
       document.querySelector("#user-input").setAttribute("type","text");
       displayProblem.style.fontSize = "25px";
+      displayProblem.style.marginTop = "0";
       instructions.textContent = "Form an Equation using 'n' from the pattern and provide an answer"
     break;
 
@@ -2972,6 +2974,7 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreMistakes.innerHTML = highScore3DotZero14.mistake
       document.querySelector("#user-input").setAttribute("type","text");
       displayProblem.style.fontSize = "25px";
+      displayProblem.style.marginTop = "0";
       instructions.textContent = "Form an Equation from the pattern and provide an answer"
     break;
 
@@ -2983,6 +2986,7 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreMistakes.innerHTML = highScore3DotZero15.mistake
       document.querySelector("#user-input").setAttribute("type","text");
       displayProblem.style.fontSize = "25px";
+      displayProblem.style.marginTop = "0";
       instructions.textContent = "Form an Equation using 'n' from the pattern and provide an answer"
     break; 
     
