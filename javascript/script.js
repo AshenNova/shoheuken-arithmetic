@@ -120,6 +120,7 @@ const highScore4DotZero14 = new HighScore("Izekiel", "1 mar 2022", 114, 1)
 const highScore5dot1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
 const highScore5dot2 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5dot3 = new HighScore("Jayden Goo", "2 Mar 2022", 79, 0)
+const highScore6dotZero = new HighScore("Nil", "Nil", 0, 0)
 const highScore6dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
 
@@ -1388,6 +1389,69 @@ function updateProblems(){
     }
   }
 
+  if ( level == 6.0){
+    if (p.numOne == p.denoOne || p.numTwo == p.denoTwo || p.numThree == p.denoThree){
+      p.denoOne += 1
+      p.denoTwo += 1
+      p.denoThree += 1
+    }
+    if (p.numOne > p.denoOne){
+      [p.numOne, p.denoOne] = [p.denoOne, p.numOne]
+    }
+    if (p.numTwo > p.denoTwo){
+      [p.numTwo, p.denoTwo] = [p.denoTwo, p.numTwo]
+    }
+    if (p.numThree > p.denoThree){
+      [p.numThree, p.denoThree] = [p.denoThree, p.numThree]
+    }
+
+    for ( let a = p.denoOne; a > 1 ;a--){
+      if (p.numOne%a == 0 && p.denoOne%a == 0){
+        p.numOne /= a;
+        p.denoOne /= a;
+      }
+    }
+    for ( let b = p.denoTwo; b > 1 ;b--){
+      if (p.numOne%b == 0 && p.denoOne%b == 0){
+        p.numOne /= b;
+        p.denoOne /= b;
+      }
+    }
+    for ( let c = p.denoThree; c > 1 ;c--){
+      if (p.numThree%c == 0 && p.denoThree%c == 0){
+        p.numThree /= c;
+        p.denoThree /= c;
+      }
+    }
+
+    if (p.choiceOne == "percentage"){
+      p.sentenceA = `B used ${p.percentageOne}%.`
+    }
+    if (p.choiceOne == "fraction"){
+      p.sentenceA = `B used ${p.numOne}/${p.denoOne}.`
+    }
+    if (p.choiceTwo == "percentage"){
+      p.sentenceB = `C used ${p.percentageTwo}%.`
+    }
+    if (p.choiceTwo == "fraction"){
+      p.sentenceB = `C used ${p.numTwo}/${p.denoTwo}.`
+    }
+    if (p.choiceThree == "ratio"){
+      p.sentenceC = `The ratio of B to C is now, ${p.numThree}:${p.denoThree}.`
+    }
+    if (p.choiceThree == "fraction"){
+      p.sentenceC = `B is ${p.numThree}/${p.denoThree} of C in the end.`
+    }
+    p.sentenceD = `What is ${p.choiceBC} at first?`
+    displayProblem.innerHTML = 
+    `
+    ${p.sentenceA}</br>
+    ${p.sentenceB}</br>
+    ${p.sentenceC}</br>
+    ${p.sentenceD}
+    `
+  }
+
   if (level == 7){
     displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
   }
@@ -2087,6 +2151,22 @@ function handleSubmit(e){
         }
       }
 
+      if ( level == 6.0){
+        if (p.choiceBC == "B" && p.choiceOne == "percentage"){
+          correctAnswer = `${p.numThree}/${100-p.percentageOne}x100`
+        }
+        if (p.choiceBC == "B" && p.choiceOne == "fraction"){
+          correctAnswer = `${p.numThree}/${p.denoOne-p.numOne}x${p.denoOne}`
+        }
+        if (p.choiceBC == "C" && p.choiceTwo == "percentage"){
+          correctAnswer = `${p.denoThree}/${100-p.percentageTwo}x100`
+        }
+        if (p.choiceBC == "C" && p.choiceTwo == "fraction"){
+          correctAnswer = `${p.denoThree}/${p.denoTwo-p.numTwo}x${p.denoTwo}`
+        }
+      }
+
+
       if (level == 7){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") correctAnswer = p.numOne - p.numTwo
@@ -2626,6 +2706,31 @@ function genProblems(){
       letterChangeTwo: ["increase", "decrease", "of"][genNumbers(3)],
       letterAB: ["A","B"][genNumbers(2)],
       option: [":","/"][genNumbers(2)]
+    }
+  }
+
+  if ( level == 6.0){
+    return {
+      percentageOne: (genNumbers(18)+1)*5,
+      percentageTwo: (genNumbers(18)+1)*5,
+      percentageThree: (genNumbers(18)+1)*5,
+      ratioOne: (genNumbers(10)+1),
+      ratioTwo: (genNumbers(10)+1),
+      ratioThree: (genNumbers(10)+1),
+      numOne: (genNumbers(10)+1),
+      denoOne: (genNumbers(10)+1),
+      numTwo: (genNumbers(10)+1),
+      denoTwo: (genNumbers(10)+1),
+      numThree: (genNumbers(10)+1),
+      denoThree: (genNumbers(10)+1),
+      choiceOne: ['percentage','fraction'][genNumbers(2)],
+      choiceTwo: ['percentage','fraction'][genNumbers(2)],
+      choiceThree: ['ratio','fraction'][genNumbers(2)],
+      choiceBC: ["B","C"][genNumbers(2)],
+      sentenceA: 0,
+      sentenceB: 0,
+      sentenceC: 0,
+      sentenceD: 0,
     }
   }
 
@@ -3250,9 +3355,9 @@ for (let i = 0; i <  settingButton.length; i++){
       level = 5.03;
       scoreNeeded = 10;
       gold = 120;
-      highScoreName.innerHTML = highScore5dot2.name
-      highScoreTime.innerHTML = highScore5dot2.time
-      highScoreMistakes.innerHTML = highScore5dot2.mistake
+      highScoreName.innerHTML = highScore5dot3.name
+      highScoreTime.innerHTML = highScore5dot3.time
+      highScoreMistakes.innerHTML = highScore5dot3.mistake
       document.querySelector("#user-input").setAttribute("type","text");
       displayProblem.style.fontSize = "25px";
       instructions.innerHTML = "Form an equation using</br> multiplication of percentage </br> from/100 x end"
@@ -3263,12 +3368,23 @@ for (let i = 0; i <  settingButton.length; i++){
       level = 5.04;
       scoreNeeded = 10;
       gold = 79;
-      highScoreName.innerHTML = highScore5dot3.name
-      highScoreTime.innerHTML = highScore5dot3.time
-      highScoreMistakes.innerHTML = highScore5dot3.mistake
+      highScoreName.innerHTML = highScore5dot4.name
+      highScoreTime.innerHTML = highScore5dot4.time
+      highScoreMistakes.innerHTML = highScore5dot4.mistake
       document.querySelector("#user-input").setAttribute("type","text");
       displayProblem.style.fontSize = "25px";
       break;
+    
+
+    case "Level 6.0":
+      level = 6.0;
+      scoreNeeded = 10;
+      highScoreName.innerHTML = highScore6dotZero.name
+      highScoreTime.innerHTML = highScore6dotZero.time
+      highScoreMistakes.innerHTML = highScore6dotZero.mistake
+      document.querySelector("#user-input").setAttribute("type","text");
+      displayProblem.style.fontSize = "25px";
+    break;
 
     case "Level 6.3":
       level = 6.3;
