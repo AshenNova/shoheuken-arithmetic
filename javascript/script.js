@@ -1295,6 +1295,34 @@ function updateProblems(){
   }
 
   if ( level == 5.02){
+    if (p.numThree == p.numFour){
+      p.numFour = p.numThree+[1, 2][genNumbers(2)]
+      }
+    if (p.numOne == p.numTwo){
+    p.numTwo = p.numOne+[1, 2][genNumbers(2)]
+    }
+    if (p.numOne == p.numThree){
+      p.numOne += 1;
+    }
+    if (p.numOne > p.numThree){
+      [p.numOne , p.numThree] = [p.numThree, p.numOne];
+    }
+
+    arr.push(p.numOne, p.numThree);
+    arr.sort(function(a, b){return b-a});
+    let i = 1;
+      while (arr[0]%arr[arr.length-1] != 0){
+        console.log(arr, i)
+        i++;
+        arr.unshift(p.numThree*i)
+      }
+    displayProblem.innerHTML = 
+    `
+    ${p.numOne}/${p.numTwo} of A ${p.sentenceChoice} ${p.numThree}/${p.numFour} of B.
+    `
+  }
+
+  if ( level == 5.03){
     if (p.letterChange == "of" && p.letterChangeTwo != "of"){
       displayProblem.innerHTML =
       `A is ${p.numOne}% of A and B.</br>
@@ -1323,7 +1351,7 @@ function updateProblems(){
       What percentage of the total is ${p.letterAB} in the end?`
       }
   }
-  if ( level == 5.03){
+  if ( level == 5.04){
     for (let i = p.numTwo; i > 1; i--){
       if(p.numOne%i == 0 && p.numTwo%i == 0){
         p.numOne /= i;
@@ -2008,7 +2036,12 @@ function handleSubmit(e){
         }
       }
 
-      if ( level == 5.02 ){
+      if ( level == 5.02) {
+        correctAnswer = `${arr[0]}/${arr[0]/p.numOne*p.numTwo}A=${arr[0]}/${arr[0]/p.numThree*p.numFour}B`
+      }
+
+
+      if ( level == 5.03 ){
         p.varA = p.numOne
         p.varB = 100-p.numOne
         if ( p.letterAB == "A" && p.letterChange == "increase"){
@@ -2030,7 +2063,7 @@ function handleSubmit(e){
           correctAnswer = p.varB + "/100x" + (100-p.numThree)
         }
       }
-      if ( level == 5.03 ){
+      if ( level == 5.04 ){
         p.varA = p.numOne
         p.varB = p.numTwo
         if (p.letterBTotal == "A and B"){
@@ -2557,7 +2590,17 @@ function genProblems(){
     }
   }
 
-  if (level == 5.02){
+  if (level == 5.02) {
+    return {
+      numOne: genNumbers(5)+1,
+      numTwo: genNumbers(5)+1,
+      numThree: genNumbers(5)+1,
+      numFour: genNumbers(5)+1,
+      sentenceChoice: ["is equal to","the same as","="][genNumbers(3)]
+    }
+  }
+
+  if (level == 5.03){
     return {
     numOne: (genNumbers(10)+1)*5,
     numTwo: (genNumbers(18)+1)*5,
@@ -2570,7 +2613,7 @@ function genProblems(){
     }
   }
 
-  if (level == 5.03){
+  if (level == 5.04){
     return {
       numOne: genNumbers(5)+1,
       numTwo: genNumbers(5)+6,
@@ -3190,10 +3233,21 @@ for (let i = 0; i <  settingButton.length; i++){
       document.querySelector("#user-input").setAttribute("type","text");
       displayProblem.style.fontSize = "25px";
       instructions.innerHTML = "Form an equation using</br> multiplication of fraction </br> RC = from x want"
-      break;    
-    
+      break;
+
     case "Level 5.02":
       level = 5.02;
+      scoreNeeded = 10;
+      highScoreName.innerHTML = highScore5dot2.name
+      highScoreTime.innerHTML = highScore5dot2.time
+      highScoreMistakes.innerHTML = highScore5dot2.mistake
+      document.querySelector("#user-input").setAttribute("type","text");
+      displayProblem.style.fontSize = "25px";
+      instructions.innerHTML = "Form an equation using in fraction"
+    break;
+    
+    case "Level 5.03":
+      level = 5.03;
       scoreNeeded = 10;
       gold = 120;
       highScoreName.innerHTML = highScore5dot2.name
@@ -3205,8 +3259,8 @@ for (let i = 0; i <  settingButton.length; i++){
       userInput.style.width = "200px";
       break;    
     
-    case "Level 5.03":
-      level = 5.03;
+    case "Level 5.04":
+      level = 5.04;
       scoreNeeded = 10;
       gold = 79;
       highScoreName.innerHTML = highScore5dot3.name
