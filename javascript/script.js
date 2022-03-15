@@ -99,6 +99,8 @@ const highScore3DotZero10 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero11 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero12 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero13 = new HighScore("Javen Chen", "12 March 2022", 471, 4)
+const highScore3DotZero14 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3DotZero15 = new HighScore("Nil", "Nil", 0, 0)
 
 const highScore4DotZero = new HighScore("Adam Poon", "12 March 2022", 813, 4)
 const highScore4DotZero1 = new HighScore("Adam Poon", "12 March 2022", 229, 0)
@@ -787,13 +789,60 @@ function updateProblems(){
 
   if ( level == 3.13 ){
     displayProblem.innerHTML = `
-    Pattern 1: ${p.numOne}</br>
-    Pattern 2: ${p.numOne+p.numTwo}</br>
-    Pattern 3: ${p.numOne+p.numTwo*2}</br>
+    Pattern 1: ${p.numTwo}</br>
+    Pattern 2: ${p.numTwo+p.numThree}</br>
+    Pattern 3: ${p.numTwo+p.numThree*2}</br>
     ...</br>
-    Pattern ${p.numThree}: ?
+    Pattern ${p.numFour}: ?
     `
   }
+
+  if ( level == 3.14 ){
+    displayProblem.innerHTML = `
+    Pattern 1: 1</br>
+    Pattern 2: 4</br>
+    Pattern 3: 9</br>
+    ...</br>
+    Pattern ${p.numFive}: ?</br>
+    Pattern ?: ${(p.numFive+p.numSix)*(p.numFive+p.numSix)}
+    `
+  }
+
+  if ( level == 3.15){
+// level 3.12
+    if (p.optionFinal == 1){
+      displayProblem.innerHTML = `
+      Pattern 1: 1</br>
+      Pattern 2: 3</br>
+      Pattern 3: 6</br>
+      Pattern 4: 10</br>
+      ...</br>
+      Pattern ${p.numOne}: ?
+      `
+    }
+// level 3.13
+    if (p.optionFinal == 2){
+      displayProblem.innerHTML = `
+      Pattern 1: ${p.numTwo}</br>
+      Pattern 2: ${p.numTwo+p.numThree}</br>
+      Pattern 3: ${p.numTwo+p.numThree*2}</br>
+      ...</br>
+      Pattern ${p.numFour}: ?
+      `
+    }
+// level 3.14
+    if (p.optionFinal == 3){
+      displayProblem.innerHTML = `
+      Pattern 1: 1</br>
+      Pattern 2: 4</br>
+      Pattern 3: 9</br>
+      ...</br>
+      Pattern ${p.numFive}: ?</br>
+      Pattern ?: ${(p.numFive+p.numSix)*(p.numFive+p.numSix)}
+      `
+    }
+  }
+
 
   if ( level == 4.0) {
     displayProblem.innerHTML = 
@@ -814,7 +863,9 @@ function updateProblems(){
   }
 
   if ( level == 4.02){
-    console.log(p.numOne,p.numThree)
+    if (p.numOne%10 == 0){
+      p.numOne += 1
+    }
     if (p.placeValue == "Whole Number"){
       p.numTwo = [10,100,1000][genNumbers(3)];
     }
@@ -828,6 +879,7 @@ function updateProblems(){
     while (p.numFinal > 1000){
       p.numFinal -= 1000;
     }
+    console.log(p.numOne,p.numTwo, p.numFinal)
     helpMe.textContent = `${p.placeValue}`
     displayProblem.textContent = `${p.numFinal} ≈ `
   }
@@ -1678,12 +1730,37 @@ function handleSubmit(e){
       }
 
       if ( level == 3.13 ){
-        if (p.numTwo > p.numOne) {
-          correctAnswer = `${p.numTwo}n-${p.numTwo-p.numOne} ${p.numTwo*p.numThree+(p.numOne-p.numTwo)}`
-        } else if (p.numTwo == p.numOne){
-          correctAnswer = `${p.numTwo}n ${p.numTwo*p.numThree}`
+        if (p.numThree > p.numTwo) {
+          correctAnswer = `${p.numThree}n-${p.numThree-p.numTwo} ${p.numThree*p.numFour+(p.numTwo-p.numThree)}`
+        } else if (p.numThree == p.numTwo){
+          correctAnswer = `${p.numThree}n ${p.numThree*p.numFour}`
         } else  {
-          correctAnswer = `${p.numTwo}n+${p.numOne-p.numTwo} ${p.numTwo*p.numThree+(p.numOne-p.numTwo)}`
+          correctAnswer = `${p.numThree}n+${p.numTwo-p.numThree} ${p.numThree*p.numFour+(p.numTwo-p.numThree)}`
+        }
+      }
+
+      if ( level == 3.14){
+        correctAnswer = p.numFive + "x" + p.numFive + "=" + p.numFive*p.numFive + " " + (p.numFive+p.numSix)
+      }
+
+      if ( level == 3.15){
+        // level 3.12
+        if (p.optionFinal == 1){
+          correctAnswer = p.numOne+1 + "x" + (p.numOne) + "/2"
+        }
+        // level 3.13
+        if (p.optionFinal == 2){
+          if (p.numThree > p.numTwo) {
+            correctAnswer = `${p.numThree}n-${p.numThree-p.numTwo} ${p.numThree*p.numFour+(p.numTwo-p.numThree)}`
+          } else if (p.numThree == p.numTwo){
+            correctAnswer = `${p.numThree}n ${p.numThree*p.numFour}`
+          } else  {
+            correctAnswer = `${p.numThree}n+${p.numTwo-p.numThree} ${p.numThree*p.numFour+(p.numTwo-p.numThree)}`
+          }
+        }
+        // level 3.14
+        if (p.optionFinal == 3){
+          correctAnswer = p.numFive + "x" + p.numFive + "=" + p.numFive*p.numFive + " " + (p.numFive+p.numSix)
         }
       }
 
@@ -1728,6 +1805,7 @@ function handleSubmit(e){
         }
         if (p.placeValue == "2 decimal places"){
           p.ansFinal = Math.round(p.numFinal*100)/100
+          console.log(p.ansFinal)
           if ((p.ansFinal*100)%100 == 0){
             correctAnswer = p.ansFinal + ".00"
           } else if ((p.ansFinal*100)%10 == 0){
@@ -2279,9 +2357,31 @@ function genProblems(){
 
   if (level == 3.13){
     return {
-      numOne: genNumbers(10)+1,
-      numTwo: genNumbers(5)+2,
-      numThree: genNumbers(5)+5
+      numTwo: genNumbers(10)+1,
+      numThree: genNumbers(5)+2,
+      numFour: genNumbers(5)+5
+    }
+  }
+
+  if ( level == 3.14){
+    return {
+      numFive: genNumbers(8)+5,
+      numSix: [-1,1,2][genNumbers(3)]
+    }
+  }
+
+  if ( level == 3.15){
+    return {
+      numOne: genNumbers(94)+5,
+
+      numTwo: genNumbers(10)+1,
+      numThree: genNumbers(5)+2,
+
+      numFour: genNumbers(5)+5,
+      numFive: genNumbers(8)+5,
+      numSix: [-1,1,2][genNumbers(3)],
+
+      optionFinal: [1,2,3][genNumbers(3)]
     }
   }
 
@@ -2849,7 +2949,7 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreMistakes.innerHTML = highScore3DotZero12.mistake
       document.querySelector("#user-input").setAttribute("type","text");
       displayProblem.style.fontSize = "25px";
-      instructions.textContent = "Form an Equation from the pattern and provide an answer"
+      instructions.textContent = "Form an Equation from the pattern"
     break;      
 
     case "Level 3.13":
@@ -2862,7 +2962,29 @@ for (let i = 0; i <  settingButton.length; i++){
       document.querySelector("#user-input").setAttribute("type","text");
       displayProblem.style.fontSize = "25px";
       instructions.textContent = "Form an Equation using 'n' from the pattern and provide an answer"
-    break;    
+    break;
+
+    case "Level 3.14":
+      level = 3.14;
+      scoreNeeded = 20;
+      highScoreName.innerHTML = highScore3DotZero14.name
+      highScoreTime.innerHTML = highScore3DotZero14.time
+      highScoreMistakes.innerHTML = highScore3DotZero14.mistake
+      document.querySelector("#user-input").setAttribute("type","text");
+      displayProblem.style.fontSize = "25px";
+      instructions.textContent = "Form an Equation from the pattern and provide an answer"
+    break;
+
+    case "Level 3.15":
+      level = 3.15;
+      scoreNeeded = 20;
+      highScoreName.innerHTML = highScore3DotZero15.name
+      highScoreTime.innerHTML = highScore3DotZero15.time
+      highScoreMistakes.innerHTML = highScore3DotZero15.mistake
+      document.querySelector("#user-input").setAttribute("type","text");
+      displayProblem.style.fontSize = "25px";
+      instructions.textContent = "Form an Equation using 'n' from the pattern and provide an answer"
+    break; 
     
     case "Level 4.0":
       level = 4.0;
