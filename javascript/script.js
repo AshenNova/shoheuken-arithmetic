@@ -1425,16 +1425,16 @@ function updateProblems(){
     }
 
     if (p.choiceOne == "percentage"){
-      p.sentenceA = `B used ${p.percentageOne}%.`
+      p.sentenceA = `B ${p.situationA} ${p.percentageOne}%.`
     }
     if (p.choiceOne == "fraction"){
-      p.sentenceA = `B used ${p.numOne}/${p.denoOne}.`
+      p.sentenceA = `B ${p.situationA} ${p.numOne}/${p.denoOne}.`
     }
     if (p.choiceTwo == "percentage"){
-      p.sentenceB = `C used ${p.percentageTwo}%.`
+      p.sentenceB = `C ${p.situationB} ${p.percentageTwo}%.`
     }
     if (p.choiceTwo == "fraction"){
-      p.sentenceB = `C used ${p.numTwo}/${p.denoTwo}.`
+      p.sentenceB = `C ${p.situationB} ${p.numTwo}/${p.denoTwo}.`
     }
     if (p.choiceThree == "ratio"){
       p.sentenceC = `The ratio of B to C is now, ${p.numThree}:${p.denoThree}.`
@@ -2153,16 +2153,32 @@ function handleSubmit(e){
 
       if ( level == 6.0){
         if (p.choiceBC == "B" && p.choiceOne == "percentage"){
-          correctAnswer = `${p.numThree}/${100-p.percentageOne}x100`
+          if (p.situationA == "increased by") {
+            correctAnswer = `${p.numThree}/${100+p.percentageOne}x100` 
+          } else {
+           correctAnswer = `${p.numThree}/${100-p.percentageOne}x100`
+          }
         }
         if (p.choiceBC == "B" && p.choiceOne == "fraction"){
-          correctAnswer = `${p.numThree}/${p.denoOne-p.numOne}x${p.denoOne}`
+          if (p.situationA == "increased by"){
+            correctAnswer = `${p.numThree}/${p.denoOne+p.numOne}x${p.denoOne}`            
+          } else {
+           correctAnswer = `${p.numThree}/${p.denoOne-p.numOne}x${p.denoOne}`
+          }
         }
         if (p.choiceBC == "C" && p.choiceTwo == "percentage"){
-          correctAnswer = `${p.denoThree}/${100-p.percentageTwo}x100`
+          if (p.situationB == "increased by"){
+            correctAnswer = `${p.denoThree}/${100+p.percentageTwo}x100`
+          } else {
+            correctAnswer = `${p.denoThree}/${100-p.percentageTwo}x100`
+          }
         }
         if (p.choiceBC == "C" && p.choiceTwo == "fraction"){
-          correctAnswer = `${p.denoThree}/${p.denoTwo-p.numTwo}x${p.denoTwo}`
+          if (p.situationB == "increased by"){
+            correctAnswer = `${p.denoThree}/${p.denoTwo+p.numTwo}x${p.denoTwo}`
+          } else {
+            correctAnswer = `${p.denoThree}/${p.denoTwo-p.numTwo}x${p.denoTwo}`
+        }
         }
       }
 
@@ -2731,6 +2747,8 @@ function genProblems(){
       sentenceB: 0,
       sentenceC: 0,
       sentenceD: 0,
+      situationA: ["used","increased by"][genNumbers(2)],
+      situationB: ["used","increased by"][genNumbers(2)]
     }
   }
 
