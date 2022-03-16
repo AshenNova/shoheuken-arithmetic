@@ -120,6 +120,7 @@ const highScore4DotZero14 = new HighScore("Izekiel", "1 mar 2022", 114, 1)
 const highScore5dot1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
 const highScore5dot2 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5dot3 = new HighScore("Jayden Goo", "2 Mar 2022", 79, 0)
+const highScore5dot4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore6dotZero = new HighScore("Nil", "Nil", 0, 0)
 const highScore6dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
