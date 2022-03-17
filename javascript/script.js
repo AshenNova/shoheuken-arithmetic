@@ -18,6 +18,7 @@ const secondUnitMeasurement= document.querySelector('.secondUnitMeasurement');
 const inputBox = document.querySelector('.input.box');
 const resetButton = document.getElementById('reset');
 const backButton = document.querySelectorAll(".back-button");
+const instructions = document.querySelector('.instructions');
 
 const imageG = document.createElement('img');
 const imageS = document.createElement('img');
@@ -97,6 +98,7 @@ const highScore3DotZero4 = new HighScore("Amanda Poon", "12 March 2022", 229, 0)
 const highScore3DotZero5 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero6 = new HighScore("Shanice Lee", "1 mar 2022", 376, 3)
 const highScore3DotZero7 = new HighScore("Sheyanne Cheong", "12 March 2022", 80, 0)
+const highScore3DotZero8 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero10 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero11 = new HighScore("Nil", "Nil", 0, 0)
@@ -208,11 +210,13 @@ const resetStuff = function (){
   fractionsContainer.classList.add('hidden');
   fractionsContainerTwo.classList.add('hidden');
   wholeNumberContainer.classList.remove('hidden');
+  multiplesSettingCl.classList.add('hidden');
+  firstCanvas.classList.add('hidden');
+
   secondUnitMeasurement.textContent = ""
-  instructions.textContent = ""
+  instructions.innerHTML = ""
   document.querySelector("#user-input").setAttribute("type","number");
   document.querySelector("#user-input").setAttribute("step","1");
-  multiplesSettingCl.classList.add('hidden');
   displayProblem.style.fontSize = "50px";
   userInput.style.width = "175px";
   document.querySelector("#user-input").style.marginTop = "0";
@@ -231,6 +235,8 @@ const resetStuff = function (){
   document.querySelector('.trophy').removeChild(imageB)
   document.querySelector('.trophy').removeChild(imageNMP)
   }
+  console.log("reset button activated")
+  
 }
 
 resetButton.addEventListener('click', function(){
@@ -709,6 +715,70 @@ function updateProblems(){
     }
     arr.push(p.numOne, p.numTwo, p.numThree);
     displayProblem.innerHTML = `${p.numOne} , ${p.numTwo} , ${p.numThree}`
+  }
+  if ( level == 3.08 ){
+    ctx.font = '1em serif'
+    ctx.save()
+
+    if (p.parallelorPerpendicular == "parallel"){
+      if ( p.roll == 1){
+        ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelGHI}${p.labelJKL} or ${p.labelMNO}${p.labelPQR}`, 0, 15)
+      } else {
+        ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelMNO}${p.labelPQR} or ${p.labelGHI}${p.labelJKL}`, 0, 15)
+      }
+    } else {
+      if ( p.roll == 1){
+        ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelGHI}${p.labelJKL} or ${p.labelMNO}${p.labelPQR}`, 0, 15)
+      } else {
+      ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelMNO}${p.labelPQR} or ${p.labelGHI}${p.labelJKL}`, 0, 15)
+      }
+    }
+
+
+
+    ctx.font = '20px serif'
+      // First Line
+    ctx.translate(p.translateX, p.translateY);
+    ctx.rotate(p.rotation1 * Math.PI / 180)
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, p.pointY1);
+    ctx.stroke();
+    ctx.fillText(p.labelABC, -5, 0);
+    ctx.fillText(p.labelDEF, -5, p.pointY1+10);
+
+    ctx.save()
+      // Second Line
+    ctx.translate(p.translateX2, p.translateY2);
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, p.pointY1);
+    ctx.stroke();
+
+    ctx.fillStyle = "red"
+    ctx.fillText(p.labelGHI, -5, -5);
+    ctx.fillText(p.labelJKL, -5, p.pointY1+20);
+
+    ctx.restore();
+      // Third Line
+    ctx.translate(p.translateX3, p.translateY3);
+    ctx.rotate(p.rotation2 * Math.PI / 180);
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, p.pointY2);
+    ctx.stroke();
+
+    ctx.fillStyle = "red"
+    ctx.fillText(p.labelMNO, -5, -5);
+    ctx.fillText(p.labelPQR, -5, p.pointY2+20);
+
+    ctx.restore()
   }
 
   if ( level == 3.09 ){
@@ -1279,13 +1349,14 @@ function updateProblems(){
 
   if ( level == 5.0 ){
     ctx.font = '1em serif'
+    ctx.save()
+
     if ( p.sidesBH == "base"){
-      ctx.fillText(`The ${p.sidesBH} = ${p.labelABC}${p.labelDEF}, find the height.`, 5, 20)
+      ctx.fillText(`The ${p.sidesBH} = ${p.labelABC}${p.labelDEF}, find the height.`, 0, 0)
      } else {
-      ctx.fillText(`The ${p.sidesBH} = ${p.labelABC}${p.labelGHI}, find the base.`, 5, 20)
+      ctx.fillText(`The ${p.sidesBH} = ${p.labelABC}${p.labelGHI}, find the base.`, 0, 0)
      }
 
-    ctx.save();
     ctx.translate(p.translateX, p.translateY);
     ctx.rotate(p.rotation * Math.PI / 180);
     // label
@@ -1808,7 +1879,13 @@ function handleSubmit(e){
           } 
         correctAnswer = commonMultipleArrTwo[commonMultipleArrTwo.length-1];
       }
-
+      if ( level == 3.08 ){
+        if (p.parallelOrPerpendicular == "parallel"){
+          correctAnswer = p.labelGHI + p.labelJKL
+        } else {
+          correctAnswer = p.labelMNO + p.labelPQR
+        }
+      }
       if ( level == 3.09){
         for (let i = p.numLargest; i > 1; i--){
           if ((p.numOne % i == 0) && (p.numTwo % i == 0)){
@@ -2497,6 +2574,37 @@ function genProblems(){
       numThree: genNumbers(5)+1,
     }
   }
+  if ( level == 3.08 ){
+    return {
+      // pointX1: genNumbers(70)+30,
+      pointY1: genNumbers(80)+20,
+
+      // pointX2: genNumbers(3),
+      pointY2: genNumbers(80)+20,
+
+      rotation1: genNumbers(360),
+      rotation2: [90, 270][genNumbers(2)],
+      translateX: genNumbers(200)+100,
+      translateY: genNumbers(40)+60,
+
+      translateX2: genNumbers(80)-70,
+      translateY2: genNumbers(80)-70,
+
+      translateX3: genNumbers(80)-70,
+      translateY3: genNumbers(80)-70,
+      
+      labelABC: ["A","B","C"][genNumbers(3)],
+      labelDEF: ["D","E","F"][genNumbers(3)],
+      labelGHI: ["G","H","I"][genNumbers(3)],
+      labelJKL: ["J","K","L"][genNumbers(3)],
+      labelMNO: ["M","N","O"][genNumbers(3)],
+      labelPQR: ["P","Q","R"][genNumbers(3)],
+
+      roll: [1,2][genNumbers(3)],
+
+      parallelOrPerpendicular: ["parallel","perpendicular"][genNumbers(2)]
+    } 
+  }
 
   if (level == 3.09){
     return {
@@ -3165,6 +3273,17 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreMistakes.innerHTML = highScore3DotZero7.mistake
       instructions.textContent = "Find the Lowest Common Multiple of the 3 numbers"
       break;
+
+    case "Level 3.08":
+      level = 3.08;
+      scoreNeeded = 20;
+      highScoreName.innerHTML = highScore3DotZero8.name
+      highScoreTime.innerHTML = highScore3DotZero8.time
+      highScoreMistakes.innerHTML = highScore3DotZero8.mistake
+      document.querySelector("#user-input").setAttribute("type","text");
+      wholeNumberContainer.classList.add('hidden');
+      firstCanvas.classList.remove('hidden');
+    break;
 
     case "Level 3.09":
       level = 3.09;

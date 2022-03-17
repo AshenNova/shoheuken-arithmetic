@@ -262,6 +262,10 @@ button {
   background-color: orange;
 }
 
+.btn-geometry{
+  background-color: olive;
+}
+
 img{
  height: 100px;
 }
