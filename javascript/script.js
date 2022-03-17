@@ -734,6 +734,7 @@ function updateProblems(){
       }
     }
 
+    ctx.translate(200, 137.5);
     ctx.font = '20px serif'
       // First Line
     ctx.translate(p.translateX, p.translateY);
@@ -2584,8 +2585,8 @@ function genProblems(){
 
       rotation1: genNumbers(360),
       rotation2: [90, 270][genNumbers(2)],
-      translateX: genNumbers(200)+100,
-      translateY: genNumbers(40)+80,
+      translateX: genNumbers(100)-50,
+      translateY: genNumbers(100)-50,
 
       translateX2: genNumbers(100)-50,
       translateY2: genNumbers(100)-50,
