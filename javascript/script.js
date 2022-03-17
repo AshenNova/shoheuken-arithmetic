@@ -1,4 +1,3 @@
-const instructions = document.querySelector(".instructions")
 const displayProblem = document.querySelector(".display-problems")
 const helpMe = document.querySelector(".help-me-text")
 const ourForm = document.querySelector(".our-form")
@@ -57,6 +56,8 @@ const threeNumerator = document.querySelector(".three-numerator")
 const threeDenominator = document.querySelector(".three-denominator")
 const equalSymbol = document.querySelector(".equal-symbol")
 
+const firstCanvas = document.querySelector(".first-canvas");
+
 let level = 0;
 let player = 1;
 let arr = [];
@@ -66,6 +67,8 @@ let bronze = 0
 const commonMultipleArr = [];
 const commonMultipleArrTwo = [];
 
+const canvas = document.getElementById("canvas1");
+const ctx = canvas.getContext("2d");
 
 function HighScore(name, date, time, mistake) {
   this.name = name
@@ -117,12 +120,14 @@ const highScore4DotZero11 = new HighScore("Nadya", "13 March 2022", 134, 0)
 const highScore4DotZero12 = new HighScore("Javen Chen", "12 March 2022", 297, 3)
 const highScore4DotZero13 = new HighScore("Sheyanne Cheong", "12 March 2022", 49, 0)
 const highScore4DotZero14 = new HighScore("Izekiel", "1 mar 2022", 114, 1)
-const highScore5dot1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
-const highScore5dot2 = new HighScore("Nil", "Nil", 0, 0)
-const highScore5dot3 = new HighScore("Jayden Goo", "2 Mar 2022", 79, 0)
-const highScore5dot4 = new HighScore("Nil", "Nil", 0, 0)
-const highScore6dotZero = new HighScore("Nil", "Nil", 0, 0)
-const highScore6dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
+
+const highScore5DotZero = new HighScore("Nil", "Nil", 0, 0)
+const highScore5DotZero1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
+const highScore5DotZero2 = new HighScore("Nil", "Nil", 0, 0)
+const highScore5DotZero3 = new HighScore("Jayden Goo", "2 Mar 2022", 79, 0)
+const highScore5DotZero4 = new HighScore("Nil", "Nil", 0, 0)
+const highScore6DotZero = new HighScore("Nil", "Nil", 0, 0)
+const highScore6Dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
 
 // Storing of question
@@ -259,6 +264,8 @@ for (let x = 0; x < backButton.length; x++){
 // 2. Also to visual update the HTML
 function updateProblems(){
   state.currentProblem = genProblems()
+  state.drawProblem = genProblems()
+
   const p = state.currentProblem
 
   // generating display -> Turn this into a function!
@@ -1270,6 +1277,36 @@ function updateProblems(){
     }
   }
 
+  if ( level == 5.0 ){
+    ctx.font = '1em serif'
+    if ( p.sidesBH == "base"){
+      ctx.fillText(`The ${p.sidesBH} = ${p.labelABC}${p.labelDEF}, find the height.`, 5, 20)
+     } else {
+      ctx.fillText(`The ${p.sidesBH} = ${p.labelABC}${p.labelGHI}, find the base.`, 5, 20)
+     }
+
+    ctx.save();
+    ctx.translate(p.translateX, p.translateY);
+    ctx.rotate(p.rotation * Math.PI / 180);
+    // label
+    ctx.fillStyle = "red";
+    ctx.fillText(p.labelABC, -10, 0)
+    ctx.fillText(p.labelDEF, -10, p.pointY1+10)
+    ctx.fillText(p.labelGHI, p.pointX1, 0)
+  
+      // triangle
+    ctx.fillStyle = 'black';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, p.pointY1);
+    ctx.lineTo(p.pointX1, 0);
+    ctx.closePath();
+    ctx.stroke();
+
+    ctx.restore()
+  }
+
   if ( level == 5.01){
     for (let i = p.numTwo; i > 1; i--){
       if (p.numOne%i == 0 && p.numTwo%i == 0){
@@ -1471,6 +1508,7 @@ ourForm.addEventListener('submit', handleSubmit)
 
 function handleSubmit(e){
   e.preventDefault()
+
   if ( player == 1 ){
     if (userInput.value == "") alert("Please input a value")
     let correctAnswer
@@ -2077,6 +2115,14 @@ function handleSubmit(e){
         }
       }
 
+      if ( level == 5.0) {
+        if (p.sidesBH == "base"){
+          correctAnswer = `${p.labelABC}${p.labelGHI}`
+        } else {
+          correctAnswer = `${p.labelABC}${p.labelDEF}`
+        }
+      }
+
       if ( level == 5.01 ){
         p.varA = p.numOne
         p.varB = p.numTwo
@@ -2205,6 +2251,7 @@ function handleSubmit(e){
         commonMultipleArr.length = 0;
         commonMultipleArrTwo.length = 0;
         console.log(arr, commonMultipleArr, commonMultipleArrTwo);
+        ctx.clearRect(0, 0, 400, 275);
         updateProblems()
         console.log("new questions generated")
       
@@ -2670,6 +2717,22 @@ function genProblems(){
     }
   }
 
+  if ( level == 5.0 ){
+    return {
+      pointX1: genNumbers(70)+30,
+      pointY1: genNumbers(40)+20,
+      pointX2: genNumbers(3),
+      pointY2: genNumbers(4),
+      rotation: genNumbers(360),
+      translateX: genNumbers(200)+100,
+      translateY: genNumbers(40)+137.5,
+      labelABC: ["A","B","C"][genNumbers(3)],
+      labelDEF: ["D","E","F"][genNumbers(3)],
+      labelGHI: ["G","H","I"][genNumbers(3)],
+      sidesBH: ["base","height"][genNumbers(2)]
+    } 
+  }
+
   if (level == 5.01){
     return {
     numOne: genNumbers(5)+1,
@@ -2865,6 +2928,35 @@ function levelBox(){
     startBox.classList.remove('hidden')
     levelLabel.innerHTML = `You are attempting Level ${level}`
 }
+
+// function draw(){
+  // state.currentDrawing = genProblems();
+  // const p = state.currentDrawing
+
+  // const canvas = document.getElementById("canvas1");
+  // const ctx = canvas.getContext("2d");
+
+  // ctx.translate(p.translateX, p.translateY);
+  // ctx.rotate(p.rotation * Math.PI / 180);
+
+  // // label
+  // ctx.font = '1em serif'
+  // ctx.fillStyle = "red";
+  // ctx.fillText(p.labelABC, 0, 10)
+  // ctx.fillText(p.labelDEF, 0, p.pointY1+10)
+  // ctx.fillText(p.labelGHI, p.pointX1+3, 11)
+
+
+  //   // triangle
+  // ctx.fillStyle = 'black';
+  // ctx.lineWidth = 1;
+  // ctx.beginPath();
+  // ctx.moveTo(13, 10);
+  // ctx.lineTo(13, p.pointY1);
+  // ctx.lineTo(p.pointX1, 10);
+  // ctx.closePath();
+  // ctx.stroke();
+// }
 
 //////////////////////////// SET CLICK ///////////////////////////////
 
@@ -3345,15 +3437,26 @@ for (let i = 0; i <  settingButton.length; i++){
       f-f , r+r , vxr</br>
       fxr , fxv</br>
       `
-      break;
-    
+    break;
+
+    case "Level 5.0":
+      level = 5.0;
+      scoreNeeded = 20;
+      highScoreName.innerHTML = highScore5DotZero.name
+      highScoreTime.innerHTML = highScore5DotZero.time
+      highScoreMistakes.innerHTML = highScore5DotZero.mistake
+      document.querySelector("#user-input").setAttribute("type","text");
+      wholeNumberContainer.classList.add('hidden');
+      firstCanvas.classList.remove('hidden');
+    break;
+
     case "Level 5.01":
       level = 5.01;
       scoreNeeded = 10;
       gold = 80;
-      highScoreName.innerHTML = highScore5dot1.name
-      highScoreTime.innerHTML = highScore5dot1.time
-      highScoreMistakes.innerHTML = highScore5dot1.mistake
+      highScoreName.innerHTML = highScore5DotZero1.name
+      highScoreTime.innerHTML = highScore5DotZero1.time
+      highScoreMistakes.innerHTML = highScore5DotZero1.mistake
       document.querySelector("#user-input").setAttribute("type","text");
       displayProblem.style.fontSize = "25px";
       instructions.innerHTML = "Form an equation using</br> multiplication of fraction </br> RC = from x want"
@@ -3362,9 +3465,9 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 5.02":
       level = 5.02;
       scoreNeeded = 10;
-      highScoreName.innerHTML = highScore5dot2.name
-      highScoreTime.innerHTML = highScore5dot2.time
-      highScoreMistakes.innerHTML = highScore5dot2.mistake
+      highScoreName.innerHTML = highScore5DotZero2.name
+      highScoreTime.innerHTML = highScore5DotZero2.time
+      highScoreMistakes.innerHTML = highScore5DotZero2.mistake
       document.querySelector("#user-input").setAttribute("type","text");
       displayProblem.style.fontSize = "25px";
       instructions.innerHTML = "Form an equation using in fraction"
@@ -3374,9 +3477,9 @@ for (let i = 0; i <  settingButton.length; i++){
       level = 5.03;
       scoreNeeded = 10;
       gold = 120;
-      highScoreName.innerHTML = highScore5dot3.name
-      highScoreTime.innerHTML = highScore5dot3.time
-      highScoreMistakes.innerHTML = highScore5dot3.mistake
+      highScoreName.innerHTML = highScore5DotZero3.name
+      highScoreTime.innerHTML = highScore5DotZero3.time
+      highScoreMistakes.innerHTML = highScore5DotZero3.mistake
       document.querySelector("#user-input").setAttribute("type","text");
       displayProblem.style.fontSize = "25px";
       instructions.innerHTML = "Form an equation using</br> multiplication of percentage </br> from/100 x end"
@@ -3387,20 +3490,19 @@ for (let i = 0; i <  settingButton.length; i++){
       level = 5.04;
       scoreNeeded = 10;
       gold = 79;
-      highScoreName.innerHTML = highScore5dot4.name
-      highScoreTime.innerHTML = highScore5dot4.time
-      highScoreMistakes.innerHTML = highScore5dot4.mistake
+      highScoreName.innerHTML = highScore5DotZero4.name
+      highScoreTime.innerHTML = highScore5DotZero4.time
+      highScoreMistakes.innerHTML = highScore5DotZero4.mistake
       document.querySelector("#user-input").setAttribute("type","text");
       displayProblem.style.fontSize = "25px";
       break;
-    
 
     case "Level 6.0":
       level = 6.0;
       scoreNeeded = 10;
-      highScoreName.innerHTML = highScore6dotZero.name
-      highScoreTime.innerHTML = highScore6dotZero.time
-      highScoreMistakes.innerHTML = highScore6dotZero.mistake
+      highScoreName.innerHTML = highScore6DotZero.name
+      highScoreTime.innerHTML = highScore6DotZero.time
+      highScoreMistakes.innerHTML = highScore6DotZero.mistake
       document.querySelector("#user-input").setAttribute("type","text");
       displayProblem.style.fontSize = "25px";
     break;
@@ -3408,9 +3510,9 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 6.3":
       level = 6.3;
       scoreNeeded = 30;
-      highScoreName.innerHTML = highScore6dot3.name
-      highScoreTime.innerHTML = highScore6dot3.time
-      highScoreMistakes.innerHTML = highScore6dot3.mistake
+      highScoreName.innerHTML = highScore6Dot3.name
+      highScoreTime.innerHTML = highScore6Dot3.time
+      highScoreMistakes.innerHTML = highScore6Dot3.mistake
       break;
     
     case "Level 7":
