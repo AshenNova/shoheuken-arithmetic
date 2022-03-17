@@ -1347,14 +1347,20 @@ function updateProblems(){
   }
 
   if ( level == 5.0 ){
+    let alignXText = 15;
     ctx.font = '1em serif'
     ctx.save()
 
     if ( p.sidesBH == "base"){
-      ctx.fillText(`The ${p.sidesBH} = ${p.labelABC}${p.labelDEF}, find the height.`, 0, 0)
+      ctx.fillText(`The ${p.sidesBH} = ${p.labelABC}${p.labelDEF}, find the height.`, alignXText, 20)
+     } else if (p.sidesBH == "height") {
+      ctx.fillText(`The ${p.sidesBH} = ${p.labelABC}${p.labelGHI}, find the base.`, alignXText, 20)
+     } else if (p.sidesBH == "base2") {
+      ctx.fillText(`The base = ${p.labelDEF}${p.labelGHI}, find the height.`, alignXText, 20)
      } else {
-      ctx.fillText(`The ${p.sidesBH} = ${p.labelABC}${p.labelGHI}, find the base.`, 0, 0)
+      ctx.fillText(`The height = ${p.labelABC}${p.labelJKL}, find the base.`, alignXText, 20)
      }
+     ctx.fillText(`${p.labelABC}${p.labelDEF}, ${p.labelABC}${p.labelGHI}, ${p.labelABC}${p.labelJKL} or ${p.labelDEF}${p.labelGHI}`, alignXText, 40)
 
     ctx.translate(p.translateX, p.translateY);
     ctx.rotate(p.rotation * Math.PI / 180);
@@ -1373,6 +1379,28 @@ function updateProblems(){
     ctx.lineTo(p.pointX1, 0);
     ctx.closePath();
     ctx.stroke();
+    ctx.restore();
+
+    ctx.save()
+    ctx.translate(p.translateX, p.translateY);
+    ctx.rotate(p.rotation * Math.PI / 180);
+    let areaOfTriangle = p.pointX1*p.pointY1*1/2
+    let hypotenuse = Math.sqrt(p.pointX1*p.pointX1+p.pointY1*p.pointY1)
+    let otherHeight = areaOfTriangle*2/hypotenuse
+    let otherAngle = Math.acos(p.pointY1/hypotenuse);
+
+    ctx.rotate(otherAngle);
+    console.log(areaOfTriangle, hypotenuse, otherHeight, otherAngle);
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(otherHeight, 0);
+    ctx.stroke();
+
+    ctx.fillStyle = "red";
+    ctx.fillText(p.labelJKL, otherHeight+3, 3)
+
 
     ctx.restore()
   }
@@ -2194,8 +2222,12 @@ function handleSubmit(e){
       if ( level == 5.0) {
         if (p.sidesBH == "base"){
           correctAnswer = `${p.labelABC}${p.labelGHI}`
-        } else {
+        } else if (p.sidesBH == "height") {
           correctAnswer = `${p.labelABC}${p.labelDEF}`
+        } else if (p.sidesBH == "base2"){
+          correctAnswer = `${p.labelABC}${p.labelJKL}`
+        } else {
+          correctAnswer = `${p.labelDEF}${p.labelGHI}`
         }
       }
 
@@ -2828,17 +2860,18 @@ function genProblems(){
 
   if ( level == 5.0 ){
     return {
-      pointX1: genNumbers(70)+30,
-      pointY1: genNumbers(40)+20,
-      pointX2: genNumbers(3),
-      pointY2: genNumbers(4),
+      pointX1: genNumbers(70)+40,
+      pointY1: genNumbers(40)+30,
+      // pointX2: genNumbers(3),
+      // pointY2: genNumbers(4),
       rotation: genNumbers(360),
       translateX: genNumbers(200)+100,
       translateY: genNumbers(40)+137.5,
       labelABC: ["A","B","C"][genNumbers(3)],
       labelDEF: ["D","E","F"][genNumbers(3)],
       labelGHI: ["G","H","I"][genNumbers(3)],
-      sidesBH: ["base","height"][genNumbers(2)]
+      labelJKL: ["J","K","L"][genNumbers(3)],
+      sidesBH: ["base","height", "base2", "height2"][genNumbers(4)]
     } 
   }
 
