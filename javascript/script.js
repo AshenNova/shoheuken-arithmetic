@@ -734,8 +734,6 @@ function updateProblems(){
       }
     }
 
-
-
     ctx.font = '20px serif'
       // First Line
     ctx.translate(p.translateX, p.translateY);
@@ -756,12 +754,12 @@ function updateProblems(){
     ctx.lineWidth = 3;
     ctx.beginPath();
     ctx.moveTo(0, 0);
-    ctx.lineTo(0, p.pointY1);
+    ctx.lineTo(0, p.pointY2);
     ctx.stroke();
 
     ctx.fillStyle = "red"
     ctx.fillText(p.labelGHI, -5, -5);
-    ctx.fillText(p.labelJKL, -5, p.pointY1+20);
+    ctx.fillText(p.labelJKL, -5, p.pointY2+20);
 
     ctx.restore();
       // Third Line
@@ -771,12 +769,12 @@ function updateProblems(){
     ctx.lineWidth = 3;
     ctx.beginPath();
     ctx.moveTo(0, 0);
-    ctx.lineTo(0, p.pointY2);
+    ctx.lineTo(0, p.pointY3);
     ctx.stroke();
 
     ctx.fillStyle = "red"
     ctx.fillText(p.labelMNO, -5, -5);
-    ctx.fillText(p.labelPQR, -5, p.pointY2+20);
+    ctx.fillText(p.labelPQR, -5, p.pointY3+20);
 
     ctx.restore()
   }
@@ -2582,16 +2580,18 @@ function genProblems(){
       // pointX2: genNumbers(3),
       pointY2: genNumbers(80)+20,
 
+      pointY3: genNumbers(80)+20,
+
       rotation1: genNumbers(360),
       rotation2: [90, 270][genNumbers(2)],
       translateX: genNumbers(200)+100,
-      translateY: genNumbers(40)+60,
+      translateY: genNumbers(40)+80,
 
-      translateX2: genNumbers(80)-70,
-      translateY2: genNumbers(80)-70,
+      translateX2: genNumbers(100)-50,
+      translateY2: genNumbers(100)-50,
 
-      translateX3: genNumbers(80)-70,
-      translateY3: genNumbers(80)-70,
+      translateX3: genNumbers(100)-50,
+      translateY3: genNumbers(100)-50,
       
       labelABC: ["A","B","C"][genNumbers(3)],
       labelDEF: ["D","E","F"][genNumbers(3)],
