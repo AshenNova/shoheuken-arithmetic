@@ -58,6 +58,16 @@ const threeDenominator = document.querySelector(".three-denominator")
 const equalSymbol = document.querySelector(".equal-symbol")
 
 const firstCanvas = document.querySelector(".first-canvas");
+const canvas = document.getElementById("canvas1");
+const ctx = canvas.getContext("2d");
+const mouse = {
+  x: undefined,
+  y: undefined
+}
+canvas.addEventListener('click', function(event){
+  mouse.x = event.x;
+  mouse.y = event.y;
+})
 
 let level = 0;
 let player = 1;
@@ -67,9 +77,6 @@ let silver = 0
 let bronze = 0
 const commonMultipleArr = [];
 const commonMultipleArrTwo = [];
-
-const canvas = document.getElementById("canvas1");
-const ctx = canvas.getContext("2d");
 
 function HighScore(name, date, time, mistake) {
   this.name = name
@@ -1347,6 +1354,7 @@ function updateProblems(){
   }
 
   if ( level == 5.0 ){
+    
     let alignXText = 15;
     ctx.font = '1em serif'
     ctx.save()
@@ -1404,8 +1412,8 @@ function updateProblems(){
     ctx.fillStyle = "black";
     ctx.fillText(p.labelJKL, otherHeight+3, 3)
 
-
     ctx.restore()
+  
   }
 
   if ( level == 5.01){
