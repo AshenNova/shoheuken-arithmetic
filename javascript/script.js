@@ -105,7 +105,6 @@ const highScore3DotZero4 = new HighScore("Amanda Poon", "12 March 2022", 229, 0)
 const highScore3DotZero5 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero6 = new HighScore("Shanice Lee", "1 mar 2022", 376, 3)
 const highScore3DotZero7 = new HighScore("Sheyanne Cheong", "12 March 2022", 80, 0)
-const highScore3DotZero8 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero10 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero11 = new HighScore("Nil", "Nil", 0, 0)
@@ -113,6 +112,8 @@ const highScore3DotZero12 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero13 = new HighScore("Javen Chen", "12 March 2022", 471, 4)
 const highScore3DotZero14 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero15 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3DotZero16 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3DotZero17 = new HighScore("Nil", "Nil", 0, 0)
 
 const highScore4DotZero = new HighScore("Adam Poon", "12 March 2022", 813, 4)
 const highScore4DotZero1 = new HighScore("Adam Poon", "12 March 2022", 229, 0)
@@ -723,76 +724,7 @@ function updateProblems(){
     arr.push(p.numOne, p.numTwo, p.numThree);
     displayProblem.innerHTML = `${p.numOne} , ${p.numTwo} , ${p.numThree}`
   }
-  if ( level == 3.08 ){
-    ctx.font = '1em serif'
-    ctx.save()
-
-    if (p.parallelorPerpendicular == "parallel"){
-      if ( p.roll == 1){
-        ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelGHI}${p.labelJKL} or ${p.labelMNO}${p.labelPQR}`, 0, 15)
-      } else {
-        ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelMNO}${p.labelPQR} or ${p.labelGHI}${p.labelJKL}`, 0, 15)
-      }
-    } else {
-      if ( p.roll == 1){
-        ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelGHI}${p.labelJKL} or ${p.labelMNO}${p.labelPQR}`, 0, 15)
-      } else {
-      ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelMNO}${p.labelPQR} or ${p.labelGHI}${p.labelJKL}`, 0, 15)
-      }
-    }
-
-    ctx.translate(200, 137.5);
-    ctx.font = '20px serif'
-      // First Line
-    ctx.translate(p.translateX, p.translateY);
-    ctx.rotate(p.rotation1 * Math.PI / 180)
-    ctx.strokeStyle = 'black';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(0, p.pointY1);
-    ctx.stroke();
-    ctx.fillText(p.labelABC, -5, 0);
-    ctx.fillText(p.labelDEF, -5, p.pointY1+10);
-
-    ctx.save()
-      // Second Line
-      if (p.translateX2 < 5 && p.translateX2 > -5){
-        p.translateX2 = ["-","+"][genNumbers(2)]*10
-      }
-      if (p.translateY2 < 5 && p.translateY2 > -5){
-        p.translateY2 = ["-","+"][genNumbers(2)]*10
-      }
-    ctx.translate(p.translateX2, p.translateY2);
-    ctx.strokeStyle = 'red';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(0, p.pointY2);
-    ctx.stroke();
-
-    ctx.fillStyle = "red"
-    ctx.fillText(p.labelGHI, -5, -5);
-    ctx.fillText(p.labelJKL, -5, p.pointY2+20);
-
-    ctx.restore();
-      // Third Line
-    ctx.translate(p.translateX3, p.translateY3);
-    ctx.rotate(p.rotation2 * Math.PI / 180);
-    ctx.strokeStyle = 'red';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(0, p.pointY3);
-    ctx.stroke();
-
-    ctx.fillStyle = "red"
-    ctx.fillText(p.labelMNO, -5, -5);
-    ctx.fillText(p.labelPQR, -5, p.pointY3+20);
-
-    ctx.restore()
-  }
-
+  
   if ( level == 3.09 ){
     threeWholeNumber.textContent = ""
     threeNumerator.textContent = "?"
@@ -936,6 +868,116 @@ function updateProblems(){
     }
   }
 
+  if ( level == 3.16) {
+    ctx.save()
+    ctx.font = '1em serif'
+    arcAngleRad = p.arcAngle*Math.PI/180
+    ctx.fillText(`Which angle is ${p.acuteOrObtuse}?`, 30, 20)
+    ctx.translate(200, 187.5)
+
+    // Draw baseline
+    ctx.strokeStyle ="black",
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(-100, 0)
+    ctx.lineTo(100, 0)
+    ctx.stroke();
+   
+    // Draw arc1
+    ctx.strokeStyle ="yellow",
+    ctx.beginPath();
+    ctx.arc(0, 0, 75, 1*Math.PI, (1+(p.arcAngle/180))*Math.PI);
+    ctx.stroke();
+
+    ctx.fillText("a", -90, -10)
+    ctx.fillText("b", 75, -10)
+    
+    // Draw arc1
+    ctx.strokeStyle ="orange",
+    ctx.beginPath();
+    ctx.arc(0, 0, 70, (1+(p.arcAngle/180))*Math.PI, 2*Math.PI);
+    ctx.stroke();
+
+    ctx.rotate(arcAngleRad)
+    ctx.beginPath();
+    ctx.strokeStyle ="black",
+    ctx.lineWidth = 3;
+    ctx.moveTo(0, 0)
+    ctx.lineTo(-100, 0)
+    ctx.stroke();
+    ctx.restore();
+
+  }
+
+  if ( level == 3.17 ){
+    ctx.font = '1em serif'
+    ctx.save()
+
+    if (p.parallelorPerpendicular == "parallel"){
+      if ( p.roll == 1){
+        ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelGHI}${p.labelJKL} or ${p.labelMNO}${p.labelPQR}`, 0, 15)
+      } else {
+        ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelMNO}${p.labelPQR} or ${p.labelGHI}${p.labelJKL}`, 0, 15)
+      }
+    } else {
+      if ( p.roll == 1){
+        ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelGHI}${p.labelJKL} or ${p.labelMNO}${p.labelPQR}`, 0, 15)
+      } else {
+      ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelMNO}${p.labelPQR} or ${p.labelGHI}${p.labelJKL}`, 0, 15)
+      }
+    }
+
+    ctx.translate(200, 137.5);
+    ctx.font = '20px serif'
+      // First Line
+    ctx.translate(p.translateX, p.translateY);
+    ctx.rotate(p.rotation1 * Math.PI / 180)
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, p.pointY1);
+    ctx.stroke();
+    ctx.fillText(p.labelABC, -5, 0);
+    ctx.fillText(p.labelDEF, -5, p.pointY1+10);
+
+    ctx.save()
+      // Second Line
+      if (p.translateX2 < 5 && p.translateX2 > -5){
+        p.translateX2 = ["-","+"][genNumbers(2)]*10
+      }
+      if (p.translateY2 < 5 && p.translateY2 > -5){
+        p.translateY2 = ["-","+"][genNumbers(2)]*10
+      }
+    ctx.translate(p.translateX2, p.translateY2);
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, p.pointY2);
+    ctx.stroke();
+
+    ctx.fillStyle = "red"
+    ctx.fillText(p.labelGHI, -5, -5);
+    ctx.fillText(p.labelJKL, -5, p.pointY2+20);
+
+    ctx.restore();
+      // Third Line
+    ctx.translate(p.translateX3, p.translateY3);
+    ctx.rotate(p.rotation2 * Math.PI / 180);
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, p.pointY3);
+    ctx.stroke();
+
+    ctx.fillStyle = "red"
+    ctx.fillText(p.labelMNO, -5, -5);
+    ctx.fillText(p.labelPQR, -5, p.pointY3+20);
+
+    ctx.restore()
+  }
 
   if ( level == 4.0) {
     displayProblem.innerHTML = 
@@ -1923,13 +1965,7 @@ function handleSubmit(e){
           } 
         correctAnswer = commonMultipleArrTwo[commonMultipleArrTwo.length-1];
       }
-      if ( level == 3.08 ){
-        if (p.parallelOrPerpendicular == "parallel"){
-          correctAnswer = p.labelGHI + p.labelJKL
-        } else {
-          correctAnswer = p.labelMNO + p.labelPQR
-        }
-      }
+    
       if ( level == 3.09){
         for (let i = p.numLargest; i > 1; i--){
           if ((p.numOne % i == 0) && (p.numTwo % i == 0)){
@@ -2015,6 +2051,37 @@ function handleSubmit(e){
         // level 3.14
         if (p.optionFinal == 3){
           correctAnswer = p.numFive + "x" + p.numFive + "=" + p.numFive*p.numFive + " " + (p.numFive+p.numSix)
+        }
+      }
+      if ( level == 3.16 ) {
+        if (p.arcAngle > 80 && p.arcAngle < 100) {
+          if (p.arcAngle > 90 ){
+            p.arcAngle += +20;
+          } else {
+          p.arcAngle -= 20;
+          }
+        }
+        if (p.acuteOrObtuse == "acute"){
+          if (p.arcAngle < 90 ){
+            correctAnswer = "a"
+          } else {
+            correctAnswer = "b"
+          }
+        }
+        if (p.acuteOrObtuse == "obtuse") {
+          if (p.arcAngle < 90){
+            correctAnswer = "b"
+          } else {
+            correctAnswer = "a"
+          }
+        }
+      }
+
+      if ( level == 3.17 ){
+        if (p.parallelOrPerpendicular == "parallel"){
+          correctAnswer = p.labelGHI + p.labelJKL
+        } else {
+          correctAnswer = p.labelMNO + p.labelPQR
         }
       }
 
@@ -2622,40 +2689,7 @@ function genProblems(){
       numThree: genNumbers(5)+1,
     }
   }
-  if ( level == 3.08 ){
-    return {
-      // pointX1: genNumbers(70)+30,
-      pointY1: genNumbers(80)+20,
-
-      // pointX2: genNumbers(3),
-      pointY2: genNumbers(80)+20,
-
-      pointY3: genNumbers(80)+20,
-
-      rotation1: genNumbers(360),
-      rotation2: [90, 270][genNumbers(2)],
-      translateX: genNumbers(100)-50,
-      translateY: genNumbers(100)-50,
-
-      translateX2: genNumbers(100)-50,
-      translateY2: genNumbers(100)-50,
-
-      translateX3: genNumbers(100)-50,
-      translateY3: genNumbers(100)-50,
-      
-      labelABC: ["A","B","C"][genNumbers(3)],
-      labelDEF: ["D","E","F"][genNumbers(3)],
-      labelGHI: ["G","H","I"][genNumbers(3)],
-      labelJKL: ["J","K","L"][genNumbers(3)],
-      labelMNO: ["M","N","O"][genNumbers(3)],
-      labelPQR: ["P","Q","R"][genNumbers(3)],
-
-      roll: [1,2][genNumbers(3)],
-
-      parallelOrPerpendicular: ["parallel","perpendicular"][genNumbers(2)]
-    } 
-  }
-
+  
   if (level == 3.09){
     return {
       numOne: genNumbers(9)+1,
@@ -2720,6 +2754,49 @@ function genProblems(){
 
       optionFinal: [1,2,3][genNumbers(3)]
     }
+  }
+
+  if ( level == 3.16 ){
+    return {
+      arcAngle: genNumbers(140)+20,
+      acuteOrObtuse: ["acute","obtuse"][genNumbers(2)],
+      roll: [1,2][genNumbers(2)]
+    }
+  
+  }
+
+  if ( level == 3.17 ){
+    return {
+      // pointX1: genNumbers(70)+30,
+      pointY1: genNumbers(80)+20,
+
+      // pointX2: genNumbers(3),
+      pointY2: genNumbers(80)+20,
+
+      pointY3: genNumbers(80)+20,
+
+      rotation1: genNumbers(360),
+      rotation2: [90, 270][genNumbers(2)],
+      translateX: genNumbers(100)-50,
+      translateY: genNumbers(100)-50,
+
+      translateX2: genNumbers(100)-50,
+      translateY2: genNumbers(100)-50,
+
+      translateX3: genNumbers(100)-50,
+      translateY3: genNumbers(100)-50,
+      
+      labelABC: ["A","B","C"][genNumbers(3)],
+      labelDEF: ["D","E","F"][genNumbers(3)],
+      labelGHI: ["G","H","I"][genNumbers(3)],
+      labelJKL: ["J","K","L"][genNumbers(3)],
+      labelMNO: ["M","N","O"][genNumbers(3)],
+      labelPQR: ["P","Q","R"][genNumbers(3)],
+
+      roll: [1,2][genNumbers(3)],
+
+      parallelOrPerpendicular: ["parallel","perpendicular"][genNumbers(2)]
+    } 
   }
 
   if ( level == 4.0){
@@ -3325,17 +3402,7 @@ for (let i = 0; i <  settingButton.length; i++){
       instructions.textContent = "Find the Lowest Common Multiple of the 3 numbers"
       break;
 
-    case "Level 3.08":
-      level = 3.08;
-      scoreNeeded = 20;
-      highScoreName.innerHTML = highScore3DotZero8.name
-      highScoreTime.innerHTML = highScore3DotZero8.time
-      highScoreMistakes.innerHTML = highScore3DotZero8.mistake
-      document.querySelector("#user-input").setAttribute("type","text");
-      wholeNumberContainer.classList.add('hidden');
-      firstCanvas.classList.remove('hidden');
-    break;
-
+  
     case "Level 3.09":
       level = 3.09;
       scoreNeeded = 30;
@@ -3419,8 +3486,30 @@ for (let i = 0; i <  settingButton.length; i++){
       displayProblem.style.fontSize = "25px";
       displayProblem.style.marginTop = "0";
       instructions.textContent = "Form an Equation using 'n' from the pattern and provide an answer"
-    break; 
-    
+    break;
+
+    case "Level 3.16":
+      level = 3.16;
+      scoreNeeded = 20;
+      highScoreName.innerHTML = highScore3DotZero16.name
+      highScoreTime.innerHTML = highScore3DotZero16.time
+      highScoreMistakes.innerHTML = highScore3DotZero16.mistake
+      document.querySelector("#user-input").setAttribute("type","text");
+      wholeNumberContainer.classList.add('hidden');
+      firstCanvas.classList.remove('hidden');
+    break;
+
+    case "Level 3.17":
+      level = 3.17;
+      scoreNeeded = 20;
+      highScoreName.innerHTML = highScore3DotZero17.name
+      highScoreTime.innerHTML = highScore3DotZero17.time
+      highScoreMistakes.innerHTML = highScore3DotZero17.mistake
+      document.querySelector("#user-input").setAttribute("type","text");
+      wholeNumberContainer.classList.add('hidden');
+      firstCanvas.classList.remove('hidden');
+    break;
+
     case "Level 4.0":
       level = 4.0;
       scoreNeeded = 10;
