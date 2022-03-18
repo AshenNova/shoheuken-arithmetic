@@ -757,6 +757,12 @@ function updateProblems(){
 
     ctx.save()
       // Second Line
+      if (p.translateX2 < 5 && p.translateX2 > -5){
+        p.translateX2 = ["-","+"][genNumbers(2)]*10
+      }
+      if (p.translateY2 < 5 && p.translateY2 > -5){
+        p.translateY2 = ["-","+"][genNumbers(2)]*10
+      }
     ctx.translate(p.translateX2, p.translateY2);
     ctx.strokeStyle = 'red';
     ctx.lineWidth = 3;
