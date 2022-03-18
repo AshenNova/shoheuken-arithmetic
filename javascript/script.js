@@ -1365,19 +1365,21 @@ function updateProblems(){
     ctx.translate(p.translateX, p.translateY);
     ctx.rotate(p.rotation * Math.PI / 180);
     // label
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "black";
     ctx.fillText(p.labelABC, -10, 0)
     ctx.fillText(p.labelDEF, -10, p.pointY1+10)
     ctx.fillText(p.labelGHI, p.pointX1, 0)
   
       // triangle
-    ctx.fillStyle = 'black';
+    ctx.fillStyle = 'orange';
+    ctx.strokeStyle = "grey";
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.lineTo(0, p.pointY1);
     ctx.lineTo(p.pointX1, 0);
     ctx.closePath();
+    ctx.fill();
     ctx.stroke();
     ctx.restore();
 
@@ -1391,14 +1393,15 @@ function updateProblems(){
 
     ctx.rotate(otherAngle);
     console.log(areaOfTriangle, hypotenuse, otherHeight, otherAngle);
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = 'grey';
+    ctx.setLineDash([1,1]);
     ctx.lineWidth = 3;
     ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.lineTo(otherHeight, 0);
     ctx.stroke();
 
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "black";
     ctx.fillText(p.labelJKL, otherHeight+3, 3)
 
 
@@ -2860,8 +2863,8 @@ function genProblems(){
 
   if ( level == 5.0 ){
     return {
-      pointX1: genNumbers(70)+40,
-      pointY1: genNumbers(40)+30,
+      pointX1: genNumbers(70)+50,
+      pointY1: genNumbers(40)+40,
       // pointX2: genNumbers(3),
       // pointY2: genNumbers(4),
       rotation: genNumbers(360),
