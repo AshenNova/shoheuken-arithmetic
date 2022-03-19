@@ -19,6 +19,7 @@ const inputBox = document.querySelector('.input.box');
 const resetButton = document.getElementById('reset');
 const backButton = document.querySelectorAll(".back-button");
 const instructions = document.querySelector('.instructions');
+const hardcoreMode = document.querySelector('.hardcore-mode')
 
 const imageG = document.createElement('img');
 const imageS = document.createElement('img');
@@ -31,6 +32,7 @@ imageNMP.src = 'images/endgame/needmorepractice.jpeg'
 
 const levelSetting = document.querySelector('.level-setting');
 const levelLabel = document.querySelector('.level-label');
+const mainBox = document.querySelector('.main-box');
 
 const mistakesCountCl = document.querySelector('.mistakesCount');
 const settingButton = document.querySelectorAll('.settingButton');
@@ -73,8 +75,9 @@ let level = 0;
 let player = 1;
 let arr = [];
 let gold = 0;
-let silver = 0
-let bronze = 0
+let silver = 0;
+let bronze = 0;
+let hardcore = 0;
 const commonMultipleArr = [];
 const commonMultipleArrTwo = [];
 
@@ -2456,21 +2459,26 @@ function handleSubmit(e){
       
       } else {
         console.log("incorrect")
-        state.mistake++
-        if (state.score > 0 && state.score < 11){
-          state.score = state.score - 1;
-        }
-        if (state.score >= 11 && state.score < 21){
-          state.score = state.score - 2;
-        }
-        if (state.score >= 21 && state.score < 30){
-          state.score = state.score - 3;
-        }
-        if (state.score >= 31 && state.score < 40){
-          state.score = state.score - 4;
-        }
-        if (state.score >= 41 && state.score < 50){
-          state.score = state.score - 5;
+
+          state.mistake++
+          if ( hardcore == 1){
+            state.score = 0;
+          } else {
+          if (state.score > 0 && state.score < 11){
+            state.score = state.score - 1;
+          }
+          if (state.score >= 11 && state.score < 21){
+            state.score = state.score - 2;
+          }
+          if (state.score >= 21 && state.score < 30){
+            state.score = state.score - 3;
+          }
+          if (state.score >= 31 && state.score < 40){
+            state.score = state.score - 4;
+          }
+          if (state.score >= 41 && state.score < 50){
+            state.score = state.score - 5;
+          }
         }
         currentScore.textContent = state.score
         currentMistake.textContent = state.mistake
@@ -3864,3 +3872,16 @@ for (let i = 0; i <  settingButton.length; i++){
     levelBox();
     });
   }
+
+  hardcoreMode.addEventListener('click', function(){
+    if (hardcore == 0 ){
+      hardcore = 1;
+      mainBox.style.borderColor = "red"
+      levelSetting.style.borderColor = "red"
+    } else {
+      hardcore = 0;
+      mainBox.style.borderColor = "black"
+      levelSetting.style.borderColor = "black"
+    }
+    console.log(hardcore)
+  })
