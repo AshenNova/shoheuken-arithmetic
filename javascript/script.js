@@ -946,13 +946,16 @@ function updateProblems(){
     ctx.fillText(p.labelDEF, -5, p.pointY1+10);
 
     ctx.save()
-      // Second Line
-      if (p.translateX2 < 5 && p.translateX2 > -5){
-        p.translateX2 = ["-","+"][genNumbers(2)]*10
+      // Second Line (parallel line)
+      console.log(p.translateX2, p.translateY2)
+      if (p.translateX2 < 10 && p.translateX2 > -10){
+        p.translateX2 = ["-","+"][genNumbers(2)]+20
       }
-      if (p.translateY2 < 5 && p.translateY2 > -5){
-        p.translateY2 = ["-","+"][genNumbers(2)]*10
+      if (p.translateY2 < 10 && p.translateY2 > -10){
+        p.translateY2 = ["-","+"][genNumbers(2)]+20
       }
+      console.log(p.translateX2, p.translateY2)
+
     ctx.translate(p.translateX2, p.translateY2);
     ctx.strokeStyle = 'red';
     ctx.lineWidth = 3;
@@ -966,7 +969,7 @@ function updateProblems(){
     ctx.fillText(p.labelJKL, -5, p.pointY2+20);
 
     ctx.restore();
-      // Third Line
+      // Third Line (perpendicular)
     ctx.translate(p.translateX3, p.translateY3);
     ctx.rotate(p.rotation2 * Math.PI / 180);
     ctx.strokeStyle = 'red';
