@@ -3130,7 +3130,7 @@ function genProblems(){
       labelGHI: ["G","H","I"][genNumbers(3)],
       labelJKL: ["J","K","L"][genNumbers(3)],
 
-      question: ["base", "height", "base2", "height2"][genNumbers(2)],
+      question: ["base", "height", "base2", "height2"][genNumbers(4)],
 
       rotation : genNumbers(360)
     } 
