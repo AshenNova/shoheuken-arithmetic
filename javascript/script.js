@@ -139,6 +139,7 @@ const highScore5DotZero1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
 const highScore5DotZero2 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero3 = new HighScore("Jayden Goo", "2 Mar 2022", 79, 0)
 const highScore5DotZero4 = new HighScore("Nil", "Nil", 0, 0)
+const highScore5DotZero5 = new HighScore("Nil", "Nil", 0, 0)
 const highScore6DotZero = new HighScore("Nil", "Nil", 0, 0)
 const highScore6Dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
@@ -1593,6 +1594,57 @@ function updateProblems(){
       What is ${p.letterAB} in the end?`
     }
   }
+  if ( level == 5.05 ){
+
+    ctx.save()
+    ctx.font = "1em serif"
+
+    if (p.question == "base"){
+      ctx.fillText(`The ${p.question} of the triangle is ${p.labelABC}${p.labelJKL}. What is its height?`, 20, 40)
+    } else if (p.question == "height") {
+      ctx.fillText(`The ${p.question} of the triangle is ${p.labelDEF}${p.labelGHI}. What is its base?`, 20, 40)
+    } else if ( p.question == "base2") {
+      ctx.fillText(`The base of the triangle is ${p.labelDEF}${p.labelGHI}. What is its height?`, 20, 40)
+    } else {
+      ctx.fillText(`The height of the triangle is ${p.labelABC}${p.labelJKL}. What is its base?`, 20, 40)
+    }
+    ctx.fillText(`${p.labelABC}${p.labelDEF}, ${p.labelGHI}${p.labelJKL}, ${p.labelABC}${p.labelJKL}, ${p.labelDEF}${p.labelGHI}, ${p.labelABC}${p.labelGHI}`, 20, 60)
+    ctx.translate(200, 137.5)
+    ctx.rotate(p.rotation*Math.PI/180)
+    // triangle A
+    p.triA2y = p.triA1y+genNumbers(20)+10
+    p.triA3y = p.triA2y
+    ctx.setLineDash([2, 2]);
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, p.triA1y)
+    ctx.lineTo(0, p.triA2y)
+    ctx.lineTo(p.triA3x, p.triA3y)
+    ctx.closePath()
+    ctx.stroke();
+    
+    // triangle B
+    ctx.fillStyle = 'orange'
+    ctx.setLineDash([]);
+    p.triB2y = p.triA1y
+    p.triB3x = p.triA3x
+    p.triB3y = p.triA3y
+    ctx.beginPath()
+    ctx.moveTo(0, 0)
+    ctx.lineTo(0, p.triA1y)
+    ctx.lineTo(p.triB3x, p.triB3y)
+    ctx.closePath()
+    ctx.fill()
+    ctx.stroke()
+
+    ctx.fillStyle = "red"
+    ctx.fillText(p.labelABC, 0-13, p.triA1y);
+    ctx.fillText(p.labelDEF, 0-13, p.triA2y+10);
+    ctx.fillText(p.labelGHI, p.triA3x+5, p.triA3y+10);
+    ctx.fillText(p.labelJKL, 0-10, -3)
+
+    ctx.restore()
+  }
 
   if ( level == 6.0){
     if (p.numOne == p.denoOne || p.numTwo == p.denoTwo || p.numThree == p.denoThree){
@@ -2400,6 +2452,22 @@ function handleSubmit(e){
         }
       }
 
+      if ( level == 5.05 ){
+        if (p.question == "base"){
+          correctAnswer = `${p.labelDEF}${p.labelGHI}`
+        }
+        if (p.question == "height"){
+          correctAnswer = `${p.labelABC}${p.labelJKL}`
+        }
+        if (p.question == "base2"){
+          correctAnswer = `${p.labelABC}${p.labelJKL}`
+        }
+        if (p.question == "height2"){
+          correctAnswer = `${p.labelDEF}${p.labelGHI}`
+        }
+
+      }
+
       if ( level == 6.0){
         if (p.choiceBC == "B" && p.choiceOne == "percentage"){
           if (p.situationA == "increased by") {
@@ -3040,6 +3108,33 @@ function genProblems(){
     }
   }
 
+  if ( level == 5.05 ){
+    return {
+
+      // triangle A
+      triA1y: genNumbers(40)+40,
+
+      triA2y: undefined,
+
+      triA3x: genNumbers(40)+40,
+      triA3y: undefined,
+
+      // triangle B
+
+      triB2y: undefined,
+      triB3x: undefined,
+      triB3y: undefined,
+
+      labelABC: ["A","B","C"][genNumbers(3)],
+      labelDEF: ["D","E","F"][genNumbers(3)],
+      labelGHI: ["G","H","I"][genNumbers(3)],
+      labelJKL: ["J","K","L"][genNumbers(3)],
+
+      question: ["base", "height", "base2", "height2"][genNumbers(2)],
+
+      rotation : genNumbers(360)
+    } 
+  }
   if ( level == 6.0){
     return {
       percentageOne: (genNumbers(18)+1)*5,
@@ -3770,6 +3865,17 @@ for (let i = 0; i <  settingButton.length; i++){
       document.querySelector("#user-input").setAttribute("type","text");
       displayProblem.style.fontSize = "25px";
       break;
+    
+    case "Level 5.05":
+      level = 5.05;
+      scoreNeeded = 20;
+      highScoreName.innerHTML = highScore5DotZero5.name
+      highScoreTime.innerHTML = highScore5DotZero5.time
+      highScoreMistakes.innerHTML = highScore5DotZero5.mistake
+      document.querySelector("#user-input").setAttribute("type","text");
+      wholeNumberContainer.classList.add('hidden');
+      firstCanvas.classList.remove('hidden');
+    break;
 
     case "Level 6.0":
       level = 6.0;
