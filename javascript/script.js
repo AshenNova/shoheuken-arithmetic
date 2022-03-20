@@ -1605,10 +1605,15 @@ function updateProblems(){
       ctx.fillText(`The ${p.question} of the triangle is ${p.labelDEF}${p.labelGHI}. What is its base?`, 20, 40)
     } else if ( p.question == "base2") {
       ctx.fillText(`The base of the triangle is ${p.labelDEF}${p.labelGHI}. What is its height?`, 20, 40)
-    } else {
+    } else if ( p.question == "height2") {
       ctx.fillText(`The height of the triangle is ${p.labelABC}${p.labelJKL}. What is its base?`, 20, 40)
+    } else if ( p.question == "base3"){
+      ctx.fillText(`The base of the triangle is ${p.labelGHI}${p.labelJKL}. What is its height?`, 20, 40)
+    } else {
+      ctx.fillText(`The height of the triangle is ${p.labelABC}${p.labelMNO}. What is its base?`, 20, 40)
     }
-    ctx.fillText(`${p.labelABC}${p.labelDEF}, ${p.labelGHI}${p.labelJKL}, ${p.labelABC}${p.labelJKL}, ${p.labelDEF}${p.labelGHI}, ${p.labelABC}${p.labelGHI}`, 20, 60)
+
+    ctx.fillText(`${p.labelABC}${p.labelDEF}, ${p.labelGHI}${p.labelJKL}, ${p.labelABC}${p.labelJKL}, ${p.labelDEF}${p.labelGHI}, ${p.labelABC}${p.labelGHI}, ${p.labelABC}${p.labelMNO}, ${p.labelGHI}${p.labelJKL}`, 20, 60)
     ctx.translate(200, 137.5)
     ctx.rotate(p.rotation*Math.PI/180)
     // triangle A
@@ -1623,6 +1628,24 @@ function updateProblems(){
     ctx.closePath()
     ctx.stroke();
     
+    const lengthHypo = Math.sqrt(p.triA2y*p.triA2y+p.triA3x*p.triA3x)
+    const angleB = Math.acos(p.triA2y/lengthHypo)
+    const otherLine = Math.sin(angleB)*p.triA1y
+    const otherRotation = (90*Math.PI/180)-angleB+(180*Math.PI/180)
+    console.log(otherLine);
+
+    ctx.save()
+    ctx.setLineDash([2, 2]);
+    ctx.translate(0, p.triA1y);
+    ctx.rotate(otherRotation);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, otherLine)
+    ctx.stroke()
+    ctx.fillStyle = "red"
+    ctx.fillText(`${p.labelMNO}`, 0-5, otherLine+15)
+    ctx.restore()
+
     // triangle B
     ctx.fillStyle = 'orange'
     ctx.setLineDash([]);
@@ -1634,7 +1657,7 @@ function updateProblems(){
     ctx.lineTo(0, p.triA1y)
     ctx.lineTo(p.triB3x, p.triB3y)
     ctx.closePath()
-    ctx.fill()
+    // ctx.fill()
     ctx.stroke()
 
     ctx.fillStyle = "red"
@@ -2465,6 +2488,12 @@ function handleSubmit(e){
         if (p.question == "height2"){
           correctAnswer = `${p.labelDEF}${p.labelGHI}`
         }
+        if (p.question == "base3"){
+          correctAnswer = `${p.labelABC}${p.labelMNO}`
+        }
+        if (p.question == "height3"){
+          correctAnswer = `${p.labelGHI}${p.labelJKL}`
+        }
 
       }
 
@@ -3130,8 +3159,9 @@ function genProblems(){
       labelDEF: ["D","E","F"][genNumbers(3)],
       labelGHI: ["G","H","I"][genNumbers(3)],
       labelJKL: ["J","K","L"][genNumbers(3)],
+      labelMNO: ["M","N","O"][genNumbers(3)],
 
-      question: ["base", "height", "base2", "height2"][genNumbers(4)],
+      question: ["base", "height", "base2", "height2", "base3", "height3"][genNumbers(6)],
 
       rotation : genNumbers(360)
     } 
