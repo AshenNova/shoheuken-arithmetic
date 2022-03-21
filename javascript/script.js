@@ -92,34 +92,34 @@ function HighScore(name, date, time, mistake) {
 const highScore1DotZero = new HighScore("Jayden Cheong", "16 October 2021", 140, 1)
 const highScore1DotZero1 = new HighScore("Jayden Cheong", "16 October 2021", 823, 12)
 const highScore1DotZero2 = new HighScore("Nil", "16 October 2021", 0, 0)
-const highScore1DotZero3 = new HighScore("Lucia", "6 March 2022", 432, 5)
-const highScore1DotZero4 = new HighScore("Jayden Cheong", "12 March 2022", 163, 2)
-const highScore1DotZero5 = new HighScore("Shanice Lee", "1 mar 2022", 171, 3)
+const highScore1DotZero3 = new HighScore("Maegan Lim", "18 March 2022", 162, 1)
+const highScore1DotZero4 = new HighScore("Jayden Cheong", "19 March 2022", 133, 0)
+const highScore1DotZero5 = new HighScore("Jayden Cheong", "19 mar 2022", 153, 0)
 const highScore1DotZero6 = new HighScore("Nadya", "13 March 2022", 436, 4)
-const highScore1DotZero7 = new HighScore("Jadee Wong", "11 March 2022", 1323, 22)
+const highScore1DotZero7 = new HighScore("Nadya", "20 March 2022", 598, 12)
 const highScore2DotZero = new HighScore("Nil", "16 October 2021", 0, 0)
 const highScore2DotZero1 = new HighScore("JingKai Ng", "16 October 2021", 823, 24)
 const highScore2DotZero2 = new HighScore("Nil", "Nil", 0, 0)
-const highScore2DotZero3 = new HighScore("Jingkai Ng", "30 October 2021", 853, 23)
+const highScore2DotZero3 = new HighScore("Jayden Cheong", "19 March 2022", 623, 1)
 const highScore2DotZero5 = new HighScore("Nil", "Nil", 0, 0)
-const highScore2DotZero7 = new HighScore("Jayden Goo", "2 mar 2022", 113, 0)
+const highScore2DotZero7 = new HighScore("Jayden Goo", "16 mar 2022", 110, 0)
 const highScore3DotZero = new HighScore("Shanice Lee", "30 October 2021", 614, 7)
 const highScore3DotZero1 = new HighScore("Shanice Lee", "30 October 2021", 162, 5)
 const highScore3DotZero2 = new HighScore("Javen Chen", "12 March 2022", 230, 2)
 const highScore3DotZero3 = new HighScore("Shanice Lee", "6 November 2021", 662, 4)
 const highScore3DotZero4 = new HighScore("Amanda Poon", "12 March 2022", 229, 0)
 const highScore3DotZero5 = new HighScore("Nil", "Nil", 0, 0)
-const highScore3DotZero6 = new HighScore("Shanice Lee", "1 mar 2022", 376, 3)
+const highScore3DotZero6 = new HighScore("Yuki Chin", "20 mar 2022", 299, 3)
 const highScore3DotZero7 = new HighScore("Sheyanne Cheong", "12 March 2022", 80, 0)
-const highScore3DotZero9 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3DotZero9 = new HighScore("Maegan Lim", "20 March 2022", 1676, 3)
 const highScore3DotZero10 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero11 = new HighScore("Nil", "Nil", 0, 0)
-const highScore3DotZero12 = new HighScore("Nil", "Nil", 0, 0)
-const highScore3DotZero13 = new HighScore("Javen Chen", "12 March 2022", 471, 4)
-const highScore3DotZero14 = new HighScore("Nil", "Nil", 0, 0)
-const highScore3DotZero15 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3DotZero12 = new HighScore("Jayden Goo", "16 march 2022", 72, 0)
+const highScore3DotZero13 = new HighScore("Jadee Wong", "14 March 2022", 310, 1)
+const highScore3DotZero14 = new HighScore("Sheyanne Cheong", "19 March 2022", 240, 0)
+const highScore3DotZero15 = new HighScore("Emma Leo", "21 March 2022", 358, 1)
 const highScore3DotZero16 = new HighScore("Nil", "Nil", 0, 0)
-const highScore3DotZero17 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3DotZero17 = new HighScore("Lucia", "20 March 2022", 392, 2)
 
 const highScore4DotZero = new HighScore("Adam Poon", "12 March 2022", 813, 4)
 const highScore4DotZero1 = new HighScore("Adam Poon", "12 March 2022", 229, 0)
@@ -135,15 +135,15 @@ const highScore4DotZero10 = new HighScore("Nadya", "13 March 2022", 215, 0)
 const highScore4DotZero11 = new HighScore("Nadya", "13 March 2022", 134, 0)
 const highScore4DotZero12 = new HighScore("Javen Chen", "12 March 2022", 297, 3)
 const highScore4DotZero13 = new HighScore("Sheyanne Cheong", "12 March 2022", 49, 0)
-const highScore4DotZero14 = new HighScore("Izekiel", "1 mar 2022", 114, 1)
+const highScore4DotZero14 = new HighScore("Jayden Goo", "16 mar 2022", 91, 2)
 
-const highScore5DotZero = new HighScore("Nil", "Nil", 0, 0)
+const highScore5DotZero = new HighScore("Sheyanne Cheong", "19 March 2022", 453, 5)
 const highScore5DotZero1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
-const highScore5DotZero2 = new HighScore("Nil", "Nil", 0, 0)
-const highScore5DotZero3 = new HighScore("Jayden Goo", "2 Mar 2022", 79, 0)
+const highScore5DotZero2 = new HighScore("Emma Leo", "21 March 2022", 167, 0)
+const highScore5DotZero3 = new HighScore("Emma Leo", "21 Mar 2022", 100, 0)
 const highScore5DotZero4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero5 = new HighScore("Nil", "Nil", 0, 0)
-const highScore6DotZero = new HighScore("Nil", "Nil", 0, 0)
+const highScore6DotZero = new HighScore("Jayden Goo", "16 March 2022", 143, 0)
 const highScore6Dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
 
@@ -3537,7 +3537,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 1.03":
       level = 1.03;
       scoreNeeded = 50;
-      gold = 432;
+      gold = 162;
       highScoreName.innerHTML = highScore1DotZero3.name
       highScoreTime.innerHTML = highScore1DotZero3.time
       highScoreMistakes.innerHTML = highScore1DotZero3.mistake
@@ -3546,7 +3546,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 1.04":
       level = 1.04;
       scoreNeeded = 30;
-      gold = 163
+      gold = highScore1DotZero4.time
       highScoreName.innerHTML = highScore1DotZero4.name
       highScoreTime.innerHTML = highScore1DotZero4.time
       highScoreMistakes.innerHTML = highScore1DotZero5.mistake
@@ -3560,7 +3560,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 1.05":
       level = 1.05;
       scoreNeeded = 30;
-      gold = 171
+      gold = highScore1DotZero5.name
       highScoreName.innerHTML = highScore1DotZero5.name
       highScoreTime.innerHTML = highScore1DotZero5.time
       highScoreMistakes.innerHTML = highScore1DotZero5.mistake
@@ -3581,7 +3581,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 1.07":
       level = 1.07;
       scoreNeeded = 30;
-      gold = 1323;
+      gold = highScore1DotZero7.time;
       highScoreName.innerHTML = highScore1DotZero7.name
       highScoreTime.innerHTML = highScore1DotZero7.time
       highScoreMistakes.innerHTML = highScore1DotZero7.mistake
@@ -3618,6 +3618,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 2.03":
       level = 2.03;
       scoreNeeded = 50;
+      gold = highScore2DotZero3.time;
       highScoreName.innerHTML = highScore2DotZero3.name
       highScoreTime.innerHTML = highScore2DotZero3.time
       highScoreMistakes.innerHTML = highScore2DotZero3.mistake
@@ -3639,7 +3640,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 2.07":
       level = 2.07;
       scoreNeeded = 50;
-      gold = 113
+      gold = 110
       highScoreName.innerHTML = highScore2DotZero7.name
       highScoreTime.innerHTML = highScore2DotZero7.time
       highScoreMistakes.innerHTML = highScore2DotZero7.mistake
@@ -3704,7 +3705,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 3.06":
       level = 3.06;
       scoreNeeded = 30;
-      gold = 376
+      gold = highScore3DotZero6.time
       highScoreName.innerHTML = highScore3DotZero6.name
       highScoreTime.innerHTML = highScore3DotZero6.time
       highScoreMistakes.innerHTML = highScore3DotZero6.mistake
@@ -3729,6 +3730,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 3.09":
       level = 3.09;
       scoreNeeded = 30;
+      gold = highScore3DotZero9.time;
       highScoreName.innerHTML = highScore3DotZero9.name
       highScoreTime.innerHTML = highScore3DotZero9.time
       highScoreMistakes.innerHTML = highScore3DotZero9.mistake
@@ -3765,6 +3767,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 3.12":
       level = 3.12;
       scoreNeeded = 20;
+      gold = 72;
       highScoreName.innerHTML = highScore3DotZero12.name
       highScoreTime.innerHTML = highScore3DotZero12.time
       highScoreMistakes.innerHTML = highScore3DotZero12.mistake
@@ -3790,6 +3793,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 3.14":
       level = 3.14;
       scoreNeeded = 20;
+      gold = highScore3DotZero14.time;
       highScoreName.innerHTML = highScore3DotZero14.name
       highScoreTime.innerHTML = highScore3DotZero14.time
       highScoreMistakes.innerHTML = highScore3DotZero14.mistake
@@ -3802,6 +3806,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 3.15":
       level = 3.15;
       scoreNeeded = 20;
+      gold = highScore3DotZero15.time;
       highScoreName.innerHTML = highScore3DotZero15.name
       highScoreTime.innerHTML = highScore3DotZero15.time
       highScoreMistakes.innerHTML = highScore3DotZero15.mistake
@@ -3814,6 +3819,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 3.16":
       level = 3.16;
       scoreNeeded = 20;
+      gold = highScore3DotZero16.time;
       highScoreName.innerHTML = highScore3DotZero16.name
       highScoreTime.innerHTML = highScore3DotZero16.time
       highScoreMistakes.innerHTML = highScore3DotZero16.mistake
@@ -3825,6 +3831,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 3.17":
       level = 3.17;
       scoreNeeded = 20;
+      gold = highScore3DotZero17.time;
       highScoreName.innerHTML = highScore3DotZero17.name
       highScoreTime.innerHTML = highScore3DotZero17.time
       highScoreMistakes.innerHTML = highScore3DotZero17.mistake
@@ -3871,7 +3878,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 4.03":
       level = 4.03;
       scoreNeeded = 30;
-      gold = 758
+      gold = 310
       highScoreName.innerHTML = highScore4DotZero3.name
       highScoreTime.innerHTML = highScore4DotZero3.time
       highScoreMistakes.innerHTML = highScore4DotZero3.mistake
@@ -4007,10 +4014,10 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 4.14":
       level = 4.14;
       scoreNeeded = 20;
+      gold = 91;
       highScoreName.innerHTML = highScore4DotZero11.name
       highScoreTime.innerHTML = highScore4DotZero11.time
       highScoreMistakes.innerHTML = highScore4DotZero11.mistake
-      gold = 114
       document.querySelector("#user-input").setAttribute("type","text");
       document.querySelector("#user-input").style.width = "250px"
       displayProblem.style.fontSize = "25px";
@@ -4024,6 +4031,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 5.0":
       level = 5.0;
       scoreNeeded = 20;
+      gold = highScore5DotZero.time;
       highScoreName.innerHTML = highScore5DotZero.name
       highScoreTime.innerHTML = highScore5DotZero.time
       highScoreMistakes.innerHTML = highScore5DotZero.mistake
@@ -4047,6 +4055,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 5.02":
       level = 5.02;
       scoreNeeded = 10;
+      gold = highScore5DotZero2.time;
       highScoreName.innerHTML = highScore5DotZero2.name
       highScoreTime.innerHTML = highScore5DotZero2.time
       highScoreMistakes.innerHTML = highScore5DotZero2.mistake
@@ -4058,7 +4067,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 5.03":
       level = 5.03;
       scoreNeeded = 10;
-      gold = 120;
+      gold = highScore5DotZero3.time;
       highScoreName.innerHTML = highScore5DotZero3.name
       highScoreTime.innerHTML = highScore5DotZero3.time
       highScoreMistakes.innerHTML = highScore5DotZero3.mistake
@@ -4093,6 +4102,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 6.0":
       level = 6.0;
       scoreNeeded = 10;
+      gold = 143
       highScoreName.innerHTML = highScore6DotZero.name
       highScoreTime.innerHTML = highScore6DotZero.time
       highScoreMistakes.innerHTML = highScore6DotZero.mistake
