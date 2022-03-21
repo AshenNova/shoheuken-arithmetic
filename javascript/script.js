@@ -2687,9 +2687,11 @@ function handleSubmit(e){
         if ( level == 2.05){
           arr = [0, 1, 2, 3, 4, 5, 6, 7 ,8 ,9];
           arr2.length = 0;
-        console.log("new questions generated")
         }
+
+        console.log("new questions generated")
         updateProblems()
+        
       } else {
         console.log("incorrect")
 
