@@ -142,7 +142,7 @@ const highScore5DotZero1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
 const highScore5DotZero2 = new HighScore("Emma Leo", "21 March 2022", 167, 0)
 const highScore5DotZero3 = new HighScore("Emma Leo", "21 Mar 2022", 100, 0)
 const highScore5DotZero4 = new HighScore("Nil", "Nil", 0, 0)
-const highScore5DotZero5 = new HighScore("Nil", "Nil", 0, 0)
+const highScore5DotZero5 = new HighScore("Nadya", "20 March 2022", 335, 2)
 const highScore6DotZero = new HighScore("Jayden Goo", "16 March 2022", 143, 0)
 const highScore6Dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
@@ -551,14 +551,25 @@ function updateProblems(){
     }
   }
   if (level == 2.02 ){
+    for (let i = 0; i < digit; i++){
+      const chosenNumber = arr[genNumbers(arr.length-1)]
+      arr2.push(chosenNumber)
+      const index = arr.indexOf(chosenNumber)
+      arr.splice(index,1)
+    }
+  p.place = ["ones","tens","hundreds","thousands","ten thousands", "hundred thousands", "millions"][genNumbers(arr2.length+1)]
+  let b = 1
+    for ( let a = 0; a < arr2.length; a++){
+      p.holdingNumber = arr2[a]*b
+      b = b*10
+      p.totalNumber += p.holdingNumber
+    }
 
-    p.totalNumber = p.onesPlace*1+p.tensPlace*10+p.hundredsPlace*100+p.thousandsPlace*1000+p.tenThousandsPlace*10000+p.hundredThousandsPlace*100000+p.millionsPlace*1000000
-    p.totalNumber = p.totalNumber.toLocaleString("en-US")
     displayProblem.innerHTML = 
     `
     Which digit is in the</br>
     <u>${p.place}</u> place? <br>
-    ${p.totalNumber}
+    ${p.totalNumber.toLocaleString('en-US')}
     `
   }
 
@@ -2027,13 +2038,13 @@ function handleSubmit(e){
       }
 
       if ( level == 2.02){
-        if (p.place == "ones") correctAnswer = p.onesPlace
-        if (p.place == "tens") correctAnswer = p.tensPlace
-        if (p.place == "hundreds") correctAnswer = p.hundredsPlace
-        if (p.place == "thousands") correctAnswer = p.thousandsPlace
-        if (p.place == "ten thousands") correctAnswer = p.tenThousandsPlace
-        if (p.place == "hundred thousands") correctAnswer = p.hundredThousandsPlace
-        if (p.place == "millions") correctAnswer = p.millionsPlace
+        if (p.place == "ones") correctAnswer = arr2[0]
+        if (p.place == "tens") correctAnswer = arr2[1]
+        if (p.place == "hundreds") correctAnswer = arr2[2]
+        if (p.place == "thousands") correctAnswer = arr2[3]
+        if (p.place == "ten thousands") correctAnswer = arr2[4]
+        if (p.place == "hundred thousands") correctAnswer = arr2[5]
+        if (p.place == "millions") correctAnswer = arr2[6]
       }
 
       if ( level == 2.05) {
@@ -2684,7 +2695,7 @@ function handleSubmit(e){
         commonMultipleArrTwo.length = 0;
         console.log(arr, commonMultipleArr, commonMultipleArrTwo);
         ctx.clearRect(0, 0, 400, 275);
-        if ( level == 2.05){
+        if ( level == 2.02 || level == 2.05 ){
           arr = [0, 1, 2, 3, 4, 5, 6, 7 ,8 ,9];
           arr2.length = 0;
         }
@@ -2838,15 +2849,9 @@ function genProblems(){
 
   if ( level == 2.02){
     return {
-      onesPlace: genNumbers(9),
-      tensPlace: genNumbers(9),
-      hundredsPlace: genNumbers(9),
-      thousandsPlace: genNumbers(9),
-      tenThousandsPlace: genNumbers(9),
-      hundredThousandsPlace: genNumbers(9),
-      millionsPlace: genNumbers(9),
-      totalNumber: undefined,
-      place: ["ones","tens","hundreds","thousands","ten thousands", "hundred thousands", "millions"][genNumbers(7)]
+      totalNumber: 0,
+      holdingNumber: undefined,
+      place: undefined
     }
   }
 
@@ -3613,6 +3618,8 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreTime.innerHTML = highScore2DotZero2.time
       highScoreMistakes.innerHTML = highScore2DotZero2.mistake
       displayProblem.style.fontSize = "25px";
+      digit = prompt("How many digits?")
+      arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     break;
 
     case "Level 2.03":
@@ -4091,6 +4098,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 5.05":
       level = 5.05;
       scoreNeeded = 20;
+      gold = highScore5DotZero5.time;
       highScoreName.innerHTML = highScore5DotZero5.name
       highScoreTime.innerHTML = highScore5DotZero5.time
       highScoreMistakes.innerHTML = highScore5DotZero5.mistake
