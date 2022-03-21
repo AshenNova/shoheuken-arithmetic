@@ -74,6 +74,7 @@ canvas.addEventListener('click', function(event){
 let level = 0;
 let player = 1;
 let arr = [];
+let arr2 = [];
 let gold = 0;
 let silver = 0;
 let bronze = 0;
@@ -100,7 +101,8 @@ const highScore2DotZero = new HighScore("Nil", "16 October 2021", 0, 0)
 const highScore2DotZero1 = new HighScore("JingKai Ng", "16 October 2021", 823, 24)
 const highScore2DotZero2 = new HighScore("Nil", "Nil", 0, 0)
 const highScore2DotZero3 = new HighScore("Jingkai Ng", "30 October 2021", 853, 23)
-const highScore2DotZero4 = new HighScore("Jayden Goo", "2 mar 2022", 113, 0)
+const highScore2DotZero5 = new HighScore("Nil", "Nil", 0, 0)
+const highScore2DotZero7 = new HighScore("Jayden Goo", "2 mar 2022", 113, 0)
 const highScore3DotZero = new HighScore("Shanice Lee", "30 October 2021", 614, 7)
 const highScore3DotZero1 = new HighScore("Shanice Lee", "30 October 2021", 162, 5)
 const highScore3DotZero2 = new HighScore("Javen Chen", "12 March 2022", 230, 2)
@@ -247,7 +249,7 @@ const resetStuff = function (){
   gold = 0;
   silver = 0;
   bronze = 0;
-  if (document.querySelector('.trophy').childNodes.length < 0){
+  if (document.querySelector('.trophy').childNodes.length > 0){
   document.querySelector('.trophy').removeChild(imageG)
   document.querySelector('.trophy').removeChild(imageS)
   document.querySelector('.trophy').removeChild(imageB)
@@ -560,7 +562,84 @@ function updateProblems(){
     `
   }
 
-  if (level == 2.04){
+  if ( level == 2.05 ){
+    let oddEvenCount = [0, 0];
+    for (let i = arr2.length; arr2.length < digit; i++){
+      const chosenNumber =  arr[genNumbers(arr.length-1)];
+      arr2.push(chosenNumber)
+      const index = arr.indexOf(chosenNumber)
+      arr.splice(index, 1);
+      console.log(arr, arr2)
+    }
+
+    // checking if all are odd or even
+    for (let b = 0; b < arr2.length; b++){
+      if (arr2[b]%2 == 0){
+        oddEvenCount[0]++
+      } else {
+        oddEvenCount[1]++
+      }
+    }
+    if (p.choice == "odd" && oddEventCount[0] == 0){
+      arr2[0] += 1
+    }
+    if (p.choice == "even" && oddEventCount[1] == 0){
+      arr2[1] += 1
+    }
+    console.log(`Odd Even Count: ${oddEvenCount}`);
+
+    displayProblem.innerHTML = 
+    `
+    Form the <u>${p.choice}</u> ${p.evenOrOdd} number using</br>
+    ${arr2}
+    `
+    if (p.choice == "smallest"){
+      arr2.sort(function(a, b){return a-b});
+      if ( arr2[0] == 0) {
+       [arr2[1], arr2[0]] = [arr2[0], arr2[1]]
+      }
+    }
+    if (p.choice == "greatest"){
+      arr2.sort(function(a, b){return b-a});
+    }
+    console.log(arr2, p.evenOrOdd)
+    p.landingNumber = arr2.join('');
+
+    let a = 1
+    if (p.evenOrOdd == "even") {
+      if (p.landingNumber%2 == 0){
+        p.finalNumber = p.landingNumber
+      } else {
+          // do until true
+          while ((arr2[arr2.length-a])%2 != 0){
+            a++
+          }
+          const lastDigit = arr2[arr2.length-a]
+          arr2.push(arr2.splice(arr2.indexOf(lastDigit),1))
+        } 
+    }
+    if (p.evenOrOdd == "odd") {
+      if (p.landingNumber%2 != 0){
+        p.finalNumber = p.landingNumber
+      } else {
+          // do until true
+          while ((arr2[arr2.length-a])%2 == 0){
+            a++
+          }
+          const lastDigit = arr2[arr2.length-a]
+          arr2.push(arr2.splice(arr2.indexOf(lastDigit),1))
+        } 
+    }
+    if (arr2[0] == 0){
+      console.log("first digit still Zero");
+      [arr2[0], arr2[1]] = [arr2[1], arr2[0]]
+    }
+
+    p.finalNumber = arr2.join('');
+    console.log(p.finalNumber)
+  }
+
+  if (level == 2.07){
     if (p.bigOrSmall == "1"){
       fractionChoice.innerHTML = "Smaller"
     } else {
@@ -1951,7 +2030,29 @@ function handleSubmit(e){
         if (p.place == "millions") correctAnswer = p.millionsPlace
       }
 
-      if (level == 2.04){
+      if ( level == 2.05) {
+          if (p.evenOrOdd == "even") {
+            if (p.landingNumber%2 == 0){
+            console.log("Choice 1")
+            correctAnswer = p.finalNumber
+            } else {
+            console.log("Choice 2")
+            correctAnswer = `${p.landingNumber} ${p.finalNumber}`
+            }
+          }
+
+          if (p.evenOrOdd == "odd") {
+            if (p.landingNumber%2 != 0){
+            console.log("Choice 3")
+            correctAnswer = p.finalNumber
+            } else {
+            console.log("Choice 4")
+            correctAnswer = `${p.landingNumber} ${p.finalNumber}`
+            }
+          }
+        }
+      
+      if (level == 2.07){
         if (p.option == "1") {
           a = p.numOne/p.numThree
           b = p.numOne/p.numFour
@@ -2577,8 +2678,13 @@ function handleSubmit(e){
         commonMultipleArrTwo.length = 0;
         console.log(arr, commonMultipleArr, commonMultipleArrTwo);
         ctx.clearRect(0, 0, 400, 275);
-        updateProblems()
+        if ( level == 2.05){
+          arr = [0, 1, 2, 3, 4, 5, 6, 7 ,8 ,9];
+          arr2.length = 0;
         console.log("new questions generated")
+       
+        updateProblems()
+        }
       
       } else {
         console.log("incorrect")
@@ -2628,7 +2734,6 @@ function genNumbers(max){
 //////////////////////////// SET VALUES //////////////////////////////
 // Step 2: Generate Problem
 function genProblems(){
-  console.log(level);
 
   if (level == 1.0){
     return {
@@ -2749,7 +2854,7 @@ function genProblems(){
     }
   }
 
-  if (level == 2.04){
+  if (level == 2.07){
     return {
       numOne: genNumbers(5)+1,
       numThree: genNumbers(4)+5,
@@ -2759,6 +2864,15 @@ function genProblems(){
       numSix: genNumbers(5)+1,
       option: ["1","2"][genNumbers(2)],
       bigOrSmall: ["1","2"][genNumbers(2)]
+    }
+  }
+
+  if ( level == 2.05){
+    return {
+      choice: ["smallest","greatest"][genNumbers(2)],
+      landingNumber: undefined,
+      finalNumber: undefined,
+      evenOrOdd: ["even","odd"][genNumbers(2)]
     }
   }
 
@@ -3503,13 +3617,26 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreMistakes.innerHTML = highScore2DotZero3.mistake
     break;
 
-    case "Level 2.04":
-      level = 2.04;
+    case "Level 2.05":
+      level = 2.05;
+      scoreNeeded = 30;
+      digit = prompt("How many digits?")
+      arr = [0, 1, 2, 3, 4, 5, 6, 7 ,8 ,9]
+      highScoreName.innerHTML = highScore2DotZero5.name
+      highScoreTime.innerHTML = highScore2DotZero5.time
+      highScoreMistakes.innerHTML = highScore2DotZero5.mistake
+      instructions.textContent = "Form the Number"
+      displayProblem.style.fontSize = "25px";
+      document.querySelector("#user-input").setAttribute("type","text");
+    break;
+
+    case "Level 2.07":
+      level = 2.07;
       scoreNeeded = 50;
       gold = 113
-      highScoreName.innerHTML = highScore2DotZero4.name
-      highScoreTime.innerHTML = highScore2DotZero4.time
-      highScoreMistakes.innerHTML = highScore2DotZero4.mistake
+      highScoreName.innerHTML = highScore2DotZero7.name
+      highScoreTime.innerHTML = highScore2DotZero7.time
+      highScoreMistakes.innerHTML = highScore2DotZero7.mistake
       wholeNumberContainer.classList.add('hidden');
       fractionsContainer.classList.remove('hidden');
       instructions.textContent = "Answer using '1' or '2' only"
