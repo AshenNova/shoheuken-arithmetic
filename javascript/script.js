@@ -563,6 +563,12 @@ function updateProblems(){
   }
 
   if ( level == 2.05 ){
+    if (digit < 3){
+      digit = 3
+    }
+    if (digit > 7){
+     digit = 7 
+    }
     let oddEvenCount = [0, 0];
     for (let i = arr2.length; arr2.length < digit; i++){
       const chosenNumber =  arr[genNumbers(arr.length-1)];
@@ -2682,10 +2688,8 @@ function handleSubmit(e){
           arr = [0, 1, 2, 3, 4, 5, 6, 7 ,8 ,9];
           arr2.length = 0;
         console.log("new questions generated")
-       
-        updateProblems()
         }
-      
+        updateProblems()
       } else {
         console.log("incorrect")
 
@@ -3620,7 +3624,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 2.05":
       level = 2.05;
       scoreNeeded = 30;
-      digit = prompt("How many digits?")
+      digit = prompt("How many digits? (3-8 only)")
       arr = [0, 1, 2, 3, 4, 5, 6, 7 ,8 ,9]
       highScoreName.innerHTML = highScore2DotZero5.name
       highScoreTime.innerHTML = highScore2DotZero5.time
