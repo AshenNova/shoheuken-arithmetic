@@ -608,13 +608,24 @@ function updateProblems(){
         oddEvenCount[1]++
       }
     }
+    console.log(arr2[0]+1, arr2);
+    console.log(`Odd Even Count: ${oddEvenCount}`);
+
+    let changeFirstArray = 0;
     if (p.choice == "odd" && oddEventCount[0] == 0){
-      arr2[0] += 1
+      changeFirstArray = arr2[0]+1
+      arr2.shift()
+      console.log(arr2)
+      arr2.push(changeFirstArray)
+      console.log(arr2)
     }
     if (p.choice == "even" && oddEventCount[1] == 0){
-      arr2[1] += 1
+      changeFirstArray = arr2[0]+1
+      arr2.shift()
+      console.log(arr2)
+      arr2.push(changeFirstArray)
+      console.log(arr2)
     }
-    console.log(`Odd Even Count: ${oddEvenCount}`);
 
     displayProblem.innerHTML = 
     `
@@ -2563,7 +2574,7 @@ function handleSubmit(e){
         correctAnswer = p.numOne + " " + p.numTwo%p.numThree + "/" + p.numThree
       }
 
-      if ( level == 4.1 ){
+      if ( level == 4.11){
         // level 4.09
         if (p.optionFinal == "1"){
           for (let i = p.numThree; i > 1; i--){
