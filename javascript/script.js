@@ -551,14 +551,24 @@ function updateProblems(){
     }
   }
   if (level == 2.02 ){
+    if (digit < 3){
+      digit = 3
+    }
+    if (digit > 7){
+     digit = 7 
+    }
     for (let i = 0; i < digit; i++){
       const chosenNumber = arr[genNumbers(arr.length-1)]
       arr2.push(chosenNumber)
       const index = arr.indexOf(chosenNumber)
       arr.splice(index,1)
     }
-  p.place = ["ones","tens","hundreds","thousands","ten thousands", "hundred thousands", "millions"][genNumbers(arr2.length+1)]
-  let b = 1
+  p.place = ["ones","tens","hundreds","thousands","ten thousands", "hundred thousands", "millions"][genNumbers(arr2.length)]
+  
+     if (arr2[0] == 0){
+       [arr2[0], arr2[1]] = [arr2[1], arr2[0]]
+     }
+    let b = 1
     for ( let a = 0; a < arr2.length; a++){
       p.holdingNumber = arr2[a]*b
       b = b*10
@@ -3618,7 +3628,7 @@ for (let i = 0; i <  settingButton.length; i++){
       highScoreTime.innerHTML = highScore2DotZero2.time
       highScoreMistakes.innerHTML = highScore2DotZero2.mistake
       displayProblem.style.fontSize = "25px";
-      digit = prompt("How many digits?")
+      digit = prompt("How many digits? (3-7 only)")
       arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     break;
 
@@ -3634,7 +3644,7 @@ for (let i = 0; i <  settingButton.length; i++){
     case "Level 2.05":
       level = 2.05;
       scoreNeeded = 30;
-      digit = prompt("How many digits? (3-8 only)")
+      digit = prompt("How many digits? (3-7 only)")
       arr = [0, 1, 2, 3, 4, 5, 6, 7 ,8 ,9]
       highScoreName.innerHTML = highScore2DotZero5.name
       highScoreTime.innerHTML = highScore2DotZero5.time
