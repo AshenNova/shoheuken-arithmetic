@@ -591,6 +591,8 @@ function updateProblems(){
     if (digit > 7){
      digit = 7 
     }
+
+    // counting odd or even in array
     let oddEvenCount = [0, 0];
     for (let i = arr2.length; arr2.length < digit; i++){
       const chosenNumber =  arr[genNumbers(arr.length-1)];
@@ -599,27 +601,28 @@ function updateProblems(){
       arr.splice(index, 1);
       console.log(arr, arr2)
     }
+    console.log(oddEvenCount[0], oddEvenCount[1])
 
     // checking if all are odd or even
     for (let b = 0; b < arr2.length; b++){
       if (arr2[b]%2 == 0){
-        oddEvenCount[0]++
-      } else {
         oddEvenCount[1]++
+      } else {
+        oddEvenCount[0]++
       }
     }
-    console.log(arr2[0]+1, arr2);
-    console.log(`Odd Even Count: ${oddEvenCount}`);
 
     let changeFirstArray = 0;
-    if (p.choice == "odd" && oddEventCount[0] == 0){
+    if (p.evenOrOdd == "odd" && oddEvenCount[0] == 0){
+      console.log("choice 1")
       changeFirstArray = arr2[0]+1
       arr2.shift()
       console.log(arr2)
       arr2.push(changeFirstArray)
       console.log(arr2)
     }
-    if (p.choice == "even" && oddEventCount[1] == 0){
+    if (p.evenOrOdd == "even" && oddEvenCount[1] == 0){
+      console.log("choice 2")
       changeFirstArray = arr2[0]+1
       arr2.shift()
       console.log(arr2)
@@ -2996,7 +2999,7 @@ function genProblems(){
       choice: ["smallest","greatest"][genNumbers(2)],
       landingNumber: undefined,
       finalNumber: undefined,
-      evenOrOdd: ["even","odd"][genNumbers(2)]
+      evenOrOdd: ["even", "odd"][genNumbers(2)]
     }
   }
 
