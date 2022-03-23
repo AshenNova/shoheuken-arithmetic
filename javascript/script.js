@@ -137,6 +137,7 @@ const highScore4DotZero12 = new HighScore("Nadya", "13 March 2022", 134, 0)
 const highScore4DotZero13 = new HighScore("Javen Chen", "12 March 2022", 297, 3)
 const highScore4DotZero14 = new HighScore("Sheyanne Cheong", "12 March 2022", 49, 0)
 const highScore4DotZero15 = new HighScore("Jayden Goo", "16 mar 2022", 91, 2)
+const highScore4DotZero17 = new HighScore("Nil", "Nil", 0, 0)
 
 const highScore5DotZero = new HighScore("Sheyanne Cheong", "19 March 2022", 453, 5)
 const highScore5DotZero1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
@@ -1612,6 +1613,58 @@ function updateProblems(){
     }
   }
 
+  if ( level == 4.17) {
+    const gridX = 380;
+    const gridY = 210;
+    ctx.save()
+    // vertical grid
+    for (let i = 0; i < gridX; i+=30){
+      ctx.setLineDash([1,1]);
+      ctx.beginPath();
+      ctx.moveTo(20+i, 30)
+      ctx.lineTo(20+i, gridY)
+      ctx.stroke();
+    }
+  // horizontal grid
+    for (let i = 0; i < gridY; i+=30){
+      ctx.setLineDash([1,1]);
+      ctx.beginPath();  
+      ctx.moveTo(20, 30+i)
+      ctx.lineTo(gridX, 30+i)
+      ctx.stroke();
+    }
+    console.log(arr)
+
+    while (arr.length > 0){
+      const chosenAlp = arr[genNumbers(arr.length-1)]
+      const index = arr.indexOf(chosenAlp)
+      arr2.push(chosenAlp)
+      arr.splice(index, 1)
+      console.log(arr, arr2)
+    }
+    ctx.font = "1em serif"
+    ctx.fillText(`_____ is ${p.compass} of ${arr2[4]}` ,20, 20)
+    ctx.save()
+
+    ctx.translate(200, 137.5)
+    // fill in text
+    ctx.font = "1.5em serif"
+    let a = 0;
+    ctx.fillStyle = "red"
+    const alignmentX = -7
+    const alignmentY = -11
+    for (let i = -60 ; i <= 60; i += 60 ) {
+      ctx.fillText(`${arr2[a]}`, i+alignmentX, -60+alignmentY)
+      ctx.fillText(`${arr2[3+a]}`, i+alignmentX, 0+alignmentY)
+      ctx.fillText(`${arr2[6+a]}`, i+alignmentX, 60+alignmentY)
+      a++
+    }
+
+    ctx.restore();
+
+    ctx.restore();
+  }
+
   if ( level == 5.0 ){
     
     let alignXText = 15;
@@ -2648,6 +2701,33 @@ function handleSubmit(e){
         }
       }
 
+      if ( level == 4.17){
+        if (p.compass == "north-west"){
+          correctAnswer =  arr2[0]
+        }
+        if (p.compass == "north"){
+          correctAnswer = arr2[1] 
+        }
+        if (p.compass == "north-east"){
+          correctAnswer = arr2[2] 
+        }
+        if (p.compass == "east"){
+          correctAnswer = arr2[6] 
+        }
+        if (p.compass == "south-east"){
+          correctAnswer = arr2[8] 
+        }
+        if (p.compass == "south"){
+          correctAnswer = arr2[7] 
+        }
+        if (p.compass == "south-west"){
+          correctAnswer = arr2[6] 
+        }
+        if (p.compass == "west"){
+          correctAnswer = arr2[4] 
+        }
+      }
+
       if ( level == 5.0) {
         if (p.sidesBH == "base"){
           correctAnswer = `${p.labelABC}${p.labelGHI}`
@@ -3369,6 +3449,13 @@ function genProblems(){
     numSix: genNumbers(7)+2,
     unitMeasurement: ["m","ℓ","km","kg"][genNumbers(4)],
     option: ["1","2","3","4","5"][genNumbers(5)]
+    }
+  }
+
+  if ( level == 4.17){
+    return {
+      choice: ["A","B","C","D","E","F","G","H","I"][genNumbers(9)],
+      compass: ["north","north-east","east","south-east","south","south-west","east","north-west"][genNumbers(8)]
     }
   }
 
@@ -4197,6 +4284,19 @@ for (let i = 0; i <  settingButton.length; i++){
       f-f , r+r , vxr</br>
       fxr , fxv</br>
       `
+    break;
+
+    case "Level 4.17":
+      level = 4.17;
+      scoreNeeded = 20;
+      gold = highScore4DotZero17.time;
+      highScoreName.innerHTML = highScore4DotZero17.name
+      highScoreTime.innerHTML = highScore4DotZero17.time
+      highScoreMistakes.innerHTML = highScore4DotZero17.mistake
+      wholeNumberContainer.classList.add('hidden');
+      firstCanvas.classList.remove('hidden');
+      arr = ["A","B","C","D","E","F","G","H","I"]
+      document.querySelector("#user-input").setAttribute("type","text");
     break;
 
     case "Level 5.0":
