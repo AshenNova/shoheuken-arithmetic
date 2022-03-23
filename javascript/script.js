@@ -2712,7 +2712,7 @@ function handleSubmit(e){
           correctAnswer = arr2[2] 
         }
         if (p.compass == "east"){
-          correctAnswer = arr2[6] 
+          correctAnswer = arr2[5] 
         }
         if (p.compass == "south-east"){
           correctAnswer = arr2[8] 
@@ -2724,7 +2724,7 @@ function handleSubmit(e){
           correctAnswer = arr2[6] 
         }
         if (p.compass == "west"){
-          correctAnswer = arr2[4] 
+          correctAnswer = arr2[3] 
         }
       }
 
@@ -2893,6 +2893,10 @@ function handleSubmit(e){
         ctx.clearRect(0, 0, 400, 275);
         if ( level == 2.02 || level == 2.05 || level == 4.02 ){
           arr = [0, 1, 2, 3, 4, 5, 6, 7 ,8 ,9];
+          arr2.length = 0;
+        }
+        if ( level == 4.17) {
+          arr = ["A","B","C","D","E","F","G","H","I"]
           arr2.length = 0;
         }
 
