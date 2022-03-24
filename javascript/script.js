@@ -75,6 +75,7 @@ let level = 0;
 let player = 1;
 let arr = [];
 let arr2 = [];
+let arr3 = [];
 let gold = 0;
 let silver = 0;
 let bronze = 0;
@@ -252,10 +253,14 @@ const resetStuff = function (){
   silver = 0;
   bronze = 0;
   if (document.querySelector('.trophy').childNodes.length > 0){
-  document.querySelector('.trophy').removeChild(imageG)
-  document.querySelector('.trophy').removeChild(imageS)
-  document.querySelector('.trophy').removeChild(imageB)
-  document.querySelector('.trophy').removeChild(imageNMP)
+  // document.querySelector('.trophy').removeChild(imageG)
+  // document.querySelector('.trophy').removeChild(imageS)
+  // document.querySelector('.trophy').removeChild(imageB)
+  // document.querySelector('.trophy').removeChild(imageNMP)
+  imageG.remove();
+  imageS.remove();
+  imageB.remove();
+  imageNMP.remove();
   }
 
   ctx.clearRect(0, 0, 400, 275);
@@ -1633,8 +1638,7 @@ function updateProblems(){
       ctx.lineTo(gridX, 30+i)
       ctx.stroke();
     }
-    console.log(arr)
-
+   
     while (arr.length > 0){
       const chosenAlp = arr[genNumbers(arr.length-1)]
       const index = arr.indexOf(chosenAlp)
@@ -1642,8 +1646,32 @@ function updateProblems(){
       arr.splice(index, 1)
       console.log(arr, arr2)
     }
+
     ctx.font = "1em serif"
-    ctx.fillText(`_____ is ${p.compass} of ${arr2[4]}` ,20, 20)
+
+    arr3.push(arr2[1])
+    arr3.push(arr2[2])
+    arr3.push(arr2[5])
+    arr3.push(arr2[8])
+    arr3.push(arr2[7])
+    arr3.push(arr2[6])
+    arr3.push(arr2[3])
+    arr3.push(arr2[0])
+    console.log(arr3);
+
+    if ( p.roll == 1){
+      ctx.fillText(`_____ is ${p.compass} of ${arr2[4]}` ,20, 20)
+    } else {
+      let a = 0;
+      for (let i = 0; i < arr3.length; i++){
+        if (p.compass == compassArr[a]){
+          p.choice = arr3[a]
+        }
+        a++
+      }
+      ctx.fillText(`${p.choice} is ${p.compass} of _____`, 20, 20)
+    }
+    
     ctx.save()
 
     ctx.translate(200, 137.5)
@@ -2702,29 +2730,33 @@ function handleSubmit(e){
       }
 
       if ( level == 4.17){
-        if (p.compass == "north-west"){
-          correctAnswer =  arr2[0]
-        }
-        if (p.compass == "north"){
-          correctAnswer = arr2[1] 
-        }
-        if (p.compass == "north-east"){
-          correctAnswer = arr2[2] 
-        }
-        if (p.compass == "east"){
-          correctAnswer = arr2[5] 
-        }
-        if (p.compass == "south-east"){
-          correctAnswer = arr2[8] 
-        }
-        if (p.compass == "south"){
-          correctAnswer = arr2[7] 
-        }
-        if (p.compass == "south-west"){
-          correctAnswer = arr2[6] 
-        }
-        if (p.compass == "west"){
-          correctAnswer = arr2[3] 
+        if (p.roll == 1 ){
+          if (p.compass == "north-west"){
+            correctAnswer =  arr2[0]
+          }
+          if (p.compass == "north"){
+            correctAnswer = arr2[1] 
+          }
+          if (p.compass == "north-east"){
+            correctAnswer = arr2[2] 
+          }
+          if (p.compass == "east"){
+            correctAnswer = arr2[5] 
+          }
+          if (p.compass == "south-east"){
+            correctAnswer = arr2[8] 
+          }
+          if (p.compass == "south"){
+            correctAnswer = arr2[7] 
+          }
+          if (p.compass == "south-west"){
+            correctAnswer = arr2[6] 
+          }
+          if (p.compass == "west"){
+            correctAnswer = arr2[3] 
+          }
+        } else {
+          correctAnswer = arr2[4];
         }
       }
 
@@ -2898,6 +2930,7 @@ function handleSubmit(e){
         if ( level == 4.17) {
           arr = ["A","B","C","D","E","F","G","H","I"]
           arr2.length = 0;
+          arr3.length = 0;
         }
 
         console.log("new questions generated")
@@ -3459,7 +3492,8 @@ function genProblems(){
   if ( level == 4.17){
     return {
       choice: ["A","B","C","D","E","F","G","H","I"][genNumbers(9)],
-      compass: ["north","north-east","east","south-east","south","south-west","east","north-west"][genNumbers(8)]
+      compass: ["north","north-east","east","south-east","south","south-west","west","north-west"][genNumbers(8)],
+      roll: [1, 2][genNumbers(2)]
     }
   }
 
@@ -3744,7 +3778,7 @@ for (let i = 0; i <  settingButton.length; i++){
   switch (buttonLevel) {
     case "Level 1.0":
       level = 1.0;
-      scoreNeeded = 50;
+      scoreNeeded = 1;
       gold = 100;
       silver = 120;
       bronze = 140;
@@ -4300,6 +4334,7 @@ for (let i = 0; i <  settingButton.length; i++){
       wholeNumberContainer.classList.add('hidden');
       firstCanvas.classList.remove('hidden');
       arr = ["A","B","C","D","E","F","G","H","I"]
+      compassArr= ["north","north-east","east","south-east","south","south-west","west","north-west"]
       document.querySelector("#user-input").setAttribute("type","text");
     break;
 
