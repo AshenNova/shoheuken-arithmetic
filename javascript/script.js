@@ -1699,8 +1699,21 @@ function updateProblems(){
     const gridX = 380;
     const gridY = 210;
     ctx.font = "1em serif"
-    ctx.fillText(`From point O facing ${p.choice}, turn ${p.angleTurn} ${p.direction}.`, 20, 20)
-    ctx.fillText(`Now facing ___?`, 20, 40)
+    if (p.roll == 1){
+      if (p.angleTurn == 180 || p.angleTurn == 360){
+        ctx.fillText(`From point O facing ${p.choice}, turn ${p.angleTurn}°.`, 20, 20)
+      } else {
+      ctx.fillText(`From point O facing ${p.choice}, turn ${p.angleTurn}° ${p.direction}.`, 20, 20)
+       }
+      ctx.fillText(`Now facing ___?`, 20, 40)
+    } else {
+      if (p.angleTurn == 180 || p.angleTurn == 360){
+        ctx.fillText(`After turning ${p.angleTurn}°, point O is facing ${p.choice}`, 20 ,20)
+      } else {
+        ctx.fillText(`After turning ${p.angleTurn}° ${p.direction}, point O is facing ${p.choice}`, 20 ,20)
+      }
+      ctx.fillText(`Facing Point ___ at first?`, 20, 40)
+    }
 
     ctx.save()
       ctx.translate(200, 137.5)
@@ -2825,19 +2838,35 @@ function handleSubmit(e){
 
       if ( level == 4.18 ){
         const index = arr2.indexOf(p.choice)
-        if (p.direction == "counter-clockwise"){
-          p.angleTurn = 360-p.angleTurn
-        }
-        const intervalsTurned = p.angleTurn/45
-        let finalIndex = index+intervalsTurned
-        console.log(index, intervalsTurned, arr[index], finalIndex)
-        if (finalIndex == 8){
-          finalIndex = 0
-        }  
-        if (finalIndex > 8) {
-            finalIndex -= 8
+       
+        if (p.roll == 1){
+          if (p.direction == "counter-clockwise"){
+            p.angleTurn = 360-p.angleTurn 
           }
-        correctAnswer = arr2[finalIndex]
+          const intervalsTurned = p.angleTurn/45
+          let finalIndex = index+intervalsTurned
+          if (finalIndex == 8){
+            finalIndex = 0
+          }  
+          if (finalIndex > 8) {
+              finalIndex -= 8
+            }
+          correctAnswer = arr2[finalIndex]
+        } else {
+          if (p.direction == "counter-clockwise"){
+            p.angleTurn = 360-p.angleTurn
+          }
+          const intervalsTurned = p.angleTurn/45
+          let finalIndex = index-intervalsTurned
+          if (finalIndex == 8){
+            finalIndex = 0
+          }  
+          if (finalIndex < 0) {
+              finalIndex += 8
+            }
+          correctAnswer = arr2[finalIndex];
+          console.log(p.direction, intervalsTurned, index, finalIndex, arr2[finalIndex])
+        }
       }
 
       if ( level == 5.0) {
@@ -3585,7 +3614,7 @@ function genProblems(){
   if ( level == 4.18){
     return {
       choice: ["A","B","C","D","F","G","H","I"][genNumbers(8)],
-      roll: [1, 2][genNumbers(2)],
+      roll: [2, 1][genNumbers(2)],
       angleTurn: (genNumbers(8)+1)*45,
       direction: ["clockwise","counter-clockwise"][genNumbers(2)],
     }
