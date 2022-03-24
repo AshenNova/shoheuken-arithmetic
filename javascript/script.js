@@ -139,6 +139,7 @@ const highScore4DotZero13 = new HighScore("Javen Chen", "12 March 2022", 297, 3)
 const highScore4DotZero14 = new HighScore("Sheyanne Cheong", "12 March 2022", 49, 0)
 const highScore4DotZero15 = new HighScore("Jayden Goo", "16 mar 2022", 91, 2)
 const highScore4DotZero17 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4DotZero18 = new HighScore("Nil", "Nil", 0, 0)
 
 const highScore5DotZero = new HighScore("Sheyanne Cheong", "19 March 2022", 453, 5)
 const highScore5DotZero1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
@@ -1693,6 +1694,68 @@ function updateProblems(){
     ctx.restore();
   }
 
+  if ( level == 4.18 ){
+
+    const gridX = 380;
+    const gridY = 210;
+    ctx.font = "1em serif"
+    ctx.fillText(`From point O facing ${p.choice}, turn ${p.angleTurn} ${p.direction}.`, 20, 20)
+    ctx.fillText(`Now facing ___?`, 20, 40)
+
+    ctx.save()
+      ctx.translate(200, 137.5)
+
+        ctx.save()
+          // horizontal
+          ctx.setLineDash([1,1]);
+          ctx.beginPath();
+          ctx.moveTo(-60, 0)
+          ctx.lineTo(60, 0)
+          ctx.stroke();
+
+          // vertical
+          ctx.setLineDash([1,1]);
+          ctx.beginPath();  
+          ctx.moveTo(0, -60)
+          ctx.lineTo(0, 60)
+          ctx.stroke();
+
+          // diagonal from left
+          ctx.setLineDash([1,1]);
+          ctx.beginPath();  
+          ctx.moveTo(-60, -60)
+          ctx.lineTo(60, 60)
+          ctx.stroke();
+
+          // diagonal from right
+          ctx.setLineDash([1,1]);
+          ctx.beginPath();  
+          ctx.moveTo(60, -60)
+          ctx.lineTo(-60, 60)
+          ctx.stroke();
+
+        ctx.restore();
+    
+      ctx.save()
+      
+        // fill in text
+        ctx.font = "1.5em serif"
+        let a = 0;
+        ctx.fillStyle = "red"
+        const alignmentX = -8
+        const alignmentY = 7
+        for (let i = -60 ; i <= 60; i += 60 ) {
+          ctx.fillText(`${arr[a]}`, i+alignmentX, -60+alignmentY)
+          ctx.fillText(`${arr[3+a]}`, i+alignmentX, 0+alignmentY)
+          ctx.fillText(`${arr[6+a]}`, i+alignmentX, 60+alignmentY)
+          a++
+        }
+
+      ctx.restore();
+
+    ctx.restore()
+  }
+
   if ( level == 5.0 ){
     
     let alignXText = 15;
@@ -2760,6 +2823,23 @@ function handleSubmit(e){
         }
       }
 
+      if ( level == 4.18 ){
+        const index = arr2.indexOf(p.choice)
+        if (p.direction == "counter-clockwise"){
+          p.angleTurn = 360-p.angleTurn
+        }
+        const intervalsTurned = p.angleTurn/45
+        let finalIndex = index+intervalsTurned
+        console.log(index, intervalsTurned, arr[index], finalIndex)
+        if (finalIndex == 8){
+          finalIndex = 0
+        }  
+        if (finalIndex > 8) {
+            finalIndex -= 8
+          }
+        correctAnswer = arr2[finalIndex]
+      }
+
       if ( level == 5.0) {
         if (p.sidesBH == "base"){
           correctAnswer = `${p.labelABC}${p.labelGHI}`
@@ -2932,7 +3012,10 @@ function handleSubmit(e){
           arr2.length = 0;
           arr3.length = 0;
         }
-
+        if ( level == 4.18){
+          arr = ["A","B","C","D","O","F","G","H","I"]
+        }
+        
         console.log("new questions generated")
         updateProblems()
         
@@ -3491,9 +3574,20 @@ function genProblems(){
 
   if ( level == 4.17){
     return {
-      choice: ["A","B","C","D","E","F","G","H","I"][genNumbers(9)],
+      choice: ["A","B","C","D", "E", "F","G","H","I"][genNumbers(9)],
       compass: ["north","north-east","east","south-east","south","south-west","west","north-west"][genNumbers(8)],
-      roll: [1, 2][genNumbers(2)]
+      roll: [1, 2][genNumbers(2)],
+     
+
+    }
+  }
+
+  if ( level == 4.18){
+    return {
+      choice: ["A","B","C","D","F","G","H","I"][genNumbers(8)],
+      roll: [1, 2][genNumbers(2)],
+      angleTurn: (genNumbers(8)+1)*45,
+      direction: ["clockwise","counter-clockwise"][genNumbers(2)],
     }
   }
 
@@ -4335,6 +4429,20 @@ for (let i = 0; i <  settingButton.length; i++){
       firstCanvas.classList.remove('hidden');
       arr = ["A","B","C","D","E","F","G","H","I"]
       compassArr= ["north","north-east","east","south-east","south","south-west","west","north-west"]
+      document.querySelector("#user-input").setAttribute("type","text");
+    break;
+
+    case "Level 4.18":
+      level = 4.18;
+      scoreNeeded = 20;
+      gold = highScore4DotZero18.time;
+      highScoreName.innerHTML = highScore4DotZero18.name
+      highScoreTime.innerHTML = highScore4DotZero18.time
+      highScoreMistakes.innerHTML = highScore4DotZero18.mistake
+      wholeNumberContainer.classList.add('hidden');
+      firstCanvas.classList.remove('hidden');
+      arr = ["A","B","C","D","O","F","G","H","I"]
+      arr2 = ["B","C","F","I","H","G","D","A"]
       document.querySelector("#user-input").setAttribute("type","text");
     break;
 
