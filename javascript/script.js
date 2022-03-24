@@ -3894,7 +3894,7 @@ function levelBox(){
 
 for (let i = 0; i <  settingButton.length; i++){
 
-  settingButton[i].addEventListener("click", function(){
+  settingButton[i].addEventListener("dblclick", function(){
     buttonLevel = this.innerHTML
     mulLevel = "nil"
 
