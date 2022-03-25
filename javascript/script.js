@@ -4218,21 +4218,21 @@ for (let i = 0; i <  settingButton.length; i++){
     switch (buttonLevel) {
       case "Level 1.0":
         level = 1.0;
-        scoreNeeded = 1;
+        scoreNeeded = 50;
         gold = highScore1DotZero.time
         silver = highScore1DotZero.time+((cutoff-highScore1DotZero.time)/3)
         bronze = highScore1DotZero.time+((cutoff-highScore1DotZero.time)/3)*2
         highScoreName.innerHTML = highScore1DotZero.name
         highScoreTime.innerHTML = highScore1DotZero.time
         highScoreMistakes.innerHTML = highScore1DotZero.mistake
-        break;
+      break;
   
       case "Level 1.01":
         level = 1.01;
         scoreNeeded = 50;
-        gold = 100;
-        silver = 110;
-        bronze = 120;
+        gold = highScore1DotZero1.time
+        silver = highScore1DotZero.time+((cutoff-highScore1DotZero1.time)/3)
+        bronze = highScore1DotZero.time+((cutoff-highScore1DotZero1.time)/3)*2
         highScoreName.innerHTML = highScore1DotZero1.name
         highScoreTime.innerHTML = highScore1DotZero1.time
         highScoreMistakes.innerHTML = highScore1DotZero1.mistake
