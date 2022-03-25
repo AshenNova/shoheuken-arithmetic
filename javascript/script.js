@@ -73,6 +73,7 @@ canvas.addEventListener('click', function(event){
 
 let level = 0;
 let player = 1;
+let levelArr = [];
 let arr = [];
 let arr2 = [];
 let arr3 = [];
@@ -91,6 +92,9 @@ function HighScore(name, date, time, mistake) {
 }
 
 const highScore1DotZero = new HighScore("Jayden Cheong", "16 October 2021", 140, 1)
+const levelBtn1Zero = document.querySelector(".btn-level-one")
+let levelBtn1ZeroCount = 0;
+
 const highScore1DotZero1 = new HighScore("Jayden Cheong", "16 October 2021", 823, 12)
 const highScore1DotZero2 = new HighScore("Nil", "16 October 2021", 0, 0)
 const highScore1DotZero3 = new HighScore("Maegan Lim", "18 March 2022", 162, 1)
@@ -112,6 +116,7 @@ const highScore3DotZero4 = new HighScore("Amanda Poon", "12 March 2022", 229, 0)
 const highScore3DotZero5 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero6 = new HighScore("Yuki Chin", "20 mar 2022", 299, 3)
 const highScore3DotZero7 = new HighScore("Sheyanne Cheong", "12 March 2022", 80, 0)
+const highScore3DotZero8 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero9 = new HighScore("Maegan Lim", "20 March 2022", 1676, 3)
 const highScore3DotZero10 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero11 = new HighScore("Nil", "Nil", 0, 0)
@@ -151,6 +156,7 @@ const highScore6DotZero = new HighScore("Jayden Goo", "16 March 2022", 143, 0)
 const highScore6Dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
 
+
 // Storing of question
 let state = {
   score: 0,
@@ -164,6 +170,11 @@ function clickStart(){
   startBox.classList.add('hidden');
   multiplesSettingCl.classList.add('hidden');
   countDownTimer.classList.remove('hidden');
+  // if (levelArr.length != 0){
+  //   buttonStart.innerHTML = `Level ${levelArr[0]}`
+  //   buttonLevel = buttonStart.innerHTML
+  //   switchButton();
+  // }
     
   // Timer1 countdown
   let time = 3;
@@ -875,6 +886,139 @@ function updateProblems(){
     }
     arr.push(p.numOne, p.numTwo, p.numThree);
     displayProblem.innerHTML = `${p.numOne} , ${p.numTwo} , ${p.numThree}`
+  }
+
+  if ( level == 3.08){
+
+    if (p.hoursOne > p.hoursTwo){
+      [p.hoursOne, p.hoursTwo] = [p.hoursTwo, p.hoursOne]
+    }
+    if (p.amOrPmOne < 12){
+      p.amOrPmOne = "a.m"
+    }
+    if (p.amOrPmTwo < 12){
+      p.amOrPmTwo = "a.m"
+    }
+    if (p.hoursOne > 12){
+      p.hoursOne -= 12
+    }
+    if (p.hoursTwo > 12){
+      p.hoursTwo -= 12
+    }
+    if (p.hoursOne > p.hoursTwo){
+      [p.hoursOne, p.hoursTwo] = [p.hoursTwo, p.hoursOne]
+    }
+    // swap mins if hours same
+    if (p.hoursOne == p.hoursTwo && p.minsOne > p.minsTwo){
+      [p.minsOne, p.minsTwo] = [p.minsTwo, p.minsOne]
+    }
+
+    ctx.save()
+      ctx.save()
+        ctx.font = ("1em serif")
+        if (p.minsOne < 10 && p.minsTwo < 10){
+          if (p.minsOne == 0 && p.minsTwo == 0){
+            ctx.fillText(`What is the duration between ${p.hoursOne} ${p.amOrPmOne} and ${p.hoursTwo} ${p.amOrPmTwo}`, 20, 20)
+          } else {
+            ctx.fillText(`What is the duration between ${p.hoursOne}.0${p.minsOne} ${p.amOrPmOne} and ${p.hoursTwo}.0${p.minsTwo} ${p.amOrPmTwo}`, 20, 20)
+          }
+        } else if (p.minsOne < 10){
+          if (p.minsOne == 0){
+            ctx.fillText(`What is the duration between ${p.hoursOne} ${p.amOrPmOne} and ${p.hoursTwo}.${p.minsTwo} ${p.amOrPmTwo}`, 20, 20)
+          } else {
+          ctx.fillText(`What is the duration between ${p.hoursOne}.0${p.minsOne} ${p.amOrPmOne} and ${p.hoursTwo}.${p.minsTwo} ${p.amOrPmTwo}`, 20, 20)
+          }
+        } else if (p.minsTwo < 10){
+            if (p.minsTwo == 0){
+              ctx.fillText(`What is the duration between ${p.hoursOne}.${p.minsOne} ${p.amOrPmOne} and ${p.hoursTwo} ${p.amOrPmTwo}`, 20, 20)
+            } else {
+            ctx.fillText(`What is the duration between ${p.hoursOne}.${p.minsOne} ${p.amOrPmOne} and ${p.hoursTwo}.0${p.minsTwo} ${p.amOrPmTwo}`, 20, 20)
+            }
+        } else {
+          ctx.fillText(`What is the duration between ${p.hoursOne}.${p.minsOne} ${p.amOrPmOne} and ${p.hoursTwo}.${p.minsTwo} ${p.amOrPmTwo}`, 20, 20)
+        }
+      ctx.restore()
+      
+      ctx.save()
+        const xStart = -150
+        const yStart = 0
+        const xEnd = 160
+        const yEnd = 0
+        ctx.font = ("1.2em serif")
+        ctx.translate(200, 137.5)
+        // horizontal line
+        ctx.lineWidth = 2;
+        ctx.beginPath()
+        ctx.moveTo(xStart, yStart)
+        ctx.lineTo(xEnd, yEnd)
+        ctx.stroke();
+        // arrowhead
+        ctx.beginPath()
+        ctx.moveTo(160, 0)
+        ctx.lineTo(150, -10)
+        ctx.stroke();
+
+        ctx.beginPath
+        ctx.moveTo(160, 0)
+        ctx.lineTo(150, 10)
+        ctx.stroke();
+
+        // start label
+        ctx.beginPath()
+        ctx.moveTo(-150,15)
+        ctx.lineTo(-150, -15)
+        ctx.stroke()
+        if (p.minsOne < 10){
+          ctx.fillText(`${p.hoursOne}.0${p.minsOne} ${p.amOrPmOne}`, -163, -17)
+        } else {
+        ctx.fillText(`${p.hoursOne}.${p.minsOne} ${p.amOrPmOne}`, -163, -17)
+        }
+
+        // end label
+        ctx.beginPath()
+        ctx.moveTo(140,15)
+        ctx.lineTo(140, -15)
+        ctx.stroke()
+        if (p.minsTwo < 10){
+          ctx.fillText(`${p.hoursTwo}.0${p.minsTwo} ${p.amOrPmTwo}`, 120, -17)
+        } else {
+        ctx.fillText(`${p.hoursTwo}.${p.minsTwo} ${p.amOrPmTwo}`, 120, -17)
+        }
+
+        ctx.save()
+        ctx.strokeStyle = "red";
+          if (p.minsTwo > p.minsOne){
+            const totalTime = (p.hoursTwo-p.hoursOne)*60+(p.minsTwo-p.minsOne)
+            const perPixel = totalTime/290
+            const xHelp = perPixel*(p.minsTwo-p.minsOne)
+            
+            ctx.beginPath()
+            ctx.moveTo(xStart+xHelp ,10)
+            ctx.lineTo(xStart+xHelp ,-10)
+            ctx.stroke();
+          }
+          if (p.minsTwo < p.minsOne){
+
+            const totalTime = (p.hoursTwo-p.hoursOne-1)*60+(60-p.minsOne)+p.minsTwo
+            const perPixel = totalTime/290
+            const xHelp = perPixel*(60-p.minsOne)
+            
+            ctx.beginPath()
+            ctx.moveTo(xStart+xHelp ,10)
+            ctx.lineTo(xStart+xHelp ,-10)
+            ctx.stroke();
+
+            const xHelp2 = perPixel*(totalTime-p.minsTwo)
+            ctx.beginPath()
+            ctx.moveTo(xStart+xHelp2 ,10)
+            ctx.lineTo(xStart+xHelp2 ,-10)
+            ctx.stroke();
+          }
+        ctx.restore()
+
+      ctx.restore();  
+
+    ctx.restore()
   }
   
   if ( level == 3.09 ){
@@ -2439,7 +2583,32 @@ function handleSubmit(e){
           } 
         correctAnswer = commonMultipleArrTwo[commonMultipleArrTwo.length-1];
       }
-    
+      
+      if ( level == 3.08 ){
+        if (p.amOrPmOne == "p.m"){
+          p.hoursOne += 12
+        }
+        if (p.amOrPmTwo == "p.m"){
+          p.hoursTwo += 12
+        }
+        if (p.minsTwo > p.minsOne){
+          if (p.hoursOne == p.hoursTwo){
+            correctAnswer = `${p.minsTwo-p.minsOne}mins`
+          } else if (p.minsTwo == 0) {
+            correctAnswer = `${60-p.minsOne}+${p.hoursTwo-p.hoursOne-1}`
+          } else {
+          correctAnswer = `${p.minsTwo-p.minsOne}mins+${p.hoursTwo-p.hoursOne}h`
+          }
+        }
+        if (p.minsTwo < p.minsOne){
+          if (p.hoursTwo-p.hoursOne == 1){
+            correctAnswer = `${60-p.minsOne}mins+${p.minsTwo}mins`
+          } else {
+           correctAnswer = `${60-p.minsOne}mins+${p.hoursTwo-p.hoursOne-1}h+${p.minsTwo}mins`
+          }    
+        }
+      }
+
       if ( level == 3.09){
         for (let i = p.numLargest; i > 1; i--){
           if ((p.numOne % i == 0) && (p.numTwo % i == 0)){
@@ -3312,6 +3481,17 @@ function genProblems(){
       numThree: genNumbers(5)+1,
     }
   }
+
+  if (level == 3.08){
+    return {
+      hoursOne: genNumbers(24)+1,
+      minsOne: genNumbers(60),
+      hoursTwo: genNumbers(24)+1,
+      minsTwo: genNumbers(60),
+      amOrPmOne: "p.m",
+      amOrPmTwo: "p.m"
+    }
+  }
   
   if (level == 3.09){
     return {
@@ -3898,754 +4078,7 @@ for (let i = 0; i <  settingButton.length; i++){
     buttonLevel = this.innerHTML
     mulLevel = "nil"
 
-  switch (buttonLevel) {
-    case "Level 1.0":
-      level = 1.0;
-      scoreNeeded = 1;
-      gold = 100;
-      silver = 120;
-      bronze = 140;
-      highScoreName.innerHTML = highScore1DotZero.name
-      highScoreTime.innerHTML = highScore1DotZero.time
-      highScoreMistakes.innerHTML = highScore1DotZero.mistake
-      break;
-
-    case "Level 1.01":
-      level = 1.01;
-      scoreNeeded = 50;
-      gold = 100;
-      silver = 110;
-      bronze = 120;
-      highScoreName.innerHTML = highScore1DotZero1.name
-      highScoreTime.innerHTML = highScore1DotZero1.time
-      highScoreMistakes.innerHTML = highScore1DotZero1.mistake
-      break;
-
-    case "Level 1.02":
-      level = 1.02;
-      scoreNeeded = 50;
-      highScoreName.innerHTML = highScore1DotZero2.name
-      highScoreTime.innerHTML = highScore1DotZero2.time
-      highScoreMistakes.innerHTML = highScore1DotZero2.mistake
-      break;
-
-    case "Level 1.03":
-      level = 1.03;
-      scoreNeeded = 50;
-      gold = 162;
-      highScoreName.innerHTML = highScore1DotZero3.name
-      highScoreTime.innerHTML = highScore1DotZero3.time
-      highScoreMistakes.innerHTML = highScore1DotZero3.mistake
-      break;
-    
-    case "Level 1.04":
-      level = 1.04;
-      scoreNeeded = 30;
-      gold = highScore1DotZero4.time
-      highScoreName.innerHTML = highScore1DotZero4.name
-      highScoreTime.innerHTML = highScore1DotZero4.time
-      highScoreMistakes.innerHTML = highScore1DotZero5.mistake
-      document.querySelector("#user-input").setAttribute("type","text");
-      instructions.innerHTML = `
-      1 + 2 = 3</br>
-      c ± d = r </br>
-      Use: 'c+', 'c-', 'd-', 'r+' or 'r-' `
-      break;
-
-    case "Level 1.05":
-      level = 1.05;
-      scoreNeeded = 30;
-      gold = highScore1DotZero5.name
-      highScoreName.innerHTML = highScore1DotZero5.name
-      highScoreTime.innerHTML = highScore1DotZero5.time
-      highScoreMistakes.innerHTML = highScore1DotZero5.mistake
-      document.querySelector("#user-input").setAttribute("type","text");
-      instructions.innerHTML = "Answer using</br> 'c+', 'c-', 'd-', 'r+' or 'r-' "
-      break;
-
-    case "Level 1.06":
-      level = 1.06;
-      scoreNeeded = 30;
-      gold = 436;
-      highScoreName.innerHTML = highScore1DotZero6.name
-      highScoreTime.innerHTML = highScore1DotZero6.time
-      highScoreMistakes.innerHTML = highScore1DotZero5.mistake
-      instructions.textContent = ""
-      break;
-
-    case "Level 1.07":
-      level = 1.07;
-      scoreNeeded = 30;
-      gold = highScore1DotZero7.time;
-      highScoreName.innerHTML = highScore1DotZero7.name
-      highScoreTime.innerHTML = highScore1DotZero7.time
-      highScoreMistakes.innerHTML = highScore1DotZero7.mistake
-      displayProblem.style.fontSize = "25px";
-      document.querySelector("#user-input").style.marginTop = "100px";
-    break  
-
-    case "Level 2.0":
-      level = 2.0;
-      scoreNeeded = 50;
-      highScoreName.innerHTML = highScore2DotZero.name
-      highScoreTime.innerHTML = highScore2DotZero.time
-      highScoreMistakes.innerHTML = highScore2DotZero.mistake
-    break;
-
-    case "Level 2.01":
-      level = 2.01;
-      scoreNeeded = 50;
-      gold = 780
-      highScoreName.innerHTML = highScore2DotZero1.name
-      highScoreTime.innerHTML = highScore2DotZero1.time
-      highScoreMistakes.innerHTML = highScore2DotZero1.mistake
-    break;
-
-    case "Level 2.02":
-      level = 2.02;
-      scoreNeeded = 30;
-      highScoreName.innerHTML = highScore2DotZero2.name
-      highScoreTime.innerHTML = highScore2DotZero2.time
-      highScoreMistakes.innerHTML = highScore2DotZero2.mistake
-      displayProblem.style.fontSize = "25px";
-      digit = prompt("How many digits? (3-7 only)")
-      arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-    break;
-
-    case "Level 2.03":
-      level = 2.03;
-      scoreNeeded = 50;
-      gold = highScore2DotZero3.time;
-      highScoreName.innerHTML = highScore2DotZero3.name
-      highScoreTime.innerHTML = highScore2DotZero3.time
-      highScoreMistakes.innerHTML = highScore2DotZero3.mistake
-    break;
-
-    case "Level 2.05":
-      level = 2.05;
-      scoreNeeded = 30;
-      digit = prompt("How many digits? (3-7 only)")
-      arr = [0, 1, 2, 3, 4, 5, 6, 7 ,8 ,9]
-      highScoreName.innerHTML = highScore2DotZero5.name
-      highScoreTime.innerHTML = highScore2DotZero5.time
-      highScoreMistakes.innerHTML = highScore2DotZero5.mistake
-      instructions.textContent = "Form the Number"
-      displayProblem.style.fontSize = "25px";
-      document.querySelector("#user-input").setAttribute("type","text");
-    break;
-
-    case "Level 2.07":
-      level = 2.07;
-      scoreNeeded = 50;
-      gold = 110
-      highScoreName.innerHTML = highScore2DotZero7.name
-      highScoreTime.innerHTML = highScore2DotZero7.time
-      highScoreMistakes.innerHTML = highScore2DotZero7.mistake
-      wholeNumberContainer.classList.add('hidden');
-      fractionsContainer.classList.remove('hidden');
-      instructions.textContent = "Answer using '1' or '2' only"
-      break;
-
-    case "Level 3.0":
-      level = 3.0;
-      scoreNeeded = 30;
-      highScoreName.innerHTML = highScore3DotZero.name
-      highScoreTime.innerHTML = highScore3DotZero.time
-      highScoreMistakes.innerHTML = highScore3DotZero.mistake
-      break;
-
-    case "Level 3.01":
-      level = 3.01;
-      scoreNeeded = 30;
-      highScoreName.innerHTML = highScore3DotZero1.name
-      highScoreTime.innerHTML = highScore3DotZero1.time
-      highScoreMistakes.innerHTML = highScore3DotZero1.mistake
-      break;
-    
-    case "Level 3.02":
-      level = 3.02;
-      scoreNeeded = 30;
-      gold = 141
-      silver = 230;
-      highScoreName.innerHTML = highScore3DotZero2.name
-      highScoreTime.innerHTML = highScore3DotZero2.time
-      highScoreMistakes.innerHTML = highScore3DotZero2.mistake
-      document.querySelector("#user-input").setAttribute("max","9999999")
-      break;
-        
-    case "Level 3.03":
-      level = 3.03;
-      scoreNeeded = 30;
-      highScoreName.innerHTML = highScore3DotZero3.name
-      highScoreTime.innerHTML = highScore3DotZero3.time
-      highScoreMistakes.innerHTML = highScore3DotZero3.mistake
-      break;
-
-    case "Level 3.04":
-      level = 3.04;
-      scoreNeeded = 30;
-      gold = 284
-      silver = 521;
-      highScoreName.innerHTML = highScore3DotZero4.name
-      highScoreTime.innerHTML = highScore3DotZero4.time
-      highScoreMistakes.innerHTML = highScore3DotZero4.mistake
-      break;
-
-    case "Level 3.05":
-      level = 3.05;
-      scoreNeeded = 30;
-      highScoreName.innerHTML = highScore3DotZero5.name
-      highScoreTime.innerHTML = highScore3DotZero5.time
-      highScoreMistakes.innerHTML = highScore3DotZero5.mistake
-      break;
-
-    case "Level 3.06":
-      level = 3.06;
-      scoreNeeded = 30;
-      gold = highScore3DotZero6.time
-      highScoreName.innerHTML = highScore3DotZero6.name
-      highScoreTime.innerHTML = highScore3DotZero6.time
-      highScoreMistakes.innerHTML = highScore3DotZero6.mistake
-      document.querySelector("#user-input").setAttribute("type","text");
-      instructions.innerHTML = 
-      `Do not leave any spaces.</br>
-      Answer using capital 'L' and 'ml' for volume`
-      helpMe.textContent = `Include units`
-      break;
-
-    case "Level 3.07":
-      level = 3.07;
-      scoreNeeded = 30;
-      gold = 80
-      highScoreName.innerHTML = highScore3DotZero7.name
-      highScoreTime.innerHTML = highScore3DotZero7.time
-      highScoreMistakes.innerHTML = highScore3DotZero7.mistake
-      instructions.textContent = "Find the Lowest Common Multiple of the 3 numbers"
-      break;
-
-  
-    case "Level 3.09":
-      level = 3.09;
-      scoreNeeded = 30;
-      gold = highScore3DotZero9.time;
-      highScoreName.innerHTML = highScore3DotZero9.name
-      highScoreTime.innerHTML = highScore3DotZero9.time
-      highScoreMistakes.innerHTML = highScore3DotZero9.mistake
-      wholeNumberContainer.classList.add('hidden');
-      fractionsContainerTwo.classList.remove('hidden');
-      document.querySelector("#user-input").setAttribute("type","text");
-      instructions.textContent = "Formate: 2/3"
-      break;
-
-    case "Level 3.10":
-        level = 3.10;
-        scoreNeeded = 30;
-        highScoreName.innerHTML = highScore3DotZero10.name
-        highScoreTime.innerHTML = highScore3DotZero10.time
-        highScoreMistakes.innerHTML = highScore3DotZero10.mistake
-        wholeNumberContainer.classList.add('hidden');
-        fractionsContainerTwo.classList.remove('hidden');
-        document.querySelector("#user-input").setAttribute("type","text");
-        instructions.textContent = ""
-        break;
-    
-    case "Level 3.11":
-      level = 3.11;
-      scoreNeeded = 30;
-      highScoreName.innerHTML = highScore3DotZero11.name
-      highScoreTime.innerHTML = highScore3DotZero11.time
-      highScoreMistakes.innerHTML = highScore3DotZero11.mistake
-      wholeNumberContainer.classList.add('hidden');
-      fractionsContainerTwo.classList.remove('hidden');
-      document.querySelector("#user-input").setAttribute("type","text");
-      instructions.textContent = ""
-      break;   
-    
-    case "Level 3.12":
-      level = 3.12;
-      scoreNeeded = 20;
-      gold = 72;
-      highScoreName.innerHTML = highScore3DotZero12.name
-      highScoreTime.innerHTML = highScore3DotZero12.time
-      highScoreMistakes.innerHTML = highScore3DotZero12.mistake
-      document.querySelector("#user-input").setAttribute("type","text");
-      displayProblem.style.fontSize = "25px";
-      displayProblem.style.marginTop = "0";
-      instructions.textContent = "Form an Equation from the pattern"
-    break;      
-
-    case "Level 3.13":
-      level = 3.13;
-      scoreNeeded = 20;
-      gold = 471;
-      highScoreName.innerHTML = highScore3DotZero13.name
-      highScoreTime.innerHTML = highScore3DotZero13.time
-      highScoreMistakes.innerHTML = highScore3DotZero13.mistake
-      document.querySelector("#user-input").setAttribute("type","text");
-      displayProblem.style.fontSize = "25px";
-      displayProblem.style.marginTop = "0";
-      instructions.textContent = "Form an Equation using 'n' from the pattern and provide an answer"
-    break;
-
-    case "Level 3.14":
-      level = 3.14;
-      scoreNeeded = 20;
-      gold = highScore3DotZero14.time;
-      highScoreName.innerHTML = highScore3DotZero14.name
-      highScoreTime.innerHTML = highScore3DotZero14.time
-      highScoreMistakes.innerHTML = highScore3DotZero14.mistake
-      document.querySelector("#user-input").setAttribute("type","text");
-      displayProblem.style.fontSize = "25px";
-      displayProblem.style.marginTop = "0";
-      instructions.textContent = "Form an Equation from the pattern and provide an answer"
-    break;
-
-    case "Level 3.15":
-      level = 3.15;
-      scoreNeeded = 20;
-      gold = highScore3DotZero15.time;
-      highScoreName.innerHTML = highScore3DotZero15.name
-      highScoreTime.innerHTML = highScore3DotZero15.time
-      highScoreMistakes.innerHTML = highScore3DotZero15.mistake
-      document.querySelector("#user-input").setAttribute("type","text");
-      displayProblem.style.fontSize = "25px";
-      displayProblem.style.marginTop = "0";
-      instructions.textContent = "Form an Equation using 'n' from the pattern and provide an answer"
-    break;
-
-    case "Level 3.16":
-      level = 3.16;
-      scoreNeeded = 20;
-      gold = highScore3DotZero16.time;
-      highScoreName.innerHTML = highScore3DotZero16.name
-      highScoreTime.innerHTML = highScore3DotZero16.time
-      highScoreMistakes.innerHTML = highScore3DotZero16.mistake
-      document.querySelector("#user-input").setAttribute("type","text");
-      wholeNumberContainer.classList.add('hidden');
-      firstCanvas.classList.remove('hidden');
-    break;
-
-    case "Level 3.17":
-      level = 3.17;
-      scoreNeeded = 20;
-      gold = highScore3DotZero17.time;
-      highScoreName.innerHTML = highScore3DotZero17.name
-      highScoreTime.innerHTML = highScore3DotZero17.time
-      highScoreMistakes.innerHTML = highScore3DotZero17.mistake
-      document.querySelector("#user-input").setAttribute("type","text");
-      wholeNumberContainer.classList.add('hidden');
-      firstCanvas.classList.remove('hidden');
-    break;
-
-    case "Level 3.18":
-      level = 3.18;
-      scoreNeeded = 20;
-      gold = highScore3DotZero18.time;
-      highScoreName.innerHTML = highScore3DotZero18.name
-      highScoreTime.innerHTML = highScore3DotZero18.time
-      highScoreMistakes.innerHTML = highScore3DotZero18.mistake
-      wholeNumberContainer.classList.add('hidden');
-      firstCanvas.classList.remove('hidden');
-    break;
-
-    case "Level 4.0":
-      level = 4.0;
-      scoreNeeded = 10;
-      gold = 813;
-      highScoreName.innerHTML = highScore4DotZero.name
-      highScoreTime.innerHTML = highScore4DotZero.time
-      highScoreMistakes.innerHTML = highScore4DotZero.mistake
-      document.querySelector("#user-input").setAttribute("type","text");
-      displayProblem.style.fontSize = "25px";
-      instructions.innerHTML = 
-      `List the factors in pairs</br>
-      in ascending order.
-      `
-    break;
-
-    case "Level 4.01":
-      level = "4.01";
-      scoreNeeded = 30;
-      gold = 229;
-      highScoreName.innerHTML = highScore4DotZero1.name
-      highScoreTime.innerHTML = highScore4DotZero1.time
-      highScoreMistakes.innerHTML = highScore4DotZero1.mistake
-      document.querySelector("#user-input").setAttribute("max","100000")
-      break; 
-      
-    case "Level 4.02":
-      level = "4.02";
-      scoreNeeded = 30;
-      gold = highScore4DotZero1.time;
-      highScoreName.innerHTML = highScore4DotZero1.name
-      highScoreTime.innerHTML = highScore4DotZero1.time
-      highScoreMistakes.innerHTML = highScore4DotZero1.mistake
-      displayProblem.style.fontSize = "25px";
-      arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-    break;    
-    
-    case "Level 4.03":
-      level = "4.03";
-      scoreNeeded = 30;
-      gold = 264;
-      highScoreName.innerHTML = highScore4DotZero3.name
-      highScoreTime.innerHTML = highScore4DotZero3.time
-      highScoreMistakes.innerHTML = highScore4DotZero3.mistake
-      document.querySelector("#user-input").setAttribute("step","0.000001")
-    break;
-
-    case "Level 4.04":
-      level = 4.04;
-      scoreNeeded = 30;
-      gold = 310
-      highScoreName.innerHTML = highScore4DotZero4.name
-      highScoreTime.innerHTML = highScore4DotZero4.time
-      highScoreMistakes.innerHTML = highScore4DotZero4.mistake
-      document.querySelector("#user-input").setAttribute("type","text");
-      break;
-
-    case "Level 4.05":
-      level = 4.05;
-      scoreNeeded = 30;
-      highScoreName.innerHTML = highScore4DotZero5.name
-      highScoreTime.innerHTML = highScore4DotZero5.time
-      highScoreMistakes.innerHTML = highScore4DotZero5.mistake
-      document.querySelector("#user-input").setAttribute("step","0.000001")
-      break;  
-
-    case "Level 4.06":
-      level = 4.06;
-      scoreNeeded = 30;
-      highScoreName.innerHTML = highScore4DotZero6.name
-      highScoreTime.innerHTML = highScore4DotZero6.time
-      highScoreMistakes.innerHTML = highScore4DotZero6.mistake
-      document.querySelector("#user-input").setAttribute("step","0.000001")
-      break;
-     
-    case "Level 4.07":
-      level = 4.07;
-      scoreNeeded = 30;
-      highScoreName.innerHTML = highScore4DotZero7.name
-      highScoreTime.innerHTML = highScore4DotZero7.time
-      highScoreMistakes.innerHTML = highScore4DotZero7.mistake
-      document.querySelector("#user-input").setAttribute("step","0.000001")
-      break;
-
-    case "Level 4.08":
-      level = 4.08;
-      scoreNeeded = 30;
-      gold = 207;
-      highScoreName.innerHTML = highScore4DotZero8.name
-      highScoreTime.innerHTML = highScore4DotZero8.time
-      highScoreMistakes.innerHTML = highScore4DotZero8.mistake
-      document.querySelector("#user-input").setAttribute("step","0.000001")
-      break;  
-
-    case "Level 4.09":
-      level = 4.09;
-      scoreNeeded = 30;
-      highScoreName.innerHTML = highScore4DotZero9.name
-      highScoreTime.innerHTML = highScore4DotZero9.time
-      highScoreMistakes.innerHTML = highScore4DotZero9.mistake
-      wholeNumberContainer.classList.add('hidden');
-      fractionsContainerTwo.classList.remove('hidden');
-      document.querySelector("#user-input").setAttribute("type","text");
-      instructions.innerHTML = `
-      Mixed to Improper Fraction</br>
-      Format: 9/2`
-      break;
-
-    case "Level 4.10":
-      level = 4.10;
-      scoreNeeded = 30;
-      highScoreName.innerHTML = highScore4DotZero10.name
-      highScoreTime.innerHTML = highScore4DotZero10.time
-      highScoreMistakes.innerHTML = highScore4DotZero10.mistake
-      wholeNumberContainer.classList.add('hidden');
-      fractionsContainerTwo.classList.remove('hidden');
-      document.querySelector("#user-input").setAttribute("type","text");
-      instructions.innerHTML = `
-      Improper to Mixed Fractions </br>
-      Format: 2 4/5`
-      break;
-
-    case "Level 4.11":
-      level = 4.11;
-      scoreNeeded = 30;
-      gold = 215;
-      highScoreName.innerHTML = highScore4DotZero11.name
-      highScoreTime.innerHTML = highScore4DotZero11.time
-      highScoreMistakes.innerHTML = highScore4DotZero11.mistake
-      wholeNumberContainer.classList.add('hidden');
-      fractionsContainerTwo.classList.remove('hidden');
-      document.querySelector("#user-input").setAttribute("type","text");
-      instructions.textContent = ""
-      break;
-
-    
-    case "Level 4.12":
-      level = 4.12;
-      scoreNeeded = 30;
-      gold = 134;
-      silver = 153;
-      highScoreName.innerHTML = highScore4DotZero12.name
-      highScoreTime.innerHTML = highScore4DotZero12.time
-      highScoreMistakes.innerHTML = highScore4DotZero12.mistake
-      instructions.textContent = ""
-      displayProblem.style.fontSize = "25px";
-      displayProblem.style.marginBottom = "150px";
-      break;
-
-      case "Level 4.13":
-        level = 4.13;
-        scoreNeeded = 30;
-        gold = 297
-        silver = 376;
-        highScoreName.innerHTML = highScore4DotZero13.name
-        highScoreTime.innerHTML = highScore4DotZero13.time
-        highScoreMistakes.innerHTML = highScore4DotZero13.mistake
-        instructions.textContent = ""
-        displayProblem.style.fontSize = "25px";
-        document.querySelector("#user-input").setAttribute("type","text");
-        break;
-
-    case "Level 4.14":
-        level = 4.14;
-        scoreNeeded = 30;
-        gold = 49;
-        highScoreName.innerHTML = highScore4DotZero14.name
-        highScoreTime.innerHTML = highScore4DotZero14.time
-        highScoreMistakes.innerHTML = highScore4DotZero14.mistake
-        document.querySelector("#user-input").setAttribute("type","text");
-        wholeNumberContainer.classList.add('hidden');
-        fractionsContainerTwo.classList.remove('hidden');
-        equalSymbol.innerHTML = ""
-        instructions.innerHTML =
-        `Answer using</br>
-        r, f, v
-        `
-        threeWholeNumber.textContent = ""
-        threeNumerator.textContent = ""
-        threeDenominator.textContent = ""
-        threeNumerator.classList.remove('line');
-    break;
-
-    case "Level 4.15":
-      level = 4.15;
-      scoreNeeded = 20;
-      gold = 91;
-      highScoreName.innerHTML = highScore4DotZero15.name
-      highScoreTime.innerHTML = highScore4DotZero15.time
-      highScoreMistakes.innerHTML = highScore4DotZero15.mistake
-      document.querySelector("#user-input").setAttribute("type","text");
-      document.querySelector("#user-input").style.width = "250px"
-      displayProblem.style.fontSize = "25px";
-      instructions.innerHTML = 
-      `Answer using:</br>
-      f-f , r+r , vxr</br>
-      fxr , fxv</br>
-      `
-    break;
-
-    case "Level 4.17":
-      level = 4.17;
-      scoreNeeded = 20;
-      gold = highScore4DotZero17.time;
-      highScoreName.innerHTML = highScore4DotZero17.name
-      highScoreTime.innerHTML = highScore4DotZero17.time
-      highScoreMistakes.innerHTML = highScore4DotZero17.mistake
-      wholeNumberContainer.classList.add('hidden');
-      firstCanvas.classList.remove('hidden');
-      arr = ["A","B","C","D","E","F","G","H","I"]
-      compassArr= ["north","north-east","east","south-east","south","south-west","west","north-west"]
-      document.querySelector("#user-input").setAttribute("type","text");
-    break;
-
-    case "Level 4.18":
-      level = 4.18;
-      scoreNeeded = 20;
-      gold = highScore4DotZero18.time;
-      highScoreName.innerHTML = highScore4DotZero18.name
-      highScoreTime.innerHTML = highScore4DotZero18.time
-      highScoreMistakes.innerHTML = highScore4DotZero18.mistake
-      wholeNumberContainer.classList.add('hidden');
-      firstCanvas.classList.remove('hidden');
-      arr = ["A","B","C","D","O","F","G","H","I"]
-      arr2 = ["B","C","F","I","H","G","D","A"]
-      document.querySelector("#user-input").setAttribute("type","text");
-    break;
-
-    case "Level 5.0":
-      level = 5.0;
-      scoreNeeded = 20;
-      gold = highScore5DotZero.time;
-      highScoreName.innerHTML = highScore5DotZero.name
-      highScoreTime.innerHTML = highScore5DotZero.time
-      highScoreMistakes.innerHTML = highScore5DotZero.mistake
-      document.querySelector("#user-input").setAttribute("type","text");
-      wholeNumberContainer.classList.add('hidden');
-      firstCanvas.classList.remove('hidden');
-    break;
-
-    case "Level 5.01":
-      level = 5.01;
-      scoreNeeded = 10;
-      gold = 80;
-      highScoreName.innerHTML = highScore5DotZero1.name
-      highScoreTime.innerHTML = highScore5DotZero1.time
-      highScoreMistakes.innerHTML = highScore5DotZero1.mistake
-      document.querySelector("#user-input").setAttribute("type","text");
-      displayProblem.style.fontSize = "25px";
-      instructions.innerHTML = "Form an equation using</br> multiplication of fraction </br> RC = from x want"
-      break;
-
-    case "Level 5.02":
-      level = 5.02;
-      scoreNeeded = 10;
-      gold = highScore5DotZero2.time;
-      highScoreName.innerHTML = highScore5DotZero2.name
-      highScoreTime.innerHTML = highScore5DotZero2.time
-      highScoreMistakes.innerHTML = highScore5DotZero2.mistake
-      document.querySelector("#user-input").setAttribute("type","text");
-      displayProblem.style.fontSize = "25px";
-      instructions.innerHTML = "Form an equation using in fraction"
-    break;
-    
-    case "Level 5.03":
-      level = 5.03;
-      scoreNeeded = 10;
-      gold = highScore5DotZero3.time;
-      highScoreName.innerHTML = highScore5DotZero3.name
-      highScoreTime.innerHTML = highScore5DotZero3.time
-      highScoreMistakes.innerHTML = highScore5DotZero3.mistake
-      document.querySelector("#user-input").setAttribute("type","text");
-      displayProblem.style.fontSize = "25px";
-      instructions.innerHTML = "Form an equation using</br> multiplication of percentage </br> from/100 x end"
-      userInput.style.width = "200px";
-      break;    
-    
-    case "Level 5.04":
-      level = 5.04;
-      scoreNeeded = 10;
-      gold = 79;
-      highScoreName.innerHTML = highScore5DotZero4.name
-      highScoreTime.innerHTML = highScore5DotZero4.time
-      highScoreMistakes.innerHTML = highScore5DotZero4.mistake
-      document.querySelector("#user-input").setAttribute("type","text");
-      displayProblem.style.fontSize = "25px";
-      break;
-    
-    case "Level 5.05":
-      level = 5.05;
-      scoreNeeded = 20;
-      gold = highScore5DotZero5.time;
-      highScoreName.innerHTML = highScore5DotZero5.name
-      highScoreTime.innerHTML = highScore5DotZero5.time
-      highScoreMistakes.innerHTML = highScore5DotZero5.mistake
-      document.querySelector("#user-input").setAttribute("type","text");
-      wholeNumberContainer.classList.add('hidden');
-      firstCanvas.classList.remove('hidden');
-    break;
-
-    case "Level 6.0":
-      level = 6.0;
-      scoreNeeded = 10;
-      gold = 143
-      highScoreName.innerHTML = highScore6DotZero.name
-      highScoreTime.innerHTML = highScore6DotZero.time
-      highScoreMistakes.innerHTML = highScore6DotZero.mistake
-      document.querySelector("#user-input").setAttribute("type","text");
-      displayProblem.style.fontSize = "25px";
-    break;
-
-    case "Level 6.3":
-      level = 6.3;
-      scoreNeeded = 30;
-      highScoreName.innerHTML = highScore6Dot3.name
-      highScoreTime.innerHTML = highScore6Dot3.time
-      highScoreMistakes.innerHTML = highScore6Dot3.mistake
-      break;
-    
-    case "Level 7":
-      level = 7;
-      scoreNeeded = 30;
-      break;
-
-    case "Multiples 1":
-      level = "1 times table";
-      mulLevel = "multiples"
-      scoreNeeded = 13;
-      break;
-     
-    case "Multiples 2":
-      level = "2 times table";
-      mulLevel = "multiples"
-      scoreNeeded = 13;
-      break;
-      
-    case "Multiples 3":
-      level = "3 times table";
-      mulLevel = "multiples"
-      scoreNeeded = 13;
-      break;   
-
-    case "Multiples 4":
-      level = "4 times table";
-      mulLevel = "multiples"
-      scoreNeeded = 13;
-      break;   
-
-    case "Multiples 5":
-      level = "5 times table";
-      mulLevel = "multiples"
-      scoreNeeded = 13;
-      break;   
-      case "Multiples 6":
-      level = "6 times table";
-      mulLevel = "multiples"
-      scoreNeeded = 13;
-      break;
-     
-    case "Multiples 7":
-      level = "7 times table";
-      mulLevel = "multiples"
-      scoreNeeded = 13;
-      break;
-      
-    case "Multiples 8":
-      level = "8 times table";
-      mulLevel = "multiples"
-      scoreNeeded = 13;
-      break;   
-
-    case "Multiples 9":
-      level = "9 times table";
-      mulLevel = "multiples"
-      scoreNeeded = 13;
-      break;   
-
-    case "Multiples 10":
-      level = "10 times table";
-      mulLevel = "multiples"
-      scoreNeeded = 13;
-      break;
-
-    case "Multiples 11":
-      level = "11 times table";
-      mulLevel = "multiples"
-      scoreNeeded = 13;
-      break;
-
-    case "Multiples 12":
-      level = "12 times table";
-      mulLevel = "multiples"
-      scoreNeeded = 13;
-      break;              
-
-    default:
-      console.log(this.innerHTML);
-    }
-
+    switchButton();
     levelBox();
     });
   }
@@ -4662,3 +4095,807 @@ for (let i = 0; i <  settingButton.length; i++){
     }
     console.log(hardcore)
   })
+
+
+  // SINGLE CLICK
+  // for (let i = 0; i <  settingButton.length; i++){
+  //   settingButton[i].addEventListener("click", function(){
+  //     buttonLevel = this.innerHTML
+
+  //     switch(buttonLevel){ 
+  //       case "Level 1.0":
+  //         level = 1.0
+  //         levelBtn1Zero.classList.toggle("btn-select")
+  //         if (levelBtn1ZeroCount == 0){
+  //           levelBtn1ZeroCount = 1
+  //         } else {
+  //           levelBtn1ZeroCount = 0
+  //         }
+  //       break
+
+  //       case "Level 1.01":
+  //         level = 1.01;
+
+  //       break;
+
+  //       case "Level 1.02":
+  //         level = 1.02;
+
+  //       break;
+  //     }
+      
+  //     let indexLevel = levelArr.indexOf(level)
+  //     console.log(indexLevel)
+
+  //     if (indexLevel >= 0){
+  //       levelArr.splice(indexLevel, 1);
+  //     } else {
+  //       levelArr.push(level);
+  //     }
+      
+  //     console.log(levelArr);
+  //     console.log("single click detected")
+  //   })
+  // }
+
+  // LEVEL SETTINGS
+  function switchButton(){
+    switch (buttonLevel) {
+      case "Level 1.0":
+        level = 1.0;
+        scoreNeeded = 50;
+        gold = 100;
+        silver = 120;
+        bronze = 140;
+        highScoreName.innerHTML = highScore1DotZero.name
+        highScoreTime.innerHTML = highScore1DotZero.time
+        highScoreMistakes.innerHTML = highScore1DotZero.mistake
+        break;
+  
+      case "Level 1.01":
+        level = 1.01;
+        scoreNeeded = 50;
+        gold = 100;
+        silver = 110;
+        bronze = 120;
+        highScoreName.innerHTML = highScore1DotZero1.name
+        highScoreTime.innerHTML = highScore1DotZero1.time
+        highScoreMistakes.innerHTML = highScore1DotZero1.mistake
+        break;
+  
+      case "Level 1.02":
+        level = 1.02;
+        scoreNeeded = 50;
+        highScoreName.innerHTML = highScore1DotZero2.name
+        highScoreTime.innerHTML = highScore1DotZero2.time
+        highScoreMistakes.innerHTML = highScore1DotZero2.mistake
+        break;
+  
+      case "Level 1.03":
+        level = 1.03;
+        scoreNeeded = 50;
+        gold = 162;
+        highScoreName.innerHTML = highScore1DotZero3.name
+        highScoreTime.innerHTML = highScore1DotZero3.time
+        highScoreMistakes.innerHTML = highScore1DotZero3.mistake
+        break;
+      
+      case "Level 1.04":
+        level = 1.04;
+        scoreNeeded = 30;
+        gold = highScore1DotZero4.time
+        highScoreName.innerHTML = highScore1DotZero4.name
+        highScoreTime.innerHTML = highScore1DotZero4.time
+        highScoreMistakes.innerHTML = highScore1DotZero5.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        instructions.innerHTML = `
+        1 + 2 = 3</br>
+        c ± d = r </br>
+        Use: 'c+', 'c-', 'd-', 'r+' or 'r-' `
+        break;
+  
+      case "Level 1.05":
+        level = 1.05;
+        scoreNeeded = 30;
+        gold = highScore1DotZero5.name
+        highScoreName.innerHTML = highScore1DotZero5.name
+        highScoreTime.innerHTML = highScore1DotZero5.time
+        highScoreMistakes.innerHTML = highScore1DotZero5.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        instructions.innerHTML = "Answer using</br> 'c+', 'c-', 'd-', 'r+' or 'r-' "
+        break;
+  
+      case "Level 1.06":
+        level = 1.06;
+        scoreNeeded = 30;
+        gold = 436;
+        highScoreName.innerHTML = highScore1DotZero6.name
+        highScoreTime.innerHTML = highScore1DotZero6.time
+        highScoreMistakes.innerHTML = highScore1DotZero5.mistake
+        instructions.textContent = ""
+        break;
+  
+      case "Level 1.07":
+        level = 1.07;
+        scoreNeeded = 30;
+        gold = highScore1DotZero7.time;
+        highScoreName.innerHTML = highScore1DotZero7.name
+        highScoreTime.innerHTML = highScore1DotZero7.time
+        highScoreMistakes.innerHTML = highScore1DotZero7.mistake
+        displayProblem.style.fontSize = "25px";
+        document.querySelector("#user-input").style.marginTop = "100px";
+      break  
+  
+      case "Level 2.0":
+        level = 2.0;
+        scoreNeeded = 50;
+        highScoreName.innerHTML = highScore2DotZero.name
+        highScoreTime.innerHTML = highScore2DotZero.time
+        highScoreMistakes.innerHTML = highScore2DotZero.mistake
+      break;
+  
+      case "Level 2.01":
+        level = 2.01;
+        scoreNeeded = 50;
+        gold = 780
+        highScoreName.innerHTML = highScore2DotZero1.name
+        highScoreTime.innerHTML = highScore2DotZero1.time
+        highScoreMistakes.innerHTML = highScore2DotZero1.mistake
+      break;
+  
+      case "Level 2.02":
+        level = 2.02;
+        scoreNeeded = 30;
+        highScoreName.innerHTML = highScore2DotZero2.name
+        highScoreTime.innerHTML = highScore2DotZero2.time
+        highScoreMistakes.innerHTML = highScore2DotZero2.mistake
+        displayProblem.style.fontSize = "25px";
+        digit = prompt("How many digits? (3-7 only)")
+        arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+      break;
+  
+      case "Level 2.03":
+        level = 2.03;
+        scoreNeeded = 50;
+        gold = highScore2DotZero3.time;
+        highScoreName.innerHTML = highScore2DotZero3.name
+        highScoreTime.innerHTML = highScore2DotZero3.time
+        highScoreMistakes.innerHTML = highScore2DotZero3.mistake
+      break;
+  
+      case "Level 2.05":
+        level = 2.05;
+        scoreNeeded = 30;
+        digit = prompt("How many digits? (3-7 only)")
+        arr = [0, 1, 2, 3, 4, 5, 6, 7 ,8 ,9]
+        highScoreName.innerHTML = highScore2DotZero5.name
+        highScoreTime.innerHTML = highScore2DotZero5.time
+        highScoreMistakes.innerHTML = highScore2DotZero5.mistake
+        instructions.textContent = "Form the Number"
+        displayProblem.style.fontSize = "25px";
+        document.querySelector("#user-input").setAttribute("type","text");
+      break;
+  
+      case "Level 2.07":
+        level = 2.07;
+        scoreNeeded = 50;
+        gold = 110
+        highScoreName.innerHTML = highScore2DotZero7.name
+        highScoreTime.innerHTML = highScore2DotZero7.time
+        highScoreMistakes.innerHTML = highScore2DotZero7.mistake
+        wholeNumberContainer.classList.add('hidden');
+        fractionsContainer.classList.remove('hidden');
+        instructions.textContent = "Answer using '1' or '2' only"
+        break;
+  
+      case "Level 3.0":
+        level = 3.0;
+        scoreNeeded = 30;
+        highScoreName.innerHTML = highScore3DotZero.name
+        highScoreTime.innerHTML = highScore3DotZero.time
+        highScoreMistakes.innerHTML = highScore3DotZero.mistake
+        break;
+  
+      case "Level 3.01":
+        level = 3.01;
+        scoreNeeded = 30;
+        highScoreName.innerHTML = highScore3DotZero1.name
+        highScoreTime.innerHTML = highScore3DotZero1.time
+        highScoreMistakes.innerHTML = highScore3DotZero1.mistake
+        break;
+      
+      case "Level 3.02":
+        level = 3.02;
+        scoreNeeded = 30;
+        gold = 141
+        silver = 230;
+        highScoreName.innerHTML = highScore3DotZero2.name
+        highScoreTime.innerHTML = highScore3DotZero2.time
+        highScoreMistakes.innerHTML = highScore3DotZero2.mistake
+        document.querySelector("#user-input").setAttribute("max","9999999")
+        break;
+          
+      case "Level 3.03":
+        level = 3.03;
+        scoreNeeded = 30;
+        highScoreName.innerHTML = highScore3DotZero3.name
+        highScoreTime.innerHTML = highScore3DotZero3.time
+        highScoreMistakes.innerHTML = highScore3DotZero3.mistake
+        break;
+  
+      case "Level 3.04":
+        level = 3.04;
+        scoreNeeded = 30;
+        gold = 284
+        silver = 521;
+        highScoreName.innerHTML = highScore3DotZero4.name
+        highScoreTime.innerHTML = highScore3DotZero4.time
+        highScoreMistakes.innerHTML = highScore3DotZero4.mistake
+        break;
+  
+      case "Level 3.05":
+        level = 3.05;
+        scoreNeeded = 30;
+        highScoreName.innerHTML = highScore3DotZero5.name
+        highScoreTime.innerHTML = highScore3DotZero5.time
+        highScoreMistakes.innerHTML = highScore3DotZero5.mistake
+        break;
+  
+      case "Level 3.06":
+        level = 3.06;
+        scoreNeeded = 30;
+        gold = highScore3DotZero6.time
+        highScoreName.innerHTML = highScore3DotZero6.name
+        highScoreTime.innerHTML = highScore3DotZero6.time
+        highScoreMistakes.innerHTML = highScore3DotZero6.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        instructions.innerHTML = 
+        `Do not leave any spaces.</br>
+        Answer using capital 'L' and 'ml' for volume`
+        helpMe.textContent = `Include units`
+        break;
+  
+      case "Level 3.07":
+        level = 3.07;
+        scoreNeeded = 30;
+        gold = 80
+        highScoreName.innerHTML = highScore3DotZero7.name
+        highScoreTime.innerHTML = highScore3DotZero7.time
+        highScoreMistakes.innerHTML = highScore3DotZero7.mistake
+        instructions.textContent = "Find the Lowest Common Multiple of the 3 numbers"
+        break;
+
+      case "Level 3.08":
+        level = 3.08;
+        scoreNeeded = 20;
+        gold = highScore3DotZero8.time;
+        highScoreName.innerHTML = highScore3DotZero8.name
+        highScoreTime.innerHTML = highScore3DotZero8.time
+        highScoreMistakes.innerHTML = highScore3DotZero8.mistake
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
+        document.querySelector("#user-input").setAttribute("type","text");
+      break;  
+    
+      case "Level 3.09":
+        level = 3.09;
+        scoreNeeded = 30;
+        gold = highScore3DotZero9.time;
+        highScoreName.innerHTML = highScore3DotZero9.name
+        highScoreTime.innerHTML = highScore3DotZero9.time
+        highScoreMistakes.innerHTML = highScore3DotZero9.mistake
+        wholeNumberContainer.classList.add('hidden');
+        fractionsContainerTwo.classList.remove('hidden');
+        document.querySelector("#user-input").setAttribute("type","text");
+        instructions.textContent = "Formate: 2/3"
+        break;
+  
+      case "Level 3.10":
+          level = 3.10;
+          scoreNeeded = 30;
+          highScoreName.innerHTML = highScore3DotZero10.name
+          highScoreTime.innerHTML = highScore3DotZero10.time
+          highScoreMistakes.innerHTML = highScore3DotZero10.mistake
+          wholeNumberContainer.classList.add('hidden');
+          fractionsContainerTwo.classList.remove('hidden');
+          document.querySelector("#user-input").setAttribute("type","text");
+          instructions.textContent = ""
+          break;
+      
+      case "Level 3.11":
+        level = 3.11;
+        scoreNeeded = 30;
+        highScoreName.innerHTML = highScore3DotZero11.name
+        highScoreTime.innerHTML = highScore3DotZero11.time
+        highScoreMistakes.innerHTML = highScore3DotZero11.mistake
+        wholeNumberContainer.classList.add('hidden');
+        fractionsContainerTwo.classList.remove('hidden');
+        document.querySelector("#user-input").setAttribute("type","text");
+        instructions.textContent = ""
+        break;   
+      
+      case "Level 3.12":
+        level = 3.12;
+        scoreNeeded = 20;
+        gold = 72;
+        highScoreName.innerHTML = highScore3DotZero12.name
+        highScoreTime.innerHTML = highScore3DotZero12.time
+        highScoreMistakes.innerHTML = highScore3DotZero12.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        displayProblem.style.fontSize = "25px";
+        displayProblem.style.marginTop = "0";
+        instructions.textContent = "Form an Equation from the pattern"
+      break;      
+  
+      case "Level 3.13":
+        level = 3.13;
+        scoreNeeded = 20;
+        gold = 471;
+        highScoreName.innerHTML = highScore3DotZero13.name
+        highScoreTime.innerHTML = highScore3DotZero13.time
+        highScoreMistakes.innerHTML = highScore3DotZero13.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        displayProblem.style.fontSize = "25px";
+        displayProblem.style.marginTop = "0";
+        instructions.textContent = "Form an Equation using 'n' from the pattern and provide an answer"
+      break;
+  
+      case "Level 3.14":
+        level = 3.14;
+        scoreNeeded = 20;
+        gold = highScore3DotZero14.time;
+        highScoreName.innerHTML = highScore3DotZero14.name
+        highScoreTime.innerHTML = highScore3DotZero14.time
+        highScoreMistakes.innerHTML = highScore3DotZero14.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        displayProblem.style.fontSize = "25px";
+        displayProblem.style.marginTop = "0";
+        instructions.textContent = "Form an Equation from the pattern and provide an answer"
+      break;
+  
+      case "Level 3.15":
+        level = 3.15;
+        scoreNeeded = 20;
+        gold = highScore3DotZero15.time;
+        highScoreName.innerHTML = highScore3DotZero15.name
+        highScoreTime.innerHTML = highScore3DotZero15.time
+        highScoreMistakes.innerHTML = highScore3DotZero15.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        displayProblem.style.fontSize = "25px";
+        displayProblem.style.marginTop = "0";
+        instructions.textContent = "Form an Equation using 'n' from the pattern and provide an answer"
+      break;
+  
+      case "Level 3.16":
+        level = 3.16;
+        scoreNeeded = 20;
+        gold = highScore3DotZero16.time;
+        highScoreName.innerHTML = highScore3DotZero16.name
+        highScoreTime.innerHTML = highScore3DotZero16.time
+        highScoreMistakes.innerHTML = highScore3DotZero16.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
+      break;
+  
+      case "Level 3.17":
+        level = 3.17;
+        scoreNeeded = 20;
+        gold = highScore3DotZero17.time;
+        highScoreName.innerHTML = highScore3DotZero17.name
+        highScoreTime.innerHTML = highScore3DotZero17.time
+        highScoreMistakes.innerHTML = highScore3DotZero17.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
+      break;
+  
+      case "Level 3.18":
+        level = 3.18;
+        scoreNeeded = 20;
+        gold = highScore3DotZero18.time;
+        highScoreName.innerHTML = highScore3DotZero18.name
+        highScoreTime.innerHTML = highScore3DotZero18.time
+        highScoreMistakes.innerHTML = highScore3DotZero18.mistake
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
+      break;
+  
+      case "Level 4.0":
+        level = 4.0;
+        scoreNeeded = 10;
+        gold = 813;
+        highScoreName.innerHTML = highScore4DotZero.name
+        highScoreTime.innerHTML = highScore4DotZero.time
+        highScoreMistakes.innerHTML = highScore4DotZero.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        displayProblem.style.fontSize = "25px";
+        instructions.innerHTML = 
+        `List the factors in pairs</br>
+        in ascending order.
+        `
+      break;
+  
+      case "Level 4.01":
+        level = "4.01";
+        scoreNeeded = 30;
+        gold = 229;
+        highScoreName.innerHTML = highScore4DotZero1.name
+        highScoreTime.innerHTML = highScore4DotZero1.time
+        highScoreMistakes.innerHTML = highScore4DotZero1.mistake
+        document.querySelector("#user-input").setAttribute("max","100000")
+        break; 
+        
+      case "Level 4.02":
+        level = "4.02";
+        scoreNeeded = 30;
+        gold = highScore4DotZero1.time;
+        highScoreName.innerHTML = highScore4DotZero1.name
+        highScoreTime.innerHTML = highScore4DotZero1.time
+        highScoreMistakes.innerHTML = highScore4DotZero1.mistake
+        displayProblem.style.fontSize = "25px";
+        arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+      break;    
+      
+      case "Level 4.03":
+        level = "4.03";
+        scoreNeeded = 30;
+        gold = 264;
+        highScoreName.innerHTML = highScore4DotZero3.name
+        highScoreTime.innerHTML = highScore4DotZero3.time
+        highScoreMistakes.innerHTML = highScore4DotZero3.mistake
+        document.querySelector("#user-input").setAttribute("step","0.000001")
+      break;
+  
+      case "Level 4.04":
+        level = 4.04;
+        scoreNeeded = 30;
+        gold = 310
+        highScoreName.innerHTML = highScore4DotZero4.name
+        highScoreTime.innerHTML = highScore4DotZero4.time
+        highScoreMistakes.innerHTML = highScore4DotZero4.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        break;
+  
+      case "Level 4.05":
+        level = 4.05;
+        scoreNeeded = 30;
+        highScoreName.innerHTML = highScore4DotZero5.name
+        highScoreTime.innerHTML = highScore4DotZero5.time
+        highScoreMistakes.innerHTML = highScore4DotZero5.mistake
+        document.querySelector("#user-input").setAttribute("step","0.000001")
+        break;  
+  
+      case "Level 4.06":
+        level = 4.06;
+        scoreNeeded = 30;
+        highScoreName.innerHTML = highScore4DotZero6.name
+        highScoreTime.innerHTML = highScore4DotZero6.time
+        highScoreMistakes.innerHTML = highScore4DotZero6.mistake
+        document.querySelector("#user-input").setAttribute("step","0.000001")
+        break;
+       
+      case "Level 4.07":
+        level = 4.07;
+        scoreNeeded = 30;
+        highScoreName.innerHTML = highScore4DotZero7.name
+        highScoreTime.innerHTML = highScore4DotZero7.time
+        highScoreMistakes.innerHTML = highScore4DotZero7.mistake
+        document.querySelector("#user-input").setAttribute("step","0.000001")
+        break;
+  
+      case "Level 4.08":
+        level = 4.08;
+        scoreNeeded = 30;
+        gold = 207;
+        highScoreName.innerHTML = highScore4DotZero8.name
+        highScoreTime.innerHTML = highScore4DotZero8.time
+        highScoreMistakes.innerHTML = highScore4DotZero8.mistake
+        document.querySelector("#user-input").setAttribute("step","0.000001")
+        break;  
+  
+      case "Level 4.09":
+        level = 4.09;
+        scoreNeeded = 30;
+        highScoreName.innerHTML = highScore4DotZero9.name
+        highScoreTime.innerHTML = highScore4DotZero9.time
+        highScoreMistakes.innerHTML = highScore4DotZero9.mistake
+        wholeNumberContainer.classList.add('hidden');
+        fractionsContainerTwo.classList.remove('hidden');
+        document.querySelector("#user-input").setAttribute("type","text");
+        instructions.innerHTML = `
+        Mixed to Improper Fraction</br>
+        Format: 9/2`
+        break;
+  
+      case "Level 4.10":
+        level = 4.10;
+        scoreNeeded = 30;
+        highScoreName.innerHTML = highScore4DotZero10.name
+        highScoreTime.innerHTML = highScore4DotZero10.time
+        highScoreMistakes.innerHTML = highScore4DotZero10.mistake
+        wholeNumberContainer.classList.add('hidden');
+        fractionsContainerTwo.classList.remove('hidden');
+        document.querySelector("#user-input").setAttribute("type","text");
+        instructions.innerHTML = `
+        Improper to Mixed Fractions </br>
+        Format: 2 4/5`
+        break;
+  
+      case "Level 4.11":
+        level = 4.11;
+        scoreNeeded = 30;
+        gold = 215;
+        highScoreName.innerHTML = highScore4DotZero11.name
+        highScoreTime.innerHTML = highScore4DotZero11.time
+        highScoreMistakes.innerHTML = highScore4DotZero11.mistake
+        wholeNumberContainer.classList.add('hidden');
+        fractionsContainerTwo.classList.remove('hidden');
+        document.querySelector("#user-input").setAttribute("type","text");
+        instructions.textContent = ""
+        break;
+  
+      
+      case "Level 4.12":
+        level = 4.12;
+        scoreNeeded = 30;
+        gold = 134;
+        silver = 153;
+        highScoreName.innerHTML = highScore4DotZero12.name
+        highScoreTime.innerHTML = highScore4DotZero12.time
+        highScoreMistakes.innerHTML = highScore4DotZero12.mistake
+        instructions.textContent = ""
+        displayProblem.style.fontSize = "25px";
+        displayProblem.style.marginBottom = "150px";
+        break;
+  
+        case "Level 4.13":
+          level = 4.13;
+          scoreNeeded = 30;
+          gold = 297
+          silver = 376;
+          highScoreName.innerHTML = highScore4DotZero13.name
+          highScoreTime.innerHTML = highScore4DotZero13.time
+          highScoreMistakes.innerHTML = highScore4DotZero13.mistake
+          instructions.textContent = ""
+          displayProblem.style.fontSize = "25px";
+          document.querySelector("#user-input").setAttribute("type","text");
+          break;
+  
+      case "Level 4.14":
+          level = 4.14;
+          scoreNeeded = 30;
+          gold = 49;
+          highScoreName.innerHTML = highScore4DotZero14.name
+          highScoreTime.innerHTML = highScore4DotZero14.time
+          highScoreMistakes.innerHTML = highScore4DotZero14.mistake
+          document.querySelector("#user-input").setAttribute("type","text");
+          wholeNumberContainer.classList.add('hidden');
+          fractionsContainerTwo.classList.remove('hidden');
+          equalSymbol.innerHTML = ""
+          instructions.innerHTML =
+          `Answer using</br>
+          r, f, v
+          `
+          threeWholeNumber.textContent = ""
+          threeNumerator.textContent = ""
+          threeDenominator.textContent = ""
+          threeNumerator.classList.remove('line');
+      break;
+  
+      case "Level 4.15":
+        level = 4.15;
+        scoreNeeded = 20;
+        gold = 91;
+        highScoreName.innerHTML = highScore4DotZero15.name
+        highScoreTime.innerHTML = highScore4DotZero15.time
+        highScoreMistakes.innerHTML = highScore4DotZero15.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        document.querySelector("#user-input").style.width = "250px"
+        displayProblem.style.fontSize = "25px";
+        instructions.innerHTML = 
+        `Answer using:</br>
+        f-f , r+r , vxr</br>
+        fxr , fxv</br>
+        `
+      break;
+  
+      case "Level 4.17":
+        level = 4.17;
+        scoreNeeded = 20;
+        gold = highScore4DotZero17.time;
+        highScoreName.innerHTML = highScore4DotZero17.name
+        highScoreTime.innerHTML = highScore4DotZero17.time
+        highScoreMistakes.innerHTML = highScore4DotZero17.mistake
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
+        arr = ["A","B","C","D","E","F","G","H","I"]
+        compassArr= ["north","north-east","east","south-east","south","south-west","west","north-west"]
+        document.querySelector("#user-input").setAttribute("type","text");
+      break;
+  
+      case "Level 4.18":
+        level = 4.18;
+        scoreNeeded = 20;
+        gold = highScore4DotZero18.time;
+        highScoreName.innerHTML = highScore4DotZero18.name
+        highScoreTime.innerHTML = highScore4DotZero18.time
+        highScoreMistakes.innerHTML = highScore4DotZero18.mistake
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
+        arr = ["A","B","C","D","O","F","G","H","I"]
+        arr2 = ["B","C","F","I","H","G","D","A"]
+        document.querySelector("#user-input").setAttribute("type","text");
+      break;
+  
+      case "Level 5.0":
+        level = 5.0;
+        scoreNeeded = 20;
+        gold = highScore5DotZero.time;
+        highScoreName.innerHTML = highScore5DotZero.name
+        highScoreTime.innerHTML = highScore5DotZero.time
+        highScoreMistakes.innerHTML = highScore5DotZero.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
+      break;
+  
+      case "Level 5.01":
+        level = 5.01;
+        scoreNeeded = 10;
+        gold = 80;
+        highScoreName.innerHTML = highScore5DotZero1.name
+        highScoreTime.innerHTML = highScore5DotZero1.time
+        highScoreMistakes.innerHTML = highScore5DotZero1.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        displayProblem.style.fontSize = "25px";
+        instructions.innerHTML = "Form an equation using</br> multiplication of fraction </br> RC = from x want"
+        break;
+  
+      case "Level 5.02":
+        level = 5.02;
+        scoreNeeded = 10;
+        gold = highScore5DotZero2.time;
+        highScoreName.innerHTML = highScore5DotZero2.name
+        highScoreTime.innerHTML = highScore5DotZero2.time
+        highScoreMistakes.innerHTML = highScore5DotZero2.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        displayProblem.style.fontSize = "25px";
+        instructions.innerHTML = "Form an equation using in fraction"
+      break;
+      
+      case "Level 5.03":
+        level = 5.03;
+        scoreNeeded = 10;
+        gold = highScore5DotZero3.time;
+        highScoreName.innerHTML = highScore5DotZero3.name
+        highScoreTime.innerHTML = highScore5DotZero3.time
+        highScoreMistakes.innerHTML = highScore5DotZero3.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        displayProblem.style.fontSize = "25px";
+        instructions.innerHTML = "Form an equation using</br> multiplication of percentage </br> from/100 x end"
+        userInput.style.width = "200px";
+        break;    
+      
+      case "Level 5.04":
+        level = 5.04;
+        scoreNeeded = 10;
+        gold = 79;
+        highScoreName.innerHTML = highScore5DotZero4.name
+        highScoreTime.innerHTML = highScore5DotZero4.time
+        highScoreMistakes.innerHTML = highScore5DotZero4.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        displayProblem.style.fontSize = "25px";
+        break;
+      
+      case "Level 5.05":
+        level = 5.05;
+        scoreNeeded = 20;
+        gold = highScore5DotZero5.time;
+        highScoreName.innerHTML = highScore5DotZero5.name
+        highScoreTime.innerHTML = highScore5DotZero5.time
+        highScoreMistakes.innerHTML = highScore5DotZero5.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
+      break;
+  
+      case "Level 6.0":
+        level = 6.0;
+        scoreNeeded = 10;
+        gold = 143
+        highScoreName.innerHTML = highScore6DotZero.name
+        highScoreTime.innerHTML = highScore6DotZero.time
+        highScoreMistakes.innerHTML = highScore6DotZero.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        displayProblem.style.fontSize = "25px";
+      break;
+  
+      case "Level 6.3":
+        level = 6.3;
+        scoreNeeded = 30;
+        highScoreName.innerHTML = highScore6Dot3.name
+        highScoreTime.innerHTML = highScore6Dot3.time
+        highScoreMistakes.innerHTML = highScore6Dot3.mistake
+        break;
+      
+      case "Level 7":
+        level = 7;
+        scoreNeeded = 30;
+        break;
+  
+      case "Multiples 1":
+        level = "1 times table";
+        mulLevel = "multiples"
+        scoreNeeded = 13;
+        break;
+       
+      case "Multiples 2":
+        level = "2 times table";
+        mulLevel = "multiples"
+        scoreNeeded = 13;
+        break;
+        
+      case "Multiples 3":
+        level = "3 times table";
+        mulLevel = "multiples"
+        scoreNeeded = 13;
+        break;   
+  
+      case "Multiples 4":
+        level = "4 times table";
+        mulLevel = "multiples"
+        scoreNeeded = 13;
+        break;   
+  
+      case "Multiples 5":
+        level = "5 times table";
+        mulLevel = "multiples"
+        scoreNeeded = 13;
+        break;   
+        case "Multiples 6":
+        level = "6 times table";
+        mulLevel = "multiples"
+        scoreNeeded = 13;
+        break;
+       
+      case "Multiples 7":
+        level = "7 times table";
+        mulLevel = "multiples"
+        scoreNeeded = 13;
+        break;
+        
+      case "Multiples 8":
+        level = "8 times table";
+        mulLevel = "multiples"
+        scoreNeeded = 13;
+        break;   
+  
+      case "Multiples 9":
+        level = "9 times table";
+        mulLevel = "multiples"
+        scoreNeeded = 13;
+        break;   
+  
+      case "Multiples 10":
+        level = "10 times table";
+        mulLevel = "multiples"
+        scoreNeeded = 13;
+        break;
+  
+      case "Multiples 11":
+        level = "11 times table";
+        mulLevel = "multiples"
+        scoreNeeded = 13;
+        break;
+  
+      case "Multiples 12":
+        level = "12 times table";
+        mulLevel = "multiples"
+        scoreNeeded = 13;
+        break;              
+  
+      default:
+        console.log(this.innerHTML);
+      }
+  }
