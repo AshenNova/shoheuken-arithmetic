@@ -766,6 +766,75 @@ function updateProblems(){
     displayProblem.innerHTML = `${p.numOne} ${p.minHours} ${p.numTwo} ${p.minSeconds} ${p.operator} ${p.numThree} ${p.minHours} ${p.numFour} ${p.minSeconds} =`
   }
 
+  if ( level == 2.09){
+    ctx.save()
+
+      if (p.timeHours > 12){
+        p.timeHours -= 12
+      }
+      ctx.save()
+        const xStart = -150
+        const yStart = 0
+        const xEnd = 160
+        const yEnd = 0
+        ctx.font = ("1.2em serif")
+        ctx.translate(200, 137.5)
+        // horizontal line
+        ctx.lineWidth = 2;
+        ctx.beginPath()
+        ctx.moveTo(xStart, yStart)
+        ctx.lineTo(xEnd, yEnd)
+        ctx.stroke();
+        // arrowhead
+        ctx.beginPath()
+        ctx.moveTo(160, 0)
+        ctx.lineTo(150, -10)
+        ctx.stroke();
+
+        ctx.beginPath()
+        ctx.moveTo(160, 0)
+        ctx.lineTo(150, 10)
+        ctx.stroke();
+
+        // start label
+        ctx.beginPath()
+        ctx.moveTo(-150,15)
+        ctx.lineTo(-150, -15)
+        ctx.stroke()
+        if (p.situation == "later"){
+          if (p.timeMinutes < 10){
+            ctx.fillText(`${p.timeHours}.0${p.timeMinutes} ${p.amOrPm}`, -163, -17)
+          } else {
+          ctx.fillText(`${p.timeHours}.${p.timeMinutes} ${p.amOrPm}`, -163, -17)
+          }
+        ctx.fillText(`?`, 135, -20)
+        }
+
+        if (p.situation == "before"){
+          if (p.timeMinutes < 10){
+            ctx.fillText(`${p.timeHours}.0${p.timeMinutes} ${p.amOrPm}`, 118, -17)
+          } else {
+          ctx.fillText(`${p.timeHours}.${p.timeMinutes} ${p.amOrPm}`, 118, -17)
+          }
+        ctx.fillText(`?`, -155, -20)
+        }
+
+        // end label
+        ctx.beginPath()
+        ctx.moveTo(140,15)
+        ctx.lineTo(140, -15)
+        ctx.stroke()
+        if (p.situation == "later"){
+        ctx.fillText(`${p.changeHours}h ${p.changeMinutes}mins ${p.situation}`, -50, -10)
+         }
+        if (p.situation == "before"){
+        ctx.fillText(`${p.changeHours}h ${p.changeMinutes}mins ${p.situation}`, -50, -10)
+          }
+      ctx.restore()
+
+    ctx.restore()
+  }
+
   if (level == 2.03 || level == 3.03 || level == 4.04 || level == 6.3){
     console.log(p.operator);
     if (p.operator == "x" ) displayProblem.innerHTML = `${p.numThree} ${p.operator} ${p.numFour}` 
@@ -933,10 +1002,10 @@ function updateProblems(){
       [p.hoursOne, p.hoursTwo] = [p.hoursTwo, p.hoursOne]
     }
     if (p.amOrPmOne < 12){
-      p.amOrPmOne = "a.m"
+      p.amOrPmOne = "am"
     }
     if (p.amOrPmTwo < 12){
-      p.amOrPmTwo = "a.m"
+      p.amOrPmTwo = "am"
     }
     if (p.hoursOne > 12){
       p.hoursOne -= 12
@@ -997,7 +1066,7 @@ function updateProblems(){
         ctx.lineTo(150, -10)
         ctx.stroke();
 
-        ctx.beginPath
+        ctx.beginPath()
         ctx.moveTo(160, 0)
         ctx.lineTo(150, 10)
         ctx.stroke();
@@ -2556,6 +2625,46 @@ function handleSubmit(e){
         }
       }
 
+      if ( level == 2.09){
+        if (p.amOrPm == "pm"){
+          p.timeHours += 12
+        }
+        if (p.situation == "later"){
+            let finalHours = p.timeHours+p.changeHours
+            let finalMinutes = p.timeMinutes+p.changeMinutes
+          if (finalHours > 11 && finalHours < 23){
+            p.amOrPm = "pm"
+          } else {
+            p.amOrPm = "am"
+          }
+          if (finalHours == 11 && finalMinutes >= 60){
+            p.amOrPm = "pm"
+          }
+          if (finalHours == 23 && finalMinutes >= 60){
+            p.amOrPm = "am"
+          }
+          if (finalHours>24){
+            finalHours -=24
+          }
+          if (finalHours>12){
+            finalHours -=12
+          }
+          if ((p.timeMinutes+p.changeMinutes)>=60){
+            if ((finalMinutes-60) < 10) {
+              correctAnswer = `${finalHours}.${finalMinutes},${finalHours+1}.0${finalMinutes-60}${p.amOrPm}`
+            } else {
+              correctAnswer = `${finalHours}.${finalMinutes},${finalHours+1}.${finalMinutes-60}${p.amOrPm}`
+            }
+          } else {
+            correctAnswer = `${finalHours}.${finalMinutes}${p.amOrPm}`
+          }
+        }
+        if (p.situation == "before"){
+          
+        }
+      }
+
+
       if ( level == 3.02 ){
         if (p.option == "1"){
          correctAnswer = p.numOne*p.numMultiTwo*p.numMulti
@@ -2645,10 +2754,10 @@ function handleSubmit(e){
       }
       
       if ( level == 3.08 ){
-        if (p.amOrPmOne == "p.m"){
+        if (p.amOrPmOne == "pm"){
           p.hoursOne += 12
         }
-        if (p.amOrPmTwo == "p.m"){
+        if (p.amOrPmTwo == "pm"){
           p.hoursTwo += 12
         }
         if (p.minsTwo > p.minsOne){
@@ -2666,6 +2775,9 @@ function handleSubmit(e){
           } else {
            correctAnswer = `${60-p.minsOne}mins+${p.hoursTwo-p.hoursOne-1}h+${p.minsTwo}mins`
           }    
+        }
+        if (p.minsTwo == p.minsOne){
+          correctAnswer = `${p.hoursTwo-p.hoursOne}h`
         }
       }
 
@@ -3473,6 +3585,18 @@ function genProblems(){
     }
   }
 
+  if (level == 2.09){
+    return {
+      timeHours: genNumbers(24)+1,
+      timeMinutes: genNumbers(60),
+      changeHours: genNumbers(12)+1,
+      changeMinutes: genNumbers(60),
+      roll: ["mins","hours"][genNumbers(2)],
+      situation: ["later","before"][genNumbers(1)],
+      amOrPm: "pm"
+    }
+  }
+
   if (level == 3.0){
     return {
       numOne: genNumbers(150)+100,
@@ -3560,8 +3684,8 @@ function genProblems(){
       minsOne: genNumbers(60),
       hoursTwo: genNumbers(24)+1,
       minsTwo: genNumbers(60),
-      amOrPmOne: "p.m",
-      amOrPmTwo: "p.m"
+      amOrPmOne: "pm",
+      amOrPmTwo: "pm"
     }
   }
   
@@ -4231,8 +4355,8 @@ for (let i = 0; i <  settingButton.length; i++){
         level = 1.01;
         scoreNeeded = 50;
         gold = highScore1DotZero1.time
-        silver = highScore1DotZero.time+((cutoff-highScore1DotZero1.time)/3)
-        bronze = highScore1DotZero.time+((cutoff-highScore1DotZero1.time)/3)*2
+        silver = highScore1DotZero1.time+((cutoff-highScore1DotZero1.time)/3)
+        bronze = highScore1DotZero1.time+((cutoff-highScore1DotZero1.time)/3)*2
         highScoreName.innerHTML = highScore1DotZero1.name
         highScoreTime.innerHTML = highScore1DotZero1.time
         highScoreMistakes.innerHTML = highScore1DotZero1.mistake
@@ -4378,7 +4502,9 @@ for (let i = 0; i <  settingButton.length; i++){
       case "Level 2.09":
         level = 2.09;
         scoreNeeded = 30;
-        gold = highScore2DotZero9.time;
+        gold = highScore2DotZero9.time
+        silver = highScore2DotZero9.time+((cutoff-highScore2DotZero9.time)/3)
+        bronze = highScore2DotZero9.time+((cutoff-highScore2DotZero9.time)/3)*2
         highScoreName.innerHTML = highScore2DotZero9.name
         highScoreTime.innerHTML = highScore2DotZero9.time
         highScoreMistakes.innerHTML = highScore2DotZero9.mistake
