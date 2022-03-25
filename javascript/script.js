@@ -25,10 +25,12 @@ const imageG = document.createElement('img');
 const imageS = document.createElement('img');
 const imageB = document.createElement('img');
 const imageNMP = document.createElement('img');
+const imageFailed = document.createElement('img');
 imageG.src = 'images/endgame/gold.jpeg'
 imageS.src = 'images/endgame/silver.jpeg'
 imageB.src = 'images/endgame/bronze.jpeg'
 imageNMP.src = 'images/endgame/needmorepractice.jpeg'
+imageFailed.src = 'images/endgame/failed.jpeg'
 
 const levelSetting = document.querySelector('.level-setting');
 const levelLabel = document.querySelector('.level-label');
@@ -83,6 +85,7 @@ let bronze = 0;
 let hardcore = 0;
 const commonMultipleArr = [];
 const commonMultipleArrTwo = [];
+const cutoff = 600;
 
 function HighScore(name, date, time, mistake) {
   this.name = name
@@ -207,11 +210,16 @@ time++;
 document.getElementById('timer').innerHTML = time;
 console.log(state.score);
 
-if (state.score >= scoreNeeded){
+if (state.score >= scoreNeeded || time == cutoff){
   clearInterval(countDownTwo);
   document.getElementById('timer').innerHTML = time;
   starto.classList.remove('hidden');
-  finalText.innerHTML = time;
+  if (time == cutoff){
+    finalText.innerHTML = `You scored ${state.score}`;
+  } else {
+    finalText.innerHTML = `You took ${time} seconds`;
+  }
+ 
   finalBox.classList.remove('hidden');
 
   if (time < gold){
@@ -223,9 +231,12 @@ if (state.score >= scoreNeeded){
   } else if (time < bronze){
     document.querySelector('.trophy').appendChild(imageB);
     console.log("Bronze image")
-  } else {
+  } else if (time < cutoff) {
     document.querySelector('.trophy').appendChild(imageNMP);
     console.log("Practice image")
+  } else {
+    document.querySelector('.trophy').appendChild(imageFailed);
+    console.log("Failed")
   }
 
   mistakesCountCl.innerHTML = state.mistake;
@@ -4209,8 +4220,8 @@ for (let i = 0; i <  settingButton.length; i++){
         level = 1.0;
         scoreNeeded = 1;
         gold = highScore1DotZero.time
-        silver = highScore1DotZero.time+60
-        bronze = highScore1DotZero.time+60
+        silver = highScore1DotZero.time+((cutoff-highScore1DotZero.time)/3)
+        bronze = highScore1DotZero.time+((cutoff-highScore1DotZero.time)/3)*2
         highScoreName.innerHTML = highScore1DotZero.name
         highScoreTime.innerHTML = highScore1DotZero.time
         highScoreMistakes.innerHTML = highScore1DotZero.mistake
