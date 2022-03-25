@@ -108,6 +108,9 @@ const highScore2DotZero2 = new HighScore("Nil", "Nil", 0, 0)
 const highScore2DotZero3 = new HighScore("Jayden Cheong", "19 March 2022", 623, 1)
 const highScore2DotZero5 = new HighScore("Nil", "Nil", 0, 0)
 const highScore2DotZero7 = new HighScore("Jayden Goo", "16 mar 2022", 110, 0)
+const highScore2DotZero8 = new HighScore("Nil", "Nil", 0, 0)
+const highScore2DotZero9 = new HighScore("Nil", "Nil", 0, 0)
+
 const highScore3DotZero = new HighScore("Shanice Lee", "30 October 2021", 614, 7)
 const highScore3DotZero1 = new HighScore("Shanice Lee", "30 October 2021", 162, 5)
 const highScore3DotZero2 = new HighScore("Javen Chen", "12 March 2022", 230, 2)
@@ -166,15 +169,16 @@ let state = {
 }
 
 function clickStart(){
+  buttonLevel = this.innerHTML
   console.log("start button clicked");
   startBox.classList.add('hidden');
   multiplesSettingCl.classList.add('hidden');
   countDownTimer.classList.remove('hidden');
-  // if (levelArr.length != 0){
-  //   buttonStart.innerHTML = `Level ${levelArr[0]}`
-  //   buttonLevel = buttonStart.innerHTML
-  //   switchButton();
-  // }
+  if (levelArr.length != 0){
+    buttonLevelSetting();
+    levelLabel.innerHTML = `You are attempting Level ${level}`
+    console.log(buttonLevel);
+  }
     
   // Timer1 countdown
   let time = 3;
@@ -192,7 +196,6 @@ function clickStart(){
       updateProblems()
      }
   }, 1000);
-  
 }
 
   // Timer2
@@ -725,6 +728,31 @@ function updateProblems(){
       denominatorOne.innerHTML = `${p.numTwo}`
       denominatorTwo.innerHTML = `${p.numTwo}`
     }
+  }
+
+  if ( level == 2.08){
+    if (p.operator == "-"){
+      if (p.numOne < p.numThree) {
+        [p.numOne, p.numThree] = [p.numThree, p.numOne]
+      }
+      if (p.numOne == p.numThree && p.numTwo < p.numFour){
+        [p.numTwo, p.numFour] = [p.numFour, p.numTwo]
+      }
+    }
+    helpMe.textContent = ""
+    if (p.operator == "-" && (p.numTwo < p.numFour) && state.score < 11){
+      helpMe.textContent = "Borrowed,final answer"
+    }
+    if (p.operator == "+" && (p.numTwo + p.numFour)>=60 && state.score < 11){
+      helpMe.textContent = "Overflow=final answer"
+    }
+   
+    if (p.minHours == "mins"){
+     p.minSeconds = "secs"
+    } else {
+      p.minSeconds = "mins"
+    }
+    displayProblem.innerHTML = `${p.numOne} ${p.minHours} ${p.numTwo} ${p.minSeconds} ${p.operator} ${p.numThree} ${p.minHours} ${p.numFour} ${p.minSeconds} =`
   }
 
   if (level == 2.03 || level == 3.03 || level == 4.04 || level == 6.3){
@@ -2496,6 +2524,27 @@ function handleSubmit(e){
           }
         }  
       }
+
+      if ( level == 2.08){
+        if (p.operator == "+"){
+          if (p.numTwo + p.numFour >= 60){
+            correctAnswer = `${p.numOne+p.numThree}${p.minHours}${p.numTwo+p.numFour}${p.minSeconds}=${p.numOne+p.numThree+1}${p.minHours}${p.numTwo+p.numFour-60}${p.minSeconds}`
+          } else {
+            correctAnswer = `${p.numOne+p.numThree}${p.minHours}${p.numTwo+p.numFour}${p.minSeconds}`
+          }
+        }  
+        if (p.operator == "-"){
+          if (p.numTwo - p.numFour < 0){
+            correctAnswer = `${p.numOne-1}${p.minHours}${p.numTwo+60}${p.minSeconds},${p.numOne-p.numThree-1}${p.minHours}${p.numTwo+60-p.numFour}${p.minSeconds}`
+          } else {
+            correctAnswer = `${p.numOne-p.numThree}${p.minHours}${p.numTwo-p.numFour}${p.minSeconds}`
+          }
+          if (p.numOne == p.numThree){
+            correctAnswer = `${p.numThree-p.numFour}${p.minSeconds}`
+          }
+        }
+      }
+
       if ( level == 3.02 ){
         if (p.option == "1"){
          correctAnswer = p.numOne*p.numMultiTwo*p.numMulti
@@ -3379,6 +3428,15 @@ function genProblems(){
     }
   }
 
+  if ( level == 2.05){
+    return {
+      choice: ["smallest","greatest"][genNumbers(2)],
+      landingNumber: undefined,
+      finalNumber: undefined,
+      evenOrOdd: ["even", "odd"][genNumbers(2)]
+    }
+  }
+
   if (level == 2.07){
     return {
       numOne: genNumbers(5)+1,
@@ -3392,12 +3450,15 @@ function genProblems(){
     }
   }
 
-  if ( level == 2.05){
+  if (level == 2.08){
     return {
-      choice: ["smallest","greatest"][genNumbers(2)],
-      landingNumber: undefined,
-      finalNumber: undefined,
-      evenOrOdd: ["even", "odd"][genNumbers(2)]
+      operator: ["-","+"][genNumbers(2)],
+      minHours: ["mins","h"][genNumbers(2)],
+      minSeconds: undefined,
+      numOne: genNumbers(10),
+      numTwo: genNumbers(60)+1,
+      numThree: genNumbers(10),
+      numFour: genNumbers(60)+1
     }
   }
 
@@ -4078,7 +4139,7 @@ for (let i = 0; i <  settingButton.length; i++){
     buttonLevel = this.innerHTML
     mulLevel = "nil"
 
-    switchButton();
+    buttonLevelSetting();
     levelBox();
     });
   }
@@ -4139,14 +4200,17 @@ for (let i = 0; i <  settingButton.length; i++){
   // }
 
   // LEVEL SETTINGS
-  function switchButton(){
+  function buttonLevelSetting(){
+    // if (levelArr.length != 0){
+    //   buttonLevel = `Level ${levelArr[0]}`
+    // }
     switch (buttonLevel) {
       case "Level 1.0":
         level = 1.0;
-        scoreNeeded = 50;
-        gold = 100;
-        silver = 120;
-        bronze = 140;
+        scoreNeeded = 1;
+        gold = highScore1DotZero.time
+        silver = highScore1DotZero.time+60
+        bronze = highScore1DotZero.time+60
         highScoreName.innerHTML = highScore1DotZero.name
         highScoreTime.innerHTML = highScore1DotZero.time
         highScoreMistakes.innerHTML = highScore1DotZero.mistake
@@ -4286,7 +4350,31 @@ for (let i = 0; i <  settingButton.length; i++){
         wholeNumberContainer.classList.add('hidden');
         fractionsContainer.classList.remove('hidden');
         instructions.textContent = "Answer using '1' or '2' only"
-        break;
+      break;
+
+      case "Level 2.08":
+        level = 2.08;
+        scoreNeeded = 30;
+        gold = highScore2DotZero8.time;
+        highScoreName.innerHTML = highScore2DotZero8.name
+        highScoreTime.innerHTML = highScore2DotZero8.time
+        highScoreMistakes.innerHTML = highScore2DotZero8.mistake
+        displayProblem.style.fontSize = "25px";
+        document.querySelector("#user-input").setAttribute("type","text");
+        document.querySelector("#user-input").style.width = "300px"
+      break;  
+
+      case "Level 2.09":
+        level = 2.09;
+        scoreNeeded = 30;
+        gold = highScore2DotZero9.time;
+        highScoreName.innerHTML = highScore2DotZero9.name
+        highScoreTime.innerHTML = highScore2DotZero9.time
+        highScoreMistakes.innerHTML = highScore2DotZero9.mistake
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
+        document.querySelector("#user-input").setAttribute("type","text");
+      break;  
   
       case "Level 3.0":
         level = 3.0;
@@ -4898,4 +4986,8 @@ for (let i = 0; i <  settingButton.length; i++){
       default:
         console.log(this.innerHTML);
       }
+      
+    // if (levelArr.length != 0){
+    //   buttonStart.innerHTML =`Level ${levelArr[0]}`
+    // }
   }
