@@ -287,6 +287,7 @@ const resetStuff = function (){
   imageS.remove();
   imageB.remove();
   imageNMP.remove();
+  imageFailed.remove();
   }
 
   ctx.clearRect(0, 0, 400, 275);
