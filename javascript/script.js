@@ -4485,7 +4485,7 @@ for (let i = 0; i <  settingButton.length; i++){
   
       case "Level 2.02":
         level = 2.02;
-        scoreNeeded = 1;
+        scoreNeeded = 30;
         highScoreName.innerHTML = highScore2DotZero2.name
         highScoreTime.innerHTML = highScore2DotZero2.time
         highScoreMistakes.innerHTML = highScore2DotZero2.mistake
@@ -4505,7 +4505,7 @@ for (let i = 0; i <  settingButton.length; i++){
   
       case "Level 2.05":
         level = 2.05;
-        scoreNeeded = 2;
+        scoreNeeded = 20;
         digit = prompt("How many digits? (3-7 only)")
         arr = [0, 1, 2, 3, 4, 5, 6, 7 ,8 ,9]
         highScoreName.innerHTML = highScore2DotZero5.name
