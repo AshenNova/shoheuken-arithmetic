@@ -149,6 +149,7 @@ const highScore4DotZero12 = new HighScore("Nadya", "13 March 2022", 134, 0)
 const highScore4DotZero13 = new HighScore("Javen Chen", "12 March 2022", 297, 3)
 const highScore4DotZero14 = new HighScore("Sheyanne Cheong", "12 March 2022", 49, 0)
 const highScore4DotZero15 = new HighScore("Jayden Goo", "16 mar 2022", 91, 2)
+const highScore4DotZero16 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4DotZero17 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4DotZero18 = new HighScore("Nil", "Nil", 0, 0)
 
@@ -1874,6 +1875,63 @@ function updateProblems(){
     }
   }
 
+  if ( level == 4.16 ){
+    if (p.placeValue == "tens" && p.numOne < 100){
+       while (p.numOne > 100){
+         p.numOne += 10;
+       }
+    }
+    if (p.placeValue == "hundreds" && p.numOne < 1000){
+      while (p.numOne > 1000){
+        p.numOne += 100;
+      }
+   }
+   if (p.placeValue == "thousands" && p.numOne < 10000){
+    while (p.numOne > 10000){
+      p.numOne += 1000;
+    }
+   }  
+
+    if (p.placeValue == "tens"){
+      p.numOne = Math.round(p.numOne/10)*10
+    }
+    if (p.placeValue == "hundreds"){
+      p.numOne = Math.round(p.numOne/100)*100
+    }
+    if (p.placeValue == "thousands"){
+      p.numOne = Math.round(p.numOne/1000)*1000
+    }
+ 
+    displayProblem.innerHTML = `
+    <u>${p.choice}</u> value before rounding off to the</br> 
+    <u>${p.placeValue}</u> place?</br>
+    <br>
+    _______ ≈ ${p.numOne}`
+
+    if (p.choice == "Smallest"){
+      if (p.placeValue == "tens"){
+        p.numOne = p.numOne-10+5
+      }
+      if (p.placeValue == "hundreds"){
+        p.numOne = p.numOne-100+50
+      }
+      if (p.placeValue == "thousands"){
+        p.numOne = p.numOne-1000+500
+      }
+    }
+    if (p.choice == "Largest"){
+      if (p.placeValue == "tens"){
+        p.numOne = p.numOne+4
+      }
+      if (p.placeValue == "hundreds"){
+        p.numOne = p.numOne+49
+      }
+      if (p.placeValue == "thousands"){
+        p.numOne = p.numOne+499
+      }
+    }
+  }
+
   if ( level == 4.17) {
     const gridX = 380;
     const gridY = 210;
@@ -3191,6 +3249,10 @@ function handleSubmit(e){
         }
       }
 
+      if ( level == 4.16){
+        correctAnswer = p.numOne;
+      }
+
       if ( level == 4.17){
         if (p.roll == 1 ){
           if (p.compass == "north-west"){
@@ -4020,6 +4082,14 @@ function genProblems(){
     numSix: genNumbers(7)+2,
     unitMeasurement: ["m","ℓ","km","kg"][genNumbers(4)],
     option: ["1","2","3","4","5"][genNumbers(5)]
+    }
+  }
+
+  if ( level == 4.16){
+    return {
+      placeValue: ["tens","hundreds","thousands"][genNumbers(3)],
+      numOne: genNumbers(99999)+1,
+      choice: ["Smallest","Largest"][genNumbers(2)]
     }
   }
 
@@ -4974,6 +5044,16 @@ for (let i = 0; i <  settingButton.length; i++){
         f-f , r+r , vxr</br>
         fxr , fxv</br>
         `
+      break;
+
+      case "Level 4.16":
+        level = 4.16;
+        scoreNeeded = 20;
+        gold = highScore4DotZero16.time
+        highScoreName.innerHTML = highScore4DotZero16.name
+        highScoreTime.innerHTML = highScore4DotZero16.time
+        highScoreMistakes.innerHTML = highScore4DotZero16.mistake
+        displayProblem.style.fontSize = "25px";
       break;
   
       case "Level 4.17":
