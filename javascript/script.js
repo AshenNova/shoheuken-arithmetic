@@ -2788,8 +2788,14 @@ function handleSubmit(e){
             const somethingTwo = commonMultipleArrTwo[0]*(a+2)
             commonMultipleArrTwo.push(somethingTwo)
             a++
-          } 
-        correctAnswer = commonMultipleArrTwo[commonMultipleArrTwo.length-1];
+          }
+        if (commonMultipleArrTwo.length > 1){
+          correctAnswer = commonMultipleArrTwo[0] + "," + commonMultipleArrTwo[commonMultipleArrTwo.length-1];
+        } else {
+          correctAnswer = commonMultipleArrTwo[0];
+        }
+        
+        console.log(commonMultipleArrTwo);
       }
       
       if ( level == 3.08 ){
@@ -4625,11 +4631,12 @@ for (let i = 0; i <  settingButton.length; i++){
       case "Level 3.07":
         level = 3.07;
         scoreNeeded = 30;
-        gold = 80
+        gold = highScore3DotZero7.time
         highScoreName.innerHTML = highScore3DotZero7.name
         highScoreTime.innerHTML = highScore3DotZero7.time
         highScoreMistakes.innerHTML = highScore3DotZero7.mistake
         instructions.textContent = "Find the Lowest Common Multiple of the 3 numbers"
+        document.querySelector("#user-input").setAttribute("type","text");
         break;
 
       case "Level 3.08":
