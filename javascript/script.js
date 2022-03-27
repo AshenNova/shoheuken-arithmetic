@@ -288,6 +288,8 @@ const resetStuff = function (){
   imageB.remove();
   imageNMP.remove();
   imageFailed.remove();
+  arr.length = 0;
+  arr2.length = 0;
   }
 
   ctx.clearRect(0, 0, 400, 275);
@@ -3377,6 +3379,7 @@ function handleSubmit(e){
         if ( level == 2.02 || level == 2.05 || level == 4.02 ){
           arr = [0, 1, 2, 3, 4, 5, 6, 7 ,8 ,9];
           arr2.length = 0;
+          console.log("Array reset", arr, arr2)
         }
         if ( level == 4.17) {
           arr = ["A","B","C","D","E","F","G","H","I"]
@@ -4446,7 +4449,7 @@ for (let i = 0; i <  settingButton.length; i++){
   
       case "Level 2.02":
         level = 2.02;
-        scoreNeeded = 30;
+        scoreNeeded = 1;
         highScoreName.innerHTML = highScore2DotZero2.name
         highScoreTime.innerHTML = highScore2DotZero2.time
         highScoreMistakes.innerHTML = highScore2DotZero2.mistake
@@ -4466,7 +4469,7 @@ for (let i = 0; i <  settingButton.length; i++){
   
       case "Level 2.05":
         level = 2.05;
-        scoreNeeded = 20;
+        scoreNeeded = 2;
         digit = prompt("How many digits? (3-7 only)")
         arr = [0, 1, 2, 3, 4, 5, 6, 7 ,8 ,9]
         highScoreName.innerHTML = highScore2DotZero5.name
