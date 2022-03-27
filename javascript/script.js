@@ -2632,6 +2632,8 @@ function handleSubmit(e){
         if (p.amOrPm == "pm"){
           p.timeHours += 12
         }
+
+        // if later
         if (p.situation == "later"){
             let finalHours = p.timeHours+p.changeHours
             let finalMinutes = p.timeMinutes+p.changeMinutes
@@ -2662,8 +2664,42 @@ function handleSubmit(e){
             correctAnswer = `${finalHours}.${finalMinutes}${p.amOrPm}`
           }
         }
+        // if before
         if (p.situation == "before"){
-          
+            let finalHours = p.timeHours-p.changeHours
+            let finalMinutes = p.timeMinutes-p.changeMinutes
+          if (finalHours > 11 && finalHours < 23){
+            p.amOrPm = "pm"
+          } else {
+            p.amOrPm = "am"
+          }
+          if (finalHours == 12 && finalMinutes <= 0){
+            p.amOrPm = "am"
+          }
+          if (finalHours == 24 && finalMinutes <= 0){
+            p.amOrPm = "pm"
+          }
+          if (finalHours>24){
+            finalHours -=24
+          }
+          if (finalHours>12){
+            finalHours -=12
+          }
+          if (p.timeHours > 12){
+            p.timeHours -= 12
+          }
+
+          if (finalMinutes < 0){
+            correctAnswer = `${p.timeHours-1}.${p.timeMinutes+60},${finalHours-1}.${finalMinutes+60}${p.amOrPm}`
+          }
+          if (finalMinutes > 0){
+            if (finalMinutes < 10){
+              correctAnswer = `${finalHours}.0${finalMinutes}${p.amOrPm}`
+            } else {
+              correctAnswer = `${finalHours}.${finalMinutes}${p.amOrPm}`
+            }
+          }
+
         }
       }
 
@@ -3422,7 +3458,7 @@ function handleSubmit(e){
         setTimeout(() => currentMistake.classList.remove("animate-wrong"), 331)
         mainContainer.classList.add("animate-wrong-container")
         setTimeout(() => mainContainer.classList.remove("animate-wrong-container"), 331)
-         if ( level != 4.0 && level != 3.12 && level != 3.13 && level != 3.14 && level != 3.15){
+         if ( level != 2.09 && level != 3.12 && level != 3.13 && level != 3.14 && level != 3.15 && level != 4.0){
           console.log("DO NOT CLEAR")
           userInput.value = ""
          }
@@ -3593,10 +3629,10 @@ function genProblems(){
     return {
       timeHours: genNumbers(24)+1,
       timeMinutes: genNumbers(60),
-      changeHours: genNumbers(12)+1,
+      changeHours: genNumbers(6)+1,
       changeMinutes: genNumbers(60),
       roll: ["mins","hours"][genNumbers(2)],
-      situation: ["later","before"][genNumbers(1)],
+      situation: ["before","later"][genNumbers(1)],
       amOrPm: "pm"
     }
   }
@@ -4516,6 +4552,7 @@ for (let i = 0; i <  settingButton.length; i++){
         wholeNumberContainer.classList.add('hidden');
         firstCanvas.classList.remove('hidden');
         document.querySelector("#user-input").setAttribute("type","text");
+        document.querySelector("#user-input").style.width = "300px"
       break;  
   
       case "Level 3.0":
