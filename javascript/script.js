@@ -20,6 +20,7 @@ const resetButton = document.getElementById('reset');
 const backButton = document.querySelectorAll(".back-button");
 const instructions = document.querySelector('.instructions');
 const hardcoreMode = document.querySelector('.hardcore-mode')
+const easyMode = document.querySelector('.easy-mode')
 
 const imageG = document.createElement('img');
 const imageS = document.createElement('img');
@@ -83,6 +84,7 @@ let gold = 0;
 let silver = 0;
 let bronze = 0;
 let hardcore = 0;
+let easy = 0;
 const commonMultipleArr = [];
 const commonMultipleArrTwo = [];
 const cutoff = 600;
@@ -3503,6 +3505,8 @@ function handleSubmit(e){
           state.mistake++
           if ( hardcore == 1){
             state.score = 0;
+          } else if ( easy == 1 ) {
+            console.log("Easy Mode");
           } else {
           if (state.score > 0 && state.score < 11){
             state.score = state.score - 1;
@@ -4398,10 +4402,24 @@ for (let i = 0; i <  settingButton.length; i++){
   hardcoreMode.addEventListener('click', function(){
     if (hardcore == 0 ){
       hardcore = 1;
+      easy = 0;
       mainBox.style.borderColor = "red"
       levelSetting.style.borderColor = "red"
     } else {
       hardcore = 0;
+      mainBox.style.borderColor = "black"
+      levelSetting.style.borderColor = "black"
+    }
+    console.log(hardcore)
+  })
+
+  easyMode.addEventListener('click', function(){
+    if ( easy == 0 ){
+      easy = 1;
+      hardcore = 0;
+      mainBox.style.borderColor = "#39FF14"
+      levelSetting.style.borderColor = "#39FF14"
+    } else {
       mainBox.style.borderColor = "black"
       levelSetting.style.borderColor = "black"
     }
@@ -5254,7 +5272,10 @@ for (let i = 0; i <  settingButton.length; i++){
       default:
         console.log(this.innerHTML);
       }
-      
+    
+    if ( hardcore == 1 ){
+      scoreNeeded /= 2
+    }  
     // if (levelArr.length != 0){
     //   buttonStart.innerHTML =`Level ${levelArr[0]}`
     // }
