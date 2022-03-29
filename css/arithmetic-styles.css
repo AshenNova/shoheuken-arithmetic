@@ -274,6 +274,9 @@ button {
 .btn-time{
   background-color: #F6FF33;
 }
+.btn-angle{
+  background-color: #40E0D0;
+}
 
 .btn-select{
   border-style: solid;
