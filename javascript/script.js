@@ -3830,7 +3830,7 @@ function handleSubmit(e){
         setTimeout(() => currentMistake.classList.remove("animate-wrong"), 331)
         mainContainer.classList.add("animate-wrong-container")
         setTimeout(() => mainContainer.classList.remove("animate-wrong-container"), 331)
-         if ( level != 2.09 && level != 3.12 && level != 3.13 && level != 3.14 && level != 3.15 && level != 4.0){
+         if ( level != 2.09 && level != 2.05 && level != 3.12 && level != 3.13 && level != 3.14 && level != 3.15 && level != 4.0){
           console.log("DO NOT CLEAR")
           userInput.value = ""
          }
