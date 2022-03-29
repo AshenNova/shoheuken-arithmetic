@@ -102,16 +102,16 @@ let levelBtn1ZeroCount = 0;
 
 const highScore1DotZero1 = new HighScore("Jayden Cheong", "16 October 2021", 823, 12)
 const highScore1DotZero2 = new HighScore("Nil", "16 October 2021", 0, 0)
-const highScore1DotZero3 = new HighScore("Maegan Lim", "18 March 2022", 162, 1)
+const highScore1DotZero3 = new HighScore("Aixl Lim", "26 March 2022", 124, 0)
 const highScore1DotZero4 = new HighScore("Jayden Cheong", "19 March 2022", 133, 0)
 const highScore1DotZero5 = new HighScore("Jayden Cheong", "19 mar 2022", 153, 0)
 const highScore1DotZero6 = new HighScore("Nadya", "13 March 2022", 436, 4)
 const highScore1DotZero7 = new HighScore("Jadee", "21 March 2022", 363, 5)
 const highScore2DotZero = new HighScore("Nil", "16 October 2021", 0, 0)
 const highScore2DotZero1 = new HighScore("JingKai Ng", "16 October 2021", 823, 24)
-const highScore2DotZero2 = new HighScore("Nil", "Nil", 0, 0)
+const highScore2DotZero2 = new HighScore("Jayden Cheong", "25 March 2022", 152, 1)
 const highScore2DotZero3 = new HighScore("Jayden Cheong", "19 March 2022", 623, 1)
-const highScore2DotZero5 = new HighScore("Nil", "Nil", 0, 0)
+const highScore2DotZero5 = new HighScore("Adam Poon", "26 March 2022", 343, 2)
 const highScore2DotZero7 = new HighScore("Jayden Goo", "16 mar 2022", 110, 0)
 const highScore2DotZero8 = new HighScore("Nil", "Nil", 0, 0)
 const highScore2DotZero9 = new HighScore("Nil", "Nil", 0, 0)
@@ -127,11 +127,11 @@ const highScore3DotZero7 = new HighScore("Sheyanne Cheong", "12 March 2022", 80,
 const highScore3DotZero8 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero9 = new HighScore("Maegan Lim", "20 March 2022", 1676, 3)
 const highScore3DotZero10 = new HighScore("Nil", "Nil", 0, 0)
-const highScore3DotZero11 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3DotZero11 = new HighScore("Shanice Lee", "22 March 2022", 478, 2)
 const highScore3DotZero12 = new HighScore("Jayden Goo", "16 march 2022", 72, 0)
 const highScore3DotZero13 = new HighScore("Jadee Wong", "14 March 2022", 310, 1)
 const highScore3DotZero14 = new HighScore("Sheyanne Cheong", "19 March 2022", 240, 0)
-const highScore3DotZero15 = new HighScore("Emma Leo", "21 March 2022", 358, 1)
+const highScore3DotZero15 = new HighScore("Sheyanne Cheong", "25 March 2022", 251, 0)
 const highScore3DotZero16 = new HighScore("Nil", "Nil", 0, 0)
 const highScore3DotZero17 = new HighScore("Jadee Wong", "21 March 2022", 282, 2)
 const highScore3DotZero18 = new HighScore("Nil", "Nil", 0, 0)
@@ -159,9 +159,10 @@ const highScore4DotZero19 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero = new HighScore("Sheyanne Cheong", "19 March 2022", 453, 5)
 const highScore5DotZero1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
 const highScore5DotZero2 = new HighScore("Emma Leo", "21 March 2022", 167, 0)
-const highScore5DotZero3 = new HighScore("Emma Leo", "21 Mar 2022", 100, 0)
+const highScore5DotZero3 = new HighScore("Jayden Goo", "23 Mar 2022", 88, 0)
 const highScore5DotZero4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero5 = new HighScore("Nadya", "20 March 2022", 335, 2)
+const highScore5DotZero6 = new HighScore("Nil", "Nil", 0, 0)
 const highScore6DotZero = new HighScore("Jayden Goo", "16 March 2022", 143, 0)
 const highScore6Dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
@@ -2538,6 +2539,65 @@ function updateProblems(){
     ctx.restore()
   }
 
+  if ( level == 5.06){
+    ctx.save()
+    ctx.font = "1em serif"
+                           // right angle triangle
+      if (p.rightAngleTriX1 == p.rightAngleTriX2) {
+        p.rightAngleTriX1 += 10
+      }
+      ctx.translate(200, 137.5)
+      ctx.beginPath()
+      ctx.moveTo(p.rightAngleTriX1, 0)
+      ctx.lineTo(p.rightAngleTriX2, 0)
+      let base = p.rightAngleTriX2-p.rightAngleTriX1
+      let height = -p.rightAngleTriY;
+      let hypo = Math.sqrt(height*height+base*base)
+      let angle = Math.atan(height/base)
+      let angleLabel = Math.round(angle*180/Math.PI)
+
+
+      // right angle on the left
+      if (p.rightAngleRoll == 1){
+        ctx.lineTo(p.rightAngleTriX1, p.rightAngleTriY)
+        ctx.closePath()
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.rect(p.rightAngleTriX1, 0, 7, -7)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.arc(p.rightAngleTriX2, 0, 15, 1*Math.PI, angle+1*Math.PI)
+        ctx.stroke()
+        ctx.fillText(`${angleLabel}°`, p.rightAngleTriX2-35, -1)
+
+        ctx.beginPath()
+        ctx.arc(p.rightAngleTriX1, p.rightAngleTriY, 10, angle, 0.5*Math.PI)
+        ctx.stroke()
+      }
+      // right angle on the right
+      if (p.rightAngleRoll == 2){
+        ctx.lineTo(p.rightAngleTriX2, p.rightAngleTriY)
+        ctx.closePath()
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.rect(p.rightAngleTriX2, 0, -7, -7)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.arc(p.rightAngleTriX1, 0, 15, 0, (2-angle/Math.PI)*Math.PI, true)
+        ctx.stroke()
+        ctx.fillText(`${angleLabel}°`, p.rightAngleTriX1+15, -1)
+
+        ctx.beginPath()
+        ctx.arc(p.rightAngleTriX2, p.rightAngleTriY, 10, 0.5*Math.PI, 1*Math.PI-angle)
+        ctx.stroke()
+      }
+    ctx.restore()
+  }
+
   if ( level == 6.0){
     if (p.numOne == p.denoOne || p.numTwo == p.denoTwo || p.numThree == p.denoThree){
       p.denoOne += 1
@@ -4480,6 +4540,16 @@ function genProblems(){
       rotation : genNumbers(360)
     } 
   }
+
+  if ( level == 5.06){
+    return {
+    rightAngleTriX1 : -(genNumbers(5)+1)*20,
+    rightAngleTriX2 : (genNumbers(5)+1)*20,
+    rightAngleTriY : -(genNumbers(5)+2)*20,
+    rightAngleRoll : [1, 2][genNumbers(2)]
+   }
+  }
+
   if ( level == 6.0){
     return {
       percentageOne: (genNumbers(18)+1)*5,
@@ -4770,7 +4840,9 @@ for (let i = 0; i <  settingButton.length; i++){
       case "Level 1.03":
         level = 1.03;
         scoreNeeded = 50;
-        gold = 162;
+        gold = highScore1DotZero3.time
+        silver = highScore1DotZero3.time+((cutoff-highScore1DotZero.time3)/3)
+        bronze = highScore1DotZero3.time+((cutoff-highScore1DotZero.time3)/3)*2
         highScoreName.innerHTML = highScore1DotZero3.name
         highScoreTime.innerHTML = highScore1DotZero3.time
         highScoreMistakes.innerHTML = highScore1DotZero3.mistake
@@ -4843,6 +4915,9 @@ for (let i = 0; i <  settingButton.length; i++){
       case "Level 2.02":
         level = 2.02;
         scoreNeeded = 30;
+        gold = highScore2DotZero2.time
+        silver = highScore2DotZero2.time+((cutoff-highScore2DotZero2.time)/3)
+        bronze = highScore2DotZero2.time+((cutoff-highScore2DotZero2.time)/3)*2
         highScoreName.innerHTML = highScore2DotZero2.name
         highScoreTime.innerHTML = highScore2DotZero2.time
         highScoreMistakes.innerHTML = highScore2DotZero2.mistake
@@ -4863,6 +4938,9 @@ for (let i = 0; i <  settingButton.length; i++){
       case "Level 2.05":
         level = 2.05;
         scoreNeeded = 20;
+        gold = highScore2DotZero5.time
+        silver = highScore2DotZero5.time+((cutoff-highScore2DotZero5.time)/3)
+        bronze = highScore2DotZero5.time+((cutoff-highScore2DotZero5.time)/3)*2
         digit = prompt("How many digits? (3-7 only)")
         arr = [0, 1, 2, 3, 4, 5, 6, 7 ,8 ,9]
         highScoreName.innerHTML = highScore2DotZero5.name
@@ -5030,6 +5108,9 @@ for (let i = 0; i <  settingButton.length; i++){
       case "Level 3.11":
         level = 3.11;
         scoreNeeded = 30;
+        gold = highScore3DotZero11.time
+        silver = highScore3DotZero11.time+((cutoff-highScore3DotZero11.time)/3)
+        bronze = highScore3DotZero11.time+((cutoff-highScore3DotZero11.time)/3)*2
         highScoreName.innerHTML = highScore3DotZero11.name
         highScoreTime.innerHTML = highScore3DotZero11.time
         highScoreMistakes.innerHTML = highScore3DotZero11.mistake
@@ -5082,6 +5163,8 @@ for (let i = 0; i <  settingButton.length; i++){
         level = 3.15;
         scoreNeeded = 20;
         gold = highScore3DotZero15.time;
+        silver = highScore3DotZero15.time+((cutoff-highScore3DotZero15.time)/3)
+        bronze = highScore3DotZero15.time+((cutoff-highScore3DotZero15.time)/3)*2
         highScoreName.innerHTML = highScore3DotZero15.name
         highScoreTime.innerHTML = highScore3DotZero15.time
         highScoreMistakes.innerHTML = highScore3DotZero15.mistake
@@ -5419,6 +5502,8 @@ for (let i = 0; i <  settingButton.length; i++){
         level = 5.03;
         scoreNeeded = 10;
         gold = highScore5DotZero3.time;
+        silver = highScore5DotZero3.time+((cutoff-highScore5DotZero3.time)/3)
+        bronze = highScore5DotZero3.time+((cutoff-highScore5DotZero3.time)/3)*2
         highScoreName.innerHTML = highScore5DotZero3.name
         highScoreTime.innerHTML = highScore5DotZero3.time
         highScoreMistakes.innerHTML = highScore5DotZero3.mistake
@@ -5446,6 +5531,20 @@ for (let i = 0; i <  settingButton.length; i++){
         highScoreName.innerHTML = highScore5DotZero5.name
         highScoreTime.innerHTML = highScore5DotZero5.time
         highScoreMistakes.innerHTML = highScore5DotZero5.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
+      break;
+
+      case "Level 5.06":
+        level = 5.06;
+        scoreNeeded = 20;
+        gold = highScore5DotZero6.time;
+        silver = highScore5DotZero6.time+((cutoff-highScore5DotZero6.time)/3)
+        bronze = highScore5DotZero6.time+((cutoff-highScore5DotZero6.time)/3)*2
+        highScoreName.innerHTML = highScore5DotZero6.name
+        highScoreTime.innerHTML = highScore5DotZero6.time
+        highScoreMistakes.innerHTML = highScore5DotZero6.mistake
         document.querySelector("#user-input").setAttribute("type","text");
         wholeNumberContainer.classList.add('hidden');
         firstCanvas.classList.remove('hidden');
