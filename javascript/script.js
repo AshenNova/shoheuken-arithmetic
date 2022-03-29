@@ -2971,6 +2971,7 @@ function handleSubmit(e){
           if (finalHours>12){
             finalHours -=12
           }
+
           if ((p.timeMinutes+p.changeMinutes)>=60){
             if ((finalMinutes-60) < 10) {
               correctAnswer = `${finalHours}.${finalMinutes},${finalHours+1}.0${finalMinutes-60}${p.amOrPm}`
@@ -3004,6 +3005,9 @@ function handleSubmit(e){
           }
           if (p.timeHours > 12){
             p.timeHours -= 12
+          }
+          if (finalHours <= 0){
+            finalHours += 12
           }
 
           if (finalMinutes < 0){
@@ -4004,7 +4008,7 @@ function genProblems(){
       changeHours: genNumbers(6)+1,
       changeMinutes: genNumbers(60),
       roll: ["mins","hours"][genNumbers(2)],
-      situation: ["before","later"][genNumbers(1)],
+      situation: ["before","later"][genNumbers(2)],
       amOrPm: "pm"
     }
   }
@@ -4738,10 +4742,12 @@ for (let i = 0; i <  settingButton.length; i++){
       easy = 0;
       mainBox.style.borderColor = "red"
       levelSetting.style.borderColor = "red"
+      cutoff = 600;
     } else {
       hardcore = 0;
       mainBox.style.borderColor = "black"
       levelSetting.style.borderColor = "black"
+      cutoff = 9999;
     }
     console.log(hardcore)
   })
