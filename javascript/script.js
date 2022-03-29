@@ -154,6 +154,7 @@ const highScore4DotZero15 = new HighScore("Jayden Goo", "16 mar 2022", 91, 2)
 const highScore4DotZero16 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4DotZero17 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4DotZero18 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4DotZero19 = new HighScore("Nil", "Nil", 0, 0)
 
 const highScore5DotZero = new HighScore("Sheyanne Cheong", "19 March 2022", 453, 5)
 const highScore5DotZero1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
@@ -2084,6 +2085,202 @@ function updateProblems(){
     ctx.restore()
   }
 
+  if ( level == 4.19 ){
+    ctx.font = "1em serif"
+    ctx.save()
+      // square
+    if (p.shapeRoll == "Square"){
+
+      if (p.squareRoll == 1 || p.squareRoll == 2){
+        ctx.fillText(`What is ∠a.`, 20, 20)
+      } else {
+        ctx.fillText(`What is the total angle of the Square?`, 20, 20)
+      }
+        ctx.translate(200, 137.5)
+        const squareCoord2 = p.coordSquare/2
+        ctx.beginPath()
+        ctx.rect(-squareCoord2, -squareCoord2,squareCoord2*2, squareCoord2*2)
+        ctx.stroke();
+        
+      if (p.squareRoll == 1){
+        ctx.beginPath()
+        ctx.moveTo(-squareCoord2, squareCoord2)
+        ctx.lineTo(squareCoord2, -squareCoord2)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.arc(-squareCoord2, squareCoord2, 20, 315*Math.PI/180, 2*Math.PI)
+        ctx.stroke();
+
+        ctx.font = "1em serif"
+        ctx.fillText(`a`,-squareCoord2+20, squareCoord2-5)
+      }
+
+      if (p.squareRoll == 2){
+        ctx.beginPath()
+        ctx.rect(-squareCoord2, squareCoord2-10, 10, 10)
+        ctx.stroke()
+        ctx.font = "1em serif"
+        ctx.fillText(`a`,-squareCoord2+15, squareCoord2-5)
+      }
+    }
+      
+    if (p.shapeRoll == "Rectangle"){
+        
+      if (p.rectRoll == 1){
+        ctx.fillText(`What is ∠b.`, 20, 20)
+      }
+      if (p.rectRoll == 2){
+        ctx.fillText(`Find ∠b.`, 20, 20)
+      }
+      if (p.rectRoll == 3){
+        ctx.fillText(`What is the total angle of the Rectangle?`, 20, 20)
+      }
+        
+        let rectLength = genNumbers(50)+50
+        let rectBreadth = rectLength*(((genNumbers(15)+7)*10)/100)
+        let rectHypo = Math.sqrt(rectLength*rectLength+rectBreadth*rectBreadth)
+        p.angle = Math.asin(rectBreadth/rectHypo)
+        p.angleDegrees = Math.round(p.angle*180/Math.PI)
+      
+        console.log(rectLength, rectBreadth, rectHypo, p.angle, p.angleDegrees)
+        ctx.translate(200, 137.5)
+        ctx.beginPath()
+        ctx.rect(-p.coordRect1/2, p.coordRect2/2, rectLength, -rectBreadth)
+        ctx.stroke();
+
+        if (p.rectRoll == 1){
+          ctx.beginPath()
+          ctx.rect(-p.coordRect1/2, p.coordRect2/2, 10, -10)
+          ctx.stroke();
+
+          ctx.fillText(`b`,(-p.coordRect1/2)+15, p.coordRect2/2-5)
+        }
+
+        if (p.rectRoll == 2){
+          ctx.beginPath()
+          ctx.moveTo(-p.coordRect1/2, p.coordRect2/2)
+          ctx.lineTo(-p.coordRect1/2+rectLength, p.coordRect2/2-rectBreadth)
+          ctx.stroke()
+
+          ctx.beginPath()
+          ctx.arc(-p.coordRect1/2, p.coordRect2/2, 10, (360-p.angleDegrees)*Math.PI/180, 2*Math.PI)
+          ctx.stroke()
+
+          ctx.font = "1em serif"
+          ctx.fillText(`${p.angleDegrees}°`, -p.coordRect1/2+15, p.coordRect2/2-5)
+
+          ctx.save()
+            ctx.fillStyle = "red"
+            ctx.beginPath()
+            ctx.arc(-p.coordRect1/2, p.coordRect2/2, 8, 1.5*Math.PI, (360-p.angleDegrees)*Math.PI/180)
+            ctx.fill()
+          ctx.restore()
+
+          ctx.fillText(`b`, -p.coordRect1/2, p.coordRect2/2-15)
+        }  
+    }
+    if (p.shapeRoll == "straight"){
+      ctx.save()
+        ctx.translate(200, 137.5)
+        ctx.beginPath();
+        ctx.arc(0, 0, 3, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.fill();
+      ctx.restore();
+      if (p.straightRoll == 1){
+        ctx.fillText(`What is the angle on a straight line?`, 20, 20)
+      }
+      if (p.straightRoll == 2){
+        ctx.fillText(`Find ∠c`, 20, 20)
+      }
+
+      ctx.translate(200, 137.5)
+
+      ctx.beginPath()
+      ctx.moveTo(-150, 0)
+      ctx.lineTo(150, 0)
+      ctx.stroke();
+
+      if (p.straightRoll == 2){
+        ctx.save()
+          ctx.rotate(-p.angleStraight*Math.PI/180);
+          ctx.beginPath()
+          ctx.moveTo(0, 0)
+          ctx.lineTo(100, 0)
+          ctx.stroke()
+        ctx.restore()
+
+        ctx.arc(0, 0, 10, (360-p.angleStraight)*Math.PI/180, 2*Math.PI)
+        ctx.stroke()
+        if (p.angleStraight < 20 ){
+          ctx.fillText(`${p.angleStraight}`, 90, -1)
+        } else {
+        ctx.fillText(`${p.angleStraight}`, 10, -5)
+        }
+
+        ctx.arc(0, 0, 15, 1*Math.PI, (360-p.angleStraight)*Math.PI/180)
+        ctx.stroke()
+        ctx.fillText(`c`, -30, -1)
+      }
+    }
+
+    if (p.shapeRoll == "circle"){
+      ctx.save()
+        ctx.translate(200, 137.5)
+        ctx.beginPath();
+        ctx.arc(0, 0, 3, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.fill();
+      ctx.restore();
+      if (p.circleRoll == 1){
+        ctx.fillText(`What is the angle of a full circle?`, 20, 20)
+      }
+      if (p.circleRoll == 2){
+        ctx.fillText(`Find ∠d`, 20, 20)
+      }
+
+      ctx.save()
+      ctx.translate(200,137.5)
+      if (p.circleRoll == "1"){
+        ctx.beginPath()
+        ctx.arc(0, 0, 110, 0, 2*Math.PI)
+        ctx.stroke()
+      }
+      if (p.circleRoll == "2"){
+        ctx.beginPath()
+        ctx.arc(0, 0, 20, p.angleCircle*Math.PI/180, 2*Math.PI)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(0, 0)
+        ctx.lineTo(120, 0)
+        ctx.stroke()
+
+        ctx.save()
+          ctx.rotate(p.angleCircle*Math.PI/180)
+          ctx.beginPath()
+          ctx.moveTo(0, 0)
+          ctx.lineTo(120, 0)
+          ctx.stroke()
+        ctx.restore()
+
+        ctx.beginPath()
+        ctx.arc(0, 0, 15, 0, p.angleCircle*Math.PI/180)
+        ctx.stroke()
+
+        ctx.fillText(`${p.angleCircle}`, 25, 12)
+        if (p.angleCircle > 340){
+          ctx.fillText(`d`, 100, -1)
+        } else {
+          ctx.fillText(`d`, 25, -3)
+        }
+      }
+      ctx.restore()
+    }
+    ctx.restore()
+  }
+
   if ( level == 5.0 ){
     
     let alignXText = 15;
@@ -3319,6 +3516,49 @@ function handleSubmit(e){
         }
       }
 
+      if ( level == 4.19 ){
+        if (p.shapeRoll == "Square"){
+          if (p.squareRoll == 1){
+            correctAnswer = 45
+          }
+          if (p.squareRoll == 2){
+            correctAnswer = 90
+          }
+          if (p.squareRoll == 3){
+            correctAnswer = 360
+          }
+        }
+        if (p.shapeRoll == "Rectangle"){
+      
+          if (p.rectRoll == 1){
+            correctAnswer = 90
+          }
+          if (p.rectRoll == 2){
+            correctAnswer = `90-${p.angleDegrees}`
+          }
+          if (p.rectRoll == 3){
+            correctAnswer = 360
+          }
+        }
+        if (p.shapeRoll == "straight"){
+          if (p.straightRoll == 1) {
+            correctAnswer = 180
+          }
+          if (p.straightRoll == 2){
+            correctAnswer = `180-${p.angleStraight}`
+          }
+        }
+
+        if (p.shapeRoll == "circle"){
+          if (p.circleRoll == 1){
+            correctAnswer = 360
+          }
+          if (p.circleRoll == 2){
+            correctAnswer = `360-${p.angleCircle}`
+          }
+        }
+      }
+
       if ( level == 5.0) {
         if (p.sidesBH == "base"){
           correctAnswer = `${p.labelABC}${p.labelGHI}`
@@ -4113,6 +4353,29 @@ function genProblems(){
       roll: [2, 1][genNumbers(2)],
       angleTurn: (genNumbers(8)+1)*45,
       direction: ["clockwise","counter-clockwise"][genNumbers(2)],
+    }
+  }
+
+  if ( level == 4.19 ){
+    return {
+      // square
+      coordSquare: genNumbers(70)+70,
+      squareRoll: [1, 2, 3][genNumbers(3)],
+
+      coordRect1: genNumbers(70)+70,
+      coordRect2: genNumbers(50)+80,
+      rectRoll:  [1, 2, 3][genNumbers(3)],
+      angle: undefined,
+      angleDegrees: undefined,
+
+      angleStraight: genNumbers(160)+10,
+      straightRoll: [1, 2][genNumbers(2)],
+
+      angleCircle: genNumbers(360)+10,
+      circleRoll: [2, 1][genNumbers(2)],
+
+      shapeRoll: ["circle","straight","Rectangle","Square"][genNumbers(4)]
+    
     }
   }
 
@@ -5099,6 +5362,20 @@ for (let i = 0; i <  settingButton.length; i++){
         firstCanvas.classList.remove('hidden');
         arr = ["A","B","C","D","O","F","G","H","I"]
         arr2 = ["B","C","F","I","H","G","D","A"]
+        document.querySelector("#user-input").setAttribute("type","text");
+      break;
+
+      case "Level 4.19":
+        level = 4.19;
+        scoreNeeded = 20;
+        gold = highScore4DotZero19.time
+        silver = highScore4DotZero19.time+((cutoff-highScore4DotZero19.time)/3)
+        bronze = highScore4DotZero.time+((cutoff-highScore4DotZero19.time)/3)*2
+        highScoreName.innerHTML = highScore4DotZero19.name
+        highScoreTime.innerHTML = highScore4DotZero19.time
+        highScoreMistakes.innerHTML = highScore4DotZero19.mistake
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
         document.querySelector("#user-input").setAttribute("type","text");
       break;
   
