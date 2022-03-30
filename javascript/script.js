@@ -2565,62 +2565,66 @@ function updateProblems(){
   }
 
   if ( level == 5.06){
-    ctx.save()
-    ctx.font = "1em serif"
-                           // right angle triangle
-      if (p.rightAngleTriX1 == p.rightAngleTriX2) {
-        p.rightAngleTriX1 += 10
-      }
-      ctx.translate(200, 137.5)
-      ctx.beginPath()
-      ctx.moveTo(p.rightAngleTriX1, 0)
-      ctx.lineTo(p.rightAngleTriX2, 0)
-      let base = p.rightAngleTriX2-p.rightAngleTriX1
-      let height = -p.rightAngleTriY;
-      let hypo = Math.sqrt(height*height+base*base)
-      let angle = Math.atan(height/base)
-      let angleLabel = Math.round(angle*180/Math.PI)
+    if (p.roll == 1){
+      ctx.save()
+        ctx.font = "1em serif"
+                              // right angle triangle
+          if (-p.rightAngleTriX1 == p.rightAngleTriX2) {
+            p.rightAngleTriX1 -= 10
+          ctx.fillText(`Find ∠a`, 20, 20)
+          }
+          ctx.translate(200, 137.5)
+          ctx.beginPath()
+          ctx.moveTo(p.rightAngleTriX1, 0)
+          ctx.lineTo(p.rightAngleTriX2, 0)
+          let base = p.rightAngleTriX2-p.rightAngleTriX1
+          let height = -p.rightAngleTriY;
+          let hypo = Math.sqrt(height*height+base*base)
+          let angle = Math.atan(height/base)
+          p.angleLabel = Math.round(angle*180/Math.PI)
 
+          // right angle on the left
+          if (p.rightAngleRoll == 1){
+            ctx.lineTo(p.rightAngleTriX1, p.rightAngleTriY)
+            ctx.closePath()
+            ctx.stroke()
 
-      // right angle on the left
-      if (p.rightAngleRoll == 1){
-        ctx.lineTo(p.rightAngleTriX1, p.rightAngleTriY)
-        ctx.closePath()
-        ctx.stroke()
+            ctx.beginPath()
+            ctx.rect(p.rightAngleTriX1, 0, 7, -7)
+            ctx.stroke()
 
-        ctx.beginPath()
-        ctx.rect(p.rightAngleTriX1, 0, 7, -7)
-        ctx.stroke()
+            ctx.beginPath()
+            ctx.arc(p.rightAngleTriX2, 0, 15, 1*Math.PI, angle+1*Math.PI)
+            ctx.stroke()
+            ctx.fillText(`${p.angleLabel}°`, p.rightAngleTriX2-35, -1)
 
-        ctx.beginPath()
-        ctx.arc(p.rightAngleTriX2, 0, 15, 1*Math.PI, angle+1*Math.PI)
-        ctx.stroke()
-        ctx.fillText(`${angleLabel}°`, p.rightAngleTriX2-35, -1)
+            ctx.beginPath()
+            ctx.arc(p.rightAngleTriX1, p.rightAngleTriY, 10, angle, 0.5*Math.PI)
+            ctx.stroke()
+            ctx.fillText("a", p.rightAngleTriX1+3, p.rightAngleTriY+20)
+          }
+          // right angle on the right
+          if (p.rightAngleRoll == 2){
+            ctx.lineTo(p.rightAngleTriX2, p.rightAngleTriY)
+            ctx.closePath()
+            ctx.stroke()
 
-        ctx.beginPath()
-        ctx.arc(p.rightAngleTriX1, p.rightAngleTriY, 10, angle, 0.5*Math.PI)
-        ctx.stroke()
-      }
-      // right angle on the right
-      if (p.rightAngleRoll == 2){
-        ctx.lineTo(p.rightAngleTriX2, p.rightAngleTriY)
-        ctx.closePath()
-        ctx.stroke()
+            ctx.beginPath()
+            ctx.rect(p.rightAngleTriX2, 0, -7, -7)
+            ctx.stroke()
 
-        ctx.beginPath()
-        ctx.rect(p.rightAngleTriX2, 0, -7, -7)
-        ctx.stroke()
+            ctx.beginPath()
+            ctx.arc(p.rightAngleTriX1, 0, 15, 0, (2-angle/Math.PI)*Math.PI, true)
+            ctx.stroke()
+            ctx.fillText(`${p.angleLabel}°`, p.rightAngleTriX1+15, -1)
 
-        ctx.beginPath()
-        ctx.arc(p.rightAngleTriX1, 0, 15, 0, (2-angle/Math.PI)*Math.PI, true)
-        ctx.stroke()
-        ctx.fillText(`${angleLabel}°`, p.rightAngleTriX1+15, -1)
-
-        ctx.beginPath()
-        ctx.arc(p.rightAngleTriX2, p.rightAngleTriY, 10, 0.5*Math.PI, 1*Math.PI-angle)
-        ctx.stroke()
-      }
-    ctx.restore()
+            ctx.beginPath()
+            ctx.arc(p.rightAngleTriX2, p.rightAngleTriY, 10, 0.5*Math.PI, 1*Math.PI-angle)
+            ctx.stroke()
+            ctx.fillText("a", p.rightAngleTriX2-10, p.rightAngleTriY+20)
+          }
+      ctx.restore()
+    }
   }
 
   if ( level == 6.0){
@@ -3812,6 +3816,17 @@ function handleSubmit(e){
 
       }
 
+      if ( level == 5.06){
+        if (p.roll == 1){
+          if (p.rightAngleRoll == 1){
+            correctAnswer = `90-${p.angleLabel}`
+          }
+          if (p.rightAngleRoll == 2){
+            correctAnswer = `90-${p.angleLabel}`
+          }
+        }
+      
+      }
       if ( level == 6.0){
         if (p.choiceBC == "B" && p.choiceOne == "percentage"){
           if (p.situationA == "increased by") {
@@ -4643,10 +4658,13 @@ function genProblems(){
 
   if ( level == 5.06){
     return {
-    rightAngleTriX1 : -(genNumbers(5)+1)*20,
-    rightAngleTriX2 : (genNumbers(5)+1)*20,
+    roll: [1][genNumbers(1)],
+
+    rightAngleTriX1 : -(genNumbers(4)+3)*20,
+    rightAngleTriX2 : (genNumbers(4)+3)*20,
     rightAngleTriY : -(genNumbers(5)+2)*20,
-    rightAngleRoll : [1, 2][genNumbers(2)]
+    rightAngleRoll : [1, 2][genNumbers(2)],
+    angleLabel: undefined
    }
   }
 
