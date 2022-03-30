@@ -779,7 +779,11 @@ function updateProblems(){
 
       if (p.timeHours > 12){
         p.timeHours -= 12
+        p.amOrPm = "pm"
+      } else {
+        p.amOrPm = "am"
       }
+
       ctx.save()
         const xStart = -150
         const yStart = 0
@@ -833,11 +837,25 @@ function updateProblems(){
         ctx.lineTo(140, -15)
         ctx.stroke()
         if (p.situation == "later"){
-        ctx.fillText(`${p.changeHours}h ${p.changeMinutes}mins ${p.situation}`, -50, -10)
+          if (p.roll == "mins"){
+            ctx.fillText(`${p.changeMinutes}mins ${p.situation}`, -50, -10)
+          }
+          if (p.roll == "hours")
+            ctx.fillText(`${p.changeHours}hours ${p.situation}`, -50, -10)
          }
         if (p.situation == "before"){
-        ctx.fillText(`${p.changeHours}h ${p.changeMinutes}mins ${p.situation}`, -50, -10)
+          if (p.roll == "mins"){
+            ctx.fillText(`${p.changeMinutes}mins ${p.situation}`, -50, -10)
           }
+          if (p.roll == "hours"){
+            ctx.fillText(`${p.changeHours}hours ${p.situation}`, -50, -10)
+          }
+        }
+
+       if (state.score < 11){
+         ctx.fillText("am: 1 2 3 4 5 6 7 8 9 10 11 12", -115, -100) 
+         ctx.fillText("pm: 12 11 10 9 8 7 6 5 4 3 2 1", -115, -80)
+       }
       ctx.restore()
 
     ctx.restore()
@@ -2946,85 +2964,135 @@ function handleSubmit(e){
       }
 
       if ( level == 2.09){
-        if (p.amOrPm == "pm"){
-          p.timeHours += 12
+        let finalHours = p.timeHours
+        if (p.amOrPm == "pm" && p.timeHours < 12){
+          finalHours += 12
         }
-
-        // if later
-        if (p.situation == "later"){
-            let finalHours = p.timeHours+p.changeHours
-            let finalMinutes = p.timeMinutes+p.changeMinutes
-          if (finalHours > 11 && finalHours < 23){
-            p.amOrPm = "pm"
-          } else {
-            p.amOrPm = "am"
-          }
-          if (finalHours == 11 && finalMinutes >= 60){
-            p.amOrPm = "pm"
-          }
-          if (finalHours == 23 && finalMinutes >= 60){
-            p.amOrPm = "am"
-          }
-          if (finalHours>24){
-            finalHours -=24
-          }
-          if (finalHours>12){
-            finalHours -=12
-          }
-
-          if ((p.timeMinutes+p.changeMinutes)>=60){
-            if ((finalMinutes-60) < 10) {
-              correctAnswer = `${finalHours}.${finalMinutes},${finalHours+1}.0${finalMinutes-60}${p.amOrPm}`
-            } else {
-              correctAnswer = `${finalHours}.${finalMinutes},${finalHours+1}.${finalMinutes-60}${p.amOrPm}`
+        if (p.amOrPm == "am" && p.timeHours == 12){
+          finalHours -= 12
+        }
+        let totalMinutes = finalHours*60+p.timeMinutes
+        console.log(`Total minutes: ${totalMinutes}`)
+        // total minutes = 24x60=1440
+        // am range = 11x60+59=719
+        // pm range = 780 to 1439
+        let amOrPm2 = undefined
+      if (p.situation == "later"){
+          if (p.roll == "mins"){
+            let finalMinutes = totalMinutes+p.changeMinutes
+            console.log(`Final Minutes: ${finalMinutes}`)
+            let hours = Math.floor(finalMinutes/60)
+            if (hours > 12 && hours < 25){
+              hours -= 12
             }
-          } else {
-            correctAnswer = `${finalHours}.${finalMinutes}${p.amOrPm}`
-          }
-        }
-        // if before
-        if (p.situation == "before"){
-            let finalHours = p.timeHours-p.changeHours
-            let finalMinutes = p.timeMinutes-p.changeMinutes
-          if (finalHours > 11 && finalHours < 23){
-            p.amOrPm = "pm"
-          } else {
-            p.amOrPm = "am"
-          }
-          if (finalHours == 12 && finalMinutes <= 0){
-            p.amOrPm = "am"
-          }
-          if (finalHours == 24 && finalMinutes <= 0){
-            p.amOrPm = "pm"
-          }
-          if (finalHours>24){
-            finalHours -=24
-          }
-          if (finalHours>12){
-            finalHours -=12
-          }
-          if (p.timeHours > 12){
-            p.timeHours -= 12
-          }
-          if (finalHours <= 0){
-            finalHours += 12
-          }
-
-          if (finalMinutes < 0){
-            correctAnswer = `${p.timeHours-1}.${p.timeMinutes+60},${finalHours-1}.${finalMinutes+60}${p.amOrPm}`
-          }
-          if (finalMinutes > 0){
-            if (finalMinutes < 10){
-              correctAnswer = `${finalHours}.0${finalMinutes}${p.amOrPm}`
+            if (hours >= 25){
+              hours -= 24
+            }
+            if (finalMinutes <= 719 || finalMinutes >= 1440){
+              amOrPm2 = "am"
             } else {
-              correctAnswer = `${finalHours}.${finalMinutes}${p.amOrPm}`
+              amOrPm2 = "pm"
+            }
+            
+            if (p.timeMinutes+p.changeMinutes == 60 || p.timeMinutes+p.changeMinutes == 0){
+              correctAnswer = `${hours}${p.amOrPm2}`
+            } else if (p.timeMinutes+p.changeMinutes >= 60 && (p.timeMinutes+p.changeMinutes-60)<10){
+              correctAnswer = `${p.timeHours}.${p.timeMinutes+p.changeMinutes}=${hours}.0${finalMinutes%60}${amOrPm2}`
+            } else if (p.timeMinutes+p.changeMinutes >= 60){
+              correctAnswer = `${p.timeHours}.${p.timeMinutes+p.changeMinutes}=${hours}.${finalMinutes%60}${amOrPm2}`
+            } else if (finalMinutes%60 < 10){
+              correctAnswer = `${hours}.0${finalMinutes%60}${amOrPm2}`
+            } else {
+              correctAnswer = `${hours}.${finalMinutes%60}${amOrPm2}`
             }
           }
-
-        }
+          if (p.roll == "hours"){
+            let finalMinutes = totalMinutes+p.changeHours*60
+            console.log(`Final Minutes: ${finalMinutes}`)
+            let hours = Math.floor(finalMinutes/60)
+            if (hours > 12 && hours < 25){
+              hours -= 12
+            }
+            if (hours >= 25){
+              hours -= 24
+            }
+            if (finalMinutes <= 719 || finalMinutes >= 1440){
+              amOrPm2 = "am"
+            } else {
+              amOrPm2 = "pm"
+            }
+            
+            if (finalMinutes%60 == 0){
+              correctAnswer = `${hours}${amOrPm2}`
+            } else if ( finalMinutes%60 < 10){
+              correctAnswer = `${hours}.0${finalMinutes%60}${amOrPm2}`
+            } else {
+            correctAnswer = `${hours}.${finalMinutes%60}${amOrPm2}`
+            }
+          } 
       }
+      if (p.situation == "before"){
+          if (p.roll == "mins"){
+            let finalMinutes = totalMinutes-p.changeMinutes
+            if (finalMinutes <= 0){
+              finalMinutes += 1440
+            }
+            console.log(`Final Minutes: ${finalMinutes}`)
+            let hours = Math.floor(finalMinutes/60)
+            if (hours > 12 && hours < 25){
+              hours -= 12
+            }
+            if (hours >= 25){
+              hours -= 24
+            }
+            if (finalMinutes <= 719 || finalMinutes >= 1440){
+              amOrPm2 = "am"
+            } else {
+              amOrPm2 = "pm"
+            }
+            
+            if (p.timeMinutes-p.changeMinutes == 0){
+              correctAnswer = `${hours}${amOrPm2}`
+            } else if (p.timeMinutes-p.changeMinutes < 0){
+              correctAnswer = `${p.timeHours-1}.${p.timeMinutes+60},${hours}.${finalMinutes%60}${amOrPm2}`
+            } else if (finalMinutes%60 < 10){
+              correctAnswer = `${hours}.0${finalMinutes%60}${amOrPm2}`
+            } else {
+            correctAnswer = `${hours}.${finalMinutes%60}${amOrPm2}`
+            }
+          }
 
+          if (p.roll == "hours"){
+            let finalMinutes = totalMinutes-p.changeHours*60
+            if (finalMinutes <= 0){
+              finalMinutes += 1440
+            }
+            console.log(`Final Minutes: ${finalMinutes}`)
+            let hours = Math.floor(finalMinutes/60)
+            if (hours > 12 && hours < 25){
+              hours -= 12
+            }
+            if (hours >= 25){
+              hours -= 24
+            }
+            if (finalMinutes <= 719 || finalMinutes >= 1440){
+              amOrPm2 = "am"
+            } else {
+              amOrPm2 = "pm"
+            }
+            
+            if (finalMinutes%60 == 0){
+              correctAnswer = `${hours}${amOrPm2}`
+            } else if ( finalMinutes%60 < 10){
+              correctAnswer = `${hours}.0${finalMinutes%60}${amOrPm2}`
+            } else {
+            correctAnswer = `${hours}.${finalMinutes%60}${amOrPm2}`
+            }
+          }
+        }
+    }
 
+  
       if ( level == 3.02 ){
         if (p.option == "1"){
          correctAnswer = p.numOne*p.numMultiTwo*p.numMulti
@@ -4007,9 +4075,9 @@ function genProblems(){
       timeMinutes: genNumbers(60),
       changeHours: genNumbers(6)+1,
       changeMinutes: genNumbers(60),
-      roll: ["mins","hours"][genNumbers(2)],
-      situation: ["before","later"][genNumbers(2)],
-      amOrPm: "pm"
+      roll: ["hours","mins"][genNumbers(2)],
+      situation: ["later","before"][genNumbers(2)],
+      amOrPm: undefined
     }
   }
 
@@ -4747,7 +4815,7 @@ for (let i = 0; i <  settingButton.length; i++){
       hardcore = 0;
       mainBox.style.borderColor = "black"
       levelSetting.style.borderColor = "black"
-      cutoff = 9999;
+      cutoff = 99999;
     }
     console.log(hardcore)
   })
