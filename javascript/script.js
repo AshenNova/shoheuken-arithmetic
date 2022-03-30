@@ -852,9 +852,16 @@ function updateProblems(){
           }
         }
 
-       if (state.score < 11){
+       if (state.score < 11 || state.mistake > 5){
          ctx.fillText("am: 1 2 3 4 5 6 7 8 9 10 11 12", -115, -100) 
          ctx.fillText("pm: 12 11 10 9 8 7 6 5 4 3 2 1", -115, -80)
+       }
+
+       if (state.mistake > 10  && p.situation == "later" && p.roll == "mins" && p.timeMinutes+p.changeMinutes >= 60 && state.score < 11){
+        ctx.fillText("Overflow", -55, -60)
+       }
+       if (state.mistake > 10 && p.situation == "before" && p.roll == "mins" && p.timeMinutes-p.changeMinutes < 0 && state.score < 11){
+        ctx.fillText("Insufficient", -55, -60)
        }
       ctx.restore()
 
@@ -2994,8 +3001,10 @@ function handleSubmit(e){
               amOrPm2 = "pm"
             }
             
-            if (p.timeMinutes+p.changeMinutes == 60 || p.timeMinutes+p.changeMinutes == 0){
-              correctAnswer = `${hours}${p.amOrPm2}`
+            if (p.timeMinutes+p.changeMinutes == 0){
+              correctAnswer = `${hours}${amOrPm2}`
+            } else if (p.timeMinutes+p.changeMinutes == 60 ){
+              correctAnswer = `${p.timeHours}.60=${hours}${amOrPm2}`
             } else if (p.timeMinutes+p.changeMinutes >= 60 && (p.timeMinutes+p.changeMinutes-60)<10){
               correctAnswer = `${p.timeHours}.${p.timeMinutes+p.changeMinutes}=${hours}.0${finalMinutes%60}${amOrPm2}`
             } else if (p.timeMinutes+p.changeMinutes >= 60){
@@ -3054,7 +3063,7 @@ function handleSubmit(e){
             if (p.timeMinutes-p.changeMinutes == 0){
               correctAnswer = `${hours}${amOrPm2}`
             } else if (p.timeMinutes-p.changeMinutes < 0){
-              correctAnswer = `${p.timeHours-1}.${p.timeMinutes+60},${hours}.${finalMinutes%60}${amOrPm2}`
+              correctAnswer = `${hours}.${p.timeMinutes+60},${hours}.${finalMinutes%60}${amOrPm2}`
             } else if (finalMinutes%60 < 10){
               correctAnswer = `${hours}.0${finalMinutes%60}${amOrPm2}`
             } else {
@@ -3079,6 +3088,9 @@ function handleSubmit(e){
               amOrPm2 = "am"
             } else {
               amOrPm2 = "pm"
+            }
+            if (hours == 0){
+              hours = 12
             }
             
             if (finalMinutes%60 == 0){
@@ -3909,6 +3921,22 @@ function handleSubmit(e){
          if ( level == 4.0 ){
            arr.length = 0;
          }
+
+
+
+        //  help me!
+        if ( level == 2.09){
+          if (state.mistake > 5){
+            ctx.fillText("am: 1 2 3 4 5 6 7 8 9 10 11 12", -115, -100) 
+            ctx.fillText("pm: 12 11 10 9 8 7 6 5 4 3 2 1", -115, -80)
+          }   
+          if (state.mistake > 5 && p.situation == "later" && p.roll == "mins" && p.timeMinutes+p.changeMinutes >= 60 && state.score < 11){
+            ctx.fillText("Overflow", -55, -60)
+           }
+           if (state.mistake > 5 && p.situation == "before" && p.roll == "mins" && p.timeMinutes-p.changeMinutes < 0 && state.score < 11){
+            ctx.fillText("Insufficient", -55, -60)
+           }
+        }
       }
     
   }
