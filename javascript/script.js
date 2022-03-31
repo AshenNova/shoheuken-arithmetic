@@ -3907,7 +3907,7 @@ function handleSubmit(e){
         }
         if (p.roll == 3){
           if (p.isosRoll == 1){
-            correctAnswer = `180-${p.isosAngle}-${p.isosAngle}`
+            correctAnswer = `180-${p.isosAngle}x2`
           }
           if (p.isosRoll == 2){
             correctAnswer = `(180-${p.isosAngle2Label})/2`
