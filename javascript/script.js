@@ -2565,66 +2565,143 @@ function updateProblems(){
   }
 
   if ( level == 5.06){
+    ctx.save()
+    ctx.font = "1em serif"
     if (p.roll == 1){
-      ctx.save()
-        ctx.font = "1em serif"
-                              // right angle triangle
-          if (-p.rightAngleTriX1 == p.rightAngleTriX2) {
-            p.rightAngleTriX1 -= 10
-          ctx.fillText(`Find ∠a`, 20, 20)
-          }
-          ctx.translate(200, 137.5)
+                            // right angle triangle
+        if (-p.rightAngleTriX1 == p.rightAngleTriX2) {
+          p.rightAngleTriX1 -= 10
+        ctx.fillText(`Below is a Right-Angled Triangle`, 20, 20)
+        ctx.fillText(`Find ∠a`, 40, 20)
+        }
+        ctx.translate(200, 137.5)
+        ctx.beginPath()
+        ctx.moveTo(p.rightAngleTriX1, 0)
+        ctx.lineTo(p.rightAngleTriX2, 0)
+        let base = p.rightAngleTriX2-p.rightAngleTriX1
+        let height = -p.rightAngleTriY;
+        let hypo = Math.sqrt(height*height+base*base)
+        let angle = Math.atan(height/base)
+        p.angleLabel = Math.round(angle*180/Math.PI)
+
+        // right angle on the left
+        if (p.rightAngleRoll == 1){
+          ctx.lineTo(p.rightAngleTriX1, p.rightAngleTriY)
+          ctx.closePath()
+          ctx.stroke()
+
           ctx.beginPath()
-          ctx.moveTo(p.rightAngleTriX1, 0)
-          ctx.lineTo(p.rightAngleTriX2, 0)
-          let base = p.rightAngleTriX2-p.rightAngleTriX1
-          let height = -p.rightAngleTriY;
-          let hypo = Math.sqrt(height*height+base*base)
-          let angle = Math.atan(height/base)
-          p.angleLabel = Math.round(angle*180/Math.PI)
+          ctx.rect(p.rightAngleTriX1, 0, 7, -7)
+          ctx.stroke()
 
-          // right angle on the left
-          if (p.rightAngleRoll == 1){
-            ctx.lineTo(p.rightAngleTriX1, p.rightAngleTriY)
-            ctx.closePath()
-            ctx.stroke()
+          ctx.beginPath()
+          ctx.arc(p.rightAngleTriX2, 0, 15, 1*Math.PI, angle+1*Math.PI)
+          ctx.stroke()
+          ctx.fillText(`${p.angleLabel}°`, p.rightAngleTriX2-35, -1)
 
-            ctx.beginPath()
-            ctx.rect(p.rightAngleTriX1, 0, 7, -7)
-            ctx.stroke()
+          ctx.beginPath()
+          ctx.arc(p.rightAngleTriX1, p.rightAngleTriY, 10, angle, 0.5*Math.PI)
+          ctx.stroke()
+          ctx.fillText("a", p.rightAngleTriX1+3, p.rightAngleTriY+20)
+        }
+        // right angle on the right
+        if (p.rightAngleRoll == 2){
+          ctx.lineTo(p.rightAngleTriX2, p.rightAngleTriY)
+          ctx.closePath()
+          ctx.stroke()
 
-            ctx.beginPath()
-            ctx.arc(p.rightAngleTriX2, 0, 15, 1*Math.PI, angle+1*Math.PI)
-            ctx.stroke()
-            ctx.fillText(`${p.angleLabel}°`, p.rightAngleTriX2-35, -1)
+          ctx.beginPath()
+          ctx.rect(p.rightAngleTriX2, 0, -7, -7)
+          ctx.stroke()
 
-            ctx.beginPath()
-            ctx.arc(p.rightAngleTriX1, p.rightAngleTriY, 10, angle, 0.5*Math.PI)
-            ctx.stroke()
-            ctx.fillText("a", p.rightAngleTriX1+3, p.rightAngleTriY+20)
-          }
-          // right angle on the right
-          if (p.rightAngleRoll == 2){
-            ctx.lineTo(p.rightAngleTriX2, p.rightAngleTriY)
-            ctx.closePath()
-            ctx.stroke()
+          ctx.beginPath()
+          ctx.arc(p.rightAngleTriX1, 0, 15, 0, (2-angle/Math.PI)*Math.PI, true)
+          ctx.stroke()
+          ctx.fillText(`${p.angleLabel}°`, p.rightAngleTriX1+15, -1)
 
-            ctx.beginPath()
-            ctx.rect(p.rightAngleTriX2, 0, -7, -7)
-            ctx.stroke()
-
-            ctx.beginPath()
-            ctx.arc(p.rightAngleTriX1, 0, 15, 0, (2-angle/Math.PI)*Math.PI, true)
-            ctx.stroke()
-            ctx.fillText(`${p.angleLabel}°`, p.rightAngleTriX1+15, -1)
-
-            ctx.beginPath()
-            ctx.arc(p.rightAngleTriX2, p.rightAngleTriY, 10, 0.5*Math.PI, 1*Math.PI-angle)
-            ctx.stroke()
-            ctx.fillText("a", p.rightAngleTriX2-10, p.rightAngleTriY+20)
-          }
-      ctx.restore()
+          ctx.beginPath()
+          ctx.arc(p.rightAngleTriX2, p.rightAngleTriY, 10, 0.5*Math.PI, 1*Math.PI-angle)
+          ctx.stroke()
+          ctx.fillText("a", p.rightAngleTriX2-10, p.rightAngleTriY+20)
+        }   
     }
+    if (p.roll == 2){
+      ctx.fillText("Below is a Equilateral Triangle.", 20, 20)
+      ctx.fillText("What is ∠e?",20, 40)
+
+      ctx.translate(200,137.5)
+      ctx.translate(0, 20)
+      ctx.beginPath()
+      ctx.moveTo(-p.equiAngleTriX, 0)
+      ctx.lineTo(p.equiAngleTriX, 0)
+      let equiMid = p.equiAngleTriX
+      let equiAngle = 60*Math.PI/180
+      let equiHeight = Math.tan(equiAngle)*equiMid
+      console.log(equiMid, equiAngle, equiHeight)
+      ctx.lineTo(0, -equiHeight)
+      ctx.closePath()
+      ctx.stroke()
+
+      ctx.beginPath()
+      ctx.arc(-p.equiAngleTriX, 0, 15, 2*Math.PI-equiAngle, 2*Math.PI)
+      ctx.stroke()
+    }
+
+    if (p.roll == 3){
+      ctx.fillText("Below is a Isosceles Triangle.", 20, 20)
+      ctx.fillText("What is ∠i?",20, 40)
+
+      ctx.translate(200,137.5)
+      ctx.translate(0, 40)
+      ctx.beginPath()
+      ctx.moveTo(-p.isosTriX, 0)
+      ctx.lineTo(p.isosTriX, 0)
+      if (p.isosAngle == 45){
+        p.isosAngle += 5
+      }
+      let isosMid = p.isosTriX
+      // convert to rad
+      let isosAngle = p.isosAngle*Math.PI/180
+      let isosHeight = Math.tan(isosAngle)*isosMid
+      console.log(isosMid, isosAngle, isosHeight, isosAngle*Math.PI/180)
+      ctx.lineTo(0, -isosHeight)
+      ctx.closePath()
+      ctx.stroke()
+
+      let isosAngle2R = (0.5*Math.PI-isosAngle)*2
+      let isosAngle2D = isosAngle2R*180/Math.PI
+      p.isosAngle2Label = Math.floor(isosAngle2D);
+
+      if (p.isosRoll == 1){
+        // angle at top find bottom left
+        console.log("choice 1")
+        ctx.beginPath()
+        ctx.arc(-p.isosTriX, 0, 15, 2*Math.PI-isosAngle, 2*Math.PI)
+        ctx.stroke()
+        ctx.fillText("i", -1, -isosHeight+30)
+
+        ctx.beginPath()
+        ctx.arc(0, -isosHeight, 15, isosAngle, 1*Math.PI-isosAngle*2+isosAngle)
+        ctx.stroke()
+        ctx.fillText(`${p.isosAngle}°`, -p.isosTriX+20, -2)
+      }
+
+      if (p.isosRoll == 2){
+         // angle at bottom find top
+        console.log("choice 2")
+        ctx.beginPath()
+        ctx.arc(0, -isosHeight, 15, isosAngle, (1*Math.PI-isosAngle*2)+isosAngle)
+        ctx.stroke()
+        ctx.fillText("i", -p.isosTriX+20, 0-2)
+
+        ctx.beginPath()
+        ctx.arc(-p.isosTriX, 0, 15, 2*Math.PI-isosAngle, 2*Math.PI)
+        ctx.stroke()
+        ctx.fillText(`${p.isosAngle2Label}°`, -5, -isosHeight+30)
+
+      }
+    }   
+    ctx.restore()
   }
 
   if ( level == 6.0){
@@ -3825,6 +3902,17 @@ function handleSubmit(e){
             correctAnswer = `90-${p.angleLabel}`
           }
         }
+        if (p.roll == 2){
+          correctAnswer = 60;
+        }
+        if (p.roll == 3){
+          if (p.isosRoll == 1){
+            correctAnswer = `180-${p.isosAngle}-${p.isosAngle}`
+          }
+          if (p.isosRoll == 2){
+            correctAnswer = `(180-${p.isosAngle2Label})/2`
+          }
+        }
       
       }
       if ( level == 6.0){
@@ -4658,13 +4746,20 @@ function genProblems(){
 
   if ( level == 5.06){
     return {
-    roll: [1][genNumbers(1)],
+    roll: [3, 2, 1][genNumbers(1)],
 
-    rightAngleTriX1 : -(genNumbers(4)+3)*20,
+    rightAngleTriX1 : -(genNumbers(4)+3)*15,
     rightAngleTriX2 : (genNumbers(4)+3)*20,
     rightAngleTriY : -(genNumbers(5)+2)*20,
     rightAngleRoll : [1, 2][genNumbers(2)],
-    angleLabel: undefined
+    angleLabel: undefined,
+
+    equiAngleTriX: (genNumbers(4)+3)*15,
+
+    isosTriX: (genNumbers(4)+3)*15,
+    isosAngle: ((genNumbers(5)+3)*9),
+    isosRoll: [2, 1][genNumbers(2)],
+    isosAngle2Label: undefined
    }
   }
 
