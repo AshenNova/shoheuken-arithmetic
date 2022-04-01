@@ -3272,7 +3272,11 @@ function handleSubmit(e){
             a++
           }
         if (commonMultipleArrTwo.length > 1){
-          correctAnswer = commonMultipleArrTwo[0] + "," + commonMultipleArrTwo[commonMultipleArrTwo.length-1];
+          if (commonMultipleArrTwo[0] == commonMultipleArrTwo[1]){
+            correctAnswer = commonMultipleArrTwo[0]
+          } else {
+            correctAnswer = commonMultipleArrTwo[0] + "," + commonMultipleArrTwo[commonMultipleArrTwo.length-1];
+          }
         } else {
           correctAnswer = commonMultipleArrTwo[0];
         }
