@@ -165,6 +165,7 @@ const highScore5DotZero3 = new HighScore("Jayden Goo", "23 Mar 2022", 88, 0)
 const highScore5DotZero4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero5 = new HighScore("Emma Leo", "30 March 2022", 251, 1)
 const highScore5DotZero6 = new HighScore("Nil", "Nil", 0, 0)
+const highScore5DotZero8 = new HighScore("Nil", "Nil", 0, 0)
 const highScore6DotZero = new HighScore("Jayden Goo", "16 March 2022", 143, 0)
 const highScore6Dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
@@ -2833,6 +2834,52 @@ function updateProblems(){
     }
     ctx.restore()
   }
+  
+  if ( level == 5.08 ){
+    console.log(p.roll, p.rollChange)
+    if (p.roll == "discount"){
+      if (p.rollChange == 1){
+        displayProblem.innerHTML = `
+        The discount of $${p.change} was given to an item that cost $${p.totalAmount}.</br>
+        What percentage discount is given?
+        `
+      }
+      if (p.rollChange == 2){
+        displayProblem.innerHTML = `
+        An item cost $${p.totalAmount-p.change} after a $${p.change} discount was given.</br>
+        What percentage discount is given?
+        `
+      }
+    }
+    if (p.roll == "increase"){
+      if (p.rollChange == 1){
+        displayProblem.innerHTML = `
+       Something ${p.roll} by ${p.change} and was ${p.totalAmount} at first.</br>
+       What is the percentage ${p.roll}?
+        `
+      }
+      if (p.rollChange == 2){
+        displayProblem.innerHTML = `
+       Something ${p.roll} by ${p.change} and became ${p.totalAmount+p.change}.</br>
+       What is the percentage ${p.roll}?
+        `
+      }
+    }
+    if (p.roll == "decrease"){
+      if (p.rollChange == 1){
+        displayProblem.innerHTML = `
+       Something ${p.roll} by ${p.change} and was ${p.totalAmount} at first.</br>
+       What is the percentage ${p.roll}?
+        `
+      }
+      if (p.rollChange == 2){
+        displayProblem.innerHTML = `
+        Something ${p.roll} by ${p.change} and became ${p.totalAmount-p.change}.</br>
+        What is the percentage ${p.roll}?
+         `
+      }
+    }
+  }
 
   if ( level == 6.0){
     if (p.numOne == p.denoOne || p.numTwo == p.denoTwo || p.numThree == p.denoThree){
@@ -4059,6 +4106,12 @@ function handleSubmit(e){
          }
        }
       }
+
+      if ( level == 5.08 ){
+          correctAnswer = `${p.change}/${p.totalAmount}x100`
+      }
+
+      
       if ( level == 6.0){
         if (p.choiceBC == "B" && p.choiceOne == "percentage"){
           if (p.situationA == "increased by") {
@@ -4919,6 +4972,15 @@ function genProblems(){
     tri3LeftAngleD: undefined,
     tri3RightAndleD: undefined
    }
+  }
+
+  if ( level == 5.08 ){
+    return {
+      roll: ["discount","increase","decrease"][genNumbers(3)],
+      rollChange: [1, 2][genNumbers(2)],
+      change: (genNumbers(10)+1),
+      totalAmount: genNumbers(10)+10
+    }
   }
 
   if ( level == 6.0){
@@ -5941,6 +6003,25 @@ for (let i = 0; i <  settingButton.length; i++){
         firstCanvas.classList.remove('hidden');
       break;
   
+      case "Level 5.08":
+        level = 5.08;
+        scoreNeeded = 20;
+        gold = highScore5DotZero8.time
+        silver = highScore5DotZero8.time+((cutoff-highScore5DotZero8.time)/3)
+        bronze = highScore5DotZero8.time+((cutoff-highScore5DotZero8.time)/3)*2
+        highScoreName.innerHTML = highScore5DotZero8.name
+        highScoreTime.innerHTML = highScore5DotZero8.time
+        highScoreMistakes.innerHTML = highScore5DotZero8.mistake
+        instructions.innerHTML = 
+        `
+        discount/original x 100
+        increase/original x 100
+        decrease/original x 100
+        `
+        displayProblem.style.fontSize = "25px";
+        document.querySelector("#user-input").setAttribute("type","text");
+      break;
+
       case "Level 6.0":
         level = 6.0;
         scoreNeeded = 10;
