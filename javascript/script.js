@@ -2700,7 +2700,129 @@ function updateProblems(){
         ctx.fillText(`${p.isosAngle2Label}°`, -5, -isosHeight+30)
 
       }
-    }   
+    }
+    if (p.roll == 4){
+      ctx.fillText(`Find ∠b`, 20, 20)
+      ctx.translate(200, 137.5)
+      ctx.translate(0, 40)
+      let triHeight = p.triCy
+
+        // right angled triangle
+      if (p.triRoll == 1){
+        ctx.beginPath()
+        ctx.moveTo(-p.triAx, 0)
+        ctx.lineTo(p.triBx, 0)
+        p.triCx = genNumbers(p.triAx+p.triAx)-p.triAx
+        ctx.lineTo(p.triCx, -p.triCy)
+        ctx.closePath()
+        ctx.stroke()
+
+        let triLeftAdj = undefined
+        if (p.triCx < 0){
+           triLeftAdj = p.triAx-(-p.triCx)
+        } else {
+          triLeftAdj = p.triAx+p.triCx
+        }
+        let triLeftAngleR = Math.atan(triHeight/triLeftAdj)
+        p.triLeftAngleD = Math.floor(triLeftAngleR*180/Math.PI)
+        console.log(p.triCx, triHeight, triLeftAngleR, p.triLeftAngleD)
+
+        // left arc
+        ctx.beginPath()
+        ctx.arc(-p.triAx, 0, 15, (2*Math.PI)-triLeftAngleR , 2*Math.PI)
+        ctx.stroke()
+        ctx.fillText(`${p.triLeftAngleD}°`, -p.triAx+20, 0-3)
+
+        // left arc
+        let triRightAdj = p.triAx+p.triBx-triLeftAdj
+        let triRightAngleR = Math.atan(triHeight/triRightAdj)
+        p.triRightAngleD = Math.floor(triRightAngleR*180/Math.PI)
+
+        ctx.beginPath()
+        ctx.arc(p.triBx, 0, 15, (1*Math.PI), 1*Math.PI+triRightAngleR)
+        ctx.stroke()
+        ctx.fillText(`${p.triRightAngleD}°`, p.triBx-35, 0-3)
+
+        // answer arc
+        ctx.beginPath()
+        ctx.arc(p.triCx, -p.triCy, 15, triRightAngleR, 1*Math.PI-triLeftAngleR)
+        ctx.stroke()
+        ctx.fillText(`b`, p.triCx, -p.triCy+25)
+      }
+      if (p.triRoll == 2){
+        ctx.beginPath()
+        ctx.moveTo(-p.triAx, 0)
+        ctx.lineTo(p.triBx, 0)
+        ctx.lineTo(-p.triAx-p.triDx, -p.triCy)
+        ctx.closePath()
+        ctx.stroke()
+
+
+        // left arc
+        let tri2LeftAdj = p.triDx
+        let tri2LeftAngleR = 1*Math.PI-Math.atan(triHeight/tri2LeftAdj)
+        p.tri2LeftAngleD = Math.floor(tri2LeftAngleR*180/Math.PI)
+
+        ctx.beginPath()
+        ctx.arc(-p.triAx, 0, 15, 2*Math.PI-tri2LeftAngleR, 2*Math.PI)
+        ctx.stroke()
+        ctx.fillText(`${p.tri2LeftAngleD}°`, -p.triAx+20, 0-3)
+
+        // right arc
+        let tri2RightAdj = p.triAx+p.triDx+p.triBx
+        let tri2RightAngleR = Math.atan(triHeight/tri2RightAdj)
+        p.tri2RightAngleD = Math.floor(tri2RightAngleR*180/Math.PI)
+
+        ctx.beginPath()
+        ctx.arc(p.triBx, 0, 15, 1*Math.PI, 1*Math.PI+tri2RightAngleR)
+        ctx.stroke()
+        ctx.fillText(`${p.tri2RightAngleD}°`, p.triBx-35, 0-3)
+
+        // answer arc
+        ctx.beginPath()
+        ctx.arc(-p.triAx-p.triDx, -p.triCy,15, tri2RightAngleR, 1*Math.PI-tri2LeftAngleR)
+        ctx.stroke()
+        ctx.fillText(`b`, -p.triAx-p.triDx+20, -p.triCy+20)
+
+      }
+
+      if (p.triRoll == 3){
+        ctx.beginPath()
+        ctx.moveTo(-p.triAx, 0)
+        ctx.lineTo(p.triBx, 0)
+        ctx.lineTo(p.triBx+p.triDx, -p.triCy)
+        ctx.closePath()
+        ctx.stroke()
+
+        // right arc
+        let tri3RightAdj = p.triDx
+        let tri3RightAngleR = 1*Math.PI-Math.atan(triHeight/tri3RightAdj)
+        p.tri3RightAngleD = Math.floor(tri3RightAngleR*180/Math.PI)
+
+        ctx.beginPath()
+        ctx.arc(p.triBx, 0, 15, 1*Math.PI, 1*Math.PI+tri3RightAngleR)
+        ctx.stroke()
+        ctx.fillText(`${p.tri3RightAngleD}°`, p.triBx-40, 0-3)
+
+        // left arc
+        let tri3LeftAdj = p.triAx+p.triDx+p.triBx
+        let tri3LeftAngleR = Math.atan(triHeight/tri3LeftAdj)
+        p.tri3LeftAngleD = Math.floor(tri3LeftAngleR*180/Math.PI)
+
+        ctx.beginPath()
+        ctx.arc(-p.triAx, 0, 15, 2*Math.PI-tri3LeftAngleR, 2*Math.PI)
+        ctx.stroke()
+        ctx.fillText(`${p.tri3LeftAngleD}°`, -p.triAx+25, 0-3)
+
+        // answer arc
+        ctx.beginPath()
+        ctx.arc(p.triBx+p.triDx, -p.triCy,15, tri3RightAngleR, 1*Math.PI-tri3LeftAngleR)
+        ctx.stroke()
+        ctx.fillText(`b`, p.triBx+p.triDx-20, -p.triCy+20)
+
+
+      }
+    }
     ctx.restore()
   }
 
@@ -3917,7 +4039,17 @@ function handleSubmit(e){
             correctAnswer = `(180-${p.isosAngle2Label})/2`
           }
         }
-      
+       if (p.roll == 4){
+         if (p.triRoll == 1){
+           correctAnswer = `180-${p.triLeftAngleD}-${p.triRightAngleD}`
+         }
+         if (p.triRoll == 2){
+           correctAnswer = `180-${p.tri2LeftAngleD}-${p.tri2RightAngleD}`
+         }
+         if (p.triRoll == 3){
+           correctAnswer = `180-${p.tri3LeftAngleD}-${p.tri3RightAngleD}`
+         }
+       }
       }
       if ( level == 6.0){
         if (p.choiceBC == "B" && p.choiceOne == "percentage"){
@@ -4750,7 +4882,7 @@ function genProblems(){
 
   if ( level == 5.06){
     return {
-    roll: [3, 2, 1][genNumbers(1)],
+    roll: [4, 3, 2, 1][genNumbers(1)],
 
     rightAngleTriX1 : -(genNumbers(4)+3)*15,
     rightAngleTriX2 : (genNumbers(4)+3)*20,
@@ -4763,7 +4895,21 @@ function genProblems(){
     isosTriX: (genNumbers(4)+3)*15,
     isosAngle: ((genNumbers(5)+3)*9),
     isosRoll: [2, 1][genNumbers(2)],
-    isosAngle2Label: undefined
+    isosAngle2Label: undefined,
+
+    triRoll: [3, 2, 1][genNumbers(3)],
+    triAx : (genNumbers(4)+3)*20,
+    triBx : (genNumbers(4)+3)*20,
+    triCx : (genNumbers(14)-7)*15,
+    triCy : (genNumbers(4)+4)*15,
+    triLeftAngleD : undefined,
+    triRightAngleD : undefined,
+
+    triDx : (genNumbers(5)+1)*5,
+    tri2LeftAngleD: undefined,
+    tri2RightAndleD: undefined,
+    tri3LeftAngleD: undefined,
+    tri3RightAndleD: undefined
    }
   }
 
