@@ -3223,7 +3223,7 @@ function handleSubmit(e){
             correctAnswer = `${p.numOne-p.numThree}${p.minHours}${p.numTwo-p.numFour}${p.minSeconds}`
           }
           if (p.numOne == p.numThree){
-            correctAnswer = `${p.numThree-p.numFour}${p.minSeconds}`
+            correctAnswer = `${p.numTwo-p.numFour}${p.minSeconds}`
           }
         }
       }
