@@ -3215,6 +3215,9 @@ function handleSubmit(e){
           } else {
             correctAnswer = `${p.numOne+p.numThree}${p.minHours}${p.numTwo+p.numFour}${p.minSeconds}`
           }
+          if (p.numOne == p.numThree){
+            correctAnswer =`${p.numTwo+p.numFour}${p.minSeconds}`
+          } 
         }  
         if (p.operator == "-"){
           if (p.numTwo - p.numFour < 0){
@@ -5405,7 +5408,7 @@ for (let i = 0; i <  settingButton.length; i++){
 
       case "Level 2.08":
         level = 2.08;
-        scoreNeeded = 30;
+        scoreNeeded = 20;
         gold = highScore2DotZero8.time;
         highScoreName.innerHTML = highScore2DotZero8.name
         highScoreTime.innerHTML = highScore2DotZero8.time
