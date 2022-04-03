@@ -5179,7 +5179,7 @@ for (let i = 0; i <  settingButton.length; i++){
       hardcore = 0;
       mainBox.style.borderColor = "black"
       levelSetting.style.borderColor = "black"
-      cutoff = 99999;
+      cutoff = 600;
     }
     console.log(hardcore)
   })
@@ -5190,10 +5190,12 @@ for (let i = 0; i <  settingButton.length; i++){
       hardcore = 0;
       mainBox.style.borderColor = "#39FF14"
       levelSetting.style.borderColor = "#39FF14"
+      cutoff = 99999;
     } else {
       easy = 0;
       mainBox.style.borderColor = "black"
       levelSetting.style.borderColor = "black"
+      cutoff = 600;
     }
     console.log(hardcore)
   })
