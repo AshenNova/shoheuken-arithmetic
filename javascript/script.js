@@ -3215,7 +3215,7 @@ function handleSubmit(e){
           } else {
             correctAnswer = `${p.numOne+p.numThree}${p.minHours}${p.numTwo+p.numFour}${p.minSeconds}`
           }
-          if (p.numOne == p.numThree){
+          if (p.numOne == p.numThree && p.numOne == 0){
             correctAnswer =`${p.numTwo+p.numFour}${p.minSeconds}`
           } 
         }  
