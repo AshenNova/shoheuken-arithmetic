@@ -5444,7 +5444,7 @@ for (let i = 0; i <  settingButton.length; i++){
     switch (buttonLevel) {
       case "Level 1.0":
         level = 1.0;
-        scoreNeeded = 1;
+        scoreNeeded = 50;
         gold = highScore1DotZero.time
         silver = highScore1DotZero.time+((cutoff-highScore1DotZero.time)/3)
         bronze = highScore1DotZero.time+((cutoff-highScore1DotZero.time)/3)*2
