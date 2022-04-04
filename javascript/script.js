@@ -2949,7 +2949,7 @@ function updateProblems(){
 
       if (p.roll == "corresponding"){
         ctx.save
-        ctx.rotate(p.finalRotation*Math.PI/180)
+        // ctx.rotate(p.finalRotation*Math.PI/180)
         // first horizontal line
           ctx.translate(0, 50)
           ctx.beginPath()
@@ -2989,14 +2989,27 @@ function updateProblems(){
           ctx.lineTo(linePointX-adjustX-10-parallelAdjust, -50)
           ctx.stroke()
 
+          // first arc
           let corrAngle = angles(linePointX+adjustX, 0, linePointX-adjustX, -60)
           console.log(corrAngle)
-          ctx.beginPath()
-          ctx.arc(linePointX+adjustX, 0, 15, 2*Math.PI+corrAngle*Math.PI/180, 2*Math.PI)
-          ctx.stroke()
-
           p.corrAngleDisplay = Math.abs(Math.floor(corrAngle))
-          ctx.fillText(`${p.corrAngleDisplay}°`, linePointX+adjustX+20, -1)
+          if (p.corrRoll != 4){
+            ctx.beginPath()
+            ctx.arc(linePointX+adjustX, 0, 15, 2*Math.PI+corrAngle*Math.PI/180, 2*Math.PI)
+            ctx.stroke()
+
+            ctx.fillText(`${p.corrAngleDisplay}°`, linePointX+adjustX+20, -1)  
+          }
+
+          // longer intersect
+          ctx.save()
+            ctx.translate(linePointX+adjustX, 0)
+            ctx.rotate(corrAngle*Math.PI/180)
+            ctx.beginPath()
+            ctx.moveTo(-60, 0)
+            ctx.lineTo(120, 0)
+            ctx.stroke()
+          ctx.restore()
 
           if (p.corrRoll == 1){
             ctx.beginPath()
@@ -3009,14 +3022,27 @@ function updateProblems(){
             ctx.arc(linePointX-adjustX, -60, 15, 0, 1*Math.PI+corrAngle*Math.PI/180)
             ctx.stroke()
             ctx.fillText(`c`, linePointX-adjustX+21, -60+9)
-          }           
+          }          
+          if (p.corrRoll == 3 || p.corrRoll == 4){
+            // ctx.translate(0, -60)
+            ctx.beginPath()
+            ctx.arc(linePointX-adjustX, -60, 15, 2*Math.PI+corrAngle*Math.PI/180, 2*Math.PI)
+            ctx.stroke()
+            if (p.corrRoll == 3){
+              ctx.fillText(`c`, linePointX-adjustX+21, -60-1)
+            }
+            if (p.corrRoll == 4){
+              ctx.fillText(`${p.corrAngleDisplay}°`, linePointX-adjustX+21, -60-1)
 
+              ctx.beginPath()
+              ctx.arc(linePointX-adjustX, -60, 15, 1*Math.PI+corrAngle*Math.PI/180, 1*Math.PI)
+              ctx.stroke()
 
-
+              ctx.fillText(`c`,linePointX-adjustX-25, -50)
+            }
+          } 
         ctx.restore()
-
       }
-
     ctx.restore()
   }
 
@@ -4301,7 +4327,7 @@ function handleSubmit(e){
           correctAnswer = p.oppositeRotation
         }
         if (p.roll == "corresponding"){
-          if (p.corrRoll == "1"){
+          if (p.corrRoll == "1" || p.corrRoll == "3" || p.corrRoll == "4"){
             correctAnswer = p.corrAngleDisplay
           }
           if (p.corrRoll == "2"){
@@ -5179,11 +5205,11 @@ function genProblems(){
 
   if ( level == 5.07) {
     return {
-      roll: ["corresponding","opposite"][genNumbers(1)],
+      roll: ["corresponding","opposite"][genNumbers(2)],
       oppositeRotation: [genNumbers(120)+30],
       finalRotation: [genNumbers(180)-90],
 
-      corrRoll: [2, 1][genNumbers(2)],
+      corrRoll: [4, 3, 2, 1][genNumbers(4)],
       correspondingTranslateY: (genNumbers(12)+8)*5,
       corrAngleDisplay: undefined
     }
