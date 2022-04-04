@@ -1469,7 +1469,7 @@ function updateProblems(){
       console.log("while loop")
       p.numOne = genNumbers(60)+1
     }
-    
+
     displayProblem.innerHTML = 
     `List the factors of</br> 
     ${p.numOne}
@@ -2659,6 +2659,32 @@ function updateProblems(){
       ctx.beginPath()
       ctx.arc(-p.equiAngleTriX, 0, 15, 2*Math.PI-equiAngle, 2*Math.PI)
       ctx.stroke()
+
+      ctx.save()
+        ctx.rotate(90*Math.PI/180)
+        ctx.beginPath()
+        ctx.moveTo(-5, 0)
+        ctx.lineTo (5, 0)
+        ctx.stroke()
+      ctx.restore()
+
+      ctx.save()
+        ctx.translate(-p.equiAngleTriX/2, -equiHeight/2)
+        ctx.rotate(30*Math.PI/180)
+        ctx.beginPath()
+        ctx.moveTo(-5,0)
+        ctx.lineTo (5,0)
+        ctx.stroke()
+      ctx.restore()
+
+      ctx.save()
+        ctx.translate(p.equiAngleTriX/2, -equiHeight/2)
+        ctx.rotate(330*Math.PI/180)
+        ctx.beginPath()
+        ctx.moveTo(-5,0)
+        ctx.lineTo (5,0)
+        ctx.stroke()
+      ctx.restore()
     }
 
     if (p.roll == 3){
@@ -2685,6 +2711,24 @@ function updateProblems(){
       let isosAngle2R = (0.5*Math.PI-isosAngle)*2
       let isosAngle2D = isosAngle2R*180/Math.PI
       p.isosAngle2Label = Math.floor(isosAngle2D);
+
+      ctx.save()
+        ctx.translate(-p.isosTriX/2, -isosHeight/2)
+        ctx.rotate(0.5*Math.PI-isosAngle)
+        ctx.beginPath()
+        ctx.moveTo(-5, 0)
+        ctx.lineTo (5, 0)
+        ctx.stroke()
+      ctx.restore()
+
+      ctx.save()
+        ctx.translate(p.isosTriX/2, -isosHeight/2)
+        ctx.rotate(-(0.5*Math.PI-isosAngle))
+        ctx.beginPath()
+        ctx.moveTo(-5, 0)
+        ctx.lineTo (5, 0)
+        ctx.stroke()
+      ctx.restore()
 
       if (p.isosRoll == 1){
         // angle at top find bottom left
@@ -4952,7 +4996,7 @@ function genProblems(){
 
   if ( level == 5.06){
     return {
-    roll: [4, 3, 2, 1][genNumbers(4)],
+    roll: [3, 2, 1][genNumbers(1)],
 
     rightAngleTriX1 : -(genNumbers(4)+3)*15,
     rightAngleTriX2 : (genNumbers(4)+3)*20,
@@ -4962,7 +5006,7 @@ function genProblems(){
 
     equiAngleTriX: (genNumbers(4)+3)*15,
 
-    isosTriX: (genNumbers(4)+3)*15,
+    isosTriX: (genNumbers(4)+4)*15,
     isosAngle: ((genNumbers(5)+3)*9),
     isosRoll: [2, 1][genNumbers(2)],
     isosAngle2Label: undefined,
