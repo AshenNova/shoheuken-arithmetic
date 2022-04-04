@@ -228,12 +228,6 @@ time++;
 document.getElementById('timer').innerHTML = time;
 console.log(state.score);
 
-if (easy == 1) {
-  cutoff = 99999;
-} else {
-  cutoff = 600;
-}
-
 if (state.score >= scoreNeeded || time == cutoff){
   clearInterval(countDownTwo);
   document.getElementById('timer').innerHTML = time;
@@ -5368,10 +5362,12 @@ for (let i = 0; i <  settingButton.length; i++){
       easy = 0;
       mainBox.style.borderColor = "red"
       levelSetting.style.borderColor = "red"
+      cutoff = 600;
     } else {
       hardcore = 0;
       mainBox.style.borderColor = "black"
       levelSetting.style.borderColor = "black"
+      cutoff = 600;
     }
     console.log(hardcore)
   })
@@ -5382,10 +5378,12 @@ for (let i = 0; i <  settingButton.length; i++){
       hardcore = 0;
       mainBox.style.borderColor = "#39FF14"
       levelSetting.style.borderColor = "#39FF14"
+      cutoff = 99999;
     } else {
       easy = 0;
       mainBox.style.borderColor = "black"
       levelSetting.style.borderColor = "black"
+      cutoff = 600;
     }
     console.log(hardcore)
   })
@@ -5440,7 +5438,7 @@ for (let i = 0; i <  settingButton.length; i++){
     switch (buttonLevel) {
       case "Level 1.0":
         level = 1.0;
-        scoreNeeded = 50;
+        scoreNeeded = 1;
         gold = highScore1DotZero.time
         silver = highScore1DotZero.time+((cutoff-highScore1DotZero.time)/3)
         bronze = highScore1DotZero.time+((cutoff-highScore1DotZero.time)/3)*2
