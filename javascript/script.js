@@ -98,7 +98,7 @@ let hardcore = 0;
 let easy = 0;
 const commonMultipleArr = [];
 const commonMultipleArrTwo = [];
-const cutoff = 600;
+let cutoff = 600;
 
 function HighScore(name, date, time, mistake) {
   this.name = name
@@ -227,6 +227,12 @@ const countDownTwo = setInterval(function(){
 time++;
 document.getElementById('timer').innerHTML = time;
 console.log(state.score);
+
+if (easy == 1){
+  cutoff = 99999
+} else {
+  cutoff = 600;
+}
 
 if (state.score >= scoreNeeded || time == cutoff){
   clearInterval(countDownTwo);
@@ -5362,12 +5368,12 @@ for (let i = 0; i <  settingButton.length; i++){
       easy = 0;
       mainBox.style.borderColor = "red"
       levelSetting.style.borderColor = "red"
-      cutoff = 600;
+      // cutoff = 600;
     } else {
       hardcore = 0;
       mainBox.style.borderColor = "black"
       levelSetting.style.borderColor = "black"
-      cutoff = 600;
+      // cutoff = 600;
     }
     console.log(hardcore)
   })
@@ -5378,12 +5384,12 @@ for (let i = 0; i <  settingButton.length; i++){
       hardcore = 0;
       mainBox.style.borderColor = "#39FF14"
       levelSetting.style.borderColor = "#39FF14"
-      cutoff = 99999;
+      // cutoff = 99999;
     } else {
       easy = 0;
       mainBox.style.borderColor = "black"
       levelSetting.style.borderColor = "black"
-      cutoff = 600;
+      // cutoff = 600;
     }
     console.log(hardcore)
   })
