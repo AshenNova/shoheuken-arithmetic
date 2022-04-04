@@ -1465,6 +1465,11 @@ function updateProblems(){
   }
 
   if ( level == 4.0) {
+    while (p.numOne == 17 || p.numOne == 19 || p.numOne == 23 || p.numOne == 29 || p.numOne == 31 || p.numOne == 37 || p.numOne == 41 || p.numOne == 43 || p.numOne == 47 || p.numOne == 53 || p.numOne == 59){
+      console.log("while loop")
+      p.numOne = genNumbers(60)+1
+    }
+    
     displayProblem.innerHTML = 
     `List the factors of</br> 
     ${p.numOne}
@@ -3632,6 +3637,7 @@ function handleSubmit(e){
 
 
       if ( level == 4.0){
+
         for (let i = 1; i <= p.numOne/i; i++){
           if (p.numOne%i == 0){
             arr.push(`${i}x${p.numOne/i}`);
