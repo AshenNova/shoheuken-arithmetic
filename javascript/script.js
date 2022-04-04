@@ -71,6 +71,15 @@ const mouse = {
   x: undefined,
   y: undefined
 }
+
+function angles(x1, y1, x2, y2){
+  let dy = y2-y1
+  let dx = x2-x1
+  let theta = Math.atan2(dy, dx);
+  theta *= 180/Math.PI
+  return theta
+}
+
 canvas.addEventListener('click', function(event){
   mouse.x = event.x;
   mouse.y = event.y;
@@ -165,6 +174,7 @@ const highScore5DotZero3 = new HighScore("Jayden Goo", "23 Mar 2022", 88, 0)
 const highScore5DotZero4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero5 = new HighScore("Emma Leo", "30 March 2022", 251, 1)
 const highScore5DotZero6 = new HighScore("Nil", "Nil", 0, 0)
+const highScore5DotZero7 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero8 = new HighScore("Nil", "Nil", 0, 0)
 const highScore6DotZero = new HighScore("Jayden Goo", "16 March 2022", 143, 0)
 const highScore6Dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
@@ -217,6 +227,12 @@ const countDownTwo = setInterval(function(){
 time++;
 document.getElementById('timer').innerHTML = time;
 console.log(state.score);
+
+if (easy == 1) {
+  cutoff = 99999;
+} else {
+  cutoff = 600;
+}
 
 if (state.score >= scoreNeeded || time == cutoff){
   clearInterval(countDownTwo);
@@ -2884,6 +2900,117 @@ function updateProblems(){
     ctx.restore()
   }
   
+  if ( level == 5.07 ){
+    ctx.save()
+    ctx.font = "1em serif"
+    if (p.roll == "opposite"){
+      ctx.fillText("What is ∠a?", 20, 20)
+    }
+
+    ctx.translate(200, 137.5)
+
+      if (p.roll == "opposite"){
+        ctx.save()
+        
+          ctx.rotate(p.finalRotation*Math.PI/180)
+            ctx.beginPath()
+            ctx.moveTo(-150, 0)
+            ctx.lineTo(150, 0)
+            ctx.stroke()
+        
+          ctx.save()
+            ctx.rotate(p.oppositeRotation*Math.PI/180)
+            ctx.beginPath()
+            ctx.moveTo(-150, 0)
+            ctx.lineTo(150, 0)
+            ctx.stroke()
+          ctx.restore()
+
+          ctx.save()
+            ctx.beginPath()
+            ctx.arc(0, 0, 15, 0, p.oppositeRotation*Math.PI/180)
+            ctx.stroke()
+            ctx.rotate(p.oppositeRotation/2*Math.PI/180)
+            ctx.fillText(`${p.oppositeRotation}°`, 25, 5)
+          ctx.restore()
+
+          ctx.save()
+            ctx.beginPath()
+            ctx.arc(0, 0, 15, 1*Math.PI, 1*Math.PI+p.oppositeRotation*Math.PI/180)
+            ctx.stroke()
+            ctx.rotate(p.oppositeRotation/2*Math.PI/180)
+            ctx.fillText("a", -26, 0)
+          ctx.restore()
+        ctx.restore()
+      }
+
+      if (p.roll == "corresponding"){
+        ctx.save
+        ctx.rotate(p.finalRotation*Math.PI/180)
+        // first horizontal line
+          ctx.translate(0, 50)
+          ctx.beginPath()
+          ctx.moveTo(-150, 0)
+          ctx.lineTo(150, 0)
+          ctx.stroke()
+
+        // second horizontal line
+          ctx.save()
+            ctx.translate(0, -60)
+            ctx.beginPath()
+            ctx.moveTo(-150, 0)
+            ctx.lineTo(150, 0)
+            ctx.stroke()
+          ctx.restore()
+
+        // Intersect
+          let linePointX = genNumbers(200)-100
+          let adjustX = genNumbers(60)-30;
+          console.log(`Adjust X: ${adjustX}`)
+          ctx.beginPath()
+          ctx.arc(linePointX+adjustX, 0 , 3, 0, 2*Math.PI)
+          ctx.fill()
+
+          ctx.beginPath()
+          ctx.arc(linePointX-adjustX, -60 , 3, 0, 2*Math.PI)
+          ctx.fill()
+
+          ctx.beginPath()
+          ctx.moveTo(linePointX+adjustX, 0)
+          ctx.lineTo(linePointX-adjustX, -60)
+          ctx.stroke()
+
+          let corrAngle = angles(linePointX+adjustX, 0, linePointX-adjustX, -60)
+          console.log(corrAngle)
+          ctx.beginPath()
+          ctx.arc(linePointX+adjustX, 0, 15, 2*Math.PI+corrAngle*Math.PI/180, 2*Math.PI)
+          ctx.stroke()
+
+          corrAngleDisplay = Math.abs(Math.floor(corrAngle))
+          ctx.fillText(`${corrAngleDisplay}°`, linePointX+adjustX+20, -1)
+
+          if (p.corrRoll == 1){
+            ctx.beginPath()
+            ctx.arc(linePointX-adjustX, -60, 15, 1*Math.PI+corrAngle*Math.PI/180, 1*Math.PI)
+            ctx.stroke()
+            ctx.fillText(`c`, linePointX-adjustX-28, -60+9)
+          }
+          if (p.corrRoll == 2){
+            ctx.beginPath()
+            ctx.arc(linePointX-adjustX, -60, 15, 0, 1*Math.PI+corrAngle*Math.PI/180)
+            ctx.stroke()
+            ctx.fillText(`c`, linePointX-adjustX+21, -60+9)
+          }           
+
+
+
+        ctx.restore()
+
+      }
+
+    ctx.restore()
+  }
+
   if ( level == 5.08 ){
     console.log(p.roll, p.rollChange)
     if (p.roll == "discount"){
@@ -4160,6 +4287,12 @@ function handleSubmit(e){
        }
       }
 
+      if ( level == 5.07 ){
+        if (p.roll == "opposite"){
+          correctAnswer = p.oppositeRotation
+        }
+      }
+
       if ( level == 5.08 ){
           correctAnswer = `${p.change}/${p.totalAmount}x100`
       }
@@ -5027,6 +5160,17 @@ function genProblems(){
    }
   }
 
+  if ( level == 5.07) {
+    return {
+      roll: ["corresponding","opposite"][genNumbers(1)],
+      oppositeRotation: [genNumbers(120)+30],
+      finalRotation: [genNumbers(360)],
+
+      corrRoll: [2, 1][genNumbers(1)],
+      correspondingTranslateY: (genNumbers(12)+8)*5
+    }
+  }
+
   if ( level == 5.08 ){
     return {
       roll: ["discount","increase","decrease"][genNumbers(3)],
@@ -5224,12 +5368,10 @@ for (let i = 0; i <  settingButton.length; i++){
       easy = 0;
       mainBox.style.borderColor = "red"
       levelSetting.style.borderColor = "red"
-      cutoff = 600;
     } else {
       hardcore = 0;
       mainBox.style.borderColor = "black"
       levelSetting.style.borderColor = "black"
-      cutoff = 600;
     }
     console.log(hardcore)
   })
@@ -5240,12 +5382,10 @@ for (let i = 0; i <  settingButton.length; i++){
       hardcore = 0;
       mainBox.style.borderColor = "#39FF14"
       levelSetting.style.borderColor = "#39FF14"
-      cutoff = 99999;
     } else {
       easy = 0;
       mainBox.style.borderColor = "black"
       levelSetting.style.borderColor = "black"
-      cutoff = 600;
     }
     console.log(hardcore)
   })
@@ -6053,6 +6193,20 @@ for (let i = 0; i <  settingButton.length; i++){
         highScoreName.innerHTML = highScore5DotZero6.name
         highScoreTime.innerHTML = highScore5DotZero6.time
         highScoreMistakes.innerHTML = highScore5DotZero6.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
+      break;
+
+      case "Level 5.07":
+        level = 5.07;
+        scoreNeeded = 20;
+        gold = highScore5DotZero7.time;
+        silver = highScore5DotZero7.time+((cutoff-highScore5DotZero7.time)/3)
+        bronze = highScore5DotZero7.time+((cutoff-highScore5DotZero7.time)/3)*2
+        highScoreName.innerHTML = highScore5DotZero7.name
+        highScoreTime.innerHTML = highScore5DotZero7.time
+        highScoreMistakes.innerHTML = highScore5DotZero7.mistake
         document.querySelector("#user-input").setAttribute("type","text");
         wholeNumberContainer.classList.add('hidden');
         firstCanvas.classList.remove('hidden');
