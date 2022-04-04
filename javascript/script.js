@@ -2906,6 +2906,9 @@ function updateProblems(){
     if (p.roll == "opposite"){
       ctx.fillText("What is ∠a?", 20, 20)
     }
+    if (p.roll == "corresponding"){
+      ctx.fillText("What is ∠c?", 20, 20)
+    }
 
     ctx.translate(200, 137.5)
 
@@ -2961,23 +2964,29 @@ function updateProblems(){
             ctx.moveTo(-150, 0)
             ctx.lineTo(150, 0)
             ctx.stroke()
+
           ctx.restore()
 
         // Intersect
           let linePointX = genNumbers(200)-100
           let adjustX = genNumbers(60)-30;
-          console.log(`Adjust X: ${adjustX}`)
-          ctx.beginPath()
-          ctx.arc(linePointX+adjustX, 0 , 3, 0, 2*Math.PI)
-          ctx.fill()
-
-          ctx.beginPath()
-          ctx.arc(linePointX-adjustX, -60 , 3, 0, 2*Math.PI)
-          ctx.fill()
-
+        
           ctx.beginPath()
           ctx.moveTo(linePointX+adjustX, 0)
           ctx.lineTo(linePointX-adjustX, -60)
+          ctx.stroke()
+
+          let parallelAdjust = genNumbers(10)+25
+          ctx.beginPath()
+          ctx.moveTo(linePointX+adjustX-10-parallelAdjust, -10)
+          ctx.lineTo(linePointX+adjustX-parallelAdjust, 0)
+          ctx.lineTo(linePointX+adjustX-10-parallelAdjust, 10)
+          ctx.stroke()
+
+          ctx.beginPath()
+          ctx.moveTo(linePointX-adjustX-10-parallelAdjust, -70)
+          ctx.lineTo(linePointX-adjustX-parallelAdjust, -60)
+          ctx.lineTo(linePointX-adjustX-10-parallelAdjust, -50)
           ctx.stroke()
 
           let corrAngle = angles(linePointX+adjustX, 0, linePointX-adjustX, -60)
@@ -2986,8 +2995,8 @@ function updateProblems(){
           ctx.arc(linePointX+adjustX, 0, 15, 2*Math.PI+corrAngle*Math.PI/180, 2*Math.PI)
           ctx.stroke()
 
-          corrAngleDisplay = Math.abs(Math.floor(corrAngle))
-          ctx.fillText(`${corrAngleDisplay}°`, linePointX+adjustX+20, -1)
+          p.corrAngleDisplay = Math.abs(Math.floor(corrAngle))
+          ctx.fillText(`${p.corrAngleDisplay}°`, linePointX+adjustX+20, -1)
 
           if (p.corrRoll == 1){
             ctx.beginPath()
@@ -4291,6 +4300,14 @@ function handleSubmit(e){
         if (p.roll == "opposite"){
           correctAnswer = p.oppositeRotation
         }
+        if (p.roll == "corresponding"){
+          if (p.corrRoll == "1"){
+            correctAnswer = p.corrAngleDisplay
+          }
+          if (p.corrRoll == "2"){
+            correctAnswer = `180-${p.corrAngleDisplay}`
+          }
+        }
       }
 
       if ( level == 5.08 ){
@@ -5164,10 +5181,11 @@ function genProblems(){
     return {
       roll: ["corresponding","opposite"][genNumbers(1)],
       oppositeRotation: [genNumbers(120)+30],
-      finalRotation: [genNumbers(360)],
+      finalRotation: [genNumbers(180)-90],
 
-      corrRoll: [2, 1][genNumbers(1)],
-      correspondingTranslateY: (genNumbers(12)+8)*5
+      corrRoll: [2, 1][genNumbers(2)],
+      correspondingTranslateY: (genNumbers(12)+8)*5,
+      corrAngleDisplay: undefined
     }
   }
 
