@@ -176,6 +176,7 @@ const highScore5DotZero5 = new HighScore("Emma Leo", "30 March 2022", 251, 1)
 const highScore5DotZero6 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero7 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero8 = new HighScore("Nil", "Nil", 0, 0)
+const highScore5DotZero9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore6DotZero = new HighScore("Jayden Goo", "16 March 2022", 143, 0)
 const highScore6Dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
@@ -3098,6 +3099,52 @@ function updateProblems(){
     }
   }
 
+  if ( level == 5.09){
+    ctx.save()
+      ctx.font = "1em serif"
+      ctx.translate(200, 137.5)
+      ctx.beginPath()
+      ctx.arc(0, 0, 3, 0, 2*Math.PI)
+      ctx.fill()
+
+      if (p.rollShape == "parallelogram"){
+        let adjustX = genNumbers(40)-20
+        ctx.beginPath()
+        ctx.moveTo(0, 0)
+        ctx.lineTo(-p.paraLength, 0)
+        ctx.lineTo(-p.paraLength+adjustX, -p.paraBreadth)
+        ctx.lineTo(p.paraLength+adjustX, -p.paraBreadth)
+        ctx.lineTo(p.paraLength, 0)
+        ctx.closePath()
+        ctx.stroke()
+
+        let paraAngle = angles(-p.paraLength, 0, -p.paraLength+adjustX, -p.paraBreadth);
+        paraAngleR = paraAngle*Math.PI/180
+        p.paraAngleD = Math.abs(Math.floor(paraAngle))
+        console.log(paraAngle, p.paraAngleD)
+
+        ctx.beginPath()
+        ctx.arc(-p.paraLength, 0, 15, 2*Math.PI+paraAngleR, 2*Math.PI)
+        ctx.stroke()
+        ctx.fillText(`${p.paraAngleD}°`,-p.paraLength+20, 0-3)
+
+        if (p.paraRoll == 1){
+          ctx.beginPath()
+          ctx.arc(-p.paraLength+adjustX, -p.paraBreadth, 15, 0, 1*Math.PI+paraAngleR)
+          ctx.stroke()
+          ctx.fillText(`p`,-p.paraLength+adjustX+20, -p.paraBreadth+10)
+        }
+
+        if (p.paraRoll == 2){
+          ctx.beginPath()
+          ctx.arc(p.paraLength+adjustX, -p.paraBreadth, 15, 1*Math.PI+paraAngleR, 1*Math.PI)
+          ctx.stroke()  
+          ctx.fillText(`p`,p.paraLength+adjustX-25, -p.paraBreadth+10)
+        }
+      }
+    ctx.restore()
+  }
+
   if ( level == 6.0){
     if (p.numOne == p.denoOne || p.numTwo == p.denoTwo || p.numThree == p.denoThree){
       p.denoOne += 1
@@ -4360,6 +4407,16 @@ function handleSubmit(e){
           correctAnswer = `${p.change}/${p.totalAmount}x100`
       }
 
+      if ( level == 5.09){
+        if (p.rollShape == "parallelogram"){
+          if (p.paraRoll == 1 ){
+            correctAnswer = `180-${p.paraAngleD}`
+          }
+          if (p.paraRoll == 2){
+            correctAnswer = p.paraAngleD
+          }
+        }
+      }
       
       if ( level == 6.0){
         if (p.choiceBC == "B" && p.choiceOne == "percentage"){
@@ -5241,6 +5298,16 @@ function genProblems(){
       rollChange: [1, 2][genNumbers(2)],
       change: (genNumbers(10)+1),
       totalAmount: genNumbers(10)+10
+    }
+  }
+
+  if ( level == 5.09 ){
+    return {
+      rollShape: ["parallelogram"][genNumbers(1)],
+      paraLength: (genNumbers(4)+8)*10,
+      paraBreadth: (genNumbers(5)+5)*9,
+      paraAngleD: undefined,
+      paraRoll: [2, 1][genNumbers(2)]
     }
   }
 
@@ -6297,6 +6364,20 @@ for (let i = 0; i <  settingButton.length; i++){
         `
         displayProblem.style.fontSize = "25px";
         document.querySelector("#user-input").setAttribute("type","text");
+      break;
+
+      case "Level 5.09":
+        level = 5.09;
+        scoreNeeded = 20;
+        gold = highScore5DotZero9.time;
+        silver = highScore5DotZero9.time+((cutoff-highScore5DotZero9.time)/3)
+        bronze = highScore5DotZero9.time+((cutoff-highScore5DotZero9.time)/3)*2
+        highScoreName.innerHTML = highScore5DotZero9.name
+        highScoreTime.innerHTML = highScore5DotZero9.time
+        highScoreMistakes.innerHTML = highScore5DotZero9.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
       break;
 
       case "Level 6.0":
