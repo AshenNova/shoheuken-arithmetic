@@ -3101,7 +3101,14 @@ function updateProblems(){
 
   if ( level == 5.09){
     ctx.save()
-      ctx.font = "1em serif"
+    ctx.font = "1em serif"
+    if (p.rollShape == "parallelogram"){
+      ctx.fillText(`What is ∠p?`, 20, 20)
+    }
+    if (p.rollShape == "rhombus"){
+      ctx.fillText(`What is ∠r?`, 20, 20)
+    }
+     
       ctx.translate(200, 137.5)
       ctx.beginPath()
       ctx.arc(0, 0, 3, 0, 2*Math.PI)
@@ -3140,6 +3147,83 @@ function updateProblems(){
           ctx.arc(p.paraLength+adjustX, -p.paraBreadth, 15, 1*Math.PI+paraAngleR, 1*Math.PI)
           ctx.stroke()  
           ctx.fillText(`p`,p.paraLength+adjustX-25, -p.paraBreadth+10)
+        }
+      }
+      if (p.rollShape == "rhombus"){
+        let adjustX = (genNumbers(10)-5)*9
+        ctx.beginPath()
+        ctx.moveTo(0, 0)
+        ctx.lineTo(-p.rhombusSide/2, 0)
+        ctx.lineTo(-p.rhombusSide/2+adjustX, -p.rhombusSide)
+        ctx.lineTo(p.rhombusSide/2+adjustX, -p.rhombusSide)
+        ctx.lineTo(p.rhombusSide/2, 0)
+        ctx.closePath()
+        ctx.stroke()
+
+        let rhombusAngle = angles(-p.rhombusSide/2, 0, -p.rhombusSide/2+adjustX, -p.rhombusSide)
+        let rhombusAngleR = rhombusAngle*Math.PI/180
+        p.rhombusAngleD = Math.abs(Math.floor(rhombusAngle))
+        console.log(rhombusAngle, rhombusAngleR, p.rhombusAngleD)
+
+        if (p.rhombusRoll != 5){
+          ctx.beginPath()
+          ctx.arc(-p.rhombusSide/2, 0, 15, 2*Math.PI+rhombusAngleR, 2*Math.PI)
+          ctx.stroke()
+          ctx.fillText(`${p.rhombusAngleD}°`,-p.rhombusSide/2+20, -2)
+        }
+
+        if (p.rhombusRoll == 1){
+          ctx.beginPath()
+          ctx.arc(-p.rhombusSide/2+adjustX, -p.rhombusSide, 15, 0, 1*Math.PI+rhombusAngleR)
+          ctx.stroke()
+          ctx.fillText(`r`,-p.rhombusSide/2+adjustX+20, -p.rhombusSide+10)
+        }
+
+        if (p.rhombusRoll == 2){
+          ctx.beginPath()
+          ctx.arc(p.rhombusSide/2+adjustX, -p.rhombusSide, 15, 1*Math.PI+rhombusAngleR, 1*Math.PI)
+          ctx.stroke()
+          ctx.fillText(`r`,p.rhombusSide/2+adjustX-30, -p.rhombusSide+10)
+        }
+
+        if (p.rhombusRoll == 3){
+          ctx.beginPath()
+          ctx.moveTo(-p.rhombusSide/2+adjustX, -p.rhombusSide)
+          ctx.lineTo(p.rhombusSide/2, 0)
+          ctx.stroke()
+
+          ctx.beginPath()
+          ctx.arc(-p.rhombusSide/2+adjustX, -p.rhombusSide, 15, (1*Math.PI+rhombusAngleR)/2, 1*Math.PI+rhombusAngleR)
+          ctx.stroke()
+          ctx.fillText(`r`,-p.rhombusSide/2+adjustX+5, -p.rhombusSide+23)
+        }
+
+        if (p.rhombusRoll == 4){
+          ctx.beginPath()
+          ctx.moveTo(-p.rhombusSide/2, 0)
+          ctx.lineTo(p.rhombusSide/2+adjustX, -p.rhombusSide)
+          ctx.stroke()
+
+          ctx.beginPath()
+          ctx.arc(-p.rhombusSide/2, 0, 20, 2*Math.PI+rhombusAngleR, 2*Math.PI+rhombusAngleR/2)
+          ctx.stroke()
+          ctx.fillText(`r`,-p.rhombusSide/2+6, -22)
+        }
+        if (p.rhombusRoll == 5){
+          ctx.beginPath()
+          ctx.moveTo(-p.rhombusSide/2, 0)
+          ctx.lineTo(p.rhombusSide/2+adjustX, -p.rhombusSide)
+          ctx.stroke()
+
+          ctx.beginPath()
+          ctx.arc(-p.rhombusSide/2, 0, 20, 2*Math.PI+rhombusAngleR, 2*Math.PI+rhombusAngleR/2)
+          ctx.stroke()
+          ctx.fillText(`${p.rhombusAngleD/2}°`,-p.rhombusSide/2+6, -22)
+
+          ctx.beginPath()
+          ctx.arc(-p.rhombusSide/2+adjustX, -p.rhombusSide, 15, 0, 1*Math.PI+rhombusAngleR)
+          ctx.stroke()
+          ctx.fillText(`r`, -p.rhombusSide/2+adjustX+17, -p.rhombusSide+20)
         }
       }
     ctx.restore()
@@ -4416,6 +4500,23 @@ function handleSubmit(e){
             correctAnswer = p.paraAngleD
           }
         }
+        if (p.rollShape == "rhombus"){
+          if (p.rhombusRoll == 1){
+            correctAnswer = `180-${p.rhombusAngleD}`
+          }
+          if (p.rhombusRoll == 2){
+            correctAnswer = p.rhombusAngleD
+          }
+          if (p.rhombusRoll == 3){
+            correctAnswer = `(180-${p.rhombusAngleD})/2`
+          }
+          if (p.rhombusRoll == 4){
+            correctAnswer = `${p.rhombusAngleD}/2`
+          }
+          if (p.rhombusRoll == 5){
+            correctAnswer = `180-${p.rhombusAngleD/2}x2`
+          }
+        }
       }
       
       if ( level == 6.0){
@@ -5303,11 +5404,15 @@ function genProblems(){
 
   if ( level == 5.09 ){
     return {
-      rollShape: ["parallelogram"][genNumbers(1)],
+      rollShape: ["rhombus","parallelogram"][genNumbers(1)],
       paraLength: (genNumbers(4)+8)*10,
       paraBreadth: (genNumbers(5)+5)*9,
       paraAngleD: undefined,
-      paraRoll: [2, 1][genNumbers(2)]
+      paraRoll: [2, 1][genNumbers(2)],
+
+      rhombusSide: (genNumbers(5)+5)*15,
+      rhombusAngleD: undefined,
+      rhombusRoll: [5, 4, 3, 2, 1][genNumbers(5)]
     }
   }
 
