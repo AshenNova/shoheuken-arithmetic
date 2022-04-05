@@ -1734,6 +1734,7 @@ function updateProblems(){
     twoWholeNumber.textContent = p.numOne
     twoNumerator.textContent = p.numTwo
     twoDenominator.textContent = p.numThree
+    arr.push(p.numThree);
   }
 
   if ( level == 4.10){
@@ -1744,9 +1745,11 @@ function updateProblems(){
       p.numTwo = p.numTwo - 1 - (p.numTwo-p.numThree);
     }
     twoWholeNumber.textContent = "";
+    arr.push(p.numTwo)
     p.numTwo = p.numOne*p.numThree+p.numTwo;
     twoNumerator.textContent = p.numTwo;
     twoDenominator.textContent = p.numThree
+    arr.push(p.numThree)
   }
 
   if ( level == 4.11 ){
@@ -1761,6 +1764,7 @@ function updateProblems(){
       twoWholeNumber.textContent = p.numOne
       twoNumerator.textContent = p.numTwo
       twoDenominator.textContent = p.numThree
+      arr.push(p.numThree);
     }
     // level 4.11
     if (p.optionFinal == "2"){
@@ -1771,9 +1775,11 @@ function updateProblems(){
         p.numTwo = p.numTwo - 1 - (p.numTwo-p.numThree);
       }
       twoWholeNumber.textContent = "";
+      arr.push(p.numTwo)
       p.numTwo = p.numOne*p.numThree+p.numTwo;
       twoNumerator.textContent = p.numTwo;
       twoDenominator.textContent = p.numThree
+      arr.push(p.numThree)
     }
   }
 
@@ -3979,11 +3985,14 @@ function handleSubmit(e){
             p.numThree /= i;
           }
         }
-        if (p.numTwo == 1){
+        console.log(p.numThree, arr[0])
+        p.numFour = p.numOne*p.numThree+p.numTwo
+        if (p.numThree != arr[0]){
+          correctAnswer = `${p.numOne} ${p.numTwo}/${p.numThree}=${p.numFour}/${p.numThree}`
+        } else if (p.numTwo == 1){
           p.numFour = p.numOne*p.numThree+p.numTwo
           correctAnswer = p.numFour + "/" + p.numThree
         } else {
-        p.numFour = p.numOne*p.numThree+p.numTwo
         correctAnswer = p.numFour + "/" + p.numThree
         }
       }
@@ -3995,7 +4004,11 @@ function handleSubmit(e){
             p.numThree /= i;
           }
         }
+        if (p.numThree != arr[1]){
+          correctAnswer = `${p.numOne} ${arr[0]}/${arr[1]}=${p.numOne} ${p.numTwo%p.numThree}/${p.numThree}`
+        } else {
         correctAnswer = p.numOne + " " + p.numTwo%p.numThree + "/" + p.numThree
+       }
       }
 
       if ( level == 4.11){
@@ -4007,11 +4020,14 @@ function handleSubmit(e){
               p.numThree /= i;
             }
           }
-          if (p.numTwo == 1){
+          console.log(p.numThree, arr[0])
+          p.numFour = p.numOne*p.numThree+p.numTwo
+          if (p.numThree != arr[0]){
+            correctAnswer = `${p.numOne} ${p.numTwo}/${p.numThree}=${p.numFour}/${p.numThree}`
+          } else if (p.numTwo == 1){
             p.numFour = p.numOne*p.numThree+p.numTwo
             correctAnswer = p.numFour + "/" + p.numThree
           } else {
-          p.numFour = p.numOne*p.numThree+p.numTwo
           correctAnswer = p.numFour + "/" + p.numThree
           }
         }
@@ -4023,7 +4039,11 @@ function handleSubmit(e){
               p.numThree /= i;
             }
           }
+          if (p.numThree != arr[1]){
+            correctAnswer = `${p.numOne} ${arr[0]}/${arr[1]}=${p.numOne} ${p.numTwo%p.numThree}/${p.numThree}`
+          } else {
           correctAnswer = p.numOne + " " + p.numTwo%p.numThree + "/" + p.numThree
+         }
         }
       }
       if (level == 4.12){
