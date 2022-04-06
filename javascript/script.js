@@ -3271,9 +3271,27 @@ function updateProblems(){
         ctx.lineTo(-p.trapLengthL, 0)
         ctx.lineTo(-p.trapLengthL+adjustX, -p.trapTop)
         ctx.lineTo(p.trapLengthB+adjustX2, -p.trapTop)
-        ctx.lineTo(p.trapLenthB, 0)
+        ctx.lineTo(p.trapLengthB, 0)
         ctx.closePath()
         ctx.stroke()
+
+        ctx.save()
+          ctx.translate((-p.trapLengthL+adjustX+p.trapLengthB+adjustX2)/2, -p.trapTop)
+          ctx.beginPath()
+          ctx.moveTo(-5, -5)
+          ctx.lineTo(0, 0)
+          ctx.lineTo(-5, 5)
+          ctx.stroke()
+        ctx.restore()
+
+        ctx.save()
+          ctx.translate((-p.trapLengthL+p.trapLengthB)/2, 0)
+          ctx.beginPath()
+          ctx.moveTo(-5, -5)
+          ctx.lineTo(0, 0)
+          ctx.lineTo(-5, 5)
+          ctx.stroke()
+        ctx.restore()
 
         let trapAngle = angles(-p.trapLengthL, 0, -p.trapLengthL+adjustX, -p.trapTop)
         let trapAngleR = trapAngle*Math.PI/180
@@ -5735,7 +5753,7 @@ function genProblems(){
 
   if ( level == 5.09 ){
     return {
-      rollShape: ["rhombus","parallelogram", "trapezium",][genNumbers(3)],
+      rollShape: ["trapezium", "rhombus","parallelogram"][genNumbers(1)],
       paraLength: (genNumbers(4)+8)*10,
       paraBreadth: (genNumbers(5)+5)*9,
       paraAngleD: undefined,
