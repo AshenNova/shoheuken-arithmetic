@@ -3271,7 +3271,7 @@ function updateProblems(){
         ctx.lineTo(-p.trapLengthL, 0)
         ctx.lineTo(-p.trapLengthL+adjustX, -p.trapTop)
         ctx.lineTo(p.trapLengthB+adjustX2, -p.trapTop)
-        ctx.lineTo(p.trapLengthB, 0)
+        // ctx.lineTo(p.trapLengthB, 0)
         ctx.closePath()
         ctx.stroke()
 
@@ -3285,7 +3285,7 @@ function updateProblems(){
         ctx.restore()
 
         ctx.save()
-          ctx.translate((-p.trapLengthL+p.trapLengthB)/2, 0)
+          ctx.translate(-p.trapLengthL/2, 0)
           ctx.beginPath()
           ctx.moveTo(-5, -5)
           ctx.lineTo(0, 0)
