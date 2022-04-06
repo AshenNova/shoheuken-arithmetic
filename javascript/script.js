@@ -5681,7 +5681,7 @@ function genProblems(){
 
   if ( level == 5.06){
     return {
-    roll: [3, 2, 1][genNumbers(1)],
+    roll: [3, 2, 1][genNumbers(3)],
 
     rightAngleTriX1 : -(genNumbers(4)+3)*15,
     rightAngleTriX2 : (genNumbers(4)+3)*20,
