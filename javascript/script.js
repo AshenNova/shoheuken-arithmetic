@@ -178,6 +178,7 @@ const highScore5DotZero7 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero8 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore6DotZero = new HighScore("Jayden Goo", "16 March 2022", 143, 0)
+const highScore6DotZero1 = new HighScore("Nil", "", 0, 0)
 const highScore6Dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
 
@@ -3373,6 +3374,76 @@ function updateProblems(){
     ${p.sentenceD}
     `
   }
+  if ( level == 6.01){
+    ctx.save()
+    ctx.font = "1em serif"
+    if (p.rollType == "area"){
+      ctx.fillText(`Find the ${p.rollType} of the Circle`, 20, 20)
+    }
+    if (p.rollType == "circumference"){
+      ctx.fillText(`Find the ${p.rollType} of the Circle`, 20, 20)
+    }
+    if (p.rollPi != "π"){
+      ctx.fillText(`π = ${p.rollPi}`, 20, 40)
+    }
+    ctx.translate(200, 137.5)
+
+    ctx.fillStyle = "orange"
+    ctx.beginPath()
+    ctx.arc(0, 0, p.radius, 0, 2*Math.PI)
+    ctx.stroke()
+    ctx.fill()
+
+    // center
+    ctx.fillStyle = "black"
+    ctx.beginPath()
+    ctx.arc(0, 0, 1, 0, 2*Math.PI)
+    ctx.stroke()
+    ctx.fill()
+
+    if (p.rollRD == "r"){
+      ctx.beginPath()
+      ctx.moveTo(0, 0)
+      ctx.lineTo(p.radius, 0)
+      ctx.stroke()
+
+      ctx.beginPath()
+      ctx.moveTo(5, -5)
+      ctx.lineTo(0, 0)
+      ctx.lineTo(5, 5)
+      ctx.stroke()
+
+      ctx.beginPath()
+      ctx.moveTo(p.radius-5, -5)
+      ctx.lineTo(p.radius, 0)
+      ctx.lineTo(p.radius-5, 5)
+      ctx.stroke()
+
+      ctx.fillText(`${p.radius}cm`, 0+10,-3)
+    }
+
+    if (p.rollRD == "d"){
+      ctx.beginPath()
+      ctx.moveTo(-p.radius, 0)
+      ctx.lineTo(p.radius, 0)
+      ctx.stroke()
+
+      ctx.beginPath()
+      ctx.moveTo(-p.radius+5, -5)
+      ctx.lineTo(-p.radius, 0)
+      ctx.lineTo(-p.radius+5, 5)
+      ctx.stroke()
+
+      ctx.beginPath()
+      ctx.moveTo(p.radius-5, -5)
+      ctx.lineTo(p.radius, 0)
+      ctx.lineTo(p.radius-5, 5)
+      ctx.stroke()
+
+      ctx.fillText(`${p.radius*2}cm`, 0-10,-3)
+    }
+    ctx.restore()
+  }
 
   if (level == 7){
     displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
@@ -4640,6 +4711,22 @@ function handleSubmit(e){
         }
       }
 
+      if ( level == 6.01){
+        if (p.rollType == "area"){
+          if (p.rollPi != "π"){
+            correctAnswer = `${p.rollPi}x${p.radius}x${p.radius}`
+          } else {
+            correctAnswer = `pix${p.radius}x${p.radius}`
+          }
+        }
+        if (p.rollType == "circumference"){
+          if (p.rollPi != "π"){
+            correctAnswer = `2x${p.rollPi}x${p.radius}`
+          } else {
+            correctAnswer = `2xpix${p.radius}`
+          }
+        }
+      }
 
       if (level == 7){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
@@ -5538,6 +5625,14 @@ function genProblems(){
       sentenceD: 0,
       situationA: ["used","increased by"][genNumbers(2)],
       situationB: ["used","increased by"][genNumbers(2)]
+    }
+  }
+  if (level == 6.01){
+    return{
+      rollType: ["area", "circumference"][genNumbers(2)],
+      rollRD: ["r","d"][genNumbers(2)],
+      rollPi: ["3.14","22/7","π"][genNumbers(3)],
+      radius: (genNumbers(5)+5)*9
     }
   }
 
@@ -6594,6 +6689,27 @@ for (let i = 0; i <  settingButton.length; i++){
         displayProblem.style.fontSize = "25px";
       break;
   
+      case "Level 6.01":
+        level = 6.01;
+        scoreNeeded = 20;
+        gold = highScore6DotZero1.time;
+        silver = highScore6DotZero1.time+((cutoff-highScore6DotZero1.time)/3)
+        bronze = highScore6DotZero1.time+((cutoff-highScore6DotZero1.time)/3)*2
+        highScoreName.innerHTML = highScore6DotZero1.name
+        highScoreTime.innerHTML = highScore6DotZero1.time
+        highScoreMistakes.innerHTML = highScore6DotZero1.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
+        instructions.innerHTML = 
+        `
+        Area of Circle<br>
+        π x r x r</br>
+        Circumference of Circle</br>
+        2 x π x r OR π x d
+        `
+      break;
+
       case "Level 6.3":
         level = 6.3;
         scoreNeeded = 30;
