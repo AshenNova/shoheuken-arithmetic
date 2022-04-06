@@ -3375,72 +3375,175 @@ function updateProblems(){
     `
   }
   if ( level == 6.01){
+    if (difficulty <= 0){
+      difficulty = 0;
+    } else {
+      difficulty = 1;
+    }
     ctx.save()
     ctx.font = "1em serif"
-    if (p.rollType == "area"){
-      ctx.fillText(`Find the ${p.rollType} of the Circle`, 20, 20)
+    if (difficulty == 0){
+      if (p.rollType == "area"){
+        ctx.fillText(`Find the ${p.rollType} of the Circle`, 20, 20)
+      }
+      if (p.rollType == "circumference"){
+        ctx.fillText(`Find the ${p.rollType} of the Circle`, 20, 20)
+      }
+      if (p.rollPi != "π"){
+        ctx.fillText(`π = ${p.rollPi}`, 20, 40)
+      }
+      ctx.translate(200, 137.5)
+
+      ctx.fillStyle = "orange"
+      ctx.beginPath()
+      ctx.arc(0, 0, p.radius, 0, 2*Math.PI)
+      ctx.stroke()
+      ctx.fill()
+
+      // center
+      ctx.fillStyle = "black"
+      ctx.beginPath()
+      ctx.arc(0, 0, 1, 0, 2*Math.PI)
+      ctx.stroke()
+      ctx.fill()
+
+      if (p.rollRD == "r"){
+        ctx.beginPath()
+        ctx.moveTo(0, 0)
+        ctx.lineTo(p.radius, 0)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(5, -5)
+        ctx.lineTo(0, 0)
+        ctx.lineTo(5, 5)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(p.radius-5, -5)
+        ctx.lineTo(p.radius, 0)
+        ctx.lineTo(p.radius-5, 5)
+        ctx.stroke()
+
+        ctx.fillText(`${p.radius}cm`, 0+10,-3)
+      }
+
+      if (p.rollRD == "d"){
+        ctx.beginPath()
+        ctx.moveTo(-p.radius, 0)
+        ctx.lineTo(p.radius, 0)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(-p.radius+5, -5)
+        ctx.lineTo(-p.radius, 0)
+        ctx.lineTo(-p.radius+5, 5)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(p.radius-5, -5)
+        ctx.lineTo(p.radius, 0)
+        ctx.lineTo(p.radius-5, 5)
+        ctx.stroke()
+
+        ctx.fillText(`${p.radius*2}cm`, 0-10,-3)
+      }
     }
-    if (p.rollType == "circumference"){
-      ctx.fillText(`Find the ${p.rollType} of the Circle`, 20, 20)
-    }
-    if (p.rollPi != "π"){
-      ctx.fillText(`π = ${p.rollPi}`, 20, 40)
-    }
-    ctx.translate(200, 137.5)
+    if (difficulty == 1){
+      if (p.rollType == "area"){
+        ctx.fillText(`Find the ${p.rollType} of the figure`, 20, 20)
+      }
+      if (p.rollType == "circumference"){
+        ctx.fillText(`Find the ${p.rollType} of the figure`, 20, 20)
+      }
+      if (p.rollPi != "π"){
+        ctx.fillText(`π = ${p.rollPi}`, 20, 40)
+      }
+      ctx.translate(200, 137.5)
+      if (p.rollType2 == "semicircle"){
+        p.arcAngle = 180*Math.PI/180
+      }
+      if (p.rollType2 == "quadrant"){
+        p.arcAngle = 90*Math.PI/180
+      }
+      if (p.rollType2 == "others"){
+        p.arcAngle = p.rollOthers*Math.PI/180
+      }
 
-    ctx.fillStyle = "orange"
-    ctx.beginPath()
-    ctx.arc(0, 0, p.radius, 0, 2*Math.PI)
-    ctx.stroke()
-    ctx.fill()
+      if (p.rollType2 == "others" || p.rollType2 == "quadrant"){
+        p.rollRD = "r"
+      }
+      ctx.save()
+        ctx.fillStyle = "orange"
+        ctx.beginPath()
+        ctx.moveTo(0, 0)
+        ctx.arc(0, 0, p.radius, 2*Math.PI-p.arcAngle, 2*Math.PI)
+        ctx.lineTo(0, 0)
+        ctx.stroke()
+        ctx.fill()
+      ctx.restore()
 
-    // center
-    ctx.fillStyle = "black"
-    ctx.beginPath()
-    ctx.arc(0, 0, 1, 0, 2*Math.PI)
-    ctx.stroke()
-    ctx.fill()
+      if (p.rollType2 == "others"){
+        ctx.beginPath()
+        ctx.arc(0, 0, 10, 2*Math.PI-p.arcAngle, 2*Math.PI)
+        ctx.stroke()
+        if (p.rollType2 == "quadrant" || (p.rollType2 == "others" && p.rollOthers <= 90 )){
+          ctx.fillText(`${p.rollOthers}°`, +5, -10)
+        } else if (p.rollType2 == "semicircle" || (p.rollType2 == "others" && p.rollOthers > 90 && p.rollOthers <= 180)){
+          ctx.fillText(`${p.rollOthers}°`, -10, -10)
+        } else {
+          ctx.fillText(`${p.rollOthers}°`, -50, +2)
+        }
+      }
 
-    if (p.rollRD == "r"){
+      // center
+      ctx.fillStyle = "black"
       ctx.beginPath()
-      ctx.moveTo(0, 0)
-      ctx.lineTo(p.radius, 0)
+      ctx.arc(0, 0, 1, 0, 2*Math.PI)
       ctx.stroke()
+      ctx.fill()
 
-      ctx.beginPath()
-      ctx.moveTo(5, -5)
-      ctx.lineTo(0, 0)
-      ctx.lineTo(5, 5)
-      ctx.stroke()
+      if (p.rollRD == "r"){
+        ctx.beginPath()
+        ctx.moveTo(0, 0)
+        ctx.lineTo(p.radius, 0)
+        ctx.stroke()
 
-      ctx.beginPath()
-      ctx.moveTo(p.radius-5, -5)
-      ctx.lineTo(p.radius, 0)
-      ctx.lineTo(p.radius-5, 5)
-      ctx.stroke()
+        ctx.beginPath()
+        ctx.moveTo(5, -5)
+        ctx.lineTo(0, 0)
+        ctx.lineTo(5, 5)
+        ctx.stroke()
 
-      ctx.fillText(`${p.radius}cm`, 0+10,-3)
-    }
+        ctx.beginPath()
+        ctx.moveTo(p.radius-5, -5)
+        ctx.lineTo(p.radius, 0)
+        ctx.lineTo(p.radius-5, 5)
+        ctx.stroke()
 
-    if (p.rollRD == "d"){
-      ctx.beginPath()
-      ctx.moveTo(-p.radius, 0)
-      ctx.lineTo(p.radius, 0)
-      ctx.stroke()
+        ctx.fillText(`${p.radius}cm`, 0+10,-3)
+      }
 
-      ctx.beginPath()
-      ctx.moveTo(-p.radius+5, -5)
-      ctx.lineTo(-p.radius, 0)
-      ctx.lineTo(-p.radius+5, 5)
-      ctx.stroke()
+      if (p.rollRD == "d"){
+        ctx.beginPath()
+        ctx.moveTo(-p.radius, 0)
+        ctx.lineTo(p.radius, 0)
+        ctx.stroke()
 
-      ctx.beginPath()
-      ctx.moveTo(p.radius-5, -5)
-      ctx.lineTo(p.radius, 0)
-      ctx.lineTo(p.radius-5, 5)
-      ctx.stroke()
+        ctx.beginPath()
+        ctx.moveTo(-p.radius+5, -5)
+        ctx.lineTo(-p.radius, 0)
+        ctx.lineTo(-p.radius+5, 5)
+        ctx.stroke()
 
-      ctx.fillText(`${p.radius*2}cm`, 0-10,-3)
+        ctx.beginPath()
+        ctx.moveTo(p.radius-5, -5)
+        ctx.lineTo(p.radius, 0)
+        ctx.lineTo(p.radius-5, 5)
+        ctx.stroke()
+
+        ctx.fillText(`${p.radius*2}cm`, 0-10,-3)
+      }
     }
     ctx.restore()
   }
@@ -4712,20 +4815,71 @@ function handleSubmit(e){
       }
 
       if ( level == 6.01){
-        if (p.rollType == "area"){
-          if (p.rollPi != "π"){
-            correctAnswer = `${p.rollPi}x${p.radius}x${p.radius}`
-          } else {
-            correctAnswer = `pix${p.radius}x${p.radius}`
+        if (difficulty == 0){
+          if (p.rollType == "area"){
+            if (p.rollPi != "π"){
+              correctAnswer = `${p.rollPi}x${p.radius}x${p.radius}`
+            } else {
+              correctAnswer = `pix${p.radius}x${p.radius}`
+            }
+          }
+          if (p.rollType == "circumference"){
+            if (p.rollPi != "π"){
+              correctAnswer = `2x${p.rollPi}x${p.radius}`
+            } else {
+              correctAnswer = `2xpix${p.radius}`
+            }
           }
         }
-        if (p.rollType == "circumference"){
-          if (p.rollPi != "π"){
-            correctAnswer = `2x${p.rollPi}x${p.radius}`
-          } else {
-            correctAnswer = `2xpix${p.radius}`
+        if (difficulty == 1){
+          if (p.rollType == "area"){
+            if (p.rollPi != "π"){
+              if (p.rollType2 == "semicircle") {
+                correctAnswer = `${p.rollPi}x${p.radius}x${p.radius}x1/2`
+              }
+              if (p.rollType2 == "quadrant"){
+                correctAnswer = `${p.rollPi}x${p.radius}x${p.radius}x1/4`
+              }
+              if (p.rollType2 == "others"){
+                correctAnswer = `${p.rollPi}x${p.radius}x${p.radius}x${p.rollOthers}/360`
+              }
+            }  else {
+              if (p.rollType2 == "semicircle") {
+                correctAnswer = `pix${p.radius}x${p.radius}x1/2`
+              }
+              if (p.rollType2 == "quadrant"){
+                correctAnswer = `pix${p.radius}x${p.radius}x1/4`
+              }
+              if (p.rollType2 == "others"){
+                correctAnswer = `pix${p.radius}x${p.radius}x${p.rollOthers}/360`
+              }
+            }
+          }
+          if (p.rollType == "circumference"){
+            if (p.rollPi != "π"){
+              if (p.rollType2 == "semicircle") {
+                correctAnswer = `2x${p.rollPi}x${p.radius}x1/2+2x${p.radius}`
+              }
+              if (p.rollType2 == "quadrant"){
+                correctAnswer = `2x${p.rollPi}x${p.radius}x1/4+2x${p.radius}`
+              }
+              if (p.rollType2 == "others"){
+                correctAnswer = `2x${p.rollPi}x${p.radius}x${p.rollOthers}/360+2x${p.radius}`
+              }
+            }  else {
+              if (p.rollType2 == "semicircle") {
+                correctAnswer = `2xpix${p.radius}x1/2+2x${p.radius}`
+              }
+              if (p.rollType2 == "quadrant"){
+                correctAnswer = `2xpix${p.radius}x1/4+2x${p.radius}`
+              }
+              if (p.rollType2 == "others"){
+                correctAnswer = `2xpix${p.radius}x${p.rollOthers}/360+2x${p.radius}`
+              }
+            }
           }
         }
+        
       }
 
       if (level == 7){
@@ -4798,7 +4952,7 @@ function handleSubmit(e){
         setTimeout(() => currentMistake.classList.remove("animate-wrong"), 331)
         mainContainer.classList.add("animate-wrong-container")
         setTimeout(() => mainContainer.classList.remove("animate-wrong-container"), 331)
-         if ( level != 2.09 && level != 2.05 && level != 3.12 && level != 3.13 && level != 3.14 && level != 3.15 && level != 4.0){
+         if ( level != 2.09 && level != 2.05 && level != 3.12 && level != 3.13 && level != 3.14 && level != 3.15 && level != 4.0 && level != 6.01 ){
           console.log("DO NOT CLEAR")
           userInput.value = ""
          }
@@ -5632,7 +5786,11 @@ function genProblems(){
       rollType: ["area", "circumference"][genNumbers(2)],
       rollRD: ["r","d"][genNumbers(2)],
       rollPi: ["3.14","22/7","π"][genNumbers(3)],
-      radius: (genNumbers(5)+5)*9
+      radius: (genNumbers(5)+6)*9,
+
+      rollType2: ["others", "quadrant", "semicircle"][genNumbers(1)],
+      rollOthers: genNumbers(270)+45,
+      arcAngle: undefined
     }
   }
 
@@ -6690,6 +6848,8 @@ for (let i = 0; i <  settingButton.length; i++){
       break;
   
       case "Level 6.01":
+        difficulty = prompt("Enter 0 or 1")
+        console.log(difficulty);
         level = 6.01;
         scoreNeeded = 20;
         gold = highScore6DotZero1.time;
