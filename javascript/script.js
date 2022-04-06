@@ -3108,12 +3108,12 @@ function updateProblems(){
     if (p.rollShape == "rhombus"){
       ctx.fillText(`What is ∠r?`, 20, 20)
     }
+    if (p.rollShape == "trapezium"){
+      ctx.fillText(`What is ∠t?`, 20, 20)
+    }
      
       ctx.translate(200, 137.5)
-      ctx.beginPath()
-      ctx.arc(0, 0, 3, 0, 2*Math.PI)
-      ctx.fill()
-
+  
       if (p.rollShape == "parallelogram"){
         let adjustX = genNumbers(40)-20
         ctx.beginPath()
@@ -3164,6 +3164,42 @@ function updateProblems(){
         let rhombusAngleR = rhombusAngle*Math.PI/180
         p.rhombusAngleD = Math.abs(Math.floor(rhombusAngle))
         console.log(rhombusAngle, rhombusAngleR, p.rhombusAngleD)
+
+        ctx.save()
+          ctx.translate((-p.rhombusSide/2+(-p.rhombusSide/2+adjustX))/2, (0-p.rhombusSide)/2)
+          ctx.rotate(rhombusAngleR-0.5*Math.PI)
+          ctx.beginPath()
+          ctx.moveTo(-5, 0)
+          ctx.lineTo(5, 0)
+          ctx.stroke()
+        ctx.restore()
+
+        ctx.save()
+          ctx.translate((-p.rhombusSide/2+adjustX+p.rhombusSide/2+adjustX)/2, -p.rhombusSide)
+          ctx.rotate(rhombusAngleR)
+          ctx.beginPath()
+          ctx.moveTo(-5, 0)
+          ctx.lineTo(5, 0)
+          ctx.stroke()
+        ctx.restore()
+
+        ctx.save()
+          ctx.translate((p.rhombusSide/2+adjustX+p.rhombusSide/2)/2, -p.rhombusSide/2)
+          ctx.rotate(rhombusAngleR-0.5*Math.PI)
+          ctx.beginPath()
+          ctx.moveTo(-5, 0)
+          ctx.lineTo(5, 0)
+          ctx.stroke()
+        ctx.restore()
+
+        ctx.save()
+          ctx.translate(0, 0)
+          ctx.rotate(rhombusAngleR)
+          ctx.beginPath()
+          ctx.moveTo(-5, 0)
+          ctx.lineTo(5, 0)
+          ctx.stroke()
+        ctx.restore()
 
         if (p.rhombusRoll != 5){
           ctx.beginPath()
@@ -3224,6 +3260,52 @@ function updateProblems(){
           ctx.arc(-p.rhombusSide/2+adjustX, -p.rhombusSide, 15, 0, 1*Math.PI+rhombusAngleR)
           ctx.stroke()
           ctx.fillText(`r`, -p.rhombusSide/2+adjustX+17, -p.rhombusSide+20)
+        }
+      }
+      if (p.rollShape == "trapezium"){
+        let adjustX = (genNumbers(10)-5)*9
+        let adjustX2 = (genNumbers(10)-5)*9
+        ctx.beginPath()
+        ctx.moveTo(0, 0)
+        ctx.lineTo(-p.trapLengthL, 0)
+        ctx.lineTo(-p.trapLengthL+adjustX, -p.trapTop)
+        ctx.lineTo(p.trapLengthB+adjustX2, -p.trapTop)
+        ctx.lineTo(p.trapLenthB, 0)
+        ctx.closePath()
+        ctx.stroke()
+
+        let trapAngle = angles(-p.trapLengthL, 0, -p.trapLengthL+adjustX, -p.trapTop)
+        let trapAngleR = trapAngle*Math.PI/180
+        p.trapAngleD = Math.abs(Math.floor(trapAngle))
+        console.log(trapAngle, trapAngleR, p.trapAngleD)
+
+        if (p.trapRoll == 1){
+          ctx.beginPath()
+          ctx.arc(-p.trapLengthL, 0, 15, 2*Math.PI+trapAngleR, 2*Math.PI)
+          ctx.stroke()
+          ctx.fillText(`${p.trapAngleD}°`, -p.trapLengthL+20, -1)
+
+          ctx.beginPath()
+          ctx.arc(-p.trapLengthL+adjustX, -p.trapTop, 15, 0, 1*Math.PI+trapAngleR)
+          ctx.stroke()
+          ctx.fillText(`t`, -p.trapLengthL+adjustX+20, -p.trapTop+11)
+        }
+
+        let trapAngle2 = angles(0, 0, p.trapLengthB+adjustX2, -p.trapTop)+180
+        let trapAngleR2 = trapAngle2*Math.PI/180
+        p.trapAngleD2 = Math.abs(Math.floor(trapAngle2))
+        console.log(trapAngle2, trapAngleR2, p.trapAngleD2)
+
+        if (p.trapRoll == 2){
+          ctx.beginPath()
+          ctx.arc(0, 0, 15, 1*Math.PI, 1*Math.PI+trapAngleR2)
+          ctx.stroke()
+          ctx.fillText(`${p.trapAngleD2}°`, 0-45, -2)
+
+          ctx.beginPath()
+          ctx.arc(p.trapLengthB+adjustX2, -p.trapTop, 15, trapAngleR2, 1*Math.PI)
+          ctx.stroke()
+          ctx.fillText(`t`, p.trapLengthB+adjustX2-30, -p.trapTop+11)
         }
       }
     ctx.restore()
@@ -4517,6 +4599,14 @@ function handleSubmit(e){
             correctAnswer = `180-${p.rhombusAngleD/2}x2`
           }
         }
+        if (p.rollShape == "trapezium"){
+          if (p.trapRoll == 1){
+            correctAnswer = `180-${p.trapAngleD}`
+          }
+          if (p.trapRoll == 2){
+            correctAnswer = `180-${p.trapAngleD2}`
+          }
+        }
       }
       
       if ( level == 6.0){
@@ -5404,7 +5494,7 @@ function genProblems(){
 
   if ( level == 5.09 ){
     return {
-      rollShape: ["rhombus","parallelogram"][genNumbers(1)],
+      rollShape: ["rhombus","parallelogram", "trapezium",][genNumbers(3)],
       paraLength: (genNumbers(4)+8)*10,
       paraBreadth: (genNumbers(5)+5)*9,
       paraAngleD: undefined,
@@ -5412,7 +5502,15 @@ function genProblems(){
 
       rhombusSide: (genNumbers(5)+5)*15,
       rhombusAngleD: undefined,
-      rhombusRoll: [5, 4, 3, 2, 1][genNumbers(5)]
+      rhombusRoll: [5, 4, 3, 2, 1][genNumbers(5)],
+
+      trapLengthL: (genNumbers(4)+8)*10,
+      trapLengthB: (genNumbers(4)+8)*10,
+      trapTop: (genNumbers(4)+8)*10,
+      trapAngleD: undefined,
+      trapAngleD2: undefined,
+      trapRoll: [2, 1][genNumbers(2)]
+
     }
   }
 
