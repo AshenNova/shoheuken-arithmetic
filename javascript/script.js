@@ -166,6 +166,7 @@ const highScore4DotZero16 = new HighScore("Emma Leo", "30 March 2022", 393, 2)
 const highScore4DotZero17 = new HighScore("Emma Leo", "30 March 2022", 224, 2)
 const highScore4DotZero18 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4DotZero19 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4Dot2Zero = new HighScore("Nil", "Nil", 0, 0)
 
 const highScore5DotZero = new HighScore("Sheyanne Cheong", "19 March 2022", 453, 5)
 const highScore5DotZero1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
@@ -2342,6 +2343,75 @@ function updateProblems(){
       }
       ctx.restore()
     }
+    ctx.restore()
+  }
+
+  if ( level == 4.20 ){
+    ctx.save()
+      ctx.font = "1em serif"
+      ctx.fillText("What is the perimeter of the figure?", 20, 20)
+      ctx.translate(30, 240)
+      ctx.beginPath()
+      ctx.arc(0, 0, 3, 0, 2*Math.PI)
+      ctx.fill()
+
+      ctx.beginPath()
+      ctx.moveTo(0, 0)
+      ctx.lineTo(0, -p.topOne)
+      ctx.lineTo(p.topOne, -p.topOne)
+      ctx.lineTo(p.topOne, -p.sideOne)
+      ctx.lineTo(p.topOne+p.sideOne, -p.sideOne)
+      ctx.lineTo(p.topOne+p.sideOne, 0)
+      ctx.closePath()
+      ctx.stroke()
+
+      ctx.save()
+        ctx.beginPath()
+        ctx.setLineDash([3, 3])
+        ctx.lineTo(p.topOne, -p.sideOne)
+        ctx.lineTo(p.topOne, 0)
+        ctx.stroke()
+      ctx.restore()
+
+      ctx.beginPath()
+      ctx.moveTo(-5, 0)
+      ctx.lineTo(-5, -p.topOne)
+      ctx.stroke()
+
+      ctx.beginPath()
+      ctx.moveTo(-10, -10)
+      ctx.lineTo(-5, 0)
+      ctx.lineTo(0, -10)
+      ctx.stroke()
+
+      ctx.beginPath()
+      ctx.moveTo(-10, -p.topOne+10)
+      ctx.lineTo(-5, -p.topOne)
+      ctx.lineTo(0, -p.topOne+10)
+      ctx.stroke()
+
+      ctx.fillText(`${p.topOne} cm`, 5, -p.topOne/2)
+
+      ctx.beginPath()
+      ctx.moveTo(0, 5)
+      ctx.lineTo(p.topOne+p.sideOne, 5)
+      ctx.stroke()
+
+      ctx.beginPath()
+      ctx.moveTo(10, 0)
+      ctx.lineTo(0, 5)
+      ctx.lineTo(10, 10)
+      ctx.stroke()
+
+      ctx.beginPath()
+      ctx.moveTo(p.topOne+p.sideOne-10, 0)
+      ctx.lineTo(p.topOne+p.sideOne, 5)
+      ctx.lineTo(p.topOne+p.sideOne-10, 10)
+      ctx.stroke()
+
+      p.lengthTotal = p.topOne+p.sideOne      
+      ctx.fillText(`${p.lengthTotal} cm`, p.lengthTotal/2-10, -3)
+
     ctx.restore()
   }
 
@@ -4605,6 +4675,10 @@ function handleSubmit(e){
         }
       }
 
+      if ( level == 4.20){
+        correctAnswer = `(${p.lengthTotal}+${p.topOne})x2`
+      }
+
       if ( level == 5.0) {
         if (p.sidesBH == "base"){
           correctAnswer = `${p.labelABC}${p.labelGHI}`
@@ -5592,6 +5666,16 @@ function genProblems(){
 
       shapeRoll: ["circle","straight","Rectangle","Square"][genNumbers(4)]
     
+    }
+  }
+
+  if ( level == 4.20){
+    return {
+      lengthTotal: undefined,
+      topOne: (genNumbers(4)+7)*20,
+      topTwo: undefined,
+      sideOne: (genNumbers(5)+2)*20,
+      sideTwo: undefined
     }
   }
 
@@ -6715,6 +6799,20 @@ for (let i = 0; i <  settingButton.length; i++){
         wholeNumberContainer.classList.add('hidden');
         firstCanvas.classList.remove('hidden');
         document.querySelector("#user-input").setAttribute("type","text");
+      break;
+
+      case "Level 4.20":
+        level = 4.20;
+        scoreNeeded = 10;
+        gold = highScore4Dot2Zero.time;
+        silver = highScore4Dot2Zero.time+((cutoff-highScore4Dot2Zero.time)/3)
+        bronze = highScore4DotZero.time+((cutoff-highScore4Dot2Zero.time)/3)*2
+        highScoreName.innerHTML = highScore4Dot2Zero.name
+        highScoreTime.innerHTML = highScore4Dot2Zero.time
+        highScoreMistakes.innerHTML = highScore4Dot2Zero.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
       break;
   
       case "Level 5.0":
