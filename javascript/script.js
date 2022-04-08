@@ -5155,7 +5155,7 @@ function handleSubmit(e){
             correctAnswer = `${p.valueOne}/${100+p.percentageOne}x100`
           }
           if (p.rollType2 == "change"){
-            correctAnswer = `$${p.valueOne}/${100+p.percentageTwo}x${p.percentageOne}`
+            correctAnswer = `${p.valueOne}/${100+p.percentageTwo}x${p.percentageOne}`
           }
         }
       }
