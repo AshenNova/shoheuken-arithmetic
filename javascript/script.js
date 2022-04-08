@@ -2351,67 +2351,201 @@ function updateProblems(){
       ctx.font = "1em serif"
       ctx.fillText("What is the perimeter of the figure?", 20, 20)
       ctx.translate(30, 240)
-      ctx.beginPath()
-      ctx.arc(0, 0, 3, 0, 2*Math.PI)
-      ctx.fill()
 
-      ctx.beginPath()
-      ctx.moveTo(0, 0)
-      ctx.lineTo(0, -p.topOne)
-      ctx.lineTo(p.topOne, -p.topOne)
-      ctx.lineTo(p.topOne, -p.sideOne)
-      ctx.lineTo(p.topOne+p.sideOne, -p.sideOne)
-      ctx.lineTo(p.topOne+p.sideOne, 0)
-      ctx.closePath()
-      ctx.stroke()
-
-      ctx.save()
+      if (p.rollType == 1){
         ctx.beginPath()
-        ctx.setLineDash([3, 3])
+        ctx.moveTo(0, 0)
+        ctx.lineTo(0, -p.topOne)
+        ctx.lineTo(p.topOne, -p.topOne)
         ctx.lineTo(p.topOne, -p.sideOne)
-        ctx.lineTo(p.topOne, 0)
+        ctx.lineTo(p.topOne+p.sideOne, -p.sideOne)
+        ctx.lineTo(p.topOne+p.sideOne, 0)
+        ctx.closePath()
         ctx.stroke()
-      ctx.restore()
 
-      ctx.beginPath()
-      ctx.moveTo(-5, 0)
-      ctx.lineTo(-5, -p.topOne)
-      ctx.stroke()
+        ctx.save()
+          ctx.beginPath()
+          ctx.setLineDash([3, 3])
+          ctx.lineTo(p.topOne, -p.sideOne)
+          ctx.lineTo(p.topOne, 0)
+          ctx.stroke()
+        ctx.restore()
 
-      ctx.beginPath()
-      ctx.moveTo(-10, -10)
-      ctx.lineTo(-5, 0)
-      ctx.lineTo(0, -10)
-      ctx.stroke()
+        ctx.beginPath()
+        ctx.moveTo(-5, 0)
+        ctx.lineTo(-5, -p.topOne)
+        ctx.stroke()
 
-      ctx.beginPath()
-      ctx.moveTo(-10, -p.topOne+10)
-      ctx.lineTo(-5, -p.topOne)
-      ctx.lineTo(0, -p.topOne+10)
-      ctx.stroke()
+        ctx.beginPath()
+        ctx.moveTo(-10, -10)
+        ctx.lineTo(-5, 0)
+        ctx.lineTo(0, -10)
+        ctx.stroke()
 
-      ctx.fillText(`${p.topOne} cm`, 5, -p.topOne/2)
+        ctx.beginPath()
+        ctx.moveTo(-10, -p.topOne+10)
+        ctx.lineTo(-5, -p.topOne)
+        ctx.lineTo(0, -p.topOne+10)
+        ctx.stroke()
 
-      ctx.beginPath()
-      ctx.moveTo(0, 5)
-      ctx.lineTo(p.topOne+p.sideOne, 5)
-      ctx.stroke()
+        ctx.fillText(`${p.topOne} cm`, 5, -p.topOne/2)
 
-      ctx.beginPath()
-      ctx.moveTo(10, 0)
-      ctx.lineTo(0, 5)
-      ctx.lineTo(10, 10)
-      ctx.stroke()
+        ctx.beginPath()
+        ctx.moveTo(0, 5)
+        ctx.lineTo(p.topOne+p.sideOne, 5)
+        ctx.stroke()
 
-      ctx.beginPath()
-      ctx.moveTo(p.topOne+p.sideOne-10, 0)
-      ctx.lineTo(p.topOne+p.sideOne, 5)
-      ctx.lineTo(p.topOne+p.sideOne-10, 10)
-      ctx.stroke()
+        ctx.beginPath()
+        ctx.moveTo(10, 0)
+        ctx.lineTo(0, 5)
+        ctx.lineTo(10, 10)
+        ctx.stroke()
 
-      p.lengthTotal = p.topOne+p.sideOne      
-      ctx.fillText(`${p.lengthTotal} cm`, p.lengthTotal/2-10, -3)
+        ctx.beginPath()
+        ctx.moveTo(p.topOne+p.sideOne-10, 0)
+        ctx.lineTo(p.topOne+p.sideOne, 5)
+        ctx.lineTo(p.topOne+p.sideOne-10, 10)
+        ctx.stroke()
 
+        p.lengthTotal = p.topOne+p.sideOne      
+        ctx.fillText(`${p.lengthTotal} cm`, p.lengthTotal/2-10, -3)
+      }
+
+      if (p.rollType == 2 ){
+        ctx.translate(100, -50)
+        ctx.beginPath()
+        // 1
+        ctx.moveTo(p.smallSquare, 0)
+        // 2
+        ctx.lineTo(p.smallSquare, -p.smallSquare)
+        // 3
+        ctx.lineTo(0, -p.smallSquare)
+        // 4
+        ctx.lineTo(0, -p.bigSquare+p.smallSquare)
+        // 5
+        ctx.lineTo(p.smallSquare,  -p.bigSquare+p.smallSquare)
+        // 6
+        ctx.lineTo(p.smallSquare , -p.bigSquare)
+        // 7
+        ctx.lineTo(p.bigSquare-p.smallSquare, -p.bigSquare)
+        // 8
+        ctx.lineTo(p.bigSquare-p.smallSquare, -p.bigSquare+p.smallSquare)
+        // 9
+        ctx.lineTo(p.bigSquare, -p.bigSquare+p.smallSquare)
+        // 10
+        ctx.lineTo(p.bigSquare, -p.smallSquare)
+        // 11
+        ctx.lineTo(p.bigSquare-p.smallSquare, -p.smallSquare)
+        // 12
+        ctx.lineTo(p.bigSquare-p.smallSquare, 0)
+        ctx.closePath()
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(-5, 0)
+        ctx.lineTo(-5, -p.bigSquare)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(-10, -10)
+        ctx.lineTo(-5, 0)
+        ctx.lineTo(0, -10)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(-10, -p.bigSquare+10)
+        ctx.lineTo(-5, -p.bigSquare)
+        ctx.lineTo(0, -p.bigSquare+10)
+        ctx.stroke()
+
+        ctx.fillText(`${p.bigSquare} cm`, -55, -p.bigSquare/2)
+
+        ctx.beginPath()
+        ctx.moveTo(0, 5)
+        ctx.lineTo(p.bigSquare, 5)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(10, 0)
+        ctx.lineTo(0, 5)
+        ctx.lineTo(10, 10)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(p.bigSquare-10, 0)
+        ctx.lineTo(p.bigSquare, 5)
+        ctx.lineTo(p.bigSquare-10, 10)
+        ctx.stroke()
+        ctx.fillText(`${p.bigSquare} cm`, p.bigSquare/2-20, +22)
+      }
+
+      if (p.rollType == 3 ){
+        ctx.translate(30, -50)
+        ctx.beginPath()
+        // 1
+        ctx.moveTo(p.smallSquare, 0)
+        // 2
+        ctx.lineTo(p.smallSquare, -p.smallSquare)
+        // 3
+        ctx.lineTo(0, -p.smallSquare)
+        // 4
+        ctx.lineTo(0, -p.bigSquare+p.smallSquare)
+        // 5
+        ctx.lineTo(p.smallSquare,  -p.bigSquare+p.smallSquare)
+        // 6
+        ctx.lineTo(p.smallSquare , -p.bigSquare)
+        // 7
+        ctx.lineTo(p.rectangle-p.smallSquare, -p.bigSquare)
+        // 8
+        ctx.lineTo(p.rectangle-p.smallSquare, -p.bigSquare+p.smallSquare)
+        // 9
+        ctx.lineTo(p.rectangle, -p.bigSquare+p.smallSquare)
+        // 10
+        ctx.lineTo(p.rectangle, -p.smallSquare)
+        // 11
+        ctx.lineTo(p.rectangle-p.smallSquare, -p.smallSquare)
+        // 12
+        ctx.lineTo(p.rectangle-p.smallSquare, 0)
+        ctx.closePath()
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(-5, 0)
+        ctx.lineTo(-5, -p.bigSquare)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(-10, -10)
+        ctx.lineTo(-5, 0)
+        ctx.lineTo(0, -10)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(-10, -p.bigSquare+10)
+        ctx.lineTo(-5, -p.bigSquare)
+        ctx.lineTo(0, -p.bigSquare+10)
+        ctx.stroke()
+
+        ctx.fillText(`${p.bigSquare} cm`, -55, -p.bigSquare/2)
+
+        ctx.beginPath()
+        ctx.moveTo(0, 5)
+        ctx.lineTo(p.rectangle, 5)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(10, 0)
+        ctx.lineTo(0, 5)
+        ctx.lineTo(10, 10)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(p.rectangle-10, 0)
+        ctx.lineTo(p.rectangle, 5)
+        ctx.lineTo(p.rectangle-10, 10)
+        ctx.stroke()
+        ctx.fillText(`${p.rectangle} cm`, p.rectangle/2-20, +22)
+      }
     ctx.restore()
   }
 
@@ -4676,7 +4810,15 @@ function handleSubmit(e){
       }
 
       if ( level == 4.20){
-        correctAnswer = `(${p.lengthTotal}+${p.topOne})x2`
+        if (p.rollType == 1){
+          correctAnswer = `(${p.lengthTotal}+${p.topOne})x2`
+        }
+        if (p.rollType == 2){
+          correctAnswer = `${p.bigSquare}x4`
+        }
+        if (p.rollType == 3){
+          correctAnswer = `(${p.rectangle}+${p.bigSquare})x2`
+        }
       }
 
       if ( level == 5.0) {
@@ -5671,11 +5813,18 @@ function genProblems(){
 
   if ( level == 4.20){
     return {
+      rollType: [3, 2, 1][genNumbers(3)],
+
       lengthTotal: undefined,
       topOne: (genNumbers(4)+7)*20,
       topTwo: undefined,
       sideOne: (genNumbers(5)+2)*20,
-      sideTwo: undefined
+      sideTwo: undefined,
+
+      smallSquare: genNumbers(4)+2*10,
+      bigSquare: (genNumbers(5)+12)*10,
+
+      rectangle: (genNumbers(5)+12)*20
     }
   }
 
