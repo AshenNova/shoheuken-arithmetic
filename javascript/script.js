@@ -5133,7 +5133,7 @@ function handleSubmit(e){
             correctAnswer = `${p.valueOne}/${100-p.percentageOne}x100`
           }
           if (p.rollType2 == "change"){
-            correctAnswer = `$${p.valueOne}/${100-p.percentageOne}x${p.percentageOne}`
+            correctAnswer = `${p.valueOne}/${100-p.percentageOne}x${p.percentageOne}`
           }
         }
         if (p.rollType == "GST"){
@@ -5144,7 +5144,7 @@ function handleSubmit(e){
             correctAnswer = `${p.valueOne}/${100+p.percentageTwo}x100`
           }
           if (p.rollType2 == "change"){
-            correctAnswer = `$${p.valueOne}/${100+p.percentageTwo}x${p.percentageTwo}`
+            correctAnswer = `${p.valueOne}/${100+p.percentageTwo}x${p.percentageTwo}`
           }
         }
         if (p.rollType == "increase"){
