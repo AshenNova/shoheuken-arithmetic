@@ -5744,7 +5744,7 @@ function genProblems(){
 
   if ( level == 4.0){
     return{
-      numOne: genNumbers(59)+3
+      numOne: genNumbers(58)+3
     }
   }
 
