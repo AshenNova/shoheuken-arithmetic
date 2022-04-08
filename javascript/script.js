@@ -178,6 +178,7 @@ const highScore5DotZero6 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero7 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero8 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero9 = new HighScore("Nil", "Nil", 0, 0)
+const highScore5DotZero10 = new HighScore("Nil", "Nil", 0, 0)
 const highScore6DotZero = new HighScore("Jayden Goo", "16 March 2022", 143, 0)
 const highScore6DotZero1 = new HighScore("Nil", "", 0, 0)
 const highScore6Dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
@@ -3534,6 +3535,112 @@ function updateProblems(){
     ctx.restore()
   }
 
+
+  if ( level == 5.10){
+    if (p.rollType == "discount"){
+      if (p.rollType2 == "before"){
+        displayProblem.innerHTML = 
+        `
+        A discount of ${p.percentageOne}% is given to an item that cost $${p.valueOne}.
+        What is the price of the item after discount?
+        `
+      }
+      if (p.rollType2 == "after"){
+        displayProblem.innerHTML = 
+        `
+        A discount of ${p.percentageOne}% is given to an item.</br> 
+        After discount, the item now cost $${p.valueOne}.</br> 
+        What is the price of the item before discount?
+        `
+      }
+      if (p.rollType2 == "change"){
+        displayProblem.innerHTML = 
+        `
+        A discount of ${p.percentageOne}% is given to an item.</br> 
+        After discount, the item now cost $${p.valueOne}.</br> 
+        What is the amount of discount given?
+        `
+      }
+    }
+    if (p.rollType == "GST"){
+      if (p.rollType2 == "before"){
+        displayProblem.innerHTML = 
+        `
+        A ${p.percentageTwo}% GST is charged to an item that cost $${p.valueOne}.
+        What is the final amount for the item?
+        `
+      }
+      if (p.rollType2 == "after"){
+        displayProblem.innerHTML = 
+        `
+        A ${p.percentageTwo}% GST is charged to an item.</br>
+        The final cost of the item is $${p.valueOne}.</br> 
+        What is the price of the item before GST?
+        `
+      }
+      if (p.rollType2 == "change"){
+        displayProblem.innerHTML = 
+        `
+        A ${p.percentageTwo}% GST is charged to an item.</br> 
+        The final cost of the item is $${p.valueOne}.</br> 
+        What is the amount for the GST?
+        `
+      }
+    }
+    if (p.rollType == "increase"){
+      if (p.rollType2 == "before"){
+        displayProblem.innerHTML = 
+        `
+        An item cost $${p.valueOne} at first.<br>
+        Its value has now increased by ${p.percentageOne}%.<br>
+        What is the value of the item now?
+        `
+      }
+      if (p.rollType2 == "after"){
+        displayProblem.innerHTML = 
+        `
+       The value of an item increased by ${p.percentageOne}%.</br>
+       It now cost $${p.valueOne}.</br>
+       What is the value of the item at first?
+        `
+      }
+      if (p.rollType2 == "change"){
+        displayProblem.innerHTML = 
+        `
+       The value of an item increased by ${p.percentageOne}%.</br>
+       It now cost $${p.valueOne}.</br>
+       What is the value of the increase?
+        `
+      }
+    }
+    if (p.rollType == "decrease"){
+      if (p.rollType2 == "before"){
+        displayProblem.innerHTML = 
+        `
+        An item cost $${p.valueOne} at first.</br>
+        Its value has now decreased by ${p.percentageOne}%.</br>
+        What is the value of the item now?
+        `
+      }
+      if (p.rollType2 == "after"){
+        displayProblem.innerHTML = 
+        `
+       The value of an item decreased by ${p.percentageOne}%.</br>
+       It now cost $${p.valueOne}.</br>
+       What is the value of the item at first?
+        `
+      }
+      if (p.rollType2 == "change"){
+        displayProblem.innerHTML = 
+        `
+       The value of an item decreased by ${p.percentageOne}%.</br>
+       It now cost $${p.valueOne}.</br>
+       What is the value of the decrease?
+        `
+      }
+    }
+  }
+
   if ( level == 6.0){
     if (p.numOne == p.denoOne || p.numTwo == p.denoTwo || p.numThree == p.denoThree){
       p.denoOne += 1
@@ -5016,6 +5123,42 @@ function handleSubmit(e){
           }
         }
       }
+
+      if ( level == 5.10 ){
+        if (p.rollType == "discount" || p.rollType == "decrease"){
+          if (p.rollType2 == "before"){
+            correctAnswer = `${p.valueOne}/100x${100-p.percentageOne}`
+          }
+          if (p.rollType2 == "after"){
+            correctAnswer = `${p.valueOne}/${100-p.percentageOne}x100`
+          }
+          if (p.rollType2 == "change"){
+            correctAnswer = `$${p.valueOne}/${100-p.percentageOne}x${p.percentageOne}`
+          }
+        }
+        if (p.rollType == "GST"){
+          if (p.rollType2 == "before"){
+            correctAnswer = `${p.valueOne}/100x${100+p.percentageTwo}`
+          }
+          if (p.rollType2 == "after"){
+            correctAnswer = `${p.valueOne}/${100+p.percentageTwo}x100`
+          }
+          if (p.rollType2 == "change"){
+            correctAnswer = `$${p.valueOne}/${100+p.percentageTwo}x${p.percentageTwo}`
+          }
+        }
+        if (p.rollType == "increase"){
+          if (p.rollType2 == "before"){
+            correctAnswer = `${p.valueOne}/100x${100+p.percentageOne}`
+          }
+          if (p.rollType2 == "after"){
+            correctAnswer = `${p.valueOne}/${100+p.percentageOne}x100`
+          }
+          if (p.rollType2 == "change"){
+            correctAnswer = `$${p.valueOne}/${100+p.percentageTwo}x${p.percentageOne}`
+          }
+        }
+      }
       
       if ( level == 6.0){
         if (p.choiceBC == "B" && p.choiceOne == "percentage"){
@@ -6003,6 +6146,16 @@ function genProblems(){
       trapAngleD2: undefined,
       trapRoll: [2, 1][genNumbers(2)]
 
+    }
+  }
+
+  if ( level == 5.10 ){
+    return{
+      rollType: ["decrease", "increase", "GST", "discount"][genNumbers(1)],
+      rollType2: ["before", "after", "change"][genNumbers(3)],
+      percentageOne: (genNumbers(9)+1)*10,
+      valueOne: (genNumbers(900)+100),
+      percentageTwo: genNumbers(2)+7
     }
   }
 
@@ -7099,6 +7252,23 @@ for (let i = 0; i <  settingButton.length; i++){
         document.querySelector("#user-input").setAttribute("type","text");
         wholeNumberContainer.classList.add('hidden');
         firstCanvas.classList.remove('hidden');
+      break;
+
+      case "Level 5.10":
+        level = 5.10;
+        scoreNeeded = 20;
+        gold = highScore5DotZero10.time
+        silver = highScore5DotZero10.time+((cutoff-highScore5DotZero10.time)/3)
+        bronze = highScore5DotZero10.time+((cutoff-highScore5DotZero10.time)/3)*2
+        highScoreName.innerHTML = highScore5DotZero10.name
+        highScoreTime.innerHTML = highScore5DotZero10.time
+        highScoreMistakes.innerHTML = highScore5DotZero10.mistake
+        instructions.innerHTML = 
+        `
+        Calculate the value via percentage
+        `
+        displayProblem.style.fontSize = "25px";
+        document.querySelector("#user-input").setAttribute("type","text");
       break;
 
       case "Level 6.0":
