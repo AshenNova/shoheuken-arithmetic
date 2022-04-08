@@ -142,10 +142,11 @@ const highScore3DotZero11 = new HighScore("Shanice Lee", "22 March 2022", 478, 2
 const highScore3DotZero12 = new HighScore("Jayden Goo", "16 march 2022", 72, 0)
 const highScore3DotZero13 = new HighScore("Jadee Wong", "14 March 2022", 310, 1)
 const highScore3DotZero14 = new HighScore("Sheyanne Cheong", "19 March 2022", 240, 0)
-const highScore3DotZero15 = new HighScore("Sheyanne Cheong", "25 March 2022", 251, 0)
-const highScore3DotZero16 = new HighScore("Nil", "Nil", 0, 0)
-const highScore3DotZero17 = new HighScore("Yuki Chin", "27 March 2022", 165, 2)
-const highScore3DotZero18 = new HighScore("Adam Poon", "26 March 2022", 196, 4)
+const highScore3DotZero15 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3DotZero16 = new HighScore("Sheyanne Cheong", "25 March 2022", 251, 0)
+const highScore3DotZero17 = new HighScore("Nil", "Nil", 0, 0)
+const highScore3DotZero18 = new HighScore("Yuki Chin", "27 March 2022", 165, 2)
+const highScore3DotZero19 = new HighScore("Adam Poon", "26 March 2022", 196, 4)
 
 const highScore4DotZero = new HighScore("Javen Chen", "27 March 2022", 140, 0)
 const highScore4DotZero1 = new HighScore("Adam Poon", "12 March 2022", 229, 0)
@@ -1300,6 +1301,32 @@ function updateProblems(){
   }
 
   if ( level == 3.15){
+    if (p.rollType == "A"){
+      for (let i = 0; i<p.rollTimes; i++){
+        p.rollA = genNumbers(5)
+        arr.push(p.rollA)
+      }
+    }
+    if (p.rollType == "B"){
+      for (let i = 0; i<p.rollTimes; i++){
+        p.rollB = ["A","B","C","D","E"][genNumbers(5)]
+        arr.push(p.rollB)
+      }
+    }
+    console.log(arr)
+    for (let i = 0; arr2.length<13; i++){
+      arr2.push(arr[i%(p.rollTimes)])
+    }
+    console.log(arr2)
+    arr2.push("...")
+    displayProblem.innerHTML = 
+    `
+    What is in position ${p.position}?</br>
+    ${arr2.toString()}
+    `
+  }
+
+  if ( level == 3.16){
 // level 3.12
     if (p.optionFinal == 1){
       displayProblem.innerHTML = `
@@ -1334,7 +1361,7 @@ function updateProblems(){
     }
   }
 
-  if ( level == 3.16) {
+  if ( level == 3.17) {
     ctx.save()
     ctx.font = '1em serif'
     arcAngleRad = p.arcAngle*Math.PI/180
@@ -1375,7 +1402,7 @@ function updateProblems(){
 
   }
 
-  if ( level == 3.17 ){
+  if ( level == 3.18 ){
     ctx.font = '1em serif'
     ctx.save()
 
@@ -1448,7 +1475,7 @@ function updateProblems(){
     ctx.restore()
   }
 
-  if ( level == 3.18) {
+  if ( level == 3.19) {
     ctx.font = "1em serif"
     ctx.save()
     ctx.fillText(`Find the ${p.areaOrPerimeter} of the ${p.shapeChoice}.`, 20, 40)   
@@ -4493,6 +4520,15 @@ function handleSubmit(e){
       }
 
       if ( level == 3.15){
+        let remainder = (p.position%arr.length)-1
+        if (remainder < 0){
+          remainder = arr.length-1
+        }
+        console.log(remainder)
+        correctAnswer = arr[remainder]
+      }
+
+      if ( level == 3.16){
         // level 3.12
         if (p.optionFinal == 1){
           correctAnswer = p.numOne+1 + "x" + (p.numOne) + "/2"
@@ -4512,7 +4548,7 @@ function handleSubmit(e){
           correctAnswer = p.numFive + "x" + p.numFive + "=" + p.numFive*p.numFive + " " + (p.numFive+p.numSix)
         }
       }
-      if ( level == 3.16 ) {
+      if ( level == 3.17 ) {
         if (p.arcAngle > 80 && p.arcAngle < 100) {
           if (p.arcAngle > 90 ){
             p.arcAngle += +20;
@@ -4536,7 +4572,7 @@ function handleSubmit(e){
         }
       }
 
-      if ( level == 3.17 ){
+      if ( level == 3.18 ){
         if (p.parallelOrPerpendicular == "parallel"){
           correctAnswer = p.labelGHI + p.labelJKL
         } else {
@@ -4544,7 +4580,7 @@ function handleSubmit(e){
         }
       }
 
-      if ( level == 3.18){
+      if ( level == 3.19){
         if (p.shapeChoice == "square"){
           if (p.areaOrPerimeter == "area"){
             correctAnswer = p.squareSide*p.squareSide
@@ -5286,6 +5322,9 @@ function handleSubmit(e){
           arr2.length = 0;
           console.log("Array reset", arr, arr2)
         }
+        if (level == 3.15){
+          arr2.length = 0;
+        }
         if ( level == 4.17) {
           arr = ["A","B","C","D","E","F","G","H","I"]
           arr2.length = 0;
@@ -5329,15 +5368,13 @@ function handleSubmit(e){
         setTimeout(() => currentMistake.classList.remove("animate-wrong"), 331)
         mainContainer.classList.add("animate-wrong-container")
         setTimeout(() => mainContainer.classList.remove("animate-wrong-container"), 331)
-         if ( level != 2.09 && level != 2.05 && level != 3.12 && level != 3.13 && level != 3.14 && level != 3.15 && level != 4.0 && level != 6.01 ){
+         if ( level != 2.09 && level != 2.05 && level != 3.12 && level != 3.13 && level != 3.14 && level != 3.16 && level != 4.0 && level != 6.01 ){
           console.log("DO NOT CLEAR")
           userInput.value = ""
          }
          if ( level == 4.0 ){
            arr.length = 0;
          }
-
-
 
         //  help me!
         if ( level == 2.09){
@@ -5669,6 +5706,16 @@ function genProblems(){
 
   if ( level == 3.15){
     return {
+      rollType: ["A", "B"][genNumbers(2)],
+      rollA: undefined,
+      rollB: undefined,
+      rollTimes: genNumbers(3)+3,
+      position: genNumbers(30)+20
+    }
+  }
+
+  if ( level == 3.16){
+    return {
       numOne: genNumbers(94)+5,
 
       numTwo: genNumbers(10)+1,
@@ -5682,7 +5729,7 @@ function genProblems(){
     }
   }
 
-  if ( level == 3.16 ){
+  if ( level == 3.17 ){
     return {
       arcAngle: genNumbers(140)+20,
       acuteOrObtuse: ["acute","obtuse"][genNumbers(2)],
@@ -5691,7 +5738,7 @@ function genProblems(){
   
   }
 
-  if ( level == 3.17 ){
+  if ( level == 3.18 ){
     return {
       // pointX1: genNumbers(70)+30,
       pointY1: genNumbers(80)+20,
@@ -5725,7 +5772,7 @@ function genProblems(){
     } 
   }
 
-  if ( level == 3.18 ){
+  if ( level == 3.19 ){
     return {
     shapeChoice: ["rectangle", "square"][genNumbers(2)],
     squareCoord: genNumbers(50)+30,
@@ -6801,27 +6848,28 @@ for (let i = 0; i <  settingButton.length; i++){
         document.querySelector("#user-input").setAttribute("type","text");
         displayProblem.style.fontSize = "25px";
         displayProblem.style.marginTop = "0";
-        instructions.textContent = "Form an Equation using 'n' from the pattern and provide an answer"
+        instructions.textContent = "Take note of the repeated pattern and use it to find the position of the other pattern"
       break;
-  
+
       case "Level 3.16":
         level = 3.16;
         scoreNeeded = 20;
         gold = highScore3DotZero16.time;
+        silver = highScore3DotZero16.time+((cutoff-highScore3DotZero16.time)/3)
+        bronze = highScore3DotZero16.time+((cutoff-highScore3DotZero16.time)/3)*2
         highScoreName.innerHTML = highScore3DotZero16.name
         highScoreTime.innerHTML = highScore3DotZero16.time
         highScoreMistakes.innerHTML = highScore3DotZero16.mistake
         document.querySelector("#user-input").setAttribute("type","text");
-        wholeNumberContainer.classList.add('hidden');
-        firstCanvas.classList.remove('hidden');
+        displayProblem.style.fontSize = "25px";
+        displayProblem.style.marginTop = "0";
+        instructions.textContent = "Form an Equation using 'n' from the pattern and provide an answer"
       break;
   
       case "Level 3.17":
         level = 3.17;
         scoreNeeded = 20;
-        gold = highScore3DotZero17.time
-        silver = highScore3DotZero17.time+((cutoff-highScore3DotZero17.time)/3)
-        bronze = highScore3DotZero17.time+((cutoff-highScore3DotZero17.time)/3)*2
+        gold = highScore3DotZero17.time;
         highScoreName.innerHTML = highScore3DotZero17.name
         highScoreTime.innerHTML = highScore3DotZero17.time
         highScoreMistakes.innerHTML = highScore3DotZero17.mistake
@@ -6839,6 +6887,20 @@ for (let i = 0; i <  settingButton.length; i++){
         highScoreName.innerHTML = highScore3DotZero18.name
         highScoreTime.innerHTML = highScore3DotZero18.time
         highScoreMistakes.innerHTML = highScore3DotZero18.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
+      break;
+  
+      case "Level 3.19":
+        level = 3.19;
+        scoreNeeded = 20;
+        gold = highScore3DotZero19.time
+        silver = highScore3DotZero19.time+((cutoff-highScore3DotZero19.time)/3)
+        bronze = highScore3DotZero19.time+((cutoff-highScore3DotZero19.time)/3)*2
+        highScoreName.innerHTML = highScore3DotZero19.name
+        highScoreTime.innerHTML = highScore3DotZero19.time
+        highScoreMistakes.innerHTML = highScore3DotZero19.mistake
         wholeNumberContainer.classList.add('hidden');
         firstCanvas.classList.remove('hidden');
       break;
