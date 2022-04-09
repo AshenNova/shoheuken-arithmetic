@@ -6176,7 +6176,7 @@ function genProblems(){
 
   if ( level == 5.09 ){
     return {
-      rollShape: ["trapezium", "rhombus","parallelogram"][genNumbers(1)],
+      rollShape: ["trapezium", "rhombus","parallelogram"][genNumbers(3)],
       paraLength: (genNumbers(4)+8)*10,
       paraBreadth: (genNumbers(5)+5)*9,
       paraAngleD: undefined,
