@@ -122,6 +122,7 @@ const highScore2DotZero = new HighScore("Nil", "16 October 2021", 0, 0)
 const highScore2DotZero1 = new HighScore("JingKai Ng", "16 October 2021", 823, 24)
 const highScore2DotZero2 = new HighScore("Reila", "28 March 2022", 152, 1)
 const highScore2DotZero3 = new HighScore("Jayden Cheong", "19 March 2022", 623, 1)
+const highScore2DotZero4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore2DotZero5 = new HighScore("Adam Poon", "26 March 2022", 343, 2)
 const highScore2DotZero7 = new HighScore("Reila", "28 mar 2022", 107, 0)
 const highScore2DotZero8 = new HighScore("Nil", "Nil", 0, 0)
@@ -652,6 +653,30 @@ function updateProblems(){
     <u>${p.place}</u> place? <br>
     ${p.totalNumber.toLocaleString('en-US')}
     `
+  }
+
+  if ( level == 2.04 ){
+    if (p.operator == "x"){
+      p.repeat = 2
+    }
+    let value = p.numOne
+    console.log(p.operator, p.repeat, p.numOne)
+    for (let i = 0; i < p.repeat; i++){
+      arr.push(p.figure)
+      arr.push(p.operator)
+    }
+    arr.pop()
+
+    for (let i = 0; i < p.repeat-1; i++){
+      if (p.operator == "x"){
+        value *= p.numOne
+      }
+      if (p.operator == "+"){
+        value += p.numOne
+      }
+    }
+
+    displayProblem.innerHTML = `${arr.join(" ")} = ${value}`
   }
 
   if ( level == 2.05 ){
@@ -4107,6 +4132,10 @@ function handleSubmit(e){
         if (p.place == "millions") correctAnswer = arr2[6]
       }
 
+      if ( level == 2.04 ){
+        correctAnswer = p.numOne
+      }
+
       if ( level == 2.05) {
           if (p.evenOrOdd == "even") {
             if (p.landingNumber%2 == 0){
@@ -5515,6 +5544,15 @@ function genProblems(){
     }
   }
 
+  if ( level == 2.04 ){
+    return {
+      figure: ["🏀",'⚽️','🏈','🎾'][genNumbers(4)],
+      repeat: [2, 3][genNumbers(2)],
+      operator: ["x","+"][genNumbers(2)],
+      numOne: genNumbers(4)+2
+    }
+  }
+
   if ( level == 2.05){
     return {
       choice: ["smallest","greatest"][genNumbers(2)],
@@ -6608,6 +6646,17 @@ for (let i = 0; i <  settingButton.length; i++){
         highScoreName.innerHTML = highScore2DotZero3.name
         highScoreTime.innerHTML = highScore2DotZero3.time
         highScoreMistakes.innerHTML = highScore2DotZero3.mistake
+      break;
+
+      case "Level 2.04":
+        level = 2.04;
+        scoreNeeded = 30;
+        gold = highScore2DotZero4.time;
+        silver = highScore2DotZero4.time+((cutoff-highScore2DotZero4.time)/3)
+        bronze = highScore2DotZero4.time+((cutoff-highScore2DotZero4.time)/3)*2
+        highScoreName.innerHTML = highScore2DotZero4.name
+        highScoreTime.innerHTML = highScore2DotZero4.time
+        highScoreMistakes.innerHTML = highScore2DotZero4.mistake
       break;
   
       case "Level 2.05":
