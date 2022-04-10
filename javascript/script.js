@@ -2307,9 +2307,9 @@ function updateProblems(){
         ctx.arc(0, 0, 10, (360-p.angleStraight)*Math.PI/180, 2*Math.PI)
         ctx.stroke()
         if (p.angleStraight < 20 ){
-          ctx.fillText(`${p.angleStraight}`, 90, -1)
+          ctx.fillText(`${p.angleStraight}°`, 90, -1)
         } else {
-        ctx.fillText(`${p.angleStraight}`, 10, -5)
+        ctx.fillText(`${p.angleStraight}°`, 10, -5)
         }
 
         ctx.arc(0, 0, 15, 1*Math.PI, (360-p.angleStraight)*Math.PI/180)
@@ -5993,7 +5993,7 @@ function genProblems(){
       angleStraight: genNumbers(160)+10,
       straightRoll: [1, 2][genNumbers(2)],
 
-      angleCircle: genNumbers(360)+10,
+      angleCircle: genNumbers(340)+10,
       circleRoll: [2, 1][genNumbers(2)],
 
       shapeRoll: ["circle","straight","Rectangle","Square"][genNumbers(4)]
