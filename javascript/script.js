@@ -660,7 +660,6 @@ function updateProblems(){
       p.repeat = 2
     }
     let value = p.numOne
-    console.log(p.operator, p.repeat, p.numOne)
     for (let i = 0; i < p.repeat; i++){
       arr.push(p.figure)
       arr.push(p.operator)
