@@ -5546,7 +5546,7 @@ function genProblems(){
 
   if ( level == 2.04 ){
     return {
-      figure: ["🏀",'⚽️','🏈','🎾'][genNumbers(4)],
+      figure: ["🏀",'⚽️','🏈','🎾','🍎','🍏','🌭'][genNumbers(7)],
       repeat: [2, 3][genNumbers(2)],
       operator: ["x","+"][genNumbers(2)],
       numOne: genNumbers(4)+2
