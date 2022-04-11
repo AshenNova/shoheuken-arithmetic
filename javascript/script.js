@@ -782,7 +782,7 @@ function updateProblems(){
       p.figureTwo = ["🏀",'⚽️','🏈','🎾','🍎','🍏','🌭'][genNumbers(7)]
     }
     while (p.numTwo > p.numOne){
-      p.numTwo = (genNumbers(9)+2)*5
+      p.numTwo = (genNumbers(9)+2)
     }
     arr.push(p.figureTwo)
     let repeat = genNumbers(2)+2
@@ -5610,8 +5610,8 @@ function genProblems(){
       figure: ["🏀",'⚽️','🏈','🎾','🍎','🍏','🌭'][genNumbers(7)],
       figureTwo: ["🏀",'⚽️','🏈','🎾','🍎','🍏','🌭'][genNumbers(7)],
       operator: "+",
-      numOne: (genNumbers(19)+2)*5,
-      numTwo: (genNumbers(9)+2)*5
+      numOne: (genNumbers(9)+2),
+      numTwo: (genNumbers(9)+2)
     }
   }
 
