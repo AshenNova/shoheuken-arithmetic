@@ -124,6 +124,7 @@ const highScore2DotZero2 = new HighScore("Reila", "28 March 2022", 152, 1)
 const highScore2DotZero3 = new HighScore("Jayden Cheong", "19 March 2022", 623, 1)
 const highScore2DotZero4 = new HighScore("Nil", "Nil", 0, 0)
 const highScore2DotZero5 = new HighScore("Adam Poon", "26 March 2022", 343, 2)
+const highScore2DotZero6 = new HighScore("Nil", "Nil", 0, 0)
 const highScore2DotZero7 = new HighScore("Reila", "28 mar 2022", 107, 0)
 const highScore2DotZero8 = new HighScore("Nil", "Nil", 0, 0)
 const highScore2DotZero9 = new HighScore("Nil", "Nil", 0, 0)
@@ -773,6 +774,41 @@ function updateProblems(){
 
     p.finalNumber = arr2.join('');
     console.log(p.finalNumber)
+  }
+
+  if ( level == 2.06) {
+    arr.push(p.figure)
+    while (arr[0] == p.figureTwo){
+      p.figureTwo = ["🏀",'⚽️','🏈','🎾','🍎','🍏','🌭'][genNumbers(7)]
+    }
+    while (p.numTwo > p.numOne){
+      p.numTwo = (genNumbers(9)+2)*5
+    }
+    arr.push(p.figureTwo)
+    let repeat = genNumbers(2)+2
+    let repeatTwo = genNumbers(2)+2
+    if (repeat = repeatTwo){
+      repeat -= 1
+    }
+    for (let i = 0; i < repeat; i++){
+      arr2.push(arr[0])
+    } 
+    for (let i = 0; i < repeatTwo; i++){
+      arr2.push(arr[1])
+    }
+    let count = 0
+    if ( repeat > repeatTwo){
+      count = repeatTwo
+    } else {
+      count = repeat
+    }
+    console.log(p.numOne, count, p.numTwo)
+     displayProblem.innerHTML = `
+    ${arr2.join("+")} = ${p.numOne*count+p.numTwo}</br>
+    ${arr[0]}+${arr[1]} = ${p.numOne}</br>
+    ${arr[1]} = ?
+    `
+
   }
 
   if (level == 2.07){
@@ -4157,6 +4193,10 @@ function handleSubmit(e){
           }
         }
       
+      if ( level == 2.06 ){
+        correctAnswer = p.numTwo
+      }
+
       if (level == 2.07){
         if (p.option == "1") {
           a = p.numOne/p.numThree
@@ -5350,6 +5390,10 @@ function handleSubmit(e){
           arr2.length = 0;
           console.log("Array reset", arr, arr2)
         }
+        if (level == 2.06){
+          arr.length = 0
+          arr2.length = 0
+        }
         if (level == 3.15){
           arr2.length = 0;
         }
@@ -5558,6 +5602,16 @@ function genProblems(){
       landingNumber: undefined,
       finalNumber: undefined,
       evenOrOdd: ["even", "odd"][genNumbers(2)]
+    }
+  }
+
+  if ( level == 2.06 ){
+    return {
+      figure: ["🏀",'⚽️','🏈','🎾','🍎','🍏','🌭'][genNumbers(7)],
+      figureTwo: ["🏀",'⚽️','🏈','🎾','🍎','🍏','🌭'][genNumbers(7)],
+      operator: "+",
+      numOne: (genNumbers(19)+2)*5,
+      numTwo: (genNumbers(9)+2)*5
     }
   }
 
@@ -6672,6 +6726,18 @@ for (let i = 0; i <  settingButton.length; i++){
         instructions.textContent = "Form the Number"
         displayProblem.style.fontSize = "25px";
         document.querySelector("#user-input").setAttribute("type","text");
+      break;
+
+      case "Level 2.06":
+        level = 2.06;
+        scoreNeeded = 20;
+        gold = highScore2DotZero6.time
+        silver = highScore2DotZero6.time+((cutoff-highScore2DotZero6.time)/3)
+        bronze = highScore2DotZero6.time+((cutoff-highScore2DotZero6.time)/3)*2
+        highScoreName.innerHTML = highScore2DotZero6.name
+        highScoreTime.innerHTML = highScore2DotZero6.time
+        highScoreMistakes.innerHTML = highScore2DotZero6.mistake
+        displayProblem.style.fontSize = "25px";
       break;
   
       case "Level 2.07":
