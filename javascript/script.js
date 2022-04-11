@@ -1419,6 +1419,33 @@ function updateProblems(){
       Pattern ?: ${(p.numFive+p.numSix)*(p.numFive+p.numSix)}
       `
     }
+// level 3.15
+    if (p.optionFinal == 4){
+      if (p.rollType == "A"){
+        for (let i = 0; i<p.rollTimes; i++){
+          p.rollA = genNumbers(5)
+          arr.push(p.rollA)
+        }
+      }
+      if (p.rollType == "B"){
+        for (let i = 0; i<p.rollTimes; i++){
+          p.rollB = ["A","B","C","D","E"][genNumbers(5)]
+          arr.push(p.rollB)
+        }
+      }
+      console.log(arr)
+      for (let i = 0; arr2.length<13; i++){
+        arr2.push(arr[i%(p.rollTimes)])
+      }
+      console.log(arr2)
+      arr2.push("...")
+      displayProblem.innerHTML = 
+      `
+      What is in position ${p.position}?</br>
+      ${arr2.toString()}
+      `
+    }
+    
   }
 
   if ( level == 3.17) {
@@ -5816,7 +5843,14 @@ function genProblems(){
       numFive: genNumbers(8)+5,
       numSix: [-1,1,2][genNumbers(3)],
 
-      optionFinal: [1,2,3][genNumbers(3)]
+      optionFinal: [1,2,3,4][genNumbers(4)],
+
+      // 3.15
+      rollType: ["A", "B"][genNumbers(2)],
+      rollA: undefined,
+      rollB: undefined,
+      rollTimes: genNumbers(3)+3,
+      position: genNumbers(30)+20
     }
   }
 
