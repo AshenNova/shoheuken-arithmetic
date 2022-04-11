@@ -5421,7 +5421,7 @@ function handleSubmit(e){
           arr.length = 0
           arr2.length = 0
         }
-        if (level == 3.15){
+        if (level == 3.15 || level == 3.16){
           arr2.length = 0;
         }
         if ( level == 4.17) {
