@@ -2852,20 +2852,20 @@ function updateProblems(){
     ctx.font = "1em serif"
 
     if (p.question == "base"){
-      ctx.fillText(`The ${p.question} of the triangle is ${p.labelABC}${p.labelJKL}. What is its height?`, 20, 40)
+      ctx.fillText(`The ${p.question} of the triangle is ${p.labelABC}${p.labelJKL}. What is its height?`, 20, 20)
     } else if (p.question == "height") {
-      ctx.fillText(`The ${p.question} of the triangle is ${p.labelDEF}${p.labelGHI}. What is its base?`, 20, 40)
+      ctx.fillText(`The ${p.question} of the triangle is ${p.labelDEF}${p.labelGHI}. What is its base?`, 20, 20)
     } else if ( p.question == "base2") {
-      ctx.fillText(`The base of the triangle is ${p.labelDEF}${p.labelGHI}. What is its height?`, 20, 40)
+      ctx.fillText(`The base of the triangle is ${p.labelDEF}${p.labelGHI}. What is its height?`, 20, 20)
     } else if ( p.question == "height2") {
-      ctx.fillText(`The height of the triangle is ${p.labelABC}${p.labelJKL}. What is its base?`, 20, 40)
+      ctx.fillText(`The height of the triangle is ${p.labelABC}${p.labelJKL}. What is its base?`, 20, 20)
     } else if ( p.question == "base3"){
-      ctx.fillText(`The base of the triangle is ${p.labelGHI}${p.labelJKL}. What is its height?`, 20, 40)
+      ctx.fillText(`The base of the triangle is ${p.labelGHI}${p.labelJKL}. What is its height?`, 20, 20)
     } else {
-      ctx.fillText(`The height of the triangle is ${p.labelABC}${p.labelMNO}. What is its base?`, 20, 40)
+      ctx.fillText(`The height of the triangle is ${p.labelABC}${p.labelMNO}. What is its base?`, 20, 20)
     }
 
-    ctx.fillText(`${p.labelABC}${p.labelDEF}, ${p.labelGHI}${p.labelJKL}, ${p.labelABC}${p.labelJKL}, ${p.labelDEF}${p.labelGHI}, ${p.labelABC}${p.labelGHI}, ${p.labelABC}${p.labelMNO}, ${p.labelGHI}${p.labelJKL}`, 20, 60)
+    ctx.fillText(`${p.labelABC}${p.labelDEF}, ${p.labelGHI}${p.labelJKL}, ${p.labelABC}${p.labelJKL}, ${p.labelDEF}${p.labelGHI}, ${p.labelABC}${p.labelGHI}, ${p.labelABC}${p.labelMNO}, ${p.labelGHI}${p.labelJKL}`, 20, 40)
     ctx.translate(200, 137.5)
     ctx.rotate(p.rotation*Math.PI/180)
     // triangle A
