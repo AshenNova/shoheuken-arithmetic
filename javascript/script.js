@@ -182,6 +182,7 @@ const highScore5DotZero7 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero8 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero10 = new HighScore("Nil", "Nil", 0, 0)
+const highScore5DotZero11 = new HighScore("Nil", "Nil", 0, 0)
 const highScore6DotZero = new HighScore("Jayden Goo", "16 March 2022", 143, 0)
 const highScore6DotZero1 = new HighScore("Nil", "", 0, 0)
 const highScore6Dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
@@ -358,7 +359,35 @@ for (let x = 0; x < backButton.length; x++){
   })
 }
 
+function drawCuboid(a, b, c, d){
+  // front
+  ctx.beginPath()
+  ctx.moveTo(0, 0)
+  ctx.lineTo(a, 0)
+  ctx.lineTo(a, b)
+  ctx.lineTo(0, b)
+  ctx.closePath()
+  ctx.stroke()
+  
+  // right
+  ctx.beginPath()
+  ctx.moveTo(a, 0)
+  ctx.lineTo(a+c, 0+d)
+  ctx.lineTo(a+c, b+d)
+  ctx.lineTo(a, b)
+  ctx.closePath()
+  ctx.stroke()
 
+  // top
+  ctx.beginPath()
+  ctx.moveTo(0, b)
+  ctx.lineTo(a, b)
+  ctx.lineTo(a+c, b+d)
+  ctx.lineTo(0+c, b+d)
+  ctx.closePath()
+  ctx.stroke()
+
+}
 //////////////////// DISPLAY PROBLEMS ////////////////////
 
 // Step 3: Updating, storing and then displaying the problem
@@ -3755,6 +3784,72 @@ function updateProblems(){
     }
   }
 
+  if ( level == 5.11){
+    ctx.save()
+    let finalDifficulty = difficulty
+    if (difficulty >= 2){
+      finalDifficulty = 3
+    } 
+    if (difficulty >= 3){
+      finalDifficulty = 4
+    } 
+    difficulty = Number(difficulty)
+    p.roll = ["v","h","l","b","ba"][genNumbers(finalDifficulty+1)]
+    console.log(p.roll)
+    ctx.font = "1em serif"
+      p.volume = (p.pointA*(p.pointA+p.pointC)*p.pointB)
+      p.volumeDisplay = (p.pointA*(p.pointA+p.pointC)*p.pointB).toLocaleString('en-US')
+      if (p.roll == "v") {
+        ctx.fillText(`Find the volume of the Cuboid`, 20, 20)
+      }
+      if (p.roll == "h") {
+        ctx.fillText(`Volume = ${p.volumeDisplay} ml. Find Height`, 20, 20)
+      }
+      if (p.roll == "b") {
+        ctx.fillText(`Volume = ${p.volumeDisplay} ml. Find Breadth`, 20, 20)
+      }
+      if (p.roll == "l") {
+        ctx.fillText(`Volume = ${p.volumeDisplay} ml. Find Length`, 20, 20)
+      }
+      if (p.roll == "ba") {
+        ctx.fillText(`Volume = ${p.volumeDisplay} ml. Find the Base Area`, 20, 20)
+      }
+
+      ctx.translate(125, 230)
+      let a = p.pointA
+      let b = -p.pointB
+      let c = p.pointC
+      let d = -p.pointD
+      
+      drawCuboid(a, b, c, d)
+
+      if (p.roll == "v"){
+        ctx.fillText(a, (a)/2-10, +15)
+        ctx.fillText(a+c, a+c/2+10, 0+d/2)
+        ctx.fillText(-b, a+c+5, b+d-b/2+5)
+      }
+      if (p.roll == "h"){
+        ctx.fillText(a, (a)/2-10, +15)
+        ctx.fillText(a+c, a+c/2+10, 0+d/2)
+        ctx.fillText("?", a+c+5, b+d-b/2+5)
+      }
+      if (p.roll == "b"){
+        ctx.fillText(a, (a)/2-10, +15)
+        ctx.fillText("?", a+c/2+10, 0+d/2)
+        ctx.fillText(-b, a+c+5, b+d-b/2+5)
+      }
+      if (p.roll == "l"){
+        ctx.fillText("?", (a)/2-10, +15)
+        ctx.fillText(a+c, a+c/2+10, 0+d/2)
+        ctx.fillText(-b, a+c+5, b+d-b/2+5)
+      }
+      if (p.roll == "ba"){
+        ctx.fillText(-b, a+c+5, b+d-b/2+5)
+      }
+
+    ctx.restore()
+  }
+
   if ( level == 6.0){
     if (p.numOne == p.denoOne || p.numTwo == p.denoTwo || p.numThree == p.denoThree){
       p.denoOne += 1
@@ -5322,6 +5417,24 @@ function handleSubmit(e){
         }
       }
 
+      if ( level == 5.11 ){
+        if (p.roll == "v"){
+          correctAnswer = `${p.pointA}x${p.pointA+p.pointC}x${p.pointB}`
+        }
+        if (p.roll == "h"){
+          correctAnswer = `${p.volume}/(${p.pointA}x${p.pointA+p.pointC})`
+        }
+        if (p.roll == "b"){
+          correctAnswer = `${p.volume}/(${p.pointA}x${p.pointB})`
+        }
+        if (p.roll == "l"){
+          correctAnswer = `${p.volume}/(${p.pointA+p.pointC}x${p.pointB})`
+        }
+        if (p.roll == "ba"){
+          correctAnswer = `${p.volume}/${p.pointB}`
+        }
+      }
+
       if ( level == 6.01){
         if (difficulty == 0){
           if (p.rollType == "area"){
@@ -6328,6 +6441,17 @@ function genProblems(){
       percentageOne: (genNumbers(9)+1)*10,
       valueOne: (genNumbers(900)+100),
       percentageTwo: genNumbers(2)+7
+    }
+  }
+
+  if ( level == 5.11){
+    return {
+      roll: undefined,
+      volume: undefined,
+      pointA: (genNumbers(5)+1)*20,
+      pointB: (genNumbers(5)+1)*20,
+      pointC: (genNumbers(6)+5)*10,
+      pointD: (genNumbers(6)+5)*10,
     }
   }
 
@@ -7479,6 +7603,27 @@ for (let i = 0; i <  settingButton.length; i++){
         `
         displayProblem.style.fontSize = "25px";
         document.querySelector("#user-input").setAttribute("type","text");
+      break;
+
+      case "Level 5.11":
+        difficulty = prompt("Difficulty: Enter 0, 1, 2 or 3")
+        console.log(difficulty);
+        level = 5.11;
+        scoreNeeded = 20;
+        gold = highScore5DotZero11.time;
+        silver = highScore5DotZero11.time+((cutoff-highScore5DotZero11.time)/3)
+        bronze = highScore5DotZero11.time+((cutoff-highScore5DotZero11.time)/3)*2
+        highScoreName.innerHTML = highScore5DotZero11.name
+        highScoreTime.innerHTML = highScore5DotZero11.time
+        highScoreMistakes.innerHTML = highScore5DotZero11.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
+        instructions.innerHTML = 
+        `
+        Length x Breadth x Height = Volume
+        L x B x H = V
+        `
       break;
 
       case "Level 6.0":
