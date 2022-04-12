@@ -7013,7 +7013,11 @@ for (let i = 0; i <  settingButton.length; i++){
         highScoreName.innerHTML = highScore3DotZero7.name
         highScoreTime.innerHTML = highScore3DotZero7.time
         highScoreMistakes.innerHTML = highScore3DotZero7.mistake
-        instructions.textContent = "Find the Lowest Common Multiple of the 3 numbers"
+        instructions.innerHTML = 
+        `Lowest Common Multiple</br>
+        5, 3, 2 => 15</br>
+        5, 3, 5 => 5,15</br>
+        `
         document.querySelector("#user-input").setAttribute("type","text");
         break;
 
