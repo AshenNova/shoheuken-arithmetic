@@ -7849,7 +7849,7 @@ for (let i = 0; i <  settingButton.length; i++){
         difficulty = prompt("Difficulty: Enter 0, 1, 2 or 3")
         console.log(difficulty);
         level = 5.11;
-        scoreNeeded = 20;
+        scoreNeeded = 10;
         gold = highScore5DotZero11.time;
         silver = highScore5DotZero11.time+((cutoff-highScore5DotZero11.time)/3)
         bronze = highScore5DotZero11.time+((cutoff-highScore5DotZero11.time)/3)*2
