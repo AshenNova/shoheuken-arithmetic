@@ -4920,7 +4920,17 @@ function handleSubmit(e){
         if (p.optionFinal == 3){
           correctAnswer = p.numFive + "x" + p.numFive + "=" + p.numFive*p.numFive + " " + (p.numFive+p.numSix)
         }
+        // level 3.15
+        if (p.optionFinal == 4){
+        let remainder = (p.position%arr.length)-1
+        if (remainder < 0){
+          remainder = arr.length-1
+        }
+        console.log(remainder)
+        correctAnswer = arr[remainder]
+       }
       }
+
       if ( level == 3.17 ) {
         if (p.arcAngle > 80 && p.arcAngle < 100) {
           if (p.arcAngle > 90 ){
