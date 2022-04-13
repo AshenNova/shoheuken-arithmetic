@@ -184,6 +184,7 @@ const highScore5DotZero9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero10 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero11 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero13 = new HighScore("Nil", "Nil", 0, 0)
+const highScore5DotZero14 = new HighScore("Nil", "Nil", 0, 0)
 const highScore6DotZero = new HighScore("Jayden Goo", "16 March 2022", 143, 0)
 const highScore6DotZero1 = new HighScore("Nil", "", 0, 0)
 const highScore6Dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
@@ -3964,6 +3965,74 @@ function updateProblems(){
     ctx.restore()
   }
 
+  if ( level == 5.14){
+    ctx.save()
+    ctx.font = "1em serif"
+    ctx.fillText(`Find the area of the figure.`, 20, 20)
+      if (p.roll == "up"){
+        ctx.translate(50, 200)
+        ctx.beginPath()
+        ctx.moveTo(0, 0)
+        ctx.lineTo(p.triX1, 0)
+        ctx.lineTo(p.triX2, -p.triY2)
+        ctx.closePath()
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(p.triX1, 0)
+        ctx.lineTo(p.triX1+p.triX2, 0)
+        ctx.lineTo(p.triX2+genNumbers(150)+5, -p.triY2)
+        ctx.closePath()
+        ctx.stroke()
+
+
+// horizontal line
+        ctx.beginPath()
+        ctx.moveTo(0, 5)
+        ctx.lineTo(p.triX1+p.triX2, 5)
+        ctx.stroke()
+
+        ctx.fillText(`${p.triX1+p.triX2}`, (p.triX1+p.triX2)/2-15, 20)
+        
+        ctx.beginPath()
+        ctx.moveTo(5, 0)
+        ctx.lineTo(0, 5)
+        ctx.lineTo(5, 10)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(p.triX1+p.triX2-5, 0)
+        ctx.lineTo(p.triX1+p.triX2, 5)
+        ctx.lineTo(p.triX1+p.triX2-5, 10)
+        ctx.stroke()
+
+// vertical line
+
+        ctx.beginPath()
+        ctx.moveTo(p.triX1+p.triX2+5, 0)
+        ctx.lineTo(p.triX1+p.triX2+5, -p.triY2)
+        ctx.stroke()
+
+        ctx.fillText(`${p.triY2}`, (p.triX1+p.triX2+5)+3,-p.triY2/2)
+
+        ctx.beginPath()
+        ctx.moveTo(p.triX1+p.triX2, -5)
+        ctx.lineTo(p.triX1+p.triX2+5, 0)
+        ctx.lineTo(p.triX1+p.triX2+10, -5)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(p.triX1+p.triX2, -p.triY2+5)
+        ctx.lineTo(p.triX1+p.triX2+5, -p.triY2)
+        ctx.lineTo(p.triX1+p.triX2+10, -p.triY2+5)
+        ctx.stroke()
+
+      }
+
+
+    ctx.restore()
+  }
+
   if ( level == 6.0){
     if (p.numOne == p.denoOne || p.numTwo == p.denoTwo || p.numThree == p.denoThree){
       p.denoOne += 1
@@ -5558,6 +5627,12 @@ function handleSubmit(e){
         }
       }
 
+      if (level == 5.14){
+        let totalBase = p.triX1+p.triX2
+        let totalHeight = p.triY2
+        correctAnswer = `1/2x${totalBase}x${totalHeight}`
+      }
+
       if ( level == 6.01){
         if (difficulty == 0){
           if (p.rollType == "area"){
@@ -6594,6 +6669,17 @@ function genProblems(){
     }
   }
 
+  if ( level == 5.14 ){
+    return{
+      roll: ["up"][genNumbers(1)],
+      triX1: (genNumbers(5)+5)*20,
+
+      triX2: (genNumbers(5)+5)*10,
+      triY2: (genNumbers(5)+5)*15,
+
+      triX2: (genNumbers(5)+5)*10
+    }
+  }
 
   if ( level == 6.0){
     return {
@@ -7771,8 +7857,6 @@ for (let i = 0; i <  settingButton.length; i++){
       break;
 
       case "Level 5.13":
-        // difficulty = prompt("Difficulty: Enter 0, 1, 2 or 3")
-        // console.log(difficulty);
         level = 5.13;
         scoreNeeded = 10;
         gold = highScore5DotZero13.time;
@@ -7784,11 +7868,20 @@ for (let i = 0; i <  settingButton.length; i++){
         document.querySelector("#user-input").setAttribute("type","text");
         wholeNumberContainer.classList.add('hidden');
         firstCanvas.classList.remove('hidden');
-        // instructions.innerHTML = 
-        // `
-        // Length x Breadth x Height = Volume
-        // L x B x H = V
-        // `
+      break;
+
+      case "Level 5.14":
+        level = 5.14;
+        scoreNeeded = 10;
+        gold = highScore5DotZero14.time;
+        silver = highScore5DotZero14.time+((cutoff-highScore5DotZero14.time)/3)
+        bronze = highScore5DotZero14.time+((cutoff-highScore5DotZero14.time)/3)*2
+        highScoreName.innerHTML = highScore5DotZero14.name
+        highScoreTime.innerHTML = highScore5DotZero14.time
+        highScoreMistakes.innerHTML = highScore5DotZero14.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
       break;
 
       case "Level 6.0":
