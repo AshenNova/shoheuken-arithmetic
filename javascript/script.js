@@ -183,11 +183,10 @@ const highScore5DotZero8 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero10 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero11 = new HighScore("Nil", "Nil", 0, 0)
+const highScore5DotZero13 = new HighScore("Nil", "Nil", 0, 0)
 const highScore6DotZero = new HighScore("Jayden Goo", "16 March 2022", 143, 0)
 const highScore6DotZero1 = new HighScore("Nil", "", 0, 0)
 const highScore6Dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
-
-
 
 // Storing of question
 let state = {
@@ -275,14 +274,12 @@ if (state.score >= scoreNeeded || time == cutoff){
     document.querySelector('.trophy').appendChild(imageCompleted);
       console.log("Completed image")
   }
-
   mistakesCountCl.innerHTML = state.mistake;
   player = 0;
 }
 
 }, 1000);
 }
-
 
 buttonStart.addEventListener('click', clickStart)
 
@@ -3850,6 +3847,123 @@ function updateProblems(){
     ctx.restore()
   }
 
+  if ( level == 5.13 ){
+    ctx.save()
+      ctx.font = "1em serif"
+      if (p.rollAnswer == "A"){
+        ctx.fillText(`These are identical ${p.rollShape}s.`, 20, 20)
+        ctx.fillText(` What is the area of the figure?`, 20, 40)
+      }
+      if (p.rollAnswer == "B"){
+        ctx.fillText(`These are identical ${p.rollShape}.`, 20, 20)
+        ctx.fillText(`What is the area of the unshaded parts?`, 20, 40)
+      }
+
+      let x = 100
+      let y = 50
+      let x2 = genNumbers(10)+20
+      let y2 = genNumbers(10)+20
+  
+      if (p.rollShape == "square"){
+        ctx.translate(x, y)
+        ctx.beginPath()
+        ctx.rect(0, 0, p.squareSide, p.squareSide);
+        ctx.stroke()
+
+         // text
+         p.shadedArea = (p.squareSide-x2)*(p.squareSide-y2)
+         p.shadedArea = Math.floor(p.shadedArea/100)
+         p.unshadedArea = p.squareSide*p.squareSide-p.shadedArea
+         p.unshadedArea = Math.floor(p.unshadedArea/100)
+         ctx.fillText(p.unshadedArea, 0+5, 0+20)
+
+        ctx.translate(x2, y2)
+        ctx.beginPath()
+        ctx.rect(0, 0, p.squareSide, p.squareSide);
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.rect(0, 0, p.squareSide-x2, p.squareSide-y2)
+        ctx.fill()
+
+        // text
+        ctx.save()
+          ctx.fillStyle = "white"
+          ctx.fillText(p.shadedArea, 0+5, 0+20)
+        ctx.restore()
+      }
+
+      if (p.rollShape == "rectangle"){
+        ctx.translate(x, y)
+        ctx.beginPath()
+        ctx.rect(0, 0, p.rectLength, p.rectBreadth);
+        ctx.stroke()
+
+         // text
+         p.shadedArea = (p.rectLength-x2)*(p.rectBreadth-y2)
+         p.shadedArea = Math.floor(p.shadedArea/100)
+         p.unshadedArea = p.rectLength*p.rectBreadth-p.shadedArea
+         p.unshadedArea = Math.floor(p.unshadedArea/100)
+         ctx.fillText(p.unshadedArea, 0+5, 0+20)
+
+        ctx.translate(x2, y2)
+        ctx.beginPath()
+        ctx.rect(0, 0, p.rectLength, p.rectBreadth);
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.rect(0, 0, p.rectLength-x2, p.rectBreadth-y2)
+        ctx.fill()
+
+        // text
+        ctx.save()
+          ctx.fillStyle = "white"
+          ctx.fillText(p.shadedArea, 0+5, 0+20)
+        ctx.restore()
+      }
+
+      if (p.rollShape == "triangle"){
+        ctx.translate(x-30, y)
+        ctx.beginPath()
+        ctx.moveTo(0, 0)
+        ctx.lineTo(p.triBase, 0)
+        ctx.lineTo(p.triBase, p.triHeight)
+        ctx.closePath()
+        ctx.stroke()
+
+
+        let m = p.triHeight/p.triBase
+        let c = y2/m
+        ctx.beginPath()
+        ctx.moveTo(p.triBase, y2)
+        ctx.lineTo(p.triBase, p.triHeight)
+        ctx.lineTo(c, y2)
+        ctx.fill()
+
+        //  text
+         p.shadedArea = 1/2*(p.triBase-c)*(p.triHeight-y2)
+         p.shadedArea = Math.floor(p.shadedArea/100)
+         p.unshadedArea = 1/2*p.triBase*p.triHeight
+         p.unshadedArea = Math.floor(p.unshadedArea/100)
+         ctx.fillText(p.unshadedArea, p.triBase-30, 0+20)
+
+          // text
+        ctx.save()
+          ctx.fillStyle = "white"
+          ctx.fillText(p.shadedArea, p.triBase-20, y2+16)
+        ctx.restore()
+
+        ctx.translate(x2, y2)
+        ctx.beginPath()
+        ctx.moveTo(0, 0)
+        ctx.lineTo(p.triBase, 0)
+        ctx.lineTo(p.triBase, p.triHeight)
+        ctx.closePath()
+        ctx.stroke()
+    }
+    ctx.restore()
+  }
+
   if ( level == 6.0){
     if (p.numOne == p.denoOne || p.numTwo == p.denoTwo || p.numThree == p.denoThree){
       p.denoOne += 1
@@ -5435,6 +5549,15 @@ function handleSubmit(e){
         }
       }
 
+      if ( level == 5.13 ){
+        if (p.rollAnswer == "A"){
+          correctAnswer = `${p.shadedArea}+${p.unshadedArea}x2`
+        }
+        if (p.rollAnswer == "B"){
+          correctAnswer = `${p.unshadedArea}x2`
+        }
+      }
+
       if ( level == 6.01){
         if (difficulty == 0){
           if (p.rollType == "area"){
@@ -6454,6 +6577,23 @@ function genProblems(){
       pointD: (genNumbers(6)+5)*10,
     }
   }
+
+  if ( level == 5.13){
+    return {
+      rollAnswer: ["A","B"][genNumbers(2)],
+      shadedArea: undefined,
+      unshadedArea: undefined,
+      rollShape: ["triangle", "rectangle","square"][genNumbers(3)],
+      squareSide: (genNumbers(10)+5)*10,
+
+      rectLength: (genNumbers(20)+10)*10,
+      rectBreadth: (genNumbers(5)+5)*10,
+
+      triBase: (genNumbers(20)+10)*10,
+      triHeight: (genNumbers(5)+5)*10,
+    }
+  }
+
 
   if ( level == 6.0){
     return {
@@ -7628,6 +7768,27 @@ for (let i = 0; i <  settingButton.length; i++){
         Length x Breadth x Height = Volume
         L x B x H = V
         `
+      break;
+
+      case "Level 5.13":
+        // difficulty = prompt("Difficulty: Enter 0, 1, 2 or 3")
+        // console.log(difficulty);
+        level = 5.13;
+        scoreNeeded = 10;
+        gold = highScore5DotZero13.time;
+        silver = highScore5DotZero13.time+((cutoff-highScore5DotZero13.time)/3)
+        bronze = highScore5DotZero13.time+((cutoff-highScore5DotZero13.time)/3)*2
+        highScoreName.innerHTML = highScore5DotZero13.name
+        highScoreTime.innerHTML = highScore5DotZero13.time
+        highScoreMistakes.innerHTML = highScore5DotZero13.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
+        // instructions.innerHTML = 
+        // `
+        // Length x Breadth x Height = Volume
+        // L x B x H = V
+        // `
       break;
 
       case "Level 6.0":
