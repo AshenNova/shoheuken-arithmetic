@@ -386,6 +386,56 @@ function drawCuboid(a, b, c, d){
   ctx.stroke()
 
 }
+
+function drawHorizontalLine(x, y, right, adjust){
+  ctx.save()
+
+    // straight line
+    ctx.translate(x ,y)
+
+    ctx.beginPath()
+    ctx.moveTo(0, adjust)
+    ctx.lineTo(right, adjust)
+    ctx.stroke()
+
+    ctx.beginPath()
+    ctx.moveTo(5, adjust-5)
+    ctx.lineTo(0, adjust)
+    ctx.lineTo(5, adjust+5)
+    ctx.stroke()
+
+    ctx.beginPath()
+    ctx.moveTo(right-5, adjust-5)
+    ctx.lineTo(right, adjust)
+    ctx.lineTo(right-5, adjust+5)
+    ctx.stroke()
+  ctx.restore()
+}
+
+function drawVerticalLine(x, y, bottom, adjust){
+  ctx.save()
+
+    // straight line
+    ctx.translate(x ,y)
+
+    ctx.beginPath()
+    ctx.moveTo(adjust, 0)
+    ctx.lineTo(adjust, bottom)
+    ctx.stroke()
+
+    ctx.beginPath()
+    ctx.moveTo(adjust+5, 5)
+    ctx.lineTo(adjust+0, 0)
+    ctx.lineTo(adjust-5, 5)
+    ctx.stroke()
+
+    ctx.beginPath()
+    ctx.moveTo(adjust+5, bottom-5)
+    ctx.lineTo(adjust+0, bottom)
+    ctx.lineTo(adjust-5, bottom-5)
+    ctx.stroke()
+  ctx.restore()
+}
 //////////////////// DISPLAY PROBLEMS ////////////////////
 
 // Step 3: Updating, storing and then displaying the problem
@@ -3987,45 +4037,50 @@ function updateProblems(){
 
 
 // horizontal line
-        ctx.beginPath()
-        ctx.moveTo(0, 5)
-        ctx.lineTo(p.triX1+p.triX2, 5)
-        ctx.stroke()
+        // ctx.beginPath()
+        // ctx.moveTo(0, 5)
+        // ctx.lineTo(p.triX1+p.triX2, 5)
+        // ctx.stroke()
 
-        ctx.fillText(`${p.triX1+p.triX2}`, (p.triX1+p.triX2)/2-15, 20)
+        // ctx.fillText(`${p.triX1+p.triX2}`, (p.triX1+p.triX2)/2-15, 20)
         
-        ctx.beginPath()
-        ctx.moveTo(5, 0)
-        ctx.lineTo(0, 5)
-        ctx.lineTo(5, 10)
-        ctx.stroke()
+        // ctx.beginPath()
+        // ctx.moveTo(5, 0)
+        // ctx.lineTo(0, 5)
+        // ctx.lineTo(5, 10)
+        // ctx.stroke()
 
-        ctx.beginPath()
-        ctx.moveTo(p.triX1+p.triX2-5, 0)
-        ctx.lineTo(p.triX1+p.triX2, 5)
-        ctx.lineTo(p.triX1+p.triX2-5, 10)
-        ctx.stroke()
+        // ctx.beginPath()
+        // ctx.moveTo(p.triX1+p.triX2-5, 0)
+        // ctx.lineTo(p.triX1+p.triX2, 5)
+        // ctx.lineTo(p.triX1+p.triX2-5, 10)
+        // ctx.stroke()
+
+        drawHorizontalLine(0, 0, p.triX1+p.triX2, 5)
+        ctx.fillText(`${p.triX1+p.triX2}`, (p.triX1+p.triX2)/2-15, 20)
 
 // vertical line
 
-        ctx.beginPath()
-        ctx.moveTo(p.triX1+p.triX2+5, 0)
-        ctx.lineTo(p.triX1+p.triX2+5, -p.triY2)
-        ctx.stroke()
+        // ctx.beginPath()
+        // ctx.moveTo(p.triX1+p.triX2+5, 0)
+        // ctx.lineTo(p.triX1+p.triX2+5, -p.triY2)
+        // ctx.stroke()
 
+        // ctx.fillText(`${p.triY2}`, (p.triX1+p.triX2+5)+3,-p.triY2/2)
+
+        // ctx.beginPath()
+        // ctx.moveTo(p.triX1+p.triX2, -5)
+        // ctx.lineTo(p.triX1+p.triX2+5, 0)
+        // ctx.lineTo(p.triX1+p.triX2+10, -5)
+        // ctx.stroke()
+
+        // ctx.beginPath()
+        // ctx.moveTo(p.triX1+p.triX2, -p.triY2+5)
+        // ctx.lineTo(p.triX1+p.triX2+5, -p.triY2)
+        // ctx.lineTo(p.triX1+p.triX2+10, -p.triY2+5)
+        // ctx.stroke()
+        drawVerticalLine(p.triX1+p.triX2, -p.triY2, p.triY2, 5)
         ctx.fillText(`${p.triY2}`, (p.triX1+p.triX2+5)+3,-p.triY2/2)
-
-        ctx.beginPath()
-        ctx.moveTo(p.triX1+p.triX2, -5)
-        ctx.lineTo(p.triX1+p.triX2+5, 0)
-        ctx.lineTo(p.triX1+p.triX2+10, -5)
-        ctx.stroke()
-
-        ctx.beginPath()
-        ctx.moveTo(p.triX1+p.triX2, -p.triY2+5)
-        ctx.lineTo(p.triX1+p.triX2+5, -p.triY2)
-        ctx.lineTo(p.triX1+p.triX2+10, -p.triY2+5)
-        ctx.stroke()
 
       }
 
