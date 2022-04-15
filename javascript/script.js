@@ -4019,8 +4019,26 @@ function updateProblems(){
     ctx.save()
     ctx.font = "1em serif"
     ctx.fillText(`Find the area of the figure.`, 20, 20)
-      if (p.roll == "up"){
-        ctx.translate(50, 200)
+
+      if (p.roll == "up" || p.roll == "down" ){
+        if (p.roll == "up"){
+          ctx.translate(50, 200)
+          drawHorizontalLine(0, 0, p.triX1+p.triX2, 5)
+          ctx.fillText(`${p.triX1+p.triX2}`, (p.triX1+p.triX2)/2-15, 20)
+
+          drawVerticalLine(p.triX1+p.triX2, -p.triY2, p.triY2, 5)
+          ctx.fillText(`${p.triY2}`, (p.triX1+p.triX2+5)+3,-p.triY2/2)
+        }
+        if (p.roll == "down" ){
+          ctx.translate(50, 50)
+          p.triY2 = p.triY2*-1
+          drawHorizontalLine(0, 0, p.triX1+p.triX2, -5)
+          ctx.fillText(`${p.triX1+p.triX2}`, (p.triX1+p.triX2)/2-15, -10)
+  
+          drawVerticalLine(p.triX1+p.triX2, 0, -p.triY2, 5)
+          ctx.fillText(`${-p.triY2}`, (p.triX1+p.triX2+5)+3, -p.triY2/2)
+        }
+        // draw triangle
         ctx.beginPath()
         ctx.moveTo(0, 0)
         ctx.lineTo(p.triX1, 0)
@@ -4034,7 +4052,6 @@ function updateProblems(){
         ctx.lineTo(p.triX2+genNumbers(150)+5, -p.triY2)
         ctx.closePath()
         ctx.stroke()
-
 
 // horizontal line
         // ctx.beginPath()
@@ -4056,8 +4073,6 @@ function updateProblems(){
         // ctx.lineTo(p.triX1+p.triX2-5, 10)
         // ctx.stroke()
 
-        drawHorizontalLine(0, 0, p.triX1+p.triX2, 5)
-        ctx.fillText(`${p.triX1+p.triX2}`, (p.triX1+p.triX2)/2-15, 20)
 
 // vertical line
 
@@ -4079,11 +4094,51 @@ function updateProblems(){
         // ctx.lineTo(p.triX1+p.triX2+5, -p.triY2)
         // ctx.lineTo(p.triX1+p.triX2+10, -p.triY2+5)
         // ctx.stroke()
-        drawVerticalLine(p.triX1+p.triX2, -p.triY2, p.triY2, 5)
-        ctx.fillText(`${p.triY2}`, (p.triX1+p.triX2+5)+3,-p.triY2/2)
+      }
+      if (p.roll == "updown"){
+          ctx.translate(50, 175)
+          drawHorizontalLine(0, 0, p.triX1+p.triX2, 5)
+          ctx.fillText(`${p.triX1+p.triX2}`, (p.triX1+p.triX2)/2-15, 20)
 
+          drawVerticalLine(p.triX1+p.triX2, -p.triY2, p.triY2+p.triY3, 10)
+          ctx.fillText(`${p.triY2+p.triY3}`, (p.triX1+p.triX2+5)+5,-p.triY2/2)
+  
+        ctx.beginPath()
+        ctx.moveTo(0, 0)
+        ctx.lineTo(p.triX1, 0)
+        ctx.lineTo(p.triX2, -p.triY2)
+        ctx.closePath()
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(p.triX1, 0)
+        ctx.lineTo(p.triX1+p.triX2, 0)
+        ctx.lineTo(p.triX2+genNumbers(150)+5, p.triY3)
+        ctx.closePath()
+        ctx.stroke()
       }
 
+      if (p.roll == "rectangle"){
+        let centralize = (400-p.rectL)/2
+        ctx.translate(centralize, 100)
+        ctx.beginPath()
+        ctx.rect(0, 0, p.rectL, p.rectB)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(0, 0)
+        ctx.lineTo(p.rectO, p.rectB)
+        ctx.lineTo(p.rectL, 0)
+        ctx.closePath()
+        ctx.stroke()
+        ctx.fill()
+
+        ctx.save()
+          ctx.fillStyle = "white"
+          p.triA = 1/2*p.rectL*p.rectB
+          ctx.fillText(`${p.triA}cm2`, p.rectL/2-30, 20)
+        ctx.restore()
+      }
 
     ctx.restore()
   }
@@ -5693,9 +5748,24 @@ function handleSubmit(e){
       }
 
       if (level == 5.14){
-        let totalBase = p.triX1+p.triX2
-        let totalHeight = p.triY2
-        correctAnswer = `1/2x${totalBase}x${totalHeight}`
+        if (p.roll == "up"){
+          let totalBase = p.triX1+p.triX2
+          let totalHeight = p.triY2
+          correctAnswer = `1/2x${totalBase}x${totalHeight}`
+        }
+        if (p.roll == "down"){
+          let totalBase = p.triX1+p.triX2
+          let totalHeight = p.triY2
+          correctAnswer = `1/2x${totalBase}x${-totalHeight}`
+        }
+        if (p.roll == "updown"){
+          let totalBase = p.triX1+p.triX2
+          let totalHeight = p.triY2+p.triY3
+          correctAnswer = `1/2x${totalBase}x${totalHeight}`
+        }
+        if (p.roll == "rectangle"){
+          correctAnswer = `${p.triA}x2`
+        }
       }
 
       if ( level == 6.01){
@@ -6736,13 +6806,19 @@ function genProblems(){
 
   if ( level == 5.14 ){
     return{
-      roll: ["up"][genNumbers(1)],
+      roll: ["rectangle","updown","down","up"][genNumbers(1)],
       triX1: (genNumbers(5)+5)*20,
 
       triX2: (genNumbers(5)+5)*10,
       triY2: (genNumbers(5)+5)*15,
 
-      triX2: (genNumbers(5)+5)*10
+      triX2: (genNumbers(5)+5)*10,
+      triY3: (genNumbers(5)+5)*5,
+
+      rectL: (genNumbers(5)+5)*20,
+      rectB: (genNumbers(5)+5)*15,
+      rectO: (genNumbers(4)+1)*20,
+      triA: undefined
     }
   }
 
