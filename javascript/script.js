@@ -174,6 +174,7 @@ const highScore4Dot2Zero = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero = new HighScore("Sheyanne Cheong", "19 March 2022", 453, 5)
 const highScore5DotZero1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
 const highScore5DotZero2 = new HighScore("Emma Leo", "21 March 2022", 167, 0)
+const highScore5DotZero3 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero4 = new HighScore("Jayden Goo", "23 Mar 2022", 88, 0)
 const highScore5DotZero5 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero6 = new HighScore("Emma Leo", "30 March 2022", 251, 1)
@@ -2858,6 +2859,27 @@ function updateProblems(){
     `
   }
 
+  if ( level == 5.03){
+    if (p.numerator == p.denominator){
+      p.numerator -= 1
+    }
+    p.percentageDisplay = p.numerator/p.denominator*100
+    if (p.rollA == "fraction"){
+      displayProblem.innerHTML = `${p.numerator}/${p.denominator} = ___ %`
+    }
+    if (p.rollA == "decimal"){
+      displayProblem.innerHTML = `${p.numerator/p.denominator} = ___ %`
+    }
+    // if (p.rollA == "ratio"){
+    //   displayProblem.innerHTML = `${p.numerator} : ${p.denominator} = ___ %`
+    // }
+    if (p.rollA == "percentage"){
+        displayProblem.innerHTML = `
+        Convert to ${p.rollB}</br>
+        ${p.percentageDisplay}% = ____`
+    }
+  }
+
   if ( level == 5.04){
     if (p.letterChange == "of" && p.letterChangeTwo != "of"){
       displayProblem.innerHTML =
@@ -5497,6 +5519,25 @@ function handleSubmit(e){
         correctAnswer = `${arr[0]}/${arr[0]/p.numOne*p.numTwo}A=${arr[0]}/${arr[0]/p.numThree*p.numFour}B`
       }
 
+      if ( level == 5.03){
+        if (p.rollA == "decimal"){
+          correctAnswer = p.numerator/p.denominator*100
+        }
+        if (p.rollA == "fraction"){
+          correctAnswer = `${p.numerator}/${p.denominator}x100`
+        }
+        if (p.rollA == "percentage"){
+          if (p.rollB == "fraction"){
+            correctAnswer = `${p.percentageDisplay}/100`
+          }
+          if (p.rollB == "decimal"){
+            correctAnswer = `${p.percentageDisplay/100}`
+          }
+          if (p.rollB == "ratio"){
+            correctAnswer = `${p.percentageDisplay}:100`
+          }
+        }
+      }
 
       if ( level == 5.04 ){
         p.varA = p.numOne
@@ -6630,6 +6671,16 @@ function genProblems(){
       numThree: genNumbers(5)+1,
       numFour: genNumbers(5)+1,
       sentenceChoice: ["is equal to","the same as","="][genNumbers(3)]
+    }
+  }
+
+  if ( level == 5.03){
+    return {
+      numerator: genNumbers(10)+1,
+      denominator: [10, 100, 1000][genNumbers(3)],
+      rollA: ["fraction", "decimal", "percentage"][genNumbers(3)],
+      rollB: ["fraction","decimal","ratio"][genNumbers(3)],
+      percentageDisplay: undefined
     }
   }
 
@@ -7853,6 +7904,18 @@ for (let i = 0; i <  settingButton.length; i++){
         highScoreName.innerHTML = highScore5DotZero2.name
         highScoreTime.innerHTML = highScore5DotZero2.time
         highScoreMistakes.innerHTML = highScore5DotZero2.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        displayProblem.style.fontSize = "25px";
+        instructions.innerHTML = "Form an equation using in fraction"
+      break;
+
+      case "Level 5.03":
+        level = 5.03;
+        scoreNeeded = 20;
+        gold = highScore5DotZero3.time;
+        highScoreName.innerHTML = highScore5DotZero3.name
+        highScoreTime.innerHTML = highScore5DotZero3.time
+        highScoreMistakes.innerHTML = highScore5DotZero3.mistake
         document.querySelector("#user-input").setAttribute("type","text");
         displayProblem.style.fontSize = "25px";
         instructions.innerHTML = "Form an equation using in fraction"
