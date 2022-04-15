@@ -174,15 +174,15 @@ const highScore4Dot2Zero = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero = new HighScore("Sheyanne Cheong", "19 March 2022", 453, 5)
 const highScore5DotZero1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
 const highScore5DotZero2 = new HighScore("Emma Leo", "21 March 2022", 167, 0)
-const highScore5DotZero3 = new HighScore("Jayden Goo", "23 Mar 2022", 88, 0)
-const highScore5DotZero4 = new HighScore("Nil", "Nil", 0, 0)
-const highScore5DotZero5 = new HighScore("Emma Leo", "30 March 2022", 251, 1)
-const highScore5DotZero6 = new HighScore("Nil", "Nil", 0, 0)
+const highScore5DotZero4 = new HighScore("Jayden Goo", "23 Mar 2022", 88, 0)
+const highScore5DotZero5 = new HighScore("Nil", "Nil", 0, 0)
+const highScore5DotZero6 = new HighScore("Emma Leo", "30 March 2022", 251, 1)
 const highScore5DotZero7 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero8 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero9 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero10 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero11 = new HighScore("Nil", "Nil", 0, 0)
+const highScore5DotZero12 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero13 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero14 = new HighScore("Nil", "Nil", 0, 0)
 const highScore6DotZero = new HighScore("Jayden Goo", "16 March 2022", 143, 0)
@@ -2858,7 +2858,7 @@ function updateProblems(){
     `
   }
 
-  if ( level == 5.03){
+  if ( level == 5.04){
     if (p.letterChange == "of" && p.letterChangeTwo != "of"){
       displayProblem.innerHTML =
       `A is ${p.numOne}% of A and B.</br>
@@ -2887,7 +2887,7 @@ function updateProblems(){
       What percentage of the total is ${p.letterAB} in the end?`
       }
   }
-  if ( level == 5.04){
+  if ( level == 5.05){
     for (let i = p.numTwo; i > 1; i--){
       if(p.numOne%i == 0 && p.numTwo%i == 0){
         p.numOne /= i;
@@ -2923,7 +2923,7 @@ function updateProblems(){
       What is ${p.letterAB} in the end?`
     }
   }
-  if ( level == 5.05 ){
+  if ( level == 5.06 ){
 
     ctx.save()
     ctx.font = "1em serif"
@@ -2998,7 +2998,7 @@ function updateProblems(){
     ctx.restore()
   }
 
-  if ( level == 5.06){
+  if ( level == 5.07){
     ctx.save()
     ctx.font = "1em serif"
     if (p.roll == 1){
@@ -3304,7 +3304,7 @@ function updateProblems(){
     ctx.restore()
   }
   
-  if ( level == 5.07 ){
+  if ( level == 5.08 ){
     ctx.save()
     ctx.font = "1em serif"
     if (p.roll == "opposite"){
@@ -3450,7 +3450,7 @@ function updateProblems(){
     ctx.restore()
   }
 
-  if ( level == 5.08 ){
+  if ( level == 5.09 ){
     console.log(p.roll, p.rollChange)
     if (p.roll == "discount"){
       if (p.rollChange == 1){
@@ -3496,7 +3496,7 @@ function updateProblems(){
     }
   }
 
-  if ( level == 5.09){
+  if ( level == 5.10){
     ctx.save()
     ctx.font = "1em serif"
     if (p.rollShape == "parallelogram"){
@@ -3727,7 +3727,7 @@ function updateProblems(){
   }
 
 
-  if ( level == 5.10){
+  if ( level == 5.11){
     if (p.rollType == "discount"){
       if (p.rollType2 == "before"){
         displayProblem.innerHTML = 
@@ -3832,7 +3832,7 @@ function updateProblems(){
     }
   }
 
-  if ( level == 5.11){
+  if ( level == 5.12){
     ctx.save()
     let finalDifficulty = difficulty
     if (difficulty >= 2){
@@ -5498,7 +5498,7 @@ function handleSubmit(e){
       }
 
 
-      if ( level == 5.03 ){
+      if ( level == 5.04 ){
         p.varA = p.numOne
         p.varB = 100-p.numOne
         if ( p.letterAB == "A" && p.letterChange == "increase"){
@@ -5520,7 +5520,7 @@ function handleSubmit(e){
           correctAnswer = p.varB + "/100x" + (100-p.numThree)
         }
       }
-      if ( level == 5.04 ){
+      if ( level == 5.05 ){
         p.varA = p.numOne
         p.varB = p.numTwo
         if (p.letterBTotal == "A and B"){
@@ -5544,7 +5544,7 @@ function handleSubmit(e){
         }
       }
 
-      if ( level == 5.05 ){
+      if ( level == 5.06 ){
         if (p.question == "base"){
           correctAnswer = `${p.labelDEF}${p.labelGHI}`
         }
@@ -5566,7 +5566,7 @@ function handleSubmit(e){
 
       }
 
-      if ( level == 5.06){
+      if ( level == 5.07){
         if (p.roll == 1){
           if (p.rightAngleRoll == 1){
             correctAnswer = `90-${p.angleLabel}`
@@ -5599,7 +5599,7 @@ function handleSubmit(e){
        }
       }
 
-      if ( level == 5.07 ){
+      if ( level == 5.08 ){
         if (p.roll == "opposite"){
           correctAnswer = p.oppositeRotation
         }
@@ -5613,11 +5613,11 @@ function handleSubmit(e){
         }
       }
 
-      if ( level == 5.08 ){
+      if ( level == 5.09 ){
           correctAnswer = `${p.change}/${p.totalAmount}x100`
       }
 
-      if ( level == 5.09){
+      if ( level == 5.10){
         if (p.rollShape == "parallelogram"){
           if (p.paraRoll == 1 ){
             correctAnswer = `180-${p.paraAngleD}`
@@ -5653,7 +5653,7 @@ function handleSubmit(e){
         }
       }
 
-      if ( level == 5.10 ){
+      if ( level == 5.11 ){
         if (p.rollType == "discount" || p.rollType == "decrease"){
           if (p.rollType2 == "before"){
             correctAnswer = `${p.valueOne}/100x${100-p.percentageOne}`
@@ -5720,7 +5720,7 @@ function handleSubmit(e){
         }
       }
 
-      if ( level == 5.11 ){
+      if ( level == 5.12 ){
         if (p.roll == "v"){
           correctAnswer = `${p.pointA}x${p.pointA+p.pointC}x${p.pointB}`
         }
@@ -6633,7 +6633,7 @@ function genProblems(){
     }
   }
 
-  if (level == 5.03){
+  if (level == 5.04){
     return {
     numOne: (genNumbers(10)+1)*5,
     numTwo: (genNumbers(18)+1)*5,
@@ -6646,7 +6646,7 @@ function genProblems(){
     }
   }
 
-  if (level == 5.04){
+  if (level == 5.05){
     return {
       numOne: genNumbers(5)+1,
       numTwo: genNumbers(5)+6,
@@ -6662,7 +6662,7 @@ function genProblems(){
     }
   }
 
-  if ( level == 5.05 ){
+  if ( level == 5.06 ){
     return {
 
       // triangle A
@@ -6691,7 +6691,7 @@ function genProblems(){
     } 
   }
 
-  if ( level == 5.06){
+  if ( level == 5.07){
     return {
     roll: [3, 2, 1][genNumbers(3)],
 
@@ -6724,7 +6724,7 @@ function genProblems(){
    }
   }
 
-  if ( level == 5.07) {
+  if ( level == 5.08) {
     return {
       roll: ["corresponding","opposite"][genNumbers(2)],
       oppositeRotation: [genNumbers(120)+30],
@@ -6736,7 +6736,7 @@ function genProblems(){
     }
   }
 
-  if ( level == 5.08 ){
+  if ( level == 5.09 ){
     return {
       roll: ["discount","increase","decrease"][genNumbers(3)],
       rollChange: [1, 2][genNumbers(2)],
@@ -6745,7 +6745,7 @@ function genProblems(){
     }
   }
 
-  if ( level == 5.09 ){
+  if ( level == 5.10 ){
     return {
       rollShape: ["trapezium", "rhombus","parallelogram"][genNumbers(3)],
       paraLength: (genNumbers(4)+8)*10,
@@ -6767,7 +6767,7 @@ function genProblems(){
     }
   }
 
-  if ( level == 5.10 ){
+  if ( level == 5.11 ){
     return{
       rollType: ["decrease", "increase", "GST", "discount"][genNumbers(1)],
       rollType2: ["before", "after", "change"][genNumbers(3)],
@@ -6777,7 +6777,7 @@ function genProblems(){
     }
   }
 
-  if ( level == 5.11){
+  if ( level == 5.12){
     return {
       roll: undefined,
       volume: undefined,
@@ -7858,46 +7858,32 @@ for (let i = 0; i <  settingButton.length; i++){
         instructions.innerHTML = "Form an equation using in fraction"
       break;
       
-      case "Level 5.03":
-        level = 5.03;
+      case "Level 5.04":
+        level = 5.04;
         scoreNeeded = 10;
-        gold = highScore5DotZero3.time;
-        silver = highScore5DotZero3.time+((cutoff-highScore5DotZero3.time)/3)
-        bronze = highScore5DotZero3.time+((cutoff-highScore5DotZero3.time)/3)*2
-        highScoreName.innerHTML = highScore5DotZero3.name
-        highScoreTime.innerHTML = highScore5DotZero3.time
-        highScoreMistakes.innerHTML = highScore5DotZero3.mistake
+        gold = highScore5DotZero4.time;
+        silver = highScore5DotZero4.time+((cutoff-highScore5DotZero4.time)/3)
+        bronze = highScore5DotZero4.time+((cutoff-highScore5DotZero4.time)/3)*2
+        highScoreName.innerHTML = highScore5DotZero4.name
+        highScoreTime.innerHTML = highScore5DotZero4.time
+        highScoreMistakes.innerHTML = highScore5DotZero4.mistake
         document.querySelector("#user-input").setAttribute("type","text");
         displayProblem.style.fontSize = "25px";
         instructions.innerHTML = "Form an equation using</br> multiplication of percentage </br> from/100 x end"
         userInput.style.width = "200px";
         break;    
       
-      case "Level 5.04":
-        level = 5.04;
-        scoreNeeded = 10;
-        gold = 79;
-        highScoreName.innerHTML = highScore5DotZero4.name
-        highScoreTime.innerHTML = highScore5DotZero4.time
-        highScoreMistakes.innerHTML = highScore5DotZero4.mistake
-        document.querySelector("#user-input").setAttribute("type","text");
-        displayProblem.style.fontSize = "25px";
-        break;
-      
       case "Level 5.05":
         level = 5.05;
-        scoreNeeded = 20;
-        gold = highScore5DotZero5.time;
-        silver = highScore5DotZero5.time+((cutoff-highScore5DotZero5.time)/3)
-        bronze = highScore5DotZero5.time+((cutoff-highScore5DotZero5.time)/3)*2
+        scoreNeeded = 10;
+        gold = 79;
         highScoreName.innerHTML = highScore5DotZero5.name
         highScoreTime.innerHTML = highScore5DotZero5.time
         highScoreMistakes.innerHTML = highScore5DotZero5.mistake
         document.querySelector("#user-input").setAttribute("type","text");
-        wholeNumberContainer.classList.add('hidden');
-        firstCanvas.classList.remove('hidden');
-      break;
-
+        displayProblem.style.fontSize = "25px";
+        break;
+      
       case "Level 5.06":
         level = 5.06;
         scoreNeeded = 20;
@@ -7925,16 +7911,30 @@ for (let i = 0; i <  settingButton.length; i++){
         wholeNumberContainer.classList.add('hidden');
         firstCanvas.classList.remove('hidden');
       break;
-  
+
       case "Level 5.08":
         level = 5.08;
-        scoreNeeded = 10;
-        gold = highScore5DotZero8.time
+        scoreNeeded = 20;
+        gold = highScore5DotZero8.time;
         silver = highScore5DotZero8.time+((cutoff-highScore5DotZero8.time)/3)
         bronze = highScore5DotZero8.time+((cutoff-highScore5DotZero8.time)/3)*2
         highScoreName.innerHTML = highScore5DotZero8.name
         highScoreTime.innerHTML = highScore5DotZero8.time
         highScoreMistakes.innerHTML = highScore5DotZero8.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
+      break;
+  
+      case "Level 5.09":
+        level = 5.09;
+        scoreNeeded = 10;
+        gold = highScore5DotZero9.time
+        silver = highScore5DotZero9.time+((cutoff-highScore5DotZero9.time)/3)
+        bronze = highScore5DotZero9.time+((cutoff-highScore5DotZero9.time)/3)*2
+        highScoreName.innerHTML = highScore5DotZero9.name
+        highScoreTime.innerHTML = highScore5DotZero9.time
+        highScoreMistakes.innerHTML = highScore5DotZero9.mistake
         instructions.innerHTML = 
         `
         discount/original x 100
@@ -7945,29 +7945,29 @@ for (let i = 0; i <  settingButton.length; i++){
         document.querySelector("#user-input").setAttribute("type","text");
       break;
 
-      case "Level 5.09":
-        level = 5.09;
-        scoreNeeded = 20;
-        gold = highScore5DotZero9.time;
-        silver = highScore5DotZero9.time+((cutoff-highScore5DotZero9.time)/3)
-        bronze = highScore5DotZero9.time+((cutoff-highScore5DotZero9.time)/3)*2
-        highScoreName.innerHTML = highScore5DotZero9.name
-        highScoreTime.innerHTML = highScore5DotZero9.time
-        highScoreMistakes.innerHTML = highScore5DotZero9.mistake
-        document.querySelector("#user-input").setAttribute("type","text");
-        wholeNumberContainer.classList.add('hidden');
-        firstCanvas.classList.remove('hidden');
-      break;
-
       case "Level 5.10":
         level = 5.10;
-        scoreNeeded = 10;
-        gold = highScore5DotZero10.time
+        scoreNeeded = 20;
+        gold = highScore5DotZero10.time;
         silver = highScore5DotZero10.time+((cutoff-highScore5DotZero10.time)/3)
         bronze = highScore5DotZero10.time+((cutoff-highScore5DotZero10.time)/3)*2
         highScoreName.innerHTML = highScore5DotZero10.name
         highScoreTime.innerHTML = highScore5DotZero10.time
         highScoreMistakes.innerHTML = highScore5DotZero10.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
+      break;
+
+      case "Level 5.11":
+        level = 5.11;
+        scoreNeeded = 10;
+        gold = highScore5DotZero11.time
+        silver = highScore5DotZero11.time+((cutoff-highScore5DotZero11.time)/3)
+        bronze = highScore5DotZero11.time+((cutoff-highScore5DotZero11.time)/3)*2
+        highScoreName.innerHTML = highScore5DotZero11.name
+        highScoreTime.innerHTML = highScore5DotZero11.time
+        highScoreMistakes.innerHTML = highScore5DotZero11.mistake
         instructions.innerHTML = 
         `
         Calculate the value via percentage
@@ -7976,17 +7976,17 @@ for (let i = 0; i <  settingButton.length; i++){
         document.querySelector("#user-input").setAttribute("type","text");
       break;
 
-      case "Level 5.11":
+      case "Level 5.12":
         difficulty = prompt("Difficulty: Enter 0, 1, 2 or 3")
         console.log(difficulty);
-        level = 5.11;
+        level = 5.12;
         scoreNeeded = 10;
-        gold = highScore5DotZero11.time;
-        silver = highScore5DotZero11.time+((cutoff-highScore5DotZero11.time)/3)
-        bronze = highScore5DotZero11.time+((cutoff-highScore5DotZero11.time)/3)*2
-        highScoreName.innerHTML = highScore5DotZero11.name
-        highScoreTime.innerHTML = highScore5DotZero11.time
-        highScoreMistakes.innerHTML = highScore5DotZero11.mistake
+        gold = highScore5DotZero12.time;
+        silver = highScore5DotZero12.time+((cutoff-highScore5DotZero12.time)/3)
+        bronze = highScore5DotZero12.time+((cutoff-highScore5DotZero12.time)/3)*2
+        highScoreName.innerHTML = highScore5DotZero12.name
+        highScoreTime.innerHTML = highScore5DotZero12.time
+        highScoreMistakes.innerHTML = highScore5DotZero12.mistake
         document.querySelector("#user-input").setAttribute("type","text");
         wholeNumberContainer.classList.add('hidden');
         firstCanvas.classList.remove('hidden');
