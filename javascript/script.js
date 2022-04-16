@@ -7197,8 +7197,8 @@ for (let i = 0; i <  settingButton.length; i++){
         highScoreMistakes.innerHTML = highScore1DotZero5.mistake
         document.querySelector("#user-input").setAttribute("type","text");
         instructions.innerHTML = `
-        1 + 2 = 3</br>
-        c ± d = r </br>
+        1 + 2 = 3 or 3 = 2 + 1</br>
+        c ± d = r or r = c ± d</br>
         Use: 'c+', 'c-', 'd-', 'r+' or 'r-' `
         break;
   
