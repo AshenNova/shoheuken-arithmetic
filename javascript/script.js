@@ -4677,12 +4677,14 @@ function handleSubmit(e){
         if (p.operator == "+"){
           if (p.numTwo + p.numFour >= 60){
             correctAnswer = `${p.numOne+p.numThree}${p.minHours}${p.numTwo+p.numFour}${p.minSeconds}=${p.numOne+p.numThree+1}${p.minHours}${p.numTwo+p.numFour-60}${p.minSeconds}`
+          } else if (p.numOne == p.numThree && p.numOne == 0){
+            correctAnswer =`${p.numTwo+p.numFour}${p.minSeconds}`
           } else {
             correctAnswer = `${p.numOne+p.numThree}${p.minHours}${p.numTwo+p.numFour}${p.minSeconds}`
           }
-          if (p.numOne == p.numThree && p.numOne == 0){
-            correctAnswer =`${p.numTwo+p.numFour}${p.minSeconds}`
-          } 
+          // if (p.numOne == p.numThree && p.numOne == 0){
+          //   correctAnswer =`${p.numTwo+p.numFour}${p.minSeconds}`
+          // } 
         }  
         if (p.operator == "-"){
           if (p.numTwo - p.numFour < 0){
@@ -7672,6 +7674,9 @@ for (let i = 0; i <  settingButton.length; i++){
       case "Level 4.06":
         level = 4.06;
         scoreNeeded = 30;
+        gold = highScore4DotZero6.time
+        silver = highScore4DotZero6.time+((cutoff-highScore4DotZero6.time)/3)
+        bronze = highScore4DotZero6.time+((cutoff-highScore4DotZero6.time)/3)*2
         highScoreName.innerHTML = highScore4DotZero6.name
         highScoreTime.innerHTML = highScore4DotZero6.time
         highScoreMistakes.innerHTML = highScore4DotZero6.mistake
@@ -7754,7 +7759,7 @@ for (let i = 0; i <  settingButton.length; i++){
   
         case "Level 4.13":
           level = 4.13;
-          scoreNeeded = 30;
+          scoreNeeded = 20;
           gold = 297
           silver = 376;
           highScoreName.innerHTML = highScore4DotZero13.name
