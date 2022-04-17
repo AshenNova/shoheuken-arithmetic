@@ -7727,7 +7727,7 @@ for (let i = 0; i <  settingButton.length; i++){
   
       case "Level 4.11":
         level = 4.11;
-        scoreNeeded = 30;
+        scoreNeeded = 20;
         gold = 215;
         highScoreName.innerHTML = highScore4DotZero11.name
         highScoreTime.innerHTML = highScore4DotZero11.time
