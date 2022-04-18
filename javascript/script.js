@@ -2860,6 +2860,9 @@ function updateProblems(){
   }
 
   if ( level == 5.03){
+    p.numerator = Math.abs(p.numerator)
+    p.denominator = Math.abs(p.denominator)
+
     if (p.numerator == p.denominator){
       p.numerator -= 1
     }
