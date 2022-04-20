@@ -188,6 +188,7 @@ const highScore5DotZero13 = new HighScore("Nil", "Nil", 0, 0)
 const highScore5DotZero14 = new HighScore("Nil", "Nil", 0, 0)
 const highScore6DotZero = new HighScore("Jayden Goo", "16 March 2022", 143, 0)
 const highScore6DotZero1 = new HighScore("Nil", "", 0, 0)
+const highScore6DotZero2 = new HighScore("Nil", "", 0, 0)
 const highScore6Dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
 
 // Storing of question
@@ -4404,6 +4405,171 @@ function updateProblems(){
     ctx.restore()
   }
 
+  if ( level == 6.02){
+    ctx.save()
+    let x = 200
+    let y = 137.5
+    ctx.font = "1em serif"
+    if (p.rollType == "triangle"){
+      ctx.fillText(`What is the area of the isosceles Triangle?`, 20, 20)
+    }
+    if (p.rollType == "radius"){
+      ctx.fillText(`What is the area of the Circle?`, 20, 20)
+    }
+    if (p.rollType == "angle"){
+      ctx.fillText(`Find ∠${p.rollAngle}.`, 20, 20)
+    }
+
+      if (p.rollType == "triangle"){
+        ctx.translate(200, 137.5)
+        ctx.rotate(p.rotation*Math.PI/180)
+        ctx.beginPath()
+        ctx.moveTo(0, 0)
+        ctx.lineTo(0, p.triangleSide)
+        ctx.lineTo(p.triangleSide, 0)
+        ctx.closePath()
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.moveTo(0, p.triangleSide+5)
+        ctx.lineTo(p.triangleSide+5, 0)
+        ctx.stroke()
+
+        ctx.fillText(`${p.triangleSide}`, (p.triangleSide+5)/2+10,(p.triangleSide+5)/2+10)
+        ctx.beginPath()
+        ctx.moveTo(p.triangleSide, 0)
+        ctx.lineTo(p.triangleSide+5, 0)
+        ctx.lineTo(p.triangleSide+5, 5)
+        ctx.stroke()
+        
+        ctx.save()
+          ctx.translate(0, p.triangleSide/2)
+          ctx.beginPath()
+          ctx.moveTo(-5, 0)
+          ctx.lineTo(5, 0)
+          ctx.stroke()
+        ctx.restore()
+
+        ctx.save()
+          ctx.translate(p.triangleSide/2, 0)
+          ctx.beginPath()
+          ctx.moveTo(0, -5)
+          ctx.lineTo(0, 5)
+          ctx.stroke()
+        ctx.restore()
+
+        ctx.beginPath()
+        ctx.moveTo(0, p.triangleSide)
+        ctx.lineTo(0, p.triangleSide+5)
+        ctx.lineTo(0+5, p.triangleSide+5)
+        ctx.stroke()
+      }
+
+      if ( p.rollType == "radius"){
+        ctx.translate(x, y)
+
+        let squareSide = Math.sqrt(1/2*p.radius*p.radius)
+        p.squareSideD = Math.floor(squareSide)
+        ctx.beginPath()
+        ctx.arc(0, 0, 2, 0, 2*Math.PI)
+        ctx.fill()
+
+        ctx.beginPath()
+        ctx.arc(0, 0, p.radius, 0, 2*Math.PI)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.rect(0, 0, squareSide, -squareSide)
+        ctx.stroke()
+
+        // diagonal line
+        ctx.save()
+          ctx.strokeStyle = "red"
+          ctx.fillStyle = "red"
+          ctx.beginPath()
+          ctx.moveTo(0, -squareSide)
+          ctx.lineTo(squareSide, 0)
+          ctx.stroke()
+
+          ctx.beginPath()
+          ctx.moveTo(3, -squareSide+6)
+          ctx.lineTo(0, -squareSide)
+          ctx.lineTo(6, -squareSide+3)
+          ctx.stroke()
+
+          ctx.beginPath()
+          ctx.moveTo(squareSide-3, -6)
+          ctx.lineTo(squareSide, 0)
+          ctx.lineTo(squareSide-6, -3)
+          ctx.stroke()
+
+          ctx.fillText(`${p.squareSideD}`, squareSide/2-20, -squareSide/2+10)
+        ctx.restore()
+      }
+      
+      if (p.rollType == "angle"){
+        // if (p.rotation == p.rotation2){
+        //   p.rotation -= 30
+        // }
+        // if (p.rotation > p.rotation2){
+        //   [p.rotation, p.rotation2] = [p.rotation2, p.rotation]
+        // }
+        // p.netRotation = p.rotation2-p.rotation
+       
+        console.log(p.rotation2)
+        p.angleOther = (180-p.rotation2)/2
+        ctx.translate(x, y)
+        ctx.beginPath()
+        ctx.arc(0, 0, p.radius, 0, 2*Math.PI)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.arc(0, 0, 2, 0, 2*Math.PI)
+        ctx.fill()
+
+        ctx.beginPath()
+        ctx.moveTo(0, 0)
+        ctx.lineTo(p.radius, 0)
+        ctx.stroke()
+
+        ctx.save()
+          ctx.rotate(p.rotation2*Math.PI/180)
+          ctx.lineTo(p.radius, 0)
+        ctx.restore()
+        ctx.closePath()
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.arc(0, 0, 10, 0, p.rotation2*Math.PI/180)
+        ctx.stroke()
+        if (p.rollAngle == "a"){
+          ctx.fillText(`${p.rotation2}°`, 10, 12)
+        }
+        if (p.rollAngle == "b"){
+          ctx.fillText(`b`, 10, 12)
+        }
+
+        ctx.save()
+          ctx.translate(p.radius, 0)
+          ctx.beginPath()
+          ctx.arc(0, 0, 10, (180-p.angleOther)*Math.PI/180, 1*Math.PI)
+          ctx.stroke()
+          if (p.rollAngle == "a"){
+            ctx.fillText(`a`, -20, 10)
+          }
+          if (p.rollAngle == "b"){
+            if (p.angleOther%1 != 0){
+              ctx.fillText(`${p.angleOther}°`, 1, 3)
+            } else {
+              ctx.fillText(`${p.angleOther}°`, -35, 11)
+            }
+          }
+        ctx.restore()
+      }
+
+    ctx.restore()
+  }
+
   if (level == 7){
     displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
   }
@@ -5882,6 +6048,21 @@ function handleSubmit(e){
         
       }
 
+      if ( level == 6.02 ){
+        if (p.rollType == "triangle"){
+          correctAnswer = `1/2x${p.triangleSide}x${p.triangleSide/2}`
+        }
+        if (p.rollType == "radius"){
+          correctAnswer = `pix${p.squareSideD}x${p.squareSideD}`
+        }
+        if (p.rollType == "angle" && p.rollAngle == "a"){
+          correctAnswer = `(180-${p.rotation2})/2`
+        }
+        if (p.rollType == "angle" && p.rollAngle == "b"){
+          correctAnswer = `180-${p.angleOther}x2`
+        }
+      }
+
       if (level == 7){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") correctAnswer = p.numOne - p.numTwo
@@ -6914,6 +7095,22 @@ function genProblems(){
       rollType2: ["others", "quadrant", "semicircle"][genNumbers(1)],
       rollOthers: genNumbers(270)+45,
       arcAngle: undefined
+    }
+  }
+
+  if ( level == 6.02 ){
+    return {
+      rotation: (genNumbers(7)*45),
+      rollType: ["angle","radius","triangle"][genNumbers(3)],
+      triangleSide: ((genNumbers(6)+5)*10),
+
+      radius: ((genNumbers(4)+6)*10),
+      squareSideD: undefined,
+
+      rollAngle: ["a","b"][genNumbers(2)],
+      rotation2: genNumbers(90)+44,
+      angleOther: undefined
+
     }
   }
 
@@ -8128,6 +8325,29 @@ for (let i = 0; i <  settingButton.length; i++){
         Circumference of Circle</br>
         2 x π x r OR π x d
         `
+      break;
+
+      case "Level 6.02":
+        // difficulty = prompt("Enter 0 or 1")
+        // console.log(difficulty);
+        level = 6.02;
+        scoreNeeded = 20;
+        gold = highScore6DotZero2.time;
+        silver = highScore6DotZero2.time+((cutoff-highScore6DotZero2.time)/3)
+        bronze = highScore6DotZero2.time+((cutoff-highScore6DotZero2.time)/3)*2
+        highScoreName.innerHTML = highScore6DotZero2.name
+        highScoreTime.innerHTML = highScore6DotZero2.time
+        highScoreMistakes.innerHTML = highScore6DotZero2.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
+        // instructions.innerHTML = 
+        // `
+        // Area of Circle<br>
+        // π x r x r</br>
+        // Circumference of Circle</br>
+        // 2 x π x r OR π x d
+        // `
       break;
 
       case "Level 6.3":
