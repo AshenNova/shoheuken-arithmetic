@@ -4419,6 +4419,9 @@ function updateProblems(){
     if (p.rollType == "angle"){
       ctx.fillText(`Find ∠${p.rollAngle}.`, 20, 20)
     }
+    if (p.rollType == "square"){
+      ctx.fillText(`Find the radius of the circle.`, 20, 20)
+    }
 
       if (p.rollType == "triangle"){
         ctx.translate(200, 137.5)
@@ -4564,6 +4567,28 @@ function updateProblems(){
               ctx.fillText(`${p.angleOther}°`, -35, 11)
             }
           }
+        ctx.restore()
+      }
+      if (p.rollType == "square"){
+        let squareSide = Math.sqrt(1/2*p.radius*p.radius)
+        ctx.fillText(`Area of the square is ${p.radius/10*p.radius/10*2}cm2.`, 20, 40)
+        ctx.translate(x, y)
+        ctx.beginPath()
+        ctx.arc(0, 0, p.radius, 0, 2*Math.PI)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.arc(0, 0, 2, 0, 2*Math.PI)
+        ctx.fill()
+
+        ctx.beginPath()
+        ctx.rect(-squareSide,squareSide,squareSide*2, -squareSide*2)
+        ctx.stroke()
+
+        ctx.save()
+        ctx.rotate(((genNumbers(6)-2)*45)*Math.PI/180)
+          drawHorizontalLine(0, 0, p.radius, 0)
+          ctx.fillText(`?`, p.radius/2, 5)
         ctx.restore()
       }
 
@@ -6061,6 +6086,9 @@ function handleSubmit(e){
         if (p.rollType == "angle" && p.rollAngle == "b"){
           correctAnswer = `180-${p.angleOther}x2`
         }
+        if (p.rollType == "square"){
+          correctAnswer = p.radius/10
+        }
       }
 
       if (level == 7){
@@ -7101,7 +7129,7 @@ function genProblems(){
   if ( level == 6.02 ){
     return {
       rotation: (genNumbers(7)*45),
-      rollType: ["angle","radius","triangle"][genNumbers(3)],
+      rollType: ["square","angle","radius","triangle"][genNumbers(4)],
       triangleSide: ((genNumbers(6)+5)*10),
 
       radius: ((genNumbers(4)+6)*10),
