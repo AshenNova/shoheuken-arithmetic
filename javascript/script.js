@@ -2861,22 +2861,23 @@ function updateProblems(){
   }
 
   if ( level == 5.03){
-    p.numerator = Math.abs(p.numerator)
-    p.denominator = Math.abs(p.denominator)
-
     if (p.numerator == p.denominator){
       p.numerator -= 1
     }
-    p.percentageDisplay = p.numerator/p.denominator*100
+    console.log(p.numerator, p.denominator, p.numerator/p.denominator)
+     p.percentageDisplay = p.numerator/(p.denominator/100)
+     
+     if (p.percentageDisplay%1 != 0){
+       console.log(p.percentageDisplay)
+     }
+    
     if (p.rollA == "fraction"){
       displayProblem.innerHTML = `${p.numerator}/${p.denominator} = ___ %`
     }
     if (p.rollA == "decimal"){
       displayProblem.innerHTML = `${p.numerator/p.denominator} = ___ %`
     }
-    // if (p.rollA == "ratio"){
-    //   displayProblem.innerHTML = `${p.numerator} : ${p.denominator} = ___ %`
-    // }
+  
     if (p.rollA == "percentage"){
         displayProblem.innerHTML = `
         Convert to ${p.rollB}</br>
@@ -4776,7 +4777,6 @@ function handleSubmit(e){
 
       }
 
-
       if (level == 2){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") {
@@ -5717,7 +5717,7 @@ function handleSubmit(e){
 
       if ( level == 5.03){
         if (p.rollA == "decimal"){
-          correctAnswer = p.numerator/p.denominator*100
+          correctAnswer = p.numerator/(p.denominator/100)
         }
         if (p.rollA == "fraction"){
           correctAnswer = `${p.numerator}/${p.denominator}x100`
@@ -6891,7 +6891,7 @@ function genProblems(){
   if ( level == 5.03){
     return {
       numerator: genNumbers(10)+1,
-      denominator: [10, 100, 1000][genNumbers(3)],
+      denominator:  [10, 100, 1000][genNumbers(3)],
       rollA: ["fraction", "decimal", "percentage"][genNumbers(3)],
       rollB: ["fraction","decimal","ratio"][genNumbers(3)],
       percentageDisplay: undefined
