@@ -1740,7 +1740,7 @@ function updateProblems(){
     if (p.placeValue == "2 decimal places"){
       p.numTwo = 1000
     }
-    p.numFinal = p.numOne/(p.numTwo*1)
+    p.numFinal = Math.floor(p.numOne/(p.numTwo*1)*p.numTwo)/p.numTwo
     while (p.numFinal > 1000){
       p.numFinal -= 1000;
     }
@@ -6639,7 +6639,7 @@ function genProblems(){
 
   if ( level == 4.03){
     return {
-      numOne: genNumbers(99999)+1,
+      numOne: genNumbers(9999)+1,
       numTwo: 0,
       placeValue: ["1 decimal place","2 decimal places","Whole Number"][genNumbers(3)],
       numFinal: 0
