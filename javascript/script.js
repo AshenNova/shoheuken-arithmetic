@@ -21,6 +21,7 @@ const backButton = document.querySelectorAll(".back-button");
 const instructions = document.querySelector('.instructions');
 const hardcoreMode = document.querySelector('.hardcore-mode')
 const easyMode = document.querySelector('.easy-mode')
+const reviewAnswer = document.querySelector('.fa-hire-a-helper')
 
 const imageG = document.createElement('img');
 const imageS = document.createElement('img');
@@ -85,6 +86,7 @@ canvas.addEventListener('click', function(event){
   mouse.y = event.y;
 })
 
+let reviewCount = 0;
 let level = 0;
 let player = 1;
 let levelArr = [];
@@ -196,7 +198,8 @@ let state = {
   score: 0,
   mistake: 0,
   scoreNeeded: 0,
-  numSix: 0
+  numSix: 0,
+  correctAnswer: 0
 }
 
 function clickStart(){
@@ -4911,6 +4914,9 @@ function handleSubmit(e){
             let finalMinutes = totalMinutes+p.changeMinutes
             console.log(`Final Minutes: ${finalMinutes}`)
             let hours = Math.floor(finalMinutes/60)
+            if (finalMinutes < 60){
+              hours = 12;
+            }
             if (hours > 12 && hours < 25){
               hours -= 12
             }
@@ -6135,12 +6141,18 @@ function handleSubmit(e){
         }
         
         console.log("new questions generated")
+        reviewAnswer.classList.add("hidden")
         updateProblems()
         
       } else {
         console.log("incorrect")
-
+  
           state.mistake++
+
+          reviewCount = 1
+          reviewAnswer.classList.remove("hidden")
+          state.correctAnswer = correctAnswer
+
           if ( hardcore == 1){
             state.score = 0;
           } else if ( easy == 1 ) {
@@ -8487,3 +8499,14 @@ for (let i = 0; i <  settingButton.length; i++){
     //   buttonStart.innerHTML =`Level ${levelArr[0]}`
     // }
   }
+
+  reviewAnswer.addEventListener('click', function(){
+    if (confirm("Are you sure? Your score will drop to 0")){
+      userInput.value = state.correctAnswer
+      userInput.focus()
+      state.score = 0
+      currentScore.textContent = state.score
+      reviewAnswer.classList.add("hidden")
+      reviewCount = 0;
+    }
+  })
