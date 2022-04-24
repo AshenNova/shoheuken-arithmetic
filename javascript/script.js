@@ -7593,7 +7593,7 @@ for (let i = 0; i <  settingButton.length; i++){
 
       case "Level 2.09":
         level = 2.09;
-        scoreNeeded = 30;
+        scoreNeeded = 20;
         gold = highScore2DotZero9.time
         silver = highScore2DotZero9.time+((cutoff-highScore2DotZero9.time)/3)
         bronze = highScore2DotZero9.time+((cutoff-highScore2DotZero9.time)/3)*2
