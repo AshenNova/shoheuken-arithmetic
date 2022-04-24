@@ -8501,7 +8501,7 @@ for (let i = 0; i <  settingButton.length; i++){
   }
 
   reviewAnswer.addEventListener('click', function(){
-    if (confirm("Are you sure? Your score will drop to 0")){
+    if (confirm("Are you sure? Your score will drop to 0.")){
       userInput.value = state.correctAnswer
       userInput.focus()
       state.score = 0
