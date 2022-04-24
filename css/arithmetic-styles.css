@@ -284,6 +284,10 @@ button {
   border-color: purple;
 }
 
+.fa-reveal{
+ color: red;
+}
+
 img{
  height: 100px;
 }
