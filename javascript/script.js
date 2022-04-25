@@ -7083,7 +7083,7 @@ function genProblems(){
 
   if ( level == 5.14 ){
     return{
-      roll: ["rectangle","updown","down","up"][genNumbers(1)],
+      roll: ["rectangle","updown","down","up"][genNumbers(4)],
       triX1: (genNumbers(5)+5)*20,
 
       triX2: (genNumbers(5)+5)*10,
