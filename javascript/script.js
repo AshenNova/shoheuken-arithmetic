@@ -1577,15 +1577,15 @@ function updateProblems(){
 
     if (p.parallelorPerpendicular == "parallel"){
       if ( p.roll == 1){
-        ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelGHI}${p.labelJKL} or ${p.labelMNO}${p.labelPQR}`, 0, 15)
+        ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelGHI}${p.labelJKL} or ${p.labelMNO}${p.labelPQR}`, 20, 20)
       } else {
-        ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelMNO}${p.labelPQR} or ${p.labelGHI}${p.labelJKL}`, 0, 15)
+        ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelMNO}${p.labelPQR} or ${p.labelGHI}${p.labelJKL}`, 20, 20)
       }
     } else {
       if ( p.roll == 1){
-        ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelGHI}${p.labelJKL} or ${p.labelMNO}${p.labelPQR}`, 0, 15)
+        ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelGHI}${p.labelJKL} or ${p.labelMNO}${p.labelPQR}`, 20, 20)
       } else {
-      ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelMNO}${p.labelPQR} or ${p.labelGHI}${p.labelJKL}`, 0, 15)
+      ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelMNO}${p.labelPQR} or ${p.labelGHI}${p.labelJKL}`, 20, 20)
       }
     }
 
@@ -8362,7 +8362,11 @@ for (let i = 0; i <  settingButton.length; i++){
         difficulty = prompt("Enter 0 or 1")
         console.log(difficulty);
         level = 6.01;
-        scoreNeeded = 20;
+        if (difficulty == 1){
+          scoreNeeded = 10
+        } else {
+          scoreNeeded = 20;
+        }
         gold = highScore6DotZero1.time;
         silver = highScore6DotZero1.time+((cutoff-highScore6DotZero1.time)/3)
         bronze = highScore6DotZero1.time+((cutoff-highScore6DotZero1.time)/3)*2
