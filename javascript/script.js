@@ -86,6 +86,7 @@ canvas.addEventListener('click', function(event){
   mouse.y = event.y;
 })
 
+let noAnswer = 0;
 let reviewCount = 0;
 let level = 0;
 let player = 1;
@@ -314,6 +315,7 @@ const resetStuff = function (){
   equalSymbol.innerHTML = "=";
   fractionsContainerTwo.style.margin = "0 25px 15px"
   helpMe.textContent = ""
+  helpMe.style.fontSize = "30px"
 
   gold = 0;
   silver = 0;
@@ -460,7 +462,18 @@ function updateProblems(){
       displayProblem.innerHTML = `${p.numTwo} ${p.operator} ${p.numOne}`
     }
   }
+
   if (level == 1.02){
+   if (state.score < 11) {
+      console.log(`state score: ${state.score}`)
+      helpMe.innerHTML = `
+    01 02 03 04 05 06 07 08 09 10</br>
+    11 12 13 14 15 16 17 18 19 20
+    `
+    } else {
+      helpMe.innerHTML = ""
+    }
+
     if (p.numOne <= 9) p.operator = "+"
     if (p.numOne > 9) p.operator = "-"
       displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}` 
@@ -7417,6 +7430,7 @@ for (let i = 0; i <  settingButton.length; i++){
         highScoreName.innerHTML = highScore1DotZero2.name
         highScoreTime.innerHTML = highScore1DotZero2.time
         highScoreMistakes.innerHTML = highScore1DotZero2.mistake
+        helpMe.style.fontSize = "1.5em"
         break;
   
       case "Level 1.03":
