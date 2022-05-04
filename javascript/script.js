@@ -6153,6 +6153,11 @@ function handleSubmit(e){
           arr = ["A","B","C","D","O","F","G","H","I"]
         }
         
+        // remove help me text
+        if ( level == 3.04 || level == 3.05 || level == 3.06 || level == 4.06 || level == 4.07 || level == 4.08 ){
+          helpMe.textContent = ""
+        }
+
         console.log("new questions generated")
         reviewAnswer.classList.add("hidden")
         updateProblems()
@@ -6214,8 +6219,27 @@ function handleSubmit(e){
             ctx.fillText("Insufficient", -55, -60)
            }
         }
-      }
-    
+        if ( level == 3.04 || level == 3.05 || level == 3.06 || level == 4.06 || level == 4.07 || level == 4.08 ){
+          if (p.unitMeasurement == "$"){
+            helpMe.textContent = `$1 = 100¢`
+          }
+          if (p.unitMeasurement == "m"){
+            helpMe.textContent = `1 m  = 100 cm`
+          }
+          if (p.unitMeasurement == "min"){
+            helpMe.textContent = `1 min  = 60 s`
+          }
+          if (p.unitMeasurement == "km"){
+            helpMe.textContent = `1 km  = 1000 m`
+          }
+          if (p.unitMeasurement == "kg"){
+            helpMe.textContent = `1 kg  = 1000 g`
+          }
+          if (p.unitMeasurement == "ℓ"){
+            helpMe.textContent = `1 ℓ  = 1000 mℓ`
+          }
+        }
+    }
   }
 }
 

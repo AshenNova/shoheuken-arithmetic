@@ -207,9 +207,10 @@ table{
 .fraction-choice, .help-me-text{
   text-align: center;
   font-size: 2em;
-  color: white;
+  color: grey;
   margin: 0;
-  text-shadow: 2px 2px black;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
   }
 
 .input-box{
