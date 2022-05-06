@@ -173,6 +173,7 @@ const highScore4DotZero17 = new HighScore("Jayden Goo", "20 April 2022", 213, 4)
 const highScore4DotZero18 = new HighScore("Jayden Goo", "20 April 2022", 185, 0)
 const highScore4DotZero19 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4Dot2Zero = new HighScore("Emma Leo", "14 April 202", 160, 0)
+const highScore4Dot21 = new HighScore("Nil", "Nil", 0, 0)
 
 const highScore5DotZero = new HighScore("Sheyanne Cheong", "9 April 2022", 176, 0)
 const highScore5DotZero1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
@@ -2757,6 +2758,43 @@ function updateProblems(){
         ctx.fillText(`${p.rectangle} cm`, p.rectangle/2-20, +22)
       }
     ctx.restore()
+  }
+
+  if ( level == 4.21 ){
+    if (difficulty > 4) {
+      difficulty = 4
+    }
+    if (difficulty == 4){
+      p.rollType = genNumbers(4)
+    }
+    p.length = ((genNumbers(10)+1)*p.dimension)+((genNumbers(p.dimension)+1))
+    p.breadth = ((genNumbers(10)+1)*p.dimension)+(genNumbers(p.dimension))
+    p.height = ((genNumbers(10)+1)*p.dimension)+(genNumbers(p.dimension))
+    console.log(p.dimension, p.length, p.breadth, p.height)
+
+    if (difficulty == 0 || difficulty == 1 || p.rollType == 0 || p.rollType == 1){
+      p.length = ((genNumbers(10)+1)*p.dimension)+((genNumbers(p.dimension)+1)*difficulty)
+      p.breadth = ((genNumbers(10)+1)*p.dimension)+((genNumbers(p.dimension)*difficulty))
+      displayProblem.innerHTML = `
+      How many ${p.dimension} cm <u>squares</u> can be cut out from a rectangle with a dimension of </br>
+      ${p.length} cm by ${p.breadth} cm?
+      `
+    }
+    if (difficulty == 2 || p.rollType == 2){
+      displayProblem.innerHTML = `
+      How many ${p.dimension} cm <u>cubes</u> can be cut out from a cuboid with a dimension of </br>
+      ${p.length} cm by ${p.breadth} cm by ${p.height}cm?
+      `
+    }
+    if (difficulty == 3 || p.rollType == 3){
+      p.dimension = genNumbers(5)+1
+      p.length = (((genNumbers(10)+1)*p.dimension)+((genNumbers(p.dimension)+1)))*2
+      p.breadth = (((genNumbers(10)+1)*p.dimension)+(genNumbers(p.dimension)))*2
+      displayProblem.innerHTML = `
+      How many <u>circles</u> with a radius of ${p.dimension} cm can be cut out from a rectangle with a dimension of </br>
+      ${p.length} cm by ${p.breadth} cm?
+      `
+    }
   }
 
   if ( level == 5.0 ){
@@ -5694,6 +5732,23 @@ function handleSubmit(e){
         }
       }
 
+      if ( level == 4.21){
+        numSquareLength = Math.floor(p.length/p.dimension)
+        numSquareBreadth = Math.floor(p.breadth/p.dimension)
+        numSquareHeight = Math.floor(p.height/p.dimension)
+        totalSquare = numSquareLength*numSquareBreadth
+        totalCube = numSquareLength*numSquareBreadth*numSquareHeight
+        if (difficulty == 0 || difficulty == 1 || p.rollType == 0 || p.rollType == 1){
+          correctAnswer = `${numSquareLength}x${numSquareBreadth}=${totalSquare}`
+        }
+        if (difficulty == 2 || p.rollType == 2){
+          correctAnswer = `${numSquareLength}x${numSquareBreadth}x${numSquareHeight}=${totalCube}`
+        }
+        if (difficulty == 3 || p.rollType == 3){
+          correctAnswer = `${Math.floor(p.length/(p.dimension*2))}x${Math.floor(p.breadth/(p.dimension*2))}=${Math.floor(p.length/(p.dimension*2))*Math.floor(p.breadth/(p.dimension*2))}`
+        } 
+      }
+
       if ( level == 5.0) {
         if (p.sidesBH == "base"){
           correctAnswer = `${p.labelABC}${p.labelGHI}`
@@ -6890,6 +6945,16 @@ function genProblems(){
       bigSquare: (genNumbers(5)+12)*10,
 
       rectangle: (genNumbers(5)+12)*20
+    }
+  }
+
+  if ( level == 4.21){
+    return {
+      rollType: undefined,
+      dimension: genNumbers(3)+2,
+      length: undefined,
+      breadth: undefined,
+      height: undefined
     }
   }
 
@@ -8164,6 +8229,20 @@ for (let i = 0; i <  settingButton.length; i++){
         document.querySelector("#user-input").setAttribute("type","text");
         wholeNumberContainer.classList.add('hidden');
         firstCanvas.classList.remove('hidden');
+      break;
+
+      case "Level 4.21":
+        difficulty = prompt("Enter 0, 1, 2, 3 or 4")
+        level = 4.21;
+        scoreNeeded = 10;
+        gold = highScore4Dot21.time;
+        silver = highScore4Dot21.time+((cutoff-highScore4Dot21.time)/3)
+        bronze = highScore4DotZero.time+((cutoff-highScore4Dot21.time)/3)*2
+        highScoreName.innerHTML = highScore4Dot21.name
+        highScoreTime.innerHTML = highScore4Dot21.time
+        highScoreMistakes.innerHTML = highScore4Dot21.mistake
+        displayProblem.style.fontSize = "20px"
+        document.querySelector("#user-input").setAttribute("type","text");
       break;
   
       case "Level 5.0":
