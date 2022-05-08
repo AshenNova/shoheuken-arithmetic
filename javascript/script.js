@@ -2359,6 +2359,35 @@ function updateProblems(){
       ctx.restore();
 
     ctx.restore()
+
+    const index = arr2.indexOf(p.choice)
+       
+    if (p.roll == 1){
+      if (p.direction == "counter-clockwise"){
+        p.angleTurn = 360-p.angleTurn 
+      }
+      const intervalsTurned = p.angleTurn/45
+      p.finalIndex = index+intervalsTurned
+      if (p.finalIndex == 8){
+        p.finalIndex = 0
+      }  
+      if (p.finalIndex > 8) {
+        p.finalIndex -= 8
+      }
+    
+    } else {
+      if (p.direction == "counter-clockwise"){
+        p.angleTurn = 360-p.angleTurn
+      }
+      const intervalsTurned = p.angleTurn/45
+      p.finalIndex = index-intervalsTurned
+      if (p.finalIndex == 8){
+        p.finalIndex = 0
+      }  
+      if (p.finalIndex < 0) {
+        p.finalIndex += 8
+      }
+    }
   }
 
   if ( level == 4.19 ){
@@ -5645,36 +5674,7 @@ function handleSubmit(e){
       }
 
       if ( level == 4.18 ){
-        const index = arr2.indexOf(p.choice)
-       
-        if (p.roll == 1){
-          if (p.direction == "counter-clockwise"){
-            p.angleTurn = 360-p.angleTurn 
-          }
-          const intervalsTurned = p.angleTurn/45
-          let finalIndex = index+intervalsTurned
-          if (finalIndex == 8){
-            finalIndex = 0
-          }  
-          if (finalIndex > 8) {
-              finalIndex -= 8
-            }
-          correctAnswer = arr2[finalIndex]
-        } else {
-          if (p.direction == "counter-clockwise"){
-            p.angleTurn = 360-p.angleTurn
-          }
-          const intervalsTurned = p.angleTurn/45
-          let finalIndex = index-intervalsTurned
-          if (finalIndex == 8){
-            finalIndex = 0
-          }  
-          if (finalIndex < 0) {
-              finalIndex += 8
-            }
-          correctAnswer = arr2[finalIndex];
-          console.log(p.direction, intervalsTurned, index, finalIndex, arr2[finalIndex])
-        }
+        correctAnswer = arr2[p.finalIndex];
       }
 
       if ( level == 4.19 ){
@@ -6905,6 +6905,7 @@ function genProblems(){
       roll: [2, 1][genNumbers(2)],
       angleTurn: (genNumbers(8)+1)*45,
       direction: ["clockwise","counter-clockwise"][genNumbers(2)],
+      finalIndex: undefined
     }
   }
 

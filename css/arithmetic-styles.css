@@ -224,6 +224,12 @@ table{
   transform: translate(-50%, -50%);
 }
 
+
+.specialBorder{
+  border-style: solid 1px;
+  border-color: black;
+}
+
 button {
   margin: auto;
   display: block;
