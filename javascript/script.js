@@ -174,6 +174,7 @@ const highScore4DotZero18 = new HighScore("Jayden Goo", "20 April 2022", 185, 0)
 const highScore4DotZero19 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4Dot2Zero = new HighScore("Emma Leo", "14 April 202", 160, 0)
 const highScore4Dot21 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4DotZero22 = new HighScore("Nil", "Nil", 0, 0)
 
 const highScore5DotZero = new HighScore("Sheyanne Cheong", "9 April 2022", 176, 0)
 const highScore5DotZero1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
@@ -2824,6 +2825,24 @@ function updateProblems(){
       ${p.length} cm by ${p.breadth} cm?
       `
     }
+  }
+
+  if ( level == 4.22) {
+    for (let i = p.numThree; i > 1; i--){
+      if (p.numTwo % i == 0 && p.numThree % i == 0 ){
+        p.numTwo /= i
+        p.numThree /= i
+      }
+    }
+
+    twoWholeNumber.textContent = p.numOne
+    twoNumerator.textContent = p.numTwo
+    twoDenominator.textContent = p.numThree
+    equalSymbol.textContent = "x"
+    threeWholeNumber.textContent = p.numFour
+    threeNumerator.textContent = ""
+    threeDenominator.textContent = ""
+    threeNumerator.classList.remove("line")
   }
 
   if ( level == 5.0 ){
@@ -5749,6 +5768,10 @@ function handleSubmit(e){
         } 
       }
 
+      if ( level == 4.22) {
+        correctAnswer = `${p.numOne}x${p.numFour}+${p.numTwo}/${p.numThree}x${p.numFour}`
+      }
+
       if ( level == 5.0) {
         if (p.sidesBH == "base"){
           correctAnswer = `${p.labelABC}${p.labelGHI}`
@@ -6959,6 +6982,15 @@ function genProblems(){
     }
   }
 
+  if ( level == 4.22){
+    return {
+      numOne: genNumbers(10)+1,
+      numTwo:genNumbers(5)+1,
+      numThree: genNumbers(5)+6,
+      numFour:genNumbers(20)+1
+    }
+  }
+
   if ( level == 5.0 ){
     return {
       pointX1: genNumbers(70)+50,
@@ -8087,7 +8119,9 @@ for (let i = 0; i <  settingButton.length; i++){
       case "Level 4.11":
         level = 4.11;
         scoreNeeded = 20;
-        gold = 215;
+        gold = highScore4DotZero11.time
+        silver = highScore4DotZero11.time+((cutoff-highScore4DotZero11.time)/3)
+        bronze = highScore4DotZero11.time+((cutoff-highScore4DotZero11.time)/3)*2
         highScoreName.innerHTML = highScore4DotZero11.name
         highScoreTime.innerHTML = highScore4DotZero11.time
         highScoreMistakes.innerHTML = highScore4DotZero11.mistake
@@ -8095,9 +8129,8 @@ for (let i = 0; i <  settingButton.length; i++){
         fractionsContainerTwo.classList.remove('hidden');
         document.querySelector("#user-input").setAttribute("type","text");
         instructions.textContent = ""
-        break;
+      break;
   
-      
       case "Level 4.12":
         level = 4.12;
         scoreNeeded = 30;
@@ -8238,14 +8271,29 @@ for (let i = 0; i <  settingButton.length; i++){
         scoreNeeded = 10;
         gold = highScore4Dot21.time;
         silver = highScore4Dot21.time+((cutoff-highScore4Dot21.time)/3)
-        bronze = highScore4DotZero.time+((cutoff-highScore4Dot21.time)/3)*2
+        bronze = highScore4Dot21.time+((cutoff-highScore4Dot21.time)/3)*2
         highScoreName.innerHTML = highScore4Dot21.name
         highScoreTime.innerHTML = highScore4Dot21.time
         highScoreMistakes.innerHTML = highScore4Dot21.mistake
         displayProblem.style.fontSize = "20px"
         document.querySelector("#user-input").setAttribute("type","text");
       break;
-  
+      
+      case "Level 4.22":
+        level = 4.22;
+        scoreNeeded = 10;
+        gold = highScore4DotZero22.time
+        silver = highScore4DotZero22.time+((cutoff-highScore4DotZero22.time)/3)
+        bronze = highScore4DotZero22.time+((cutoff-highScore4DotZero22.time)/3)*2
+        highScoreName.innerHTML = highScore4DotZero22.name
+        highScoreTime.innerHTML = highScore4DotZero22.time
+        highScoreMistakes.innerHTML = highScore4DotZero22.mistake
+        wholeNumberContainer.classList.add('hidden');
+        fractionsContainerTwo.classList.remove('hidden');
+        document.querySelector("#user-input").setAttribute("type","text");
+        instructions.textContent = ""
+      break;
+
       case "Level 5.0":
         level = 5.0;
         scoreNeeded = 20;
