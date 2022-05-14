@@ -2834,15 +2834,29 @@ function updateProblems(){
         p.numThree /= i
       }
     }
-
-    twoWholeNumber.textContent = p.numOne
-    twoNumerator.textContent = p.numTwo
-    twoDenominator.textContent = p.numThree
-    equalSymbol.textContent = "x"
-    threeWholeNumber.textContent = p.numFour
-    threeNumerator.textContent = ""
-    threeDenominator.textContent = ""
-    threeNumerator.classList.remove("line")
+    console.log(p.options)
+    if (p.options == 1){
+      twoNumerator.classList.add("line")
+      twoWholeNumber.textContent = p.numOne
+      twoNumerator.textContent = p.numTwo
+      twoDenominator.textContent = p.numThree
+      equalSymbol.textContent = "x"
+      threeWholeNumber.textContent = p.numFour
+      threeNumerator.textContent = ""
+      threeDenominator.textContent = ""
+      threeNumerator.classList.remove("line")
+    }
+    if (p.options == 2){
+      threeNumerator.classList.add("line")
+      threeWholeNumber.textContent = p.numOne
+      threeNumerator.textContent = p.numTwo
+      threeDenominator.textContent = p.numThree
+      equalSymbol.textContent = "x"
+      twoWholeNumber.textContent = p.numFour
+      twoNumerator.textContent = ""
+      twoDenominator.textContent = ""
+      twoNumerator.classList.remove("line")
+    }
   }
 
   if ( level == 5.0 ){
@@ -5769,7 +5783,7 @@ function handleSubmit(e){
       }
 
       if ( level == 4.22) {
-        correctAnswer = `${p.numOne}x${p.numFour}+${p.numTwo}/${p.numThree}x${p.numFour}`
+        correctAnswer = `${p.numFour}x${p.numOne}+${p.numFour}x${p.numTwo}/${p.numThree}`
       }
 
       if ( level == 5.0) {
@@ -6984,6 +6998,7 @@ function genProblems(){
 
   if ( level == 4.22){
     return {
+      options: [1, 2][genNumbers(2)],
       numOne: genNumbers(10)+1,
       numTwo:genNumbers(5)+1,
       numThree: genNumbers(5)+6,
