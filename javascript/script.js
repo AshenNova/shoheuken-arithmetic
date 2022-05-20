@@ -175,6 +175,7 @@ const highScore4DotZero19 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4Dot2Zero = new HighScore("Emma Leo", "14 April 202", 160, 0)
 const highScore4Dot21 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4DotZero22 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4DotZero23 = new HighScore("Nil", "Nil", 0, 0)
 
 const highScore5DotZero = new HighScore("Sheyanne Cheong", "9 April 2022", 176, 0)
 const highScore5DotZero1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
@@ -2857,6 +2858,30 @@ function updateProblems(){
       twoDenominator.textContent = ""
       twoNumerator.classList.remove("line")
     }
+  }
+
+  if ( level == 4.23 ){
+  
+    if (p.option == "no"){
+      while (arrayConvenient.includes(p.numTwo) == true) {
+        p.numTwo = genNumbers(20)+3
+      }
+      p.numOne = p.numTwo
+    }
+    p.divisor = 2;
+    let a = 0;
+    displayProblem.textContent = p.numOne
+    
+    if( 10%p.numOne == 0){
+      p.convenient = 10
+    } else if ( 100%p.numOne == 0){
+      p.convenient = 100
+    } else {
+      p.convenient = 1000
+    }
+
+    p.divisor = p.convenient/p.numOne
+    console.log(p.numOne, p.divisor)
   }
 
   if ( level == 5.0 ){
@@ -5786,6 +5811,15 @@ function handleSubmit(e){
         correctAnswer = `${p.numFour}x${p.numOne}+${p.numFour}x${p.numTwo}/${p.numThree}`
       }
 
+      if ( level == 4.23 ){
+        if (p.option == "no"){
+          correctAnswer = "x"
+        }
+        if (p.option == "yes"){
+          correctAnswer = `${p.numOne}x${p.divisor}=${p.convenient}`
+        }
+      }
+
       if ( level == 5.0) {
         if (p.sidesBH == "base"){
           correctAnswer = `${p.labelABC}${p.labelGHI}`
@@ -7006,6 +7040,16 @@ function genProblems(){
     }
   }
 
+  if ( level == 4.23 ){
+    return {
+      option: ["yes","no"][genNumbers(2)],
+      numOne: arrayConvenient[genNumbers(9)],
+      numTwo: genNumbers(20)+3,
+      divisor: undefined,
+      convenient: undefined
+    }
+  }
+
   if ( level == 5.0 ){
     return {
       pointX1: genNumbers(70)+50,
@@ -8070,7 +8114,7 @@ for (let i = 0; i <  settingButton.length; i++){
         highScoreTime.innerHTML = highScore4DotZero5.time
         highScoreMistakes.innerHTML = highScore4DotZero5.mistake
         document.querySelector("#user-input").setAttribute("step","0.000001")
-        break;  
+      break;
   
       case "Level 4.06":
         level = 4.06;
@@ -8307,6 +8351,19 @@ for (let i = 0; i <  settingButton.length; i++){
         fractionsContainerTwo.classList.remove('hidden');
         document.querySelector("#user-input").setAttribute("type","text");
         instructions.textContent = ""
+      break;
+
+      case "Level 4.23":
+        level = 4.23;
+        scoreNeeded = 20;
+        arrayConvenient = [2,4,5,8,10,20,25,50,125];
+        gold = highScore4DotZero23.time
+        silver = highScore4DotZero23.time+((cutoff-highScore4DotZero23.time)/3)
+        bronze = highScore4DotZero23.time+((cutoff-highScore4DotZero23.time)/3)*2
+        highScoreName.innerHTML = highScore4DotZero23.name
+        highScoreTime.innerHTML = highScore4DotZero23.time
+        highScoreMistakes.innerHTML = highScore4DotZero23.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
       break;
 
       case "Level 5.0":
