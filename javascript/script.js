@@ -2127,8 +2127,8 @@ function updateProblems(){
     if (p.option == "2"){
       displayProblem.innerHTML = 
       `B ate ${p.numOne}/${p.numTwo} of something.</br>
-      B ate another ${p.numThree}/${p.numFour} of it.</br>
-      How much did B eat?`
+      B ate another ${p.numThree}/${p.numFour} of something.</br>
+      How much of something did B eat?`
     }
       // V x Real
     if (p.option == "3"){
@@ -7174,7 +7174,7 @@ function genProblems(){
 
     equiAngleTriX: (genNumbers(4)+3)*15,
 
-    isosTriX: (genNumbers(4)+4)*15,
+    isosTriX: (genNumbers(4)+4)*12,
     isosAngle: ((genNumbers(5)+3)*9),
     isosRoll: [2, 1][genNumbers(2)],
     isosAngle2Label: undefined,
