@@ -94,6 +94,7 @@ let levelArr = [];
 let arr = [];
 let arr2 = [];
 let arr3 = [];
+let multiplesArr = [0]
 let gold = 0;
 let silver = 0;
 let bronze = 0;
@@ -202,7 +203,6 @@ let state = {
   score: 0,
   mistake: 0,
   scoreNeeded: 0,
-  numSix: 0,
   correctAnswer: 0
 }
 
@@ -336,6 +336,7 @@ const resetStuff = function (){
   imageCompleted.remove();
   arr.length = 0;
   arr2.length = 0;
+  multiplesArr = [0]
   }
 
   ctx.clearRect(0, 0, 400, 275);
@@ -4742,7 +4743,7 @@ function updateProblems(){
   }
 
   if (mulLevel == "multiples"){
-    displayProblem.innerHTML = `${p.numFive} ${p.operator} ${state.numSix}`
+    displayProblem.innerHTML = `${p.numFive} ${p.operator} ${multiplesArr.length-1}`
   }
 
   userInput.value = ""
@@ -6242,13 +6243,18 @@ function handleSubmit(e){
       }
 
       if (mulLevel == "multiples"){
-        correctAnswer = p.numFive * state.numSix
+        correctAnswer = p.numFive*(multiplesArr.length-1)
       }
 
     console.log(correctAnswer, userInput.value)
       if (userInput.value == correctAnswer){
         console.log("correct")
         state.score++
+        if (mulLevel == "multiples"){
+          multiplesArr.push(userInput.value)
+          state.score = multiplesArr.length-1
+          helpMe.textContent = multiplesArr.slice(1)
+        }
         currentScore.textContent = state.score
         currentScore.classList.add("animate-right")
         setTimeout(() => currentScore.classList.remove("animate-right"), 331)
@@ -6299,7 +6305,7 @@ function handleSubmit(e){
 
           if ( hardcore == 1){
             state.score = 0;
-          } else if ( easy == 1 ) {
+          } else if ( easy == 1 || mulLevel == "multiples") {
             console.log("Easy Mode");
           } else {
           if (state.score > 0 && state.score < 11){
