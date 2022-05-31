@@ -4565,6 +4565,9 @@ function updateProblems(){
     if (p.rollType == "square"){
       ctx.fillText(`Find the radius of the circle.`, 20, 20)
     }
+    if (p.rollType == "square2"){
+      ctx.fillText(`Find the area of the square.`, 20, 20)
+    }
 
       if (p.rollType == "triangle"){
         ctx.translate(200, 137.5)
@@ -4732,6 +4735,40 @@ function updateProblems(){
         ctx.rotate(((genNumbers(6)-2)*45)*Math.PI/180)
           drawHorizontalLine(0, 0, p.radius, 0)
           ctx.fillText(`?`, p.radius/2, 5)
+        ctx.restore()
+      }
+      if (p.rollType == "square2"){
+        ctx.save()
+         ctx.translate(x, y)
+         ctx.rotate(p.rotation * Math.PI / 180)
+         ctx.beginPath()
+         ctx.arc(0, 0, 1, 0, 2*Math.PI)
+         ctx.stroke()
+
+          ctx.beginPath()
+          ctx.rect(-p.radius2, -p.radius2, p.radius2*2, p.radius2*2)
+          ctx.stroke()
+
+          ctx.beginPath()
+          ctx.moveTo(0, 0)
+          ctx.lineTo(p.radius2, p.radius2)
+          ctx.stroke()
+
+          // arrow head
+          ctx.beginPath()
+          ctx.moveTo(10, 3)
+          ctx.lineTo(0, 0)
+          ctx.lineTo(3, 10)
+          ctx.stroke()
+
+          ctx.beginPath()
+          ctx.moveTo(p.radius2-11, p.radius2-6)
+          ctx.lineTo(p.radius2, p.radius2)
+          ctx.lineTo(p.radius2-6, p.radius2-11)
+          ctx.stroke()
+
+          ctx.fillText(`${p.radius2/20} cm`, p.radius2/2, p.radius2/2)
+
         ctx.restore()
       }
 
@@ -6235,6 +6272,9 @@ function handleSubmit(e){
         if (p.rollType == "square"){
           correctAnswer = p.radius/10
         }
+        if (p.rollType == "square2"){
+          correctAnswer = 2*(p.radius2/20)*(p.radius2/20)
+        }
       }
 
       if (level == 7){
@@ -7341,11 +7381,12 @@ function genProblems(){
   if ( level == 6.02 ){
     return {
       rotation: (genNumbers(7)*45),
-      rollType: ["square","angle","radius","triangle"][genNumbers(4)],
+      rollType: ["square2", "square","angle","radius","triangle"][genNumbers(5)],
       triangleSide: ((genNumbers(6)+5)*10),
 
       radius: ((genNumbers(4)+6)*10),
       squareSideD: undefined,
+      radius2: (genNumbers(4)+2)*20,
 
       rollAngle: ["a","b"][genNumbers(2)],
       rotation2: genNumbers(90)+44,
