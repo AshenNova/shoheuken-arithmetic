@@ -1700,7 +1700,7 @@ function updateProblems(){
   if ( level == 4.0) {
     while (p.numOne == 17 || p.numOne == 19 || p.numOne == 23 || p.numOne == 29 || p.numOne == 31 || p.numOne == 37 || p.numOne == 41 || p.numOne == 43 || p.numOne == 47 || p.numOne == 53 || p.numOne == 59){
       console.log("while loop")
-      p.numOne = genNumbers(60)+1
+      p.numOne = genNumbers(60)+2
     }
 
     displayProblem.innerHTML = 
