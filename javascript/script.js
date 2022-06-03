@@ -197,6 +197,7 @@ const highScore6DotZero = new HighScore("Jayden Goo", "20 April 2022", 79, 1)
 const highScore6DotZero1 = new HighScore("Emma Leo", "18 April 2022", 240, 0)
 const highScore6DotZero2 = new HighScore("Nil", "", 0, 0)
 const highScore6DotZero3 = new HighScore("Nil", "", 0, 0)
+const highScore6DotZero5 = new HighScore("Nil", "", 0, 0)
 
 // Storing of question
 let state = {
@@ -4808,6 +4809,35 @@ function updateProblems(){
     }
   }
 
+  if ( level == 6.05 ){
+    if (p.rollOne == "d"){
+      displayProblem.innerHTML = 
+      `
+      Someone travels from point A to B, </br>
+      at ${p.rollS} ${p.rollUnits[p.roll][0]}/${p.rollUnits[p.roll][1]} for ${p.rollT} ${p.rollUnits[p.roll][1]}</br>
+      What is the distance between A and B? 
+      `
+    }
+    if (p.rollOne == "s"){
+      p.distance = p.rollS*p.rollT
+      displayProblem.innerHTML = 
+      `
+      Someone travels from point A to B,</br>
+      which is ${p.distance} ${p.rollUnits[p.roll][0]} apart, in ${p.rollT} ${p.rollUnits[p.roll][1]}.</br>
+      How fast did ${p.identity} travel?
+      `
+    }
+    if (p.rollOne == "t"){
+      p.distance = p.rollS*p.rollT
+      displayProblem.innerHTML = 
+      `
+      Someone travels from point A to B which is ${p.distance} ${p.rollUnits[p.roll][0]} apart, </br>
+      at ${p.rollS} ${p.rollUnits[p.roll][0]}/${p.rollUnits[p.roll][1]}  .</br>
+      How long did ${p.identity} take?
+      `
+    }
+  }
+
   if (level == 7){
     displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
   }
@@ -6313,16 +6343,12 @@ function handleSubmit(e){
       if ( level == 6.03 ){
         if ((p.rollOne == "NA" || p.rollOne == "AN") && (p.rollSym == "+" || p.rollSym == "-")){
           if (p.rollOne == "NA" && p.rollThree == 1){
-            console.log("NA")
             correctAnswer = `${p.rollTwo}${p.rollSym}${p.rollAlp}`
           } else if (p.rollOne == "AN" && p.rollTwo == 1) {
-            console.log("AN")
             correctAnswer = `${p.rollAlp}${p.rollSym}${p.rollThree}`
           } else if (p.rollOne == "NA" && p.rollThree != 1) {
-            console.log("C")
             correctAnswer = `${p.rollTwo}${p.rollSym}${p.rollThree}${p.rollAlp}`
           } else if (p.rollOne == "AN" && p.rollTwo != 1) {
-            console.log("D")
             correctAnswer = `${p.rollTwo}${p.rollAlp}${p.rollSym}${p.rollThree}`
           } 
         }
@@ -6354,6 +6380,18 @@ function handleSubmit(e){
               correctAnswer = `${p.rollAlp}`
             }
           }
+        }
+      }
+
+      if (level == 6.05){
+        if (p.rollOne == "d"){
+          correctAnswer = `${p.rollS}x${p.rollT}`
+        }
+        if (p.rollOne == "s"){
+          correctAnswer = `${p.distance}/${p.rollT}`
+        }
+        if (p.rollOne == "t"){
+          correctAnswer = `${p.distance}/${p.rollS}`
         }
       }
 
@@ -7483,6 +7521,21 @@ function genProblems(){
      rollAlp: ["a","b","c","y","z","i"][genNumbers(6)],
      rollSym: ["+","-","x","÷"][genNumbers(4)],
      rollSymTwo: ["+","-"][genNumbers(2)]
+    }
+  }
+
+  if (level == 6.05){
+    return {
+      rollOne: ["t","s","d"][genNumbers(1)],
+      roll: genNumbers(2),
+      rollUnits: [
+        ["km", "h"],
+        ["m", "s"]
+      ],
+      rollT: genNumbers(10)+5,
+      rollS: genNumbers(10)+5,
+      distance: undefined,
+      identity: ["he","she"][genNumbers(2)]
     }
   }
 
@@ -8783,6 +8836,19 @@ for (let i = 0; i <  settingButton.length; i++){
         highScoreName.innerHTML = highScore6DotZero3.name
         highScoreTime.innerHTML = highScore6DotZero3.time
         highScoreMistakes.innerHTML = highScore6DotZero3.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        displayProblem.style.fontSize = "25px";
+      break;
+
+      case "Level 6.05":
+        level = 6.05;
+        scoreNeeded = 20;
+        gold = highScore6DotZero5.time;
+        silver = highScore6DotZero5.time+((cutoff-highScore6DotZero5.time)/3)
+        bronze = highScore6DotZero5.time+((cutoff-highScore6DotZero5.time)/3)*2
+        highScoreName.innerHTML = highScore6DotZero5.name
+        highScoreTime.innerHTML = highScore6DotZero5.time
+        highScoreMistakes.innerHTML = highScore6DotZero5.mistake
         document.querySelector("#user-input").setAttribute("type","text");
         displayProblem.style.fontSize = "25px";
       break;

@@ -281,12 +281,17 @@ button {
 .btn-time{
   background-color: #F6FF33;
 }
+
 .btn-angle{
   background-color: #40E0D0;
 }
 
 .btn-algebra{
   background-color: #B533FF;
+}
+
+.btn-speed{
+  background-color: #ACFF33;
 }
 
 .btn-select{
