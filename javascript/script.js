@@ -6452,7 +6452,7 @@ function handleSubmit(e){
         }
         
         // remove help me text
-        if ( level == 3.04 || level == 3.05 || level == 3.06 || level == 4.06 || level == 4.07 || level == 4.08 ){
+        if ( level == 3.04 || level == 3.05 || level == 3.06 || level == 4.06 || level == 4.07 || level == 4.08 || level == 6.05 ){
           helpMe.textContent = ""
         }
 
@@ -6536,6 +6536,9 @@ function handleSubmit(e){
           if (p.unitMeasurement == "ℓ"){
             helpMe.textContent = `1 ℓ  = 1000 mℓ`
           }
+        }
+        if ( level == 6.05){
+          helpMe.textContent = `Distance = Speed x Time`
         }
     }
   }
@@ -8859,7 +8862,7 @@ for (let i = 0; i <  settingButton.length; i++){
         highScoreTime.innerHTML = highScore6DotZero5.time
         highScoreMistakes.innerHTML = highScore6DotZero5.mistake
         document.querySelector("#user-input").setAttribute("type","text");
-        displayProblem.style.fontSize = "25px";
+        displayProblem.style.fontSize = "20px";
       break;
       
       case "Level 7":
