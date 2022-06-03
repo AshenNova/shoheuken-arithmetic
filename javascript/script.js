@@ -1466,12 +1466,22 @@ function updateProblems(){
         p.rollA = genNumbers(5)
         arr.push(p.rollA)
       }
+    while (arr[2] == arr[1] && arr[2] == arr[0]){
+      arr.pop(arr[3])
+      arr.push(genNumbers(5))
+    }
+
     }
     if (p.rollType == "B"){
       for (let i = 0; i<p.rollTimes; i++){
         p.rollB = ["A","B","C","D","E"][genNumbers(5)]
         arr.push(p.rollB)
       }
+      while (arr[2] == arr[1] && arr[2] == arr[0]){
+        arr.pop(arr[2])
+        p.rollB = ["A","B","C","D","E"][genNumbers(5)]
+        arr.push(p.rollB)
+      }  
     }
     console.log(arr)
     for (let i = 0; arr2.length<13; i++){
@@ -1526,12 +1536,22 @@ function updateProblems(){
           p.rollA = genNumbers(5)
           arr.push(p.rollA)
         }
+      while (arr[2] == arr[1] && arr[2] == arr[0]){
+        arr.pop(arr[3])
+        arr.push(genNumbers(5))
+      }
+  
       }
       if (p.rollType == "B"){
         for (let i = 0; i<p.rollTimes; i++){
           p.rollB = ["A","B","C","D","E"][genNumbers(5)]
           arr.push(p.rollB)
         }
+        while (arr[2] == arr[1] && arr[2] == arr[0]){
+          arr.pop(arr[2])
+          p.rollB = ["A","B","C","D","E"][genNumbers(5)]
+          arr.push(p.rollB)
+        }  
       }
       console.log(arr)
       for (let i = 0; arr2.length<13; i++){
