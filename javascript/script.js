@@ -4811,10 +4811,12 @@ function updateProblems(){
 
   if ( level == 6.05 ){
     if (p.rollOne == "d"){
+      console.log(p.roll2)
+      let time = p.roll2 == 2? p.rollUnits[p.roll][2]:p.rollUnits[p.roll][1]
       displayProblem.innerHTML = 
       `
       Someone travels from point A to B, </br>
-      at ${p.rollS} ${p.rollUnits[p.roll][0]}/${p.rollUnits[p.roll][1]} for ${p.rollT} ${p.rollUnits[p.roll][1]}</br>
+      at ${p.rollS} ${p.rollUnits[p.roll][0]}/${p.rollUnits[p.roll][1]} for ${p.rollT} ${time}</br>
       What is the distance between A and B? 
       `
     }
@@ -6386,6 +6388,12 @@ function handleSubmit(e){
       if (level == 6.05){
         if (p.rollOne == "d"){
           correctAnswer = `${p.rollS}x${p.rollT}`
+          if (p.roll2 == "2" && p.rollUnits[p.roll][1] == "h"){
+            correctAnswer = `${p.rollS}x${p.rollT}/60`
+          }
+          if (p.roll2 == "2" && p.rollUnits[p.roll][1] == "s"){
+            correctAnswer = `${p.rollS}x${p.rollT}x60`
+          }
         }
         if (p.rollOne == "s"){
           correctAnswer = `${p.distance}/${p.rollT}`
@@ -7526,11 +7534,12 @@ function genProblems(){
 
   if (level == 6.05){
     return {
-      rollOne: ["t","s","d"][genNumbers(1)],
+      rollOne: ["t","s","d"][genNumbers(3)],
       roll: genNumbers(2),
+      roll2: genNumbers(2)+1,
       rollUnits: [
-        ["km", "h"],
-        ["m", "s"]
+        ["km", "h", "min"],
+        ["m", "s", "min"]
       ],
       rollT: genNumbers(10)+5,
       rollS: genNumbers(10)+5,
