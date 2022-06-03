@@ -196,7 +196,7 @@ const highScore5DotZero14 = new HighScore("Jayden Goo", "20 April 2022", 35, 1)
 const highScore6DotZero = new HighScore("Jayden Goo", "20 April 2022", 79, 1)
 const highScore6DotZero1 = new HighScore("Emma Leo", "18 April 2022", 240, 0)
 const highScore6DotZero2 = new HighScore("Nil", "", 0, 0)
-const highScore6Dot3 = new HighScore("Yixin", "29 September 2021", 366, 8)
+const highScore6DotZero3 = new HighScore("Nil", "", 0, 0)
 
 // Storing of question
 let state = {
@@ -4775,6 +4775,39 @@ function updateProblems(){
     ctx.restore()
   }
 
+  if ( level == 6.03){
+    console.log(p.rollOne, p.rollTwo, p.rollThree)
+    if (p.rollOne == "AN"){
+      displayProblem.textContent = `${p.rollTwo}${p.rollAlp} ${p.rollSym} ${p.rollThree}`
+      if (p.rollTwo == 1){
+        displayProblem.textContent = `${p.rollAlp} ${p.rollSym} ${p.rollThree}`
+      }
+    }
+    if (p.rollOne == "AA"){
+      const displayFirst = `${p.rollTwo}${p.rollAlp}`
+      const displaySecond = `${p.rollSymTwo} ${p.rollThree}${p.rollAlp}`
+      displayProblem.textContent = `${displayFirst} ${p.rollSymTwo} ${displaySecond}`
+    }
+    if (p.rollOne == "NA"){
+      displayProblem.textContent = `${p.rollTwo} ${p.rollSym} ${p.rollThree}${p.rollAlp}`
+      if (p.rollThree == 1){
+        displayProblem.textContent = `${p.rollTwo} ${p.rollSym } ${p.rollAlp}`
+      }
+    }
+    if (p.rollOne == "AA"){
+      displayProblem.textContent = `${p.rollTwo}${p.rollAlp} ${p.rollSymTwo} ${p.rollThree}${p.rollAlp}`
+      if (p.rollTwo == 1){
+        displayProblem.textContent = `${p.rollAlp} ${p.rollSymTwo} ${p.rollThree}${p.rollAlp}`
+      }
+      if (p.rollThree == 1){
+        displayProblem.textContent = `${p.rollTwo}${p.rollAlp} ${p.rollSymTwo} ${p.rollAlp}`
+      }
+      if (p.rollTwo == 1 && p.rollThree == 1){
+        displayProblem.textContent = `${p.rollAlp} ${p.rollSymTwo} ${p.rollAlp}`
+      }
+    }
+  }
+
   if (level == 7){
     displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
   }
@@ -6277,6 +6310,53 @@ function handleSubmit(e){
         }
       }
 
+      if ( level == 6.03 ){
+        if ((p.rollOne == "NA" || p.rollOne == "AN") && (p.rollSym == "+" || p.rollSym == "-")){
+          if (p.rollOne == "NA" && p.rollThree == 1){
+            console.log("NA")
+            correctAnswer = `${p.rollTwo}${p.rollSym}${p.rollAlp}`
+          } else if (p.rollOne == "AN" && p.rollTwo == 1) {
+            console.log("AN")
+            correctAnswer = `${p.rollAlp}${p.rollSym}${p.rollThree}`
+          } else if (p.rollOne == "NA" && p.rollThree != 1) {
+            console.log("C")
+            correctAnswer = `${p.rollTwo}${p.rollSym}${p.rollThree}${p.rollAlp}`
+          } else if (p.rollOne == "AN" && p.rollTwo != 1) {
+            console.log("D")
+            correctAnswer = `${p.rollTwo}${p.rollAlp}${p.rollSym}${p.rollThree}`
+          } 
+        }
+
+        if ((p.rollOne == "NA" || p.rollOne == "AN") && (p.rollSym == "÷")){
+          if (p.rollTwo % p.rollThree == 0 ){
+            correctAnswer = `${p.rollTwo/p.rollThree}${p.rollAlp}`
+          } else {
+            correctAnswer = `${p.rollTwo}/${p.rollThree}${p.rollAlp}`
+          }
+        }
+        if ((p.rollOne == "NA" || p.rollOne == "AN") && (p.rollSym == "x")){
+          correctAnswer = `${p.rollTwo*p.rollThree}${p.rollAlp}`
+        }
+
+        if (p.rollOne == "AA"){
+          if (p.rollSymTwo == "+"){
+            correctAnswer = `${p.rollTwo+p.rollThree}${p.rollAlp}`
+          }
+          if (p.rollSymTwo == "-"){
+            correctAnswer = `${p.rollTwo-p.rollThree}${p.rollAlp}`
+            if (p.rollTwo-p.rollThree == 0){
+              correctAnswer = 0
+            }
+            if (p.rollTwo-p.rollThree == -1){
+              correctAnswer = `-${p.rollAlp}`
+            }
+            if (p.rollTwo-p.rollThree == 1){
+              correctAnswer = `${p.rollAlp}`
+            }
+          }
+        }
+      }
+
       if (level == 7){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") correctAnswer = p.numOne - p.numTwo
@@ -7395,13 +7475,14 @@ function genProblems(){
     }
   }
 
-  if (level == 6.3){
+  if (level == 6.03){
     return {
-      numOne: genNumbers(500)+500,
-      numTwo: genNumbers(500)+500,
-      numThree: genNumbers(7)+6,
-      numFour: genNumbers(7)+6,
-      operator: ["+","-","x","÷"][genNumbers(4)]
+     rollOne: ["AN","AA","NA"][genNumbers(3)],
+     rollTwo: genNumbers(9)+1,
+     rollThree: genNumbers(5)+1,
+     rollAlp: ["a","b","c","y","z","i"][genNumbers(6)],
+     rollSym: ["+","-","x","÷"][genNumbers(4)],
+     rollSymTwo: ["+","-"][genNumbers(2)]
     }
   }
 
@@ -8693,13 +8774,18 @@ for (let i = 0; i <  settingButton.length; i++){
         // `
       break;
 
-      case "Level 6.3":
-        level = 6.3;
-        scoreNeeded = 30;
-        highScoreName.innerHTML = highScore6Dot3.name
-        highScoreTime.innerHTML = highScore6Dot3.time
-        highScoreMistakes.innerHTML = highScore6Dot3.mistake
-        break;
+      case "Level 6.03":
+        level = 6.03;
+        scoreNeeded = 20;
+        gold = highScore6DotZero3.time;
+        silver = highScore6DotZero3.time+((cutoff-highScore6DotZero3.time)/3)
+        bronze = highScore6DotZero3.time+((cutoff-highScore6DotZero3.time)/3)*2
+        highScoreName.innerHTML = highScore6DotZero3.name
+        highScoreTime.innerHTML = highScore6DotZero3.time
+        highScoreMistakes.innerHTML = highScore6DotZero3.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        displayProblem.style.fontSize = "25px";
+      break;
       
       case "Level 7":
         level = 7;
