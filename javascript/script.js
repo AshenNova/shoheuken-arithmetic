@@ -6378,6 +6378,8 @@ function handleSubmit(e){
         if ((p.rollOne == "NA" || p.rollOne == "AN") && (p.rollSym == "÷")){
           if (p.rollTwo % p.rollThree == 0 ){
             correctAnswer = `${p.rollTwo/p.rollThree}${p.rollAlp}`
+          } else if (p.rollTwo/p.rollThree == 1){
+            correctAnswer = `${p.rollAlp}`
           } else {
             correctAnswer = `${p.rollTwo}/${p.rollThree}${p.rollAlp}`
           }
@@ -8626,7 +8628,10 @@ for (let i = 0; i <  settingButton.length; i++){
         highScoreMistakes.innerHTML = highScore5DotZero3.mistake
         document.querySelector("#user-input").setAttribute("type","text");
         displayProblem.style.fontSize = "25px";
-        instructions.innerHTML = "Form an equation using in fraction"
+        instructions.innerHTML = 
+        `
+        Calculate the results for decimals and leave the rest in equation form.
+        `
       break;
       
       case "Level 5.04":
