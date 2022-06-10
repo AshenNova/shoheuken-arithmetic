@@ -6377,7 +6377,11 @@ function handleSubmit(e){
 
         if ((p.rollOne == "NA" || p.rollOne == "AN") && (p.rollSym == "÷")){
           if (p.rollTwo % p.rollThree == 0 ){
-            correctAnswer = `${p.rollTwo/p.rollThree}${p.rollAlp}`
+            if (p.rollThree == 1 ){
+              correctAnswer = `${p.rollTwo}/${p.rollAlp}`
+            } else {
+              correctAnswer = `${p.rollTwo/p.rollThree}${p.rollAlp}`
+            }
           } else if (p.rollTwo/p.rollThree == 1){
             correctAnswer = `${p.rollAlp}`
           } else {
