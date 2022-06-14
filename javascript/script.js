@@ -198,6 +198,7 @@ const highScore6DotZero1 = new HighScore("Emma Leo", "18 April 2022", 240, 0)
 const highScore6DotZero2 = new HighScore("Nil", "", 0, 0)
 const highScore6DotZero3 = new HighScore("Nil", "", 0, 0)
 const highScore6DotZero5 = new HighScore("Nil", "", 0, 0)
+const highScore6DotZero6 = new HighScore("Nil", "", 0, 0)
 
 // Storing of question
 let state = {
@@ -4860,6 +4861,45 @@ function updateProblems(){
     }
   }
 
+  if ( level == 6.06 ){
+    if (p.roll == "A"){
+      displayProblem.innerHTML = 
+      `
+      Someone moved from</br>
+      A to B at ${p.speedB} units/${p.timeUnits} for ${p.timeB}${p.timeUnits},</br>
+      then </br>
+      B to C at ${p.speedC} units/${p.timeUnits} for ${p.timeC}${p.timeUnits}.</br>
+      Whats the average speed of the whole journey?
+
+      `
+    }
+    if (p.roll == "B"){
+      p.speedA = Math.ceil((p.speedB*p.timeB+p.speedC*p.timeC)/(p.timeB+p.timeC))
+      displayProblem.innerHTML = 
+      `
+      Someone moved from</br>
+      A to B at ${p.speedB} units/${p.timeUnits} for ${p.timeB} ${p.timeUnits},</br>
+      then from B to C in ${p.timeC} ${p.timeUnits}.</br>
+      ${p.gender} travelled at ${p.speedA} units/${p.timeUnits} for the whole journey.</br>
+      At what speed did ${p.gender} travel between B to C?
+
+      `
+    }
+    if (p.roll == "C"){
+      p.speedA = Math.ceil((p.speedB*p.timeB+p.speedC*p.timeC)/(p.timeB+p.timeC))
+      p.timeA = p.timeB+p.timeC
+      displayProblem.innerHTML = 
+      `
+      Someone moved from</br>
+      A to B at ${p.speedB} units/${p.timeUnits} for ${p.timeB} ${p.timeUnits},</br>
+      then from B to C in ${p.speedC} units/${p.timeUnits}.</br>
+      ${p.gender} travelled at ${p.speedA} units/${p.timeUnits} for ${p.timeA} ${p.timeUnits} the whole journey.</br>
+      At what long did ${p.gender} take to travel between B to C?
+
+      `
+    }
+  }
+
   if (level == 7){
     displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
   }
@@ -6375,19 +6415,29 @@ function handleSubmit(e){
           } 
         }
 
-        if ((p.rollOne == "NA" || p.rollOne == "AN") && (p.rollSym == "÷")){
+        if ( p.rollOne == "AN" && p.rollSym == "÷"){
           if (p.rollTwo % p.rollThree == 0 ){
-            if (p.rollThree == 1 ){
+            if (p.rollTwo == 1 && p.rollThree == 1){
+              correctAnswer `${p.rollAlp}`
+            } else if (p.rollThree == 1 ){
               correctAnswer = `${p.rollTwo}${p.rollAlp}`
             } else {
               correctAnswer = `${p.rollTwo/p.rollThree}${p.rollAlp}`
             }
-          } else if (p.rollTwo/p.rollThree == 1){
-            correctAnswer = `${p.rollAlp}`
           } else {
             correctAnswer = `${p.rollTwo}/${p.rollThree}${p.rollAlp}`
           }
         }
+        if (p.rollOne == "NA" && p.rollSym == "÷"){
+          if (p.rollTwo == p.rollThree ){
+            correctAnswer = `1/${p.rollAlp}`
+          } else if (p.rollTwo % p.rollThree == 0){
+            correctAnswer = `${p.rollTwo/p.rollThree}/${p.rollAlp}`
+          } else {
+            correctAnswer = `${p.rollTwo}/${p.rollThree}${p.rollAlp}`
+          }
+        }
+
         if ((p.rollOne == "NA" || p.rollOne == "AN") && (p.rollSym == "x")){
           correctAnswer = `${p.rollTwo*p.rollThree}${p.rollAlp}`
         }
@@ -6426,6 +6476,18 @@ function handleSubmit(e){
         }
         if (p.rollOne == "t"){
           correctAnswer = `${p.distance}/${p.rollS}`
+        }
+      }
+
+      if ( level == 6.06){
+        if (p.roll == "A"){
+          correctAnswer = `(${p.speedB*p.timeB}+${p.speedC*p.timeC})/${p.timeB+p.timeC}`
+        }
+        if (p.roll == "B"){
+          correctAnswer = `(${p.speedA*(p.timeB+p.timeC)}-${p.speedB*p.timeB})/${p.timeC}`
+        }
+        if (p.roll == "C"){
+          correctAnswer = `(${p.speedA*p.timeA}-${p.speedB*p.timeB})/${p.speedC}`
         }
       }
 
@@ -7574,6 +7636,23 @@ function genProblems(){
       rollS: genNumbers(10)+5,
       distance: undefined,
       identity: ["he","she"][genNumbers(2)]
+    }
+  }
+
+  if (level == 6.06){
+    return {
+      roll: ["A","B","C"][genNumbers(3)],
+      speedA: genNumbers(5)+2,
+      timeA: genNumbers(5)+2,
+      distanceA: genNumbers(5)+2,
+      speedB: genNumbers(5)+2,
+      timeB: genNumbers(5)+2,
+      distanceB: genNumbers(5)+2,
+      speedC: genNumbers(5)+2,
+      timeC: genNumbers(5)+2,
+      distanceC: genNumbers(5)+2,
+      timeUnits: ["s","min","h"][genNumbers(3)],
+      gender: ["he","she"][genNumbers(2)]
     }
   }
 
@@ -8892,8 +8971,29 @@ for (let i = 0; i <  settingButton.length; i++){
         highScoreMistakes.innerHTML = highScore6DotZero5.mistake
         document.querySelector("#user-input").setAttribute("type","text");
         displayProblem.style.fontSize = "20px";
+        instructions.innerHTML = 
+        `
+        Distance = Speed x Time
+        `
       break;
       
+      case "Level 6.06":
+        level = 6.06;
+        scoreNeeded = 10;
+        gold = highScore6DotZero6.time;
+        silver = highScore6DotZero6.time+((cutoff-highScore6DotZero6.time)/3)
+        bronze = highScore6DotZero6.time+((cutoff-highScore6DotZero6.time)/3)*2
+        highScoreName.innerHTML = highScore6DotZero6.name
+        highScoreTime.innerHTML = highScore6DotZero6.time
+        highScoreMistakes.innerHTML = highScore6DotZero6.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        displayProblem.style.fontSize = "18px";
+        instructions.innerHTML = 
+        `
+        Average Speed of Whole Journey = Total Distance/Total Time
+        `
+      break;
+
       case "Level 7":
         level = 7;
         scoreNeeded = 30;
