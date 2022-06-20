@@ -6421,6 +6421,8 @@ function handleSubmit(e){
               correctAnswer `${p.rollAlp}`
             } else if (p.rollThree == 1 ){
               correctAnswer = `${p.rollTwo}${p.rollAlp}`
+            } else if (p.rollTwo == p.rollThree) {
+              correctAnswer = `${p.rollAlp}`
             } else {
               correctAnswer = `${p.rollTwo/p.rollThree}${p.rollAlp}`
             }
