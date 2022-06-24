@@ -2318,16 +2318,16 @@ function updateProblems(){
     ctx.font = "1em serif"
     if (p.roll == 1){
       if (p.angleTurn == 180 || p.angleTurn == 360){
-        ctx.fillText(`From point O facing ${p.choice}, turn ${p.angleTurn}°.`, 20, 20)
+        ctx.fillText(`Person O facing ${p.choice}, turn ${p.angleTurn}°.`, 20, 20)
       } else {
-      ctx.fillText(`From point O facing ${p.choice}, turn ${p.angleTurn}° ${p.direction}.`, 20, 20)
+      ctx.fillText(`Person O facing ${p.choice}, turn ${p.angleTurn}° ${p.direction}.`, 20, 20)
        }
       ctx.fillText(`Now facing ___?`, 20, 40)
     } else {
       if (p.angleTurn == 180 || p.angleTurn == 360){
-        ctx.fillText(`After turning ${p.angleTurn}°, point O is facing ${p.choice}`, 20 ,20)
+        ctx.fillText(`After turning ${p.angleTurn}°, person O is facing ${p.choice}`, 20 ,20)
       } else {
-        ctx.fillText(`After turning ${p.angleTurn}° ${p.direction}, point O is facing ${p.choice}`, 20 ,20)
+        ctx.fillText(`After turning ${p.angleTurn}° ${p.direction}, person O is facing ${p.choice}`, 20 ,20)
       }
       ctx.fillText(`Facing Point ___ at first?`, 20, 40)
     }
