@@ -6443,7 +6443,11 @@ function handleSubmit(e){
         }
 
         if ((p.rollOne == "NA" || p.rollOne == "AN") && (p.rollSym == "x")){
-          correctAnswer = `${p.rollTwo*p.rollThree}${p.rollAlp}`
+          if (p.rollTwo == 1 && p.rollThree == 1){
+            correctAnswer = `${p.rollAlp}`
+          } else {
+            correctAnswer = `${p.rollTwo*p.rollThree}${p.rollAlp}`
+          }
         }
 
         if (p.rollOne == "AA"){
