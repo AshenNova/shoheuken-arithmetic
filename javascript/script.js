@@ -5298,6 +5298,10 @@ function handleSubmit(e){
             } else {
             correctAnswer = `${hours}.${finalMinutes%60}${amOrPm2}`
             }
+
+            if (hours == 0){
+              correctAnswer = `12.${finalMinutes%60}${amOrPm2}`
+            }
           }
 
           if (p.roll == "hours"){
