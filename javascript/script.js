@@ -199,6 +199,8 @@ const highScore6DotZero2 = new HighScore("Nil", "", 0, 0)
 const highScore6DotZero3 = new HighScore("Nil", "", 0, 0)
 const highScore6DotZero5 = new HighScore("Nil", "", 0, 0)
 const highScore6DotZero6 = new HighScore("Nil", "", 0, 0)
+const highScore6DotZero7 = new HighScore("Nil", "", 0, 0)
+
 
 // Storing of question
 let state = {
@@ -4900,6 +4902,55 @@ function updateProblems(){
     }
   }
 
+  if ( level == 6.07){
+    p.distance = p.speedA*p.timeA+p.speedB*p.timeB
+    // normal
+    if (p.roll == "A"){
+      displayProblem.innerHTML = 
+      `
+      The distance between A and B is ${p.distance} units. </br>
+      A moves at ${p.speedA} units/sec. </br>
+      B moves at ${p.speedB} units/sec.  </br>
+      How long did it take both to meet?
+
+      `
+    }
+    if (p.roll == "B"){
+      // Natural
+      displayProblem.innerHTML = 
+      `
+      The distance between A and B is ${p.distance} units. </br>
+      A travels ${p.speedA*p.timeA} units at ${p.speedA} units/sec. </br>
+      B then sets off at ${p.speedB} units/sec.  </br>
+      How long did it take both to meet?
+
+      `
+    }
+    if (p.roll == "C"){
+      // Head Start
+      displayProblem.innerHTML = 
+      `
+      The distance between A and B is ${p.distance} units. </br>
+      A sets off first at ${p.speedA} units/sec for ${p.timeA}secs. </br>
+      B then sets off at ${p.speedB} units/sec.  </br>
+      How long did it take both to meet?
+
+      `
+    }
+    if (p.roll == "D"){
+      // Finding Distance
+      displayProblem.innerHTML = 
+      `
+       A and B are moving towards each other at the same time. </br>
+       A moves at ${p.speedA} units/sec. </br>
+       B moves at ${p.speedB} units/sec.  </br>
+      It took ${p.timeA+p.timeB} secs to meet up.</br>
+      How far apart are they?
+
+      `
+    }
+  }
+
   if (level == 7){
     displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
   }
@@ -6492,14 +6543,36 @@ function handleSubmit(e){
       }
 
       if ( level == 6.06){
+        // average speed whole journey
         if (p.roll == "A"){
           correctAnswer = `(${p.speedB*p.timeB}+${p.speedC*p.timeC})/${p.timeB+p.timeC}`
         }
+        // time between B to C
         if (p.roll == "B"){
           correctAnswer = `(${p.speedA*(p.timeB+p.timeC)}-${p.speedB*p.timeB})/${p.timeC}`
         }
+        // speed between B to C
         if (p.roll == "C"){
           correctAnswer = `(${p.speedA*p.timeA}-${p.speedB*p.timeB})/${p.speedC}`
+        }
+      }
+
+      if (level == 6.07){
+        // normal
+        if (p.roll == "A") {
+          correctAnswer = `${p.distance}/(${p.speedA}+${p.speedB})`
+        }
+        // natural
+        if (p.roll == "B") {
+          correctAnswer = `(${p.distance}-${p.speedA*p.timeA})/(${p.speedA}+${p.speedB})`
+        }
+        // headstart
+        if (p.roll == "C") {
+          correctAnswer = `(${p.distance}-${p.speedA*p.timeA})/(${p.speedA}+${p.speedB})`
+        }
+        // distance
+        if (p.roll == "D") {
+          correctAnswer = `(${p.speedA}+${p.speedB})x${p.timeA+p.timeB}`
         }
       }
 
@@ -6513,7 +6586,7 @@ function handleSubmit(e){
       }
 
     console.log(correctAnswer, userInput.value)
-      if (userInput.value == correctAnswer){
+      if (userInput.value.trim() == correctAnswer){
         console.log("correct")
         state.score++
         if (mulLevel == "multiples"){
@@ -7665,6 +7738,17 @@ function genProblems(){
       distanceC: genNumbers(5)+2,
       timeUnits: ["s","min","h"][genNumbers(3)],
       gender: ["he","she"][genNumbers(2)]
+    }
+  }
+
+  if ( level == 6.07 ){
+    return {
+      roll: ["D","A","B","C"][genNumbers(4)],
+      distance: undefined,
+      speedA: genNumbers(5)+5,
+      timeA: genNumbers(8)+2,
+      speedB: genNumbers(5)+5,
+      timeB: genNumbers(8)+2
     }
   }
 
@@ -9003,6 +9087,23 @@ for (let i = 0; i <  settingButton.length; i++){
         instructions.innerHTML = 
         `
         Average Speed of Whole Journey = Total Distance/Total Time
+        `
+      break;
+
+      case "Level 6.07":
+        level = 6.07;
+        scoreNeeded = 10;
+        gold = highScore6DotZero7.time;
+        silver = highScore6DotZero7.time+((cutoff-highScore6DotZero7.time)/3)
+        bronze = highScore6DotZero7.time+((cutoff-highScore6DotZero7.time)/3)*2
+        highScoreName.innerHTML = highScore6DotZero7.name
+        highScoreTime.innerHTML = highScore6DotZero7.time
+        highScoreMistakes.innerHTML = highScore6DotZero7.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        displayProblem.style.fontSize = "18px";
+        instructions.innerHTML = 
+        `
+        Meet Up =</br> (Distance / Total Speed)</br> or</br> (Left over Distance / Total Speed)
         `
       break;
 
