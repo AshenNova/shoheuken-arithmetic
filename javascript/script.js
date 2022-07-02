@@ -6484,7 +6484,7 @@ function handleSubmit(e){
           } else if (p.rollTwo == 1 ){
             correctAnswer = `${p.rollAlp}/${p.rollThree}`
           } else {
-            correctAnswer = `${p.rollTwo}/${p.rollThree}${p.rollAlp}`
+            correctAnswer = `${p.rollTwo}${p.rollAlp}/${p.rollThree}`
           }
         }
         if (p.rollOne == "NA" && p.rollSym == "÷"){
