@@ -1722,8 +1722,13 @@ function updateProblems(){
   }
 
   if ( level == 4.0) {
-    while (p.numOne == 17 || p.numOne == 19 || p.numOne == 23 || p.numOne == 29 || p.numOne == 31 || p.numOne == 37 || p.numOne == 41 || p.numOne == 43 || p.numOne == 47 || p.numOne == 53 || p.numOne == 59){
-      console.log("while loop")
+    let arrayExclude = [3, 4, 5 , 7, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59]
+    // while (p.numOne == 17 || p.numOne == 19 || p.numOne == 23 || p.numOne == 29 || p.numOne == 31 || p.numOne == 37 || p.numOne == 41 || p.numOne == 43 || p.numOne == 47 || p.numOne == 53 || p.numOne == 59){
+    //   console.log("while loop")
+     
+    // }
+    while (arrayExclude.includes(p.numOne)){
+      console.log("reroll")
       p.numOne = genNumbers(60)+2
     }
 
@@ -7701,11 +7706,11 @@ function genProblems(){
 
   if (level == 6.03){
     return {
-     rollOne: ["AN","AA","NA"][genNumbers(3)],
+     rollOne: ["AN","NA","AA"][genNumbers(2)],
      rollTwo: genNumbers(9)+1,
      rollThree: genNumbers(5)+1,
      rollAlp: ["a","b","c","y","z","i"][genNumbers(6)],
-     rollSym: ["+","-","x","÷"][genNumbers(4)],
+     rollSym: ["x","÷","+","-",][genNumbers(2)],
      rollSymTwo: ["+","-"][genNumbers(2)]
     }
   }
