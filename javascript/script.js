@@ -7708,11 +7708,11 @@ function genProblems(){
 
   if (level == 6.03){
     return {
-     rollOne: ["AN","NA","AA"][genNumbers(2)],
+     rollOne: ["AN","NA","AA"][genNumbers(3)],
      rollTwo: genNumbers(9)+1,
      rollThree: genNumbers(5)+1,
      rollAlp: ["a","b","c","y","z","i"][genNumbers(6)],
-     rollSym: ["x","÷","+","-",][genNumbers(2)],
+     rollSym: ["x","÷","+","-",][genNumbers(4)],
      rollSymTwo: ["+","-"][genNumbers(2)]
     }
   }
