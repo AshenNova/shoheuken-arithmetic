@@ -6595,6 +6595,13 @@ function handleSubmit(e){
       }
 
     console.log(correctAnswer, userInput.value)
+
+      // adjustment
+      levelToCaps = [3.16, 3.18, 4.17, 5, 5.06]
+      if (levelToCaps.includes(level)){
+        userInput.value = userInput.value.toUpperCase()
+      }
+
       if (userInput.value.trim() == correctAnswer){
         console.log("correct")
         state.score++
