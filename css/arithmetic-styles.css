@@ -300,6 +300,13 @@ button {
   border-color: purple;
 }
 
+.btn-heu{
+  background-color: #512E5F;
+  color: #F1C40F;
+  border-color:  #F1C40F;
+  border: solid 2px;
+}
+
 .fa-reveal{
  color: red;
 }

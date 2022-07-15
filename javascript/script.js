@@ -200,6 +200,7 @@ const highScore6DotZero3 = new HighScore("Nil", "", 0, 0)
 const highScore6DotZero5 = new HighScore("Nil", "", 0, 0)
 const highScore6DotZero6 = new HighScore("Nil", "", 0, 0)
 const highScore6DotZero7 = new HighScore("Nil", "", 0, 0)
+const heuOne = new HighScore("Nil", "", 0, 0)
 
 
 // Storing of question
@@ -318,6 +319,7 @@ const resetStuff = function (){
   document.querySelector("#user-input").style.marginTop = "0";
   document.querySelector("#user-input").setAttribute("max","99999")
   displayProblem.style.margin = "30px 0";
+  displayProblem.style.textAlign = "center";
   threeNumerator.classList.add('line');
   equalSymbol.innerHTML = "=";
   fractionsContainerTwo.style.margin = "0 25px 15px"
@@ -4960,6 +4962,45 @@ function updateProblems(){
     displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
   }
 
+  // HEURISTICS
+
+  if (level == "heuOne"){
+    while (p.numOne == p.numTwo){
+      p.numOne = genNumbers(9)+1
+    }
+    if (p.rollAB == "A"){
+      console.log("heuOne " + "Type " + p.rollAB + " Var " + p.rollVar)
+     
+      if (p.numOne < p.numTwo){
+        [p.numOne, p.numTwo] = [p.numTwo, p.numOne]
+      }
+
+      displayProblem.innerHTML = 
+      `
+      ${p.rollAB} is ${p.numOne} ${p.roll[p.rollPosition][2]}.</br>
+      A is ${p.numTwo} ${p.roll[p.rollPosition][2]} ${p.roll[p.rollPosition][p.rollVar]} than B.</br>
+      What is B?
+      `
+    }
+    if (p.rollAB == "B"){
+      console.log("heuOne " + "Type " + p.rollAB + " Var " + p.rollVar)
+     
+      if (p.numOne < p.numTwo){
+        [p.numOne, p.numTwo] = [p.numTwo, p.numOne]
+      }
+
+      displayProblem.innerHTML = 
+      `
+      ${p.rollAB} is ${p.numOne} ${p.roll[p.rollPosition][2]}.</br>
+      A is ${p.numTwo} ${p.roll[p.rollPosition][2]} ${p.roll[p.rollPosition][p.rollVar]} than B.</br>
+      What is A?
+      `
+    }
+  }
+
+
+
+  // MULTIPLES
   if (mulLevel == "multiples"){
     displayProblem.innerHTML = `${p.numFive} ${p.operator} ${multiplesArr.length-1}`
   }
@@ -4968,7 +5009,15 @@ function updateProblems(){
   userInput.focus()
 }
 
+
+
+
+
+
+
 // updateProblems()
+
+
 
 ourForm.addEventListener('submit', handleSubmit)
 
@@ -6590,6 +6639,23 @@ function handleSubmit(e){
         if (p.operator == "-") correctAnswer = p.numOne - p.numTwo
       }
 
+
+      // HEURISTICS ANSWER
+      if (level == "heuOne"){
+        if (p.rollAB == "A" && p.rollVar == 0){
+          correctAnswer = p.numOne-p.numTwo
+        }
+        if (p.rollAB == "A" && p.rollVar == 1){
+          correctAnswer = p.numOne+p.numTwo
+        }
+        if (p.rollAB == "B" && p.rollVar == 0){
+          correctAnswer = p.numOne+p.numTwo
+        }
+        if (p.rollAB == "B" && p.rollVar == 1){
+          correctAnswer = p.numOne-p.numTwo
+        }
+      } 
+
       if (mulLevel == "multiples"){
         correctAnswer = p.numFive*(multiplesArr.length-1)
       }
@@ -7774,6 +7840,26 @@ function genProblems(){
       numTwo: genNumbers(11),
       operator: ["+","-"][genNumbers(2)]
     }  
+  }
+
+
+  // HEURISTICS
+  if (level == "heuOne"){
+    return{
+      roll: 
+      [
+      ["more", "less", "ml"],
+      ["greater","smaller", ""],
+      ["taller", "shorter", "cm"],
+      ["longer","shorter", "m"],
+      ["heavier", "lighter", "kg"]
+      ],
+      rollPosition: genNumbers(5),
+      rollAB: ["A","B"][genNumbers(2)],
+      rollVar: [0, 1][genNumbers(2)],
+      numOne: genNumbers(9)+1,
+      numTwo: genNumbers(9)+1
+    }
   }
 
   if (level == "1 times table"){
@@ -9128,6 +9214,13 @@ for (let i = 0; i <  settingButton.length; i++){
         scoreNeeded = 30;
         break;
   
+      case "Heu.1":
+        level = "heuOne"
+        scoreNeeded = 10;
+        displayProblem.style.fontSize = "18px";
+        displayProblem.style.textAlign = "left";
+      break
+
       case "Multiples 1":
         level = "1 times table";
         mulLevel = "multiples"
