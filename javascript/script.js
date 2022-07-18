@@ -204,6 +204,7 @@ const highScore6DotZero7 = new HighScore("Nil", "", 0, 0)
 
 const heuOne = new HighScore("Nil", "", 0, 0)
 const heuTwo = new HighScore("Nil", "", 0, 0)
+const heuFour = new HighScore("Nil", "", 0, 0)
 
 
 // Storing of question
@@ -5067,6 +5068,19 @@ function updateProblems(){
     `
   }
 
+  if ( level == "heuFour"){
+    p.sceneTwo = p.sceneOne + genNumbers(5)+1
+    p.situationOne = p.numberOfStuff-(p.sceneOne*p.numberOfStudents)
+    p.situationTwo = p.numberOfStuff-(p.sceneTwo*p.numberOfStudents)
+    console.log(p.situationOne, p.situationTwo)
+    displayProblem.innerHTML =
+    `
+      If ${p.sceneOne} sweets were given to each pupils, there would be ${p.situationOne > 0 ? "an " : ""}<u>${p.situationOne > 0 ? `excess` : "short" }</u> of ${Math.abs(p.situationOne)} sweets.</br>
+      If ${p.sceneTwo} sweets were given to each pupils, there would be ${p.situationTwo > 0 ? "an " : ""}<u>${p.situationTwo > 0 ? `excess` : "short" }</u> of ${Math.abs(p.situationTwo)} sweets.</br>
+      ${p.rollAnswer == 1 ? "How many pupils are there?" : "How many sweets are there?"}
+    `
+  }
+
 
   // MULTIPLES
   if (mulLevel == "multiples"){
@@ -6763,6 +6777,16 @@ function handleSubmit(e){
         correctAnswer = `${p.distance}/${p.indexTwo-p.indexOne}x${p.indexFour-p.indexThree}=${p.rollDistance*(p.indexFour-p.indexThree)}`
       }
 
+      if ( level == "heuFour"){
+        console.log(p.rollAnswer)
+        if (p.rollAnswer == 1){
+          correctAnswer = p.numberOfStudents
+        }
+        if (p.rollAnswer == 2){
+          correctAnswer = `${p.numberOfStudents}x${p.sceneOne}${p.situationOne>0? "+":""}${p.situationOne}`
+        }
+      }
+
       if (mulLevel == "multiples"){
         correctAnswer = p.numFive*(multiplesArr.length-1)
       }
@@ -7998,6 +8022,18 @@ function genProblems(){
       indexFour: undefined,
       intervals: undefined,
       distance: undefined
+    }
+  }
+
+  if ( level == "heuFour"){
+    return {
+      numberOfStudents: genNumbers(8)+2,
+      numberOfStuff: genNumbers(20)+10,
+      sceneOne: genNumbers(4)+1,
+      sceneTwo: undefined,
+      situationOne: undefined,
+      situationTwo: undefined,
+      rollAnswer: genNumbers(2)+1
     }
   }
 
@@ -9382,6 +9418,14 @@ for (let i = 0; i <  settingButton.length; i++){
       case "Heu.2":
         setting =  parseInt(prompt("What level?"))
         level = "heuTwo"
+        scoreNeeded = 10;
+        displayProblem.style.fontSize = "18px";
+        displayProblem.style.textAlign = "left";
+        document.querySelector("#user-input").setAttribute("type","text");
+      break
+
+      case "Heu.4":
+        level = "heuFour"
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
