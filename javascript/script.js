@@ -2931,14 +2931,14 @@ function updateProblems(){
     displayProblem.innerHTML = 
     `
     ${p.objectOne} is ${p.oneValue}/${p.twoValue} of ${p.objectTwo}.</br>
-    What fraction is ${p.rollTypeQn11 == "1T" ? `${p.objectOne} of ${p.objectOne} and ${p.objectTwo}` : `${p.objectOne} and ${p.objectTwo} of ${p.objectOne}.`}
+    What fraction is ${p.rollTypeQn11 == "1T" ? `${p.objectOne} of ${p.objectOne} and ${p.objectTwo}.` : `${p.objectOne} and ${p.objectTwo} of ${p.objectOne}.`}
     `
     }
     if (p.rollTypeClue == "1T"){
       displayProblem.innerHTML = 
       `
       ${p.objectOne} is ${p.oneValue}/${p.twoValue+p.oneValue} of ${p.objectOne} and ${p.objectTwo}.</br>
-      What fraction is ${p.rollType1T == "AB" ? `${p.objectOne} of ${p.objectTwo}` : `${p.objectTwo} of ${p.objectOne}.`}
+      What fraction is ${p.rollType1T == "AB" ? `${p.objectOne} of ${p.objectTwo}.` : `${p.objectTwo} of ${p.objectOne}.`}
       `
       }
 
