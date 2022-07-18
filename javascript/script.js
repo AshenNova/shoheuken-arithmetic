@@ -177,6 +177,7 @@ const highScore4Dot2Zero = new HighScore("Emma Leo", "14 April 202", 160, 0)
 const highScore4Dot21 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4DotZero22 = new HighScore("Nil", "Nil", 0, 0)
 const highScore4DotZero23 = new HighScore("Nil", "Nil", 0, 0)
+const highScore4DotZero24 = new HighScore("Nil", "Nil", 0, 0)
 
 const highScore5DotZero = new HighScore("Sheyanne Cheong", "9 April 2022", 176, 0)
 const highScore5DotZero1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0)
@@ -200,7 +201,9 @@ const highScore6DotZero3 = new HighScore("Nil", "", 0, 0)
 const highScore6DotZero5 = new HighScore("Nil", "", 0, 0)
 const highScore6DotZero6 = new HighScore("Nil", "", 0, 0)
 const highScore6DotZero7 = new HighScore("Nil", "", 0, 0)
+
 const heuOne = new HighScore("Nil", "", 0, 0)
+const heuTwo = new HighScore("Nil", "", 0, 0)
 
 
 // Storing of question
@@ -269,7 +272,11 @@ if (state.score >= scoreNeeded || time == cutoff){
   finalBox.classList.remove('hidden');
 
   if (easy != 1){
-    if (time < gold){
+    console.log(`Gold: ${gold}, silver: ${silver}, bronze: ${bronze}`)
+    if (gold == 0){
+      document.querySelector('.trophy').appendChild(imageB);
+      console.log("Bronze image")
+    } else if (time < gold){
         document.querySelector('.trophy').appendChild(imageG);
         console.log("Gold image")
       } else if (time < silver){
@@ -2916,6 +2923,27 @@ function updateProblems(){
     console.log(p.numOne, p.divisor)
   }
 
+  if ( level == 4.24){
+    if (p.oneValue == p.twoValue){
+      p.twoValue += 1
+    }
+    if (p.rollTypeClue == "11"){
+    displayProblem.innerHTML = 
+    `
+    ${p.objectOne} is ${p.oneValue}/${p.twoValue} of ${p.objectTwo}.</br>
+    What fraction is ${p.rollTypeQn11 == "1T" ? `${p.objectOne} of ${p.objectOne} and ${p.objectTwo}` : `${p.objectOne} and ${p.objectTwo} of ${p.objectOne}.`}
+    `
+    }
+    if (p.rollTypeClue == "1T"){
+      displayProblem.innerHTML = 
+      `
+      ${p.objectOne} is ${p.oneValue}/${p.twoValue+p.oneValue} of ${p.objectOne} and ${p.objectTwo}.</br>
+      What fraction is ${p.rollType1T == "AB" ? `${p.objectOne} of ${p.objectTwo}` : `${p.objectTwo} of ${p.objectOne}.`}
+      `
+      }
+
+  }
+
   if ( level == 5.0 ){
     
     let alignXText = 15;
@@ -4962,7 +4990,7 @@ function updateProblems(){
     displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`
   }
 
-  // HEURISTICS
+  // Heuristics display
 
   if (level == "heuOne"){
     while (p.numOne == p.numTwo){
@@ -4998,6 +5026,28 @@ function updateProblems(){
     }
   }
 
+  if ( level == "heuTwo"){
+    p.positionTwo = p.rollPositionTwoArr[genNumbers(3)]
+    p.positionOne = p.rollPositionOneArr[genNumbers(3)]
+    p.positionThree = p.rollPositionOneArr[genNumbers(3)]
+    p.positionFour = p.rollPositionTwoArr[genNumbers(3)]
+
+   while (p.positionThree == p.positionOne && p.positionFour == p.positionTwo){
+    p.positionThree = p.rollPositionOneArr[genNumbers(3)]
+   }
+
+    p.indexOne = p.rollPositionOneArr.indexOf(p.positionOne)
+    p.indexTwo = p.rollPositionTwoArr.indexOf(p.positionTwo)+3
+    p.indexThree = p.rollPositionOneArr.indexOf(p.positionThree)
+    p.indexFour = p.rollPositionTwoArr.indexOf(p.positionFour)+3
+    p.intervals = p.indexTwo - p.indexOne
+    p.distance = p.intervals*p.rollDistance
+    displayProblem.innerHTML = 
+    `
+    The distance between the ${p.positionOne} ${p.rollObject} and the ${p.positionTwo} ${p.rollObject} is ${p.distance} m. </br>
+    What is the distance between the ${p.positionThree} and ${p.positionFour} ${p.rollObject}?
+    `
+  }
 
 
   // MULTIPLES
@@ -6092,6 +6142,23 @@ function handleSubmit(e){
         }
       }
 
+      if ( level == 4.24){
+        if (p.rollTypeClue == "11"){
+          if (p.rollTypeQn11 == "1T"){
+            correctAnswer = `${p.oneValue}/${p.oneValue+p.twoValue}`
+          } else {
+            correctAnswer = `${p.oneValue+p.twoValue}/${p.oneValue}`
+          }
+        }
+        if (p.rollTypeClue == "1T"){
+          if (p.rollTypeQn1T == "AB"){
+            correctAnswer = `${p.twoValue}/${p.oneValue}`
+          } else {
+            correctAnswer = `${p.oneValue}/${p.twoValue}`
+          }
+        }
+      }
+
       if ( level == 5.0) {
         if (p.sidesBH == "base"){
           correctAnswer = `${p.labelABC}${p.labelGHI}`
@@ -6640,7 +6707,7 @@ function handleSubmit(e){
       }
 
 
-      // HEURISTICS ANSWER
+      // heuristics Answer
       if (level == "heuOne"){
         if (p.rollAB == "A" && p.rollVar == 0){
           correctAnswer = p.numOne-p.numTwo
@@ -6655,6 +6722,10 @@ function handleSubmit(e){
           correctAnswer = p.numOne-p.numTwo
         }
       } 
+
+      if ( level == "heuTwo"){
+        correctAnswer = `${p.distance}/${p.indexTwo-p.indexOne}x${p.indexFour-p.indexThree}=${p.rollDistance*(p.indexFour-p.indexThree)}`
+      }
 
       if (mulLevel == "multiples"){
         correctAnswer = p.numFive*(multiplesArr.length-1)
@@ -7480,6 +7551,18 @@ function genProblems(){
     }
   }
 
+  if ( level == 4.24 ){
+    return {
+      objectOne: ["A","B","C"][genNumbers(3)],
+      objectTwo: ["X","Y","Z"][genNumbers(3)],
+      oneValue: genNumbers(5)+1,
+      twoValue: genNumbers(5)+1,
+      rollTypeClue: ["11","1T"][genNumbers(1)],
+      rollTypeQn1T: ["AB","BA"][genNumbers(2)],
+      rollTypeQn11 : ["1T", "T1"][genNumbers(2)]
+    }
+  }
+
   if ( level == 5.0 ){
     return {
       pointX1: genNumbers(70)+50,
@@ -7843,7 +7926,7 @@ function genProblems(){
   }
 
 
-  // HEURISTICS
+  // heuristics value
   if (level == "heuOne"){
     return{
       roll: 
@@ -7859,6 +7942,25 @@ function genProblems(){
       rollVar: [0, 1][genNumbers(2)],
       numOne: genNumbers(9)+1,
       numTwo: genNumbers(9)+1
+    }
+  }
+
+  if (level == "heuTwo"){
+    return{
+      rollObject: ["tree", "lamppost", "fire hydrant"][genNumbers(3)],
+      rollPositionTwoArr: ["4th", "5th","6th"],
+      rollPositionOneArr: ["1st", "2nd","3rd"],
+      positionOne: undefined,
+      positionTwo: undefined,
+      positionThree: undefined,
+      positionFour: undefined,
+      rollDistance: genNumbers(4)+2,
+      indexOne: undefined,
+      indexTwo: undefined,
+      indexThree: undefined,
+      indexFour: undefined,
+      intervals: undefined,
+      distance: undefined
     }
   }
 
@@ -8862,6 +8964,14 @@ for (let i = 0; i <  settingButton.length; i++){
         document.querySelector("#user-input").setAttribute("type","text");
       break;
 
+      case "Level 4.24":
+        level = 4.24;
+        scoreNeeded = 20;
+        document.querySelector("#user-input").setAttribute("type","text");
+        displayProblem.style.fontSize = "18px";
+        displayProblem.style.textAlign = "left";
+      break;
+
       case "Level 5.0":
         level = 5.0;
         scoreNeeded = 20;
@@ -9214,11 +9324,27 @@ for (let i = 0; i <  settingButton.length; i++){
         scoreNeeded = 30;
         break;
   
+        // heuristics settings
+
       case "Heu.1":
         level = "heuOne"
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
+        gold = heuOne.time;
+        silver = heuOne.time+((cutoff-heuOne.time)/3)
+        bronze = heuOne.time+((cutoff-heuOne.time)/3)*2
+        highScoreName.innerHTML = heuOne.name
+        highScoreTime.innerHTML = heuOne.time
+      break
+
+      case "Heu.2":
+        setting =  parseInt(prompt("What level?"))
+        level = "heuTwo"
+        scoreNeeded = 10;
+        displayProblem.style.fontSize = "18px";
+        displayProblem.style.textAlign = "left";
+        document.querySelector("#user-input").setAttribute("type","text");
       break
 
       case "Multiples 1":
