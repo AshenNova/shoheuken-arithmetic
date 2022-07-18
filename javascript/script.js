@@ -6793,10 +6793,15 @@ function handleSubmit(e){
 
     console.log(correctAnswer, userInput.value)
 
-      // adjustment
+      // adjust to uppercase
       levelToCaps = [3.18, 4.17, 4.18, 5, 5.06]
       if (levelToCaps.includes(level) || (level == 3.16 && p.optionFinal == 4)){
         userInput.value = userInput.value.toUpperCase()
+      }
+
+      levelToLower = [1.04, 1.05]
+      if (levelToLower.includes(level)){
+        userInput.value = userInput.value.toLowerCase()
       }
 
       if (userInput.value.trim() == correctAnswer){
