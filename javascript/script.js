@@ -2928,19 +2928,37 @@ function updateProblems(){
       p.twoValue += 1
     }
     if (p.rollTypeClue == "11"){
-    displayProblem.innerHTML = 
-    `
-    ${p.objectOne} is ${p.oneValue}/${p.twoValue} of ${p.objectTwo}.</br>
-    What fraction is ${p.rollTypeQn11 == "1T" ? `${p.objectOne} of ${p.objectOne} and ${p.objectTwo}.` : `${p.objectOne} and ${p.objectTwo} of ${p.objectOne}.`}
-    `
-    }
-    if (p.rollTypeClue == "1T"){
+      if (p.rollTypeQnSyn == "isof"){
       displayProblem.innerHTML = 
       `
-      ${p.objectOne} is ${p.oneValue}/${p.twoValue+p.oneValue} of ${p.objectOne} and ${p.objectTwo}.</br>
-      What fraction is ${p.rollType1T == "AB" ? `${p.objectOne} of ${p.objectTwo}.` : `${p.objectTwo} of ${p.objectOne}.`}
+      ${p.objectOne} is ${p.oneValue}/${p.twoValue} of ${p.objectTwo}.</br>
+      What fraction is ${p.rollTypeQn11 == "1T" ? `${p.objectOne} of ${p.objectOne} and ${p.objectTwo}.` : `${p.objectOne} and ${p.objectTwo} of ${p.objectOne}.`}
       `
       }
+      if (p.rollTypeQnSyn == "ofis"){
+        displayProblem.innerHTML = 
+        `
+        ${p.objectOne} is ${p.oneValue}/${p.twoValue} of ${p.objectTwo}.</br>
+        What fraction of ${p.rollTypeQn11 == "1T" ? `${p.objectOne} is ${p.objectOne} and ${p.objectTwo}.` : `${p.objectOne} and ${p.objectTwo} is ${p.objectOne}.`}
+        `
+        }
+    }
+    if (p.rollTypeClue == "1T"){
+      if (p.rollTypeQnSyn == "isof"){
+        displayProblem.innerHTML = 
+        `
+        ${p.objectOne} is ${p.oneValue}/${p.twoValue+p.oneValue} of ${p.objectOne} and ${p.objectTwo}.</br>
+        What fraction is ${p.rollTypeQn1T == "AB" ? `${p.objectOne} of ${p.objectTwo}.` : `${p.objectTwo} of ${p.objectOne}.`}
+        `
+      }
+      if (p.rollTypeQnSyn == "ofis"){
+        displayProblem.innerHTML = 
+        `
+        ${p.objectOne} is ${p.oneValue}/${p.twoValue+p.oneValue} of ${p.objectOne} and ${p.objectTwo}.</br>
+        What fraction of ${p.rollTypeQn1T == "AB" ? `${p.objectOne} is ${p.objectTwo}.` : `${p.objectTwo} is ${p.objectOne}.`}
+        `
+      }
+    }
 
   }
 
@@ -6144,17 +6162,35 @@ function handleSubmit(e){
 
       if ( level == 4.24){
         if (p.rollTypeClue == "11"){
-          if (p.rollTypeQn11 == "1T"){
-            correctAnswer = `${p.oneValue}/${p.oneValue+p.twoValue}`
-          } else {
-            correctAnswer = `${p.oneValue+p.twoValue}/${p.oneValue}`
+          if (p.rollTypeQnSyn == "isof"){
+            if (p.rollTypeQn11 == "1T"){
+              correctAnswer = `${p.oneValue}/${p.oneValue+p.twoValue}`
+            } else {
+              correctAnswer = `${p.oneValue+p.twoValue}/${p.oneValue}`
+            }
+          }
+          if (p.rollTypeQnSyn == "ofis"){
+            if (p.rollTypeQn11 != "1T"){
+              correctAnswer = `${p.oneValue}/${p.oneValue+p.twoValue}`
+            } else {
+              correctAnswer = `${p.oneValue+p.twoValue}/${p.oneValue}`
+            }
           }
         }
         if (p.rollTypeClue == "1T"){
-          if (p.rollTypeQn1T == "AB"){
-            correctAnswer = `${p.twoValue}/${p.oneValue}`
-          } else {
-            correctAnswer = `${p.oneValue}/${p.twoValue}`
+          if (p.rollTypeQnSyn == "isof"){
+            if (p.rollTypeQn1T == "AB"){
+              correctAnswer = `${p.oneValue}/${p.twoValue}`
+            } else {
+              correctAnswer = `${p.twoValue}/${p.oneValue}`
+            }
+          }
+          if (p.rollTypeQnSyn == "ofis"){
+            if (p.rollTypeQn1T == "AB"){
+              correctAnswer = `${p.twoValue}/${p.oneValue}`
+            } else {
+              correctAnswer = `${p.oneValue}/${p.twoValue}`
+            }
           }
         }
       }
@@ -7558,6 +7594,7 @@ function genProblems(){
       oneValue: genNumbers(5)+1,
       twoValue: genNumbers(5)+1,
       rollTypeClue: ["11","1T"][genNumbers(2)],
+      rollTypeQnSyn: ["isof","ofis"][genNumbers(2)],
       rollTypeQn1T: ["AB","BA"][genNumbers(2)],
       rollTypeQn11 : ["1T", "T1"][genNumbers(2)]
     }
@@ -8970,6 +9007,10 @@ for (let i = 0; i <  settingButton.length; i++){
         document.querySelector("#user-input").setAttribute("type","text");
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
+        instructions.innerHTML =
+        `
+        Do not need to simplify.
+        `
       break;
 
       case "Level 5.0":
