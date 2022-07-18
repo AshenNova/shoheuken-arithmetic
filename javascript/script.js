@@ -7557,7 +7557,7 @@ function genProblems(){
       objectTwo: ["X","Y","Z"][genNumbers(3)],
       oneValue: genNumbers(5)+1,
       twoValue: genNumbers(5)+1,
-      rollTypeClue: ["11","1T"][genNumbers(1)],
+      rollTypeClue: ["11","1T"][genNumbers(2)],
       rollTypeQn1T: ["AB","BA"][genNumbers(2)],
       rollTypeQn11 : ["1T", "T1"][genNumbers(2)]
     }
