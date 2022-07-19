@@ -5053,7 +5053,7 @@ function updateProblems(){
   }
 
   if ( level == "heuTwo"){
-    if (setting == 1){
+    if (setting == 1 || setting == 9 && p.roll == 1 ){
       p.positionTwo = p.rollPositionTwoArr[genNumbers(3)]
       p.positionOne = p.rollPositionOneArr[genNumbers(3)]
       p.positionThree = p.rollPositionOneArr[genNumbers(3)]
@@ -5075,7 +5075,7 @@ function updateProblems(){
       What is the distance between the ${p.positionThree} and ${p.positionFour} ${p.rollObject}?
       `
     }
-    if (setting == 2){
+    if (setting == 2 || setting == 9 && p.roll == 2 ){
       p.numOne = p.numTwo + (genNumbers(3)+2)*2
     
       displayProblem.innerHTML =
@@ -6821,10 +6821,10 @@ function handleSubmit(e){
       } 
 
       if ( level == "heuTwo"){
-        if (setting == 1){
+        if (setting == 1 || setting == 9 && p.roll == 1 ){
           correctAnswer = `${p.distance}/${p.indexTwo-p.indexOne}x${p.indexFour-p.indexThree}=${p.rollDistance*(p.indexFour-p.indexThree)}`
         }
-        if (setting == 2){
+        if (setting == 2 || setting == 9 && p.roll == 2 ){
           correctAnswer = (p.numOne-p.numTwo)/2
         }
       }
@@ -8105,7 +8105,8 @@ function genProblems(){
   }
 
   if (level == "heuTwo"){
-    if (setting == 1 || setting == "max"){
+    roll = genNumbers(2)+1
+    if (setting == 1 || setting == 9 && roll == 1 ){
       return{
         rollObject: ["tree", "lamppost", "fire hydrant"][genNumbers(3)],
         rollPositionTwoArr: ["4th", "5th","6th"],
@@ -8120,15 +8121,17 @@ function genProblems(){
         indexThree: undefined,
         indexFour: undefined,
         intervals: undefined,
-        distance: undefined
+        distance: undefined,
+        roll: 1
       }
     }
-    if (setting == 2){
+    if (setting == 2 || setting == 9 && roll == 2 ){
       return {
         objectOne: ["A","B","C"][genNumbers(3)],
         objectTwo: ["X","Y","Z"][genNumbers(3)],
         numTwo: genNumbers(5)+5,
-        numOne: undefined
+        numOne: undefined,
+        roll: 2
       }
     }
   }
@@ -8523,7 +8526,7 @@ for (let i = 0; i <  settingButton.length; i++){
         highScoreTime.innerHTML = highScore2DotZero2.time
         highScoreMistakes.innerHTML = highScore2DotZero2.mistake
         displayProblem.style.fontSize = "25px";
-        digit = prompt("How many digits? (3-7 only)")
+        digit = prompt("How many digits?\n3. Primary 2\n4. Primary3\n5. Primary 4\n6. Primary 5\n7. Primary 6")
         arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
       break;
   
@@ -8553,7 +8556,7 @@ for (let i = 0; i <  settingButton.length; i++){
         gold = highScore2DotZero5.time
         silver = highScore2DotZero5.time+((cutoff-highScore2DotZero5.time)/3)
         bronze = highScore2DotZero5.time+((cutoff-highScore2DotZero5.time)/3)*2
-        digit = prompt("How many digits? (3-7 only)")
+        digit = prompt("How many digits?\n3. Primary 2\n4. Primary3\n5. Primary 4\n6. Primary 5\n7. Primary 6")
         arr = [0, 1, 2, 3, 4, 5, 6, 7 ,8 ,9]
         highScoreName.innerHTML = highScore2DotZero5.name
         highScoreTime.innerHTML = highScore2DotZero5.time
@@ -9549,6 +9552,7 @@ for (let i = 0; i <  settingButton.length; i++){
 
       case "Heu.1":
         level = "heuOne"
+        setting = prompt("What level?\n1.More than / less than")
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
@@ -9560,7 +9564,7 @@ for (let i = 0; i <  settingButton.length; i++){
       break
 
       case "Heu.2":
-        setting =  parseInt(prompt("What level?\n1. Parts and Interval\n2. Internal Transfer (Same)"))
+        setting =  parseInt(prompt("What level?\n1. Parts and Interval\n2. Internal Transfer (Same)\n9.All"))
         level = "heuTwo"
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
@@ -9569,7 +9573,7 @@ for (let i = 0; i <  settingButton.length; i++){
       break
 
       case "Heu.3":
-        setting =  parseInt(prompt("What level?\n1.Sum and Difference\n2.Supposition"))
+        setting =  parseInt(prompt("What level?\n1.Sum and Difference\n2.Supposition\n9.All"))
         level = "heuThree"
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
