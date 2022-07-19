@@ -7216,7 +7216,7 @@ function genProblems(){
       timeHours: genNumbers(24)+1,
       timeMinutes: genNumbers(60),
       changeHours: genNumbers(6)+1,
-      changeMinutes: genNumbers(60),
+      changeMinutes: genNumbers(55)+5,
       roll: ["hours","mins"][genNumbers(2)],
       situation: ["later","before"][genNumbers(2)],
       amOrPm: undefined
