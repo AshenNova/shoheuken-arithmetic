@@ -1,7 +1,9 @@
 const displayProblem = document.querySelector(".display-problems")
 const helpMe = document.querySelector(".help-me-text")
 const ourForm = document.querySelector(".our-form")
+const ourForm2 = document.querySelector(".our-form2")
 const userInput = document.getElementById("user-input")
+const userInput2 = document.getElementById("user-input2")
 const currentScore = document.getElementById("current-score")
 const currentMistake = document.getElementById("current-mistake")
 const buttonStart = document.querySelector(".start-button")
@@ -22,6 +24,7 @@ const instructions = document.querySelector('.instructions');
 const hardcoreMode = document.querySelector('.hardcore-mode')
 const easyMode = document.querySelector('.easy-mode')
 const reviewAnswer = document.querySelector('.fa-hire-a-helper')
+const inputBoxCl = document.querySelector(".input-box")
 
 const imageG = document.createElement('img');
 const imageS = document.createElement('img');
@@ -42,6 +45,7 @@ const mainBox = document.querySelector('.main-box');
 
 const mistakesCountCl = document.querySelector('.mistakesCount');
 const settingButton = document.querySelectorAll('.settingButton');
+const heuristics = document.querySelectorAll('.heuristics');
 const toMultiplesBtn = document.querySelector('.toMultiples');
 
 const highScoreName = document.querySelector('.highScoreName');
@@ -239,7 +243,11 @@ function clickStart(){
       timerD.innerHTML = time;
       starto.classList.add('hidden');
       countDownTimer.classList.add('hidden');
-      userInput.focus()
+      if (document.querySelector(".input-box").classList.contains('hidden')){
+        userInput2.focus()
+      } else {
+        userInput.focus()
+      }
       timer2()
       updateProblems()
      }
@@ -340,6 +348,8 @@ const resetStuff = function (){
   fractionsContainerTwo.style.margin = "0 25px 15px"
   helpMe.textContent = ""
   helpMe.style.fontSize = "30px"
+  inputBoxCl.classList.remove('hidden')
+  ourForm2.classList.add('hidden')
 
   gold = 0;
   silver = 0;
@@ -5141,7 +5151,13 @@ function updateProblems(){
   }
 
   userInput.value = ""
-  userInput.focus()
+  userInput2.value = ""
+
+  if (document.querySelector(".input-box").classList.contains('hidden')){
+    userInput2.focus()
+  } else {
+    userInput.focus()
+  }
 }
 
 
@@ -5155,14 +5171,15 @@ function updateProblems(){
 
 
 ourForm.addEventListener('submit', handleSubmit)
+ourForm2.addEventListener('submit', handleSubmit)
 
 function handleSubmit(e){
   e.preventDefault()
 
   if ( player == 1 ){
-    if (userInput.value == "") alert("Please input a value")
+    // if (userInput.value == "") alert("Please input a value")
     let correctAnswer
-
+    console.log(userInput2.value)
     const p = state.currentProblem
     
     // Determining answer -> Turn this into a function!
@@ -6828,7 +6845,8 @@ function handleSubmit(e){
 
       if ( level == "heuTwo"){
         if (setting == 1 || setting == 9 && p.roll == 1 ){
-          correctAnswer = `${p.distance}/${p.indexTwo-p.indexOne}x${p.indexFour-p.indexThree}=${p.rollDistance*(p.indexFour-p.indexThree)}`
+          let interval = p.distance/(p.indexTwo-p.indexOne)
+          correctAnswer = `${p.indexTwo+1}-${p.indexOne+1}=${p.indexTwo-p.indexOne}\n${p.distance}/${p.indexTwo-p.indexOne}=${interval}\n${p.indexFour+1}-${p.indexThree+1}=${p.indexFour-p.indexThree}\n${interval}x${p.indexFour-p.indexThree}=${p.rollDistance*(p.indexFour-p.indexThree)}`
         }
         if (setting == 2 || setting == 9 && p.roll == 2 ){
           correctAnswer = `${p.numOne}-${p.numTwo}=${p.numOne-p.numTwo},${p.numOne-p.numTwo}/2=${(p.numOne-p.numTwo)/2}`
@@ -6863,13 +6881,14 @@ function handleSubmit(e){
         }
         if (setting == 2 || setting == 9 && p.roll == 2){
           let smallDifference = p.legTwo-p.legOne
+          let totalAnimal = p.numOne+p.numTwo
           if (p.rollQn == "A"){
-            let bigDifference = p.legTwo*(p.numTwo+p.numOne)-p.total
-            correctAnswer = `${p.legTwo*(p.numOne+p.numTwo)}-${p.total}=${bigDifference},${bigDifference}/${smallDifference}=${p.numOne}`
+            let bigDifference = p.legTwo*(totalAnimal)-p.total
+            correctAnswer = `${totalAnimal}x${p.legTwo}=${totalAnimal*p.legTwo},${p.legTwo*totalAnimal}-${p.total}=${bigDifference},${p.legTwo}-${p.legOne}=${smallDifference},${bigDifference}/${smallDifference}=${p.numOne}`
           }
           if (p.rollQn == "B"){
-            let bigDifference = p.total-(p.numOne+p.numTwo)*p.legOne
-            correctAnswer = `${p.total}-${(p.numOne+p.numTwo)*p.legOne}=${bigDifference},${bigDifference}/${smallDifference}=${p.numTwo}`
+            let bigDifference = p.total-totalAnimal*p.legOne
+            correctAnswer = `${totalAnimal}x${p.legOne}=${totalAnimal*p.legOne},${p.total}-${totalAnimal*p.legOne}=${bigDifference},${p.legTwo}-${p.legOne}=${smallDifference},${bigDifference}/${smallDifference}=${p.numTwo}`
           }
         }
         if ( setting == 3 || setting == 9 && p.roll == 3){
@@ -6904,7 +6923,7 @@ function handleSubmit(e){
         userInput.value = userInput.value.toLowerCase()
       }
 
-      if (userInput.value.trim() == correctAnswer){
+      if (userInput.value.trim() == correctAnswer || userInput2.value.trim() == correctAnswer){
         console.log("correct")
         state.score++
         if (mulLevel == "multiples"){
@@ -6992,6 +7011,7 @@ function handleSubmit(e){
          if ( !levelDoNotClearNum.includes(level) && !levelDoNotClear.includes(level) ){
           console.log("DO NOT CLEAR")
           userInput.value = ""
+          userInput2.value = ""
          }
          if ( level == 4.0 ){
            arr.length = 0;
@@ -8339,6 +8359,18 @@ for (let i = 0; i <  settingButton.length; i++){
     });
   }
 
+  for (let i = 0; i < heuristics.length; i++){
+    heuristics[i].addEventListener("dblclick", function(){
+      buttonLevel = this.innerHTML
+      mulLevel = "nil"
+  
+      buttonLevelSetting();
+      levelBox();
+      document.querySelector(".input-box").classList.add('hidden');
+      ourForm2.classList.remove('hidden');
+      });
+  }
+
   hardcoreMode.addEventListener('click', function(){
     if (hardcore == 0 ){
       hardcore = 1;
@@ -9584,10 +9616,11 @@ for (let i = 0; i <  settingButton.length; i++){
       case "Heu.2":
         setting =  parseInt(prompt("What level?\n1. Parts and Interval\n2. Internal Transfer (Same)\n9.All"))
         level = "heuTwo"
-        scoreNeeded = 10;
+        scoreNeeded = 2;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
         document.querySelector("#user-input").setAttribute("type","text");
+        document.querySelector("#user-input").style.width = "300px"
       break
 
       case "Heu.3":
@@ -9597,6 +9630,7 @@ for (let i = 0; i <  settingButton.length; i++){
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
         document.querySelector("#user-input").setAttribute("type","text");
+        document.querySelector("#user-input").style.width = "300px"
       break
 
       case "Heu.4":
@@ -9692,8 +9726,13 @@ for (let i = 0; i <  settingButton.length; i++){
 
   reviewAnswer.addEventListener('click', function(){
     if (confirm("Are you sure? Your score will drop to 0.")){
-      userInput.value = state.correctAnswer
-      userInput.focus()
+      if (document.querySelector(".input-box").classList.contains('hidden')){
+        userInput2.focus()
+        userInput2.value = state.correctAnswer
+      } else {
+        userInput.focus()
+        userInput.value = state.correctAnswer
+      }
       state.score = 0
       currentScore.textContent = state.score
       reviewAnswer.classList.add("hidden")
