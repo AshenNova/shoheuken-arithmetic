@@ -204,6 +204,7 @@ const highScore6DotZero7 = new HighScore("Nil", "", 0, 0)
 
 const heuOne = new HighScore("Nil", "", 0, 0)
 const heuTwo = new HighScore("Nil", "", 0, 0)
+const heuThree = new HighScore("Nil", "", 0, 0)
 const heuFour = new HighScore("Nil", "", 0, 0)
 
 
@@ -280,23 +281,29 @@ if (state.score >= scoreNeeded || time == cutoff){
     } else if (time < gold){
         document.querySelector('.trophy').appendChild(imageG);
         console.log("Gold image")
-      } else if (time < silver){
-        document.querySelector('.trophy').appendChild(imageS);
-        console.log("Silver image")
-      } else if (time < bronze){
-        document.querySelector('.trophy').appendChild(imageB);
-        console.log("Bronze image")
-      } else if (time < cutoff) {
-        document.querySelector('.trophy').appendChild(imageNMP);
-        console.log("Practice image")
-      } else {
+    } else if (time < silver){
+      document.querySelector('.trophy').appendChild(imageS);
+      console.log("Silver image")
+    } else if (time < bronze){
+      document.querySelector('.trophy').appendChild(imageB);
+      console.log("Bronze image")
+    } else if (time < cutoff) {
+      document.querySelector('.trophy').appendChild(imageNMP);
+      console.log("Practice image")
+    } else {
+      document.querySelector('.trophy').appendChild(imageFailed);
+      console.log("Failed")
+    }
+    if ( gold == 0 && time > cutoff){
         document.querySelector('.trophy').appendChild(imageFailed);
         console.log("Failed")
-      }
-  } else {
-    document.querySelector('.trophy').appendChild(imageCompleted);
+    }
+  } 
+    if ( easy == 1 ){
+      document.querySelector('.trophy').appendChild(imageCompleted);
       console.log("Completed image")
-  }
+    }
+
   mistakesCountCl.innerHTML = state.mistake;
   player = 0;
 }
@@ -5046,26 +5053,66 @@ function updateProblems(){
   }
 
   if ( level == "heuTwo"){
-    p.positionTwo = p.rollPositionTwoArr[genNumbers(3)]
-    p.positionOne = p.rollPositionOneArr[genNumbers(3)]
-    p.positionThree = p.rollPositionOneArr[genNumbers(3)]
-    p.positionFour = p.rollPositionTwoArr[genNumbers(3)]
+    if (setting == 1){
+      p.positionTwo = p.rollPositionTwoArr[genNumbers(3)]
+      p.positionOne = p.rollPositionOneArr[genNumbers(3)]
+      p.positionThree = p.rollPositionOneArr[genNumbers(3)]
+      p.positionFour = p.rollPositionTwoArr[genNumbers(3)]
 
-   while (p.positionThree == p.positionOne && p.positionFour == p.positionTwo){
-    p.positionThree = p.rollPositionOneArr[genNumbers(3)]
-   }
+    while (p.positionThree == p.positionOne && p.positionFour == p.positionTwo){
+      p.positionThree = p.rollPositionOneArr[genNumbers(3)]
+    }
 
-    p.indexOne = p.rollPositionOneArr.indexOf(p.positionOne)
-    p.indexTwo = p.rollPositionTwoArr.indexOf(p.positionTwo)+3
-    p.indexThree = p.rollPositionOneArr.indexOf(p.positionThree)
-    p.indexFour = p.rollPositionTwoArr.indexOf(p.positionFour)+3
-    p.intervals = p.indexTwo - p.indexOne
-    p.distance = p.intervals*p.rollDistance
-    displayProblem.innerHTML = 
-    `
-    The distance between the ${p.positionOne} ${p.rollObject} and the ${p.positionTwo} ${p.rollObject} is ${p.distance} m. </br>
-    What is the distance between the ${p.positionThree} and ${p.positionFour} ${p.rollObject}?
-    `
+      p.indexOne = p.rollPositionOneArr.indexOf(p.positionOne)
+      p.indexTwo = p.rollPositionTwoArr.indexOf(p.positionTwo)+3
+      p.indexThree = p.rollPositionOneArr.indexOf(p.positionThree)
+      p.indexFour = p.rollPositionTwoArr.indexOf(p.positionFour)+3
+      p.intervals = p.indexTwo - p.indexOne
+      p.distance = p.intervals*p.rollDistance
+      displayProblem.innerHTML = 
+      `
+      The distance between the ${p.positionOne} ${p.rollObject} and the ${p.positionTwo} ${p.rollObject} is ${p.distance} m. </br>
+      What is the distance between the ${p.positionThree} and ${p.positionFour} ${p.rollObject}?
+      `
+    }
+    if (setting == 2){
+      p.numOne = p.numTwo + (genNumbers(3)+2)*2
+    
+      displayProblem.innerHTML =
+      `
+      ${p.objectOne} has ${p.numOne} sweets.</br>
+      ${p.objectTwo} has ${p.numTwo} sweets.</br>
+      How many sweets must ${p.objectOne} transfer to ${p.objectTwo} for them to be the same?
+      `
+    }
+  }
+  if ( level == "heuThree"){
+    if ( setting == 1 || (setting == 9 && p.roll == 1) ){
+      while (p.numOne == p.numTwo) {
+        p.numOne = (genNumbers(5)+1)*2
+        p.numTwo = (genNumbers(5)+1)*2
+      }
+      displayProblem.innerHTML = 
+      `
+      ${p.objectOne} and ${p.objectTwo} has ${p.numOne+p.numTwo} sweets.</br>
+      ${p.objectOne} has ${Math.abs(p.numOne-p.numTwo)} ${p.numOne > p.numTwo ? "more" : "less"} sweets than ${p.objectTwo}.</br>
+      How many sweets does ${p.rollAnswer == 0 ? `${p.objectOne}` : `${p.objectTwo}` } have?
+      `
+    }
+    if ( setting == 2 || (setting == 9 && p.roll == 2)){
+      p.legOne = parseInt(p.objects[p.rollObj][2])
+      p.legTwo = parseInt(p.objects[p.rollObj][3])
+      p.objectOne = p.objects[p.rollObj][0]
+      p.objectTwo = p.objects[p.rollObj][1]
+      p.total = p.numOne*p.legOne+p.numTwo*p.legTwo
+      console.log(p.legOne, p.legTwo)
+      displayProblem.innerHTML = 
+      `
+      There is a total of ${p.numOne+p.numTwo} ${p.objectOne} and ${p.objectTwo}.</br>
+      There are ${p.total} ${p.rollObj < 3 ? "legs" : "wheels"}.</br>
+      How many ${p.rollQn == "A" ? p.objectOne : p.objectTwo} are there?
+      `
+    }
   }
 
   if ( level == "heuFour"){
@@ -6774,7 +6821,51 @@ function handleSubmit(e){
       } 
 
       if ( level == "heuTwo"){
-        correctAnswer = `${p.distance}/${p.indexTwo-p.indexOne}x${p.indexFour-p.indexThree}=${p.rollDistance*(p.indexFour-p.indexThree)}`
+        if (setting == 1){
+          correctAnswer = `${p.distance}/${p.indexTwo-p.indexOne}x${p.indexFour-p.indexThree}=${p.rollDistance*(p.indexFour-p.indexThree)}`
+        }
+        if (setting == 2){
+          correctAnswer = (p.numOne-p.numTwo)/2
+        }
+      }
+
+      if ( level == "heuThree"){
+
+        if (setting == 1 || (setting == 9 && p.roll == 1)){  
+          let difference = Math.abs(p.numOne-p.numTwo)
+          let adjustment = undefined
+          if (p.rollAnswer == 0){
+            if (p.numOne > p.numTwo){
+              adjustment = p.numOne+p.numTwo+difference
+            } else {
+              adjustment = p.numOne+p.numTwo-difference
+            }  
+          }
+          if (p.rollAnswer == 1){
+            if (p.numOne > p.numTwo){
+              adjustment = p.numOne+p.numTwo-difference
+            } else {
+              adjustment = p.numOne+p.numTwo+difference
+            }
+          }
+          if (p.rollAnswer == 0){
+            correctAnswer = `${p.numOne+p.numTwo}${(p.numOne>p.numTwo)?"+":"-"}${Math.abs(p.numOne-p.numTwo)}=${adjustment},${adjustment}/2=${p.numOne}`
+          }
+          if (p.rollAnswer == 1){
+            correctAnswer = `${p.numOne+p.numTwo}${(p.numOne<p.numTwo)?"+":"-"}${Math.abs(p.numOne-p.numTwo)}=${adjustment},${adjustment}/2=${p.numTwo}`
+          }
+        }
+        if (setting == 2 || setting == 9 && p.roll == 2){
+          let smallDifference = p.legTwo-p.legOne
+          if (p.rollQn == "A"){
+            let bigDifference = p.legTwo*(p.numTwo+p.numOne)-p.total
+            correctAnswer = `${p.legTwo*(p.numOne+p.numTwo)}-${p.total}=${bigDifference},${bigDifference}/${smallDifference}=${p.numOne}`
+          }
+          if (p.rollQn == "B"){
+            let bigDifference = p.total-(p.numOne+p.numTwo)*p.legOne
+            correctAnswer = `${p.total}-${(p.numOne+p.numTwo)*p.legOne}=${bigDifference},${bigDifference}/${smallDifference}=${p.numTwo}`
+          }
+        }
       }
 
       if ( level == "heuFour"){
@@ -6798,7 +6889,7 @@ function handleSubmit(e){
       if (levelToCaps.includes(level) || (level == 3.16 && p.optionFinal == 4)){
         userInput.value = userInput.value.toUpperCase()
       }
-
+      //  adjust to lowercase
       levelToLower = [1.04, 1.05]
       if (levelToLower.includes(level)){
         userInput.value = userInput.value.toLowerCase()
@@ -6887,7 +6978,9 @@ function handleSubmit(e){
         setTimeout(() => currentMistake.classList.remove("animate-wrong"), 331)
         mainContainer.classList.add("animate-wrong-container")
         setTimeout(() => mainContainer.classList.remove("animate-wrong-container"), 331)
-         if ( level != 2.09 && level != 2.05 && level != 2.08 && level != 2.09 && level != 3.12 && level != 3.13 && level != 3.14 && level != 3.16 && level != 4.0 && level != 6.01 ){
+        levelDoNotClear = ["heuOne", "heuTwo", "heuThree", "heuFour" , "heuFive", "heuSix"]
+        levelDoNotClearNum = [2.05, 2.09, 2.08, 2.09, 3.12, 3.13, 3.14, 3.16, 4.0, 6.01 ]
+         if ( !levelDoNotClearNum.includes(level) && !levelDoNotClear.includes(level) ){
           console.log("DO NOT CLEAR")
           userInput.value = ""
          }
@@ -8012,21 +8105,67 @@ function genProblems(){
   }
 
   if (level == "heuTwo"){
-    return{
-      rollObject: ["tree", "lamppost", "fire hydrant"][genNumbers(3)],
-      rollPositionTwoArr: ["4th", "5th","6th"],
-      rollPositionOneArr: ["1st", "2nd","3rd"],
-      positionOne: undefined,
-      positionTwo: undefined,
-      positionThree: undefined,
-      positionFour: undefined,
-      rollDistance: genNumbers(4)+2,
-      indexOne: undefined,
-      indexTwo: undefined,
-      indexThree: undefined,
-      indexFour: undefined,
-      intervals: undefined,
-      distance: undefined
+    if (setting == 1 || setting == "max"){
+      return{
+        rollObject: ["tree", "lamppost", "fire hydrant"][genNumbers(3)],
+        rollPositionTwoArr: ["4th", "5th","6th"],
+        rollPositionOneArr: ["1st", "2nd","3rd"],
+        positionOne: undefined,
+        positionTwo: undefined,
+        positionThree: undefined,
+        positionFour: undefined,
+        rollDistance: genNumbers(4)+2,
+        indexOne: undefined,
+        indexTwo: undefined,
+        indexThree: undefined,
+        indexFour: undefined,
+        intervals: undefined,
+        distance: undefined
+      }
+    }
+    if (setting == 2){
+      return {
+        objectOne: ["A","B","C"][genNumbers(3)],
+        objectTwo: ["X","Y","Z"][genNumbers(3)],
+        numTwo: genNumbers(5)+5,
+        numOne: undefined
+      }
+    }
+  }
+  if ( level == "heuThree"){
+    let roll = genNumbers(2)+1
+    if (setting == 1 || (setting == 9 && roll == 1)){
+        return {
+        objectOne: ["A","B","C"][genNumbers(3)],
+        objectTwo: ["X","Y","Z"][genNumbers(3)],
+        numOne: (genNumbers(5)+1)*2,
+        numTwo: (genNumbers(5)+1)*2,
+        rollAnswer: genNumbers(2),
+        roll: 1
+      }
+    }
+    if (setting == 2 || (setting == 9 && roll == 2)){
+      return {
+        objects: [
+          ["chickens", "dogs", "2", "4"],
+          ["ducks", "spiders", "2", "8"],
+          ["sheeps", "spiders", "4", "8" ],
+          ["motorcycles", "tricycle", "2", "3"],
+          ["20 cents", "50 cents", "20", "50"]  
+        ],
+        rollObj: genNumbers(4),
+        numOne: (genNumbers(5)+1),
+        numTwo: (genNumbers(5)+1),
+        rollAnswer: genNumbers(2),
+        difference: undefined,
+        objectOne: undefined,
+        objectTwo: undefined,
+        legOne: undefined,
+        legTwo: undefined,
+        roll: 2,
+        total: undefined,
+        rollQn: ["A","B"][genNumbers(2)]
+      }
     }
   }
 
@@ -9421,8 +9560,17 @@ for (let i = 0; i <  settingButton.length; i++){
       break
 
       case "Heu.2":
-        setting =  parseInt(prompt("What level?"))
+        setting =  parseInt(prompt("What level?\n1. Parts and Interval\n2. Internal Transfer (Same)"))
         level = "heuTwo"
+        scoreNeeded = 10;
+        displayProblem.style.fontSize = "18px";
+        displayProblem.style.textAlign = "left";
+        document.querySelector("#user-input").setAttribute("type","text");
+      break
+
+      case "Heu.3":
+        setting =  parseInt(prompt("What level?\n1.Sum and Difference\n2.Supposition"))
+        level = "heuThree"
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
