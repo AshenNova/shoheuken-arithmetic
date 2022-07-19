@@ -901,8 +901,8 @@ function updateProblems(){
     while (arr[0] == p.figureTwo){
       p.figureTwo = ["🏀",'⚽️','🏈','🎾','🍎','🍏','🌭'][genNumbers(7)]
     }
-    while (p.numTwo > p.numOne){
-      p.numTwo = (genNumbers(9)+2)
+    while (p.numTwo > p.numOne || p.numOne == p.numTwo){
+      p.numTwo = (genNumbers(5)+1)
     }
     arr.push(p.figureTwo)
     let repeat = genNumbers(2)+2
@@ -5113,6 +5113,12 @@ function updateProblems(){
       How many ${p.rollQn == "A" ? p.objectOne : p.objectTwo} are there?
       `
     }
+    if ( setting == 3 || setting == 9 && p.roll == 3){
+        displayProblem.innerHTML = 
+        `
+
+        `
+    }
   }
 
   if ( level == "heuFour"){
@@ -6866,6 +6872,9 @@ function handleSubmit(e){
             correctAnswer = `${p.total}-${(p.numOne+p.numTwo)*p.legOne}=${bigDifference},${bigDifference}/${smallDifference}=${p.numTwo}`
           }
         }
+        if ( setting == 3 || setting == 9 && p.roll == 3){
+
+        }
       }
 
       if ( level == "heuFour"){
@@ -7173,7 +7182,7 @@ function genProblems(){
       figureTwo: ["🏀",'⚽️','🏈','🎾','🍎','🍏','🌭'][genNumbers(7)],
       operator: "+",
       numOne: (genNumbers(9)+2),
-      numTwo: (genNumbers(9)+2)
+      numTwo: (genNumbers(5)+1)
     }
   }
 
@@ -8169,6 +8178,15 @@ function genProblems(){
         total: undefined,
         rollQn: ["A","B"][genNumbers(2)]
       }
+    }
+    if ( setting == 3 || setting == 9 && p.roll == 3){
+        objects = 
+        [
+         ["small box","big box"],
+         ["apple", "orange"],
+         ["plate","cup"],
+         ["factory A", "factory B"]
+        ]
     }
   }
 
@@ -9573,7 +9591,7 @@ for (let i = 0; i <  settingButton.length; i++){
       break
 
       case "Heu.3":
-        setting =  parseInt(prompt("What level?\n1.Sum and Difference\n2.Supposition\n9.All"))
+        setting =  parseInt(prompt("What level?\n1. Sum and Difference\n2. Supposition\n3. Under the same unit ( Unit )\n4. Under the same unit ( Difference )\n9. All"))
         level = "heuThree"
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
