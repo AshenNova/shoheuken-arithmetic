@@ -7476,7 +7476,7 @@ function genProblems(){
     holdingNumber: 0,
     finalNumber: 0,
     totalNumber: 0,
-    placeValue: ["ones", "tens","hundreds","thousands","tenths","hundredths","thousandths"][genNumbers(6)]
+    placeValue: ["ones", "tens","hundreds","thousands","tenths","hundredths","thousandths"][genNumbers(7)]
     }
   }
 
