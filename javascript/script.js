@@ -6830,16 +6830,16 @@ function handleSubmit(e){
       // heuristics Answer
       if (level == "heuOne"){
         if (p.rollAB == "A" && p.rollVar == 0){
-          correctAnswer = p.numOne-p.numTwo
+          correctAnswer = `${p.numOne}-${p.numTwo}=${p.numOne-p.numTwo}`
         }
         if (p.rollAB == "A" && p.rollVar == 1){
-          correctAnswer = p.numOne+p.numTwo
+          correctAnswer = `${p.numOne}+${p.numTwo}=${p.numOne+p.numTwo}`
         }
         if (p.rollAB == "B" && p.rollVar == 0){
-          correctAnswer = p.numOne+p.numTwo
+          correctAnswer = `${p.numOne}+${p.numTwo}=${p.numOne+p.numTwo}`
         }
         if (p.rollAB == "B" && p.rollVar == 1){
-          correctAnswer = p.numOne-p.numTwo
+          correctAnswer = `${p.numOne}-${p.numTwo}=${p.numOne-p.numTwo}`
         }
       } 
 
