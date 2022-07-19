@@ -6831,7 +6831,7 @@ function handleSubmit(e){
           correctAnswer = `${p.distance}/${p.indexTwo-p.indexOne}x${p.indexFour-p.indexThree}=${p.rollDistance*(p.indexFour-p.indexThree)}`
         }
         if (setting == 2 || setting == 9 && p.roll == 2 ){
-          correctAnswer = (p.numOne-p.numTwo)/2
+          correctAnswer = `${p.numOne}-${p.numTwo}=${p.numOne-p.numTwo},${p.numOne-p.numTwo}/2=${(p.numOne-p.numTwo)/2}`
         }
       }
 
