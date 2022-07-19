@@ -7289,7 +7289,7 @@ function genProblems(){
       numThree: genNumbers(99)+1,
       numFour: genNumbers(1000)+1,
       numFive:  genNumbers(58)+1,
-      unitMeasurement: ["min","kg","km","ℓ","$","m"][genNumbers(6)],
+      unitMeasurement: ["kg","km","ℓ","$","m","min"][genNumbers(6)],
       option: ["1","2"][genNumbers(2)],
       secondUnitMeasurement: 0,
       remainder: 0
