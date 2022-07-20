@@ -5133,6 +5133,21 @@ function updateProblems(){
 
         `
     }
+
+    if ( setting == 4 || setting == 9 && p.roll == 4 ){
+      while (p.objectOneV == p.objectTwoV){
+        p.objectTwoV = genNumbers(5)+1
+      }
+      console.log(p.objectOneV, p.objectTwoV, p.objectOneQ, p.objectTwoQ)
+      p.totalValue = (p.objectOneQ*p.objectOneV)+(p.objectTwoQ*p.objectTwoV)
+      p.difference = Math.abs(p.objectOneV-p.objectTwoV)
+      displayProblem.innerHTML = 
+      `
+      ${p.objectOne} is ${p.difference} ${p.objectOneV > p.objectTwoV ? "more" : "less"} than ${p.objectTwo}.</br>
+      If ${p.objectOneQ} ${p.objectOne} and ${p.objectTwoQ} ${p.objectTwo} is ${p.totalValue}.</br>
+      What is ${p.rollQn == "A" ? p.objectOne : p.objectTwo}?
+      `
+    }
   }
 
   if ( level == "heuFour"){
@@ -6910,6 +6925,46 @@ function handleSubmit(e){
             `${p.objectOneX}x${p.unitSentence}=${unitOne}\n${p.objectTwoX}x1=${unitTwo}\n${unitOne}+${unitTwo}=${totalUnit}\n${p.totalValue}/${totalUnit}=${oneUnit}\n${oneUnit}x${p.unitSentence}=${oneUnit*p.unitSentence}`
           }
       }
+
+      if ( setting == 4 || setting == 9 && p.roll == 4){
+        let adjustment = undefined
+        let newTotal = undefined
+
+        let firstLine = undefined
+        if (p.rollQn == "A"){
+          adjustment = p.objectTwoQ*p.difference
+          firstLine = `${p.objectTwoQ}x${p.difference}=${adjustment}`
+        }
+        if (p.rollQn == "B"){
+          adjustment = p.objectOneQ*p.difference
+          firstLine = `${p.objectOneQ}x${p.difference}=${adjustment}`
+        }
+
+        let secondLine = undefined
+        if (p.rollQn == "A" && p.objectOneV > p.objectTwoV){
+          newTotal = p.totalValue+adjustment
+          secondLine = `${p.totalValue}+${adjustment}=${newTotal}`
+        }
+        if (p.rollQn == "A" && p.objectOneV < p.objectTwoV){
+          newTotal = p.totalValue-adjustment
+          secondLine = `${p.totalValue}-${adjustment}=${newTotal}`
+        }
+        if (p.rollQn == "B" && p.objectOneV < p.objectTwoV){
+          newTotal = p.totalValue+adjustment
+          secondLine = `${p.totalValue}+${adjustment}=${newTotal}`
+        }
+        if (p.rollQn == "B" && p.objectOneV > p.objectTwoV){
+          newTotal = p.totalValue-adjustment
+          secondLine = `${p.totalValue}-${adjustment}=${newTotal}`
+        }
+
+        let totalUnit = p.objectOneQ+p.objectTwoQ
+        let thirdLine = `${p.objectOneQ}+${p.objectTwoQ}=${totalUnit}`
+        let oneUnit = newTotal/totalUnit
+        let fourthLine = `${newTotal}/${totalUnit}=${oneUnit}`
+
+        correctAnswer = `${firstLine}\n${secondLine}\n${thirdLine}\n${fourthLine}`
+      }
     }
 
       if ( level == "heuFour"){
@@ -8251,6 +8306,20 @@ function genProblems(){
         roll: 3
       }
     }
+      if ( setting == 4 || setting == 9 && p.roll == 4){
+        return{
+          objectOne: ["A","B","C"][genNumbers(3)],
+          objectTwo: ["X","Y","Z"][genNumbers(3)],
+          objectOneQ: genNumbers(4)+1,
+          objectTwoQ: genNumbers(4)+1,
+          objectOneV: genNumbers(4)+1,
+          objectTwoV: genNumbers(4)+1,
+          totalValue: undefined,
+          rollQn: ["A","B"][genNumbers(2)],
+          roll: 4,
+          difference: undefined
+        }
+      }
   }
 
   if ( level == "heuFour"){
