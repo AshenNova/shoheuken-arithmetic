@@ -7737,7 +7737,7 @@ function genProblems(){
   if ( level == 4.16){
     return {
       placeValue: ["tens","hundreds","thousands"][genNumbers(3)],
-      numOne: genNumbers(99999)+1,
+      numOne: genNumbers(99998)+1,
       choice: ["Smallest","Largest"][genNumbers(2)]
     }
   }
@@ -8259,7 +8259,7 @@ function genProblems(){
     }
   }
   if ( level == "heuThree"){
-    let roll = genNumbers(2)+1
+    let roll = genNumbers(4)+1
     if (setting == 1 || (setting == 9 && roll == 1)){
         return {
         objectOne: ["A","B","C"][genNumbers(3)],
