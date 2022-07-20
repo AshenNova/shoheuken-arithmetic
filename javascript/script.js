@@ -6849,7 +6849,8 @@ function handleSubmit(e){
           correctAnswer = `${p.indexTwo+1}-${p.indexOne+1}=${p.indexTwo-p.indexOne}\n${p.distance}/${p.indexTwo-p.indexOne}=${interval}\n${p.indexFour+1}-${p.indexThree+1}=${p.indexFour-p.indexThree}\n${interval}x${p.indexFour-p.indexThree}=${p.rollDistance*(p.indexFour-p.indexThree)}`
         }
         if (setting == 2 || setting == 9 && p.roll == 2 ){
-          correctAnswer = `${p.numOne}-${p.numTwo}=${p.numOne-p.numTwo},${p.numOne-p.numTwo}/2=${(p.numOne-p.numTwo)/2}`
+          correctAnswer = 
+          `${p.numOne}-${p.numTwo}=${p.numOne-p.numTwo}\n${p.numOne-p.numTwo}/2=${(p.numOne-p.numTwo)/2}`
         }
       }
 
@@ -6873,10 +6874,10 @@ function handleSubmit(e){
             }
           }
           if (p.rollAnswer == 0){
-            correctAnswer = `${p.numOne+p.numTwo}${(p.numOne>p.numTwo)?"+":"-"}${Math.abs(p.numOne-p.numTwo)}=${adjustment},${adjustment}/2=${p.numOne}`
+            correctAnswer = `${p.numOne+p.numTwo}${(p.numOne>p.numTwo)?"+":"-"}${Math.abs(p.numOne-p.numTwo)}=${adjustment}\n${adjustment}/2=${p.numOne}`
           }
           if (p.rollAnswer == 1){
-            correctAnswer = `${p.numOne+p.numTwo}${(p.numOne<p.numTwo)?"+":"-"}${Math.abs(p.numOne-p.numTwo)}=${adjustment},${adjustment}/2=${p.numTwo}`
+            correctAnswer = `${p.numOne+p.numTwo}${(p.numOne<p.numTwo)?"+":"-"}${Math.abs(p.numOne-p.numTwo)}=${adjustment}\n${adjustment}/2=${p.numTwo}`
           }
         }
         if (setting == 2 || setting == 9 && p.roll == 2){
@@ -6884,11 +6885,11 @@ function handleSubmit(e){
           let totalAnimal = p.numOne+p.numTwo
           if (p.rollQn == "A"){
             let bigDifference = p.legTwo*(totalAnimal)-p.total
-            correctAnswer = `${totalAnimal}x${p.legTwo}=${totalAnimal*p.legTwo},${p.legTwo*totalAnimal}-${p.total}=${bigDifference},${p.legTwo}-${p.legOne}=${smallDifference},${bigDifference}/${smallDifference}=${p.numOne}`
+            correctAnswer = `${totalAnimal}x${p.legTwo}=${totalAnimal*p.legTwo}\n${p.legTwo*totalAnimal}-${p.total}=${bigDifference}\n${p.legTwo}-${p.legOne}=${smallDifference}\n${bigDifference}/${smallDifference}=${p.numOne}`
           }
           if (p.rollQn == "B"){
             let bigDifference = p.total-totalAnimal*p.legOne
-            correctAnswer = `${totalAnimal}x${p.legOne}=${totalAnimal*p.legOne},${p.total}-${totalAnimal*p.legOne}=${bigDifference},${p.legTwo}-${p.legOne}=${smallDifference},${bigDifference}/${smallDifference}=${p.numTwo}`
+            correctAnswer = `${totalAnimal}x${p.legOne}=${totalAnimal*p.legOne}\n${p.total}-${totalAnimal*p.legOne}=${bigDifference}\n${p.legTwo}-${p.legOne}=${smallDifference}\n${bigDifference}/${smallDifference}=${p.numTwo}`
           }
         }
         if ( setting == 3 || setting == 9 && p.roll == 3){
@@ -6898,11 +6899,34 @@ function handleSubmit(e){
 
       if ( level == "heuFour"){
         console.log(p.rollAnswer)
+        let symbol = undefined
+        let bigDifference = undefined
+        let smallDifference = p.sceneTwo-p.sceneOne
+        let firstLine = `${p.situationOne}+${Math.abs(p.situationTwo)}=${p.situationOne+Math.abs(p.situationTwo)}`
+       
+        if (p.situationOne > 0 && p.situationTwo > 0 || p.situationOne < 0 && p.situationTwo < 0){
+          symbol = "-"
+          p.situationOne = Math.abs(p.situationOne)
+          p.situationTwo = Math.abs(p.situationTwo)
+          if (p.situationTwo > p.situationOne){
+            firstLine = `${Math.abs(p.situationTwo)}-${Math.abs(p.situationOne)}=${Math.abs(p.situationTwo)-p.situationOne}`
+            bigDifference = p.situationTwo-p.situationOne
+          } else {
+            firstLine = `${Math.abs(p.situationOne)}-${Math.abs(p.situationTwo)}=${p.situationOne-p.situationTwo}`
+            bigDifference = Math.abs(p.situationOne) - Math.abs(p.situationTwo)
+          }
+        } else {
+          symbol = "+"
+          bigDifference = Math.abs(p.situationOne) + Math.abs(p.situationTwo)
+        }
+        
         if (p.rollAnswer == 1){
-          correctAnswer = p.numberOfStudents
+          correctAnswer = 
+          `${firstLine}\n${p.sceneTwo}-${p.sceneOne}=${smallDifference}\n${bigDifference}/${smallDifference}=${p.numberOfStudents}`
         }
         if (p.rollAnswer == 2){
-          correctAnswer = `${p.numberOfStudents}x${p.sceneOne}${p.situationOne>0? "+":""}${p.situationOne}`
+          correctAnswer = 
+          `${firstLine}\n${p.sceneTwo}-${p.sceneOne}=${smallDifference}\n${bigDifference}/${smallDifference}=${p.numberOfStudents}\n${p.numberOfStudents}x${p.sceneOne}${symbol}${Math.abs(p.situationOne)}=${p.numberOfStuff}`
         }
       }
 
