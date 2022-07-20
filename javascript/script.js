@@ -5124,8 +5124,12 @@ function updateProblems(){
       `
     }
     if ( setting == 3 || setting == 9 && p.roll == 3){
+      p.totalValue = (p.objectOneX*p.unitSentence+p.objectTwoX)*p.multipler
         displayProblem.innerHTML = 
         `
+          ${p.objectOne} is ${p.unitSentence} times of ${p.objectTwo}.</br>
+          If ${p.objectOneX} ${p.objectOne} and ${p.objectTwoX} ${p.objectTwo} is ${p.totalValue}.</br>
+          What is ${p.rollQn == "A" ? p.objectOne : p.objectTwo }?
 
         `
     }
@@ -6892,10 +6896,21 @@ function handleSubmit(e){
             correctAnswer = `${totalAnimal}x${p.legOne}=${totalAnimal*p.legOne}\n${p.total}-${totalAnimal*p.legOne}=${bigDifference}\n${p.legTwo}-${p.legOne}=${smallDifference}\n${bigDifference}/${smallDifference}=${p.numTwo}`
           }
         }
+        
         if ( setting == 3 || setting == 9 && p.roll == 3){
-
-        }
+          let unitOne = p.unitSentence*p.objectOneX
+          let unitTwo = p.objectTwoX
+          let totalUnit = unitOne+unitTwo
+          let oneUnit = p.totalValue/totalUnit
+          if (p.rollQn == "B"){
+              correctAnswer = 
+              `${p.objectOneX}x${p.unitSentence}=${unitOne}\n${p.objectTwoX}x1=${unitTwo}\n${unitOne}+${unitTwo}=${totalUnit}\n${p.totalValue}/${totalUnit}=${oneUnit}`
+          } else {
+            correctAnswer = 
+            `${p.objectOneX}x${p.unitSentence}=${unitOne}\n${p.objectTwoX}x1=${unitTwo}\n${unitOne}+${unitTwo}=${totalUnit}\n${p.totalValue}/${totalUnit}=${oneUnit}\n${oneUnit}x${p.unitSentence}=${oneUnit*p.unitSentence}`
+          }
       }
+    }
 
       if ( level == "heuFour"){
         console.log(p.rollAnswer)
@@ -8224,13 +8239,17 @@ function genProblems(){
       }
     }
     if ( setting == 3 || setting == 9 && p.roll == 3){
-        objects = 
-        [
-         ["small box","big box"],
-         ["apple", "orange"],
-         ["plate","cup"],
-         ["factory A", "factory B"]
-        ]
+      return{
+        objectOne: ["A","B","C"][genNumbers(3)],
+        objectTwo: ["X","Y","Z"][genNumbers(3)],
+        multipler: genNumbers(3)+2,
+        unitSentence: genNumbers(4)+1,
+        objectOneX: genNumbers(4)+1,
+        objectTwoX: genNumbers(4)+1,
+        totalValue: undefined,
+        rollQn: ["A","B"][genNumbers(2)],
+        roll: 3
+      }
     }
   }
 
