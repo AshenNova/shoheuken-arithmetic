@@ -6969,13 +6969,12 @@ function handleSubmit(e){
 
       if ( level == "heuFour"){
         console.log(p.rollAnswer)
-        let symbol = undefined
+        let symbol = p.situationOne > 0 ? "+" : "-"
         let bigDifference = undefined
         let smallDifference = p.sceneTwo-p.sceneOne
         let firstLine = `${p.situationOne}+${Math.abs(p.situationTwo)}=${p.situationOne+Math.abs(p.situationTwo)}`
        
         if (p.situationOne > 0 && p.situationTwo > 0 || p.situationOne < 0 && p.situationTwo < 0){
-          symbol = "-"
           p.situationOne = Math.abs(p.situationOne)
           p.situationTwo = Math.abs(p.situationTwo)
           if (p.situationTwo > p.situationOne){
@@ -8718,7 +8717,7 @@ for (let i = 0; i <  settingButton.length; i++){
         gold = highScore2DotZero5.time
         silver = highScore2DotZero5.time+((cutoff-highScore2DotZero5.time)/3)
         bronze = highScore2DotZero5.time+((cutoff-highScore2DotZero5.time)/3)*2
-        digit = prompt("How many digits?\n3. Primary 2\n4. Primary3\n5. Primary 4\n6. Primary 5\n7. Primary 6")
+        digit = prompt("How many digits?\n3. Primary 2\n4. Primary 3\n5. Primary 4\n6. Primary 5\n7. Primary 6")
         arr = [0, 1, 2, 3, 4, 5, 6, 7 ,8 ,9]
         highScoreName.innerHTML = highScore2DotZero5.name
         highScoreTime.innerHTML = highScore2DotZero5.time
@@ -9728,7 +9727,7 @@ for (let i = 0; i <  settingButton.length; i++){
       case "Heu.2":
         setting =  parseInt(prompt("What level?\n1. Parts and Interval\n2. Internal Transfer (Same)\n9.All"))
         level = "heuTwo"
-        scoreNeeded = 2;
+        scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
         document.querySelector("#user-input").setAttribute("type","text");
