@@ -5097,6 +5097,9 @@ function updateProblems(){
     }
   }
   if ( level == "heuThree"){
+
+    console.log(setting)
+  
     if ( setting == 1 || (setting == 9 && p.roll == 1) ){
       while (p.numOne == p.numTwo) {
         p.numOne = (genNumbers(5)+1)*2
@@ -5178,16 +5181,54 @@ function updateProblems(){
   }
 
   if ( level == "heuFour"){
-    p.sceneTwo = p.sceneOne + genNumbers(5)+1
-    p.situationOne = p.numberOfStuff-(p.sceneOne*p.numberOfStudents)
-    p.situationTwo = p.numberOfStuff-(p.sceneTwo*p.numberOfStudents)
-    console.log(p.situationOne, p.situationTwo)
-    displayProblem.innerHTML =
-    `
-      If ${p.sceneOne} sweets were given to each pupils, there would be ${p.situationOne > 0 ? "an " : ""}<u>${p.situationOne > 0 ? `excess` : "short" }</u> of ${Math.abs(p.situationOne)} sweets.</br>
-      If ${p.sceneTwo} sweets were given to each pupils, there would be ${p.situationTwo > 0 ? "an " : ""}<u>${p.situationTwo > 0 ? `excess` : "short" }</u> of ${Math.abs(p.situationTwo)} sweets.</br>
-      ${p.rollAnswer == 1 ? "How many pupils are there?" : "How many sweets are there?"}
-    `
+    
+
+    if ( setting == 1 || (setting == 9 && p.roll == 2)){
+      
+      while (p.objectOneQ == p.objectTwoQ || p.objectOneQ > p.objectTwoQ){
+        p.objectTwoQ = genNumbers(4)+2
+        p.objectOneQ = genNumbers(4)+2
+      }
+  
+      console.log(p.objectOneQ, p.objectTwoQ, p.price, p.totalValue)
+      p.objectOneS = p.totalValue-(p.objectOneQ*p.price)
+      p.objectTwoS = p.totalValue-(p.objectTwoQ*p.price)
+    
+     if (p.rollType == "A"){ 
+        displayProblem.innerHTML = 
+        `
+        If person ${p.objectOne} bought ${p.objectOneQ} ${p.objects}.</br>
+        ${p.label} would ${p.objectOneS >= 0 ? "have an excess" : "be short" } of $${Math.abs(p.objectOneS)}.</br>
+        If ${p.label} bought ${p.objectTwoQ} ${p.objects} instead.</br>
+        ${p.label} would ${p.objectTwoS >= 0 ? "have an excess" : "be short" } of $${Math.abs(p.objectTwoS)}.</br>
+        ${p.rollQn == "price" ?`How much does each item cost?` : `How much did person ${p.objectOne} have?`}
+        `
+      }
+      if (p.rollType == "B"){ 
+        displayProblem.innerHTML = 
+        `
+        Both person ${p.objectOne} and ${p.objectTwo} has the same amount.</br>
+        If person ${p.objectOne} bought ${p.objectOneQ} ${p.objects}.</br>
+        ${p.label} would ${p.objectOneS >= 0 ? "have an excess" : "be short" } of $${Math.abs(p.objectOneS)}.</br>
+        If person ${p.objectTwo} bought ${p.objectTwoQ} ${p.objects}.</br>
+        ${p.label} would ${p.objectTwoS >= 0 ? "have an excess" : "be short" } of $${Math.abs(p.objectTwoS)}.</br>
+        ${p.rollQn == "price" ?`How much does each item cost?` : `How much did person ${p.objectOne} have?`}
+        `
+      }
+    }
+
+    if ( setting == 2 || (setting == 9 && p.roll == 2)){
+      p.sceneTwo = p.sceneOne + genNumbers(5)+1
+      p.situationOne = p.numberOfStuff-(p.sceneOne*p.numberOfStudents)
+      p.situationTwo = p.numberOfStuff-(p.sceneTwo*p.numberOfStudents)
+      console.log(p.situationOne, p.situationTwo)
+      displayProblem.innerHTML =
+      `
+        If ${p.sceneOne} sweets were given to each pupils, there would be ${p.situationOne > 0 ? "an " : ""}<u>${p.situationOne > 0 ? `excess` : "short" }</u> of ${Math.abs(p.situationOne)} sweets.</br>
+        If ${p.sceneTwo} sweets were given to each pupils, there would be ${p.situationTwo > 0 ? "an " : ""}<u>${p.situationTwo > 0 ? `excess` : "short" }</u> of ${Math.abs(p.situationTwo)} sweets.</br>
+        ${p.rollAnswer == 1 ? "How many pupils are there?" : "How many sweets are there?"}
+      `
+    }
   }
 
 
@@ -7023,34 +7064,63 @@ function handleSubmit(e){
     }
 
       if ( level == "heuFour"){
-        console.log(p.rollAnswer)
-        let symbol = p.situationOne > 0 ? "+" : "-"
-        let bigDifference = undefined
-        let smallDifference = p.sceneTwo-p.sceneOne
-        let firstLine = `${p.situationOne}+${Math.abs(p.situationTwo)}=${p.situationOne+Math.abs(p.situationTwo)}`
-       
-        if (p.situationOne > 0 && p.situationTwo > 0 || p.situationOne < 0 && p.situationTwo < 0){
-          p.situationOne = Math.abs(p.situationOne)
-          p.situationTwo = Math.abs(p.situationTwo)
-          if (p.situationTwo > p.situationOne){
-            firstLine = `${Math.abs(p.situationTwo)}-${Math.abs(p.situationOne)}=${Math.abs(p.situationTwo)-p.situationOne}`
-            bigDifference = p.situationTwo-p.situationOne
-          } else {
-            firstLine = `${Math.abs(p.situationOne)}-${Math.abs(p.situationTwo)}=${p.situationOne-p.situationTwo}`
-            bigDifference = Math.abs(p.situationOne) - Math.abs(p.situationTwo)
-          }
-        } else {
-          symbol = "+"
-          bigDifference = Math.abs(p.situationOne) + Math.abs(p.situationTwo)
+        if ( setting == 1 || (setting == 9 && p.roll == 1)){
+          let firstLine = undefined
+          let bigDiff = undefined
+          let newObjectOneS = Math.abs(p.objectOneS)
+          let newObjectTwoS = Math.abs(p.objectTwoS)
+            if (p.objectOneS <= 0 && p.objectTwoS <= 0){
+              bigDiff = newObjectTwoS-newObjectOneS
+              firstLine = `${newObjectTwoS}-${newObjectOneS}=${bigDiff}`
+            } else if (p.objectOneS >= 0 && p.objectTwoS >= 0){
+              bigDiff = p.objectOneS-p.objectTwoS
+              firstLine = `${p.objectOneS}-${p.objectTwoS}=${bigDiff}`
+            } else {
+              bigDiff = newObjectOneS+newObjectTwoS
+              firstLine = `${newObjectOneS}+${newObjectTwoS}=${bigDiff}`
+            }
+            
+            let smallDiff = p.objectTwoQ-p.objectOneQ
+
+            if (p.rollQn == "price"){  
+              correctAnswer = `${firstLine}\n${p.objectTwoQ}-${p.objectOneQ}=${smallDiff}\n${bigDiff}/${smallDiff}=${p.price}`
+            }
+            if (p.rollQn == "total"){  
+              correctAnswer = `${firstLine}\n${p.objectTwoQ}-${p.objectOneQ}=${smallDiff}\n${bigDiff}/${smallDiff}=${p.price}\n${p.price}x${p.objectOneQ}${p.totalValue-(p.objectOneQ*p.price) < 0 ? "-" : "+"}${newObjectOneS}=${p.totalValue}`
+            }
+          
         }
+
+        if ( setting == 2 || (setting == 9 && p.roll == 2)){
+          console.log(p.rollAnswer)
+          let symbol = p.situationOne > 0 ? "+" : "-"
+          let bigDifference = undefined
+          let smallDifference = p.sceneTwo-p.sceneOne
+          let firstLine = `${p.situationOne}+${Math.abs(p.situationTwo)}=${p.situationOne+Math.abs(p.situationTwo)}`
         
-        if (p.rollAnswer == 1){
-          correctAnswer = 
-          `${firstLine}\n${p.sceneTwo}-${p.sceneOne}=${smallDifference}\n${bigDifference}/${smallDifference}=${p.numberOfStudents}`
-        }
-        if (p.rollAnswer == 2){
-          correctAnswer = 
-          `${firstLine}\n${p.sceneTwo}-${p.sceneOne}=${smallDifference}\n${bigDifference}/${smallDifference}=${p.numberOfStudents}\n${p.numberOfStudents}x${p.sceneOne}${symbol}${Math.abs(p.situationOne)}=${p.numberOfStuff}`
+          if (p.situationOne > 0 && p.situationTwo > 0 || p.situationOne < 0 && p.situationTwo < 0){
+            p.situationOne = Math.abs(p.situationOne)
+            p.situationTwo = Math.abs(p.situationTwo)
+            if (p.situationTwo > p.situationOne){
+              firstLine = `${Math.abs(p.situationTwo)}-${Math.abs(p.situationOne)}=${Math.abs(p.situationTwo)-p.situationOne}`
+              bigDifference = p.situationTwo-p.situationOne
+            } else {
+              firstLine = `${Math.abs(p.situationOne)}-${Math.abs(p.situationTwo)}=${p.situationOne-p.situationTwo}`
+              bigDifference = Math.abs(p.situationOne) - Math.abs(p.situationTwo)
+            }
+          } else {
+            symbol = "+"
+            bigDifference = Math.abs(p.situationOne) + Math.abs(p.situationTwo)
+          }
+          
+          if (p.rollAnswer == 1){
+            correctAnswer = 
+            `${firstLine}\n${p.sceneTwo}-${p.sceneOne}=${smallDifference}\n${bigDifference}/${smallDifference}=${p.numberOfStudents}`
+          }
+          if (p.rollAnswer == 2){
+            correctAnswer = 
+            `${firstLine}\n${p.sceneTwo}-${p.sceneOne}=${smallDifference}\n${bigDifference}/${smallDifference}=${p.numberOfStudents}\n${p.numberOfStudents}x${p.sceneOne}${symbol}${Math.abs(p.situationOne)}=${p.numberOfStuff}`
+          }
         }
       }
 
@@ -8283,6 +8353,9 @@ function genProblems(){
 
   if (level == "heuTwo"){
     roll = genNumbers(2)+1
+    if (isNaN(setting)){
+      setting = 9
+    }
     if (setting == 1 || setting == 9 && roll == 1 ){
       return{
         rollObject: ["tree", "lamppost", "fire hydrant"][genNumbers(3)],
@@ -8313,7 +8386,10 @@ function genProblems(){
     }
   }
   if ( level == "heuThree"){
-    let roll = genNumbers(4)+1
+    let roll = genNumbers(5)+1
+    if (isNaN(setting)){
+      setting = 9
+    }
     if (setting == 1 || (setting == 9 && roll == 1)){
         return {
         objectOne: ["A","B","C"][genNumbers(3)],
@@ -8347,12 +8423,12 @@ function genProblems(){
         rollQn: ["A","B"][genNumbers(2)]
       }
     }
-    if ( setting == 3 || setting == 9 && p.roll == 3){
+    if ( setting == 3 || (setting == 9 && roll == 3)){
       return{
         objectOne: ["A","B","C"][genNumbers(3)],
         objectTwo: ["X","Y","Z"][genNumbers(3)],
         multipler: genNumbers(3)+2,
-        unitSentence: genNumbers(4)+1,
+        unitSentence: genNumbers(3)+2,
         objectOneX: genNumbers(4)+1,
         objectTwoX: genNumbers(4)+1,
         totalValue: undefined,
@@ -8360,7 +8436,7 @@ function genProblems(){
         roll: 3
       }
     }
-      if ( setting == 4 || setting == 9 && p.roll == 4){
+      if ( setting == 4 || (setting == 9 && roll == 4)){
         return{
           objectOne: ["A","B","C"][genNumbers(3)],
           objectTwo: ["X","Y","Z"][genNumbers(3)],
@@ -8375,7 +8451,7 @@ function genProblems(){
         }
       }
 
-      if ( setting == 5 || setting == 9 && p.roll == 5){
+      if ( setting == 5 || setting == 9 && roll == 5){
         return {
           unitMeasurement: [ "kg", "g", "ml", "ℓ"][genNumbers(4)],
           objectOne: ["A","B","C"][genNumbers(3)],
@@ -8392,15 +8468,39 @@ function genProblems(){
   }
 
   if ( level == "heuFour"){
-    return {
-      numberOfStudents: genNumbers(8)+2,
-      numberOfStuff: genNumbers(20)+10,
-      sceneOne: genNumbers(4)+1,
-      sceneTwo: undefined,
-      situationOne: undefined,
-      situationTwo: undefined,
-      rollAnswer: genNumbers(2)+1
+    if (isNaN(setting)){
+      setting = 9
     }
+
+    if (setting == 1 || (setting == 9 && roll == 1) )
+    return {
+      objects: ["stationeries","cards","toys","games"][genNumbers(4)],
+      label: ["he","she"][genNumbers(2)],
+      objectOne: ["A","B","C"][genNumbers(3)],
+      objectTwo: ["X","Y","Z"][genNumbers(3)],
+      objectOneQ: genNumbers(4)+2,
+      objectTwoQ: genNumbers(8)+2,
+      price: genNumbers(5)+5,
+      totalValue: (genNumbers(9)+1)*10,
+      rollAnswer: genNumbers(2)+1,
+      objectOneS: undefined,
+      objectTwoS: undefined,
+      roll: 1,
+      rollType: ["A","B"][genNumbers(2)],
+      rollQn: ["total","price"][genNumbers(2)]
+    }
+
+    if (setting == 2 || (setting == 9 && roll == 2) )
+      return {
+        numberOfStudents: genNumbers(8)+2,
+        numberOfStuff: genNumbers(20)+10,
+        sceneOne: genNumbers(4)+1,
+        sceneTwo: undefined,
+        situationOne: undefined,
+        situationTwo: undefined,
+        rollAnswer: genNumbers(2)+1,
+        roll: 2
+      }
   }
 
   if (level == "1 times table"){
@@ -9805,7 +9905,7 @@ for (let i = 0; i <  settingButton.length; i++){
       break
 
       case "Heu.3":
-        setting =  parseInt(prompt("What level?\n1. Sum and Difference\n2. Supposition\n3. Under the same unit ( Unit )\n4. Under the same unit ( Difference )\n5. Equal Grouping\n\n9. All"))
+        setting = parseInt(prompt("What level?\n1. Sum and Difference\n2. Supposition\n3. Under the same unit ( Unit )\n4. Under the same unit ( Difference )\n5. Equal Grouping\n\n9. All"))
         level = "heuThree"
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
@@ -9816,6 +9916,7 @@ for (let i = 0; i <  settingButton.length; i++){
 
       case "Heu.4":
         level = "heuFour"
+        setting = parseInt(prompt("What level?\n1. Excess and Shortage ( Type 1 )\n2. Excess and Shortage ( Type 2 )\n\n9. All"))
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
