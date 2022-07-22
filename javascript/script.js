@@ -5148,6 +5148,33 @@ function updateProblems(){
       What is ${p.rollQn == "A" ? p.objectOne : p.objectTwo}?
       `
     }
+
+    if ( setting == 5 || setting == 9 && p.roll == 5){
+      while (p.objectOneV == p.objectTwoV){
+        p.objectOneV = genNumbers(3)+2
+      }
+      p.total = (genNumbers(8)+2)*(p.objectOneV+p.objectTwoV)
+      if (p.rollQn2 != "total"){
+        displayProblem.innerHTML = 
+        `
+        Object ${p.objectOne} is ${p.objectOneV} ${p.unitMeasurement}.</br>
+        Object ${p.objectTwo} is ${p.objectTwoV} ${p.unitMeasurement}.</br>
+        There is an equal number of ${p.objectOne} and ${p.objectTwo}.</br>
+        The total for both is ${p.total} ${p.unitMeasurement}.</br>
+        ${ p.rollQn2 == "many" ? `How many ${p.rollQn == "A" ? p.objectOne : p.objectTwo}s are there?` : `What is the ${ p.rollQn == "A" ? p.objectOne : p.objectTwo}'s total? `}
+        `
+      } else {
+        displayProblem.innerHTML = 
+        `
+        Object ${p.objectOne} is ${p.objectOneV} ${p.unitMeasurement}.</br>
+        Object ${p.objectTwo} is ${p.objectTwoV} ${p.unitMeasurement}.</br>
+        There is an equal number of ${p.objectOne} and ${p.objectTwo}.</br>
+        The total for both is ${p.total} ${p.unitMeasurement}.</br>
+        How many ${p.objectOne} and ${p.objectTwo} are there in total?
+        `
+      }
+
+    }
   }
 
   if ( level == "heuFour"){
@@ -6965,6 +6992,34 @@ function handleSubmit(e){
 
         correctAnswer = `${firstLine}\n${secondLine}\n${thirdLine}\n${fourthLine}`
       }
+
+      if (setting == 5 || setting == 9 && p.roll == 5){
+        let oneSet = p.objectOneV+p.objectTwoV
+        let totalSets = p.total/oneSet
+        let totalValueOne = totalSets*p.objectOneV
+        let totalValueTwo = totalSets*p.objectTwoV
+
+        if (p.rollQn2 == "many"){
+          correctAnswer = 
+          `${p.objectOneV}+${p.objectTwoV}=${oneSet}\n${p.total}/${oneSet}=${totalSets}`
+        }
+
+        if (p.rollQn2 == "what"){
+         if (p.rollQn == "A"){
+          correctAnswer = 
+          `${p.objectOneV}+${p.objectTwoV}=${oneSet}\n${p.total}/${oneSet}=${totalSets}\n${totalSets}x${p.objectOneV}=${totalValueOne}`
+         } 
+         if (p.rollQn == "B"){
+          correctAnswer = 
+          `${p.objectOneV}+${p.objectTwoV}=${oneSet}\n${p.total}/${oneSet}=${totalSets}\n${totalSets}x${p.objectTwoV}=${totalValueTwo}`
+         }
+        }
+
+         if (p.rollQn2 == "total"){
+          correctAnswer = 
+          `${p.objectOneV}+${p.objectTwoV}=${oneSet}\n${p.total}/${oneSet}=${totalSets}\n${totalSets}x2=${totalSets*2}`
+         } 
+      }
     }
 
       if ( level == "heuFour"){
@@ -8317,6 +8372,21 @@ function genProblems(){
           rollQn: ["A","B"][genNumbers(2)],
           roll: 4,
           difference: undefined
+        }
+      }
+
+      if ( setting == 5 || setting == 9 && p.roll == 5){
+        return {
+          unitMeasurement: [ "kg", "g", "ml", "ℓ"][genNumbers(4)],
+          objectOne: ["A","B","C"][genNumbers(3)],
+          objectTwo: ["X","Y","Z"][genNumbers(3)],
+          objectOneV: genNumbers(3)+2,
+          objectTwoV: genNumbers(3)+2,
+          total: undefined,
+          rollQn: ["A","B"][genNumbers(2)],
+          rollQn2: ["many","what","total"][genNumbers(3)],
+          roll: 5
+      
         }
       }
   }
@@ -9735,7 +9805,7 @@ for (let i = 0; i <  settingButton.length; i++){
       break
 
       case "Heu.3":
-        setting =  parseInt(prompt("What level?\n1. Sum and Difference\n2. Supposition\n3. Under the same unit ( Unit )\n4. Under the same unit ( Difference )\n9. All"))
+        setting =  parseInt(prompt("What level?\n1. Sum and Difference\n2. Supposition\n3. Under the same unit ( Unit )\n4. Under the same unit ( Difference )\n5. Equal Grouping\n\n9. All"))
         level = "heuThree"
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
