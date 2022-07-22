@@ -5190,7 +5190,6 @@ function updateProblems(){
         p.objectOneQ = genNumbers(4)+2
       }
   
-      console.log(p.objectOneQ, p.objectTwoQ, p.price, p.totalValue)
       p.objectOneS = p.totalValue-(p.objectOneQ*p.price)
       p.objectTwoS = p.totalValue-(p.objectTwoQ*p.price)
     
