@@ -5172,7 +5172,7 @@ function updateProblems(){
         Object ${p.objectTwo} is ${p.objectTwoV} ${p.unitMeasurement}.</br>
         There is an equal number of ${p.objectOne} and ${p.objectTwo}.</br>
         The total for both is ${p.total} ${p.unitMeasurement}.</br>
-        ${ p.rollQn2 == "many" ? `How many ${p.rollQn == "A" ? p.objectOne : p.objectTwo}s are there?` : `What is the ${ p.rollQn == "A" ? p.objectOne : p.objectTwo}'s total? `}
+        ${ p.rollQn2 == "many" ? `How many ${p.rollQn == "A" ? p.objectOne : p.objectTwo}s are there?` : `What is the total for ${ p.rollQn == "A" ? p.objectOne : p.objectTwo}? `}
         `
       } else {
         displayProblem.innerHTML = 
@@ -5181,7 +5181,7 @@ function updateProblems(){
         Object ${p.objectTwo} is ${p.objectTwoV} ${p.unitMeasurement}.</br>
         There is an equal number of ${p.objectOne} and ${p.objectTwo}.</br>
         The total for both is ${p.total} ${p.unitMeasurement}.</br>
-        How many ${p.objectOne} and ${p.objectTwo} are there in total?
+        How many ${p.objectOne}s and ${p.objectTwo}s are there in total?
         `
       }
     }
