@@ -5228,6 +5228,19 @@ function updateProblems(){
         ${p.rollAnswer == 1 ? "How many pupils are there?" : "How many sweets are there?"}
       `
     }
+
+    if ( setting == 3 || setting == 9 && p.roll == 3){
+      p.absentPeople = genNumbers(p.peopleAtFirst-2)+1
+      p.giveUp = (genNumbers(4)+1)*p.absentPeople
+      p.remainingPeople = p.peopleAtFirst-p.absentPeople
+      displayProblem.innerHTML = 
+      `
+      There were ${p.peopleAtFirst} workers at first.</br>
+      ${p.absentPeople} did not turn up for work. </br>
+      Each of the remaining workers have to do additional ${p.giveUp} work.</br>
+      ${p.rollQn == "A"? "How many did each worker originally needed to do?" : "What was the total amount of work needed to be done?"}
+      `
+    }
   }
 
 
@@ -7121,6 +7134,18 @@ function handleSubmit(e){
             `${firstLine}\n${p.sceneTwo}-${p.sceneOne}=${smallDifference}\n${bigDifference}/${smallDifference}=${p.numberOfStudents}\n${p.numberOfStudents}x${p.sceneOne}${symbol}${Math.abs(p.situationOne)}=${p.numberOfStuff}`
           }
         }
+
+        if ( setting == 3 || setting == 9 && p.roll == 3){
+          let extraWork = p.remainingPeople*p.giveUp
+          let eachPerson = extraWork/p.absentPeople
+          let totalWork = eachPerson*p.peopleAtFirst
+          if (p.rollQn == "A"){
+            correctAnswer = `${p.peopleAtFirst}-${p.absentPeople}=${p.remainingPeople}\n${p.remainingPeople}x${p.giveUp}=${extraWork}\n${extraWork}/${p.absentPeople}=${eachPerson}`
+          }
+          if (p.rollQn == "B"){
+            correctAnswer = `${p.peopleAtFirst}-${p.absentPeople}=${p.remainingPeople}\n${p.remainingPeople}x${p.giveUp}=${extraWork}\n${extraWork}/${p.absentPeople}=${eachPerson}\n${eachPerson}x${p.peopleAtFirst}=${totalWork}`
+          }
+        }
       }
 
       if (mulLevel == "multiples"){
@@ -8406,7 +8431,7 @@ function genProblems(){
           ["ducks", "spiders", "2", "8"],
           ["sheeps", "spiders", "4", "8" ],
           ["motorcycles", "tricycle", "2", "3"],
-          ["20 cents", "50 cents", "20", "50"]  
+          ["bicycle", "cars", "2", "4"]  
         ],
         rollObj: genNumbers(4),
         numOne: (genNumbers(5)+1),
@@ -8467,11 +8492,13 @@ function genProblems(){
   }
 
   if ( level == "heuFour"){
+    let roll = genNumbers(3)+1
     if (isNaN(setting)){
       setting = 9
     }
 
     if (setting == 1 || (setting == 9 && roll == 1) )
+
     return {
       objects: ["stationeries","cards","toys","games"][genNumbers(4)],
       label: ["he","she"][genNumbers(2)],
@@ -8499,6 +8526,17 @@ function genProblems(){
         situationTwo: undefined,
         rollAnswer: genNumbers(2)+1,
         roll: 2
+      }
+
+      if (setting == 3 || setting == 9 && roll == 3){
+        return {
+          peopleAtFirst: genNumbers(8)+3,
+          absentPeople: undefined,
+          remainingPeople: undefined,
+          giveUp: undefined,
+          rollQn: ["A","B"][genNumbers(2)],
+          roll: 3
+        }
       }
   }
 
@@ -9915,7 +9953,7 @@ for (let i = 0; i <  settingButton.length; i++){
 
       case "Heu.4":
         level = "heuFour"
-        setting = parseInt(prompt("What level?\n1. Excess and Shortage ( Type 1 )\n2. Excess and Shortage ( Type 2 )\n\n9. All"))
+        setting = parseInt(prompt("What level?\n1. Excess and Shortage ( Type 1 )\n2. Excess and Shortage ( Type 2 )\n3. Origin\n\n9. All"))
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
