@@ -5095,6 +5095,14 @@ function updateProblems(){
       How many sweets must ${p.objectOne} transfer to ${p.objectTwo} for them to be the same?
       `
     }
+
+    if (setting == 3 || setting == 3 && p.roll == 3){
+      displayProblem.innerHTML = 
+      `
+      ${p.objectOne} must give ${p.difference} to ${p.objectTwo} to be the same.</br>
+      What is their difference at first?
+      `
+    }
   }
   if ( level == "heuThree"){
 
@@ -7030,6 +7038,9 @@ function handleSubmit(e){
           correctAnswer = 
           `${p.numOne}-${p.numTwo}=${p.numOne-p.numTwo}\n${p.numOne-p.numTwo}/2=${(p.numOne-p.numTwo)/2}`
         }
+        if (setting == 3 || setting == 9 && p.roll == 3){
+          correctAnswer = `${p.difference}x2=${p.difference*2}`
+        }
       }
 
       if ( level == "heuThree"){
@@ -8472,7 +8483,7 @@ function genProblems(){
   }
 
   if (level == "heuTwo"){
-    roll = genNumbers(2)+1
+    roll = genNumbers(3)+1
     if (isNaN(setting)){
       setting = 9
     }
@@ -8502,6 +8513,15 @@ function genProblems(){
         numTwo: genNumbers(5)+5,
         numOne: undefined,
         roll: 2
+      }
+    }
+
+    if (setting == 3 || setting == 9 && roll == 3 ){
+      return {
+        objectOne: ["B","C","D"][genNumbers(3)],
+        objectTwo: ["X","Y","Z"][genNumbers(3)],
+        difference: genNumbers(5)+5,
+        roll: 3
       }
     }
   }
@@ -10056,7 +10076,7 @@ for (let i = 0; i <  settingButton.length; i++){
       break
 
       case "Heu.2":
-        setting =  parseInt(prompt("What level?\n1. Parts and Interval\n2. Internal Transfer (Same)\n9.All"))
+        setting =  parseInt(prompt("What level?\n1. Parts and Interval\n2. Internal Transfer (Same)\n3. Internal Transfer ( Same reverse )\n\n9.All"))
         level = "heuTwo"
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
