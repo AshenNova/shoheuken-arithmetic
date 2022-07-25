@@ -5176,7 +5176,68 @@ function updateProblems(){
         How many ${p.objectOne} and ${p.objectTwo} are there in total?
         `
       }
+    }
+    if ( setting == 6 || setting == 9 && p.roll == 6){
+      let firstSentence = undefined
+      if (p.rollObject == 0){
+        p.objectV = 4
+        firstSentence = `A ${p.objects[0][0]} can fetch ${p.objectV} people.`
+      }
+      if (p.rollObject == 1){
+        p.objectV = genNumbers(4)+6
+        firstSentence = `A ${p.objects[1][0]} can fetch ${p.objectV} people.`
+      }
+      if (p.rollObject == 2){
+        p.objectV = (genNumbers(3)+1)*100
+        firstSentence = `A ${p.objects[2][0]} is ${p.objectV}ml.`
+      }
+      if (p.rollObject == 3){
+        p.objectV = (genNumbers(9)+2)
+        if (p.rollQn == "A"){
+          firstSentence = `X wants to give each person ${p.objectV} sweets.`
+        }
+        if (p.rollQn == "B"){
+          firstSentence = `There are ${p.objectV} sweets in each packet.`
+        }
+      }
 
+      let secondSentence = undefined
+      if (p.rollObject == 0 || p.rollObject == 1){
+        secondSentence = `There are ${p.total} people in total.`
+      }
+      if (p.rollObject == 2){
+        p.total = p.objectV*(genNumbers(5)+2)+(genNumbers(10)+1)*10
+        secondSentence = `A tank contains ${p.total}ml of water.`
+      }
+      if (p.rollObject == 3)
+        { secondSentence = `He has a total of ${p.total} sweets.`
+      }
+
+      let thirdSentence = undefined
+      // rounddown
+      if (p.rollQn == "A"){
+        if (p.rollObject == 0 || p.rollObject == 1 || p.rollObject == 2){
+          thirdSentence = `What is the maximum number of ${p.objects[p.rollObject][1]} are completedly filled?`
+        }
+        if (p.rollObject == 3){
+          thirdSentence = `What is the maximum number of people he can give?`
+        }
+      }
+      if (p.rollQn == "B"){
+        if (p.rollObject == 0 || p.rollObject == 1 || p.rollObject == 2){
+          thirdSentence = `What is the minimum number of ${p.objects[p.rollObject][1]} needed?`
+        }
+        if (p.rollObject == 3){
+          thirdSentence = `What is the minimum number of packets he must buy?`
+        }
+      }
+    
+      displayProblem.innerHTML = 
+      `
+        ${firstSentence}</br>
+        ${secondSentence}</br>
+        ${thirdSentence}</br>
+      `
     }
   }
 
@@ -7073,6 +7134,15 @@ function handleSubmit(e){
           `${p.objectOneV}+${p.objectTwoV}=${oneSet}\n${p.total}/${oneSet}=${totalSets}\n${totalSets}x2=${totalSets*2}`
          } 
       }
+
+      if ( setting == 6 || setting == 9 && p.roll == 6 ){
+        if (p.rollQn == "A"){
+          correctAnswer = `${p.total}/${p.objectV}=${Math.floor(p.total/p.objectV)}r${p.total%p.objectV}\n${Math.floor(p.total/p.objectV)}`
+        }
+        if (p.rollQn == "B"){
+          correctAnswer = `${p.total}/${p.objectV}=${Math.floor(p.total/p.objectV)}r${p.total%p.objectV}\n${Math.floor(p.total/p.objectV)+1}`
+        }
+      }
     }
 
       if ( level == "heuFour"){
@@ -8410,7 +8480,7 @@ function genProblems(){
     }
   }
   if ( level == "heuThree"){
-    let roll = genNumbers(5)+1
+    let roll = genNumbers(6)+1
     if (isNaN(setting)){
       setting = 9
     }
@@ -8487,6 +8557,23 @@ function genProblems(){
           rollQn2: ["many","what","total"][genNumbers(3)],
           roll: 5
       
+        }
+      }
+
+      if ( setting == 6 || setting == 9 && roll == 6){
+        return{
+          roll: 6,
+          rollObject: genNumbers(4),
+          objects:[
+            ["car", "cars"],
+            ["bus", "buses"],
+            ["bottle", "bottles of water"],
+            ["packet","packets"]
+          ],
+          objectV: undefined,
+          total: genNumbers(30)+20,
+          each: genNumbers(5)+5,
+          rollQn: ["A","B"][genNumbers(2)]
         }
       }
   }
@@ -9942,7 +10029,7 @@ for (let i = 0; i <  settingButton.length; i++){
       break
 
       case "Heu.3":
-        setting = parseInt(prompt("What level?\n1. Sum and Difference\n2. Supposition\n3. Under the same unit ( Unit )\n4. Under the same unit ( Difference )\n5. Equal Grouping\n\n9. All"))
+        setting = parseInt(prompt("What level?\n1. Sum and Difference\n2. Supposition\n3. Under the same unit ( Unit )\n4. Under the same unit ( Difference )\n5. Equal Grouping\n6. Round up/down\n\n9. All"))
         level = "heuThree"
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
