@@ -5302,6 +5302,24 @@ function updateProblems(){
       ${p.rollQn == "A"? "How many did each worker originally needed to do?" : "What was the total amount of work needed to be done?"}
       `
     }
+
+    if (setting == 4 || setting == 9 && p.roll == 4){
+      let index = ["X","Y","Z"].indexOf(p.objectTwo)
+      console.log(index)
+      let newArray = ["X","Y","Z"]
+      newArray.splice(index, 1)
+      p.objectThree = newArray[genNumbers(2)]
+      console.log(newArray, p.objectThree)
+      
+    p.groupTwo = p.groupOne+(p.unitSentence-1)*(genNumbers(5)+1)
+      displayProblem.innerHTML = 
+      `
+      ${p.objectOne} and ${p.objectTwo} is ${p.groupOne}.</br>
+      ${p.objectOne} and ${p.objectThree} is ${p.groupTwo}.</br>
+      ${p.objectThree} is ${p.unitSentence} times of ${p.objectTwo}.</br>
+      What is the value of ${p.objectOne}?
+      `
+    }
   }
 
 
@@ -7216,6 +7234,14 @@ function handleSubmit(e){
             correctAnswer = `${p.peopleAtFirst}-${p.absentPeople}=${p.remainingPeople}\n${p.remainingPeople}x${p.giveUp}=${extraWork}\n${extraWork}/${p.absentPeople}=${eachPerson}\n${eachPerson}x${p.peopleAtFirst}=${totalWork}`
           }
         }
+
+        if (setting == 4 || setting == 9 && p.roll == 4){
+          let difference = p.groupTwo-p.groupOne
+          let eachUnit = difference/(p.unitSentence-1)
+          let objectOne = p.groupOne-eachUnit
+          let unitDifference = p.unitSentence-1
+          correctAnswer = `${p.groupTwo}-${p.groupOne}=${difference}\n${p.unitSentence}-1=${unitDifference}\n${difference}/${p.unitSentence-1}=${eachUnit}\n${p.groupOne}-${eachUnit}=${objectOne}`
+        }
       }
 
       if (mulLevel == "multiples"){
@@ -8579,7 +8605,7 @@ function genProblems(){
   }
 
   if ( level == "heuFour"){
-    let roll = genNumbers(3)+1
+    let roll = genNumbers(4)+1
     if (isNaN(setting)){
       setting = 9
     }
@@ -8623,6 +8649,17 @@ function genProblems(){
           giveUp: undefined,
           rollQn: ["A","B"][genNumbers(2)],
           roll: 3
+        }
+      }
+
+      if (setting == 4 || setting == 9 && roll == 4){
+        return{
+        objectOne: ["A","B","C"][genNumbers(3)],
+        objectTwo: ["X","Y","Z"][genNumbers(3)],
+        objectThree: undefined,
+        groupOne: genNumbers(20)+5,
+        groupTwo: undefined,
+        unitSentence: genNumbers(4)+2
         }
       }
   }
@@ -10040,7 +10077,7 @@ for (let i = 0; i <  settingButton.length; i++){
 
       case "Heu.4":
         level = "heuFour"
-        setting = parseInt(prompt("What level?\n1. Excess and Shortage ( Type 1 )\n2. Excess and Shortage ( Type 2 )\n3. Origin\n\n9. All"))
+        setting = parseInt(prompt("What level?\n1. Excess and Shortage ( Type 1 )\n2. Excess and Shortage ( Type 2 )\n3. Origin\n4.Repeated Identity ( Type 2 )\n\n9. All"))
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
