@@ -5358,6 +5358,16 @@ function updateProblems(){
         `
       }
     }
+
+    if ( setting == 6 || setting == 9 && p.roll == 6 ){
+
+      displayProblem.innerHTML = 
+      `
+        There is at least ${p.objectTwoQ} ${p.objectTwo}s between any ${p.objectOne}.</br>
+        There is a total of ${p.total} ${p.objectTwo}s and ${p.objectOne}s.</br>
+        How many ${p.rollQn == "A" ? p.objectOne : p.objectTwo}s are there?
+      `
+    }
   }
 
 
@@ -7322,6 +7332,26 @@ function handleSubmit(e){
             `${p.objectOneUnit}x${p.objectOneV}=${setOne}\n${p.objectTwoUnit}x${p.objectTwoV}=${setTwo}\n${setOne}+${setTwo}=${oneSet}\n${p.total}/${oneSet}=${totalSets}\n${p.objectOneUnit}+${p.objectTwoUnit}=${groupQuantity}\n${totalSets}x${groupQuantity}=${totalSets*groupQuantity}`
            } 
         }
+
+        if (setting == 6 || setting == 9 && p.roll == 6){
+          let sets = Math.floor(p.total/(p.objectTwoQ+1))
+          let remainder = p.total%(p.objectTwoQ+1)
+          if (remainder == 0){
+            if (p.rollQn == "A"){
+              correctAnswer = `${p.total}/${p.objectTwoQ+1}=${sets}`
+            }
+            if (p.rollQn == "B"){
+              correctAnswer = `${p.total}/${p.objectTwoQ+1}=${sets}\n${sets}x${p.objectTwoQ}=${sets*p.objectTwoQ}`
+            }
+         } else {
+          if (p.rollQn == "A"){
+            correctAnswer = `${p.total}/${p.objectTwoQ+1}=${sets}r${remainder}\n${sets}+1=${sets+1}`
+          }
+          if (p.rollQn == "B"){
+            correctAnswer = `${p.total}/${p.objectTwoQ+1}=${sets}r${remainder}\n${sets}x${p.objectTwoQ}+${remainder-1}=${sets*p.objectTwoQ+remainder-1}`
+          }
+         }
+        }
       }
 
       if (mulLevel == "multiples"){
@@ -8773,7 +8803,14 @@ function genProblems(){
       }
 
       if ( setting == 6 || setting == 9 && roll == 6){
-
+        return {
+          roll: 6,
+          objectOne: ["A","B","C"][genNumbers(3)],
+          objectTwo: ["X","Y","Z"][genNumbers(3)],
+          objectTwoQ: genNumbers(3)+2,
+          total: genNumbers(45)+5,
+          rollQn: ["A","B"][genNumbers(2)]
+        }
       }
   }
 
@@ -10190,7 +10227,7 @@ for (let i = 0; i <  settingButton.length; i++){
 
       case "Heu.4":
         level = "heuFour"
-        setting = parseInt(prompt("What level?\n1. Excess and Shortage ( Type 1 )\n2. Excess and Shortage ( Type 2 )\n3. Origin\n4.Repeated Identity ( Type 2 )\n5. Uneven Grouping\n\n9. All"))
+        setting = parseInt(prompt("What level?\n1. Excess and Shortage ( Type 1 )\n2. Excess and Shortage ( Type 2 )\n3. Origin\n4.Repeated Identity ( Type 2 )\n5. Uneven Grouping\n6. Grouping Rows\n\n9. All"))
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
