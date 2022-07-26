@@ -5104,6 +5104,41 @@ function updateProblems(){
       `
     }
   }
+
+  if (level == "heuTwob"){
+    while (p.numOne == p.numTwo){
+      p.numOne = genNumbers(9)+1
+    }
+    if (p.rollAB == "A"){
+      console.log("heuTwob " + "Type " + p.rollAB + " Var " + p.rollVar)
+     
+      if (p.numOne < p.numTwo){
+        [p.numOne, p.numTwo] = [p.numTwo, p.numOne]
+      }
+
+      displayProblem.innerHTML = 
+      `
+      ${p.rollAB} is ${p.numOne} ${p.roll[p.rollPosition][2]}.</br>
+      A is ${p.numTwo} ${p.roll[p.rollPosition][2]} ${p.roll[p.rollPosition][p.rollVar]} than B.</br>
+      What is B?
+      `
+    }
+    if (p.rollAB == "B"){
+      console.log("heuTwob " + "Type " + p.rollAB + " Var " + p.rollVar)
+     
+      if (p.numOne < p.numTwo){
+        [p.numOne, p.numTwo] = [p.numTwo, p.numOne]
+      }
+
+      displayProblem.innerHTML = 
+      `
+      ${p.rollAB} is ${p.numOne} ${p.roll[p.rollPosition][2]}.</br>
+      A is ${p.numTwo} ${p.roll[p.rollPosition][2]} ${p.roll[p.rollPosition][p.rollVar]} than B.</br>
+      What is A?
+      `
+    }
+  }
+
   if ( level == "heuThree"){
 
     console.log(setting)
@@ -7083,6 +7118,22 @@ function handleSubmit(e){
         }
       }
 
+      if (level == "heuTwob"){
+        if (p.rollAB == "A" && p.rollVar == 0){
+          correctAnswer = p.numOne-p.numTwo
+        }
+        if (p.rollAB == "A" && p.rollVar == 1){
+          correctAnswer = p.numOne+p.numTwo
+        }
+        if (p.rollAB == "B" && p.rollVar == 0){
+          correctAnswer = p.numOne+p.numTwo
+        }
+        if (p.rollAB == "B" && p.rollVar == 1){
+          correctAnswer = p.numOne-p.numTwo
+        }
+      } 
+
+
       if ( level == "heuThree"){
 
         if (setting == 1 || (setting == 9 && p.roll == 1)){  
@@ -8627,6 +8678,25 @@ function genProblems(){
       }
     }
   }
+
+  if (level == "heuTwob"){
+    return{
+      roll: 
+      [
+      ["more", "less", "ml"],
+      ["greater","smaller", ""],
+      ["taller", "shorter", "cm"],
+      ["longer","shorter", "m"],
+      ["heavier", "lighter", "kg"]
+      ],
+      rollPosition: genNumbers(5),
+      rollAB: ["A","B"][genNumbers(2)],
+      rollVar: [0, 1][genNumbers(2)],
+      numOne: genNumbers(9)+1,
+      numTwo: genNumbers(9)+1
+    }
+  }
+
   if ( level == "heuThree"){
     let roll = genNumbers(6)+1
     if (isNaN(setting)){
@@ -10209,6 +10279,16 @@ for (let i = 0; i <  settingButton.length; i++){
         setting =  parseInt(prompt("What level?\n1. Parts and Interval\n2. Internal Transfer (Same)\n3. Internal Transfer ( Same reverse )\n\n9.All"))
         level = "heuTwo"
         scoreNeeded = 10;
+        displayProblem.style.fontSize = "18px";
+        displayProblem.style.textAlign = "left";
+        document.querySelector("#user-input").setAttribute("type","text");
+        document.querySelector("#user-input").style.width = "300px"
+      break
+
+      case "Heu.2b":
+        setting =  parseInt(prompt("What level?\n1. Comparison Model\n\n9.All"))
+        level = "heuTwob"
+        scoreNeeded = 2;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
         document.querySelector("#user-input").setAttribute("type","text");
