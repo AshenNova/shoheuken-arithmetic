@@ -5096,7 +5096,7 @@ function updateProblems(){
       `
     }
 
-    if (setting == 3 || setting == 3 && p.roll == 3){
+    if (setting == 3 || setting == 9 && p.roll == 3){
       displayProblem.innerHTML = 
       `
       ${p.objectOne} must give ${p.difference} to ${p.objectTwo} to be the same.</br>
