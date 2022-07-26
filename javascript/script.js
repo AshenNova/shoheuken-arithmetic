@@ -7606,6 +7606,9 @@ function genProblems(){
   }
 
   if ( level == 2.05){
+    if (digit == ""){
+      digit = 5
+    }
     return {
       choice: ["smallest","greatest"][genNumbers(2)],
       landingNumber: undefined,
@@ -8695,7 +8698,7 @@ function genProblems(){
   }
 
   if ( level == "heuFour"){
-    let roll = genNumbers(5)+1
+    let roll = genNumbers(6)+1
     if (isNaN(setting)){
       setting = 9
     }
@@ -8766,8 +8769,11 @@ function genProblems(){
           rollQn: ["A","B"][genNumbers(2)],
           rollQn2: ["many","what","total"][genNumbers(3)],
           roll: 5
-      
         }
+      }
+
+      if ( setting == 6 || setting == 9 && roll == 6){
+
       }
   }
 
