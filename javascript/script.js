@@ -5334,7 +5334,7 @@ function updateProblems(){
       while (p.objectOneV == p.objectTwoV){
         p.objectOneV = genNumbers(3)+2
       }
-      while (p.objectOneUnit == p.objectTwoUnit){
+      while (p.objectOneUnit == p.objectTwoUnit || p.objectOneUnit%2 == 0 && p.objectTwoUnit%2 == 0){
         p.objectOneUnit = genNumbers(3)+2
       }
       p.total = (genNumbers(3)+2)*(p.objectOneV*p.objectOneUnit+p.objectTwoV*p.objectTwoUnit)
@@ -8760,8 +8760,8 @@ function genProblems(){
           objectTwo: ["X","Y","Z"][genNumbers(3)],
           objectOneV: genNumbers(3)+2,
           objectTwoV: genNumbers(3)+2,
-          objectOneUnit: genNumbers(3)+2,
-          objectTwoUnit: genNumbers(3)+2,
+          objectOneUnit: genNumbers(3)+1,
+          objectTwoUnit: genNumbers(3)+1,
           total: undefined,
           rollQn: ["A","B"][genNumbers(2)],
           rollQn2: ["many","what","total"][genNumbers(3)],
