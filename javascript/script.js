@@ -8695,7 +8695,7 @@ function genProblems(){
   }
 
   if ( level == "heuFour"){
-    let roll = genNumbers(4)+1
+    let roll = genNumbers(5)+1
     if (isNaN(setting)){
       setting = 9
     }
