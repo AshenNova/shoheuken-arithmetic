@@ -5185,6 +5185,7 @@ function updateProblems(){
         `
       }
     }
+
     if ( setting == 6 || setting == 9 && p.roll == 6){
       let firstSentence = undefined
       if (p.rollObject == 0){
@@ -5327,6 +5328,35 @@ function updateProblems(){
       ${p.objectThree} is ${p.unitSentence} times of ${p.objectTwo}.</br>
       What is the value of ${p.objectOne}?
       `
+    }
+
+    if ( setting == 5 || setting == 9 && p.roll == 5){
+      while (p.objectOneV == p.objectTwoV){
+        p.objectOneV = genNumbers(3)+2
+      }
+      while (p.objectOneUnit == p.objectTwoUnit){
+        p.objectOneUnit = genNumbers(3)+2
+      }
+      p.total = (genNumbers(3)+2)*(p.objectOneV*p.objectOneUnit+p.objectTwoV*p.objectTwoUnit)
+      if (p.rollQn2 != "total"){
+        displayProblem.innerHTML = 
+        `
+        Object ${p.objectOne} is ${p.objectOneV} ${p.unitMeasurement}.</br>
+        Object ${p.objectTwo} is ${p.objectTwoV} ${p.unitMeasurement}.</br>
+        The number of ${p.objectOne} is ${p.objectOneUnit}/${p.objectTwoUnit} the number of ${p.objectTwo}.</br>
+        The total for both is ${p.total} ${p.unitMeasurement}.</br>
+        ${ p.rollQn2 == "many" ? `How many ${p.rollQn == "A" ? p.objectOne : p.objectTwo}s are there?` : `What is the total for ${ p.rollQn == "A" ? p.objectOne : p.objectTwo}? `}
+        `
+      } else {
+        displayProblem.innerHTML = 
+        `
+        Object ${p.objectOne} is ${p.objectOneV} ${p.unitMeasurement}.</br>
+        Object ${p.objectTwo} is ${p.objectTwoV} ${p.unitMeasurement}.</br>
+        The number of ${p.objectOne} is ${p.objectOneUnit}/${p.objectTwoUnit} the number of ${p.objectTwo}.</br>
+        The total for both is ${p.total} ${p.unitMeasurement}.</br>
+        How many ${p.objectOne}s and ${p.objectTwo}s are there in total?
+        `
+      }
     }
   }
 
@@ -7253,6 +7283,45 @@ function handleSubmit(e){
           let unitDifference = p.unitSentence-1
           correctAnswer = `${p.groupTwo}-${p.groupOne}=${difference}\n${p.unitSentence}-1=${unitDifference}\n${difference}/${p.unitSentence-1}=${eachUnit}\n${p.groupOne}-${eachUnit}=${objectOne}`
         }
+
+        if (setting == 5 || setting == 9 && p.roll == 5){
+          let setOne = p.objectOneV*p.objectOneUnit
+          let setTwo = p.objectTwoV*p.objectTwoUnit
+          let oneSet = p.objectOneV*p.objectOneUnit+p.objectTwoV*p.objectTwoUnit
+          let totalSets = p.total/oneSet
+          let oneQuantity = totalSets*p.objectOneUnit
+          let twoQuantity = totalSets*p.objectTwoUnit
+          let totalValueOne = oneQuantity*p.objectOneV
+          let totalValueTwo = twoQuantity*p.objectTwoV
+          let groupQuantity = p.objectOneUnit+p.objectTwoUnit
+  
+          if (p.rollQn2 == "many"){
+            if (p.rollQn == "A"){
+              correctAnswer = 
+              `${p.objectOneUnit}x${p.objectOneV}=${setOne}\n${p.objectTwoUnit}x${p.objectTwoV}=${setTwo}\n${setOne}+${setTwo}=${oneSet}\n${p.total}/${oneSet}=${totalSets}\n${totalSets}x${p.objectOneUnit}=${oneQuantity}`
+            }
+            if (p.rollQn == "B"){
+              correctAnswer = 
+              `${p.objectOneUnit}x${p.objectOneV}=${setOne}\n${p.objectTwoUnit}x${p.objectTwoV}=${setTwo}\n${setOne}+${setTwo}=${oneSet}\n${p.total}/${oneSet}=${totalSets}\n${totalSets}x${p.objectTwoUnit}=${twoQuantity}`
+            }
+          }
+  
+          if (p.rollQn2 == "what"){
+           if (p.rollQn == "A"){
+            correctAnswer = 
+            `${p.objectOneUnit}x${p.objectOneV}=${setOne}\n${p.objectTwoUnit}x${p.objectTwoV}=${setTwo}\n${setOne}+${setTwo}=${oneSet}\n${p.total}/${oneSet}=${totalSets}\n${totalSets}x${p.objectOneUnit}=${oneQuantity}\n${oneQuantity}x${p.objectOneV}=${totalValueOne}`
+           } 
+           if (p.rollQn == "B"){
+            correctAnswer = 
+            `${p.objectOneUnit}x${p.objectOneV}=${setOne}\n${p.objectTwoUnit}x${p.objectTwoV}=${setTwo}\n${setOne}+${setTwo}=${oneSet}\n${p.total}/${oneSet}=${totalSets}\n${totalSets}x${p.objectTwoUnit}=${twoQuantity}\n${oneQuantity}x${p.objectTwoV}=${totalValueTwo}`
+           }
+          }
+  
+           if (p.rollQn2 == "total"){
+            correctAnswer = 
+            `${p.objectOneUnit}x${p.objectOneV}=${setOne}\n${p.objectTwoUnit}x${p.objectTwoV}=${setTwo}\n${setOne}+${setTwo}=${oneSet}\n${p.total}/${oneSet}=${totalSets}\n${p.objectOneUnit}+${p.objectTwoUnit}=${groupQuantity}\n${totalSets}x${groupQuantity}=${totalSets*groupQuantity}`
+           } 
+        }
       }
 
       if (mulLevel == "multiples"){
@@ -8622,6 +8691,7 @@ function genProblems(){
           rollQn: ["A","B"][genNumbers(2)]
         }
       }
+
   }
 
   if ( level == "heuFour"){
@@ -8680,6 +8750,23 @@ function genProblems(){
         groupOne: genNumbers(20)+5,
         groupTwo: undefined,
         unitSentence: genNumbers(4)+2
+        }
+      }
+
+      if ( setting == 5 || setting == 9 && roll == 5){
+        return {
+          unitMeasurement: [ "kg", "g", "ml", "ℓ"][genNumbers(4)],
+          objectOne: ["A","B","C"][genNumbers(3)],
+          objectTwo: ["X","Y","Z"][genNumbers(3)],
+          objectOneV: genNumbers(3)+2,
+          objectTwoV: genNumbers(3)+2,
+          objectOneUnit: genNumbers(3)+2,
+          objectTwoUnit: genNumbers(3)+2,
+          total: undefined,
+          rollQn: ["A","B"][genNumbers(2)],
+          rollQn2: ["many","what","total"][genNumbers(3)],
+          roll: 5
+      
         }
       }
   }
@@ -10097,7 +10184,7 @@ for (let i = 0; i <  settingButton.length; i++){
 
       case "Heu.4":
         level = "heuFour"
-        setting = parseInt(prompt("What level?\n1. Excess and Shortage ( Type 1 )\n2. Excess and Shortage ( Type 2 )\n3. Origin\n4.Repeated Identity ( Type 2 )\n\n9. All"))
+        setting = parseInt(prompt("What level?\n1. Excess and Shortage ( Type 1 )\n2. Excess and Shortage ( Type 2 )\n3. Origin\n4.Repeated Identity ( Type 2 )\n5. Uneven Grouping\n\n9. All"))
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
