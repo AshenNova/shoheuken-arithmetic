@@ -283,7 +283,10 @@ if (state.score >= scoreNeeded || time == cutoff){
 
   if (easy != 1){
     console.log(`Gold: ${gold}, silver: ${silver}, bronze: ${bronze}`)
-    if (gold == 0){
+    if ( gold == 0 && time == cutoff){
+      document.querySelector('.trophy').appendChild(imageFailed);
+      console.log("Failed")
+    } else if (gold == 0 && time < cutoff){
       document.querySelector('.trophy').appendChild(imageB);
       console.log("Bronze image")
     } else if (time < gold){
@@ -302,10 +305,7 @@ if (state.score >= scoreNeeded || time == cutoff){
       document.querySelector('.trophy').appendChild(imageFailed);
       console.log("Failed")
     }
-    if ( gold == 0 && time > cutoff){
-        document.querySelector('.trophy').appendChild(imageFailed);
-        console.log("Failed")
-    }
+   
   } 
     if ( easy == 1 ){
       document.querySelector('.trophy').appendChild(imageCompleted);
