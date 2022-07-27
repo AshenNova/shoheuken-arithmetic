@@ -5394,8 +5394,6 @@ function updateProblems(){
   }
 
   if ( level == "heuFour"){
-    
-
     if ( setting == 1 || (setting == 9 && p.roll == 2)){
       
       while (p.objectOneQ == p.objectTwoQ || p.objectOneQ > p.objectTwoQ){
@@ -9008,26 +9006,26 @@ function genProblems(){
       setting = 9
     }
 
-    if (setting == 1 || (setting == 9 && roll == 1) )
-
-    return {
-      objects: ["stationeries","cards","toys","games"][genNumbers(4)],
-      label: ["he","she"][genNumbers(2)],
-      objectOne: ["A","B","C"][genNumbers(3)],
-      objectTwo: ["X","Y","Z"][genNumbers(3)],
-      objectOneQ: genNumbers(4)+2,
-      objectTwoQ: genNumbers(8)+2,
-      price: genNumbers(5)+5,
-      totalValue: (genNumbers(9)+1)*10,
-      rollAnswer: genNumbers(2)+1,
-      objectOneS: undefined,
-      objectTwoS: undefined,
-      roll: 1,
-      rollType: ["A","B"][genNumbers(2)],
-      rollQn: ["total","price"][genNumbers(2)]
+    if (setting == 1 || (setting == 9 && roll == 1) ){
+      return {
+        objects: ["stationeries","cards","toys","games"][genNumbers(4)],
+        label: ["he","she"][genNumbers(2)],
+        objectOne: ["A","B","C"][genNumbers(3)],
+        objectTwo: ["X","Y","Z"][genNumbers(3)],
+        objectOneQ: genNumbers(4)+2,
+        objectTwoQ: genNumbers(8)+2,
+        price: genNumbers(5)+5,
+        totalValue: (genNumbers(9)+1)*10,
+        rollAnswer: genNumbers(2)+1,
+        objectOneS: undefined,
+        objectTwoS: undefined,
+        roll: 1,
+        rollType: ["A","B"][genNumbers(2)],
+        rollQn: ["total","price"][genNumbers(2)]
+      }
     }
 
-    if (setting == 2 || (setting == 9 && roll == 2) )
+    if (setting == 2 || (setting == 9 && roll == 2) ){
       return {
         numberOfStudents: genNumbers(8)+2,
         numberOfStuff: genNumbers(20)+10,
@@ -9038,6 +9036,7 @@ function genProblems(){
         rollAnswer: genNumbers(2)+1,
         roll: 2
       }
+    }
 
       if (setting == 3 || setting == 9 && roll == 3){
         return {
