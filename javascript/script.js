@@ -5283,6 +5283,46 @@ function updateProblems(){
         ${thirdSentence}</br>
       `
     }
+
+    if ( setting == 7 || setting == 9 && p.roll == 7){
+      console.log(p.difference, p.transfer)
+      while (p.difference == 0 || Math.abs(p.difference) == 2){
+        p.difference = (genNumbers(20)-10)*2
+        console.log(p.difference, p.transfer)
+      }
+
+      if (p.transfer == "A" && p.difference > 0){
+        p.transferV = genNumbers(p.difference/2)
+        while (p.transferV == 0){
+          p.transferV = genNumbers(p.difference/2)
+        }
+      }
+
+      if (p.transfer == "B" && p.difference < 0){
+        p.transferV = genNumbers(-p.difference/2)
+        while (p.transferV == 0){
+          p.transferV = genNumbers(-p.difference/2)
+        }
+      }
+
+      if (p.transfer == "A"){
+        displayProblem.innerHTML = 
+        `
+        ${p.objectOne} is ${Math.abs(p.difference)} ${p.difference < 0 ? "less" : "more"} ${p.objectTwo}.</br>
+        ${p.objectOne} gave ${p.transferV} to ${p.objectTwo}.</br>
+        Whats the difference between ${p.objectOne} and ${p.objectTwo} in the end?
+        `
+      }
+
+      if (p.transfer == "B"){
+        displayProblem.innerHTML = 
+        `
+        ${p.objectOne} is ${Math.abs(p.difference)} ${p.difference < 0 ? "less" : "more"} ${p.objectTwo}.</br>
+        ${p.objectTwo} gave ${p.transferV} to ${p.objectOne}.</br>
+        Whats the difference between ${p.objectOne} and ${p.objectTwo} in the end?
+        `
+      }
+    }
   }
 
   if ( level == "heuFour"){
@@ -7263,6 +7303,26 @@ function handleSubmit(e){
           correctAnswer = `${p.total}/${p.objectV}=${Math.floor(p.total/p.objectV)}r${p.total%p.objectV}\n${Math.floor(p.total/p.objectV)+1}`
         }
       }
+
+      if ( setting == 7 || setting == 9 && p.roll == 7 ){
+        let newDifference = undefined
+        if (p.transfer == "A" && p.difference < 0 ){
+          newDifference = Math.abs(p.difference)+p.transferV*2
+          correctAnswer = `${Math.abs(p.difference)}+${p.transferV}+${p.transferV}=${newDifference}`
+        }
+        if (p.transfer == "A" && p.difference > 0 ){
+          newDifference = Math.abs(p.difference)-p.transferV*2
+          correctAnswer = `${Math.abs(p.difference)}-${p.transferV}-${p.transferV}=${newDifference}`
+        }
+        if (p.transfer == "B" && p.difference < 0 ){
+          newDifference = Math.abs(p.difference)-p.transferV*2
+          correctAnswer = `${Math.abs(p.difference)}-${p.transferV}-${p.transferV}=${newDifference}`
+        }
+        if (p.transfer == "B" && p.difference > 0 ){
+          newDifference = Math.abs(p.difference)+p.transferV*2
+          correctAnswer = `${Math.abs(p.difference)}+${p.transferV}+${p.transferV}=${newDifference}`
+        }
+      }
     }
 
       if ( level == "heuFour"){
@@ -8795,6 +8855,18 @@ function genProblems(){
         }
       }
 
+      if ( setting == 7 || setting == 9 && roll == 7){
+        return {
+          roll: 7,
+          objectOne: ["A","B","C"][genNumbers(3)],
+          objectTwo: ["X","Y","Z"][genNumbers(3)],
+          difference: (genNumbers(20)-10)*2,
+          transfer: ["A","B"][genNumbers(2)],
+          transferV: genNumbers(10)+1
+
+        }
+      }
+
   }
 
   if ( level == "heuFour"){
@@ -10296,7 +10368,7 @@ for (let i = 0; i <  settingButton.length; i++){
       break
 
       case "Heu.3":
-        setting = parseInt(prompt("What level?\n1. Sum and Difference\n2. Supposition\n3. Under the same unit ( Unit )\n4. Under the same unit ( Difference )\n5. Equal Grouping\n6. Round up/down\n\n9. All"))
+        setting = parseInt(prompt("What level?\n1. Sum and Difference\n2. Supposition\n3. Under the same unit ( Unit )\n4. Under the same unit ( Difference )\n5. Equal Grouping\n6. Round up/down\n7. Double Effect\n\n9. All"))
         level = "heuThree"
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
