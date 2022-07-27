@@ -5308,7 +5308,7 @@ function updateProblems(){
       if (p.transfer == "A"){
         displayProblem.innerHTML = 
         `
-        ${p.objectOne} is ${Math.abs(p.difference)} ${p.difference < 0 ? "less" : "more"} ${p.objectTwo}.</br>
+        ${p.objectOne} is ${Math.abs(p.difference)} ${p.difference < 0 ? "less" : "more"} than ${p.objectTwo}.</br>
         ${p.objectOne} gave ${p.transferV} to ${p.objectTwo}.</br>
         Whats the difference between ${p.objectOne} and ${p.objectTwo} in the end?
         `
@@ -5317,9 +5317,77 @@ function updateProblems(){
       if (p.transfer == "B"){
         displayProblem.innerHTML = 
         `
-        ${p.objectOne} is ${Math.abs(p.difference)} ${p.difference < 0 ? "less" : "more"} ${p.objectTwo}.</br>
+        ${p.objectOne} is ${Math.abs(p.difference)} ${p.difference < 0 ? "less" : "more"} than ${p.objectTwo}.</br>
         ${p.objectTwo} gave ${p.transferV} to ${p.objectOne}.</br>
         Whats the difference between ${p.objectOne} and ${p.objectTwo} in the end?
+        `
+      }
+    }
+  }
+
+  if ( level == "heuThreeb"){
+    if (setting == 1 || setting == 9 && p.roll == 1){
+      let choice = genNumbers(3)
+      let swope = 0
+     while (p.situationOne == 0 || p.situationTwo == 0 || p.situationOne == p.situationTwo){
+      p.situationOne = genNumbers(100)-50
+      p.situationTwo = genNumbers(100)-50
+     }
+
+     if (p.situationOne > 0 && p.situationTwo > 0){
+        while ((p.situationOne-p.situationTwo)%(p.unitSentence-1) != 0){
+          p.situationOne = genNumbers(50)+1
+          p.situationTwo = genNumbers(50)+1
+        }
+     }
+     if (p.situationOne < 0 && p.situationTwo < 0){
+      while ((p.situationTwo-p.situationOne)%(p.unitSentence-1) != 0){ 
+        p.situationOne = genNumbers(50)-100
+        p.situationTwo = genNumbers(50)-100
+      }
+    }
+      if (p.situationOne > 0 && p.situationTwo > 0){
+        if (p.situationTwo > p.situationOne){
+          [p.situationTwo, p.situationOne] = [p.situationOne, p.situationTwo]
+        }
+      }
+      if (p.situationOne < 0 && p.situationTwo < 0){
+        if (-p.situationTwo < -p.situationOne){
+          [p.situationTwo, p.situationOne] = [p.situationOne, p.situationTwo]
+        }
+      }
+
+       if (p.situationOne < 0 && p.situationTwo > 0 || p.situationOne > 0 && p.situationTwo < 0){
+         if (p.situationOne > 0){
+          while ((p.situationOne-p.situationTwo)%(p.unitSentence-1) != 0) {
+            p.situationOne = genNumbers(50)+1
+          }
+         }
+         if (p.situationOne < 0){
+          swope = 1
+          while ((p.situationTwo-p.situationOne)%(p.unitSentence-1) != 0) {
+            p.situationOne = genNumbers(50)-50
+          }
+         }
+       }
+
+      displayProblem.innerHTML = 
+      `
+      ${genNumbers == 0 ? `${p.objectOne} and ${p.objectTwo} has an equal number at first.`: `${p.objectOne} and ${p.objectTwo} has the same amount at first.`}</br>
+      ${p.objectOne} ${p.situationOne > 0 ? ["increased by","bought","received"][choice] : ["decreased by","sold","gave away"][choice]} ${Math.abs(p.situationOne)}.</br>
+      ${p.objectTwo} ${p.situationTwo > 0 ? ["increased by","bought","received"][choice] : ["decreased by","sold","gave away"][choice]} ${Math.abs(p.situationTwo)}.</br>
+      ${p.objectOne} is ${p.unitSentence} times of ${p.objectTwo} in the end.</br>
+      What is ${p.oneOrTwo == "One" ? p.objectOne : p.objectTwo} ${p.firstOrEnd}?
+      `
+      if (swope == 1){
+        console.log("display 2")
+        displayProblem.innerHTML = 
+        `
+        ${genNumbers == 0 ? `${p.objectOne} and ${p.objectTwo} has an equal number at first.`: `${p.objectOne} and ${p.objectTwo} has the same amount at first.`}</br>
+        ${p.objectOne} ${p.situationOne > 0 ? ["increased by","bought","received"][choice] : ["decreased by","sold","gave away"][choice]} ${Math.abs(p.situationOne)}.</br>
+        ${p.objectTwo} ${p.situationTwo > 0 ? ["increased by","bought","received"][choice] : ["decreased by","sold","gave away"][choice]} ${Math.abs(p.situationTwo)}.</br>
+        ${p.objectTwo} is ${p.unitSentence} times of ${p.objectOne} in the end.</br>
+        What is ${p.oneOrTwo == "One" ? p.objectOne : p.objectTwo} ${p.firstOrEnd}?
         `
       }
     }
@@ -7324,6 +7392,53 @@ function handleSubmit(e){
         }
       }
     }
+      if ( level == "heuThreeb"){
+        if ( setting == 1 || setting == 9 && p.roll == 1){
+          let difference = undefined
+
+          
+          if (p.situationOne > 0 && p.situationTwo > 0){
+            difference=p.situationOne-p.situationTwo
+          }
+          if (p.situationOne < 0 && p.situationTwo < 0){
+            difference=Math.abs(p.situationTwo-p.situationOne)
+          }
+          if (p.situationOne < 0 && p.situationTwo < 0 || p.situationOne > 0 && p.situationTwo > 0){
+            if (p.oneOrTwo == "One" && p.firstOrEnd == "in the end"){
+              correctAnswer = (difference/(p.unitSentence-1))*p.unitSentence
+            } else if (p.oneOrTwo == "Two" && p.firstOrEnd == "in the end"){
+              correctAnswer = (difference/(p.unitSentence-1))
+            } else {
+              correctAnswer = (difference/(p.unitSentence-1))+p.situationTwo*-1
+            }
+          } else {
+            if (p.situationOne > 0){
+              if (p.firstOrEnd == "in the end"){
+                if (p.oneOrTwo == "One"){
+                  correctAnswer = ((p.situationOne-p.situationTwo)/(p.unitSentence-1))*p.unitSentence
+                }
+                if (p.oneOrTwo == "Two"){
+                  correctAnswer = (p.situationOne-p.situationTwo)/(p.unitSentence-1)
+                }
+              } else {
+                correctAnswer = (p.situationOne-p.situationTwo)/(p.unitSentence-1)-p.situationTwo
+              }
+            }
+            if (p.situationOne < 0){
+              if (p.firstOrEnd == "in the end"){
+                if (p.oneOrTwo == "One"){
+                  correctAnswer = ((-p.situationOne+p.situationTwo)/(p.unitSentence-1))
+                }
+                if (p.oneOrTwo == "Two"){
+                  correctAnswer = (-p.situationOne+p.situationTwo)/(p.unitSentence-1)*p.unitSentence
+                }
+              } else {
+                correctAnswer = (-p.situationOne+p.situationTwo)/(p.unitSentence-1)-p.situationOne
+              }
+            }
+          }
+        }
+      }
 
       if ( level == "heuFour"){
         if ( setting == 1 || (setting == 9 && p.roll == 1)){
@@ -8869,6 +8984,24 @@ function genProblems(){
 
   }
 
+  if ( level == "heuThreeb"){
+    let roll = genNumbers(1)+1
+    if (isNaN(setting)){
+      setting = 9
+    }
+    if (setting == 1 || setting == 9 && roll == 1){
+      return {
+        objectOne: ["A","B","C"][genNumbers(3)],
+        objectTwo: ["X","Y","Z"][genNumbers(3)],
+        unitSentence: genNumbers(4)+2,
+        situationOne: genNumbers(100)-50,
+        situationTwo: genNumbers(100)-50,
+        oneOrTwo: ["One","Two"][genNumbers(2)],
+        firstOrEnd: ["at first","in the end"][genNumbers(2)]
+      }
+    }
+  }
+
   if ( level == "heuFour"){
     let roll = genNumbers(6)+1
     if (isNaN(setting)){
@@ -10371,6 +10504,16 @@ for (let i = 0; i <  settingButton.length; i++){
         setting = parseInt(prompt("What level?\n1. Sum and Difference\n2. Supposition\n3. Under the same unit ( Unit )\n4. Under the same unit ( Difference )\n5. Equal Grouping\n6. Round up/down\n7. Double Effect\n\n9. All"))
         level = "heuThree"
         scoreNeeded = 10;
+        displayProblem.style.fontSize = "18px";
+        displayProblem.style.textAlign = "left";
+        document.querySelector("#user-input").setAttribute("type","text");
+        document.querySelector("#user-input").style.width = "300px"
+      break
+
+      case "Heu.3b":
+        setting = parseInt(prompt("What level?\n1. Equal Beginning\n2. Equal End\n\n9. All"))
+        level = "heuThreeb"
+        scoreNeeded = 2;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
         document.querySelector("#user-input").setAttribute("type","text");
