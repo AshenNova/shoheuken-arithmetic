@@ -5333,47 +5333,61 @@ function updateProblems(){
     if (setting == 1 || setting == 9 && p.roll == 1){
       let choice = genNumbers(3)
       let swope = 0
+    
+    // Ensuring that they are not the same or 0.
      while (p.situationOne == 0 || p.situationTwo == 0 || p.situationOne == p.situationTwo){
       p.situationOne = genNumbers(100)-50
       p.situationTwo = genNumbers(100)-50
      }
+    // swap positions
+     if (p.situationOne > 0 && p.situationTwo > 0){
+      if (p.situationTwo > p.situationOne){
+        [p.situationTwo, p.situationOne] = [p.situationOne, p.situationTwo]
+      }
+    }
+    if (p.situationOne < 0 && p.situationTwo < 0){
+      if (-p.situationTwo < -p.situationOne){
+        [p.situationTwo, p.situationOne] = [p.situationOne, p.situationTwo]
+      }
+    }
+
+    let valueOfOneUnit = undefined
 
      if (p.situationOne > 0 && p.situationTwo > 0){
-        while ((p.situationOne-p.situationTwo)%(p.unitSentence-1) != 0){
-          p.situationOne = genNumbers(50)+1
-          p.situationTwo = genNumbers(50)+1
+       valueOfOneUnit = (p.situationOne-p.situationTwo)/(p.unitSentence-1)
+        while ((p.situationOne-p.situationTwo)%(p.unitSentence-1) != 0 || valueOfOneUnit <= p.situationTwo){
+          p.situationOne = genNumbers(100)+1
+          p.situationTwo = genNumbers(100)+1
+          unitSentence = genNumbers(4)+2,
+          valueOfOneUnit = (p.situationOne-p.situationTwo)/(p.unitSentence-1)
+          console.log(valueOfOneUnit, p.situationOne, p.situationTwo)
         }
      }
      if (p.situationOne < 0 && p.situationTwo < 0){
+      valueOfOneUnit = (p.situationTwo+p.situationOne)/(p.unitSentence-1)
       while ((p.situationTwo-p.situationOne)%(p.unitSentence-1) != 0){ 
-        p.situationOne = genNumbers(50)-100
-        p.situationTwo = genNumbers(50)-100
+        p.situationOne = genNumbers(100)-200
+        p.situationTwo = genNumbers(100)-200
+        unitSentence = genNumbers(4)+2,
+        valueOfOneUnit = (p.situationOne-p.situationTwo)/(p.unitSentence-1)
+        console.log(valueOfOneUnit, p.situationOne, p.situationTwo)
       }
-    }
-      if (p.situationOne > 0 && p.situationTwo > 0){
-        if (p.situationTwo > p.situationOne){
-          [p.situationTwo, p.situationOne] = [p.situationOne, p.situationTwo]
-        }
-      }
-      if (p.situationOne < 0 && p.situationTwo < 0){
-        if (-p.situationTwo < -p.situationOne){
-          [p.situationTwo, p.situationOne] = [p.situationOne, p.situationTwo]
-        }
-      }
+     }
+     
 
-       if (p.situationOne < 0 && p.situationTwo > 0 || p.situationOne > 0 && p.situationTwo < 0){
-         if (p.situationOne > 0){
+      if (p.situationOne < 0 && p.situationTwo > 0 || p.situationOne > 0 && p.situationTwo < 0){
+        if (p.situationOne > 0){
           while ((p.situationOne-p.situationTwo)%(p.unitSentence-1) != 0) {
             p.situationOne = genNumbers(50)+1
           }
-         }
-         if (p.situationOne < 0){
-          swope = 1
-          while ((p.situationTwo-p.situationOne)%(p.unitSentence-1) != 0) {
-            p.situationOne = genNumbers(50)-50
-          }
-         }
-       }
+        }
+        if (p.situationOne < 0){
+        swope = 1
+        while ((p.situationTwo-p.situationOne)%(p.unitSentence-1) != 0) {
+          p.situationOne = genNumbers(50)-50
+        }
+        }
+      }
 
       displayProblem.innerHTML = 
       `
@@ -8997,6 +9011,8 @@ function genProblems(){
         unitSentence: genNumbers(4)+2,
         situationOne: genNumbers(100)-50,
         situationTwo: genNumbers(100)-50,
+        // situationOne: genNumbers(50)-100,
+        // situationTwo: genNumbers(50)-100,
         oneOrTwo: ["One","Two"][genNumbers(2)],
         firstOrEnd: ["at first","in the end"][genNumbers(2)]
       }
