@@ -5223,6 +5223,10 @@ function updateProblems(){
 
     if ( setting == 6 || setting == 9 && p.roll == 6){
       let firstSentence = undefined
+      while (p.total % p.objectV == 0){
+        p.total = genNumbers(30)+20
+      }
+      
       if (p.rollObject == 0){
         p.objectV = 4
         firstSentence = `A ${p.objects[0][0]} can fetch ${p.objectV} people.`
@@ -7394,7 +7398,6 @@ function handleSubmit(e){
         if ( setting == 1 || setting == 9 && p.roll == 1){
           let difference = undefined
 
-          
           if (p.situationOne > 0 && p.situationTwo > 0){
             difference=p.situationOne-p.situationTwo
           }
