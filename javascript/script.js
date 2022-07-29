@@ -5409,6 +5409,60 @@ function updateProblems(){
         `
       }
     }
+
+    if ( setting == 2 || setting == 9 && p.roll == 2 ){
+      let choice = genNumbers(3)
+
+      while (p.situationOne == p.situationTwo){
+        p.situationOne = genNumbers(100)+1
+        p.situationTwo = genNumbers(100)+1
+      }
+// positive
+      if (p.situationOne > 0 && p.situationTwo > 0){
+
+        while (p.situationTwo - p.situationOne % (p.unitSentence-1) != 0 || p.situationOne == p.situationTwo) {
+          p.situationOne = genNumbers(100)+1
+          p.situationTwo = genNumbers(100)+1
+          p.unitSentence = genNumbers(4)+2
+        }
+
+        if (p.situationOne > p.situationTwo){
+          [p.situationOne, p.situationTwo] = [p.situationTwo, p.situationOne]
+        }
+
+      }
+// negative
+      else if (p.situationOne < 0 && p.situationTwo < 0) {
+
+        while ((Math.abs(p.situationOne) - Math.abs(p.situationTwo)) % (p.unitSentence-1) != 0 || p.situationOne == p.situationTwo){
+          p.situationOne = genNumbers(100)-100
+          p.situationTwo = genNumbers(100)-100
+          p.unitSentence = genNumbers(4)+2
+        }
+        if (p.situationOne > p.situationTwo){
+          [p.situationOne, p.situationTwo] = [p.situationTwo, p.situationOne]
+        }
+      }
+
+      else {
+        while((p.situationOne - p.situationTwo) % (p.unitSentence - 1) != 0 || Math.abs(p.situationOne) == Math.abs(p.situationTwo)){
+          p.situationOne = genNumbers(100)+1
+          p.situationtwo = genNumbers(100)-100
+          p.unitSentence = genNumbers(4)+2
+        }
+      }
+
+  // Both
+
+      displayProblem.innerHTML = 
+      `
+      ${p.objectOne} is ${p.unitSentence} times of ${p.objectTwo}.</br>
+      ${p.objectOne} ${p.situationOne > 0 ? ["increased by","bought","received"][choice] : ["decreased by","sold","gave away"][choice]} ${Math.abs(p.situationOne)}.</br>
+      ${p.objectTwo} ${p.situationTwo > 0 ? ["increased by","bought","received"][choice] : ["decreased by","sold","gave away"][choice]} ${Math.abs(p.situationTwo)}.</br>
+      ${genNumbers == 0 ? `${p.objectOne} and ${p.objectTwo} has an equal number in the end.`: `${p.objectOne} and ${p.objectTwo} has the same amount in the end.`}</br>
+      What is ${p.oneOrTwo == "One" ? p.objectOne : p.objectTwo} ${p.firstOrEnd}?
+      `
+    }
   }
 
   if ( level == "heuFour"){
@@ -7453,6 +7507,60 @@ function handleSubmit(e){
             }
           }
         }
+
+        if (setting == 2 || setting == 9 && p.roll == 2 ){
+          let difference = undefined
+          let oneUnit = undefined
+          if (p.situationOne > 0 && p.situationTwo > 0){
+            difference = p.situationTwo - p.situationOne
+            oneUnit = difference/(p.unitSentence-1)
+            if (p.firstOrEnd == "in the end"){
+              correctAnswer = oneUnit+p.situationTwo
+            }
+            if (p.firstOrEnd == "at first"){
+              if (p.oneOrTwo == "One"){
+                correctAnswer = oneUnit+p.situationTwo-p.situationOne
+              }
+              if (p.oneOrTwo == "Two"){
+                correctAnswer = oneUnit+p.situationTwo-p.situationTwo
+              }
+            }
+          }
+
+          else if (p.situationOne < 0 && p.situationTwo < 0) {
+            difference = -1*p.situationOne - p.situationTwo*-1
+            oneUnit = difference/(p.unitSentence-1)
+            if (p.firstOrEnd == "in the end"){
+              correctAnswer = oneUnit*p.unitSentence+(p.situationTwo*-1)
+            }
+            if (p.firstOrEnd == "at first"){
+              if (p.oneOrTwo == "One"){
+                correctAnswer = oneUnit*p.unitSentence
+              }
+              if (p.oneOrTwo == "Two"){
+                correctAnswer = oneUnit
+              }
+            }
+          } else {
+            difference = Math.abs(p.situationOne)+Math.abs(p.situationTwo)
+            oneUnit = difference/(p.unitSentence-1)
+            if (p.firstOrEnd == "at first"){
+              if (p.oneOrTwo == "One"){
+                correctAnswer = oneUnit*p.unitSentence
+              }
+              if (p.oneOrTwo == "Two"){
+                correctAnswer = oneUnit
+              }
+            }
+            if (p.firstOrEnd == "in the end"){
+              correctAnswer = oneUnit+p.situationTwo
+            }
+          }
+          while (correctAnswer <= 0){
+            updateProblems()
+            return console.log("negative answer detected")
+          }
+        }
       }
 
       if ( level == "heuFour"){
@@ -9015,6 +9123,18 @@ function genProblems(){
         // situationTwo: genNumbers(50)-100,
         oneOrTwo: ["One","Two"][genNumbers(2)],
         firstOrEnd: ["at first","in the end"][genNumbers(2)]
+      }
+    }
+
+    if ( setting == 2 || setting == 9 && roll == 2){
+      return {
+        objectOne: ["A","B","C"][genNumbers(3)],
+        objectTwo: ["X","Y","Z"][genNumbers(3)],
+        unitSentence: genNumbers(4)+2,
+        situationOne: genNumbers(200)-100,
+        situationTwo: genNumbers(200)-100,
+        oneOrTwo: ["One","Two"][genNumbers(2)],
+        firstOrEnd: ["at first", "at first","in the end"][genNumbers(1)]
       }
     }
   }
