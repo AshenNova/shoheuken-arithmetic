@@ -4407,6 +4407,33 @@ function updateProblems(){
     ctx.restore()
   }
 
+  if ( level == 5.15 ){
+    let syntext = genNumbers(2)
+    let largestValue = 0
+    while (p.objectOneV == p.objectTwoV){
+      p.objectOneV = (genNumbers(10)+1)*10
+    }
+    if (p.objectOneV > p.objectTwoV){
+      largestValue = p.objectOneV
+    } else {
+      largestValue = p.objectTwoV
+    }
+    p.objectOneSF = p.objectOneV
+    p.objectTwoSF = p.objectTwoV
+    for (let i = 2; i <= largestValue; i++ ){
+      while (p.objectOneSF % i == 0 && p.objectTwoSF % i == 0){
+        p.objectOneSF /= i
+        p.objectTwoSF /= i
+        console.log(i)
+      }
+    }
+
+    displayProblem.innerHTML = 
+    `
+    ${p.objectOneV}% of ${p.objectOne} ${syntext == 0 ? "=" : "is equal to"} ${p.objectTwoV}% of ${p.objectTwo}
+    `
+  } 
+
   if ( level == 6.0){
     if (p.numOne == p.denoOne || p.numTwo == p.denoTwo || p.numThree == p.denoThree){
       p.denoOne += 1
@@ -7048,6 +7075,14 @@ function handleSubmit(e){
         }
       }
 
+      if ( level == 5.15 ){
+        if (p.objectOneSF == p.objectOneV ){
+          correctAnswer = `${p.objectOne}:${p.objectTwo}=${p.objectTwoV}:${p.objectOneV}`
+        } else {
+          correctAnswer = `${p.objectOne}:${p.objectTwo}=${p.objectTwoV}:${p.objectOneV}=${p.objectTwoSF}:${p.objectOneSF}`
+        }
+      }
+
       if ( level == 6.01){
         if (difficulty == 0){
           if (p.rollType == "area"){
@@ -8794,6 +8829,17 @@ function genProblems(){
     }
   }
 
+  if ( level == 5.15 ){
+    return {
+     objectOne: ["A","B","C"][genNumbers(3)],
+     objectTwo: ["X","Y","Z"][genNumbers(3)],
+     objectOneV: (genNumbers(50)+1),
+     objectTwoV: (genNumbers(50)+1),
+     objectOneSF: undefined,
+     objectTwoSF: undefined,
+    }
+  }
+
   if ( level == 6.0){
     return {
       percentageOne: (genNumbers(18)+1)*5,
@@ -10469,6 +10515,21 @@ for (let i = 0; i <  settingButton.length; i++){
         document.querySelector("#user-input").setAttribute("type","text");
         wholeNumberContainer.classList.add('hidden');
         firstCanvas.classList.remove('hidden');
+      break;
+
+      case "Level 5.15":
+        level = 5.15;
+        scoreNeeded = 10;
+        // gold = highScore5DotZero14.time;
+        // silver = highScore5DotZero14.time+((cutoff-highScore5DotZero14.time)/3)
+        // bronze = highScore5DotZero14.time+((cutoff-highScore5DotZero14.time)/3)*2
+        // highScoreName.innerHTML = highScore5DotZero14.name
+        // highScoreTime.innerHTML = highScore5DotZero14.time
+        // highScoreMistakes.innerHTML = highScore5DotZero14.mistake
+        document.querySelector("#user-input").setAttribute("type","text");
+        displayProblem.style.fontSize = "18px";
+        displayProblem.style.textAlign = "left";
+        document.querySelector("#user-input").style.width = "300px"
       break;
 
       case "Level 6.0":
