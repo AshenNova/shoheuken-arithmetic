@@ -484,8 +484,8 @@ function drawVerticalLine(x, y, bottom, adjust){
 // 1. generate new problem and store the question in state object
 // 2. Also to visual update the HTML
 function updateProblems(){
-  state.currentProblem = genProblems()
-  state.drawProblem = genProblems()
+  state.currentProblem = state.drawProblem = genProblems()
+  // state.drawProblem = genProblems()
 
   const p = state.currentProblem
 
@@ -5493,7 +5493,7 @@ function updateProblems(){
   }
 
   if ( level == "heuFour"){
-    if ( setting == 1 || (setting == 9 && p.roll == 2)){
+    if ( setting == 1 || (setting == 9 && p.roll == 1)){
       
       while (p.objectOneQ == p.objectTwoQ || p.objectOneQ > p.objectTwoQ){
         p.objectTwoQ = genNumbers(4)+2
@@ -5539,7 +5539,7 @@ function updateProblems(){
       `
     }
 
-    if ( setting == 3 || setting == 9 && p.roll == 3){
+    if ( setting == 3 || (setting == 9 && p.roll == 3)){
       p.absentPeople = genNumbers(p.peopleAtFirst-2)+1
       p.giveUp = (genNumbers(4)+1)*p.absentPeople
       p.remainingPeople = p.peopleAtFirst-p.absentPeople
@@ -5552,7 +5552,7 @@ function updateProblems(){
       `
     }
 
-    if (setting == 4 || setting == 9 && p.roll == 4){
+    if (setting == 4 || (setting == 9 && p.roll == 4)){
       let index = ["X","Y","Z"].indexOf(p.objectTwo)
       console.log(index)
       let newArray = ["X","Y","Z"]
@@ -5570,7 +5570,7 @@ function updateProblems(){
       `
     }
 
-    if ( setting == 5 || setting == 9 && p.roll == 5){
+    if ( setting == 5 || (setting == 9 && p.roll == 5)){
       while (p.objectOneV == p.objectTwoV){
         p.objectOneV = genNumbers(3)+2
       }
@@ -5599,7 +5599,7 @@ function updateProblems(){
       }
     }
 
-    if ( setting == 6 || setting == 9 && p.roll == 6 ){
+    if ( setting == 6 || (setting == 9 && p.roll == 6) ){
 
       displayProblem.innerHTML = 
       `
@@ -7644,8 +7644,13 @@ function handleSubmit(e){
               bigDifference = Math.abs(p.situationOne) - Math.abs(p.situationTwo)
             }
           } else {
-            symbol = "+"
-            bigDifference = Math.abs(p.situationOne) + Math.abs(p.situationTwo)
+            if (p.situationOne == 0){
+              symbol = "-"
+              bigDifference = Math.abs(p.situationOne) + Math.abs(p.situationTwo)
+            } else {
+              symbol = "+"
+              bigDifference = Math.abs(p.situationOne) + Math.abs(p.situationTwo)
+            }
           }
           
           if (p.rollAnswer == 1){
@@ -7658,7 +7663,7 @@ function handleSubmit(e){
           }
         }
 
-        if ( setting == 3 || setting == 9 && p.roll == 3){
+        if ( setting == 3 || (setting == 9 && p.roll == 3)){
           let extraWork = p.remainingPeople*p.giveUp
           let eachPerson = extraWork/p.absentPeople
           let totalWork = eachPerson*p.peopleAtFirst
@@ -7670,7 +7675,7 @@ function handleSubmit(e){
           }
         }
 
-        if (setting == 4 || setting == 9 && p.roll == 4){
+        if (setting == 4 || (setting == 9 && p.roll == 4)){
           let difference = p.groupTwo-p.groupOne
           let eachUnit = difference/(p.unitSentence-1)
           let objectOne = p.groupOne-eachUnit
@@ -7678,7 +7683,7 @@ function handleSubmit(e){
           correctAnswer = `${p.groupTwo}-${p.groupOne}=${difference}\n${p.unitSentence}-1=${unitDifference}\n${difference}/${p.unitSentence-1}=${eachUnit}\n${p.groupOne}-${eachUnit}=${objectOne}`
         }
 
-        if (setting == 5 || setting == 9 && p.roll == 5){
+        if (setting == 5 || (setting == 9 && p.roll == 5)){
           let setOne = p.objectOneV*p.objectOneUnit
           let setTwo = p.objectTwoV*p.objectTwoUnit
           let oneSet = p.objectOneV*p.objectOneUnit+p.objectTwoV*p.objectTwoUnit
@@ -7717,7 +7722,7 @@ function handleSubmit(e){
            } 
         }
 
-        if (setting == 6 || setting == 9 && p.roll == 6){
+        if (setting == 6 || (setting == 9 && p.roll == 6)){
           let sets = Math.floor(p.total/(p.objectTwoQ+1))
           let remainder = p.total%(p.objectTwoQ+1)
           if (remainder == 0){
@@ -9158,6 +9163,7 @@ function genProblems(){
     if (isNaN(setting)){
       setting = 9
     }
+
     if (setting == 1 || setting == 9 && roll == 1){
       return {
         objectOne: ["A","B","C"][genNumbers(3)],
@@ -9187,12 +9193,16 @@ function genProblems(){
 
   if ( level == "heuFour"){
     let roll = genNumbers(6)+1
+
     if (isNaN(setting)){
       setting = 9
     }
 
+    console.log("Setting is " + setting + " roll is " + roll)
+
     if (setting == 1 || (setting == 9 && roll == 1) ){
       return {
+        roll: 1,
         objects: ["stationeries","cards","toys","games"][genNumbers(4)],
         label: ["he","she"][genNumbers(2)],
         objectOne: ["A","B","C"][genNumbers(3)],
@@ -9204,13 +9214,12 @@ function genProblems(){
         rollAnswer: genNumbers(2)+1,
         objectOneS: undefined,
         objectTwoS: undefined,
-        roll: 1,
         rollType: ["A","B"][genNumbers(2)],
         rollQn: ["total","price"][genNumbers(2)]
       }
     }
 
-    if (setting == 2 || (setting == 9 && roll == 2) ){
+    if (setting == 2 || (setting == 9 && roll == 2)){
       return {
         numberOfStudents: genNumbers(8)+2,
         numberOfStuff: genNumbers(20)+10,
@@ -9223,7 +9232,7 @@ function genProblems(){
       }
     }
 
-      if (setting == 3 || setting == 9 && roll == 3){
+      if (setting == 3 || (setting == 9 && roll == 3)){
         return {
           peopleAtFirst: genNumbers(8)+3,
           absentPeople: undefined,
@@ -9234,18 +9243,19 @@ function genProblems(){
         }
       }
 
-      if (setting == 4 || setting == 9 && roll == 4){
+      if (setting == 4 || (setting == 9 && roll == 4)){
         return{
         objectOne: ["A","B","C"][genNumbers(3)],
         objectTwo: ["X","Y","Z"][genNumbers(3)],
         objectThree: undefined,
         groupOne: genNumbers(20)+5,
         groupTwo: undefined,
-        unitSentence: genNumbers(4)+2
+        unitSentence: genNumbers(4)+2,
+        roll: 4
         }
       }
 
-      if ( setting == 5 || setting == 9 && roll == 5){
+      if ( setting == 5 || (setting == 9 && roll == 5)){
         return {
           unitMeasurement: [ "kg", "g", "ml", "ℓ"][genNumbers(4)],
           objectOne: ["A","B","C"][genNumbers(3)],
@@ -9261,7 +9271,7 @@ function genProblems(){
         }
       }
 
-      if ( setting == 6 || setting == 9 && roll == 6){
+      if ( setting == 6 || (setting == 9 && roll == 6)){
         return {
           roll: 6,
           objectOne: ["A","B","C"][genNumbers(3)],
