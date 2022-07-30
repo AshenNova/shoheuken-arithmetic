@@ -5264,6 +5264,9 @@ function updateProblems(){
       }
       if (p.rollObject == 1){
         p.objectV = genNumbers(4)+6
+        while (p.total % p.objectV == 0 ){
+          p.total = genNumbers(30)+20
+        }
         firstSentence = `A ${p.objects[1][0]} can fetch ${p.objectV} people.`
       }
       if (p.rollObject == 2){
@@ -5272,6 +5275,9 @@ function updateProblems(){
       }
       if (p.rollObject == 3){
         p.objectV = (genNumbers(9)+2)
+        while (p.total % p.objectV == 0 ){
+          p.total = genNumbers(30)+20
+        }
         if (p.rollQn == "A"){
           firstSentence = `X wants to give each person ${p.objectV} sweets.`
         }
