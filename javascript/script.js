@@ -5250,12 +5250,16 @@ function updateProblems(){
 
     if ( setting == 6 || setting == 9 && p.roll == 6){
       let firstSentence = undefined
+
       while (p.total % p.objectV == 0){
         p.total = genNumbers(30)+20
       }
       
       if (p.rollObject == 0){
         p.objectV = 4
+        while (p.total % 4 == 0 ){
+          p.total = genNumbers(30)+20
+        }
         firstSentence = `A ${p.objects[0][0]} can fetch ${p.objectV} people.`
       }
       if (p.rollObject == 1){
