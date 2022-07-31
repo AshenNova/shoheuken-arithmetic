@@ -5119,7 +5119,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
         p.indexThree = p.rollPositionOneArr.indexOf(p.positionThree)
         p.indexFour = p.rollPositionTwoArr.indexOf(p.positionFour)+3
       }
-      
+
       p.intervals = p.indexTwo - p.indexOne
       p.distance = p.intervals*p.rollDistance
       displayProblem.innerHTML = 
@@ -5213,6 +5213,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       `
     }
     if ( setting == 3 || setting == 9 && p.roll == 3){
+
       p.totalValue = (p.objectOneX*p.unitSentence+p.objectTwoX)*p.multipler
         displayProblem.innerHTML = 
         `
@@ -9119,8 +9120,8 @@ function genProblems(){
         objectTwo: ["X","Y","Z"][genNumbers(3)],
         multipler: genNumbers(3)+2,
         unitSentence: genNumbers(3)+2,
-        objectOneX: genNumbers(4)+1,
-        objectTwoX: genNumbers(4)+1,
+        objectOneX: genNumbers(4)+2,
+        objectTwoX: genNumbers(4)+2,
         totalValue: undefined,
         rollQn: ["A","B"][genNumbers(2)],
         roll: 3
@@ -9130,8 +9131,8 @@ function genProblems(){
         return{
           objectOne: ["A","B","C"][genNumbers(3)],
           objectTwo: ["X","Y","Z"][genNumbers(3)],
-          objectOneQ: genNumbers(4)+1,
-          objectTwoQ: genNumbers(4)+1,
+          objectOneQ: genNumbers(4)+2,
+          objectTwoQ: genNumbers(4)+2,
           objectOneV: genNumbers(4)+2,
           objectTwoV: genNumbers(4)+2,
           totalValue: undefined,
