@@ -1528,6 +1528,9 @@ function updateProblems(){
 
   if ( level == 3.16){
 // level 3.12
+    if (p.optionFinal == 5){
+displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + ${p.numOne}</br> = ?`
+    }
     if (p.optionFinal == 1){
       displayProblem.innerHTML = `
       Pattern 1: 1</br>
@@ -5091,6 +5094,7 @@ function updateProblems(){
 
   if ( level == "heuTwo"){
     if (setting == 1 || setting == 9 && p.roll == 1 ){
+      
       p.positionTwo = p.rollPositionTwoArr[genNumbers(3)]
       p.positionOne = p.rollPositionOneArr[genNumbers(3)]
       p.positionThree = p.rollPositionOneArr[genNumbers(3)]
@@ -6274,6 +6278,9 @@ function handleSubmit(e){
       }
 
       if ( level == 3.16){
+        if (p.optionFinal == 5){
+          correctAnswer = `${p.numOne+1}x${p.numOne}/2`
+        }
         // level 3.12
         if (p.optionFinal == 1){
           correctAnswer = p.numOne+1 + "x" + (p.numOne) + "/2"
@@ -8257,7 +8264,7 @@ function genProblems(){
       numFive: genNumbers(8)+5,
       numSix: [-1,1,2][genNumbers(3)],
 
-      optionFinal: [1,2,3,4][genNumbers(4)],
+      optionFinal: [1,2,3,4,5][genNumbers(5)],
 
       // 3.15
       rollType: ["A", "B"][genNumbers(2)],
