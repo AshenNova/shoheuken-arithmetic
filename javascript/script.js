@@ -5108,6 +5108,18 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       p.indexTwo = p.rollPositionTwoArr.indexOf(p.positionTwo)+3
       p.indexThree = p.rollPositionOneArr.indexOf(p.positionThree)
       p.indexFour = p.rollPositionTwoArr.indexOf(p.positionFour)+3
+
+      while (p.indexTwo - p.indexOne == p.indexFour - p.indexThree || p.indexTwo -p.indexOne == 1){
+        p.positionTwo = p.rollPositionTwoArr[genNumbers(3)]
+        p.positionOne = p.rollPositionOneArr[genNumbers(3)]
+        p.positionThree = p.rollPositionOneArr[genNumbers(3)]
+        p.positionFour = p.rollPositionTwoArr[genNumbers(3)]
+        p.indexOne = p.rollPositionOneArr.indexOf(p.positionOne)
+        p.indexTwo = p.rollPositionTwoArr.indexOf(p.positionTwo)+3
+        p.indexThree = p.rollPositionOneArr.indexOf(p.positionThree)
+        p.indexFour = p.rollPositionTwoArr.indexOf(p.positionFour)+3
+      }
+      
       p.intervals = p.indexTwo - p.indexOne
       p.distance = p.intervals*p.rollDistance
       displayProblem.innerHTML = 
