@@ -2425,7 +2425,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
     const index = arr2.indexOf(p.choice)
        
     if (p.roll == 1){
-      if (p.direction == "counter-clockwise"){
+      if (p.direction == "anti-clockwise"){
         p.angleTurn = 360-p.angleTurn 
       }
       const intervalsTurned = p.angleTurn/45
@@ -2438,7 +2438,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       }
     
     } else {
-      if (p.direction == "counter-clockwise"){
+      if (p.direction == "anti-clockwise"){
         p.angleTurn = 360-p.angleTurn
       }
       const intervalsTurned = p.angleTurn/45
@@ -8687,7 +8687,7 @@ function genProblems(){
       choice: ["A","B","C","D","F","G","H","I"][genNumbers(8)],
       roll: [2, 1][genNumbers(2)],
       angleTurn: (genNumbers(8)+1)*45,
-      direction: ["clockwise","counter-clockwise"][genNumbers(2)],
+      direction: ["clockwise","anti-clockwise"][genNumbers(2)],
       finalIndex: undefined
     }
   }
