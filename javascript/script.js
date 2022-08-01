@@ -5637,6 +5637,67 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
     }
   }
 
+  if ( level == "heuFive"){
+    if (setting == 1 || setting == 9 && p.roll == 1 ){
+      while (p.quantityOne == p.quantityTwo){
+        p.quantityOne = genNumbers(10)+1
+      }
+      while (p.difference == 0){
+        p.difference = genNumbers(10)-5
+      }
+
+      if (p.difference > 0){
+        p.adjustment = p.difference*p.quantityOne
+      } else {
+        p.adjustment = -p.difference*p.quantityTwo
+      }
+      p.adjustedTotal = p.total - p.adjustment
+      p.groupTotal = p.quantityOne + p.quantityTwo
+      p.group = p.adjustedTotal/p.groupTotal
+
+      if (p.group % 1 != 0) {
+        updateProblems()
+        return console.log("Question changed!")
+      }
+
+      displayProblem.innerHTML = 
+      `
+      Each girl receive ${p.quantityOne} sweets.</br>
+      Each boy receive ${p.quantityTwo} sweets.</br>
+      There are ${Math.abs(p.difference)} ${p.difference > 0 ? "more" : "less"} girls than boys.</br>
+      A total of ${p.total} sweets were given out.
+      How many ${p.choice} are there?
+      `
+    }
+
+    if (setting == 2 || setting == 9 && p.roll == 2){
+
+      p.rightQ = genNumbers(p.questions)+1
+      p.total = p.marks*p.rightQ-p.deduct*(p.questions-p.rightQ)
+      p.allRight = p.questions*p.marks
+      p.bDifference = p.allRight - p.total
+      if (p.bDifference <= 0 || p.total <= 0 ){
+        updateProblems()
+        return console.log("Question changed!")
+      }
+      p.sDifference = p.marks+p.deduct
+      p.wrong = p.bDifference/p.sDifference
+      p.correct = p.questions-p.wrong
+      // if (p.wrong % 1 != 0 || p.wrong < 0){
+      //   updateProblems()
+      //   return console.log("Question changed!")
+      // }
+
+      displayProblem.innerHTML = 
+      `
+      There are ${p.questions} questions.<br>
+      ${p.marks} marks is award if correct.</br>
+      ${p.deduct} marks is deducted if wrong.</br>
+      Someone scored ${p.total} marks.<br>
+      How many questions did ${genNumbers(2) == 0 ? "he" : "she"} get ${p.choice}?
+      `
+    }
+  }
 
   // MULTIPLES
   if (mulLevel == "multiples"){
@@ -7772,6 +7833,46 @@ function handleSubmit(e){
          }
         }
       }
+      
+      if ( level == "heuFive"){
+        if (setting == 1 || setting == 9 && p.roll == 1){
+
+          let firstSentence = undefined
+          if (p.difference > 0) {
+            firstSentence = `${p.difference}x${p.quantityOne}=${p.adjustment}`
+          }
+          if (p.difference < 0) {
+            firstSentence = `${-p.difference}x${p.quantityTwo}=${p.adjustment}`
+          }
+
+          let secondSentence = undefined          
+          secondSentence = `${p.total}-${p.adjustment}=${p.adjustedTotal}`
+
+          let thirdSentence = `${p.quantityOne}+${p.quantityTwo}=${p.groupTotal}`
+          
+          let fourthSentence = `${p.adjustedTotal}/${p.groupTotal}=${p.group}`
+          
+          if (p.choice == "girls"){
+            correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}`
+          }
+          if (p.choice == "boys"){
+            correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${p.group}+${-p.difference}=${p.group-p.difference}`
+          }
+        }
+
+        if (setting == 2 || setting == 9 && p.roll == 2){
+          let firstSentence = `${p.questions}x${p.marks}=${p.allRight}`
+          let secondSentence = `${p.allRight}-${p.total}=${p.bDifference}`
+          let thirdSentence = `${p.marks}+${p.deduct}=${p.sDifference}`
+          let fourthSentence = `${p.bDifference}/${p.sDifference}=${p.wrong}`
+          let fifthSentence = `${p.questions}-${p.wrong}=${p.correct}`
+          if (p.choice == "wrong"){
+            correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}`
+          } else {
+            correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${fifthSentence}`
+          }
+        }
+      }
 
       if (mulLevel == "multiples"){
         correctAnswer = p.numFive*(multiplesArr.length-1)
@@ -9313,6 +9414,46 @@ function genProblems(){
       }
   }
 
+  if ( level == "heuFive"){
+    let roll = genNumbers(2)+1
+    if (isNaN(setting)){
+      setting = 9
+    }
+
+    if (setting == 1 || setting == 9 && roll == 1){
+      return {
+        roll: 1,
+        objectOne: ["A","B","C"][genNumbers(3)],
+        objectTwo: ["X","Y","Z"][genNumbers(3)],
+        quantityOne: genNumbers(10)+1,
+        quantityTwo: genNumbers(10)+1,
+        difference: genNumbers(10)-5,
+        total: genNumbers(100)+50,
+        choice: ["girls", "boys"][genNumbers(2)],
+        adjustment: undefined,
+        groupTotal: undefined,
+        group: undefined
+      }
+    }
+
+    if (setting == 2 || setting == 9 && roll == 2){
+      return{
+        roll: 2,
+        marks: genNumbers(5)+2,
+        deduct: genNumbers(5)+1,
+        questions: (genNumbers(5)+1)*10,
+        rightQ: undefined,
+        total: undefined,
+        choice: ["correct","wrong"][genNumbers(2)],
+        allRight: undefined,
+        bDifference: undefined,
+        sDifference: undefined,
+        wrong: undefined,
+        correct: undefined
+      }
+    }
+  }
+
   if (level == "1 times table"){
     return {
       numFive: 1,
@@ -10762,6 +10903,15 @@ for (let i = 0; i <  settingButton.length; i++){
       case "Heu.4":
         level = "heuFour"
         setting = parseInt(prompt("What level?\n1. Excess and Shortage ( Type 1 )\n2. Excess and Shortage ( Type 2 )\n3. Origin\n4.Repeated Identity ( Type 2 )\n5. Uneven Grouping\n6. Grouping Rows\n\n9. All"))
+        scoreNeeded = 10;
+        displayProblem.style.fontSize = "18px";
+        displayProblem.style.textAlign = "left";
+        document.querySelector("#user-input").setAttribute("type","text");
+      break
+
+      case "Heu.5":
+        level = "heuFive"
+        setting = parseInt(prompt("What level?\n1. Grouping with Difference\n2. Supposition (Negative)\n\n9. All"))
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
