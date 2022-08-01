@@ -5109,7 +5109,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       p.indexThree = p.rollPositionOneArr.indexOf(p.positionThree)
       p.indexFour = p.rollPositionTwoArr.indexOf(p.positionFour)+3
 
-      while (p.indexTwo - p.indexOne == p.indexFour - p.indexThree || p.indexTwo -p.indexOne == 1){
+      while (p.indexTwo - p.indexOne == p.indexFour - p.indexThree || p.indexTwo -p.indexOne == 1 || p.indexFour - p.indexThree == 1){
         p.positionTwo = p.rollPositionTwoArr[genNumbers(3)]
         p.positionOne = p.rollPositionOneArr[genNumbers(3)]
         p.positionThree = p.rollPositionOneArr[genNumbers(3)]
