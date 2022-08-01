@@ -5709,6 +5709,10 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       p.totalOne = p.chosenOneQ*p.chosenOneN
       p.totalTwo = p.chosenTwoQ*p.chosenTwoN
       p.difference = p.totalOne-p.totalTwo
+      if (p.difference == 0){
+        updateProblems()
+        return console.log("Question change")
+      }
 
       displayProblem.innerHTML = 
       `
@@ -9508,15 +9512,18 @@ function genProblems(){
         objects: 
         [
           ["ducks","dogs","2","4","legs"],
-          ["dogs","spiders","4","8", "legs"]
+          ["dogs","spiders","4","8", "legs"],
+          ["3-legged stools", "4-legged chairs","3", "4", "legs"],
+          ["motorcycles", "cars", "2", "4", "wheels"],
+          ["birds","dragonflies","2","4","wings"]
         ],
         chosenOne: undefined,
         chosenOneQ: undefined,
-        chosenOneN: genNumbers(5)+1,
+        chosenOneN: genNumbers(9)+2,
         totalOne: undefined,
         chosenTwo: undefined,
         chosenTwoQ: undefined,
-        chosenTwoN: genNumbers(5)+1,
+        chosenTwoN: genNumbers(9)+2,
         totalTwo: undefined,
         total: undefined,
         variableName: undefined,
