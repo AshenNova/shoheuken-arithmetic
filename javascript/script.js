@@ -5697,6 +5697,26 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       How many questions did ${genNumbers(2) == 0 ? "he" : "she"} get ${p.choice}?
       `
     }
+
+    if (setting == 3 || setting == 9 && p.roll == 3){
+      chosenRoll = genNumbers(p.objects.length)
+      p.chosenOne = p.objects[chosenRoll][0]
+      p.chosenTwo = p.objects[chosenRoll][1]
+      p.variableName = p.objects[chosenRoll][4]
+      p.chosenOneQ = Math.abs(p.objects[chosenRoll][2])
+      p.chosenTwoQ = Math.abs(p.objects[chosenRoll][3])
+      p.total = p.chosenOneN+p.chosenTwoN
+      p.totalOne = p.chosenOneQ*p.chosenOneN
+      p.totalTwo = p.chosenTwoQ*p.chosenTwoN
+      p.difference = p.totalOne-p.totalTwo
+
+      displayProblem.innerHTML = 
+      `
+      There are ${p.total} ${p.chosenOne} and ${p.chosenTwo}.<br>
+      Total number of ${p.variableName} for ${p.chosenOne} is ${Math.abs(p.difference)} ${p.difference > 0 ? "more" : "less"} than the total number of ${p.variableName} for ${p.chosenTwo}.</br>
+      How many ${p.choice == 0 ? p.chosenOne : p.chosenTwo } are there?
+      `
+    }
   }
 
   // MULTIPLES
@@ -7872,6 +7892,35 @@ function handleSubmit(e){
             correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${fifthSentence}`
           }
         }
+
+        if ( setting == 3 || setting == 9 && p.roll == 3 ){
+          let firstSentence = undefined
+          let allTotal = undefined
+          if (p.totalOne > p.totalTwo){
+            allTotal = p.total*p.chosenOneQ
+            firstSentence = `${p.total}x${p.chosenOneQ}=${allTotal}`
+          }
+          if (p.totalTwo > p.totalOne){
+            allTotal = p.total*p.chosenTwoQ
+            firstSentence = `${p.total}x${p.chosenTwoQ}=${allTotal}`
+          }
+          let bDifference = allTotal - Math.abs(p.difference)
+          let secondSentence = `${allTotal}-${Math.abs(p.difference)}=${bDifference}`
+
+          let sDifference = p.chosenOneQ+p.chosenTwoQ
+          let thirdSentence = `${p.chosenOneQ}+${p.chosenTwoQ}=${sDifference}`
+
+          let fourthSentence = `${bDifference}/${sDifference}=${p.chosenOneN}`
+
+          let fifthSentence = `${p.total}-${p.chosenOneQ}=${p.chosenTwoN}`
+
+          if (p.choice == 0){
+            correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}`
+          }
+          if (p.choice == 1){
+            correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${fifthSentence}`
+          }
+        }
       }
 
       if (mulLevel == "multiples"){
@@ -9452,6 +9501,29 @@ function genProblems(){
         correct: undefined
       }
     }
+
+    if (setting == 3 || setting == 9 && roll == 3){
+      return {
+        roll: 3,
+        objects: 
+        [
+          ["ducks","dogs","2","4","legs"],
+          ["dogs","spiders","4","8", "legs"]
+        ],
+        chosenOne: undefined,
+        chosenOneQ: undefined,
+        chosenOneN: genNumbers(5)+1,
+        totalOne: undefined,
+        chosenTwo: undefined,
+        chosenTwoQ: undefined,
+        chosenTwoN: genNumbers(5)+1,
+        totalTwo: undefined,
+        total: undefined,
+        variableName: undefined,
+        choice: genNumbers(2),
+        difference: undefined
+      }
+    }
   }
 
   if (level == "1 times table"){
@@ -10911,7 +10983,7 @@ for (let i = 0; i <  settingButton.length; i++){
 
       case "Heu.5":
         level = "heuFive"
-        setting = parseInt(prompt("What level?\n1. Grouping with Difference\n2. Supposition (Negative)\n\n9. All"))
+        setting = parseInt(prompt("What level?\n1. Grouping with Difference\n2. Supposition (Negative)\n3. Supposition negative ( Difference)\n\n9. All"))
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
