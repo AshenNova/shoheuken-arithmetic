@@ -5721,6 +5721,49 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       How many ${p.choice == 0 ? p.chosenOne : p.chosenTwo } are there?
       `
     }
+
+    if ( setting == 4 || setting == 9 && p.roll == 4 ){
+
+      while (p.objectOneV == p.objectTwoV){
+        objectOneV = genNumbers(10)+2
+      }
+      if (p.objectOneV > p.objectTwoV){
+        p.sDifference = p.objectOneV - p.objectTwoV
+      } else {
+        p.sDifference = -(p.objectOneV - p.objectTwoV)
+      }
+
+      p.bDifference = p.sDifference*(genNumbers(9)+2)
+
+      let lastSentence = undefined
+      if (p.choice == 0) {
+        lastSentence = `How many ${p.objectOne}s are there?`
+      }
+      if (p.choice == 1) {
+        lastSentence = `How many ${p.objectTwo}s are there?`
+      }
+      if (p.choice == 2) {
+        lastSentence = `How many ${p.objectOne}s and ${p.objectTwo}s are there?`
+      }
+      if (p.choice == 3) {
+        lastSentence = `What is the total value of ${p.objectOne}s?`
+      }
+      if (p.choice == 4) {
+        lastSentence = `What is the total value of ${p.objectTwo}s?`
+      }
+      if (p.choice == 5){
+        lastSentence = `What is the total value of ${p.objectOne}s and ${p.objectTwo}s.`
+      }
+
+      displayProblem.innerHTML = 
+      `
+      There is equal number of ${p.objectOne} and ${p.objectTwo}.</br>
+      Each ${p.objectOne} is ${p.objectOneV}.</br>
+      Each ${p.objectTwo} is ${p.objectTwoV}.</br>
+      The difference between them is ${p.bDifference}.</br>
+      ${lastSentence}
+      `
+    }
   }
 
   // MULTIPLES
@@ -7925,6 +7968,48 @@ function handleSubmit(e){
             correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${fifthSentence}`
           }
         }
+
+        if (setting == 4 || setting == 9 && p.roll == 4 ){
+          let firstSentence = undefined
+          if (p.objectOneV > p.objectTwoV){
+            firstSentence = `${p.objectOneV}-${p.objectTwoV}=${p.sDifference}`
+          } else {
+            firstSentence = `${p.objectTwoV}-${p.objectOneV}=${p.sDifference}`
+          }
+          let groups = p.bDifference/p.sDifference
+          let secondSentence = `${p.bDifference}/${p.sDifference}=${groups}`
+
+          if (p.choice == 0 || p.choice == 1 ){
+            correctAnswer = `${firstSentence}\n${secondSentence}`
+          }
+
+          let thirdSentence = undefined
+          if (p.choice == 2 ){
+            let quantityT = groups*2
+            thirdSentence = `${groups}x2=${quantityT}`
+            correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}`
+          }
+          if (p.choice == 3 ){
+            let objectOneT = groups*p.objectOneV
+            thirdSentence = `${groups}x${p.objectOneV}=${objectOneT}`
+            correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}`
+          }
+          if (p.choice == 4 ){
+            let objectTwoT = groups*p.objectTwoV
+            thirdSentence = `${groups}x${p.objectTwoV}=${objectTwoT}`
+            correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}`
+          }
+          if (p.choice == 5 ){
+            let objectOneT = groups*p.objectOneV
+            thirdSentence = `${groups}x${p.objectOneV}=${objectOneT}`
+            let objectTwoT = groups*p.objectTwoV
+            let fourthSentence = `${groups}x${p.objectTwoV}=${objectTwoT}`
+            let fifthSentence = `${objectOneT}+${objectTwoT}=${objectOneT+objectTwoT}`
+            
+            correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${fifthSentence}`
+          }
+          
+        }
       }
 
       if (mulLevel == "multiples"){
@@ -9468,7 +9553,7 @@ function genProblems(){
   }
 
   if ( level == "heuFive"){
-    let roll = genNumbers(2)+1
+    let roll = genNumbers(4)+1
     if (isNaN(setting)){
       setting = 9
     }
@@ -9529,6 +9614,19 @@ function genProblems(){
         variableName: undefined,
         choice: genNumbers(2),
         difference: undefined
+      }
+    }
+
+    if (setting == 4 || setting == 9 && roll == 4){
+      return {
+        roll: 4,
+        objectOne: ["A","B","C"][genNumbers(3)],
+        objectTwo: ["X","Y","Z"][genNumbers(3)],
+        objectOneV: genNumbers(10)+2,
+        objectTwoV: genNumbers(10)+2,
+        sDifference: undefined,
+        bDifference: undefined,
+        choice: genNumbers(6)
       }
     }
   }
@@ -10990,7 +11088,7 @@ for (let i = 0; i <  settingButton.length; i++){
 
       case "Heu.5":
         level = "heuFive"
-        setting = parseInt(prompt("What level?\n1. Grouping with Difference\n2. Supposition (Negative)\n3. Supposition negative ( Difference)\n\n9. All"))
+        setting = parseInt(prompt("What level?\n1. Grouping with Difference\n2. Supposition (Negative)\n3. Supposition negative ( Difference)\n4.Identical Quantity with Difference\n\n9. All"))
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
