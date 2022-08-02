@@ -341,6 +341,7 @@ const resetStuff = function (){
   userInput.style.width = "175px";
   document.querySelector("#user-input").style.marginTop = "0";
   document.querySelector("#user-input").setAttribute("max","99999")
+  canvas.setAttribute("height", "275px")
   displayProblem.style.margin = "30px 0";
   displayProblem.style.textAlign = "center";
   threeNumerator.classList.add('line');
@@ -2984,6 +2985,17 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
 
   if ( level == 4.25){
     let a = [-1, 1][genNumbers(2)]
+
+    let maxLength = [p.squareOne, p.squareTwo, p.squareThree, p.squareFour]
+
+    // arrange descending
+    maxLength.sort(function(a, b){
+      return b-a
+    })
+
+    let canvasHeight = `${(maxLength[0]*2+55+30).toString()}px`
+    canvas.setAttribute("height", canvasHeight);
+
     ctx.save()
       if (p.roll == 2){
         p.length = p.squareOne + p.squareTwo
@@ -3007,13 +3019,13 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       ctx.fillText(`The figure is made up of ${p.roll} squares.`, 15, 55)
 
       if (p.roll == 2){
-        ctx.translate((400-p.squareOne-p.squareTwo)/2, 120)
+        ctx.translate((400-p.squareOne-p.squareTwo)/2, 55+maxLength[0]+10)
       }
       if (p.roll == 3){
-        ctx.translate((400-p.squareOne-p.squareTwo-p.squareThree)/2, 120)
+        ctx.translate((400-p.squareOne-p.squareTwo-p.squareThree)/2, 55+maxLength[0]+10)
       }
       if (p.roll == 4){
-        ctx.translate((400-p.squareOne-p.squareTwo-p.squareThree-p.squareFour)/2, 120)
+        ctx.translate((400-p.squareOne-p.squareTwo-p.squareThree-p.squareFour)/2, 55+maxLength[0]+10)
       }
   
       ctx.beginPath()
