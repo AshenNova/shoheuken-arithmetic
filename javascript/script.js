@@ -4522,6 +4522,31 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
     `
   } 
 
+  if ( level == 5.16 ){
+    if (p.choice2 == "B"){
+      p.objectTwoV = p.objectOneV*(genNumbers(5)+2)
+    }
+    if (p.choice2 == "S"){
+      p.objectTwoV = p.objectOneV
+      p.objectOneV = p.objectOneV*(genNumbers(5)+2)
+    }
+    let gender = ["girls","boys"][genNumbers(2)]
+    if (p.choice == "A"){
+      displayProblem.innerHTML = 
+      `
+      ${p.objectOneV} ${gender} shared ${p.objectTwoV} ${p.unit} of something.</br>
+      How much ${p.unit} did each ${gender == "girls" ? "girl" : "boy"} receive?
+      `
+    }
+    if (p.choice == "B"){
+      displayProblem.innerHTML = 
+      `
+      ${p.objectTwoV} ${p.unit} of something was shared among ${p.objectOneV} ${gender}.</br>
+      How much ${p.unit} did each ${gender == "girls" ? "girl" : "boy"} receive?
+      `
+    }
+  }
+
   if ( level == 6.0){
     if (p.numOne == p.denoOne || p.numTwo == p.denoTwo || p.numThree == p.denoThree){
       p.denoOne += 1
@@ -7335,6 +7360,15 @@ function handleSubmit(e){
         }
       }
 
+      if (level == 5.16 ){
+        if (p.choice2 == "B"){
+          correctAnswer = `${p.objectTwoV}/${p.objectOneV}=${p.objectTwoV/p.objectOneV}`
+        }
+        if (p.choice2 == "S"){
+          correctAnswer = `${p.objectTwoV}/${p.objectOneV}`
+        }
+      }
+
       if ( level == 6.01){
         if (difficulty == 0){
           if (p.rollType == "area"){
@@ -9221,6 +9255,16 @@ function genProblems(){
     }
   }
 
+  if ( level == 5.16 ){
+    return {
+     unit: ["kg","g","ml","m","cm"][genNumbers(5)],
+     objectOneV: (genNumbers(5)+2),
+     objectTwoV: undefined,
+     choice: ["A","B"][genNumbers(2)],
+     choice2: ["B","S"][genNumbers(2)]
+    }
+  }
+
   if ( level == 6.0){
     return {
       percentageOne: (genNumbers(18)+1)*5,
@@ -11004,6 +11048,18 @@ for (let i = 0; i <  settingButton.length; i++){
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
         document.querySelector("#user-input").style.width = "300px"
+      break;
+
+      case "Level 5.16":
+        level = 5.16;
+        scoreNeeded = 10;
+        document.querySelector("#user-input").setAttribute("type","text");
+        displayProblem.style.fontSize = "18px";
+        displayProblem.style.textAlign = "left";
+        instructions.innerHTML = 
+        `
+        Do not simplify when it is an equation in simple fraction.
+        `
       break;
 
       case "Level 6.0":
