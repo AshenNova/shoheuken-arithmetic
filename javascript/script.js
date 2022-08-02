@@ -2980,7 +2980,80 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
         `
       }
     }
+  }
 
+  if ( level == 4.25){
+    let a = [-1, 1][genNumbers(2)]
+    ctx.save()
+      if (p.roll == 2){
+        p.length = p.squareOne + p.squareTwo
+      }
+      if (p.roll == 3){
+        p.length = p.squareOne + p.squareTwo + p.squareThree
+      }
+      if (p.roll == 4){
+        p.length = p.squareOne + p.squareTwo + p.squareThree + p.squareFour
+      }
+      ctx.font = '1em serif'
+
+      if (p.question == "perimeter"){
+        ctx.fillText(`The length of AB is ${p.length} cm.`,15 ,15)
+        ctx.fillText(`What is the perimeter of the figure?`,15 ,35)  
+      }
+      if (p.question == "AB"){
+        ctx.fillText(`The perimeter of the figure is ${p.length*p.roll} cm.`,15 ,15)
+        ctx.fillText(`What is the length of AB?`,15 ,35)  
+      }
+      ctx.fillText(`The figure is made up of ${p.roll} squares.`, 15, 55)
+
+      if (p.roll == 2){
+        ctx.translate((400-p.squareOne-p.squareTwo)/2, 120)
+      }
+      if (p.roll == 3){
+        ctx.translate((400-p.squareOne-p.squareTwo-p.squareThree)/2, 120)
+      }
+      if (p.roll == 4){
+        ctx.translate((400-p.squareOne-p.squareTwo-p.squareThree-p.squareFour)/2, 120)
+      }
+  
+      ctx.beginPath()
+      ctx.arc(0, 0, 2, 0, 2*Math.PI)
+      ctx.stroke()
+
+        ctx.beginPath()
+        ctx.rect(0, 0, p.squareOne, a*p.squareOne)
+        ctx.stroke()
+        ctx.fillText("A", -15, 3)
+
+      if (p.roll > 1 ){
+        ctx.beginPath()
+        ctx.rect(p.squareOne, 0, p.squareTwo, a*-1*p.squareTwo)
+        ctx.stroke()
+        if (p.roll == 2 ){
+          ctx.fillText("B", p.squareOne+p.squareTwo+3, 3)
+        }
+      }
+
+      if (p.roll > 2){
+        ctx.beginPath()
+        ctx.rect(p.squareOne+p.squareTwo, 0, p.squareThree, a*p.squareThree)
+        ctx.stroke()
+        if (p.roll == 3 ){
+          ctx.fillText("B", p.squareOne+p.squareTwo+p.squareThree+3, 3)
+        }
+      }
+
+      if (p.roll > 3){
+        ctx.beginPath()
+        ctx.rect(p.squareOne+p.squareTwo+p.squareThree, 0, p.squareFour, a*-1*p.squareFour)
+        ctx.stroke()
+        if (p.roll == 4 ){
+          ctx.fillText("B", p.squareOne+p.squareTwo+p.squareThree+p.squareFour+3, 3)
+        }
+      }
+
+
+    ctx.restore()
   }
 
   if ( level == 5.0 ){
@@ -6903,6 +6976,15 @@ function handleSubmit(e){
         }
       }
 
+      if ( level == 4.25 ){
+        if (p.question == "perimeter"){
+         correctAnswer = `${p.length}x4`
+        }
+        if (p.question == "AB"){
+          correctAnswer = `${p.length*p.roll}/4`
+        }
+      }
+
       if ( level == 5.0) {
         if (p.sidesBH == "base"){
           correctAnswer = `${p.labelABC}${p.labelGHI}`
@@ -8860,6 +8942,19 @@ function genProblems(){
     }
   }
 
+  if ( level == 4.25 ){
+    return {
+      squareOne: (genNumbers(10)+1)*10,
+      squareTwo: (genNumbers(10)+1)*10,
+      squareThree: (genNumbers(10)+1)*10,
+      squareFour: (genNumbers(10)+1)*10,
+      roll: [2,3,4][genNumbers(3)],
+      length: undefined,
+      question: ["perimeter","AB"][genNumbers(2)]
+      
+    }
+  }
+
   if ( level == 5.0 ){
     return {
       pointX1: genNumbers(70)+50,
@@ -10653,6 +10748,15 @@ for (let i = 0; i <  settingButton.length; i++){
         `
         Do not need to simplify.
         `
+      break;
+
+      case "Level 4.25":
+        level = 4.25;
+        scoreNeeded = 10;
+        displayProblem.style.fontSize = "20px"
+        document.querySelector("#user-input").setAttribute("type","text");
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
       break;
 
       case "Level 5.0":
