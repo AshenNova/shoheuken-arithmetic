@@ -4547,6 +4547,94 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
     }
   }
 
+  if ( level == 5.17 ) {
+    ctx.save()
+    ctx.font = '1em serif'
+    ctx.stroke()
+    let side = 40
+    ctx.fillText("What is the perimeter of the figure?", 20, 20)
+    ctx.translate((400-p.layerOne*side)/2, 50)
+      // layer 1
+      ctx.save()
+      let firstTranslate = genNumbers(side)
+        ctx.translate(firstTranslate, 0)
+        if (p.layerOne >= 1){
+          ctx.strokeRect(0, 0, side, side)
+        }
+        if (p.layerOne >= 2){
+          ctx.strokeRect(side, 0, side, side)
+        }
+        if (p.layerOne >= 3){
+          ctx.strokeRect(side*2, 0, side, side)
+        }
+        if (p.layerOne >= 4){
+          ctx.strokeRect(side*3, 0, side, side)
+        }
+        if (p.layerOne == 5){
+          ctx.strokeRect(side*4, 0, side, side)
+        }
+
+      ctx.restore()
+      // layer 2
+      ctx.save()
+        let secondTranslate = firstTranslate+genNumbers(side)
+        p.layerTwo = genNumbers(p.layerOne)
+        while (p.layerTwo == 0){
+          p.layerTwo = genNumbers(p.layerOne)
+        }
+        ctx.translate(secondTranslate, 0)
+        if (p.layerTwo >= 1){
+          ctx.strokeRect(0, side, side, side)
+        }
+        if (p.layerTwo >= 2){
+          ctx.strokeRect(side, side, side, side)
+        }
+        if (p.layerTwo >= 3){
+          ctx.strokeRect(side*2, side, side, side)
+        }
+        if (p.layerTwo >= 4){
+          ctx.strokeRect(side*3, side, side, side)
+        }
+        ctx.restore()
+      // layer 3
+      ctx.save()
+      let thirdTranslate = secondTranslate+genNumbers(side)
+      p.layerThree = genNumbers(p.layerTwo)
+        ctx.translate(thirdTranslate, 0)
+        if (p.layerThree >= 1){
+          ctx.strokeRect(0, side*2, side, side)
+        }
+        if (p.layerThree >= 2){
+          ctx.strokeRect(side, side*2, side, side)
+        }
+        if (p.layerThree >= 3){
+          ctx.strokeRect(side*2, side*2, side, side)
+        }
+        if (p.layerThree >= 4){
+          ctx.strokeRect(side*3, side*2, side, side)
+        }
+      ctx.restore()
+      // layer 4
+      let fourthTranslate = thirdTranslate+genNumbers(side)
+      p.layerFour = genNumbers(p.layerThree)
+      ctx.save()
+        ctx.translate(fourthTranslate, 0)
+        if (p.layerFour >= 1){
+          ctx.strokeRect(0, side*3, side, side)
+        }
+        if (p.layerFour >= 2){
+          ctx.strokeRect(side, side*3, side, side)
+        }
+        if (p.layerFour >= 3){
+          ctx.strokeRect(side*2, side*3, side, side)
+        }
+        if (p.layerFour >= 4){
+          ctx.strokeRect(side*3, side*3, side, side)
+        }
+      ctx.restore()
+    ctx.restore()
+  }
+
   if ( level == 6.0){
     if (p.numOne == p.denoOne || p.numTwo == p.denoTwo || p.numThree == p.denoThree){
       p.denoOne += 1
@@ -7369,6 +7457,22 @@ function handleSubmit(e){
         }
       }
 
+      if ( level == 5.17 ){
+        let countLayers = 1
+        if (p.layerTwo > 0){
+          countLayers += 1
+        }
+        if (p.layerThree > 0){
+          countLayers += 1
+        }
+        if (p.layerFour > 0){
+          countLayers += 1
+        }
+        console.log("Layers " + countLayers)
+        console.log(p.layerOne, p.layerTwo, p.layerThree, p.layerFour)
+        correctAnswer = (p.layerOne+countLayers)*2
+      }
+
       if ( level == 6.01){
         if (difficulty == 0){
           if (p.rollType == "area"){
@@ -9265,6 +9369,15 @@ function genProblems(){
     }
   }
 
+  if ( level == 5.17 ){
+    return {
+      layerOne: genNumbers(4)+2,
+      layerTwo: undefined,
+      layerThree: undefined,
+      layerFour: undefined
+    }
+  }
+
   if ( level == 6.0){
     return {
       percentageOne: (genNumbers(18)+1)*5,
@@ -11060,6 +11173,13 @@ for (let i = 0; i <  settingButton.length; i++){
         `
         Do not simplify when it is an equation in simple fraction.
         `
+      break;
+
+      case "Level 5.17":
+        level = 5.17;
+        scoreNeeded = 10;
+        wholeNumberContainer.classList.add('hidden');
+        firstCanvas.classList.remove('hidden');
       break;
 
       case "Level 6.0":
