@@ -98,6 +98,7 @@ let levelArr = [];
 let arr = [];
 let arr2 = [];
 let arr3 = [];
+let heuArr = []
 let multiplesArr = [0]
 let gold = 0;
 let silver = 0;
@@ -5291,6 +5292,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
   }
 
   if ( level == "heuTwo"){
+    
     if (setting == 1 || setting == 9 && p.roll == 1 ){
       
       p.positionTwo = p.rollPositionTwoArr[genNumbers(3)]
@@ -8344,7 +8346,7 @@ function handleSubmit(e){
         setTimeout(() => currentMistake.classList.remove("animate-wrong"), 331)
         mainContainer.classList.add("animate-wrong-container")
         setTimeout(() => mainContainer.classList.remove("animate-wrong-container"), 331)
-        levelDoNotClear = ["heuOne", "heuTwo", "heuThree", "heuFour" , "heuFive", "heuSix"]
+        levelDoNotClear = ["heuOne", "heuTwo", "heuThree", "heuFour" , "heuFive", "heuSix", "heuTwob"]
         levelDoNotClearNum = [2.05, 2.09, 2.08, 2.09, 3.12, 3.13, 3.14, 3.16, 4.0, 6.01 ]
          if ( !levelDoNotClearNum.includes(level) && !levelDoNotClear.includes(level) ){
           console.log("DO NOT CLEAR")
@@ -8390,6 +8392,14 @@ function handleSubmit(e){
         }
         if ( level == 6.05){
           helpMe.textContent = `Distance = Speed x Time`
+        }
+
+        let allHeuArray = ["heuTwo", "heuTwob", "heuThree", "heuFour", "heuFive"]
+        if ( allHeuArray.includes(level)){
+          if (!heuArr.includes(p.roll)){
+            heuArr.push(p.roll)
+            console.log(heuArr)
+          }
         }
     }
   }
@@ -9518,10 +9528,21 @@ function genProblems(){
   }
 
   if (level == "heuTwo"){
-    roll = genNumbers(3)+1
     if (isNaN(setting)){
       setting = 9
     }
+
+    if (setting == 9){
+      if (!heuArr.length){
+        heuArr = [1, 2, 3]
+        console.log("Array renewed")
+      }
+      roll = heuArr[genNumbers(heuArr.length)]
+      console.log(heuArr.length)
+      let index = heuArr.indexOf(roll)
+      heuArr.splice(index, 1)
+    }
+
     if (setting == 1 || setting == 9 && roll == 1 ){
       return{
         rollObject: ["tree", "lamppost", "fire hydrant"][genNumbers(3)],
@@ -9580,10 +9601,22 @@ function genProblems(){
   }
 
   if ( level == "heuThree"){
-    let roll = genNumbers(7)+1
+    // let roll = genNumbers(7)+1
+
     if (isNaN(setting)){
       setting = 9
     }
+
+    if (setting == 9){
+      if (!heuArr.length){
+        heuArr = [1, 2, 3, 4, 5, 6, 7]
+        console.log("array renewed!")
+      }
+      roll = heuArr[genNumbers(heuArr.length)]
+      let index = heuArr.indexOf(roll)
+      heuArr.splice(index, 1)
+    }
+
     if (setting == 1 || (setting == 9 && roll == 1)){
         return {
         objectOne: ["A","B","C"][genNumbers(3)],
@@ -9725,7 +9758,17 @@ function genProblems(){
   }
 
   if ( level == "heuFour"){
-    let roll = genNumbers(6)+1
+    // let roll = genNumbers(6)+1
+
+    if (setting == 9){
+      if (!heuArr.length){
+        heuArr = [1, 2, 3, 4, 5, 6]
+        console.log("Array renewed")
+      }
+      roll = heuArr[genNumbers(heuArr.length)]
+      let index = heuArr.indexOf(roll)
+      heuArr.splice(index, 1)
+    }
 
     if (isNaN(setting)){
       setting = 9
@@ -9817,10 +9860,21 @@ function genProblems(){
   }
 
   if ( level == "heuFive"){
-    let roll = genNumbers(4)+1
+    // let roll = genNumbers(4)+1
     if (isNaN(setting)){
       setting = 9
     }
+
+    if (setting == 9){
+      if (!heuArr.length){
+        heuArr = [1, 2, 3, 4]
+        console.log("Array renewed")
+      }
+      roll = heuArr[genNumbers(heuArr.length)]
+      let index = heuArr.indexOf(roll)
+      heuArr.splice(index, 1)
+    }
+
 
     if (setting == 1 || setting == 9 && roll == 1){
       return {
