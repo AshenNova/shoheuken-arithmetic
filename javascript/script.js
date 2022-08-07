@@ -3295,8 +3295,8 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       ctx.fillText(`The height of the triangle is ${p.labelABC}${p.labelMNO}. What is its base?`, 20, 20)
     }
 
-    ctx.fillText(`${p.labelABC}${p.labelDEF}, ${p.labelGHI}${p.labelJKL}, ${p.labelABC}${p.labelJKL}, ${p.labelDEF}${p.labelGHI}, ${p.labelABC}${p.labelGHI}, ${p.labelABC}${p.labelMNO}, ${p.labelGHI}${p.labelJKL}`, 20, 40)
-    ctx.translate(200, 137.5)
+    // ctx.fillText(`${p.labelABC}${p.labelDEF}, ${p.labelGHI}${p.labelJKL}, ${p.labelABC}${p.labelJKL}, ${p.labelDEF}${p.labelGHI}, ${p.labelABC}${p.labelGHI}, ${p.labelABC}${p.labelMNO}, ${p.labelGHI}${p.labelJKL}`, 20, 40)
+    ctx.translate(200, 150)
     ctx.rotate(p.rotation*Math.PI/180)
     // triangle A
     p.triA2y = p.triA1y+genNumbers(20)+10
@@ -6000,6 +6000,7 @@ function handleSubmit(e){
   if ( player == 1 ){
     // if (userInput.value == "") alert("Please input a value")
     let correctAnswer
+    let correctAnswerTwo
     console.log(userInput2.value)
     const p = state.currentProblem
     
@@ -7221,21 +7222,27 @@ function handleSubmit(e){
       if ( level == 5.06 ){
         if (p.question == "base"){
           correctAnswer = `${p.labelDEF}${p.labelGHI}`
+          correctAnswerTwo = `${p.labelGHI}${p.labelDEF}`
         }
         if (p.question == "height"){
           correctAnswer = `${p.labelABC}${p.labelJKL}`
+          correctAnswerTwo = `${p.labelJKL}${p.labelABC}`
         }
         if (p.question == "base2"){
           correctAnswer = `${p.labelABC}${p.labelJKL}`
+          correctAnswerTwo = `${p.labelJKL}${p.labelABC}`
         }
         if (p.question == "height2"){
           correctAnswer = `${p.labelDEF}${p.labelGHI}`
+          correctAnswerTwo = `${p.labelGHI}${p.labelDEF}`
         }
         if (p.question == "base3"){
           correctAnswer = `${p.labelABC}${p.labelMNO}`
+          correctAnswerTwo = `${p.labelMNO}${p.labelABC}`
         }
         if (p.question == "height3"){
           correctAnswer = `${p.labelGHI}${p.labelJKL}`
+          correctAnswerTwo = `${p.labelJKL}${p.labelGHI}`
         }
 
       }
@@ -8263,7 +8270,7 @@ function handleSubmit(e){
         userInput.value = userInput.value.toLowerCase()
       }
 
-      if (userInput.value.trim() == correctAnswer || userInput2.value.trim() == correctAnswer){
+      if (userInput.value.trim() == correctAnswer || userInput2.value.trim() == correctAnswer || userInput.value.trim() == correctAnswerTwo){
         console.log("correct")
         state.score++
         if (mulLevel == "multiples"){
@@ -9199,6 +9206,7 @@ function genProblems(){
   }
 
   if ( level == 5.06 ){
+    canvas.setAttribute("height", "300px")
     return {
 
       // triangle A
