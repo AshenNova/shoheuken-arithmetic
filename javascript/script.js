@@ -8081,7 +8081,7 @@ function handleSubmit(e){
               correctAnswer = `${firstLine}\n${p.objectTwoQ}-${p.objectOneQ}=${smallDiff}\n${bigDiff}/${smallDiff}=${p.price}`
             }
             if (p.rollQn == "total"){  
-              correctAnswer = `${firstLine}\n${p.objectTwoQ}-${p.objectOneQ}=${smallDiff}\n${bigDiff}/${smallDiff}=${p.price}\n${p.price}x${p.objectOneQ}${p.totalValue-(p.objectOneQ*p.price) < 0 ? "-" : "+"}${newObjectOneS}=${p.totalValue}`
+              correctAnswer = `${firstLine}\n${p.objectTwoQ}-${p.objectOneQ}=${smallDiff}\n${bigDiff}/${smallDiff}=${p.price}\n${p.price}x${p.objectOneQ}${p.objectOneS >= 0 ? "+" : "-"}${newObjectOneS}=${p.totalValue}`
             }
           
         }
@@ -9853,8 +9853,6 @@ function genProblems(){
     if (isNaN(setting)){
       setting = 9
     }
-
-    console.log("Setting is " + setting + " roll is " + roll)
 
     if (setting == 1 || (setting == 9 && roll == 1) ){
       return {
