@@ -8229,10 +8229,18 @@ function handleSubmit(e){
           let fourthSentence = `${p.adjustedTotal}/${p.groupTotal}=${p.group}`
           
           if (p.choice == "girls"){
-            correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}`
+            if (p.difference > 0){
+              correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${p.group}+${p.difference}=${p.group+p.difference}`
+            } else {
+              correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}`
+            }
           }
           if (p.choice == "boys"){
-            correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${p.group}+${-p.difference}=${p.group-p.difference}`
+            if (p.difference > 0){
+              correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}`
+            } else {
+              correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${p.group}+${-p.difference}=${p.group-p.difference}`
+            }
           }
         }
 
@@ -9964,13 +9972,11 @@ function genProblems(){
     if (setting == 1 || setting == 9 && roll == 1){
       return {
         roll: 1,
-        objectOne: ["A","B","C"][genNumbers(3)],
-        objectTwo: ["X","Y","Z"][genNumbers(3)],
         quantityOne: genNumbers(10)+1,
         quantityTwo: genNumbers(10)+1,
         difference: genNumbers(10)-5,
         total: genNumbers(100)+50,
-        choice: ["girls", "boys"][genNumbers(2)],
+        choice: ["boys","girls"][genNumbers(2)],
         adjustment: undefined,
         groupTotal: undefined,
         group: undefined
