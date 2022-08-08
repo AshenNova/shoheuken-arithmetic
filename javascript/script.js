@@ -5581,6 +5581,30 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
         `
       }
     }
+
+    if ( setting == 8 || setting == 9 && p.roll == 8 ){
+      let gender = genNumbers(2) == 0 ? "he" : "she"
+        if (p.options == "A"){
+          p.value = p.cost*p.min*(genNumbers(4)+2)+(p.cost*genNumbers(p.min))
+        displayProblem.innerHTML = 
+        `
+          Someone has $${p.value}.<br>
+          1 packet of potatoe chip cost $${p.cost}.</br>
+          If ${gender} buys ${p.min} packets, ${gender} gets 1 more for free.</br>
+          What is the most number of packets ${gender} can get? 
+        `
+      }
+      if (p.options == "B"){
+        p.discount = genNumbers(p.cost-1)+1
+        p.value = (p.min*genNumbers(10)+1)+genNumbers(p.min)
+        displayProblem.innerHTML = 
+        `
+          1 packet of potatoe chip cost $${p.cost}.</br>
+          For every ${p.min} packets bought, a discount of $${p.discount} is given.</br>
+          How much does ${p.value} packets cost?
+        `
+      }
+   }
   }
 
   if ( level == "heuThreeb"){
@@ -7895,6 +7919,43 @@ function handleSubmit(e){
           correctAnswer = `${Math.abs(p.difference)}+${p.transferV}+${p.transferV}=${newDifference}`
         }
       }
+
+      if (setting == 8 || setting == 9 && p.roll == 8 ){
+
+        if (p.options == "A"){
+          let packetBought = p.value/p.cost
+          let sets = Math.floor(packetBought/p.min)
+          let setsR = packetBought%p.min
+          let lineTwo = undefined
+          if (setsR == 0){
+            lineTwo = `${packetBought}/${p.min}=${sets}`
+          } else {
+            lineTwo = `${packetBought}/${p.min}=${sets}r${setsR}`
+          }
+          let totalPacket = packetBought+sets
+          let lineThree = `${packetBought}+${sets}=${totalPacket}`
+          if (sets == 0){
+            correctAnswer = `${p.value}/${p.cost}=${packetBought}\n${lineTwo}`
+          } else {
+            correctAnswer = `${p.value}/${p.cost}=${packetBought}\n${lineTwo}\n${lineThree}`
+          }
+        }
+
+        if (p.options == "B"){
+          let discountSets = Math.floor(p.value/p.min)
+          let setsR = p.value%p.min
+          let lineOne = undefined
+          if (setsR == 0){
+            lineOne = `${p.value}/${p.min}=${discountSets}`
+          } else {
+            lineOne = `${p.value}/${p.min}=${discountSets}r${setsR}`
+          }
+          let valueDiscounts = discountSets*p.discount
+          let totalCost = p.value*p.cost
+          let actualCost = totalCost-valueDiscounts
+          correctAnswer = `${lineOne}\n${discountSets}x${p.discount}=${valueDiscounts}\n${p.value}x${p.cost}=${totalCost}\n${totalCost}-${valueDiscounts}=${actualCost}`
+        }
+      }
     }
       if ( level == "heuThreeb"){
         if ( setting == 1 || setting == 9 && p.roll == 1){
@@ -9617,7 +9678,7 @@ function genProblems(){
 
     if (setting == 9){
       if (!heuArr.length){
-        heuArr = [1, 2, 3, 4, 5, 6, 7]
+        heuArr = [1, 2, 3, 4, 5, 6, 7, 8]
         console.log("array renewed!")
       }
       roll = heuArr[genNumbers(heuArr.length)]
@@ -9727,6 +9788,17 @@ function genProblems(){
           transfer: ["A","B"][genNumbers(2)],
           transferV: genNumbers(10)+1
 
+        }
+      }
+
+      if ( setting == 8 || setting == 9 && roll == 8){
+        return {
+          roll: 8,
+          options: ["B","A"][genNumbers(2)],
+          value: undefined,
+          cost: genNumbers(4)+2,
+          min: genNumbers(4)+2,
+          discount: undefined
         }
       }
 
@@ -11412,7 +11484,7 @@ for (let i = 0; i <  settingButton.length; i++){
       break
 
       case "Heu.3":
-        setting = parseInt(prompt("What level?\n1. Sum and Difference\n2. Supposition\n3. Under the same unit ( Unit )\n4. Under the same unit ( Difference )\n5. Equal Grouping\n6. Round up/down\n7. Double Effect\n\n9. All"))
+        setting = parseInt(prompt("What level?\n1. Sum and Difference\n2. Supposition\n3. Under the same unit ( Unit )\n4. Under the same unit ( Difference )\n5. Equal Grouping\n6. Round up/down\n7. Double Effect\n8. Grouping ( Bonus )\n\n9. All"))
         level = "heuThree"
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
