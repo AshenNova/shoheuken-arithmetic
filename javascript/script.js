@@ -8194,17 +8194,17 @@ function handleSubmit(e){
             }
          } else if ( remainder == 1) {
           if (p.rollQn == "A"){
-            correctAnswer = `${p.objectTwoQ}+1=${p.objectTwoQ+1}\n${p.total}/${p.objectTwoQ+1}=${sets}r1\n${sets}`
+            correctAnswer = `${p.objectTwoQ}+1=${p.objectTwoQ+1}\n${p.total}/${p.objectTwoQ+1}=${sets}r1\n${sets}+1=${sets+1}`
           }
           if (p.rollQn == "B"){
-            correctAnswer = `${p.objectTwoQ}+1=${p.objectTwoQ+1}\n${p.total}/${p.objectTwoQ+1}=${sets}r1\n${sets}x${p.objectTwoQ}+1=${sets*p.objectTwoQ+1}`
+            correctAnswer = `${p.objectTwoQ}+1=${p.objectTwoQ+1}\n${p.total}/${p.objectTwoQ+1}=${sets}r1\n${sets}x${p.objectTwoQ}=${sets*p.objectTwoQ}`
           }
          } else {
           if (p.rollQn == "A"){
-            correctAnswer = `${p.objectTwoQ}+1=${p.objectTwoQ+1}\n${p.total}/${p.objectTwoQ+1}=${sets}r${remainder}\n${sets}`
+            correctAnswer = `${p.objectTwoQ}+1=${p.objectTwoQ+1}\n${p.total}/${p.objectTwoQ+1}=${sets}r${remainder}\n${sets}+1=${sets+1}`
           }
           if (p.rollQn == "B"){
-            correctAnswer = `${p.objectTwoQ}+1=${p.objectTwoQ+1}\n${p.total}/${p.objectTwoQ+1}=${sets}r${remainder}\n${sets}x${p.objectTwoQ}+${remainder}=${sets*p.objectTwoQ+remainder}`
+            correctAnswer = `${p.objectTwoQ}+1=${p.objectTwoQ+1}\n${p.total}/${p.objectTwoQ+1}=${sets}r${remainder}\n${sets}x${p.objectTwoQ}+${remainder-1}=${sets*p.objectTwoQ+remainder-1}`
           }
          }
         }
