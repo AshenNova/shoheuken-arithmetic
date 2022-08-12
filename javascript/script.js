@@ -5860,7 +5860,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       `
     }
   }
-
+                                // Display
   if ( level == "heuFive"){
     if (setting == 1 || setting == 9 && p.roll == 1 ){
       while (p.quantityOne == p.quantityTwo){
@@ -5986,6 +5986,37 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       Each ${p.objectTwo} is ${p.objectTwoV}.</br>
       The difference between them is ${p.bDifference}.</br>
       ${lastSentence}
+      `
+    }
+
+    if (setting == 5 || setting == 9 && p.roll == 5){
+      console.log(p.position)
+      while (p.objectOneM == p.objectTwoM ){
+        p.objectOneM = genNumbers(4)+2
+        p.objectTwoM = genNumbers(4)+2
+      }
+      while (p.objectOneQ == p.objectTwoQ || p.objectOneQ < p.objectTwoQ ){
+        p.objectOneQ = genNumbers(9)+2
+        p.objectTwoQ = genNumbers(4)+2
+      }
+
+      p.objectOneC = p.objects[p.position][0]
+      p.objectTwoC = p.objects[p.position][1]
+      p.objectOneFQ = p.objectOneQ*p.objectOneM
+      p.objectTwoFQ = p.objectTwoQ*p.objectTwoM
+      p.objectOneV = p.objectOneFQ*(genNumbers(5)+2)
+      p.objectTwoV = p.objectTwoFQ*(genNumbers(5)+2)
+      
+      p.objectTwoAV = p.objectTwoQ*p.objectOneM
+      p.objectTwoLQ = p.objectTwoAV+p.objectTwoFQ
+      p.total = p.objectTwoLQ*p.oneUnit
+
+      displayProblem.innerHTML = 
+      `
+        ${p.objectOneQ} ${p.objectOneC} is the same as ${p.objectTwoQ} ${p.objectTwoC}.</br>
+        ${p.objectOneFQ} ${p.objectOneC} and ${p.objectTwoFQ} ${p.objectTwoC} is ${p.total}.</br>
+        What is 1 ${p.objects[p.position][2]}?
+
       `
     }
   }
@@ -8209,7 +8240,7 @@ function handleSubmit(e){
          }
         }
       }
-      
+                                // Answers
       if ( level == "heuFive"){
         if (setting == 1 || setting == 9 && p.roll == 1){
 
@@ -8325,8 +8356,13 @@ function handleSubmit(e){
             
             correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${fifthSentence}`
           }
-          
         }
+
+        if ( setting == 5 || setting == 9 && p.roll == 5 ){
+          
+          correctAnswer = `${p.objectOneQ}${p.objectOneC[0]}=${p.objectTwoQ}${p.objectTwoC[0]}\n${p.objectOneFQ}${p.objectOneC[0]}=${p.objectTwoAV}${p.objectTwoC[0]}\n${p.objectTwoAV}${p.objectTwoC[0]}+${p.objectTwoFQ}${p.objectTwoC[0]}=${p.objectTwoLQ}${p.objectTwoC[0]}\n${p.total}/${p.objectTwoLQ}=${p.oneUnit}`
+        }
+
       }
 
       if (mulLevel == "multiples"){
@@ -9951,7 +9987,7 @@ function genProblems(){
         }
       }
   }
-
+                            // Stats
   if ( level == "heuFive"){
     // let roll = genNumbers(4)+1
     if (isNaN(setting)){
@@ -9960,7 +9996,7 @@ function genProblems(){
 
     if (setting == 9){
       if (!heuArr.length){
-        heuArr = [1, 2, 3, 4]
+        heuArr = [1, 2, 3, 4, 5]
         console.log("Array renewed")
       }
       roll = heuArr[genNumbers(heuArr.length)]
@@ -10036,6 +10072,35 @@ function genProblems(){
         sDifference: undefined,
         bDifference: undefined,
         choice: genNumbers(6)
+      }
+    }
+
+    if (setting == 5 || setting == 9 && roll == 5){
+      return {
+        roll: 5,
+        objects: [
+          ["apples", "oranges", "orange"],
+          ["small bottles", "large bottles", "large bottle"],
+          ["shirts", "pants", "pant"],
+          ["wallets", "bells", "bell"],
+          ["glasses","jugs", "jug"]
+        ],
+        position: genNumbers(5),
+        objectOneC: undefined,
+        objectTwoC: undefined,
+        objectOneQ: genNumbers(9)+2,
+        objectTwoQ: genNumbers(4)+2,
+        objectOneV: undefined,
+        objectTwoV: undefined,
+        objectOneM: genNumbers(4)+2, 
+        objectTwoM: genNumbers(4)+2,
+        objectOneFQ: undefined,
+        objectTwoFQ: undefined,
+        objectTwoAV: undefined,
+        objectTwoLQ: undefined,
+        total: undefined,
+        oneUnit: genNumbers(9)+2
+
       }
     }
   }
@@ -11525,7 +11590,7 @@ for (let i = 0; i <  settingButton.length; i++){
 
       case "Heu.5":
         level = "heuFive"
-        setting = parseInt(prompt("What level?\n1. Grouping with Difference\n2. Supposition (Negative)\n3. Supposition negative ( Difference)\n4.Identical Quantity with Difference\n\n9. All"))
+        setting = parseInt(prompt("What level?\n1. Grouping with Difference\n2. Supposition (Negative)\n3. Supposition negative ( Difference)\n4. Identical Quantity with Difference\n5. Substitution\n\n9. All"))
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
