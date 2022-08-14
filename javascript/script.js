@@ -5780,6 +5780,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
     if ( setting == 2 || (setting == 9 && p.roll == 2)){
       p.sceneTwo = p.sceneOne + genNumbers(5)+1
       p.situationOne = p.numberOfStuff-(p.sceneOne*p.numberOfStudents)
+      // p.situationOne = 0
       p.situationTwo = p.numberOfStuff-(p.sceneTwo*p.numberOfStudents)
       console.log(p.situationOne, p.situationTwo)
       displayProblem.innerHTML =
@@ -8118,28 +8119,29 @@ function handleSubmit(e){
         }
 
         if ( setting == 2 || (setting == 9 && p.roll == 2)){
-          console.log(p.rollAnswer)
           let symbol = p.situationOne > 0 ? "+" : "-"
           let bigDifference = undefined
           let smallDifference = p.sceneTwo-p.sceneOne
           let firstLine = `${p.situationOne}+${Math.abs(p.situationTwo)}=${p.situationOne+Math.abs(p.situationTwo)}`
         
-          if (p.situationOne > 0 && p.situationTwo > 0 || p.situationOne < 0 && p.situationTwo < 0){
-            p.situationOne = Math.abs(p.situationOne)
-            p.situationTwo = Math.abs(p.situationTwo)
-            if (p.situationTwo > p.situationOne){
-              firstLine = `${Math.abs(p.situationTwo)}-${Math.abs(p.situationOne)}=${Math.abs(p.situationTwo)-p.situationOne}`
-              bigDifference = p.situationTwo-p.situationOne
+          if (p.situationOne > 0 && p.situationTwo > 0 || p.situationOne <= 0 && p.situationTwo <= 0){
+            let one = Math.abs(p.situationOne)
+            let two = Math.abs(p.situationTwo)
+            // p.situationOne = Math.abs(p.situationOne)
+            // p.situationTwo = Math.abs(p.situationTwo)
+            if (two > one){
+              firstLine = `${Math.abs(two)}-${Math.abs(one)}=${Math.abs(two)-one}`
+              bigDifference = two-one
             } else {
-              firstLine = `${Math.abs(p.situationOne)}-${Math.abs(p.situationTwo)}=${p.situationOne-p.situationTwo}`
-              bigDifference = Math.abs(p.situationOne) - Math.abs(p.situationTwo)
+              firstLine = `${Math.abs(one)}-${Math.abs(two)}=${one-two}`
+              bigDifference = Math.abs(one) - Math.abs(two)
             }
           } else {
-            if (p.situationOne == 0){
-              symbol = "-"
+            if (p.situationOne == 0 || p.situationOne < 0 ){
+              // symbol = "-"
               bigDifference = Math.abs(p.situationOne) + Math.abs(p.situationTwo)
             } else {
-              symbol = "+"
+              // symbol = "+"
               bigDifference = Math.abs(p.situationOne) + Math.abs(p.situationTwo)
             }
           }
@@ -9933,6 +9935,7 @@ function genProblems(){
         situationOne: undefined,
         situationTwo: undefined,
         rollAnswer: genNumbers(2)+1,
+        // rollAnswer: 2,
         roll: 2
       }
     }
