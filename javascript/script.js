@@ -5398,7 +5398,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       `
     }
 
-    if ( setting == 3 || setting == 3 || p.roll == 3 ){
+    if ( setting == 3 || setting == 3 && p.roll == 3 ){
       p.numTotal = p.numOne + p.numTwo
       displayProblem.innerHTML = 
       `
@@ -5406,6 +5406,31 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
         ${p.rollChoice == 0 ? `${p.objectOne} is ${p.numOne}` : `${p.objectTwo} is ${p.numTwo}`}.</br>
         What is ${p.rollChoice == 0 ? p.objectTwo : p.objectOne }?
       `
+    }
+
+    if ( setting == 4 || setting == 4 && p.roll == 4 ){
+      while (p.numOne == p.numTwo) {
+        p.numOne = genNumbers(400)+100
+      }
+
+      if (p.rollChoice2 == "A"){
+        displayProblem.innerHTML = 
+        `
+          ${p.objectOne} is ${p.numOne}.</br>
+          ${p.objectTwo} is ${p.numTwo}.</br>
+          What is the difference between ${p.objectOne} and ${p.objectTwo}?
+        `
+      }
+
+      if (p.rollChoice2 == "B"){
+        p.numTotal = p.numOne + p.numTwo
+        displayProblem.innerHTML = 
+        `
+          The total for ${p.objectOne} and ${p.objectTwo} is ${p.numTotal}.</br>
+          ${p.rollChoice3 == 0 ? `${p.objectOne} is ${p.numOne}` : `${p.objectTwo} is ${p.numTwo}`}.</br>
+          How much ${p.numOne > p.numTwo ? "more" : "less"} is ${p.objectOne} than ${p.objectTwo}?
+        `
+      }
     }
   }
 
@@ -7845,6 +7870,10 @@ function handleSubmit(e){
             correctAnswer = p.numOne
           }
         }
+
+        if ( setting == 4 || setting == 9 && p.roll == 4 ){
+            correctAnswer = Math.abs(p.numOne-p.numTwo)
+        }
       } 
 
 
@@ -9758,7 +9787,7 @@ function genProblems(){
 
     if (setting == 9){
       if (!heuArr.length){
-        heuArr = [1, 2, 3]
+        heuArr = [1, 2, 3, 4]
         console.log("array renewed! "+ heuArr)
       }
       roll = heuArr[genNumbers(heuArr.length)]
@@ -9805,6 +9834,20 @@ function genProblems(){
         numTwo: genNumbers(400)+100,
         numTotal: undefined,
         rollChoice: genNumbers(2)
+      }
+    }
+
+    if ( setting == 4 || setting == 4 && roll == 3){
+      return {
+        roll: 4,
+        objectOne: ["A","B","C"][genNumbers(3)],
+        objectTwo: ["X","Y","Z"][genNumbers(3)],
+        numOne: genNumbers(400)+100,
+        numTwo: genNumbers(400)+100,
+        numTotal: undefined,
+        rollChoice: genNumbers(2),
+        rollChoice2: ["A","B"][genNumbers(2)],
+        rollChoice3: genNumbers(2)
       }
     }
   }
@@ -11642,7 +11685,7 @@ for (let i = 0; i <  settingButton.length; i++){
       break
 
       case "Heu.2b":
-        setting =  parseInt(prompt("What level?\n1. Comparison Model\n2. Parts of a Whole\n3. Whole and Parts\n\n9.All"))
+        setting =  parseInt(prompt("What level?\n1. Comparison Model\n2. Parts of a Whole\n3. Whole and Parts\n4. Looking for Difference\n\n9.All"))
         level = "heuTwob"
         scoreNeeded = 2;
         displayProblem.style.fontSize = "18px";
