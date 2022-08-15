@@ -5795,6 +5795,8 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
     }
   }
 
+                              // display
+
   if ( level == "heuFour"){
     if ( setting == 1 || (setting == 9 && p.roll == 1)){
       
@@ -8164,7 +8166,7 @@ function handleSubmit(e){
           }
         }
       }
-
+                                 // answer
       if ( level == "heuFour"){
         if ( setting == 1 || (setting == 9 && p.roll == 1)){
           let firstLine = undefined
@@ -8290,7 +8292,7 @@ function handleSubmit(e){
            } 
         }
 
-        if (setting == 6 || ( setting == 9 && p.roll == 6 )){
+        if (setting == 6 || setting == 9 && p.roll == 6 ){
           let sets = Math.floor(p.total/(p.objectTwoQ+1))
           let remainder = p.total%(p.objectTwoQ+1)
           if (remainder == 0){
@@ -8384,7 +8386,7 @@ function handleSubmit(e){
 
           let fourthSentence = `${bDifference}/${sDifference}=${p.chosenOneN}`
 
-          let fifthSentence = `${p.total}-${p.chosenOneQ}=${p.chosenTwoN}`
+          let fifthSentence = `${p.total}-${p.chosenOneN}=${p.chosenTwoN}`
 
           if (p.choice == 0){
             correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}`
