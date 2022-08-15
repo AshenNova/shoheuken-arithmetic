@@ -5357,37 +5357,54 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       `
     }
   }
-
+                             // display
   if (level == "heuTwob"){
-    while (p.numOne == p.numTwo){
-      p.numOne = genNumbers(9)+1
-    }
-    if (p.rollAB == "A"){
-      console.log("heuTwob " + "Type " + p.rollAB + " Var " + p.rollVar)
-     
-      if (p.numOne < p.numTwo){
-        [p.numOne, p.numTwo] = [p.numTwo, p.numOne]
+    if ( setting == 1 || setting == 9 && p.roll == 1 ){
+      while (p.numOne == p.numTwo){
+        p.numOne = genNumbers(9)+1
       }
+      if (p.rollAB == "A"){
+        if (p.numOne < p.numTwo){
+          [p.numOne, p.numTwo] = [p.numTwo, p.numOne]
+        }
 
+        displayProblem.innerHTML = 
+        `
+        ${p.rollAB} is ${p.numOne} ${p.rollx[p.rollPosition][2]}.</br>
+        A is ${p.numTwo} ${p.rollx[p.rollPosition][2]} ${p.rollx[p.rollPosition][p.rollVar]} than B.</br>
+        What is B?
+        `
+      }
+      if (p.rollAB == "B"){
+        if (p.numOne < p.numTwo){
+          [p.numOne, p.numTwo] = [p.numTwo, p.numOne]
+        }
+
+        displayProblem.innerHTML = 
+        `
+        ${p.rollAB} is ${p.numOne} ${p.rollx[p.rollPosition][2]}.</br>
+        A is ${p.numTwo} ${p.rollx[p.rollPosition][2]} ${p.rollx[p.rollPosition][p.rollVar]} than B.</br>
+        What is A?
+        `
+      }
+    }
+
+    if ( setting == 2 || setting == 9 || p.roll == 2 ){
       displayProblem.innerHTML = 
       `
-      ${p.rollAB} is ${p.numOne} ${p.roll[p.rollPosition][2]}.</br>
-      A is ${p.numTwo} ${p.roll[p.rollPosition][2]} ${p.roll[p.rollPosition][p.rollVar]} than B.</br>
-      What is B?
+        A has ${p.numOne}.</br>
+        B has ${p.numTwo}.</br>
+        What is the total of A and B?
       `
     }
-    if (p.rollAB == "B"){
-      console.log("heuTwob " + "Type " + p.rollAB + " Var " + p.rollVar)
-     
-      if (p.numOne < p.numTwo){
-        [p.numOne, p.numTwo] = [p.numTwo, p.numOne]
-      }
 
+    if ( setting == 3 || setting == 3 || p.roll == 3 ){
+      p.numTotal = p.numOne + p.numTwo
       displayProblem.innerHTML = 
       `
-      ${p.rollAB} is ${p.numOne} ${p.roll[p.rollPosition][2]}.</br>
-      A is ${p.numTwo} ${p.roll[p.rollPosition][2]} ${p.roll[p.rollPosition][p.rollVar]} than B.</br>
-      What is A?
+        ${p.objectOne} and ${p.objectTwo} has a total of ${p.numTotal}.</br>
+        ${p.rollChoice == 0 ? `${p.objectOne} is ${p.numOne}` : `${p.objectTwo} is ${p.numTwo}`}.</br>
+        What is ${p.rollChoice == 0 ? p.objectTwo : p.objectOne }?
       `
     }
   }
@@ -7798,18 +7815,35 @@ function handleSubmit(e){
         }
       }
 
+
+                                // answers
       if (level == "heuTwob"){
-        if (p.rollAB == "A" && p.rollVar == 0){
-          correctAnswer = p.numOne-p.numTwo
+        if (setting == 1 || setting == 9 && p.roll == 1 ){
+          if (p.rollAB == "A" && p.rollVar == 0){
+            correctAnswer = p.numOne-p.numTwo
+          }
+          if (p.rollAB == "A" && p.rollVar == 1){
+            correctAnswer = p.numOne+p.numTwo
+          }
+          if (p.rollAB == "B" && p.rollVar == 0){
+            correctAnswer = p.numOne+p.numTwo
+          }
+          if (p.rollAB == "B" && p.rollVar == 1){
+            correctAnswer = p.numOne-p.numTwo
+          }
         }
-        if (p.rollAB == "A" && p.rollVar == 1){
+
+        if ( setting == 2 || setting == 9 && p.roll == 2){
           correctAnswer = p.numOne+p.numTwo
         }
-        if (p.rollAB == "B" && p.rollVar == 0){
-          correctAnswer = p.numOne+p.numTwo
-        }
-        if (p.rollAB == "B" && p.rollVar == 1){
-          correctAnswer = p.numOne-p.numTwo
+
+        if ( setting == 3 || setting == 9 && p.roll == 3){
+          if (p.rollChoice == 0){
+            correctAnswer = p.numTwo
+          }
+          if (p.rollChoice == 1){
+            correctAnswer = p.numOne
+          }
         }
       } 
 
@@ -9715,28 +9749,69 @@ function genProblems(){
       }
     }
   }
-
+                              // settings
   if (level == "heuTwob"){
-    return{
-      roll: 
-      [
-      ["more", "less", "ml"],
-      ["greater","smaller", ""],
-      ["taller", "shorter", "cm"],
-      ["longer","shorter", "m"],
-      ["heavier", "lighter", "kg"]
-      ],
-      rollPosition: genNumbers(5),
-      rollAB: ["A","B"][genNumbers(2)],
-      rollVar: [0, 1][genNumbers(2)],
-      numOne: genNumbers(9)+1,
-      numTwo: genNumbers(9)+1
+    let roll = undefined
+    if (isNaN(setting)){
+      setting = 9
+    }
+
+    if (setting == 9){
+      if (!heuArr.length){
+        heuArr = [1, 2, 3]
+        console.log("array renewed! "+ heuArr)
+      }
+      roll = heuArr[genNumbers(heuArr.length)]
+      let index = heuArr.indexOf(roll)
+      heuArr.splice(index, 1)
+      console.log("Current Array is " + heuArr)
+    }
+
+    if (setting == 1 || setting == 9 && roll == 1 ){
+      return{
+        rollx: 
+        [
+        ["more", "less", "ml"],
+        ["greater","smaller", ""],
+        ["taller", "shorter", "cm"],
+        ["longer","shorter", "m"],
+        ["heavier", "lighter", "kg"]
+        ],
+        roll: 1,
+        rollPosition: genNumbers(5),
+        rollAB: ["A","B"][genNumbers(2)],
+        rollVar: [0, 1][genNumbers(2)],
+        numOne: genNumbers(400)+100,
+        numTwo: genNumbers(400)+100
+      }
+    }
+
+    if (setting == 2 || setting == 9 && roll == 2){
+      return {
+        roll: 2,
+        objectOne: ["A","B","C"][genNumbers(3)],
+        objectTwo: ["X","Y","Z"][genNumbers(3)],
+        numOne: genNumbers(400)+100,
+        numTwo: genNumbers(400)+100
+      }
+    }
+
+    if ( setting == 3 || setting == 9 && roll == 3){
+      return {
+        roll: 3,
+        objectOne: ["A","B","C"][genNumbers(3)],
+        objectTwo: ["X","Y","Z"][genNumbers(3)],
+        numOne: genNumbers(400)+100,
+        numTwo: genNumbers(400)+100,
+        numTotal: undefined,
+        rollChoice: genNumbers(2)
+      }
     }
   }
 
   if ( level == "heuThree"){
     // let roll = genNumbers(7)+1
-
+    let roll = undefined
     if (isNaN(setting)){
       setting = 9
     }
@@ -9744,11 +9819,12 @@ function genProblems(){
     if (setting == 9){
       if (!heuArr.length){
         heuArr = [1, 2, 3, 4, 5, 6, 7, 8]
-        console.log("array renewed!")
+        console.log("array renewed! " + heuArr)
       }
       roll = heuArr[genNumbers(heuArr.length)]
       let index = heuArr.indexOf(roll)
       heuArr.splice(index, 1)
+      console.log("Current remaining arr is " + heuArr)
     }
 
     if (setting == 1 || (setting == 9 && roll == 1)){
@@ -9904,15 +9980,16 @@ function genProblems(){
 
   if ( level == "heuFour"){
     // let roll = genNumbers(6)+1
-
+    let roll = undefined
     if (setting == 9){
       if (!heuArr.length){
         heuArr = [1, 2, 3, 4, 5, 6]
-        console.log("Array renewed")
+        console.log("Array renewed " + heuArr)
       }
       roll = heuArr[genNumbers(heuArr.length)]
       let index = heuArr.indexOf(roll)
       heuArr.splice(index, 1)
+      console.log("Current remaining array " + heuArr)
     }
 
     if (isNaN(setting)){
@@ -11565,7 +11642,7 @@ for (let i = 0; i <  settingButton.length; i++){
       break
 
       case "Heu.2b":
-        setting =  parseInt(prompt("What level?\n1. Comparison Model\n\n9.All"))
+        setting =  parseInt(prompt("What level?\n1. Comparison Model\n2. Parts of a Whole\n3. Whole and Parts\n\n9.All"))
         level = "heuTwob"
         scoreNeeded = 2;
         displayProblem.style.fontSize = "18px";
