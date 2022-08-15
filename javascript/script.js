@@ -1654,12 +1654,22 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       } else {
         ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelMNO}${p.labelPQR} or ${p.labelGHI}${p.labelJKL}`, 20, 20)
       }
+      // if ( p.roll == 1){
+      //   ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}?`, 20, 20)
+      // } else {
+      //   ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}?`, 20, 20)
+      // }
     } else {
       if ( p.roll == 1){
         ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelGHI}${p.labelJKL} or ${p.labelMNO}${p.labelPQR}`, 20, 20)
       } else {
       ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}? ${p.labelMNO}${p.labelPQR} or ${p.labelGHI}${p.labelJKL}`, 20, 20)
       }
+      // if ( p.roll == 1){
+      //   ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}?`, 20, 20)
+      // } else {
+      // ctx.fillText(`Which line is ${p.parallelOrPerpendicular} to ${p.labelABC}${p.labelDEF}?`, 20, 20)
+      // }
     }
 
     ctx.translate(200, 137.5);
@@ -6735,8 +6745,10 @@ function handleSubmit(e){
       if ( level == 3.18 ){
         if (p.parallelOrPerpendicular == "parallel"){
           correctAnswer = p.labelGHI + p.labelJKL
+          correctAnswerTwo = p.labelJKL + p.labelGHI
         } else {
           correctAnswer = p.labelMNO + p.labelPQR
+          correctAnswerTwo = p.labelPQR + p.labelMNO
         }
       }
 
