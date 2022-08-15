@@ -8193,7 +8193,7 @@ function handleSubmit(e){
           
         }
 
-        if ( setting == 2 || (setting == 9 && p.roll == 2)){
+        if ( setting == 2 || (setting == 9 && p.roll == 2 )){
           let symbol = p.situationOne > 0 ? "+" : "-"
           let bigDifference = undefined
           let smallDifference = p.sceneTwo-p.sceneOne
@@ -8290,7 +8290,7 @@ function handleSubmit(e){
            } 
         }
 
-        if (setting == 6 || (setting == 9 && p.roll == 6)){
+        if (setting == 6 || ( setting == 9 && p.roll == 6 )){
           let sets = Math.floor(p.total/(p.objectTwoQ+1))
           let remainder = p.total%(p.objectTwoQ+1)
           if (remainder == 0){
@@ -10020,7 +10020,7 @@ function genProblems(){
       }
     }
   }
-
+                                  // setting
   if ( level == "heuFour"){
     // let roll = genNumbers(6)+1
     let roll = undefined
