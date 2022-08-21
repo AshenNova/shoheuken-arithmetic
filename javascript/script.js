@@ -8387,7 +8387,7 @@ function handleSubmit(e){
           let sDifference = p.chosenOneQ+p.chosenTwoQ
           let thirdSentence = `${p.chosenOneQ}+${p.chosenTwoQ}=${sDifference}`
 
-          let fourthSentence = `${bDifference}/${sDifference}=${p.chosenOneN}`
+          let fourthSentence = `${bDifference}/${sDifference}=${bDifference/sDifference}`
 
           let fifthSentence = `${p.total}-${p.chosenOneN}=${p.chosenTwoN}`
 
