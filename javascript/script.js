@@ -5649,6 +5649,9 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       if (p.options == "B"){
         p.discount = genNumbers(p.cost-1)+1
         p.value = (p.min*genNumbers(10)+1)+genNumbers(p.min)
+        while (p.value <= p.min){
+          p.value = (p.min*genNumbers(10)+1)+genNumbers(p.min)
+        }
         displayProblem.innerHTML = 
         `
           1 packet of potatoe chip cost $${p.cost}.</br>
@@ -8046,7 +8049,7 @@ function handleSubmit(e){
           if (sets == 0){
             correctAnswer = `${p.value}/${p.cost}=${packetBought}\n${lineTwo}`
           } else {
-            correctAnswer = `${p.value}/${p.cost}=${packetBought}\n${lineTwo}\n${lineThree}`
+            correctAnswer = `${p.value}/${p.cost}=${packetBought}\n${lineTwo}\n${sets}x1=${sets}\n${lineThree}`
           }
         }
 
