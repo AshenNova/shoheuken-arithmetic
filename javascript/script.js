@@ -8391,11 +8391,17 @@ function handleSubmit(e){
 
           let fifthSentence = `${p.total}-${p.chosenOneN}=${p.chosenTwoN}`
 
-          if (p.choice == 0){
+          if (p.choice == 0 && p.difference < 0){
             correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}`
           }
-          if (p.choice == 1){
+          if (p.choice == 0 && p.difference > 0){
             correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${fifthSentence}`
+          }
+          if (p.choice == 1 && p.difference < 0){
+            correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${fifthSentence}`
+          }
+          if (p.choice == 1 && p.difference > 0){
+            correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}`
           }
         }
 
