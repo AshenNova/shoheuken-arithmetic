@@ -6916,7 +6916,7 @@ function handleSubmit(e){
           correctAnswer = Math.round(p.numFinal)
         }
         if (p.placeValue == "1 decimal place"){
-          p.ansFinal = Math.round(p.numFinal*10)/10
+          p.ansFinal = Math.round(p.numFinal*10)/(10)
           if ((p.ansFinal*10)%10 == 0){
             correctAnswer = p.ansFinal + ".0"
           } else {
@@ -6924,11 +6924,11 @@ function handleSubmit(e){
           }
         }
         if (p.placeValue == "2 decimal places"){
-          p.ansFinal = Math.round(p.numFinal*100)/100
+          p.ansFinal = Math.round(p.numFinal*100)/(100)
           console.log(p.ansFinal)
-          if ((p.ansFinal*100)%100 == 0){
+          if ((p.ansFinal*100)%(100) == 0){
             correctAnswer = p.ansFinal + ".00"
-          } else if ((p.ansFinal*100)%10 == 0){
+          } else if ((p.ansFinal*100)%(10) == 0){
             correctAnswer = p.ansFinal + "0"
           } else {
           correctAnswer = p.ansFinal
