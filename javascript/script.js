@@ -2072,20 +2072,44 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
   }
 
   if ( level == 4.12){
-    if (p.numOne == p.numTwo){
-      p.numOne += 1;
-    }
-    if (p.numOne > p.numTwo) {
-      [p.numOne, p.numTwo] = [p.numTwo, p.numOne]
-    }
-    for (let i = p.numTwo; i > 1; i--){
-      if (p.numOne%i == 0 && p.numTwo%i == 0){
-        p.numOne /= i;
-        p.numTwo /= i;
+    if ( setting == 1 || setting == 9 && p.rollChoice == 1 ){
+      if (p.numOne == p.numTwo){
+        p.numOne += 1;
       }
+      if (p.numOne > p.numTwo) {
+        [p.numOne, p.numTwo] = [p.numTwo, p.numOne]
+      }
+      for (let i = p.numTwo; i > 1; i--){
+        if (p.numOne%i == 0 && p.numTwo%i == 0){
+          p.numOne /= i;
+          p.numTwo /= i;
+        }
+      }
+      displayProblem.innerHTML = `${p.numOne}/${p.numTwo} of a number is ${p.numOne*p.numMulti}.<br>
+      What is the number?`
     }
-    displayProblem.innerHTML = `${p.numOne}/${p.numTwo} of a number is ${p.numOne*p.numMulti}.<br>
-    What is the number?`
+    if (setting == 2 || setting == 9 && p.rollChoice == 2 ){
+      while (p.nume == p.deno){
+        p.nume = genNumbers(8)+1
+      }
+      let biggest = p.nume
+      if (p.deno > p.nume){
+        biggest = p.deno
+      }
+      for (i = 2; i < biggest; i++){
+        if (p.nume % i == 0 && p.deno % i == 0){
+          p.nume /= i
+          p.deno /= i
+        }
+      }
+
+      let value = p.deno*p.numMulti
+      displayProblem.innerHTML = 
+      `
+      ${p.nume}/${p.deno} of ${value} is ?</br>
+      What is that value?
+      `
+    }
   }
 
   if ( level == 4.13 ){
@@ -7018,7 +7042,12 @@ function handleSubmit(e){
         }
       }
       if (level == 4.12){
-        correctAnswer = `${p.numMulti*p.numTwo}`
+        if ( setting == 1 || setting == 9 && p.rollChoice == 1){
+          correctAnswer = `${p.numMulti*p.numTwo}`
+        }
+        if (setting == 2 || setting == 9 && p.rollChoice == 2){
+          correctAnswer = p.deno*p.numMulti/p.deno*p.nume
+        }
       }
 
       if ( level == 4.13){
@@ -9157,10 +9186,29 @@ function genProblems(){
   }
 
   if (level == 4.12){
-    return {
-    numOne: genNumbers(8)+1,
-    numTwo: genNumbers(8)+2,
-    numMulti: genNumbers(8)+2,
+    let roll = undefined
+    if ( setting != 1 && setting != 2){
+      setting = 9
+    }
+    if (setting == 9 ){
+      roll = genNumbers(2)+1
+    }
+
+    if (setting == 1 || setting == 9 && roll == 1){ 
+      return {
+        rollChoice: 1,
+        numOne: genNumbers(8)+1,
+        numTwo: genNumbers(8)+2,
+        numMulti: genNumbers(8)+2,
+      }
+    }
+    if (setting == 2 || setting == 9 && roll == 2){ 
+      return {
+        rollChoice: 2,
+        nume: genNumbers(8)+1,
+        deno: genNumbers(8)+2,
+        numMulti: genNumbers(8)+2,
+      }
     }
   }
 
@@ -11090,6 +11138,7 @@ for (let i = 0; i <  settingButton.length; i++){
       case "Level 4.12":
         level = 4.12;
         scoreNeeded = 30;
+        setting = Math.abs(prompt("1. Numerator with value\n2. Multiplication of Fractions\n9. All"))
         gold = 134;
         silver = 153;
         highScoreName.innerHTML = highScore4DotZero12.name
