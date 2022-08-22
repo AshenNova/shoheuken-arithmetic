@@ -221,6 +221,10 @@ let state = {
   correctAnswer: 0
 }
 
+function swap(first, second){
+  [first, second] = [second, first]
+}
+
 function clickStart(){
   buttonLevel = this.innerHTML
   console.log("start button clicked");
@@ -5941,6 +5945,32 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
         How many ${p.rollQn == "A" ? p.objectOne : p.objectTwo}s are there?
       `
     }
+
+    if ( setting == 7 || setting == 9 && p.roll == 7){
+      while (p.groupOne == p.groupTwo){
+        p.groupOne = genNumbers(8)+2
+      }
+      if (p.groupTwo < p.groupOne){
+        swap(p.groupOne, p.groupTwo)
+      }
+
+      p.leftOne = p.total%p.groupOne
+      p.leftTwo = p.total%p.groupTwo
+
+      if (p.leftOne == 0 && p.leftTwo == 0){
+        return updateProblems()
+      }
+      let extraOrExcess = ["extra","excess"][genNumbers(2)]
+      displayProblem.innerHTML = 
+      `
+       There are some ${p.objects}.</br>
+       If someone packs them in groups of ${p.groupOne},
+      there would be an ${extraOrExcess} of ${p.leftOne}.</br>
+       If someone packs them in grousp of ${p.groupTwo},
+       there would be an ${extraOrExcess} of ${p.leftTwo}.</br>
+       How many ${p.objects} are there?
+      `
+    }
   }
                                 // Display
   if ( level == "heuFive"){
@@ -8350,7 +8380,30 @@ function handleSubmit(e){
           }
          }
         }
+
+        if ( setting == 7 || setting == 9 && p.roll == 7){
+          let firstNum = p.groupOne+p.leftOne
+          let arrFirstNum = [firstNum]
+          let secondNum = p.groupTwo+p.leftTwo
+          let arrSecondNum = [secondNum]
+          
+          while (firstNum != p.total){
+            firstNum = firstNum + p.groupOne
+            arrFirstNum.push(firstNum)
+          }
+          while (secondNum != p.total ){
+            secondNum = secondNum + p.groupTwo
+            arrSecondNum.push(secondNum)
+          }
+
+          let firstLine = `x${p.groupOne} +${p.leftOne}`
+          let secondLine = arrFirstNum
+          let thirdLine = `x${p.groupTwo} +${p.leftTwo}`
+          let fourthLine = arrSecondNum
+          correctAnswer = `${firstLine}\n${secondLine}\n${thirdLine}\n${fourthLine}\n${arrFirstNum[arrFirstNum.length-1]}`
+        }
       }
+
                                 // Answers
       if ( level == "heuFive"){
         if (setting == 1 || setting == 9 && p.roll == 1){
@@ -10085,7 +10138,7 @@ function genProblems(){
     let roll = undefined
     if (setting == 9){
       if (!heuArr.length){
-        heuArr = [1, 2, 3, 4, 5, 6]
+        heuArr = [1, 2, 3, 4, 5, 6, 7]
         console.log("Array renewed " + heuArr)
       }
       roll = heuArr[genNumbers(heuArr.length)]
@@ -10178,6 +10231,18 @@ function genProblems(){
           objectTwoQ: genNumbers(3)+2,
           total: genNumbers(45)+5,
           rollQn: ["A","B"][genNumbers(2)]
+        }
+      }
+
+      if ( setting == 7 || (setting == 9 && roll == 7)){
+        return {
+          roll: 7,
+          objects: ["sweets", "chocolates", "candies"][genNumbers(3)],
+          total: genNumbers(90)+10,
+          groupOne: genNumbers(8)+2,
+          leftOne: undefined,
+          groupTwo: genNumbers(8)+2,
+          leftTwo: undefined
         }
       }
   }
@@ -11776,7 +11841,7 @@ for (let i = 0; i <  settingButton.length; i++){
 
       case "Heu.4":
         level = "heuFour"
-        setting = parseInt(prompt("What level?\n1. Excess and Shortage ( Type 1 )\n2. Excess and Shortage ( Type 2 )\n3. Origin\n4.Repeated Identity ( Type 2 )\n5. Uneven Grouping\n6. Grouping Rows\n\n9. All"))
+        setting = parseInt(prompt("What level?\n1. Excess and Shortage ( Type 1 )\n2. Excess and Shortage ( Type 2 )\n3. Origin\n4.Repeated Identity ( Type 2 )\n5. Uneven Grouping\n6. Grouping Rows\n7. Systematic Listing\n\n9. All"))
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
