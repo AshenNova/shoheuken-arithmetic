@@ -6913,7 +6913,7 @@ function handleSubmit(e){
 
       if ( level == 4.03){
         if (p.placeValue == "Whole Number"){
-          correctAnswer = Math.round(p.numFinal)
+          correctAnswer = (Math.round(p.numFinal)).toString()
         }
         if (p.placeValue == "1 decimal place"){
           p.ansFinal = Math.round(p.numFinal*10)/(10)
