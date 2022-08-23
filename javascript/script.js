@@ -5387,7 +5387,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
   }
                              // display
   if (level == "heuTwob"){
-    if ( setting == 1 || setting == 9 && p.roll == 1 ){
+    if ( setting == 1 || setting == 9 && p.rollz == 1 ){
       while (p.numOne == p.numTwo){
         p.numOne = genNumbers(9)+1
       }
@@ -5417,7 +5417,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       }
     }
 
-    if ( setting == 2 || setting == 9 || p.roll == 2 ){
+    if ( setting == 2 || setting == 9 && p.rollz == 2 ){
       displayProblem.innerHTML = 
       `
         A has ${p.numOne}.</br>
@@ -5426,7 +5426,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       `
     }
 
-    if ( setting == 3 || setting == 3 && p.roll == 3 ){
+    if ( setting == 3 || setting == 9 && p.rollz == 3 ){
       p.numTotal = p.numOne + p.numTwo
       displayProblem.innerHTML = 
       `
@@ -5436,7 +5436,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       `
     }
 
-    if ( setting == 4 || setting == 4 && p.roll == 4 ){
+    if ( setting == 4 || setting == 9 && p.rollz == 4 ){
       while (p.numOne == p.numTwo) {
         p.numOne = genNumbers(400)+100
       }
@@ -7907,7 +7907,7 @@ function handleSubmit(e){
 
                                 // answers
       if (level == "heuTwob"){
-        if (setting == 1 || setting == 9 && p.roll == 1 ){
+        if (setting == 1 || setting == 9 && p.rollz == 1 ){
           if (p.rollAB == "A" && p.rollVar == 0){
             correctAnswer = p.numOne-p.numTwo
           }
@@ -7922,11 +7922,11 @@ function handleSubmit(e){
           }
         }
 
-        if ( setting == 2 || setting == 9 && p.roll == 2){
+        if ( setting == 2 || setting == 9 && p.rollz == 2){
           correctAnswer = p.numOne+p.numTwo
         }
 
-        if ( setting == 3 || setting == 9 && p.roll == 3){
+        if ( setting == 3 || setting == 9 && p.rollz == 3){
           if (p.rollChoice == 0){
             correctAnswer = p.numTwo
           }
@@ -7935,7 +7935,7 @@ function handleSubmit(e){
           }
         }
 
-        if ( setting == 4 || setting == 9 && p.roll == 4 ){
+        if ( setting == 4 || setting == 9 && p.rollz == 4 ){
             correctAnswer = Math.abs(p.numOne-p.numTwo)
         }
       } 
@@ -9918,7 +9918,7 @@ function genProblems(){
         ["longer","shorter", "m"],
         ["heavier", "lighter", "kg"]
         ],
-        roll: 1,
+        rollz: 1,
         rollPosition: genNumbers(5),
         rollAB: ["A","B"][genNumbers(2)],
         rollVar: [0, 1][genNumbers(2)],
@@ -9929,7 +9929,7 @@ function genProblems(){
 
     if (setting == 2 || setting == 9 && roll == 2){
       return {
-        roll: 2,
+        rollz: 2,
         objectOne: ["A","B","C"][genNumbers(3)],
         objectTwo: ["X","Y","Z"][genNumbers(3)],
         numOne: genNumbers(400)+100,
@@ -9939,7 +9939,7 @@ function genProblems(){
 
     if ( setting == 3 || setting == 9 && roll == 3){
       return {
-        roll: 3,
+        rollz: 3,
         objectOne: ["A","B","C"][genNumbers(3)],
         objectTwo: ["X","Y","Z"][genNumbers(3)],
         numOne: genNumbers(400)+100,
@@ -9949,9 +9949,9 @@ function genProblems(){
       }
     }
 
-    if ( setting == 4 || setting == 4 && roll == 3){
+    if ( setting == 4 || setting == 4 && roll == 4){
       return {
-        roll: 4,
+        rollz: 4,
         objectOne: ["A","B","C"][genNumbers(3)],
         objectTwo: ["X","Y","Z"][genNumbers(3)],
         numOne: genNumbers(400)+100,
