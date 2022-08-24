@@ -5331,7 +5331,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
 
   if ( level == "heuTwo"){
     
-    if (setting == 1 || setting == 9 && p.roll == 1 ){
+    if (setting == 1 || setting == 9 && p.rollz == 1 || range == 1 && p.rollz == 1 ){
       
       p.positionTwo = p.rollPositionTwoArr[genNumbers(3)]
       p.positionOne = p.rollPositionOneArr[genNumbers(3)]
@@ -5366,7 +5366,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       What is the distance between the ${p.positionThree} and ${p.positionFour} ${p.rollObject}?
       `
     }
-    if (setting == 2 || setting == 9 && p.roll == 2 ){
+    if (setting == 2 || setting == 9 && p.rollz == 2 || range == 1 && p.rollz == 2 ){
       p.numOne = p.numTwo + (genNumbers(3)+2)*2
     
       displayProblem.innerHTML =
@@ -5377,7 +5377,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       `
     }
 
-    if (setting == 3 || setting == 9 && p.roll == 3){
+    if (setting == 3 || setting == 9 && p.rollz == 3 || range == 1 && p.rollz == 3 ){
       displayProblem.innerHTML = 
       `
       ${p.objectOne} must give ${p.difference} to ${p.objectTwo} to be the same.</br>
@@ -5417,7 +5417,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       }
     }
 
-    if ( setting == 2 || setting == 9 && p.rollz == 2 ){
+    if ( setting == 2 | setting == 9 && p.rollz == 2 ){
       displayProblem.innerHTML = 
       `
         A has ${p.numOne}.</br>
@@ -5461,12 +5461,12 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       }
     }
   }
-
+                                // display
   if ( level == "heuThree"){
 
     console.log(setting)
   
-    if ( setting == 1 || (setting == 9 && p.roll == 1) ){
+    if ( setting == 1 || (setting == 9 && p.rollz == 1) || range == 1 && p.rollz == 1 ){
       while (p.numOne == p.numTwo) {
         p.numOne = (genNumbers(5)+1)*2
         p.numTwo = (genNumbers(5)+1)*2
@@ -5478,7 +5478,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       How many sweets does ${p.rollAnswer == 0 ? `${p.objectOne}` : `${p.objectTwo}` } have?
       `
     }
-    if ( setting == 2 || (setting == 9 && p.roll == 2)){
+    if ( setting == 2 || (setting == 9 && p.rollz == 2) || range == 1 && p.rollz == 2 ){
       p.legOne = parseInt(p.objects[p.rollObj][2])
       p.legTwo = parseInt(p.objects[p.rollObj][3])
       p.objectOne = p.objects[p.rollObj][0]
@@ -5492,7 +5492,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       How many ${p.rollQn == "A" ? p.objectOne : p.objectTwo} are there?
       `
     }
-    if ( setting == 3 || setting == 9 && p.roll == 3){
+    if ( setting == 3 || setting == 9 && p.rollz == 3 || range == 1 && p.rollz == 3 ){
 
       p.totalValue = (p.objectOneX*p.unitSentence+p.objectTwoX)*p.multipler
         displayProblem.innerHTML = 
@@ -5504,7 +5504,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
         `
     }
 
-    if ( setting == 4 || setting == 9 && p.roll == 4 ){
+    if ( setting == 4 || setting == 9 && p.rollz == 4 || range == 1 && p.rollz == 4 ){
       while (p.objectOneV == p.objectTwoV){
         p.objectTwoV = genNumbers(5)+1
       }
@@ -5519,7 +5519,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       `
     }
 
-    if ( setting == 5 || setting == 9 && p.roll == 5){
+    if ( setting == 5 || setting == 9 && p.rollz == 5 || range == 1 && p.rollz == 5 ){
       while (p.objectOneV == p.objectTwoV){
         p.objectOneV = genNumbers(3)+2
       }
@@ -5545,7 +5545,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       }
     }
 
-    if ( setting == 6 || setting == 9 && p.roll == 6){
+    if ( setting == 6 || setting == 9 && p.rollz == 6 || range == 1 && p.rollz == 6 ){
       let firstSentence = undefined
 
       while (p.total % p.objectV == 0){
@@ -5622,7 +5622,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       `
     }
 
-    if ( setting == 7 || setting == 9 && p.roll == 7){
+    if ( setting == 7 || setting == 9 && p.rollz == 7 || range == 1 && p.rollz == 7 ){
       console.log(p.difference, p.transfer)
       while (p.difference == 0 || Math.abs(p.difference) == 2){
         p.difference = (genNumbers(20)-10)*2
@@ -5662,7 +5662,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       }
     }
 
-    if ( setting == 8 || setting == 9 && p.roll == 8 ){
+    if ( setting == 8 || setting == 9 && p.rollz == 8 || range == 1 && p.rollz == 8 ){
       let gender = genNumbers(2) == 0 ? "he" : "she"
         if (p.options == "A"){
           p.value = p.cost*p.min*(genNumbers(4)+2)+(p.cost*genNumbers(p.min))
@@ -5829,7 +5829,8 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
                               // display
 
   if ( level == "heuFour"){
-    if ( setting == 1 || (setting == 9 && p.roll == 1)){
+
+    if ( setting == 1 || setting == 9 && p.rollz == 1 || range == 1 && p.rollz == 1 ){
       
       while (p.objectOneQ == p.objectTwoQ || p.objectOneQ > p.objectTwoQ){
         p.objectTwoQ = genNumbers(4)+2
@@ -5862,7 +5863,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       }
     }
 
-    if ( setting == 2 || (setting == 9 && p.roll == 2)){
+    if ( setting == 2 || setting == 9 && p.rollz == 2 || range == 1 && p.rollz == 2 ){
       p.sceneTwo = p.sceneOne + genNumbers(5)+1
       p.situationOne = p.numberOfStuff-(p.sceneOne*p.numberOfStudents)
       // p.situationOne = 0
@@ -5876,7 +5877,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       `
     }
 
-    if ( setting == 3 || (setting == 9 && p.roll == 3)){
+    if ( setting == 3 || (setting == 9 && p.rollz == 3) || range == 1 && p.rollz == 3 ){
       p.absentPeople = genNumbers(p.peopleAtFirst-2)+1
       p.giveUp = (genNumbers(4)+1)*p.absentPeople
       p.remainingPeople = p.peopleAtFirst-p.absentPeople
@@ -5889,7 +5890,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       `
     }
 
-    if (setting == 4 || (setting == 9 && p.roll == 4)){
+    if (setting == 4 || setting == 9 && p.rollz == 4 || range == 1 && p.rollz == 4 ){
       let index = ["X","Y","Z"].indexOf(p.objectTwo)
       console.log(index)
       let newArray = ["X","Y","Z"]
@@ -5907,7 +5908,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       `
     }
 
-    if ( setting == 5 || (setting == 9 && p.roll == 5)){
+    if ( setting == 5 || setting == 9 && p.rollz == 5 || range == 1 && p.rollz == 5 ){
       while (p.objectOneV == p.objectTwoV){
         p.objectOneV = genNumbers(3)+2
       }
@@ -5936,7 +5937,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       }
     }
 
-    if ( setting == 6 || (setting == 9 && p.roll == 6) ){
+    if ( setting == 6 || setting == 9 && p.rollz == 6 || range == 1 && p.rollz == 6 ){
 
       displayProblem.innerHTML = 
       `
@@ -5946,7 +5947,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       `
     }
 
-    if ( setting == 7 || setting == 9 && p.roll == 7){
+    if ( setting == 7 || setting == 9 && p.rollz == 7 || range == 1 && p.rollz == 7 ){
       while (p.groupOne == p.groupTwo){
         p.groupOne = genNumbers(8)+2
       }
@@ -5974,7 +5975,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
   }
                                 // Display
   if ( level == "heuFive"){
-    if (setting == 1 || setting == 9 && p.roll == 1 ){
+    if (setting == 1 || setting == 9 && p.rollz == 1 || range == 1 && p.rollz == 1 ){
       while (p.quantityOne == p.quantityTwo){
         p.quantityOne = genNumbers(10)+1
       }
@@ -6006,7 +6007,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       `
     }
 
-    if (setting == 2 || setting == 9 && p.roll == 2){
+    if (setting == 2 || setting == 9 && p.rollz == 2 || range == 1 && p.rollz == 2 ){
 
       p.rightQ = genNumbers(p.questions)+1
       p.total = p.marks*p.rightQ-p.deduct*(p.questions-p.rightQ)
@@ -6034,7 +6035,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       `
     }
 
-    if (setting == 3 || setting == 9 && p.roll == 3){
+    if (setting == 3 || setting == 9 && p.rollz == 3 || range == 1 && p.rollz == 3 ){
       chosenRoll = genNumbers(p.objects.length)
       p.chosenOne = p.objects[chosenRoll][0]
       p.chosenTwo = p.objects[chosenRoll][1]
@@ -6058,7 +6059,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       `
     }
 
-    if ( setting == 4 || setting == 9 && p.roll == 4 ){
+    if ( setting == 4 || setting == 9 && p.rollz == 4 || range == 1 && p.rollz == 4 ){
 
       while (p.objectOneV == p.objectTwoV){
         objectOneV = genNumbers(10)+2
@@ -6101,7 +6102,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       `
     }
 
-    if (setting == 5 || setting == 9 && p.roll == 5){
+    if (setting == 5 || setting == 9 && p.rollz == 5 || range == 1 && p.rollz == 5 ){
       console.log(p.position)
       while (p.objectOneM == p.objectTwoM ){
         p.objectOneM = genNumbers(4)+2
@@ -7889,17 +7890,17 @@ function handleSubmit(e){
           correctAnswer = `${p.numOne}-${p.numTwo}=${p.numOne-p.numTwo}`
         }
       } 
-
+                                        // answers
       if ( level == "heuTwo"){
-        if (setting == 1 || setting == 9 && p.roll == 1 ){
+        if (setting == 1 || setting == 9 && p.roll == 1 || range == 1 && p.rollz == 1  ){
           let interval = p.distance/(p.indexTwo-p.indexOne)
           correctAnswer = `${p.indexTwo+1}-${p.indexOne+1}=${p.indexTwo-p.indexOne}\n${p.distance}/${p.indexTwo-p.indexOne}=${interval}\n${p.indexFour+1}-${p.indexThree+1}=${p.indexFour-p.indexThree}\n${interval}x${p.indexFour-p.indexThree}=${p.rollDistance*(p.indexFour-p.indexThree)}`
         }
-        if (setting == 2 || setting == 9 && p.roll == 2 ){
+        if (setting == 2  || setting == 9 && p.roll == 2 || range == 1 && p.rollz == 2 ){
           correctAnswer = 
           `${p.numOne}-${p.numTwo}=${p.numOne-p.numTwo}\n${p.numOne-p.numTwo}/2=${(p.numOne-p.numTwo)/2}`
         }
-        if (setting == 3 || setting == 9 && p.roll == 3){
+        if (setting == 3 || setting == 9 && p.roll == 3 || range == 1 && p.rollz == 3 ){
           correctAnswer = `${p.difference}x2=${p.difference*2}`
         }
       }
@@ -7940,10 +7941,10 @@ function handleSubmit(e){
         }
       } 
 
-
+                            //  answer
       if ( level == "heuThree"){
 
-        if (setting == 1 || (setting == 9 && p.roll == 1)){  
+        if (setting == 1 || (setting == 9 && p.rollz == 1) || range == 1 && p.rollz == 1 ){  
           let difference = Math.abs(p.numOne-p.numTwo)
           let adjustment = undefined
           if (p.rollAnswer == 0){
@@ -7967,7 +7968,7 @@ function handleSubmit(e){
             correctAnswer = `${p.numOne+p.numTwo}${(p.numOne<p.numTwo)?"+":"-"}${Math.abs(p.numOne-p.numTwo)}=${adjustment}\n${adjustment}/2=${p.numTwo}`
           }
         }
-        if (setting == 2 || setting == 9 && p.roll == 2){
+        if (setting == 2 || setting == 9 && p.rollz == 2 || range == 1 && p.rollz == 2 ){
           let smallDifference = p.legTwo-p.legOne
           let totalAnimal = p.numOne+p.numTwo
           if (p.rollQn == "A"){
@@ -7980,7 +7981,7 @@ function handleSubmit(e){
           }
         }
         
-        if ( setting == 3 || setting == 9 && p.roll == 3){
+        if ( setting == 3 || setting == 9 && p.rollz == 3 || range == 1 && p.rollz == 3 ){
           let unitOne = p.unitSentence*p.objectOneX
           let unitTwo = p.objectTwoX
           let totalUnit = unitOne+unitTwo
@@ -7994,7 +7995,7 @@ function handleSubmit(e){
           }
       }
 
-      if ( setting == 4 || setting == 9 && p.roll == 4){
+      if ( setting == 4 || setting == 9 && p.rollz == 4 || range == 1 && p.rollz == 4 ){
         let adjustment = undefined
         let newTotal = undefined
 
@@ -8034,7 +8035,7 @@ function handleSubmit(e){
         correctAnswer = `${firstLine}\n${secondLine}\n${thirdLine}\n${fourthLine}`
       }
 
-      if (setting == 5 || setting == 9 && p.roll == 5){
+      if (setting == 5 || setting == 9 && p.rollz == 5 || range == 1 && p.rollz == 5 ){
         let oneSet = p.objectOneV+p.objectTwoV
         let totalSets = p.total/oneSet
         let totalValueOne = totalSets*p.objectOneV
@@ -8062,7 +8063,7 @@ function handleSubmit(e){
          } 
       }
 
-      if ( setting == 6 || setting == 9 && p.roll == 6 ){
+      if ( setting == 6 || setting == 9 && p.rollz == 6 || range == 1 && p.rollz == 6 ){
         if (p.rollQn == "A"){
           correctAnswer = `${p.total}/${p.objectV}=${Math.floor(p.total/p.objectV)}r${p.total%p.objectV}\n${Math.floor(p.total/p.objectV)}`
         }
@@ -8071,7 +8072,7 @@ function handleSubmit(e){
         }
       }
 
-      if ( setting == 7 || setting == 9 && p.roll == 7 ){
+      if ( setting == 7 || setting == 9 && p.rollz == 7 || range == 1 && p.rollz == 7 ){
         let newDifference = undefined
         if (p.transfer == "A" && p.difference < 0 ){
           newDifference = Math.abs(p.difference)+p.transferV*2
@@ -8091,7 +8092,7 @@ function handleSubmit(e){
         }
       }
 
-      if (setting == 8 || setting == 9 && p.roll == 8 ){
+      if (setting == 8 || setting == 9 && p.rollz == 8 || range == 1 && p.rollz == 8 ){
 
         if (p.options == "A"){
           let packetBought = p.value/p.cost
@@ -8230,7 +8231,7 @@ function handleSubmit(e){
       }
                                  // answer
       if ( level == "heuFour"){
-        if ( setting == 1 || (setting == 9 && p.roll == 1)){
+        if ( setting == 1 || (setting == 9 && p.rollz == 1) || range == 1 && p.rollz == 1 ){
           let firstLine = undefined
           let bigDiff = undefined
           let newObjectOneS = Math.abs(p.objectOneS)
@@ -8257,7 +8258,7 @@ function handleSubmit(e){
           
         }
 
-        if ( setting == 2 || (setting == 9 && p.roll == 2 )){
+        if ( setting == 2 || (setting == 9 && p.rollz == 2 ) || range == 1 && p.rollz == 2 ){
           let symbol = p.situationOne > 0 ? "+" : "-"
           let bigDifference = undefined
           let smallDifference = p.sceneTwo-p.sceneOne
@@ -8295,7 +8296,7 @@ function handleSubmit(e){
           }
         }
 
-        if ( setting == 3 || (setting == 9 && p.roll == 3)){
+        if ( setting == 3 || (setting == 9 && p.rollz == 3) || range == 1 && p.rollz == 3 ){
           let extraWork = p.remainingPeople*p.giveUp
           let eachPerson = extraWork/p.absentPeople
           let totalWork = eachPerson*p.peopleAtFirst
@@ -8307,7 +8308,7 @@ function handleSubmit(e){
           }
         }
 
-        if (setting == 4 || (setting == 9 && p.roll == 4)){
+        if (setting == 4 || (setting == 9 && p.rollz == 4) || range == 1 && p.rollz == 4 ){
           let difference = p.groupTwo-p.groupOne
           let eachUnit = difference/(p.unitSentence-1)
           let objectOne = p.groupOne-eachUnit
@@ -8315,7 +8316,7 @@ function handleSubmit(e){
           correctAnswer = `${p.groupTwo}-${p.groupOne}=${difference}\n${p.unitSentence}-1=${unitDifference}\n${difference}/${p.unitSentence-1}=${eachUnit}\n${p.groupOne}-${eachUnit}=${objectOne}`
         }
 
-        if (setting == 5 || (setting == 9 && p.roll == 5)){
+        if (setting == 5 || (setting == 9 && p.rollz == 5) || range == 1 && p.rollz == 5 ){
           let setOne = p.objectOneV*p.objectOneUnit
           let setTwo = p.objectTwoV*p.objectTwoUnit
           let oneSet = p.objectOneV*p.objectOneUnit+p.objectTwoV*p.objectTwoUnit
@@ -8354,7 +8355,7 @@ function handleSubmit(e){
            } 
         }
 
-        if (setting == 6 || setting == 9 && p.roll == 6 ){
+        if (setting == 6 || setting == 9 && p.rollz == 6 || range == 1 && p.rollz == 6  ){
           let sets = Math.floor(p.total/(p.objectTwoQ+1))
           let remainder = p.total%(p.objectTwoQ+1)
           if (remainder == 0){
@@ -8381,7 +8382,7 @@ function handleSubmit(e){
          }
         }
 
-        if ( setting == 7 || setting == 9 && p.roll == 7){
+        if ( setting == 7 || setting == 9 && p.rollz == 7 || range == 1 && p.rollz == 7 ){
           let firstNum = p.groupOne+p.leftOne
           let arrFirstNum = [firstNum]
           let secondNum = p.groupTwo+p.leftTwo
@@ -8406,7 +8407,7 @@ function handleSubmit(e){
 
                                 // Answers
       if ( level == "heuFive"){
-        if (setting == 1 || setting == 9 && p.roll == 1){
+        if (setting == 1 || setting == 9 && p.rollz == 1 || range == 1 && p.rollz == 1 ){
 
           let firstSentence = undefined
           if (p.difference > 0) {
@@ -8439,7 +8440,7 @@ function handleSubmit(e){
           }
         }
 
-        if (setting == 2 || setting == 9 && p.roll == 2){
+        if (setting == 2 || setting == 9 && p.rollz == 2 || range == 1 && p.rollz == 2 ){
           let firstSentence = `${p.questions}x${p.marks}=${p.allRight}`
           let secondSentence = `${p.allRight}-${p.total}=${p.bDifference}`
           let thirdSentence = `${p.marks}+${p.deduct}=${p.sDifference}`
@@ -8452,7 +8453,7 @@ function handleSubmit(e){
           }
         }
 
-        if ( setting == 3 || setting == 9 && p.roll == 3 ){
+        if ( setting == 3 || setting == 9 && p.rollz == 3 || range == 1 && p.rollz == 3 ){
           let firstSentence = undefined
           let allTotal = undefined
           if (p.totalOne > p.totalTwo){
@@ -8487,7 +8488,7 @@ function handleSubmit(e){
           }
         }
 
-        if (setting == 4 || setting == 9 && p.roll == 4 ){
+        if (setting == 4 || setting == 9 && p.rollz == 4 || range == 1 && p.rollz == 4 ){
           let firstSentence = undefined
           if (p.objectOneV > p.objectTwoV){
             firstSentence = `${p.objectOneV}-${p.objectTwoV}=${p.sDifference}`
@@ -8518,17 +8519,15 @@ function handleSubmit(e){
             correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}`
           }
           if (p.choice == 5 ){
-            let objectOneT = groups*p.objectOneV
-            thirdSentence = `${groups}x${p.objectOneV}=${objectOneT}`
-            let objectTwoT = groups*p.objectTwoV
-            let fourthSentence = `${groups}x${p.objectTwoV}=${objectTwoT}`
-            let fifthSentence = `${objectOneT}+${objectTwoT}=${objectOneT+objectTwoT}`
+            let groupValue = p.objectOneV+p.objectTwoV
+            thirdSentence = `${p.objectOneV}+${p.objectTwoV}=${groupValue}`
+            let fourthSentence = `${groupValue}x${groups}=${groupValue*groups}`
             
-            correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${fifthSentence}`
+            correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}`
           }
         }
 
-        if ( setting == 5 || setting == 9 && p.roll == 5 ){
+        if ( setting == 5 || setting == 9 && p.rollz == 5 || range == 1 && p.rollz == 5){
           
           correctAnswer = `${p.objectOneQ}${p.objectOneC[0]}=${p.objectTwoQ}${p.objectTwoC[0]}\n${p.objectOneFQ}${p.objectOneC[0]}=${p.objectTwoAV}${p.objectTwoC[0]}\n${p.objectTwoAV}${p.objectTwoC[0]}+${p.objectTwoFQ}${p.objectTwoC[0]}=${p.objectTwoLQ}${p.objectTwoC[0]}\n${p.total}/${p.objectTwoLQ}=${p.oneUnit}`
         }
@@ -8685,8 +8684,8 @@ function handleSubmit(e){
 
         let allHeuArray = ["heuTwo", "heuTwob", "heuThree", "heuFour", "heuFive"]
         if ( allHeuArray.includes(level)){
-          if (!heuArr.includes(p.roll)){
-            heuArr.push(p.roll)
+          if (!heuArr.includes(p.rollz)){
+            heuArr.push(p.rollz)
             console.log(heuArr)
           }
         }
@@ -9240,9 +9239,11 @@ function genProblems(){
 
   if (level == 4.12){
     let roll = undefined
-    if ( setting != 1 && setting != 2){
+
+    if ( (setting != 1 && setting != 2) || isNaN(setting)){
       setting = 9
     }
+
     if (setting == 9 ){
       roll = genNumbers(2)+1
     }
@@ -9835,11 +9836,38 @@ function genProblems(){
       numTwo: genNumbers(9)+1
     }
   }
-
+                                // setting
   if (level == "heuTwo"){
-    if (isNaN(setting)){
-      setting = 9
+
+    let roll = undefined
+    let settingText = setting.toString()
+    
+
+    if (settingText.includes("-")){
+      console.log("range detected")
+      range = 1;
+      settingText.split("-")
+      if (!heuArr.length){
+        for (let i = 1; i <= settingText[settingText.length-1]; i++){
+          heuArr.push(i)
+        }
+        console.log(heuArr)
+      }
+      roll = heuArr[genNumbers(heuArr.length)]
+      let index = heuArr.indexOf(roll)
+      heuArr.splice(index, 1)
+
+    } else {
+      console.log("not range")
+      setting = parseInt(setting)
+      if (isNaN(setting)){
+        setting = 9
+      }
     }
+
+    // if (isNaN(setting)){
+    //   setting = 9
+    // }
 
     if (setting == 9){
       if (!heuArr.length){
@@ -9852,7 +9880,7 @@ function genProblems(){
       heuArr.splice(index, 1)
     }
 
-    if (setting == 1 || setting == 9 && roll == 1 ){
+    if (setting == 1 && range == 0 || setting == 9 && roll == 1 || range == 1 && roll == 1 ){
       return{
         rollObject: ["tree", "lamppost", "fire hydrant"][genNumbers(3)],
         rollPositionTwoArr: ["4th", "5th","6th"],
@@ -9868,25 +9896,25 @@ function genProblems(){
         indexFour: undefined,
         intervals: undefined,
         distance: undefined,
-        roll: 1
+        rollz: 1
       }
     }
-    if (setting == 2 || setting == 9 && roll == 2 ){
+    if (setting == 2 && range == 0  || setting == 9 && roll == 2 || range == 1 && roll == 2  ){
       return {
         objectOne: ["A","B","C"][genNumbers(3)],
         objectTwo: ["X","Y","Z"][genNumbers(3)],
         numTwo: genNumbers(5)+5,
         numOne: undefined,
-        roll: 2
+        rollz: 2
       }
     }
 
-    if (setting == 3 || setting == 9 && roll == 3 ){
+    if (setting == 3 && range == 0  || setting == 9 && roll == 3 || range == 1 && roll == 3  ){
       return {
         objectOne: ["B","C","D"][genNumbers(3)],
         objectTwo: ["X","Y","Z"][genNumbers(3)],
         difference: genNumbers(5)+5,
-        roll: 3
+        rollz: 3
       }
     }
   }
@@ -9963,12 +9991,32 @@ function genProblems(){
       }
     }
   }
-
+                                // setting
   if ( level == "heuThree"){
     // let roll = genNumbers(7)+1
     let roll = undefined
-    if (isNaN(setting)){
-      setting = 9
+    let settingText = setting.toString()
+   
+    if (settingText.includes("-")){
+      console.log("range detected")
+      range = 1;
+      settingText.split("-")
+      if (!heuArr.length){
+        for (let i = 1; i <= settingText[settingText.length-1]; i++){
+          heuArr.push(i)
+        }
+        console.log(heuArr)
+      }
+      roll = heuArr[genNumbers(heuArr.length)]
+      let index = heuArr.indexOf(roll)
+      heuArr.splice(index, 1)
+
+    } else {
+      console.log("Not range detected")
+      setting = parseInt(setting)
+      if (isNaN(setting)){
+        setting = 9
+      }
     }
 
     if (setting == 9){
@@ -9982,17 +10030,17 @@ function genProblems(){
       console.log("Current remaining arr is " + heuArr)
     }
 
-    if (setting == 1 || (setting == 9 && roll == 1)){
+    if (setting == 1 || (setting == 9 && roll == 1) || range == 1 && roll == 1 ){
         return {
         objectOne: ["A","B","C"][genNumbers(3)],
         objectTwo: ["X","Y","Z"][genNumbers(3)],
         numOne: (genNumbers(5)+1)*2,
         numTwo: (genNumbers(5)+1)*2,
         rollAnswer: genNumbers(2),
-        roll: 1
+        rollz: 1
       }
     }
-    if (setting == 2 || (setting == 9 && roll == 2)){
+    if (setting == 2 || (setting == 9 && roll == 2) || range == 1 && roll == 2 ){
       return {
         objects: [
           ["chickens", "dogs", "2", "4"],
@@ -10010,12 +10058,12 @@ function genProblems(){
         objectTwo: undefined,
         legOne: undefined,
         legTwo: undefined,
-        roll: 2,
+        rollz: 2,
         total: undefined,
         rollQn: ["A","B"][genNumbers(2)]
       }
     }
-    if ( setting == 3 || (setting == 9 && roll == 3)){
+    if ( setting == 3 || (setting == 9 && roll == 3) || range == 1 && roll == 3 ){
       return{
         objectOne: ["A","B","C"][genNumbers(3)],
         objectTwo: ["X","Y","Z"][genNumbers(3)],
@@ -10025,10 +10073,10 @@ function genProblems(){
         objectTwoX: genNumbers(4)+2,
         totalValue: undefined,
         rollQn: ["A","B"][genNumbers(2)],
-        roll: 3
+        rollz: 3
       }
     }
-      if ( setting == 4 || (setting == 9 && roll == 4)){
+      if ( setting == 4 || (setting == 9 && roll == 4) || range == 1 && roll == 4 ){
         return{
           objectOne: ["A","B","C"][genNumbers(3)],
           objectTwo: ["X","Y","Z"][genNumbers(3)],
@@ -10038,12 +10086,12 @@ function genProblems(){
           objectTwoV: genNumbers(4)+2,
           totalValue: undefined,
           rollQn: ["A","B"][genNumbers(2)],
-          roll: 4,
+          rollz: 4,
           difference: undefined
         }
       }
 
-      if ( setting == 5 || setting == 9 && roll == 5){
+      if ( setting == 5 || setting == 9 && roll == 5 || range == 1 && roll == 5 ){
         return {
           unitMeasurement: [ "kg", "g", "ml", "ℓ"][genNumbers(4)],
           objectOne: ["A","B","C"][genNumbers(3)],
@@ -10053,14 +10101,14 @@ function genProblems(){
           total: undefined,
           rollQn: ["A","B"][genNumbers(2)],
           rollQn2: ["many","what","total"][genNumbers(3)],
-          roll: 5
+          rollz: 5
       
         }
       }
 
-      if ( setting == 6 || setting == 9 && roll == 6){
+      if ( setting == 6 || setting == 9 && roll == 6 || range == 1 && roll == 6 ){
         return{
-          roll: 6,
+          rollz: 6,
           rollObject: genNumbers(4),
           objects:[
             ["car", "cars"],
@@ -10075,9 +10123,9 @@ function genProblems(){
         }
       }
 
-      if ( setting == 7 || setting == 9 && roll == 7){
+      if ( setting == 7 || setting == 9 && roll == 7 || range == 1 && roll == 7 ){
         return {
-          roll: 7,
+          rollz: 7,
           objectOne: ["A","B","C"][genNumbers(3)],
           objectTwo: ["X","Y","Z"][genNumbers(3)],
           difference: (genNumbers(20)-10)*2,
@@ -10087,9 +10135,9 @@ function genProblems(){
         }
       }
 
-      if ( setting == 8 || setting == 9 && roll == 8){
+      if ( setting == 8 || setting == 9 && roll == 8 || range == 1 && roll == 8 ){
         return {
-          roll: 8,
+          rollz: 8,
           options: ["B","A"][genNumbers(2)],
           value: undefined,
           cost: genNumbers(4)+2,
@@ -10133,9 +10181,35 @@ function genProblems(){
     }
   }
                                   // setting
+
   if ( level == "heuFour"){
-    // let roll = genNumbers(6)+1
+
     let roll = undefined
+    let settingText = setting.toString()
+    console.log(setting, settingText)
+
+    if (settingText.includes("-")){
+      console.log("range detected")
+      range = 1;
+      settingText.split("-")
+      if (!heuArr.length){
+        for (let i = 1; i <= settingText[settingText.length-1]; i++){
+          heuArr.push(i)
+        }
+        console.log(heuArr)
+      }
+      roll = heuArr[genNumbers(heuArr.length)]
+      let index = heuArr.indexOf(roll)
+      heuArr.splice(index, 1)
+
+    } else {
+      console.log("Not range detected")
+      setting = parseInt(setting)
+      if (isNaN(setting)){
+        setting = 9
+      }
+    }
+
     if (setting == 9){
       if (!heuArr.length){
         heuArr = [1, 2, 3, 4, 5, 6, 7]
@@ -10147,13 +10221,9 @@ function genProblems(){
       console.log("Current remaining array " + heuArr)
     }
 
-    if (isNaN(setting)){
-      setting = 9
-    }
-
-    if (setting == 1 || (setting == 9 && roll == 1) ){
+    if (setting == 1 || (setting == 9 && roll == 1) || range == 1 && roll == 1 ){
       return {
-        roll: 1,
+        rollz: 1,
         objects: ["stationeries","cards","toys","games"][genNumbers(4)],
         label: ["he","she"][genNumbers(2)],
         objectOne: ["A","B","C"][genNumbers(3)],
@@ -10170,7 +10240,7 @@ function genProblems(){
       }
     }
 
-    if (setting == 2 || (setting == 9 && roll == 2)){
+    if (setting == 2 || (setting == 9 && roll == 2) || range == 1 && roll == 2 ){
       return {
         numberOfStudents: genNumbers(8)+2,
         numberOfStuff: genNumbers(20)+10,
@@ -10180,22 +10250,22 @@ function genProblems(){
         situationTwo: undefined,
         rollAnswer: genNumbers(2)+1,
         // rollAnswer: 2,
-        roll: 2
+        rollz: 2
       }
     }
 
-      if (setting == 3 || (setting == 9 && roll == 3)){
+      if (setting == 3 || (setting == 9 && roll == 3) || range == 1 && roll == 3 ){
         return {
           peopleAtFirst: genNumbers(8)+3,
           absentPeople: undefined,
           remainingPeople: undefined,
           giveUp: undefined,
           rollQn: ["A","B"][genNumbers(2)],
-          roll: 3
+          rollz: 3
         }
       }
 
-      if (setting == 4 || (setting == 9 && roll == 4)){
+      if (setting == 4 || (setting == 9 && roll == 4) || range == 1 && roll == 4 ){
         return{
         objectOne: ["A","B","C"][genNumbers(3)],
         objectTwo: ["X","Y","Z"][genNumbers(3)],
@@ -10203,11 +10273,11 @@ function genProblems(){
         groupOne: genNumbers(20)+5,
         groupTwo: undefined,
         unitSentence: genNumbers(4)+2,
-        roll: 4
+        rollz: 4
         }
       }
 
-      if ( setting == 5 || (setting == 9 && roll == 5)){
+      if ( setting == 5 || (setting == 9 && roll == 5) || range == 1 && roll == 5 ){
         return {
           unitMeasurement: [ "kg", "g", "ml", "ℓ"][genNumbers(4)],
           objectOne: ["A","B","C"][genNumbers(3)],
@@ -10219,13 +10289,13 @@ function genProblems(){
           total: undefined,
           rollQn: ["A","B"][genNumbers(2)],
           rollQn2: ["many","what","total"][genNumbers(3)],
-          roll: 5
+          rollz: 5
         }
       }
 
-      if ( setting == 6 || (setting == 9 && roll == 6)){
+      if ( setting == 6 || (setting == 9 && roll == 6) || range == 1 && roll == 6 ){
         return {
-          roll: 6,
+          rollz: 6,
           objectOne: ["A","B","C"][genNumbers(3)],
           objectTwo: ["X","Y","Z"][genNumbers(3)],
           objectTwoQ: genNumbers(3)+2,
@@ -10234,9 +10304,9 @@ function genProblems(){
         }
       }
 
-      if ( setting == 7 || (setting == 9 && roll == 7)){
+      if ( setting == 7 || (setting == 9 && roll == 7) || range == 1 && roll == 7 ){
         return {
-          roll: 7,
+          rollz: 7,
           objects: ["sweets", "chocolates", "candies"][genNumbers(3)],
           total: genNumbers(90)+10,
           groupOne: genNumbers(8)+2,
@@ -10248,9 +10318,31 @@ function genProblems(){
   }
                             // Stats
   if ( level == "heuFive"){
-    // let roll = genNumbers(4)+1
-    if (isNaN(setting)){
-      setting = 9
+
+    let roll = undefined
+    let settingText = setting.toString()
+    console.log(setting, settingText)
+
+    if (settingText.includes("-")){
+      console.log("range detected")
+      range = 1;
+      settingText.split("-")
+      if (!heuArr.length){
+        for (let i = 1; i <= settingText[settingText.length-1]; i++){
+          heuArr.push(i)
+        }
+      }
+      console.log(heuArr)
+      roll = heuArr[genNumbers(heuArr.length)]
+      let index = heuArr.indexOf(roll)
+      heuArr.splice(index, 1)
+
+    } else {
+      console.log("Not range detected")
+      setting = parseInt(setting)
+      if (isNaN(setting)){
+        setting = 9
+      }
     }
 
     if (setting == 9){
@@ -10263,10 +10355,9 @@ function genProblems(){
       heuArr.splice(index, 1)
     }
 
-
-    if (setting == 1 || setting == 9 && roll == 1){
+    if (setting == 1 || setting == 9 && roll == 1 || range == 1 && roll == 1){
       return {
-        roll: 1,
+        rollz: 1,
         quantityOne: genNumbers(10)+1,
         quantityTwo: genNumbers(10)+1,
         difference: genNumbers(10)-5,
@@ -10278,9 +10369,9 @@ function genProblems(){
       }
     }
 
-    if (setting == 2 || setting == 9 && roll == 2){
+    if (setting == 2 || setting == 9 && roll == 2 || range == 1 && roll == 2 ){
       return{
-        roll: 2,
+        rollz: 2,
         marks: genNumbers(5)+2,
         deduct: genNumbers(5)+1,
         questions: (genNumbers(5)+1)*10,
@@ -10295,9 +10386,9 @@ function genProblems(){
       }
     }
 
-    if (setting == 3 || setting == 9 && roll == 3){
+    if (setting == 3 || setting == 9 && roll == 3 || range == 1 && roll == 3){
       return {
-        roll: 3,
+        rollz: 3,
         objects: 
         [
           ["ducks","dogs","2","4","legs"],
@@ -10321,9 +10412,9 @@ function genProblems(){
       }
     }
 
-    if (setting == 4 || setting == 9 && roll == 4){
+    if (setting == 4 || setting == 9 && roll == 4 || range == 1 && roll == 4){
       return {
-        roll: 4,
+        rollz: 4,
         objectOne: ["A","B","C"][genNumbers(3)],
         objectTwo: ["X","Y","Z"][genNumbers(3)],
         objectOneV: genNumbers(10)+2,
@@ -10334,9 +10425,9 @@ function genProblems(){
       }
     }
 
-    if (setting == 5 || setting == 9 && roll == 5){
+    if (setting == 5 || setting == 9 && roll == 5 || range == 1 && roll == 5){
       return {
-        roll: 5,
+        rollz: 5,
         objects: [
           ["apples", "oranges", "orange"],
           ["small bottles", "large bottles", "large bottle"],
@@ -11203,7 +11294,7 @@ for (let i = 0; i <  settingButton.length; i++){
       case "Level 4.12":
         level = 4.12;
         scoreNeeded = 30;
-        setting = Math.abs(prompt("1. Numerator with value\n2. Multiplication of Fractions\n9. All"))
+        setting = Math.abs(prompt("1. Numerator with value\n2. Multiplication of Fractions\n\n9. All"))
         gold = 134;
         silver = 153;
         highScoreName.innerHTML = highScore4DotZero12.name
@@ -11800,13 +11891,14 @@ for (let i = 0; i <  settingButton.length; i++){
       break
 
       case "Heu.2":
-        setting =  parseInt(prompt("What level?\n1. Parts and Interval\n2. Internal Transfer (Same)\n3. Internal Transfer ( Same reverse )\n\n9.All"))
+        setting =  prompt("What level?\n1. Parts and Interval\n2. Internal Transfer (Same)\n3. Internal Transfer ( Same reverse )\n\n9.All")
         level = "heuTwo"
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
         document.querySelector("#user-input").setAttribute("type","text");
         document.querySelector("#user-input").style.width = "300px"
+        range = 0;
       break
 
       case "Heu.2b":
@@ -11820,9 +11912,10 @@ for (let i = 0; i <  settingButton.length; i++){
       break
 
       case "Heu.3":
-        setting = parseInt(prompt("What level?\n1. Sum and Difference\n2. Supposition\n3. Under the same unit ( Unit )\n4. Under the same unit ( Difference )\n5. Equal Grouping\n6. Round up/down\n7. Double Effect\n8. Grouping ( Bonus )\n\n9. All"))
+        setting = prompt("What level?\n1. Sum and Difference\n2. Supposition\n3. Under the same unit ( Unit )\n4. Under the same unit ( Difference )\n5. Equal Grouping\n6. Round up/down\n7. Double Effect\n8. Grouping ( Bonus )\n\n9. All")
         level = "heuThree"
         scoreNeeded = 10;
+        range = 0
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
         document.querySelector("#user-input").setAttribute("type","text");
@@ -11841,8 +11934,9 @@ for (let i = 0; i <  settingButton.length; i++){
 
       case "Heu.4":
         level = "heuFour"
-        setting = parseInt(prompt("What level?\n1. Excess and Shortage ( Type 1 )\n2. Excess and Shortage ( Type 2 )\n3. Origin\n4.Repeated Identity ( Type 2 )\n5. Uneven Grouping\n6. Grouping Rows\n7. Systematic Listing\n\n9. All"))
+        setting = prompt("What level?\n1. Excess and Shortage ( Type 1 )\n2. Excess and Shortage ( Type 2 )\n3. Origin\n4.Repeated Identity ( Type 2 )\n5. Uneven Grouping\n6. Grouping Rows\n7. Systematic Listing\n\n9. All")
         scoreNeeded = 10;
+        range = 0;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
         document.querySelector("#user-input").setAttribute("type","text");
@@ -11850,7 +11944,8 @@ for (let i = 0; i <  settingButton.length; i++){
 
       case "Heu.5":
         level = "heuFive"
-        setting = parseInt(prompt("What level?\n1. Grouping with Difference\n2. Supposition (Negative)\n3. Supposition negative ( Difference)\n4. Identical Quantity with Difference\n5. Substitution\n\n9. All"))
+        setting = prompt("What level?\n1. Grouping with Difference\n2. Supposition (Negative)\n3. Supposition negative ( Difference)\n4. Identical Quantity with Difference\n5. Substitution\n\n9. All")
+        range = 0;
         scoreNeeded = 10;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
