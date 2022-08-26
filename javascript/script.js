@@ -5962,12 +5962,62 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
         return updateProblems()
       }
       let extraOrExcess = ["extra","excess"][genNumbers(2)]
+      p.min = p.total-10
+      p.max = p.total+10
+
+      let firstNum = p.groupOne+p.leftOne
+      let secondNum = p.groupTwo+p.leftTwo
+
+      // if (firstNum > p.min ){
+      //   p.arrFirstNum.push(firstNum)
+      // }
+      // if (secondNum > p.min ){
+      //   p.arrSecondNum.push(secondNum)
+      // }
+
+      console.log(firstNum, secondNum)
+      
+      while (firstNum != p.total || firstNum > p.min && p.firstNum < p.max){
+          p.arrFirstNum.push(firstNum)
+          firstNum = firstNum + p.groupOne
+      }
+
+      while (secondNum != p.total || secondNum > p.min && p.secondNum < p.max ){
+         p.arrSecondNum.push(secondNum)
+        secondNum = secondNum + p.groupTwo
+      }
+
+      p.arrFirstNum.push(firstNum)
+      p.arrSecondNum.push(secondNum)
+
+      console.log(p.arrFirstNum, p.arrSecondNum)
+
+      for (let i = 0; i < p.arrFirstNum.length; i++){
+        if (p.arrFirstNum[i] <= p.min ){
+          p.arrFirstNum.shift()
+          console.log(p.arrFirstNum)
+        }
+      }
+
+      while (p.arrFirstNum[0] <= p.min){
+        p.arrFirstNum.shift()
+      }
+
+      while (p.arrSecondNum[0] <= p.min){
+        p.arrSecondNum.shift()
+      }
+
+      for ( let i = 1; i < p.arrFirstNum.length-2; i++){
+        if (p.arrSecondNum.includes(p.arrFirstNum[i])){
+          return updateProblems()
+        }
+      }
       displayProblem.innerHTML = 
       `
-       There are some ${p.objects}.</br>
+       There are some ${p.objects} between ${p.min} and ${p.max}.</br>
        If someone packs them in groups of ${p.groupOne},
       there would be an ${extraOrExcess} of ${p.leftOne}.</br>
-       If someone packs them in grousp of ${p.groupTwo},
+       If someone packs them in groups of ${p.groupTwo},
        there would be an ${extraOrExcess} of ${p.leftTwo}.</br>
        How many ${p.objects} are there?
       `
@@ -8383,25 +8433,12 @@ function handleSubmit(e){
         }
 
         if ( setting == 7 || setting == 9 && p.rollz == 7 || range == 1 && p.rollz == 7 ){
-          let firstNum = p.groupOne+p.leftOne
-          let arrFirstNum = [firstNum]
-          let secondNum = p.groupTwo+p.leftTwo
-          let arrSecondNum = [secondNum]
-          
-          while (firstNum != p.total){
-            firstNum = firstNum + p.groupOne
-            arrFirstNum.push(firstNum)
-          }
-          while (secondNum != p.total ){
-            secondNum = secondNum + p.groupTwo
-            arrSecondNum.push(secondNum)
-          }
 
           let firstLine = `x${p.groupOne} +${p.leftOne}`
-          let secondLine = arrFirstNum
+          let secondLine = p.arrFirstNum
           let thirdLine = `x${p.groupTwo} +${p.leftTwo}`
-          let fourthLine = arrSecondNum
-          correctAnswer = `${firstLine}\n${secondLine}\n${thirdLine}\n${fourthLine}\n${arrFirstNum[arrFirstNum.length-1]}`
+          let fourthLine = p.arrSecondNum
+          correctAnswer = `${firstLine}\n${secondLine}\n${thirdLine}\n${fourthLine}\n${p.arrFirstNum[p.arrFirstNum.length-1]}`
         }
       }
 
@@ -10312,7 +10349,11 @@ function genProblems(){
           groupOne: genNumbers(8)+2,
           leftOne: undefined,
           groupTwo: genNumbers(8)+2,
-          leftTwo: undefined
+          leftTwo: undefined,
+          min: undefined,
+          max: undefined,
+          arrFirstNum: [],
+          arrSecondNum: []
         }
       }
   }
