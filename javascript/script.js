@@ -1829,10 +1829,10 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
     if (p.placeValue == "Whole Number"){
       p.numTwo = [10,100,1000][genNumbers(3)];
     }
-    if (p.placeValue == "1 decimal place"){
+    if (p.placeValue == "1 decimal place" || p.placeValue == "tenth place"){
       p.numTwo = [100,1000][genNumbers(2)];
     }
-    if (p.placeValue == "2 decimal places"){
+    if (p.placeValue == "2 decimal place" || p.placeValue == "hundredth place"){
       p.numTwo = 1000
     }
     p.numFinal = Math.floor(p.numOne/(p.numTwo*1)*p.numTwo)/p.numTwo
@@ -6966,7 +6966,7 @@ function handleSubmit(e){
         if (p.placeValue == "Whole Number"){
           correctAnswer = (Math.round(p.numFinal)).toString()
         }
-        if (p.placeValue == "1 decimal place"){
+        if (p.placeValue == "1 decimal place" || p.placeValue == "tenth place"){
           p.ansFinal = Math.round(p.numFinal*10)/(10)
           if ((p.ansFinal*10)%10 == 0){
             correctAnswer = (p.ansFinal + ".0").toString()
@@ -6974,7 +6974,7 @@ function handleSubmit(e){
           correctAnswer = p.ansFinal.toString()
           }
         }
-        if (p.placeValue == "2 decimal places"){
+        if (p.placeValue == "2 decimal place" || p.placeValue == "hundredth place"){
           p.ansFinal = Math.round(p.numFinal*100)/(100)
           console.log(p.ansFinal)
           if ((p.ansFinal*100)%(100) == 0){
@@ -9180,7 +9180,7 @@ function genProblems(){
     return {
       numOne: genNumbers(9999)+1,
       numTwo: 0,
-      placeValue: ["1 decimal place","2 decimal places","Whole Number"][genNumbers(3)],
+      placeValue: ["1 decimal place","tenth place", "2 decimal place", "hundredth place","Whole Number"][genNumbers(5)],
       numFinal: 0
     }
   }
