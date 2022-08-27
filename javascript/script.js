@@ -7942,15 +7942,15 @@ function handleSubmit(e){
       } 
                                         // answers
       if ( level == "heuTwo"){
-        if (setting == 1 || setting == 9 && p.roll == 1 || range == 1 && p.rollz == 1  ){
+        if (setting == 1 || setting == 9 && p.rollz == 1 || range == 1 && p.rollz == 1  ){
           let interval = p.distance/(p.indexTwo-p.indexOne)
           correctAnswer = `${p.indexTwo+1}-${p.indexOne+1}=${p.indexTwo-p.indexOne}\n${p.distance}/${p.indexTwo-p.indexOne}=${interval}\n${p.indexFour+1}-${p.indexThree+1}=${p.indexFour-p.indexThree}\n${interval}x${p.indexFour-p.indexThree}=${p.rollDistance*(p.indexFour-p.indexThree)}`
         }
-        if (setting == 2  || setting == 9 && p.roll == 2 || range == 1 && p.rollz == 2 ){
+        if (setting == 2  || setting == 9 && p.rollz == 2 || range == 1 && p.rollz == 2 ){
           correctAnswer = 
           `${p.numOne}-${p.numTwo}=${p.numOne-p.numTwo}\n${p.numOne-p.numTwo}/2=${(p.numOne-p.numTwo)/2}`
         }
-        if (setting == 3 || setting == 9 && p.roll == 3 || range == 1 && p.rollz == 3 ){
+        if (setting == 3 || setting == 9 && p.rollz == 3 || range == 1 && p.rollz == 3 ){
           correctAnswer = `${p.difference}x2=${p.difference*2}`
         }
       }
@@ -9879,7 +9879,6 @@ function genProblems(){
     let roll = undefined
     let settingText = setting.toString()
     
-
     if (settingText.includes("-")){
       console.log("range detected")
       range = 1;
