@@ -5867,12 +5867,28 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       p.sceneTwo = p.sceneOne + genNumbers(5)+1
       p.situationOne = p.numberOfStuff-(p.sceneOne*p.numberOfStudents)
       // p.situationOne = 0
+      if (p.situationOne >= 0){
+        p.situationOneW = "an excess"
+      }
+      if (p.situationTwo >= 0){
+        p.situationTwoW = "an excess"
+      }
       p.situationTwo = p.numberOfStuff-(p.sceneTwo*p.numberOfStudents)
-      console.log(p.situationOne, p.situationTwo)
+
+      if (p.situationOneW != p.situationTwoW){
+        let bigDifference = Math.abs(p.situationOne)+Math.abs(p.situationTwo)
+        let smallDifference = p.sceneTwo-p.sceneOne
+        if (bigDifference%smallDifference != 0){
+          console.log("Question changed!")
+          return updateProblems()
+        }
+      }
+
+
       displayProblem.innerHTML =
       `
-        If ${p.sceneOne} sweets were given to each pupils, there would be ${p.situationOne > 0 ? "an " : ""}<u>${p.situationOne > 0 ? `excess` : "short" }</u> of ${Math.abs(p.situationOne)} sweets.</br>
-        If ${p.sceneTwo} sweets were given to each pupils, there would be ${p.situationTwo > 0 ? "an " : ""}<u>${p.situationTwo > 0 ? `excess` : "short" }</u> of ${Math.abs(p.situationTwo)} sweets.</br>
+        If ${p.sceneOne} sweets were given to each pupils, there would be <u>${p.situationOneW}</u> of ${Math.abs(p.situationOne)} sweets.</br>
+        If ${p.sceneTwo} sweets were given to each pupils, there would be <u>${p.situationTwoW}</u> of ${Math.abs(p.situationTwo)} sweets.</br>
         ${p.rollAnswer == 1 ? "How many pupils are there?" : "How many sweets are there?"}
       `
     }
@@ -8309,41 +8325,71 @@ function handleSubmit(e){
         }
 
         if ( setting == 2 || (setting == 9 && p.rollz == 2 ) || range == 1 && p.rollz == 2 ){
-          let symbol = p.situationOne > 0 ? "+" : "-"
-          let bigDifference = undefined
-          let smallDifference = p.sceneTwo-p.sceneOne
-          let firstLine = `${p.situationOne}+${Math.abs(p.situationTwo)}=${p.situationOne+Math.abs(p.situationTwo)}`
+          // let symbol = p.situationOne > 0 ? "+" : "-"
+          // let bigDifference = undefined
+          // let smallDifference = p.sceneTwo-p.sceneOne
+          // let firstLine = `${p.situationOne}+${Math.abs(p.situationTwo)}=${p.situationOne+Math.abs(p.situationTwo)}`
         
-          if (p.situationOne > 0 && p.situationTwo > 0 || p.situationOne <= 0 && p.situationTwo <= 0){
-            let one = Math.abs(p.situationOne)
-            let two = Math.abs(p.situationTwo)
-            // p.situationOne = Math.abs(p.situationOne)
-            // p.situationTwo = Math.abs(p.situationTwo)
-            if (two > one){
-              firstLine = `${Math.abs(two)}-${Math.abs(one)}=${Math.abs(two)-one}`
-              bigDifference = two-one
-            } else {
-              firstLine = `${Math.abs(one)}-${Math.abs(two)}=${one-two}`
-              bigDifference = Math.abs(one) - Math.abs(two)
-            }
-          } else {
-            if (p.situationOne == 0 || p.situationOne < 0 ){
-              // symbol = "-"
-              bigDifference = Math.abs(p.situationOne) + Math.abs(p.situationTwo)
-            } else {
-              // symbol = "+"
-              bigDifference = Math.abs(p.situationOne) + Math.abs(p.situationTwo)
-            }
+          // if (p.situationOne >= 0 && p.situationTwo >= 0 || p.situationOne < 0 && p.situationTwo < 0){
+          //   let one = Math.abs(p.situationOne)
+          //   let two = Math.abs(p.situationTwo)
+          //   // p.situationOne = Math.abs(p.situationOne)
+          //   // p.situationTwo = Math.abs(p.situationTwo)
+          //   if (two > one){
+          //     firstLine = `${Math.abs(two)}-${Math.abs(one)}=${Math.abs(two)-one}`
+          //     bigDifference = two-one
+          //   } else {
+          //     firstLine = `${Math.abs(one)}-${Math.abs(two)}=${one-two}`
+          //     bigDifference = Math.abs(one) - Math.abs(two)
+          //   }
+          // } else {
+          //   if (p.situationOne == 0 || p.situationOne < 0 ){
+          //     // symbol = "-"
+          //     bigDifference = Math.abs(p.situationOne) + Math.abs(p.situationTwo)
+          //   } else {
+          //     // symbol = "+"
+          //     bigDifference = Math.abs(p.situationOne) + Math.abs(p.situationTwo)
+          //   }
+          // }
+          let bigDifference = Math.abs(p.situationOne)+Math.abs(p.situationTwo)
+          let firstLine = `${Math.abs(p.situationOne)}+${Math.abs(p.situationTwo)}=${bigDifference}`
+          
+
+          if (p.situationOneW == "an excess" && p.situationTwoW == "an excess" || p.situationTwoW == "short" && p.situationOneW == "short"){
+           bigDifference = Math.abs(p.situationTwo)-Math.abs(p.situationOne)
+            firstLine = `${Math.abs(p.situationTwo)}-${Math.abs(p.situationOne)}=${bigDifference}`
           }
           
-          if (p.rollAnswer == 1){
-            correctAnswer = 
-            `${firstLine}\n${p.sceneTwo}-${p.sceneOne}=${smallDifference}\n${bigDifference}/${smallDifference}=${p.numberOfStudents}`
-          }
-          if (p.rollAnswer == 2){
-            correctAnswer = 
-            `${firstLine}\n${p.sceneTwo}-${p.sceneOne}=${smallDifference}\n${bigDifference}/${smallDifference}=${p.numberOfStudents}\n${p.numberOfStudents}x${p.sceneOne}${symbol}${Math.abs(p.situationOne)}=${p.numberOfStuff}`
-          }
+          let smallDifference = p.sceneTwo-p.sceneOne
+          let secondLine = `${p.sceneTwo}-${p.sceneOne}=${smallDifference}`
+
+          let groups = bigDifference/smallDifference
+          let thirdLine = `${bigDifference}/${smallDifference}=${groups}`
+
+          // if (p.rollAnswer == 1){
+          //   correctAnswer = 
+          //   `${firstLine}\n${p.sceneTwo}-${p.sceneOne}=${smallDifference}\n${bigDifference}/${smallDifference}=${p.numberOfStudents}`
+          // }
+          // if (p.rollAnswer == 2){
+          //   correctAnswer = 
+          //   `${firstLine}\n${p.sceneTwo}-${p.sceneOne}=${smallDifference}\n${bigDifference}/${smallDifference}=${p.numberOfStudents}\n${p.numberOfStudents}x${p.sceneOne}${symbol}${Math.abs(p.situationOne)}=${p.numberOfStuff}`
+          // }
+         if (p.rollAnswer == 1){
+          correctAnswer = `${firstLine}\n${secondLine}\n${thirdLine}`
+         }
+
+         let total = groups*p.sceneOne-Math.abs(p.situationOne)
+         let fourthLine = `${groups}x${p.sceneOne}-${Math.abs(p.situationOne)}=${total}`
+         if (p.situationOneW == "an excess"){
+          total = groups*p.sceneOne+Math.abs(p.situationOne)
+          fourthLine = `${groups}x${p.sceneOne}+${Math.abs(p.situationOne)}=${total}`
+         }
+         
+        if (p.rollAnswer == 2){
+          correctAnswer = `${firstLine}\n${secondLine}\n${thirdLine}\n${fourthLine}`
+        }
+         
+          
         }
 
         if ( setting == 3 || (setting == 9 && p.rollz == 3) || range == 1 && p.rollz == 3 ){
@@ -10286,7 +10332,8 @@ function genProblems(){
         situationOne: undefined,
         situationTwo: undefined,
         rollAnswer: genNumbers(2)+1,
-        // rollAnswer: 2,
+        situationOneW: "short",
+        situationTwoW: "short",
         rollz: 2
       }
     }
