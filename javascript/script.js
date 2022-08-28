@@ -8510,12 +8510,13 @@ function handleSubmit(e){
           let fourthSentence = `${bDifference}/${sDifference}=${bDifference/sDifference}`
 
           let fifthSentence = `${p.total}-${p.chosenOneN}=${p.chosenTwoN}`
+          let sixthSentence = `${p.total}-${p.chosenTwoN}=${p.chosenOneN}`
 
           if (p.choice == 0 && p.difference < 0){
             correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}`
           }
           if (p.choice == 0 && p.difference > 0){
-            correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${fifthSentence}`
+            correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${sixthSentence}`
           }
           if (p.choice == 1 && p.difference < 0){
             correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${fifthSentence}`
