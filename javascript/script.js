@@ -5387,7 +5387,8 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
   }
                              // display
   if (level == "heuTwob"){
-    if ( setting == 1 || setting == 9 && p.rollz == 1 ){
+    
+    if ( setting == 1 || setting == 9 && p.rollz == 1 || range == 1 && p.rollz == 1){
       while (p.numOne == p.numTwo){
         p.numOne = genNumbers(9)+1
       }
@@ -5417,7 +5418,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       }
     }
 
-    if ( setting == 2 | setting == 9 && p.rollz == 2 ){
+    if ( setting == 2 | setting == 9 && p.rollz == 2 || range == 1 && p.rollz == 2 ){
       displayProblem.innerHTML = 
       `
         A has ${p.numOne}.</br>
@@ -5426,7 +5427,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       `
     }
 
-    if ( setting == 3 || setting == 9 && p.rollz == 3 ){
+    if ( setting == 3 || setting == 9 && p.rollz == 3 || range == 1 && p.rollz == 3 ){
       p.numTotal = p.numOne + p.numTwo
       displayProblem.innerHTML = 
       `
@@ -5436,7 +5437,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       `
     }
 
-    if ( setting == 4 || setting == 9 && p.rollz == 4 ){
+    if ( setting == 4 || setting == 9 && p.rollz == 4 || range == 1 && p.rollz == 4 ){
       while (p.numOne == p.numTwo) {
         p.numOne = genNumbers(400)+100
       }
@@ -5459,6 +5460,56 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
           How much ${p.numOne > p.numTwo ? "more" : "less"} is ${p.objectOne} than ${p.objectTwo}?
         `
       }
+    }
+
+    if (setting == 5 || setting == 9 && p.rollz == 5 || range == 1 && p.rollz == 5){
+      let oneUnit = genNumbers(10)+10
+      p.total = (p.unitSentence+1)*oneUnit
+      p.varB = oneUnit
+      p.varA = oneUnit*p.unitSentence
+      let lineTwo = undefined
+      let lineThree = undefined
+
+      if (p.rollLineTwo == "A"){
+        lineTwo = `${p.objectOne} is ${p.varA}.`
+        p.rollLineThree = ["B","total"][genNumbers(2)]
+        if (p.rollLineThree == "B"){
+          lineThree = `What is ${p.objectTwo}`
+        }
+        if (p.rollLineThree == "total"){
+          lineThree = `What is the total of ${p.objectOne} and ${p.objectTwo}?`
+        }
+      }
+
+      if (p.rollLineTwo == "B"){
+        lineTwo = `${p.objectTwo} is ${p.varB}.`
+        p.rollLineThree = ["A","total"][genNumbers(2)]
+        if (p.rollLineThree == "A"){
+          lineThree = `What is ${p.objectOne}`
+        }
+        if (p.rollLineThree == "total"){
+          lineThree = `What is the total of ${p.objectOne} and ${p.objectTwo}?`
+        }
+      }
+
+      if (p.rollLineTwo == "total"){
+        lineTwo = `${p.objectOne} and ${p.objectTwo} is ${p.total}.`
+        p.rollLineThree = ["A","B"][genNumbers(2)]
+        if (p.rollLineThree == "A"){
+          lineThree = `What is ${p.objectOne}`
+        }
+        if (p.rollLineThree == "B"){
+          lineThree = `What is ${p.objectTwo}?`
+        }
+      }
+
+      displayProblem.innerHTML = 
+      `
+      ${p.objectOne} is ${p.unitSentence} times of ${p.objectTwo}.</br>
+      ${lineTwo}</br>
+      ${lineThree}</br>
+
+      `
     }
   }
                                 // display
@@ -5689,9 +5740,9 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       }
    }
   }
-
+                                // display
   if ( level == "heuThreeb"){
-    if (setting == 1 || setting == 9 && p.roll == 1){
+    if (setting == 1 || setting == 9 && p.rollz == 1 || range == 1 && p.rollz == 1){
       let choice = genNumbers(3)
       let swope = 0
     
@@ -5771,7 +5822,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       }
     }
 
-    if ( setting == 2 || setting == 9 && p.roll == 2 ){
+    if ( setting == 2 || setting == 9 && p.rollz == 2  || range == 1 && p.rollz == 2){
       let choice = genNumbers(3)
 
       while (p.situationOne == p.situationTwo){
@@ -5822,6 +5873,66 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       ${p.objectTwo} ${p.situationTwo > 0 ? ["increased by","bought","received"][choice] : ["decreased by","sold","gave away"][choice]} ${Math.abs(p.situationTwo)}.</br>
       ${genNumbers == 0 ? `${p.objectOne} and ${p.objectTwo} has an equal number in the end.`: `${p.objectOne} and ${p.objectTwo} has the same amount in the end.`}</br>
       What is ${p.oneOrTwo == "One" ? p.objectOne : p.objectTwo} ${p.firstOrEnd}?
+      `
+    }
+
+    if (setting == 3 || setting == 9 && p.rollz == 3 || range == 1 && p.rollz == 3){
+      
+      let oneUnit = p.startTwo = genNumbers(100)+1
+      p.startOne = p.unitSentence*oneUnit
+      
+      p.situationOne = p.situationOne*genNumbers(p.startOne)
+      p.situationTwo = p.situationTwo*genNumbers(p.startTwo)
+
+      if (p.situationOne == 0 || p.situationTwo == 0 ){
+        return updateProblems()
+      }
+
+      let lineTwo = undefined
+      if (p.oneOrTwo == "One"){
+        lineTwo = `${p.objectOne} ${p.situationOne > 0 ? "increased" : "decreased"} by ${Math.abs(p.situationOne)}.`
+      }
+      if (p.oneOrTwo == "Two"){
+        lineTwo = `${p.objectTwo} ${p.situationTwo > 0 ? "increased" : "decreased"} by ${Math.abs(p.situationTwo)}.`
+      }
+
+      if (p.oneOrTwo == "One"){
+        p.endOne = p.startOne + p.situationOne
+        p.endTwo = p.startTwo
+      }
+
+      if (p.oneOrTwo == "Two"){
+        p.endOne = p.startOne
+        p.endTwo = p.startTwo + p.situationTwo
+      }
+
+      
+      let lineThree = ["A","B"][genNumbers(2)]
+      if (lineThree == "A"){
+        lineThree = `${p.objectOne} has ${p.endOne} in the end.`
+      }
+      if (lineThree == "B"){
+        lineThree = `${p.objectTwo} has ${p.endTwo} in the end.`
+      }
+     
+      let lineFour = undefined
+      if (p.answer == "A"){
+        lineFour = `What is ${p.objectOne} at first?`
+      }
+      if (p.answer == "B"){
+        lineFour = `What is ${p.objectTwo} at first?`
+      }
+      if (p.answer == "total"){
+        lineFour = `What is the total at first?`
+      }
+
+
+      displayProblem.innerHTML = 
+      `
+      ${p.objectOne} is ${p.unitSentence} times of ${p.objectTwo}.</br>
+      ${lineTwo}</br>
+      ${lineThree}</br>
+      ${lineFour}
       `
     }
   }
@@ -5883,7 +5994,6 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
           return updateProblems()
         }
       }
-
 
       displayProblem.innerHTML =
       `
@@ -7974,7 +8084,7 @@ function handleSubmit(e){
 
                                 // answers
       if (level == "heuTwob"){
-        if (setting == 1 || setting == 9 && p.rollz == 1 ){
+        if (setting == 1 || setting == 9 && p.rollz == 1 || range == 1 && p.rollz == 1 ){
           if (p.rollAB == "A" && p.rollVar == 0){
             correctAnswer = p.numOne-p.numTwo
           }
@@ -7989,11 +8099,11 @@ function handleSubmit(e){
           }
         }
 
-        if ( setting == 2 || setting == 9 && p.rollz == 2){
+        if ( setting == 2 || setting == 9 && p.rollz == 2 || range == 1 && p.rollz == 2 ){
           correctAnswer = p.numOne+p.numTwo
         }
 
-        if ( setting == 3 || setting == 9 && p.rollz == 3){
+        if ( setting == 3 || setting == 9 && p.rollz == 3 || range == 1 && p.rollz == 3 ){
           if (p.rollChoice == 0){
             correctAnswer = p.numTwo
           }
@@ -8002,9 +8112,21 @@ function handleSubmit(e){
           }
         }
 
-        if ( setting == 4 || setting == 9 && p.rollz == 4 ){
+        if ( setting == 4 || setting == 9 && p.rollz == 4 || range == 1 && p.rollz == 4  ){
             correctAnswer = Math.abs(p.numOne-p.numTwo)
         }
+
+        if ( setting == 5 || setting == 9 && p.rollz == 5 || range == 1 && p.rollz == 5  ){
+          if (p.rollLineThree == "A"){
+            correctAnswer = p.varA
+          }
+          if (p.rollLineThree == "B"){
+            correctAnswer = p.varB
+          }
+          if (p.rollLineThree == "total"){
+            correctAnswer = p.total
+          }
+        } 
       } 
 
                             //  answer
@@ -8195,8 +8317,11 @@ function handleSubmit(e){
         }
       }
     }
+
+                                  // answers
+
       if ( level == "heuThreeb"){
-        if ( setting == 1 || setting == 9 && p.roll == 1){
+        if ( setting == 1 || setting == 9 && p.rollz == 1 || range == 1 && p.rollz == 1){
           let difference = undefined
 
           if (p.situationOne > 0 && p.situationTwo > 0){
@@ -8241,7 +8366,7 @@ function handleSubmit(e){
           }
         }
 
-        if (setting == 2 || setting == 9 && p.roll == 2 ){
+        if (setting == 2 || setting == 9 && p.roll == 2 || range == 1 && p.rollz == 2 ){
           let difference = undefined
           let oneUnit = undefined
           if (p.situationOne > 0 && p.situationTwo > 0){
@@ -8292,6 +8417,18 @@ function handleSubmit(e){
           while (correctAnswer <= 0){
             updateProblems()
             return console.log("negative answer detected")
+          }
+        }
+
+        if (setting == 3 || setting == 9 && p.rollz == 3 || range == 1 && p.rollz == 3){
+          if (p.answer == "A"){
+            correctAnswer = p.startOne
+          }
+          if (p.answer == "B"){
+            correctAnswer = p.startTwo
+          }
+          if (p.answer == "total"){
+            correctAnswer = p.startOne+p.startTwo
           }
         }
       }
@@ -10003,14 +10140,35 @@ function genProblems(){
   }
                               // settings
   if (level == "heuTwob"){
+
     let roll = undefined
-    if (isNaN(setting)){
-      setting = 9
+    let settingText = setting.toString()
+   
+    if (settingText.includes("-")){
+      console.log("range detected")
+      range = 1;
+      settingText.split("-")
+      if (!heuArr.length){
+        for (let i = 1; i <= settingText[settingText.length-1]; i++){
+          heuArr.push(i)
+        }
+        console.log(heuArr)
+      }
+      roll = heuArr[genNumbers(heuArr.length)]
+      let index = heuArr.indexOf(roll)
+      heuArr.splice(index, 1)
+
+    } else {
+      console.log("Not range detected")
+      setting = parseInt(setting)
+      if (isNaN(setting)){
+        setting = 9
+      }
     }
 
     if (setting == 9){
       if (!heuArr.length){
-        heuArr = [1, 2, 3, 4]
+        heuArr = [1, 2, 3, 4, 5]
         console.log("array renewed! "+ heuArr)
       }
       roll = heuArr[genNumbers(heuArr.length)]
@@ -10019,7 +10177,7 @@ function genProblems(){
       console.log("Current Array is " + heuArr)
     }
 
-    if (setting == 1 || setting == 9 && roll == 1 ){
+    if (setting == 1 || setting == 9 && roll == 1 || range == 1 && roll == 1 ){
       return{
         rollx: 
         [
@@ -10038,7 +10196,7 @@ function genProblems(){
       }
     }
 
-    if (setting == 2 || setting == 9 && roll == 2){
+    if (setting == 2 || setting == 9 && roll == 2 || range == 1 && roll == 2 ){
       return {
         rollz: 2,
         objectOne: ["A","B","C"][genNumbers(3)],
@@ -10048,7 +10206,7 @@ function genProblems(){
       }
     }
 
-    if ( setting == 3 || setting == 9 && roll == 3){
+    if ( setting == 3 || setting == 9 && roll == 3 || range == 1 && roll == 3 ){
       return {
         rollz: 3,
         objectOne: ["A","B","C"][genNumbers(3)],
@@ -10060,7 +10218,7 @@ function genProblems(){
       }
     }
 
-    if ( setting == 4 || setting == 4 && roll == 4){
+    if ( setting == 4 || setting == 4 && roll == 4 || range == 1 && roll == 4 ){
       return {
         rollz: 4,
         objectOne: ["A","B","C"][genNumbers(3)],
@@ -10071,6 +10229,20 @@ function genProblems(){
         rollChoice: genNumbers(2),
         rollChoice2: ["A","B"][genNumbers(2)],
         rollChoice3: genNumbers(2)
+      }
+    }
+
+    if ( setting == 5 || setting == 5 && roll == 5 || range == 1 && roll == 5 ){
+      return {
+        rollz: 5,
+        objectOne: ["A","B","C"][genNumbers(3)],
+        objectTwo: ["X","Y","Z"][genNumbers(3)],
+        unitSentence: genNumbers(9)+1,
+        total: undefined,
+        varA: undefined,
+        varB: undefined,
+        rollLineTwo: ["A","B","total"][genNumbers(3)],
+        rollLineThree: ["A","B","total"][genNumbers(3)]
       }
     }
   }
@@ -10230,14 +10402,36 @@ function genProblems(){
       }
 
   }
-
+                          // setting
   if ( level == "heuThreeb"){
-    let roll = genNumbers(1)+1
-    if (isNaN(setting)){
-      setting = 9
+
+
+    let roll = undefined
+    let settingText = setting.toString()
+   
+    if (settingText.includes("-")){
+      console.log("range detected")
+      range = 1;
+      settingText.split("-")
+      if (!heuArr.length){
+        for (let i = 1; i <= settingText[settingText.length-1]; i++){
+          heuArr.push(i)
+        }
+        console.log(heuArr)
+      }
+      roll = heuArr[genNumbers(heuArr.length)]
+      let index = heuArr.indexOf(roll)
+      heuArr.splice(index, 1)
+
+    } else {
+      console.log("Not range detected")
+      setting = parseInt(setting)
+      if (isNaN(setting)){
+        setting = 9
+      }
     }
 
-    if (setting == 1 || setting == 9 && roll == 1){
+    if (setting == 1 || setting == 9 && roll == 1 || range == 1 && roll == 1 ){
       return {
         objectOne: ["A","B","C"][genNumbers(3)],
         objectTwo: ["X","Y","Z"][genNumbers(3)],
@@ -10247,11 +10441,12 @@ function genProblems(){
         // situationOne: genNumbers(50)-100,
         // situationTwo: genNumbers(50)-100,
         oneOrTwo: ["One","Two"][genNumbers(2)],
-        firstOrEnd: ["at first","in the end"][genNumbers(2)]
+        firstOrEnd: ["at first","in the end"][genNumbers(2)],
+        rollz: 1
       }
     }
 
-    if ( setting == 2 || setting == 9 && roll == 2){
+    if ( setting == 2 || setting == 9 && roll == 2 || range == 1 && roll == 2 ){
       return {
         objectOne: ["A","B","C"][genNumbers(3)],
         objectTwo: ["X","Y","Z"][genNumbers(3)],
@@ -10259,7 +10454,25 @@ function genProblems(){
         situationOne: genNumbers(200)-100,
         situationTwo: genNumbers(200)-100,
         oneOrTwo: ["One","Two"][genNumbers(2)],
-        firstOrEnd: ["at first", "at first","in the end"][genNumbers(1)]
+        firstOrEnd: ["at first", "at first","in the end"][genNumbers(1)],
+        rollz: 2
+      }
+    }
+
+    if ( setting == 3 || setting == 9 && roll == 3 || range == 1 && roll == 3 ){
+      return {
+        objectOne: ["A","B","C"][genNumbers(3)],
+        objectTwo: ["X","Y","Z"][genNumbers(3)],
+        unitSentence: genNumbers(4)+2,
+        startOne: undefined,
+        startTwo: undefined,
+        situationOne: [-1,1][genNumbers(2)],
+        situationTwo: [-1,1][genNumbers(2)],
+        endOne: undefined,
+        endTwo: undefined,
+        oneOrTwo: ["One","Two"][genNumbers(2)],
+        answer: ["A","B","total"][genNumbers(2)],
+        rollz: 3
       }
     }
   }
@@ -11990,8 +12203,9 @@ for (let i = 0; i <  settingButton.length; i++){
       break
 
       case "Heu.2b":
-        setting =  parseInt(prompt("What level?\n1. Comparison Model\n2. Parts of a Whole\n3. Whole and Parts\n4. Looking for Difference\n\n9.All"))
+        setting =  prompt("What level?\n1. Comparison Model\n2. Parts of a Whole\n3. Whole and Parts\n4. Looking for Difference\n\n9.All")
         level = "heuTwob"
+        range = 0;
         scoreNeeded = 2;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
@@ -12011,8 +12225,9 @@ for (let i = 0; i <  settingButton.length; i++){
       break
 
       case "Heu.3b":
-        setting = parseInt(prompt("What level?\n1. Equal Beginning\n2. Equal End\n\n9. All"))
+        setting = prompt("What level?\n1. Equal Beginning\n2. Equal End\n3. Unchanged Object\n\n9. All")
         level = "heuThreeb"
+        range = 0
         scoreNeeded = 2;
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
