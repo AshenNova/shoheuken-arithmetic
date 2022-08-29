@@ -5925,6 +5925,14 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       if (p.answer == "total"){
         lineFour = `What is the total at first?`
       }
+      if (p.answer == "other"){
+        if (p.oneOrTwo == "One"){
+         lineFour = `What is ${p.objectTwo} at in the end?`
+        }
+        if (p.oneOrTwo == "Two"){
+          lineFour = `What is ${p.objectOne} at in the end?`
+         }
+      }
 
 
       displayProblem.innerHTML = 
@@ -8430,6 +8438,14 @@ function handleSubmit(e){
           if (p.answer == "total"){
             correctAnswer = p.startOne+p.startTwo
           }
+          if (p.answer == "other"){
+            if (p.oneOrTwo == "One"){
+              correctAnswer = p.endTwo
+            }
+            if (p.oneOrTwo == "Two"){
+              correctAnswer = p.endOne
+            }
+          }
         }
       }
                                  // answer
@@ -10471,7 +10487,7 @@ function genProblems(){
         endOne: undefined,
         endTwo: undefined,
         oneOrTwo: ["One","Two"][genNumbers(2)],
-        answer: ["A","B","total"][genNumbers(2)],
+        answer: ["A","B","total","other"][genNumbers(4)],
         rollz: 3
       }
     }
