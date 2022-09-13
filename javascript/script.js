@@ -356,7 +356,6 @@ const resetStuff = function (){
   helpMe.style.fontSize = "30px"
   inputBoxCl.classList.remove('hidden')
   ourForm2.classList.add('hidden')
-  p.rollz = undefined;
 
   gold = 0;
   silver = 0;
