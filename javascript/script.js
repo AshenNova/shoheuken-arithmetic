@@ -356,6 +356,7 @@ const resetStuff = function (){
   helpMe.style.fontSize = "30px"
   inputBoxCl.classList.remove('hidden')
   ourForm2.classList.add('hidden')
+  p.rollz = undefined;
 
   gold = 0;
   silver = 0;
@@ -10585,7 +10586,7 @@ function genProblems(){
         objectThree: undefined,
         groupOne: genNumbers(20)+5,
         groupTwo: undefined,
-        unitSentence: genNumbers(4)+2,
+        unitSentence: genNumbers(4)+3,
         rollz: 4
         }
       }
@@ -12232,7 +12233,7 @@ for (let i = 0; i <  settingButton.length; i++){
       case "Heu.3":
         setting = prompt("What level?\n1. Sum and Difference\n2. Supposition\n3. Under the same unit ( Unit )\n4. Under the same unit ( Difference )\n5. Equal Grouping\n6. Round up/down\n7. Double Effect\n8. Grouping ( Bonus )\n\n9. All")
         level = "heuThree"
-        scoreNeeded = 10;
+        scoreNeeded = 1;
         range = 0
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
