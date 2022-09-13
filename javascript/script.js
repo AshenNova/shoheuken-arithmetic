@@ -12233,7 +12233,7 @@ for (let i = 0; i <  settingButton.length; i++){
       case "Heu.3":
         setting = prompt("What level?\n1. Sum and Difference\n2. Supposition\n3. Under the same unit ( Unit )\n4. Under the same unit ( Difference )\n5. Equal Grouping\n6. Round up/down\n7. Double Effect\n8. Grouping ( Bonus )\n\n9. All")
         level = "heuThree"
-        scoreNeeded = 1;
+        scoreNeeded = 10;
         range = 0
         displayProblem.style.fontSize = "18px";
         displayProblem.style.textAlign = "left";
