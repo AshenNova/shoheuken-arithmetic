@@ -8758,7 +8758,7 @@ function handleSubmit(e){
           if (p.choice == 5 ){
             let groupValue = p.objectOneV+p.objectTwoV
             thirdSentence = `${p.objectOneV}+${p.objectTwoV}=${groupValue}`
-            let fourthSentence = `${groupValue}x${groups}=${groupValue*groups}`
+            let fourthSentence = `${groups}x${groupValue}=${groupValue*groups}`
             
             correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}`
           }
