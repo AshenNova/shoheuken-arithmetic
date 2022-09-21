@@ -1734,33 +1734,87 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
   if ( level == 3.19) {
     ctx.font = "1em serif"
     ctx.save()
-    ctx.fillText(`Find the ${p.areaOrPerimeter} of the ${p.shapeChoice}.`, 20, 40)   
-    ctx.translate(200, 137.5);
-    ctx.fillStyle = "orange"
-    ctx.strokeStyle = "grey"
-    ctx.lineWidth = 5;
 
-    if (p.shapeChoice == "square"){
-      ctx.beginPath();
-      ctx.rect(-p.squareCoord,-p.squareCoord,p.squareCoord*2,p.squareCoord*2);
-      ctx.stroke();
-      ctx.fill();
+    if (difficulty == 1 || difficulty == 9 && p.rollx == 0 ){
+      ctx.fillText(`Find the ${p.areaOrPerimeter} of the ${p.shapeChoice}.`, 20, 40)   
+      ctx.translate(200, 137.5);
+      ctx.fillStyle = "orange"
+      ctx.strokeStyle = "grey"
+      ctx.lineWidth = 5;
 
-      ctx.fillStyle = "black"
-      ctx.fillText(`${p.squareSide} ${p.unitMeasurement}`, -15, -p.squareCoord-10)
+      if (p.shapeChoice == "square"){
+        ctx.beginPath();
+        ctx.rect(-p.squareCoord,-p.squareCoord,p.squareCoord*2,p.squareCoord*2);
+        ctx.stroke();
+        ctx.fill();
+
+        ctx.fillStyle = "black"
+        ctx.fillText(`${p.squareSide} ${p.unitMeasurement}`, -15, -p.squareCoord-10)
+      }
+
+      if (p.shapeChoice == "rectangle"){
+        p.rectLength = p.rectLengthCoord/10
+        p.rectBreadth = p.rectBreadthCoord/10
+        ctx.beginPath();
+        ctx.rect(-p.rectLengthCoord,-p.rectBreadthCoord,p.rectLengthCoord*2,p.rectBreadthCoord*2);
+        ctx.stroke();
+        ctx.fill();
+
+        ctx.fillStyle = "black"
+        ctx.fillText(`${p.rectBreadth} ${p.unitMeasurement}`, p.rectLengthCoord+5, 0+2)
+        ctx.fillText(`${p.rectLength} ${p.unitMeasurement}`, -15, -p.rectBreadthCoord-10)
+      }
     }
 
-    if (p.shapeChoice == "rectangle"){
-      p.rectLength = p.rectLengthCoord/10
-      p.rectBreadth = p.rectBreadthCoord/10
-      ctx.beginPath();
-      ctx.rect(-p.rectLengthCoord,-p.rectBreadthCoord,p.rectLengthCoord*2,p.rectBreadthCoord*2);
-      ctx.stroke();
-      ctx.fill();
+    if (difficulty == 2 || difficulty == 9 && p.rollx == 1 ){
+      ctx.fillText(`Find the ${p.shapeChoice == "rectangle" ? p.side : "length of each side"} of the ${p.shapeChoice}.`, 20, 40)   
+      ctx.translate(200, 137.5);
+      ctx.fillStyle = "orange"
+      ctx.strokeStyle = "grey"
+      ctx.lineWidth = 5;
 
-      ctx.fillStyle = "black"
-      ctx.fillText(`${p.rectBreadth} ${p.unitMeasurement}`, p.rectLengthCoord+5, 0+2)
-      ctx.fillText(`${p.rectLength} ${p.unitMeasurement}`, -15, -p.rectBreadthCoord-10)
+      if (p.shapeChoice == "square"){
+        ctx.beginPath();
+        ctx.rect(-p.squareCoord,-p.squareCoord,p.squareCoord*2,p.squareCoord*2);
+        ctx.stroke();
+        ctx.fill();
+
+        ctx.save()
+        p.area = p.squareSide*p.squareSide
+        p.perimeter = p.squareSide*4
+        ctx.fillStyle = "black"
+        ctx.translate(-200, -137.5);
+        ctx.fillText(`The ${p.areaOrPerimeter} of the ${p.shapeChoice} is ${p.areaOrPerimeter == "area" ? `${p.area} ${p.unitMeasurement}2.` : `${p.perimeter} ${p.unitMeasurement}.`} `, 20, 60)
+        ctx.restore()
+
+        // ctx.fillStyle = "black"
+        // ctx.fillText(`${p.squareSide} ${p.unitMeasurement}`, -15, -p.squareCoord-10)
+      }
+
+      if (p.shapeChoice == "rectangle"){
+        p.rectLength = p.rectLengthCoord/10
+        p.rectBreadth = p.rectBreadthCoord/10
+        p.area = p.rectLength*p.rectBreadth
+        p.perimeter = (p.rectLength+p.rectBreadth)*2
+        ctx.beginPath();
+        ctx.rect(-p.rectLengthCoord,-p.rectBreadthCoord,p.rectLengthCoord*2,p.rectBreadthCoord*2);
+        ctx.stroke();
+        ctx.fill();
+
+        ctx.fillStyle = "black"
+        if (p.side == "breadth"){
+          ctx.fillText(`${p.rectLength} ${p.unitMeasurement}`, -15, -p.rectBreadthCoord-10)
+        }
+        if (p.side == "length"){
+          ctx.fillText(`${p.rectBreadth} ${p.unitMeasurement}`, p.rectLengthCoord+5, 0+2)
+        }
+       
+
+        ctx.save()
+        ctx.translate(-200, -137.5);
+        ctx.fillText(`The ${p.areaOrPerimeter} of the ${p.shapeChoice} is ${p.areaOrPerimeter == "area" ? `${p.area} ${p.unitMeasurement}2.` : `${p.perimeter} ${p.unitMeasurement}.`} `, 20, 60)
+        ctx.restore()
+      }
     }
 
     ctx.restore();
@@ -7039,21 +7093,36 @@ function handleSubmit(e){
       }
 
       if ( level == 3.19){
-        if (p.shapeChoice == "square"){
-          if (p.areaOrPerimeter == "area"){
-            correctAnswer = p.squareSide*p.squareSide
+        if (difficulty == 1 || difficulty == 9 && p.rollx == 0 ){
+          if (p.shapeChoice == "square"){
+            if (p.areaOrPerimeter == "area"){
+              correctAnswer = p.squareSide*p.squareSide
+            }
+            if (p.areaOrPerimeter == "perimeter"){
+              correctAnswer = p.squareSide*4
+            }
           }
-          if (p.areaOrPerimeter == "perimeter"){
-            correctAnswer = p.squareSide*4
+          if (p.shapeChoice == "rectangle"){
+            if (p.areaOrPerimeter == "area"){
+              correctAnswer = p.rectLength*p.rectBreadth
+            }
+            if (p.areaOrPerimeter == "perimeter"){
+              correctAnswer = (p.rectLength+p.rectBreadth)*2
+            }
           }
         }
-        if (p.shapeChoice == "rectangle"){
-          if (p.areaOrPerimeter == "area"){
-            correctAnswer = p.rectLength*p.rectBreadth
+        if ( difficulty == 2 || difficulty == 9 && p.rollx == 1 ){
+          if (p.shapeChoice == "square"){
+              correctAnswer = p.squareSide
           }
-          if (p.areaOrPerimeter == "perimeter"){
-            correctAnswer = (p.rectLength+p.rectBreadth)*2
-          }
+          if (p.shapeChoice == "rectangle"){
+              if (p.side == "breadth"){
+                correctAnswer = p.rectBreadth
+              }
+              if (p.side == "length"){
+                correctAnswer = p.rectLength
+              }
+            }
         }
       }
 
@@ -9338,6 +9407,11 @@ function genProblems(){
   }
 
   if ( level == 3.19 ){
+
+    if (difficulty != 1 && difficulty != 2 && difficulty != 9){
+      difficulty = 9
+    }
+    console.log(difficulty)
     return {
     shapeChoice: ["rectangle", "square"][genNumbers(2)],
     squareCoord: genNumbers(50)+30,
@@ -9350,7 +9424,12 @@ function genProblems(){
     rectBreadth: undefined,
 
     unitMeasurement: ["cm","m","km"][genNumbers(3)],
-    areaOrPerimeter: ["area", "perimeter"][genNumbers(2)]
+    areaOrPerimeter: ["area", "perimeter"][genNumbers(2)],
+
+    side: ["length", "breadth"][genNumbers(2)],
+    area: undefined,
+    perimeter: undefined,
+    rollx: genNumbers(2)
     }
   }
 
@@ -11452,6 +11531,7 @@ for (let i = 0; i <  settingButton.length; i++){
       break;
   
       case "Level 3.19":
+        difficulty = prompt("1. Basics\n2. Reverse\n\n9. All")
         level = 3.19;
         scoreNeeded = 20;
         gold = highScore3DotZero19.time
