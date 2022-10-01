@@ -11831,7 +11831,7 @@ for (let i = 0; i <  settingButton.length; i++){
       break;
 
       case "Level 4.21":
-        difficulty = prompt("Enter 0, 1, 2, 3 or 4")
+        difficulty = prompt("0. Perfect Cutting\n1. Rectangle\n2. Cuboid\n3. Circles\n\n4. Everything")
         level = 4.21;
         scoreNeeded = 10;
         gold = highScore4Dot21.time;
