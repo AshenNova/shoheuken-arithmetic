@@ -5584,6 +5584,10 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       `
     }
     if ( setting == 2 || (setting == 9 && p.rollz == 2) || range == 1 && p.rollz == 2 ){
+      
+      if (p.numOne+p.numThree < 4){
+        return updateProblems()
+      }
       p.legOne = parseInt(p.objects[p.rollObj][2])
       p.legTwo = parseInt(p.objects[p.rollObj][3])
       p.objectOne = p.objects[p.rollObj][0]
