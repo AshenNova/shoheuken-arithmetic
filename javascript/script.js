@@ -7167,26 +7167,29 @@ function handleSubmit(e){
 
       if ( level == 4.03){
         if (p.placeValue == "Whole Number"){
-          correctAnswer = (Math.round(p.numFinal)).toString()
+          // correctAnswer = (Math.round(p.numFinal)).toString()
+          correctAnswer = p.numFinal.toFixed()
         }
         if (p.placeValue == "1 decimal place" || p.placeValue == "tenth place"){
           p.ansFinal = Math.round(p.numFinal*10)/(10)
-          if ((p.ansFinal*10)%10 == 0){
-            correctAnswer = (p.ansFinal + ".0").toString()
-          } else {
-          correctAnswer = p.ansFinal.toString()
-          }
+          // if ((p.ansFinal*10)%10 == 0){
+          //   correctAnswer = (p.ansFinal + ".0").toString()
+          // } else {
+          // correctAnswer = p.ansFinal.toString()
+          // }
+          correctAnswer = p.ansFinal.toFixed(1)
         }
         if (p.placeValue == "2 decimal place" || p.placeValue == "hundredth place"){
           p.ansFinal = Math.round(p.numFinal*100)/(100)
-          console.log(p.ansFinal)
-          if ((p.ansFinal*100)%(100) == 0){
-            correctAnswer = (p.ansFinal + ".00").toString()
-          } else if ((p.ansFinal*100)%(10) == 0){
-            correctAnswer = (p.ansFinal + "0").toString()
-          } else {
-          correctAnswer = p.ansFinal.toString()
-          }
+          // console.log(p.ansFinal)
+          // if ((p.ansFinal*100)%(100) == 0){
+          //   correctAnswer = (p.ansFinal + ".00").toString()
+          // } else if ((p.ansFinal*100)%(10) == 0){
+          //   correctAnswer = (p.ansFinal + "0").toString()
+          // } else {
+          // correctAnswer = p.ansFinal.toString()
+          // }
+          correctAnswer = p.ansFinal.toFixed(2)
         }
       }
 
