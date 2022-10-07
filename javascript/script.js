@@ -747,6 +747,74 @@ function updateProblems(){
     }
   } 
 
+  if ( level == 1.08 ){
+    p.numOne = p.quantity*p.multiplier
+    if (p.choice == "division"){
+      if (p.objects == "unit"){
+        displayProblem.innerHTML = 
+        `
+          ${p.quantity} ${p.objects}s = ${p.numOne}</br>
+          1 ${p.objects} = ?
+        `
+      }
+      if (p.objects == "item"){
+        let count = genNumbers(2)+1
+        if (count == 1 ){
+          displayProblem.innerHTML = 
+          `
+            ${p.quantity} ${p.item1}s = $${p.numOne}</br>
+            1 ${p.item1} = ?
+          `
+        }
+        if (count == 2 ){
+          displayProblem.innerHTML = 
+          `
+            ${p.quantity} ${p.item2}s = $${p.numOne}</br>
+            1 ${p.item2} = ?
+          `
+        }
+      }
+    }
+    if (p.choice == "multiply"){
+      if (p.objects == "unit"){
+        displayProblem.innerHTML = 
+        // `
+        //   ${p.quantity} ${p.objects}s = ${p.numOne}</br>
+        //   1 ${p.objects} = ?
+        // `
+        `
+        1 ${p.objects} = ${p.multiplier}</br>
+        ${p.quantity} ${p.objects}s = ?</br>
+      `
+      }
+      if (p.objects == "item"){
+        let count = genNumbers(2)+1
+        if (count == 1 ){
+          displayProblem.innerHTML = 
+          // `
+          //   ${p.quantity} ${p.item1}s = $${p.numOne}</br>
+          //   1 ${p.item1} = ?
+          // `
+          `
+          1 ${p.item1} = $${p.multiplier}</br>
+          ${p.quantity} ${p.item1}s = ?</br>
+        `
+        }
+        if (count == 2 ){
+          displayProblem.innerHTML = 
+          // `
+          //   ${p.quantity} ${p.item2}s = $${p.numOne}</br>
+          //   1 ${p.item2} = ?
+          // `
+          `
+          1 ${p.item2} = ${p.multiplier}</br>
+          ${p.quantity} ${p.item2}s = ?
+        `
+        }
+      }
+    }
+  }
+
   if (level == 1.01 || level == 2.01 || level == 3.01 ){
     if (p.operator == "x" ) displayProblem.innerHTML = `${p.numThree} ${p.operator} ${p.numFour}`
     if (p.operator == "÷") displayProblem.innerHTML = `${p.numThree*p.numFour} ${p.operator} ${p.numThree}` 
@@ -6570,6 +6638,11 @@ function handleSubmit(e){
 
       }
 
+      if ( level == 1.08 ){
+        if (p.choice == "division") correctAnswer = p.multiplier
+        if (p.choice == "multiply") correctAnswer = p.numOne
+      }
+
       if (level == 2){
         if (p.operator == "+") correctAnswer = p.numOne + p.numTwo
         if (p.operator == "-") {
@@ -9093,6 +9166,18 @@ function genProblems(){
     }
   }
 
+  if (level == 1.08){
+    return {
+      choice: ["multiply","division"][genNumbers(2)],
+      objects: ["unit", "item"][genNumbers(2)],
+      quantity: genNumbers(4)+2,
+      numOne: undefined, 
+      multiplier: genNumbers(4)+2,
+      item1: ["apple","toy","pear","sweet"][genNumbers(4)],
+      item2: ["bag","packet","group"][genNumbers(3)] 
+    }
+  }
+
   if (level == 2.0){
     return {
       numOne: genNumbers(40)+10,
@@ -11181,6 +11266,21 @@ for (let i = 0; i <  settingButton.length; i++){
         highScoreMistakes.innerHTML = highScore1DotZero7.mistake
         displayProblem.style.fontSize = "25px";
         document.querySelector("#user-input").style.marginTop = "100px";
+      break
+
+      case "Level 1.08":
+        level = 1.08;
+        scoreNeeded = 20;
+        // gold = highScore1DotZero7.time
+        // silver = highScore1DotZero7.time+((cutoff-highScore1DotZero7.time)/3)
+        // bronze = highScore1DotZero7.time+((cutoff-highScore1DotZero7.time)/3)*2
+        // highScoreName.innerHTML = highScore1DotZero7.name
+        // highScoreTime.innerHTML = highScore1DotZero7.time
+        // highScoreMistakes.innerHTML = highScore1DotZero7.mistake
+        // displayProblem.style.fontSize = "25px";
+        // document.querySelector("#user-input").style.marginTop = "100px";
+        instructions.textContent = "Give the answer."
+        displayProblem.style.textAlign = "left";
       break  
   
       case "Level 2.0":
