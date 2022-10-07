@@ -774,6 +774,43 @@ function updateProblems(){
           `
         }
       }
+      if (p.objects == "mass"){
+        let massUnits = ["g","kg"][genNumbers(2)]
+        if (p.itemMass == "stone" || p.itemMass == "watermelon" || p.itemMass == "dog" || p.itemMass == "bag" ) {
+          massUnits = "kg"
+        } else {
+          massUnits = "g"
+        }
+        displayProblem.innerHTML = 
+        `
+          ${p.quantity} ${p.itemMass}s = ${p.numOne} ${massUnits}</br>
+          1 ${p.itemMass} = ?
+        `
+      }
+      if (p.objects == "volume"){
+        let volumeUnits = ["ml","ℓ"][genNumbers(2)]
+        if (p.itemVolume == "raindrop") {
+          volumeUnits = "ml"
+        }
+        else {
+          volumeUnits = "ℓ"
+        }
+        displayProblem.innerHTML = 
+        `
+          ${p.quantity} ${p.itemVolume}s = ${p.numOne} ${volumeUnits}</br>
+          1 ${p.itemVolume} = ?
+        `
+      }
+      if (p.objects == "length"){
+        let lengthUnits = ["m","cm"][genNumbers(2)]
+        if (p.itemLength == "string") lengthUnits = "cm"
+        if (p.itemLength == "rope") lengthUnits = "m"
+        displayProblem.innerHTML = 
+        `
+          ${p.quantity} ${p.itemLength}s = ${p.numOne} ${lengthUnits}</br>
+          1 ${p.itemLength} = ?
+        `
+      }
     }
     if (p.choice == "multiply"){
       if (p.objects == "unit"){
@@ -808,9 +845,48 @@ function updateProblems(){
           // `
           `
           1 ${p.item2} = ${p.multiplier}</br>
-          ${p.quantity} ${p.item2}s = ?
+          ${p.quantity} ${p.item2}s = ?</br>
         `
         }
+      }
+      if (p.objects == "mass"){
+        let massUnits = ["g","kg"][genNumbers(2)]
+        if (p.itemMass == "stone" || p.itemMass == "watermelon" || p.itemMass == "dog" || p.itemMass == "bag" ) {
+          massUnits = "kg"
+        } else {
+          massUnits = "g"
+        }
+        displayProblem.innerHTML = 
+        `
+          1 ${p.itemMass} = ${p.multiplier} ${massUnits}</br>
+          ${p.quantity} ${p.itemMass}s = ?</br>        
+        `
+      }
+      if (p.objects == "volume"){
+        let volumeUnits = ["ml","ℓ"][genNumbers(2)]
+        if (p.itemVolume == "raindrop") {
+          volumeUnits = "ml"
+        }
+        else {
+          volumeUnits = "ℓ"
+        }
+        displayProblem.innerHTML = 
+        `
+          1 ${p.itemVolume} = ${p.multiplier} ${volumeUnits}</br>
+          ${p.quantity} ${p.itemVolume}s = ?</br>
+        
+        `
+      }
+      if (p.objects == "length"){
+        let lengthUnits = ["m","cm"][genNumbers(2)]
+        if (p.itemLength == "string") lengthUnits = "cm"
+        if (p.itemLength == "rope") lengthUnits = "m"
+        displayProblem.innerHTML = 
+        `
+          1 ${p.itemLength} = ${p.multiplier} ${lengthUnits}</br>
+          ${p.quantity} ${p.itemLength}s = ?</br>
+          
+        `
       }
     }
   }
@@ -9169,12 +9245,16 @@ function genProblems(){
   if (level == 1.08){
     return {
       choice: ["multiply","division"][genNumbers(2)],
-      objects: ["unit", "item"][genNumbers(2)],
+      objects: ["unit", "item","mass","volume","length"][genNumbers(5)],
       quantity: genNumbers(4)+2,
       numOne: undefined, 
       multiplier: genNumbers(4)+2,
       item1: ["apple","toy","pear","sweet"][genNumbers(4)],
-      item2: ["bag","packet","group"][genNumbers(3)] 
+      item2: ["bag","packet","group"][genNumbers(3)],
+      itemMass: ["bag","watermelon","dog","stone", "coin", "seed"][genNumbers(5)],
+      itemVolume: ["raindrop", "bowl", "container"][genNumbers(3)],
+      itemLength: ["string","rope", "wire"][genNumbers(3)]
+
     }
   }
 
@@ -11281,6 +11361,7 @@ for (let i = 0; i <  settingButton.length; i++){
         // document.querySelector("#user-input").style.marginTop = "100px";
         instructions.textContent = "Give the answer."
         displayProblem.style.textAlign = "left";
+        displayProblem.style.fontSize = "25px";
       break  
   
       case "Level 2.0":
