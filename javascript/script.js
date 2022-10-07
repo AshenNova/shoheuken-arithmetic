@@ -749,6 +749,22 @@ function updateProblems(){
 
   if ( level == 1.08 ){
     p.numOne = p.quantity*p.multiplier
+    let massUnits = ["g","kg"][genNumbers(2)]
+        if (p.itemMass == "stone" || p.itemMass == "watermelon" || p.itemMass == "dog" || p.itemMass == "bag" ) {
+          massUnits = "kg"
+        } else {
+          massUnits = "g"
+        }
+    let volumeUnits = ["ml","ℓ"][genNumbers(2)]
+      if (p.itemVolume == "raindrop") {
+        volumeUnits = "ml"
+      }
+      else {
+        volumeUnits = "ℓ"
+      }
+    let lengthUnits = ["m","cm"][genNumbers(2)]
+      if (p.itemLength == "string") lengthUnits = "cm"
+      if (p.itemLength == "rope") lengthUnits = "m"
     if (p.choice == "division"){
       if (p.objects == "unit"){
         displayProblem.innerHTML = 
@@ -775,12 +791,6 @@ function updateProblems(){
         }
       }
       if (p.objects == "mass"){
-        let massUnits = ["g","kg"][genNumbers(2)]
-        if (p.itemMass == "stone" || p.itemMass == "watermelon" || p.itemMass == "dog" || p.itemMass == "bag" ) {
-          massUnits = "kg"
-        } else {
-          massUnits = "g"
-        }
         displayProblem.innerHTML = 
         `
           ${p.quantity} ${p.itemMass}s = ${p.numOne} ${massUnits}</br>
@@ -788,13 +798,6 @@ function updateProblems(){
         `
       }
       if (p.objects == "volume"){
-        let volumeUnits = ["ml","ℓ"][genNumbers(2)]
-        if (p.itemVolume == "raindrop") {
-          volumeUnits = "ml"
-        }
-        else {
-          volumeUnits = "ℓ"
-        }
         displayProblem.innerHTML = 
         `
           ${p.quantity} ${p.itemVolume}s = ${p.numOne} ${volumeUnits}</br>
@@ -802,9 +805,6 @@ function updateProblems(){
         `
       }
       if (p.objects == "length"){
-        let lengthUnits = ["m","cm"][genNumbers(2)]
-        if (p.itemLength == "string") lengthUnits = "cm"
-        if (p.itemLength == "rope") lengthUnits = "m"
         displayProblem.innerHTML = 
         `
           ${p.quantity} ${p.itemLength}s = ${p.numOne} ${lengthUnits}</br>
@@ -850,12 +850,6 @@ function updateProblems(){
         }
       }
       if (p.objects == "mass"){
-        let massUnits = ["g","kg"][genNumbers(2)]
-        if (p.itemMass == "stone" || p.itemMass == "watermelon" || p.itemMass == "dog" || p.itemMass == "bag" ) {
-          massUnits = "kg"
-        } else {
-          massUnits = "g"
-        }
         displayProblem.innerHTML = 
         `
           1 ${p.itemMass} = ${p.multiplier} ${massUnits}</br>
@@ -863,13 +857,6 @@ function updateProblems(){
         `
       }
       if (p.objects == "volume"){
-        let volumeUnits = ["ml","ℓ"][genNumbers(2)]
-        if (p.itemVolume == "raindrop") {
-          volumeUnits = "ml"
-        }
-        else {
-          volumeUnits = "ℓ"
-        }
         displayProblem.innerHTML = 
         `
           1 ${p.itemVolume} = ${p.multiplier} ${volumeUnits}</br>
@@ -878,9 +865,6 @@ function updateProblems(){
         `
       }
       if (p.objects == "length"){
-        let lengthUnits = ["m","cm"][genNumbers(2)]
-        if (p.itemLength == "string") lengthUnits = "cm"
-        if (p.itemLength == "rope") lengthUnits = "m"
         displayProblem.innerHTML = 
         `
           1 ${p.itemLength} = ${p.multiplier} ${lengthUnits}</br>
