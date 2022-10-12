@@ -5698,7 +5698,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
   if ( level == "heuThree"){
 
     console.log(setting)
-  
+    levelLabel.innerHTML = `You are attempting Level ${level}${setting == undefined ? "" : `.${setting}`}`  
     if ( setting == 1 || (setting == 9 && p.rollz == 1) || range == 1 && p.rollz == 1 ){
       while (p.numOne == p.numTwo) {
         p.numOne = (genNumbers(5)+1)*2
@@ -6134,7 +6134,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
                               // display
 
   if ( level == "heuFour"){
-
+    levelLabel.innerHTML = `You are attempting Level ${level}${setting == undefined ? "" : `.${setting}`}`  
     if ( setting == 1 || setting == 9 && p.rollz == 1 || range == 1 && p.rollz == 1 ){
       
       while (p.objectOneQ == p.objectTwoQ || p.objectOneQ > p.objectTwoQ){
@@ -6345,6 +6345,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
   }
                                 // Display
   if ( level == "heuFive"){
+    levelLabel.innerHTML = `You are attempting Level ${level}${setting == undefined ? "" : `.${setting}`}`
     if (setting == 1 || setting == 9 && p.rollz == 1 || range == 1 && p.rollz == 1 ){
       while (p.quantityOne == p.quantityTwo){
         p.quantityOne = genNumbers(10)+1
