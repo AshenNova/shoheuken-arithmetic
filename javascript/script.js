@@ -6310,11 +6310,19 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
 
       console.log(p.arrFirstNum, p.arrSecondNum)
 
-      for (let i = 0; i < p.arrFirstNum.length; i++){
-        if (p.arrFirstNum[i] <= p.min ){
-          p.arrFirstNum.shift()
-          console.log(p.arrFirstNum)
-        }
+      // for (let i = 0; i < p.arrFirstNum.length; i++){
+      //   if (p.arrFirstNum[i] <= p.min ){
+      //     p.arrFirstNum.shift()
+      //     console.log(p.arrFirstNum)
+      //   }
+      // }
+      
+      while (p.arrFirstNum[p.arrFirstNum.length-1] >= p.max){
+        p.arrFirstNum.pop()
+      }
+
+      while (p.arrSecondNum[p.arrSecondNum.length-1] >= p.max){
+        p.arrSecondNum.pop()
       }
 
       while (p.arrFirstNum[0] <= p.min){
@@ -6325,11 +6333,25 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
         p.arrSecondNum.shift()
       }
 
-      for ( let i = 1; i < p.arrFirstNum.length-2; i++){
-        if (p.arrSecondNum.includes(p.arrFirstNum[i])){
+      // for ( let i = 1; i < p.arrFirstNum.length-2; i++){
+      //   if (p.arrSecondNum.includes(p.arrFirstNum[i])){
+      //     return updateProblems()
+      //   }
+      // }
+
+      // const maxLength = p.arrFirstNum.length >= p.arrSecondNum.length ? p.arrFirstNum.length : p.arrSecondNum.length
+      for ( let i = 0 ; i < p.arrFirstNum.length ; i++){
+        if (p.arrSecondNum.includes(p.arrFirstNum[i]) && p.arrFirstNum[i] != p.total){
           return updateProblems()
         }
       }
+
+      for ( let i = 0 ; i < p.arrSecondNum.length ; i++){
+        if (p.arrFirstNum.includes(p.arrSecondNum[i]) && p.arrSecondNum[i] != p.total){
+          return updateProblems()
+        }
+      }
+
       displayProblem.innerHTML = 
       `
        There are some ${p.objects} between ${p.min} and ${p.max}.</br>
@@ -8841,9 +8863,9 @@ function handleSubmit(e){
         if ( setting == 7 || setting == 9 && p.rollz == 7 || range == 1 && p.rollz == 7 ){
 
           let firstLine = `x${p.groupOne} +${p.leftOne}`
-          let secondLine = p.arrFirstNum
+          let secondLine = p.arrFirstNum.join(", ")
           let thirdLine = `x${p.groupTwo} +${p.leftTwo}`
-          let fourthLine = p.arrSecondNum
+          let fourthLine = p.arrSecondNum.join(", ")
           correctAnswer = `${firstLine}\n${secondLine}\n${thirdLine}\n${fourthLine}\n${p.arrFirstNum[p.arrFirstNum.length-1]}`
         }
       }
