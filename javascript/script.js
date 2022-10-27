@@ -121,7 +121,7 @@ const levelBtn1Zero = document.querySelector(".btn-level-one")
 let levelBtn1ZeroCount = 0;
 
 const highScore1DotZero1 = new HighScore("Jayden Cheong", "16 October 2021", 823, 12)
-const highScore1DotZero2 = new HighScore("Nil", "16 October 2021", 0, 0)
+const highScore1DotZero2 = new HighScore("Zyon Lim", "26 October 2022", 313, 0)
 const highScore1DotZero3 = new HighScore("Aixl Lim", "26 March 2022", 124, 0)
 const highScore1DotZero4 = new HighScore("Shanice Lee", "19 April 2022", 80, 0)
 const highScore1DotZero5 = new HighScore("Reila", "28 mar 2022", 141, 0)
