@@ -222,7 +222,20 @@ let state = {
 }
 
 function swap(first, second){
+  // console.log("Before: " + first + ", " + second)
   [first, second] = [second, first]
+  // console.log("After: " + first + ", " + second)
+}
+
+function simplify(first, second){
+  let max = first
+  if (first < second) max = second
+  for (let i = 2; i < max ; i++){
+    while (first % i == 0 && second % i == 0){
+      first /= i
+      second /= i
+    }
+  }
 }
 
 function clickStart(){
@@ -2374,67 +2387,66 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
   }
 
   if ( level == 4.15){
-    // fake - fake
-    if (p.numOne == p.numTwo){
-      p.numTwo += 1
+    // content
+    while (p.denominator == p.numerator){
+      p.numerator = genNumbers(9)+1
+      p.denominator = genNumbers(9)+1
     }
-    if (p.numOne > p.numTwo ){
-      [p.numOne, p.numTwo] = [p.numTwo, p.numOne]
+
+    if (p.numerator > p.denominator){
+      [p.numerator, p.denominator] = [p.denominator, p.numerator]
     }
-    if (p.numThree == p.numFour){
-      p.numThree += 1
+
+    simplify(p.numerator, p.denominator)
+
+    // for ( let i = 2; i < p.denominator; i++){
+    //   while (p.numerator % i == 0 && p.denominator % i == 0){
+    //     p.numerator /= i
+    //     p.denominator /= i
+    //   }
+    // }
+
+    p.firstUnit = p.numerator
+    p.secondUnit = p.denominator-p.numerator
+    p.totalUnit = p.denominator
+
+    // let second = type[identity][p.secondSelection]
+    while (p.lastSelection == p.secondSelection) p.lastSelection = [genNumbers(3)]
+    
+    let last = p.type[p.identity][p.lastSelection]
+    if (p.lastSelection == 0) p.lastUnits = p.firstUnit
+    if (p.lastSelection == 1) p.lastUnits = p.secondUnit
+    if (p.lastSelection == 2) p.lastUnits = p.totalUnit
+
+    if (p.secondSelection == 0){
+      p.value = p.firstUnit*(genNumbers(5)+5)
+    } else if (p.secondSelection == 1){
+      p.value = p.secondUnit*(genNumbers(5)+5)
+    } else {
+      p.value = p.totalUnit*(genNumbers(5)+5)
     }
-    if (p.numThree > p.numFour ){
-      [p.numThree, p.numFour] = [p.numFour, p.numThree]
+
+    p.secondSelection = p.type[p.identity][p.secondSelection]
+
+    console.log(`First Selection: ${p.firstSelection}, ${p.numerator} units`)
+    console.log(`Second Selection: ${p.value}`)
+    console.log(`Last Selection: ${p.lastSelection}, ${p.denominator}`)
+
+    if (p.identity == 0 || p.identity == 1){
+    displayProblem.innerHTML = 
+    `
+     ${p.firstSelection == 0 ? p.firstUnit : p.secondUnit}/${p.denominator} of the ${p.type[p.identity][2]} are ${p.type[p.identity][p.firstSelection]}.</br>
+     There are ${p.value} ${p.secondSelection}.</br>
+     How many ${last} are there?
+    `
     }
-    for (let i = p.numTwo; i > 1; i--){
-      if (p.numOne%i == 0 && p.numTwo%i == 0){
-        p.numOne /= i;
-        p.numTwo /= i;
-      }
-    }
-    for (let i = p.numFour; i > 1; i--){
-      if (p.numThree%i == 0 && p.numFour%i == 0){
-        p.numThree /= i;
-        p.numFour /= i;
-      }
-    }
-    if (p.option == "1"){
+    if (p.identity == 2 || p.identity == 3) {
       displayProblem.innerHTML = 
-      `B bought ${p.numOne}/${p.numTwo} ${p.unitMeasurement} of something.</br>
-      B used ${p.numThree}/${p.numFour} ${p.unitMeasurement} of it.</br>
-      How many ${p.unitMeasurement} of it does B have left?`
-    }
-    // real - real
-    if (p.option == "2"){
-      displayProblem.innerHTML = 
-      `B ate ${p.numOne}/${p.numTwo} of something.</br>
-      B ate another ${p.numThree}/${p.numFour} of something.</br>
-      How much of something did B eat?`
-    }
-      // V x Real
-    if (p.option == "3"){
-      displayProblem.innerHTML = 
-      `B bought ${p.numFive} of something.</br>
-      B used ${p.numThree}/${p.numFour} of it.</br>
-      How many of it does B have left?`  
-    }
-    // fake x real
-    if (p.option == "4"){
-      displayProblem.innerHTML = 
-      `B bought ${p.numOne}/${p.numTwo} ${p.unitMeasurement} of something.</br>
-      B used ${p.numThree}/${p.numFour} of it.</br>
-      How many ${p.unitMeasurement} of it does B have left?`
-    }
-    // fake x V
-    if (p.option == "5"){
-      if (p.unitMeasurement == "km"){
-        p.unitMeasurement = "kg"
-      }
-      displayProblem.innerHTML = 
-      `B bought ${p.numOne}/${p.numTwo} ${p.unitMeasurement} of something.</br>
-      B bought ${p.numSix} more of it.</br>
-      How many ${p.unitMeasurement} of it does B have?`
+    `
+     ${p.firstSelection == 0 ? p.firstUnit : p.secondUnit}/${p.denominator} of the ${p.type[p.identity][2]} was ${p.type[p.identity][p.firstSelection]}.</br>
+     ${p.secondSelection == "total money" ? `There were $${p.value} at first.` : `$${p.value} was ${p.secondSelection}.`}</br>
+     ${p.lastSelection == 2 ? `How much were there at first?` : `How much was ${last}?`}
+    `
     }
   }
 
@@ -7516,21 +7528,18 @@ function handleSubmit(e){
       }
 
       if ( level == 4.15 ){
-        if (p.option == "1"){
-          correctAnswer = `f-f`
+        let index = p.type[p.identity].indexOf(p.secondSelection)
+        let oneUnit = undefined
+        if (index == 0){
+          oneUnit = p.value/p.numerator
         }
-        if (p.option == "2"){
-          correctAnswer = `r+r`
+        if (index == 1){
+          oneUnit = p.value/(p.denominator-p.numerator)
         }
-        if (p.option == "3"){
-          correctAnswer = `vxr`
+        if (index == 2){
+          oneUnit = p.value/p.denominator
         }
-        if (p.option == "4"){
-          correctAnswer = `fxr`
-        }
-        if (p.option == "5"){
-          correctAnswer = `fxv`
-        }
+        correctAnswer = oneUnit*p.lastUnits
       }
 
       if ( level == 4.16){
@@ -9781,14 +9790,25 @@ function genProblems(){
 
   if (level == 4.15){
     return {
-    numOne: genNumbers(8)+1,
-    numTwo: genNumbers(8)+1,
-    numThree: genNumbers(10)+2,
-    numFour: genNumbers(10)+2,
-    numFive: genNumbers(9999)+100,
-    numSix: genNumbers(7)+2,
-    unitMeasurement: ["m","ℓ","km","kg"][genNumbers(4)],
-    option: ["1","2","3","4","5"][genNumbers(5)]
+      numerator: genNumbers(9)+1,
+      denominator: genNumbers(9)+1,
+      firstSelection: genNumbers(2),
+      secondSelection: genNumbers(3),
+      lastSelection: genNumbers(3),
+      statementChoice: genNumbers(0)+1,
+      firstUnit: undefined,
+      secondUnit: undefined,
+      totalUnit: undefined,
+      lastUnits: undefined,
+      identity: genNumbers(4),
+      value: undefined,
+      type: 
+      [
+        ["boys","girls","pupils"],
+        ["green marbles","blue marbles","total marbles"],
+        ["saved","spent","total money"],
+        ["spent","left","total money"]
+      ]
     }
   }
 
@@ -11938,17 +11958,15 @@ for (let i = 0; i <  settingButton.length; i++){
       case "Level 4.15":
         level = 4.15;
         scoreNeeded = 20;
-        gold = 91;
         highScoreName.innerHTML = highScore4DotZero15.name
         highScoreTime.innerHTML = highScore4DotZero15.time
         highScoreMistakes.innerHTML = highScore4DotZero15.mistake
         document.querySelector("#user-input").setAttribute("type","text");
         document.querySelector("#user-input").style.width = "250px"
-        displayProblem.style.fontSize = "25px";
+        displayProblem.style.textAlign = "left"
+        displayProblem.style.fontSize = "20px";
         instructions.innerHTML = 
-        `Answer using:</br>
-        f-f , r+r , vxr</br>
-        fxr , fxv</br>
+        `Give your final answer.
         `
       break;
 
