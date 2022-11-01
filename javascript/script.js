@@ -2390,7 +2390,11 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
   if ( level == 4.15){
     // content
 
-    
+    while (p.numerator == p.denominator){
+      p.numerator = genNumbers(9)+1
+      p.denominator = genNumbers(9)+1
+    }
+
     if (p.numerator > p.denominator) {
       [p.numerator, p.denominator] = swap(p.numerator, p.denominator)
     }
