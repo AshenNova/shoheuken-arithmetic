@@ -2407,6 +2407,13 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
     p.totalUnit = p.denominator
     p.differenceUnit = Math.abs((p.numerator-p.secondUnit))
 
+    if (p.firstUnit == p.secondUnit) {
+      console.log('Updated')
+      return updateProblems()
+    }
+    if (p.secondSelection == 3){
+      p.identity = genNumbers(2)
+    }
     // let second = type[identity][p.secondSelection]
     while (p.lastSelection == p.secondSelection) p.lastSelection = [genNumbers(3)]
     
@@ -2431,7 +2438,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
     console.log(`Second Selection: ${p.secondSelection}, ${p.value}`)
     console.log(`Last Selection: ${p.lastSelection}, ${p.denominator}`)
 
-    if (p.identity == 0 || p.identity == 1){
+    if ((p.identity == 0 || p.identity == 1) && p.secondSelection != 3 ){
     displayProblem.innerHTML = 
     `
      ${p.firstSelection == 0 ? p.firstUnit : p.secondUnit}/${p.denominator} of the ${p.type[p.identity][2]} are ${p.type[p.identity][p.firstSelection]}.</br>
@@ -2439,7 +2446,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
      How many ${last} are there?
     `
     }
-    if (p.identity == 2 || p.identity == 3) {
+    else if ((p.identity == 2 || p.identity == 3) && p.secondSelection != 3) {
       displayProblem.innerHTML = 
     `
      ${p.firstSelection == 0 ? p.firstUnit : p.secondUnit}/${p.denominator} of the ${p.type[p.identity][2]} was ${p.type[p.identity][p.firstSelection]}.</br>
@@ -2447,7 +2454,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
      ${p.lastSelection == 2 ? `How much were there at first?` : `How much was ${last}?`}
     `
     }
-    if (p.identity == 1 || p.identity == 2  && p.secondSelection == 3 ){
+    else if ((p.identity == 0 || p.identity == 1) && p.secondSelection == 3 ){
       console.log("here")
       displayProblem.innerHTML = 
       `
@@ -2456,6 +2463,9 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
        How many ${last} are there?
       `
       }
+    else {
+      return updateProblems()
+    }
   }
 
   if ( level == 4.16 ){
