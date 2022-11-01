@@ -222,20 +222,21 @@ let state = {
 }
 
 function swap(first, second){
-  // console.log("Before: " + first + ", " + second)
-  [first, second] = [second, first]
-  // console.log("After: " + first + ", " + second)
+  return [first, second] = [second, first]
 }
 
 function simplify(first, second){
+  console.log("Simplifying fractions")
   let max = first
   if (first < second) max = second
   for (let i = 2; i < max ; i++){
     while (first % i == 0 && second % i == 0){
       first /= i
       second /= i
+      
     }
   }
+  return [first, second]
 }
 
 function clickStart(){
@@ -2388,23 +2389,14 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
 
   if ( level == 4.15){
     // content
-    while (p.denominator == p.numerator){
-      p.numerator = genNumbers(9)+1
-      p.denominator = genNumbers(9)+1
+
+    
+    if (p.numerator > p.denominator) {
+      [p.numerator, p.denominator] = swap(p.numerator, p.denominator)
     }
 
-    if (p.numerator > p.denominator){
-      [p.numerator, p.denominator] = [p.denominator, p.numerator]
-    }
-
-    simplify(p.numerator, p.denominator)
-
-    // for ( let i = 2; i < p.denominator; i++){
-    //   while (p.numerator % i == 0 && p.denominator % i == 0){
-    //     p.numerator /= i
-    //     p.denominator /= i
-    //   }
-    // }
+    [p.numerator, p.denominator] = simplify(p.numerator, p.denominator)
+    console.log(p.numerator, p.denominator)
 
     p.firstUnit = p.numerator
     p.secondUnit = p.denominator-p.numerator
@@ -9790,6 +9782,8 @@ function genProblems(){
 
   if (level == 4.15){
     return {
+      // numerator: genNumbers(9)+1,
+      // denominator: genNumbers(9)+1,
       numerator: genNumbers(9)+1,
       denominator: genNumbers(9)+1,
       firstSelection: genNumbers(2),
