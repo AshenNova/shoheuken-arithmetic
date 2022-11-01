@@ -2405,6 +2405,7 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
     p.firstUnit = p.numerator
     p.secondUnit = p.denominator-p.numerator
     p.totalUnit = p.denominator
+    p.differenceUnit = Math.abs((p.numerator-p.secondUnit))
 
     // let second = type[identity][p.secondSelection]
     while (p.lastSelection == p.secondSelection) p.lastSelection = [genNumbers(3)]
@@ -2418,14 +2419,16 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
       p.value = p.firstUnit*(genNumbers(5)+5)
     } else if (p.secondSelection == 1){
       p.value = p.secondUnit*(genNumbers(5)+5)
-    } else {
+    } else if (p.secondSelection == 2) {
       p.value = p.totalUnit*(genNumbers(5)+5)
+    } else {
+      p.value = p.differenceUnit*(genNumbers(5)+5)
     }
-
-    p.secondSelection = p.type[p.identity][p.secondSelection]
-
+    if (p.secondSelection != 3 ){
+      p.secondSelection = p.type[p.identity][p.secondSelection]
+    }
     console.log(`First Selection: ${p.firstSelection}, ${p.numerator} units`)
-    console.log(`Second Selection: ${p.value}`)
+    console.log(`Second Selection: ${p.secondSelection}, ${p.value}`)
     console.log(`Last Selection: ${p.lastSelection}, ${p.denominator}`)
 
     if (p.identity == 0 || p.identity == 1){
@@ -2444,6 +2447,15 @@ displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne-2} + ${p.numOne-1} + 
      ${p.lastSelection == 2 ? `How much were there at first?` : `How much was ${last}?`}
     `
     }
+    if (p.identity == 1 || p.identity == 2  && p.secondSelection == 3 ){
+      console.log("here")
+      displayProblem.innerHTML = 
+      `
+       ${p.firstSelection == 0 ? p.firstUnit : p.secondUnit}/${p.denominator} of the ${p.type[p.identity][2]} are ${p.type[p.identity][p.firstSelection]}.</br>
+       There are ${p.value} ${p.firstUnit > p.secondUnit ? "more" : "less"} ${p.type[p.identity][0]} than ${p.type[p.identity][1]} </br>
+       How many ${last} are there?
+      `
+      }
   }
 
   if ( level == 4.16 ){
@@ -7535,6 +7547,10 @@ function handleSubmit(e){
         if (index == 2){
           oneUnit = p.value/p.denominator
         }
+        if (p.secondSelection == 3){
+          oneUnit = p.value/p.differenceUnit
+        }
+        console.log(oneUnit)
         correctAnswer = oneUnit*p.lastUnits
       }
 
@@ -9791,14 +9807,16 @@ function genProblems(){
       numerator: genNumbers(9)+1,
       denominator: genNumbers(9)+1,
       firstSelection: genNumbers(2),
-      secondSelection: genNumbers(3),
+      secondSelection: genNumbers(4),
+      // secondSelection: 3,
       lastSelection: genNumbers(3),
-      statementChoice: genNumbers(0)+1,
       firstUnit: undefined,
       secondUnit: undefined,
       totalUnit: undefined,
+      differenceUnit: undefined,
       lastUnits: undefined,
       identity: genNumbers(4),
+      // identity: 1,
       value: undefined,
       type: 
       [
