@@ -7054,6 +7054,7 @@ function updateProblems() {
 
       p.objectOneS = p.totalValue - p.objectOneQ * p.price;
       p.objectTwoS = p.totalValue - p.objectTwoQ * p.price;
+      if (p.objectOneS == 0 || p.objectTwoS == 0) return updateProblems();
 
       if (p.rollType == "A") {
         displayProblem.innerHTML = `
@@ -9968,16 +9969,6 @@ function handleSubmit(e) {
         let bigDiff = undefined;
         let newObjectOneS = Math.abs(p.objectOneS);
         let newObjectTwoS = Math.abs(p.objectTwoS);
-        if (p.objectOneS <= 0 && p.objectTwoS <= 0) {
-          bigDiff = newObjectTwoS - newObjectOneS;
-          firstLine = `${newObjectTwoS}-${newObjectOneS}=${bigDiff}`;
-        } else if (p.objectOneS >= 0 && p.objectTwoS >= 0) {
-          bigDiff = p.objectOneS - p.objectTwoS;
-          firstLine = `${p.objectOneS}-${p.objectTwoS}=${bigDiff}`;
-        } else {
-          bigDiff = newObjectOneS + newObjectTwoS;
-          firstLine = `${newObjectOneS}+${newObjectTwoS}=${bigDiff}`;
-        }
 
         let smallDiff = p.objectTwoQ - p.objectOneQ;
 
