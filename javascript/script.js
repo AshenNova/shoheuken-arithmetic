@@ -9970,6 +9970,17 @@ function handleSubmit(e) {
         let newObjectOneS = Math.abs(p.objectOneS);
         let newObjectTwoS = Math.abs(p.objectTwoS);
 
+        if (p.objectOneS <= 0 && p.objectTwoS <= 0) {
+          bigDiff = newObjectTwoS - newObjectOneS;
+          firstLine = `${newObjectTwoS}-${newObjectOneS}=${bigDiff}`;
+        } else if (p.objectOneS >= 0 && p.objectTwoS >= 0) {
+          bigDiff = p.objectOneS - p.objectTwoS;
+          firstLine = `${p.objectOneS}-${p.objectTwoS}=${bigDiff}`;
+        } else {
+          bigDiff = newObjectOneS + newObjectTwoS;
+          firstLine = `${newObjectOneS}+${newObjectTwoS}=${bigDiff}`;
+        }
+
         let smallDiff = p.objectTwoQ - p.objectOneQ;
 
         if (p.rollQn == "price") {
