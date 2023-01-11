@@ -10497,7 +10497,18 @@ function handleSubmit(e) {
         "heuTwob",
       ];
       levelDoNotClearNum = [
-        2.05, 2.09, 2.08, 2.09, 3.12, 3.13, 3.14, 3.16, 4.0, 6.01,
+        2.05,
+        2.09,
+        2.08,
+        2.09,
+        3.12,
+        3.13,
+        3.14,
+        3.16,
+        4.0,
+        ,
+        4.11,
+        6.01,
       ];
       if (
         !levelDoNotClearNum.includes(level) &&
