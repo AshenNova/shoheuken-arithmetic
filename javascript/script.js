@@ -4182,6 +4182,7 @@ function updateProblems() {
       ctx.beginPath();
       ctx.arc(-p.equiAngleTriX, 0, 15, 2 * Math.PI - equiAngle, 2 * Math.PI);
       ctx.stroke();
+      ctx.fillText("∠e", -p.equiAngleTriX + 20, -5);
 
       ctx.save();
       ctx.rotate((90 * Math.PI) / 180);
