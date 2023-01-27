@@ -4090,14 +4090,15 @@ function updateProblems() {
 
   if (level == 5.07) {
     ctx.save();
+    console.log(p.roll);
     ctx.font = "1em serif";
     if (p.roll == 1) {
       // right angle triangle
       if (-p.rightAngleTriX1 == p.rightAngleTriX2) {
         p.rightAngleTriX1 -= 10;
-        ctx.fillText(`Below is a Right-Angled Triangle`, 20, 20);
-        ctx.fillText(`Find ∠a`, 40, 20);
       }
+      ctx.fillText(`Below is a Right-Angled Triangle.`, 40, 20);
+      ctx.fillText(`Find ∠a.`, 40, 40);
       ctx.translate(200, 137.5);
       ctx.beginPath();
       ctx.moveTo(p.rightAngleTriX1, 0);
