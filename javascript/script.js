@@ -10435,17 +10435,17 @@ function handleSubmit(e) {
       }
 
       // remove help me text
-      if (
-        level == 3.04 ||
-        level == 3.05 ||
-        level == 3.06 ||
-        level == 4.06 ||
-        level == 4.07 ||
-        level == 4.08 ||
-        level == 6.05
-      ) {
-        helpMe.textContent = "";
-      }
+      const removeHelpMe = [
+        3.04,
+        3.05,
+        3.06,
+        4.06,
+        4.07,
+        4.08,
+        6.05,
+        "heuThree",
+      ];
+      if (removeHelpMe.includes(level)) helpMe.textContent = "";
 
       console.log("new questions generated");
       reviewAnswer.classList.add("hidden");
@@ -10524,7 +10524,7 @@ function handleSubmit(e) {
         arr.length = 0;
       }
 
-      //  help me!
+      //  HELP!!!
       if (level == 2.09) {
         if (state.mistake > 5) {
           ctx.fillText("am: 1 2 3 4 5 6 7 8 9 10 11 12", -115, -100);
@@ -10580,8 +10580,43 @@ function handleSubmit(e) {
         helpMe.textContent = `Distance = Speed x Time`;
       }
 
-      let allHeuArray = ["heuTwo", "heuTwob", "heuThree", "heuFour", "heuFive"];
+      let allHeuArray = [
+        "heuTwo",
+        "heuTwob",
+        "heuThree",
+        "heuThreeb",
+        "heuFour",
+        "heuFive",
+      ];
+      // HEURISTICS
       if (allHeuArray.includes(level)) {
+        console.log(`Heurisics: ${level} incorrect.`);
+        // HEURISTICS ASSIST AREA
+        if (level == "heuThree" && p.rollz == 4) {
+          helpMe.innerHTML = `
+          Difference version.</p>
+          Reminder: Start with quantity.</p>
+          1. Figure out the change using difference.</p>
+          2. Apply the change. ( + or - )</p>
+          3. Add the number of variables together.</p>
+          4. Divide to find one variable.</p>
+          `;
+        }
+        if (level == "heuThree" && p.rollz == 3) {
+          helpMe.innerHTML = `
+          Unit version.</p>
+          Reminder: Start with quantity.</p>
+          1. Convert first variable into units.</p>
+          2. Convert second variable into units.</p>
+          3. Add the units together.</p>
+          4. Divide to find one unit.</p>
+          Maybe 5. Find ${
+            p.rollQn == "A" ? p.objectTwo : p.objectOne
+          } by multiplying ${p.unitSentence}.</p>
+          `;
+        }
+
+        // / adds question back into array if wrong
         if (!heuArr.includes(p.rollz)) {
           heuArr.push(p.rollz);
           console.log(heuArr);
@@ -14179,6 +14214,8 @@ function buttonLevelSetting() {
       range = 0;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
+      helpMe.style.fontSize = "18px";
+      helpMe.style.textAlign = "left";
       document.querySelector("#user-input").setAttribute("type", "text");
       document.querySelector("#user-input").style.width = "300px";
       break;
