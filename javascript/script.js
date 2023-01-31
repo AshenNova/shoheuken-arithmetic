@@ -10592,6 +10592,8 @@ function handleSubmit(e) {
       if (allHeuArray.includes(level)) {
         console.log(`Heurisics: ${level} incorrect.`);
         // HEURISTICS ASSIST AREA
+
+        // HEURISTICS THREE
         if (level == "heuThree" && p.rollz == 4) {
           helpMe.innerHTML = `
           Difference version.</p>
@@ -10613,6 +10615,21 @@ function handleSubmit(e) {
           Maybe 5. Find ${
             p.rollQn == "A" ? p.objectTwo : p.objectOne
           } by multiplying ${p.unitSentence}.</p>
+          `;
+        }
+        // HEURISTICS FOUR
+        if (
+          (level == "heuFour" && p.rollz == 1) ||
+          (level == "heuFour" && p.rollz == 2)
+        ) {
+          helpMe.innerHTML = `
+          excess & excess = -</p>
+          short & short = -</p>
+          excess & short = + </p>
+          1. Find big difference.</p>
+          2. Find small difference.</p>
+          3. Big difference / small difference </p> 
+          Maybe 4. Find ${p.rollz == 1 ? `Person ${p.objectOne}` : "sweets"}.
           `;
         }
 
@@ -14242,6 +14259,8 @@ function buttonLevelSetting() {
       range = 0;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
+      helpMe.style.fontSize = "18px";
+      helpMe.style.textAlign = "left";
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
 
