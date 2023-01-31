@@ -10444,6 +10444,8 @@ function handleSubmit(e) {
         4.08,
         6.05,
         "heuThree",
+        "heuFour",
+        "heuFive",
       ];
       if (removeHelpMe.includes(level)) helpMe.textContent = "";
 
@@ -10646,8 +10648,16 @@ function handleSubmit(e) {
           excess & short = + </p>
           1. Find big difference.</p>
           2. Find small difference.</p>
-          3. Big difference / small difference </p> 
+          3. Big difference / small difference = Groups </p> 
           Maybe 4. Find ${p.rollz == 1 ? `Person ${p.objectOne}` : "sweets"}.
+          `;
+        }
+        if (level == "heuFour" && p.rollz == 3) {
+          helpMe.innerHTML = `
+          1. Find the number of workers that turned up.</p>
+          2. Find the total amount of extra work.</p>
+          3. Find what each worker were suppose to do.</p>
+          Maybe 4. Find the total.</p>
           `;
         }
 
