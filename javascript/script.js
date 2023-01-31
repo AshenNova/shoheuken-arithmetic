@@ -10613,6 +10613,7 @@ function handleSubmit(e) {
           Unit version.</p>
           Reminder: Start with quantity.</p>
           1. Convert first variable into units.</p>
+          eg. Quantity x Units</p>
           2. Convert second variable into units.</p>
           3. Add the units together.</p>
           4. Divide to find one unit.</p>
