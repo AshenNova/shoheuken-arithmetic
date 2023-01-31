@@ -10594,14 +10594,18 @@ function handleSubmit(e) {
         // HEURISTICS ASSIST AREA
 
         // HEURISTICS THREE
-        if (level == "heuThree" && p.rollz == 4) {
+        if (level == "heuThree" && p.rollz == 1) {
           helpMe.innerHTML = `
-          Difference version.</p>
-          Reminder: Start with quantity.</p>
-          1. Figure out the change using difference.</p>
-          2. Apply the change. ( + or - )</p>
-          3. Add the number of variables together.</p>
-          4. Divide to find one variable.</p>
+          1. Change one variable to another using difference. ( + or - )</p>
+          2. Divide by 2.
+          `;
+        }
+        if (level == "heuThree" && p.rollz == 2) {
+          helpMe.innerHTML = `
+          1. All it all be the other variable.<p>
+          2. Find big difference. </p>
+          3. Find small difference </p>
+          4. big difference/small difference</p>
           `;
         }
         if (level == "heuThree" && p.rollz == 3) {
@@ -10617,6 +10621,19 @@ function handleSubmit(e) {
           } by multiplying ${p.unitSentence}.</p>
           `;
         }
+
+        if (level == "heuThree" && p.rollz == 4) {
+          helpMe.innerHTML = `
+          Difference version.</p>
+          Reminder: Start with quantity.</p>
+          1. Figure out the change using difference.</p>
+          eg. Quantity x difference <p>
+          2. Apply the change. ( + or - )</p>
+          3. Add the number of variables together.</p>
+          4. Divide to find one variable.</p>
+          `;
+        }
+
         // HEURISTICS FOUR
         if (
           (level == "heuFour" && p.rollz == 1) ||
