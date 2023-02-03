@@ -292,12 +292,12 @@ const highScore4DotZero22 = new HighScore("Nil", "Nil", 0, 0);
 const highScore4DotZero23 = new HighScore("Nil", "Nil", 0, 0);
 const highScore4DotZero24 = new HighScore("Nil", "Nil", 0, 0);
 
-const highScore5DotZero = new HighScore(
-  "Sheyanne Cheong",
-  "9 April 2022",
-  176,
-  0
-);
+// const highScore5DotZero = new HighScore(
+//   "Sheyanne Cheong",
+//   "9 April 2022",
+//   176,
+//   0
+// );
 const highScore5DotZero1 = new HighScore("Emma Leo", "28 Feb 2022", 273, 0);
 const highScore5DotZero2 = new HighScore("Emma Leo", "21 March 2022", 167, 0);
 const highScore5DotZero3 = new HighScore("Emma Leo", "20 April 2022", 354, 8);
@@ -3858,6 +3858,129 @@ function updateProblems() {
   //   ctx.restore();
   // }
 
+  // WORKING HERE!
+  if (level == 5.0) {
+    let object = p.groups[p.object][0];
+    let measurement = p.groups[p.object][1];
+
+    // first line
+    if (p.firstVar == "whole" && p.secondVar == "whole") {
+      return updateProblems();
+    }
+    if (
+      (p.firstVar == "whole" && p.secondVar == "real" && p.operator == "+") ||
+      (p.firstVar == "whole" && p.secondVar == "real" && p.operator == "-")
+    ) {
+      return updateProblems();
+    }
+    if (
+      (p.firstVar == "fake" && p.secondVar == "real" && p.operator == "+") ||
+      (p.firstVar == "fake" && p.secondVar == "real" && p.operator == "-")
+    ) {
+      return updateProblems();
+    }
+    if (
+      (p.firstVar == "fake" && p.secondVar == "fake" && p.operator == "x") ||
+      (p.firstVar == "fake" && p.secondVar == "fake" && p.operator == "/")
+    ) {
+      return updateProblems();
+    }
+    if (
+      (p.firstVar == "whole" && p.secondVar == "fake" && p.operator == "x") ||
+      (p.firstVar == "whole" && p.secondVar == "fake" && p.operator == "/")
+    ) {
+      return updateProblems();
+    }
+    if (p.numThree > p.numFour) {
+      [p.numThree, p.numFour] = [p.numFour, p.numThree];
+    }
+    if (p.numOne > p.numTwo) {
+      [p.numOne, p.numTwo] = [p.numTwo, p.numOne];
+    }
+    if (p.numThree == p.numFour) {
+      p.numFour += 1;
+    }
+    if (p.numOne == p.numTwo) {
+      p.numTwo += 1;
+    }
+
+    [p.numThree, p.numFour] = simplify(p.numThree, p.numFour);
+    [p.numOne, p.numTwo] = simplify(p.numOne, p.numTwo);
+    let positive = ["bought", "received"][genNumbers(2)];
+    let negative = ["sold", "gave away", "threw away"][genNumbers(3)];
+    if (p.firstVar == "whole")
+      lineOne = `${p.firstPerson} has ${p.numOne} ${measurement} of ${object}.`;
+    if (p.firstVar == "fake") {
+      if (p.numOne == p.numTwo) {
+        return updateProblems();
+      }
+      lineOne = `${p.firstPerson} has ${p.numOne}/${p.numTwo} ${measurement} of ${object}.`;
+    }
+    let firstGender = "She";
+    if (p.firstPerson == "Anton" || p.firstPerson == "Grady")
+      firstGender = "He";
+    // second line
+    let lineTwo = "";
+    // if fake
+    // whole number fake +
+    if (p.secondVar == "fake" && p.operator == "+")
+      lineTwo = `${firstGender} ${positive} another ${p.numThree} ${measurement}.`;
+    // whole number fake -
+    if (p.secondVar == "fake" && p.operator == "-")
+      lineTwo = `${firstGender} ${negative} ${p.numThree} ${measurement} of ${object}.`;
+    // fraction fake +
+    if (p.secondVar == "fake" && p.operator == "+")
+      lineTwo = `${firstGender} ${positive} another ${p.numThree}/${p.numFour} ${measurement}.`;
+    // fraction fake -
+    if (p.secondVar == "fake" && p.operator == "-")
+      lineTwo = `${firstGender} ${negative} ${p.numThree}/${p.numFour} ${measurement} of ${object}.`;
+    if (p.secondVar == "whole" && p.operator == "+")
+      lineTwo = `${firstGender} ${positive} ${p.numThree} ${measurement} of ${object}.`;
+    if (p.secondVar == "whole" && p.operator == "-")
+      // EXCEPTION -> instead of whole number, change to fraction
+      lineTwo = `${firstGender} ${negative} ${p.numThree}/${p.numFour} ${measurement} of ${object}.`;
+
+    // Whole number fake x
+    // if (p.secondVar == "fake" && p.operator == "x")
+    if (p.secondVar == "whole" && p.operator == "x") {
+      if (p.numThree == 1) {
+        p.numThree += 1;
+      }
+      lineTwo = `${p.otherPerson} has ${p.numThree} times of that.`;
+    }
+    // Whole number fake /
+    // if (p.secondVar == "fake" && p.operator == "/")
+    if (p.secondVar == "whole" && p.operator == "/")
+      lineTwo = `${firstGender} has ${p.numThree} times of ${p.otherPerson}.`;
+
+    // if real
+    if (p.secondVar == "real" && p.operator == "x")
+      lineTwo = `${firstGender} ${positive} another ${p.numThree}/${p.numFour} of it.`;
+    if (p.secondVar == "real" && p.operator == "/")
+      lineTwo = `${firstGender} ${negative} ${p.numThree}/${p.numFour} of it.`;
+    // if (p.secondVar == "real" && p.operator == "x")
+    //   lineTwo = `He/she bought/received another ${p.numThree}/${p.numFour} of it.`;
+    // if (p.secondVar == "real" && p.operator == "/")
+    //   lineTwo = `He/she sold/gave away ${p.numThree}/${p.numFour} of it.`;
+    // if fake
+    if (p.secondVar == "fake" && p.operator == "/") {
+      console.log("Updated");
+      return updateProblems();
+    }
+    // Last line
+    let lineThree = "";
+    if (
+      (p.secondVar == "whole" && p.operator == "/") ||
+      (p.secondVar == "whole" && p.operator == "x")
+    ) {
+      lineThree = `How many does the ${p.otherPerson} have?`;
+    } else {
+      lineThree = `How much does ${firstGender.toLowerCase()} have in the end?`;
+    }
+    console.log(p.firstVar, p.secondVar, p.operator);
+    // Display the problem
+    displayProblem.innerHTML = `${lineOne}</p>${lineTwo}</p>${lineThree}`;
+  }
   if (level == 5.01) {
     for (let i = p.numTwo; i > 1; i--) {
       if (p.numOne % i == 0 && p.numTwo % i == 0) {
@@ -8915,6 +9038,57 @@ function handleSubmit(e) {
     //     correctAnswer = `${p.labelDEF}${p.labelGHI}`;
     //   }
     // }
+    //  WORKING HERE!
+    if (level == 5.0) {
+      // plus and minus
+      if (p.firstVar == "whole" && p.secondVar == "fake" && p.operator == "+") {
+        correctAnswer = `${p.numOne}+${p.numThree}/${p.numFour}`;
+      }
+      if (p.firstVar == "fake" && p.secondVar == "fake" && p.operator == "+") {
+        correctAnswer = `${p.numOne}/${p.numTwo}+${p.numThree}/${p.numFour}`;
+      }
+      if (p.firstVar == "whole" && p.secondVar == "fake" && p.operator == "-") {
+        correctAnswer = `${p.numOne}-${p.numThree}/${p.numFour}`;
+      }
+      if (p.firstVar == "fake" && p.secondVar == "fake" && p.operator == "-") {
+        correctAnswer = `${p.numOne}/${p.numTwo}-${p.numThree}/${p.numFour}`;
+      }
+      if (p.firstVar == "fake" && p.secondVar == "whole" && p.operator == "-") {
+        // EXCEPTION
+        correctAnswer = `${p.numOne}/${p.numTwo}-${p.numThree}/${p.numFour}`;
+      }
+      if (p.firstVar == "fake" && p.secondVar == "whole" && p.operator == "+") {
+        correctAnswer = `${p.numOne}/${p.numTwo}+${p.numThree}`;
+      }
+
+      if (p.operator == "x") {
+        if (p.firstVar == "fake" && p.secondVar == "whole") {
+          // correctAnswer = `${p.numOne}/${p.numTwo}x${p.numThree}`;
+          correctAnswer = `${p.numOne}/${p.numTwo}x${p.numThree}`;
+        } else if (p.firstVar == "fake" && p.secondVar == "real") {
+          correctAnswer = `${p.numOne}/${p.numTwo}x${p.numThree + p.numFour}/${
+            p.numFour
+          }`;
+        } else if (p.firstVar == "whole" && p.secondVar == "real") {
+          correctAnswer = `${p.numOne}x${p.numThree + p.numFour}/${p.numFour}`;
+        } else {
+          correctAnswer = `2`;
+        }
+      }
+      if (p.operator == "/") {
+        if (p.firstVar == "fake" && p.secondVar == "whole") {
+          correctAnswer = `${p.numOne}/${p.numTwo}/${p.numThree}`;
+        } else if (p.firstVar == "whole" && p.secondVar == "real") {
+          correctAnswer = `${p.numOne}x${p.numFour - p.numThree}/${p.numFour}`;
+        } else if (p.firstVar == "fake" && p.secondVar == "real") {
+          correctAnswer = `${p.numOne}/${p.numTwo}x${p.numFour - p.numThree}/${
+            p.numFour
+          }`;
+        } else {
+          correctAnswer = `1`;
+        }
+      }
+    }
 
     if (level == 5.01) {
       p.varA = p.numOne;
@@ -10480,9 +10654,10 @@ function handleSubmit(e) {
     }
 
     console.log(correctAnswer, userInput.value);
+    console.log(typeof correctAnswer, typeof userInput.value);
 
     // adjust to uppercase
-    levelToCaps = [3.18, 4.17, 4.18, 5, 5.02, 5.06];
+    levelToCaps = [3.18, 4.17, 4.18, 5.02, 5.06];
     if (levelToCaps.includes(level) || (level == 3.16 && p.optionFinal == 4)) {
       userInput.value = userInput.value.toUpperCase();
     }
@@ -11587,6 +11762,26 @@ function genProblems() {
   //     sidesBH: ["base", "height", "base2", "height2"][genNumbers(4)],
   //   };
   // }
+  //  WORKING HERE!
+  if (level == 5.0) {
+    return {
+      numOne: genNumbers(5) + 1,
+      numTwo: genNumbers(5) + 2,
+      numThree: genNumbers(5) + 2,
+      numFour: genNumbers(5) + 3,
+      firstVar: ["whole", "fake"][genNumbers(2)],
+      secondVar: ["real", "fake", "whole"][genNumbers(3)],
+      object: genNumbers(3),
+      groups: [
+        ["water", "L"],
+        ["snacks", "kg"],
+        ["cloth", "m"],
+      ],
+      operator: ["x", "/", "+", "-"][genNumbers(4)],
+      firstPerson: ["Anton", "Grady", "Emma", "Aria"][genNumbers(4)],
+      otherPerson: ["Tom", "Henry", "Kim", "Jane"][genNumbers(4)],
+    };
+  }
 
   if (level == 5.01) {
     return {
@@ -13930,19 +14125,20 @@ function buttonLevelSetting() {
       firstCanvas.classList.remove("hidden");
       break;
 
+    // WORKING HERE!
     case "Level 5.0":
       level = 5.0;
       scoreNeeded = 20;
-      gold = highScore5DotZero.time;
-      silver = highScore5DotZero.time + (cutoff - highScore5DotZero.time) / 3;
-      bronze =
-        highScore5DotZero.time + ((cutoff - highScore5DotZero.time) / 3) * 2;
-      highScoreName.innerHTML = highScore5DotZero.name;
-      highScoreTime.innerHTML = highScore5DotZero.time;
-      highScoreMistakes.innerHTML = highScore5DotZero.mistake;
+      // gold = highScore5DotZero.time;
+      // silver = highScore5DotZero.time + (cutoff - highScore5DotZero.time) / 3;
+      // bronze =
+      //   highScore5DotZero.time + ((cutoff - highScore5DotZero.time) / 3) * 2;
+      // highScoreName.innerHTML = highScore5DotZero.name;
+      // highScoreTime.innerHTML = highScore5DotZero.time;
+      // highScoreMistakes.innerHTML = highScore5DotZero.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
-      wholeNumberContainer.classList.add("hidden");
-      firstCanvas.classList.remove("hidden");
+      displayProblem.style.fontSize = "20px";
+      displayProblem.style.textAlign = "left";
       break;
 
     case "Level 5.01":
