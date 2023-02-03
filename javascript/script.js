@@ -110,6 +110,7 @@ let easy = 0;
 const commonMultipleArr = [];
 const commonMultipleArrTwo = [];
 let cutoff = 600;
+let accumulatedScore = 0;
 
 function HighScore(name, date, time, mistake) {
   this.name = name;
@@ -492,6 +493,7 @@ const resetStuff = function () {
   helpMe.style.fontSize = "30px";
   inputBoxCl.classList.remove("hidden");
   ourForm2.classList.add("hidden");
+  accumulatedScore = 0;
 
   gold = 0;
   silver = 0;
@@ -10399,12 +10401,18 @@ function handleSubmit(e) {
     ) {
       console.log("correct");
       state.score++;
+      accumulatedScore++;
+      console.log(accumulatedScore);
       if (mulLevel == "multiples") {
         multiplesArr.push(userInput.value);
         state.score = multiplesArr.length - 1;
         helpMe.textContent = multiplesArr.slice(1);
       }
-      currentScore.textContent = state.score;
+      if (hardcore == 1 && state.mistake > 0) {
+        currentScore.textContent = `${state.score} (${accumulatedScore})`;
+      } else {
+        currentScore.textContent = state.score;
+      }
       currentScore.classList.add("animate-right");
       setTimeout(() => currentScore.classList.remove("animate-right"), 331);
       state.numSix++;
@@ -10463,8 +10471,11 @@ function handleSubmit(e) {
 
       if (hardcore == 1) {
         state.score = 0;
+        currentScore.innerHTML = `${state.score} (${accumulatedScore})`;
+        console.log("test");
       } else if (easy == 1 || mulLevel == "multiples") {
         console.log("Easy Mode");
+        currentScore.textContent = state.score;
       } else {
         if (state.score > 0 && state.score < 11) {
           state.score = state.score - 1;
@@ -10481,8 +10492,9 @@ function handleSubmit(e) {
         if (state.score >= 41 && state.score < 50) {
           state.score = state.score - 5;
         }
+        currentScore.textContent = state.score;
       }
-      currentScore.textContent = state.score;
+
       currentMistake.textContent = state.mistake;
       currentMistake.classList.add("animate-wrong");
       setTimeout(() => currentMistake.classList.remove("animate-wrong"), 331);
