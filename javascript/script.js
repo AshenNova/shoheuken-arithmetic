@@ -7762,6 +7762,35 @@ function updateProblems() {
         `;
       }
     }
+
+    if (
+      setting == 7 ||
+      (setting == 9 && p.rollz == 7) ||
+      (range == 1 && p.rollz == 7)
+    ) {
+      if (p.bonus > p.set) {
+        return updateProblems();
+      }
+
+      p.groups = p.groups[p.dice];
+      p.groups2 = p.groups2[p.dice];
+      p.oneGroup = p.set + p.bonus;
+      p.oneGroupCost = p.set * p.cost;
+      p.quotient = Math.floor(p.totalItems / p.oneGroup);
+      p.remainder = p.totalItems % p.oneGroup;
+
+      if (p.remainder == 0) {
+        return updateProblems();
+      }
+      p.totalCost = p.oneGroupCost * p.quotient + p.remainder * p.cost;
+      displayProblem.innerHTML = `
+      Every ${p.set} ${p.groups} purchased.</p>
+      ${p.bonus} would be given for free.</p>
+      Each ${p.groups2} cost $${p.cost}.</p>
+      The total cost was $${p.totalCost}.</p>
+      How many ${p.groups.split(" ")[0]} in total were there?</p>
+      `;
+    }
   }
 
   // MULTIPLES
@@ -10676,6 +10705,22 @@ function handleSubmit(e) {
       ) {
         correctAnswer = `${p.people}x${p.people - 1}/2`;
       }
+
+      if (
+        setting == 7 ||
+        (setting == 9 && p.rollz == 7) ||
+        (range == 1 && p.rollz == 7)
+      ) {
+        let quantityOneGroup = p.set + p.bonus;
+        let lineZero = `${p.set}+${p.bonus}=${quantityOneGroup}`;
+        let lineOne = `${p.set}x${p.cost}=${p.oneGroupCost}`;
+        let lineTwo = `${p.totalCost}/${p.oneGroupCost}=${p.quotient}r${
+          p.remainder * p.cost
+        }`;
+        let lineThree = `${p.remainder * p.cost}/${p.cost}=${p.remainder}`;
+        let lineFour = `${p.quotient}x${quantityOneGroup}+${p.remainder}=${p.totalItems}`;
+        correctAnswer = `${lineZero}\n${lineOne}\n${lineTwo}\n${lineThree}\n${lineFour}`;
+      }
     }
 
     if (mulLevel == "multiples") {
@@ -11791,7 +11836,7 @@ function genProblems() {
   //     sidesBH: ["base", "height", "base2", "height2"][genNumbers(4)],
   //   };
   // }
-  //  WORKING HERE!
+
   if (level == 5.0) {
     return {
       numOne: genNumbers(5) + 1,
@@ -13039,6 +13084,28 @@ function genProblems() {
         type: genNumbers(2),
       };
     }
+
+    // WORK IN PROGRESS
+    if (
+      setting == 7 ||
+      (setting == 9 && roll == 7) ||
+      (range == 1 && roll == 7)
+    ) {
+      return {
+        dice: genNumbers(3),
+        cost: genNumbers(8) + 2,
+        set: genNumbers(5) + 2,
+        bonus: genNumbers(5) + 1,
+        groups: ["packets of snacks", "bags of apples", "boxes of cookies"],
+        groups2: ["packet", "bag", "box"],
+        totalItems: genNumbers(40) + 10,
+        quotient: undefined,
+        remainder: undefined,
+        oneGroup: undefined,
+        totalCost: undefined,
+        oneGroupCost: undefined,
+      };
+    }
   }
 
   if (level == "1 times table") {
@@ -14166,7 +14233,6 @@ function buttonLevelSetting() {
       firstCanvas.classList.remove("hidden");
       break;
 
-    // WORKING HERE!
     case "Level 5.0":
       level = 5.0;
       scoreNeeded = 20;
@@ -14664,7 +14730,7 @@ function buttonLevelSetting() {
     case "Heu.5":
       level = "heuFive";
       setting = prompt(
-        "What level?\n1. Grouping with Difference\n2. Supposition (Negative)\n3. Supposition negative ( Difference)\n4. Identical Quantity with Difference\n5. Substitution\n6. Shaking Hands\n\n9. All"
+        "What level?\n1. Grouping with Difference\n2. Supposition (Negative)\n3. Supposition negative ( Difference)\n4. Identical Quantity with Difference\n5. Substitution\n6. Shaking Hands\n7. Bonus\n\n9. All"
       );
       range = 0;
       scoreNeeded = 10;
