@@ -7740,6 +7740,28 @@ function updateProblems() {
 
       `;
     }
+
+    if (
+      setting == 6 ||
+      (setting == 9 && p.rollz == 6) ||
+      (range == 1 && p.rollz == 6)
+    ) {
+      if (p.type == 0) {
+        displayProblem.innerHTML = `
+        There are ${p.people} people at a ${p.location}.<p>
+        If they were to shake hands with each other.</p>
+        How many handshakes would there be?
+        `;
+      }
+
+      if (p.type == 1) {
+        displayProblem.innerHTML = `
+        There were ${p.people} teams at a game.</p>
+        If they were to each play a match with each other.</p>
+        How many matches would there be?
+        `;
+      }
+    }
   }
 
   // MULTIPLES
@@ -10647,6 +10669,13 @@ function handleSubmit(e) {
       ) {
         correctAnswer = `${p.objectOneQ}${p.objectOneC[0]}=${p.objectTwoQ}${p.objectTwoC[0]}\n${p.objectOneFQ}${p.objectOneC[0]}=${p.objectTwoAV}${p.objectTwoC[0]}\n${p.objectTwoAV}${p.objectTwoC[0]}+${p.objectTwoFQ}${p.objectTwoC[0]}=${p.objectTwoLQ}${p.objectTwoC[0]}\n${p.total}/${p.objectTwoLQ}=${p.oneUnit}`;
       }
+      if (
+        setting == 6 ||
+        (setting == 9 && p.rollz == 6) ||
+        (range == 1 && p.rollz == 6)
+      ) {
+        correctAnswer = `${p.people}x${p.people - 1}/2`;
+      }
     }
 
     if (mulLevel == "multiples") {
@@ -12874,7 +12903,7 @@ function genProblems() {
 
     if (setting == 9) {
       if (!heuArr.length) {
-        heuArr = [1, 2, 3, 4, 5];
+        heuArr = [1, 2, 3, 4, 5, 6];
         console.log("Array renewed");
       }
       roll = heuArr[genNumbers(heuArr.length)];
@@ -12996,6 +13025,18 @@ function genProblems() {
         objectTwoLQ: undefined,
         total: undefined,
         oneUnit: genNumbers(9) + 2,
+      };
+    }
+
+    if (
+      setting == 6 ||
+      (setting == 9 && roll == 6) ||
+      (range == 1 && roll == 6)
+    ) {
+      return {
+        people: genNumbers(10) + 5,
+        location: ["party", "gathering", "picnic"][genNumbers(3)],
+        type: genNumbers(2),
       };
     }
   }
@@ -14623,7 +14664,7 @@ function buttonLevelSetting() {
     case "Heu.5":
       level = "heuFive";
       setting = prompt(
-        "What level?\n1. Grouping with Difference\n2. Supposition (Negative)\n3. Supposition negative ( Difference)\n4. Identical Quantity with Difference\n5. Substitution\n\n9. All"
+        "What level?\n1. Grouping with Difference\n2. Supposition (Negative)\n3. Supposition negative ( Difference)\n4. Identical Quantity with Difference\n5. Substitution\n6. Shaking Hands\n\n9. All"
       );
       range = 0;
       scoreNeeded = 10;
