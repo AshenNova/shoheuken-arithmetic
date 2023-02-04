@@ -10905,7 +10905,7 @@ function handleSubmit(e) {
           3. Add the units together.</p>
           4. Divide to find one unit.</p>
           Maybe 5. Find ${
-            p.rollQn == "A" ? p.objectTwo : p.objectOne
+            p.rollQn == "A" ? p.objectOne : p.objectTwo
           } by multiplying ${p.unitSentence}.</p>
           `;
         }
