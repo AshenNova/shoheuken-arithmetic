@@ -419,6 +419,9 @@ function timer2() {
       starto.classList.remove("hidden");
       if (time == cutoff) {
         finalText.innerHTML = `You scored ${state.score}`;
+        if (hardcore == 1) {
+          finalText.innerHTML = `You scored a total of ${accumulatedScore}`;
+        }
       } else {
         finalText.innerHTML = `You took ${time} seconds`;
       }
@@ -13276,14 +13279,13 @@ hardcoreMode.addEventListener("click", function () {
     easy = 0;
     mainBox.style.borderColor = "red";
     levelSetting.style.borderColor = "red";
-    // cutoff = 600;
+    // cutoff = 10;
   } else {
     hardcore = 0;
     mainBox.style.borderColor = "black";
     levelSetting.style.borderColor = "black";
-    // cutoff = 600;
   }
-  console.log(hardcore);
+  console.log(hardcore, cutoff);
 });
 
 easyMode.addEventListener("click", function () {
