@@ -12957,7 +12957,7 @@ function genProblems() {
 
     if (setting == 9) {
       if (!heuArr.length) {
-        heuArr = [1, 2, 3, 4, 5, 6];
+        heuArr = [1, 2, 3, 4, 5, 6, 7];
         console.log("Array renewed");
       }
       roll = heuArr[genNumbers(heuArr.length)];
@@ -13088,6 +13088,7 @@ function genProblems() {
       (range == 1 && roll == 6)
     ) {
       return {
+        rollz: 6,
         people: genNumbers(10) + 5,
         location: ["party", "gathering", "picnic"][genNumbers(3)],
         type: genNumbers(2),
@@ -13101,6 +13102,7 @@ function genProblems() {
       (range == 1 && roll == 7)
     ) {
       return {
+        rollz: 7,
         version: genNumbers(0) + 1,
         dice: genNumbers(3),
         cost: genNumbers(8) + 2,
