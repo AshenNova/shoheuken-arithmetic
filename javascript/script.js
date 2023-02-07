@@ -11112,7 +11112,7 @@ function handleSubmit(e) {
                 p.chosenTwo.charAt(0).toUpperCase() + p.chosenOne.slice(1);
             }
             helpMe.innerHTML = `
-            Observer:</p>
+            Observation:</p>
             Note that the question gave <u>difference</u> instead of the total (other version).</p>
             1) Let all the the variable that has more. ${moreVariable}</p>
             2) Find big difference.</p>
