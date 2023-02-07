@@ -11029,6 +11029,60 @@ function handleSubmit(e) {
           `;
         }
 
+        if (level == "heuFive") {
+          if (p.rollz == 1) {
+            let gender = "";
+            p.difference > 0 ? (gender = "boys") : (gender = "girls");
+            helpMe.innerHTML = `
+            1) Find the value of the extra people.</p>
+            In this case, "${
+              p.difference > 0 ? "girls" : "boys"
+            }" since there are more.</p>
+            2) Subtract away the difference.</p>
+            3) Find the value of a group.</p>
+            4) Figure out how many groups are there.</p>
+            This also represents the ${gender} since there are 1 in each group and there are lesser ${gender}.</p>
+            Maybe 5) Find the quantity of the other variable by adding it back.</p>
+            `;
+          }
+          if (p.rollz == 2) {
+            helpMe.innerHTML = `
+            Observation:</p>
+            Note that there is an option in the question which will cause the value to down.</p>
+            1) Let all be correct. Quantity x points</p>
+            2) Find big difference.</p>
+            3) Find small difference.</p>
+              ${p.marks} + ${p.deduct}; To change from right to wrong, ${p.marks} have to be removed and then another ${p.deduct}.</p>
+            4) Big/difference = groups = Wrong questions.</p>
+            Maybe 5) Total questions - wrong questions = right questions</p>
+            `;
+          }
+          if (p.rollz == 3) {
+            let moreVariable =
+              p.chosenOne.charAt(0).toUpperCase() + p.chosenOne.slice(1);
+            let lessVariable =
+              p.chosenTwo.charAt(0).toUpperCase() + p.chosenTwo.slice(1);
+            if (p.difference > 0) {
+              moreVariable =
+                p.chosenOne.charAt(0).toUpperCase() + p.chosenOne.slice(1);
+              lessVariable =
+                p.chosenTwo.charAt(0).toUpperCase() + p.chosenOne.slice(1);
+            }
+            helpMe.innerHTML = `
+            Observer:</p>
+            Note that the question gave <u>difference</u> instead of the total (other version).</p>
+            1) Let all the the variable that has more. ${moreVariable}</p>
+            2) Find big difference.</p>
+            3) Find small difference. ${p.chosenOneQ} + ${p.chosenTwoQ}</p>
+            The difference grows smaller by ${
+              p.chosenOneQ + p.chosenTwoQ
+            } since it grows shorter on one end and longer on the other.</p>
+            4) Big difference/small difference = groups = ${lessVariable}</p>
+            Maybe 5) Total - step 4. = ${moreVariable}</p>
+
+            `;
+          }
+        }
         // / adds question back into array if wrong
         if (!heuArr.includes(p.rollz)) {
           heuArr.push(p.rollz);
@@ -14748,6 +14802,8 @@ function buttonLevelSetting() {
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
       document.querySelector("#user-input").setAttribute("type", "text");
+      helpMe.style.fontSize = "18px";
+      helpMe.style.textAlign = "left";
       break;
 
     case "Multiples 1":
