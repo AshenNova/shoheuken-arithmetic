@@ -10964,22 +10964,24 @@ function handleSubmit(e) {
         // HEURISTICS ASSIST AREA
 
         // HEURISTICS THREE
-        if (level == "heuThree" && p.rollz == 1) {
-          helpMe.innerHTML = `
+        if (level == "heuThree") {
+          if (p.rollz == 1) {
+            helpMe.innerHTML = `
           1. Change one variable to another using difference. ( + or - )</p>
           2. Divide by 2.
           `;
-        }
-        if (level == "heuThree" && p.rollz == 2) {
-          helpMe.innerHTML = `
+          }
+
+          if (p.rollz == 2) {
+            helpMe.innerHTML = `
           1. All it all be the other variable.<p>
           2. Find big difference. </p>
           3. Find small difference </p>
           4. big difference/small difference</p>
           `;
-        }
-        if (level == "heuThree" && p.rollz == 3) {
-          helpMe.innerHTML = `
+          }
+          if (p.rollz == 3) {
+            helpMe.innerHTML = `
           Unit version.</p>
           Reminder: Start with quantity.</p>
           1. Convert first variable into units.</p>
@@ -10991,10 +10993,10 @@ function handleSubmit(e) {
             p.rollQn == "A" ? p.objectOne : p.objectTwo
           } by multiplying ${p.unitSentence}.</p>
           `;
-        }
+          }
 
-        if (level == "heuThree" && p.rollz == 4) {
-          helpMe.innerHTML = `
+          if (p.rollz == 4) {
+            helpMe.innerHTML = `
           Difference version.</p>
           Reminder: Start with quantity.</p>
           1. Figure out the change using difference.</p>
@@ -11003,6 +11005,25 @@ function handleSubmit(e) {
           3. Add the number of variables together.</p>
           4. Divide to find one variable.</p>
           `;
+          }
+          if (p.rollz == 8) {
+            if (p.options == "A") {
+              helpMe.innerHTML = `
+              1) Find the number of packets bought.</p>
+              2) Find the number of sets with remainder.</p>
+              3) Find the extra number of packets given.</p>
+              4) Find the total. </p>
+              `;
+            }
+            if (p.options == "B") {
+              helpMe.innerHTML`
+              1) Find the number of sets with remainder.</p>
+              2) Find the total discount given.</p>
+              3) Find the original cost.</p>
+              4) Find the final cost. (after discount)</p>
+              `;
+            }
+          }
         }
 
         // HEURISTICS FOUR
