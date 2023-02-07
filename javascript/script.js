@@ -10968,7 +10968,9 @@ function handleSubmit(e) {
           if (p.rollz == 1) {
             helpMe.innerHTML = `
           1. Change one variable to another using difference. ( + or - )</p>
-          2. Divide by 2.
+          + to change to the larger variable, - to change to the smaller variable.</p>
+          2. Divide by 2.</p>
+          Since there are now 2 of it.</p>
           `;
           }
 
