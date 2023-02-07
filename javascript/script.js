@@ -11101,9 +11101,9 @@ function handleSubmit(e) {
             `;
           }
           if (p.rollz == 3) {
-            let moreVariable =
-              p.chosenOne.charAt(0).toUpperCase() + p.chosenOne.slice(1);
             let lessVariable =
+              p.chosenOne.charAt(0).toUpperCase() + p.chosenOne.slice(1);
+            let moreVariable =
               p.chosenTwo.charAt(0).toUpperCase() + p.chosenTwo.slice(1);
             if (p.difference > 0) {
               moreVariable =
