@@ -11008,6 +11008,26 @@ function handleSubmit(e) {
           4. Divide to find one variable.</p>
           `;
           }
+          if (p.rollz == 5) {
+            helpMe.innerHTML = `
+            1) Find the value of 1 groups.</p>
+            2) Find the number of groups.</p>
+            `;
+            if (p.rollQn2 == "what") {
+              let html = `
+                3) Quantity x ${
+                  p.rollQn == "A" ? p.objectOneV : p.objectTwoV
+                } = Total Quantity
+              `;
+              helpMe.insertAdjacentHTML("beforeend", html);
+            }
+            if (p.rollQn2 == "total") {
+              let html = `
+              3) Groups x 2 = Total Quantity
+              `;
+              helpMe.insertAdjacentHTML("beforeend", html);
+            }
+          }
           if (p.rollz == 8) {
             if (p.options == "A") {
               helpMe.innerHTML = `
