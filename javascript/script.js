@@ -11017,7 +11017,7 @@ function handleSubmit(e) {
               let html = `
                 3) Quantity x ${
                   p.rollQn == "A" ? p.objectOneV : p.objectTwoV
-                } = Total Quantity
+                } = Total Value
               `;
               helpMe.insertAdjacentHTML("beforeend", html);
             }
