@@ -1,26 +1,26 @@
-*{
+* {
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
   font-family: roboto;
 }
 
-body{
+body {
   overflow: hidden;
   height: 100vh;
   width: 100vw;
 }
 
- #shoheuken{
+#shoheuken {
   background-color: black;
   color: orange;
   padding: 5px;
- }
- 
+}
+
 .hidden {
   display: none;
 }
-.instructions{
+.instructions {
   font-size: 2em;
   color: red;
 }
@@ -35,7 +35,7 @@ body{
   z-index: 5;
 }
 
-.level-setting{
+.level-setting {
   position: absolute;
   margin: auto;
   top: 2%;
@@ -50,7 +50,7 @@ body{
   overflow: auto;
 }
 
-.multiples-setting{
+.multiples-setting {
   position: absolute;
   margin: auto;
   top: 31%;
@@ -63,15 +63,16 @@ body{
   border-style: solid;
 }
 
-.level-setting .btn, .multiples-setting .btn{
+.level-setting .btn,
+.multiples-setting .btn {
   margin: 5px 0;
 }
 
-table{
-margin-top: 2%;
+table {
+  margin-top: 2%;
 }
 
-.start-box{
+.start-box {
   position: absolute;
   margin: auto;
   top: 31%;
@@ -83,22 +84,22 @@ margin-top: 2%;
   text-align: center;
   border-style: solid;
 }
-.start-text{
+.start-text {
   position: relative;
   top: 5%;
   font-size: 1.5em;
 }
-.start-button{
+.start-button {
   position: absolute;
   top: 75%;
   font-size: 25px;
   width: 80%;
-  left: 50%; 
+  left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
 
-.back-button{
+.back-button {
   position: absolute;
   top: 90%;
   left: 50%;
@@ -106,14 +107,14 @@ margin-top: 2%;
   transform: translate(-50%, -50%);
 }
 
-.countDownTimer{
+.countDownTimer {
   position: absolute;
   margin: auto;
   z-index: 10;
   font-size: 500px;
 }
 
-.finalBox{
+.finalBox {
   position: absolute;
   margin: auto;
   top: 31%;
@@ -125,13 +126,13 @@ margin-top: 2%;
   text-align: center;
   border-style: solid;
 }
-.finalTextBox{
+.finalTextBox {
   position: relative;
   top: 5%;
   font-size: 2em;
 }
 
-.main-container{
+.main-container {
   width: 100%;
   height: 100vh;
   background: antiquewhite;
@@ -139,14 +140,12 @@ margin-top: 2%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
 }
-.title-box{
+.title-box {
   margin-bottom: 25px;
   text-align: center;
-
 }
-.main-box{
+.main-box {
   width: 400px;
   height: 400px;
   background: skyblue;
@@ -159,62 +158,69 @@ margin-top: 2%;
   overflow: auto;
 }
 
-.score-board{
+.score-board {
   width: 100%;
   margin-top: 5%;
 }
 
-table{
+table {
   width: 100%;
   text-align: center;
 }
 
-.heading{
+.heading {
   font-size: 15px;
 }
 
-#current-score, #current-mistake, #timer{
+#current-score,
+#current-mistake,
+#timer {
   font-size: 25px;
   font-weight: 600;
-
 }
 
-.display-problems{
+.display-problems {
   text-align: center;
   font-size: 50px;
   font-weight: 600;
   margin: 30px 0;
   letter-spacing: 2px;
 }
-.help-me-text{
+.help-me-text {
   text-align: center;
   font-size: 30px;
   margin: 20px 0 0;
 }
 
-.display-problems-two{
+.display-problems-two {
   text-align: center;
   font-size: 50px;
   font-weight: 600;
   margin: 0 25px 15px;
   letter-spacing: 2px;
 }
-.line{
+.line {
   width: 70px;
   height: 0;
   border-bottom: 5px solid black;
-  }
+}
 
-.fraction-choice, .help-me-text{
+.fraction-choice,
+.help-me-text {
   text-align: center;
   font-size: 2em;
   color: grey;
   margin: 0;
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: black;
-  }
+}
 
-.input-box{
+.working {
+  font-size: 1.5em;
+  /* position: relative; */
+  margin-bottom: 100px;
+}
+.input-box {
   position: relative;
   height: 50px;
   width: 175px;
@@ -225,8 +231,7 @@ table{
   transform: translate(-50%, -50%);
 }
 
-
-.specialBorder{
+.specialBorder {
   border-style: solid 1px;
   border-color: black;
 }
@@ -236,105 +241,114 @@ button {
   display: block;
 }
 
-.instructions{
+.instructions {
   font-size: 1.5em;
   font-weight: 900;
 }
 
-.animate-right{
+.animate-right {
   color: limegreen;
   transform: scale(1.5);
 }
 
-.animate-wrong{
+.animate-wrong {
   color: red;
   transform: scale(1.5);
 }
 
-.animate-wrong-container{
+.animate-wrong-container {
   background-color: red;
 }
 
-.mistakesCount{
+.mistakesCount {
   color: red;
   font-weight: strong;
 }
 
-.secondUnitMeasurement{
+.secondUnitMeasurement {
   position: relative;
   font-weight: bold;
   font-size: 40px;
   bottom: 50px;
 }
 
-.settingButton{
- width: 100px;
+.settingButton {
+  width: 100px;
 }
 
-.btn-percentage{
+.btn-cal {
+  background-color: #90ee90;
+  border-color: black;
+}
+
+.btn-percentage {
   background-color: orange;
 }
 
-.btn-geometry{
+.btn-geometry {
   background-color: olive;
 }
 
-.btn-time{
-  background-color: #F6FF33;
+.btn-time {
+  background-color: #f6ff33;
 }
 
-.btn-angle{
-  background-color: #40E0D0;
+.btn-angle {
+  background-color: #40e0d0;
 }
 
-.btn-algebra{
-  background-color: #B533FF;
+.btn-algebra {
+  background-color: #b533ff;
 }
 
-.btn-speed{
-  background-color: #ACFF33;
+.btn-speed {
+  background-color: #acff33;
 }
 
-.btn-select{
+.btn-select {
   border-style: solid;
   border-width: 2px;
   border-color: purple;
 }
 
-.btn-heu{
-  background-color: #512E5F;
-  color: #F1C40F;
-  border-color:  #F1C40F;
+.btn-heu {
+  background-color: #512e5f;
+  color: #f1c40f;
+  border-color: #f1c40f;
   border: solid 2px;
 }
 
-.btn-heu:hover{
-  background-color:  #F1C40F;
-  color: #512E5F;
-  border-color:  #512E5F;
-  
+.btn-heu:hover {
+  background-color: #f1c40f;
+  color: #512e5f;
+  border-color: #512e5f;
+}
+.btn-cal:hover {
+  background-color: black;
+  color: white;
+  border-color: white;
 }
 
-.submit2{
+.submit2 {
   display: flex;
   align-items: center;
   margin-left: 10px;
 }
 
-.fa-reveal{
- color: red;
+.fa-reveal {
+  color: red;
 }
 
-img{
- height: 100px;
+img {
+  height: 100px;
 }
 
 #canvas1 {
   position: relative;
 }
 
-@media (max-width: 500px){
-  .level-setting{
+@media (max-width: 500px) {
+  .level-setting {
     width: auto;
   }
 }

@@ -11326,9 +11326,7 @@ function handleSubmit(e) {
           2. Convert second variable into units.</p>
           3. Add the units together.</p>
           4. Divide to find one unit.</p>
-          Maybe 5. Find ${
-            p.rollQn == "A" ? p.objectOne : p.objectTwo
-          } by multiplying ${p.unitSentence}.</p>
+          Maybe 5. Find ${p.objectOne} by multiplying ${p.unitSentence}.</p>
           `;
           }
 
