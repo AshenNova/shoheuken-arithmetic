@@ -220,6 +220,15 @@ table {
   /* position: relative; */
   margin-bottom: 100px;
 }
+
+.working td {
+  text-align: right;
+}
+
+.workingAnswer {
+  border-top: solid;
+}
+
 .input-box {
   position: relative;
   height: 50px;
