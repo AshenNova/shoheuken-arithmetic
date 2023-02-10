@@ -8066,9 +8066,9 @@ function updateProblems() {
       ];
       let negative = ["sold away", "decreased by", "removed"][genNumbers(3)];
       if (p.situation < 0) {
-        lineTwo = `Both ${negative} by ${Math.abs(p.situation)} ${p.object}.`;
+        lineTwo = `Both ${negative} ${Math.abs(p.situation)} ${p.object}.`;
       } else {
-        lineTwo = `Both ${positive} by ${p.situation} ${p.object}.`;
+        lineTwo = `Both ${positive} ${p.situation} ${p.object}.`;
       }
 
       // LINE THREE
