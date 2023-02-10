@@ -7765,7 +7765,7 @@ function updateProblems() {
         `;
       }
     }
-    // WORKING
+
     if (
       setting == 7 ||
       (setting == 9 && p.rollz == 7) ||
@@ -7798,6 +7798,108 @@ function updateProblems() {
       }
       if (p.version == 2) {
       }
+    }
+  }
+  // WORKING ON DISPLAY
+  if (level == "heuFiveb") {
+    if (setting == 1) {
+      let unitAF = "";
+      let unitBF = "";
+      let unitAE = "";
+      let unitBE = "";
+      [unitAF, unitBF] = simplify(p.valueAFirst, p.valueBFirst);
+      if (p.valueAFirst == unitAF || p.valueBFirst == unitBF) {
+        return updateProblems();
+      }
+      if (p.happensTo == "A") {
+        [unitAE, unitBE] = simplify(p.valueAEnd, p.valueBFirst);
+      }
+      if (p.happensTo == "B") {
+        [unitAE, unitBE] = simplify(p.valueAFirst, p.valueBEnd);
+      }
+      if (p.valueAEnd == unitAE || p.valueBEnd == unitBF) {
+        return updateProblems();
+      }
+      // LINE ONE
+      let lineOne = genNumbers(2);
+      if (lineOne == 0) {
+        lineOne = `The ratio of A : B is ${unitAF} : ${unitBF} at first.`;
+      } else {
+        lineOne = `A is ${unitAF}/${unitBF} of B at first.`;
+      }
+      // LINE TWO
+
+      let lineTwo = "";
+
+      if (p.happensTo == "A") {
+        if (p.valueAEnd - p.valueAFirst == 0) {
+          return updateProblems();
+        }
+        if (p.valueAEnd - p.valueAFirst > 0) {
+          lineTwo = `A received another ${
+            Math.abs(p.valueAEnd - p.valueAFirst) * p.multiplier
+          } ${p.object}.`;
+        } else {
+          lineTwo = `A gave away ${
+            Math.abs(p.valueAEnd - p.valueAFirst) * p.multiplier
+          } ${p.object}.`;
+        }
+      }
+      if (p.happensTo == "B") {
+        if (p.valueBEnd - p.valueBFirst == 0) {
+          return updateProblems();
+        }
+        if (p.valueBEnd - p.valueBFirst > 0) {
+          lineTwo = `B received another ${
+            Math.abs(p.valueBEnd - p.valueBFirst) * p.multiplier
+          } ${p.object}.`;
+        } else {
+          lineTwo = `B gave away ${
+            Math.abs(p.valueBEnd - p.valueBFirst) * p.multiplier
+          } ${p.object}.`;
+        }
+      }
+
+      // LINE THREE
+      let lineThree = genNumbers(2);
+      if (lineThree == 0) {
+        lineThree = `The ratio of A : B in the end is ${unitAE} : ${unitBE}.`;
+      } else {
+        lineThree = `A became ${unitAE}/${unitBE} of B.`;
+      }
+
+      //LINE FOUR
+      let lineFour = "";
+      console.log(p.situation, p.question);
+      if (p.happensTo == "A") {
+        if (p.question == "BF" || p.question == "BE") {
+          lineFour = "What is the value of B?";
+        }
+        if (p.question == "AF") {
+          lineFour = "What is A at first?";
+        }
+        if (p.question == "AE") {
+          lineFour = "What is A in the end?";
+        }
+      }
+      if (p.happensTo == "B") {
+        if (p.question == "AF" || p.question == "AE") {
+          lineFour = "What is the value of A?";
+        }
+        if (p.question == "BF") {
+          lineFour = "What is B at first?";
+        }
+        if (p.question == "BE") {
+          lineFour = "What is B in the end?";
+        }
+      }
+
+      displayProblem.innerHTML = `
+      ${lineOne}</p>
+      ${lineTwo}</p>
+      ${lineThree}</p>
+      ${lineFour}
+      `;
     }
   }
 
@@ -10712,7 +10814,6 @@ function handleSubmit(e) {
       ) {
         correctAnswer = `${p.people}x${p.people - 1}/2`;
       }
-      // WORK
       if (
         setting == 7 ||
         (setting == 9 && p.rollz == 7) ||
@@ -10731,7 +10832,16 @@ function handleSubmit(e) {
         }
       }
     }
+    // WORK ON ANSWER
 
+    if (level == "heuFiveb") {
+      if (setting == 1) {
+        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
+        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
+        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
+        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
+      }
+    }
     if (mulLevel == "multiples") {
       correctAnswer = p.numFive * (multiplesArr.length - 1);
     }
@@ -10808,8 +10918,10 @@ function handleSubmit(e) {
         4.08,
         6.05,
         "heuThree",
+        "heuThreeb",
         "heuFour",
         "heuFive",
+        "heuFiveb",
       ];
       if (removeHelpMe.includes(level)) helpMe.textContent = "";
 
@@ -10957,6 +11069,7 @@ function handleSubmit(e) {
         "heuThreeb",
         "heuFour",
         "heuFive",
+        "heuFiveb",
       ];
       // HEURISTICS
       if (allHeuArray.includes(level)) {
@@ -13192,7 +13305,6 @@ function genProblems() {
       };
     }
 
-    // WORK IN PROGRESS
     if (
       setting == 7 ||
       (setting == 9 && roll == 7) ||
@@ -13213,6 +13325,23 @@ function genProblems() {
         oneGroup: undefined,
         totalCost: undefined,
         oneGroupCost: undefined,
+      };
+    }
+  }
+
+  // WORKING ON SETTING
+  if (level == "heuFiveb") {
+    if (setting == 1) {
+      console.log("Unchanged Object");
+      return {
+        object: ["sweets", "toys", "books"][genNumbers(3)],
+        valueAFirst: genNumbers(40) + 10,
+        valueBFirst: genNumbers(40) + 10,
+        multiplier: genNumbers(5) + 2,
+        happensTo: ["A", "B"][genNumbers(2)],
+        valueAEnd: genNumbers(40) + 10,
+        valueBEnd: genNumbers(40) + 10,
+        question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
       };
     }
   }
@@ -14842,6 +14971,21 @@ function buttonLevelSetting() {
       );
       range = 0;
       scoreNeeded = 10;
+      displayProblem.style.fontSize = "18px";
+      displayProblem.style.textAlign = "left";
+      document.querySelector("#user-input").setAttribute("type", "text");
+      helpMe.style.fontSize = "18px";
+      helpMe.style.textAlign = "left";
+      break;
+
+    // WORKING ON CASE
+    case "Heu.5b":
+      level = "heuFiveb";
+      setting = prompt(
+        "What level?\n1. Unchanged Object\n2. Unchanged Total\n3. Unchanged Difference\n\n9. All"
+      );
+      range = 0;
+      scoreNeeded = 3;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
       document.querySelector("#user-input").setAttribute("type", "text");
