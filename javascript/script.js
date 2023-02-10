@@ -7800,7 +7800,7 @@ function updateProblems() {
       }
     }
   }
-  // WORKING ON DISPLAY
+
   if (level == "heuFiveb") {
     if (setting == 1) {
       let unitAF = "";
@@ -7821,26 +7821,38 @@ function updateProblems() {
         return updateProblems();
       }
       // LINE ONE
-      let lineOne = genNumbers(2);
+      let lineOne = genNumbers(4);
       if (lineOne == 0) {
         lineOne = `The ratio of A : B is ${unitAF} : ${unitBF} at first.`;
-      } else {
+      }
+      if (lineOne == 1) {
         lineOne = `A is ${unitAF}/${unitBF} of B at first.`;
+      }
+      if (lineOne == 2) {
+        lineOne = `The ratio of A to A and B is ${unitAF} : ${
+          unitAF + unitBF
+        } at first.`;
+      }
+      if (lineOne == 3) {
+        lineOne = ` A is ${unitAF}/${unitAF + unitBF} of the total at first.`;
       }
       // LINE TWO
 
       let lineTwo = "";
+      let positive = ["received", "bought"][genNumbers(2)];
+      let negative = ["sold away", "gave away"][genNumbers(2)];
 
       if (p.happensTo == "A") {
         if (p.valueAEnd - p.valueAFirst == 0) {
           return updateProblems();
         }
+
         if (p.valueAEnd - p.valueAFirst > 0) {
-          lineTwo = `A received another ${
+          lineTwo = `A ${positive} another ${
             Math.abs(p.valueAEnd - p.valueAFirst) * p.multiplier
           } ${p.object}.`;
         } else {
-          lineTwo = `A gave away ${
+          lineTwo = `A ${negative} ${
             Math.abs(p.valueAEnd - p.valueAFirst) * p.multiplier
           } ${p.object}.`;
         }
@@ -7850,22 +7862,31 @@ function updateProblems() {
           return updateProblems();
         }
         if (p.valueBEnd - p.valueBFirst > 0) {
-          lineTwo = `B received another ${
+          lineTwo = `B ${positive} another ${
             Math.abs(p.valueBEnd - p.valueBFirst) * p.multiplier
           } ${p.object}.`;
         } else {
-          lineTwo = `B gave away ${
+          lineTwo = `B ${negative} ${
             Math.abs(p.valueBEnd - p.valueBFirst) * p.multiplier
           } ${p.object}.`;
         }
       }
 
       // LINE THREE
-      let lineThree = genNumbers(2);
+      let lineThree = genNumbers(4);
       if (lineThree == 0) {
         lineThree = `The ratio of A : B in the end is ${unitAE} : ${unitBE}.`;
-      } else {
+      }
+      if (lineThree == 1) {
         lineThree = `A became ${unitAE}/${unitBE} of B.`;
+      }
+      if (lineThree == 2) {
+        lineThree = `The ratio of A to the total is ${unitAE} : ${
+          unitAE + unitBE
+        } in the end.`;
+      }
+      if (lineThree == 3) {
+        lineThree = `A became ${unitAE}/${unitAE + unitBE} of the total.`;
       }
 
       //LINE FOUR
@@ -7900,6 +7921,111 @@ function updateProblems() {
       ${lineThree}</p>
       ${lineFour}
       `;
+    }
+    // WORKING ON DISPLAY
+    if (setting == 2) {
+      let unitAF = "";
+      let unitBF = "";
+      let unitAE = "";
+      let unitBE = "";
+
+      // LINE TWO
+      let happensTo = ["A", "A"][genNumbers(2)];
+      let lineTwo = "";
+      let direction = "";
+      // let direction = ["transferred", "received"][genNumbers(2)];
+      if (p.situationA == 0 || p.situationB == 0) {
+        return updateProblems();
+      }
+      if (happensTo == "A") {
+        if (p.situationA > 0) {
+          p.valueAEnd = p.valueAFirst + p.situationA;
+          p.valueBEnd = p.valueBFirst - p.situationA;
+          lineTwo = `A received another ${
+            Math.abs(p.situationA) * p.multiplier
+          } ${p.object} from B.`;
+        }
+        if (p.situationA < 0) {
+          p.valueAEnd = p.valueAFirst + p.situationA;
+          p.valueBEnd = p.valueBFirst - p.situationA;
+          lineTwo = `A transferred ${Math.abs(p.situationA) * p.multiplier} ${
+            p.object
+          } to B.`;
+        }
+      }
+      if (happensTo == "B") {
+        if (p.situationB > 0) {
+          p.valueAEnd = p.valueAFirst - p.situationB;
+          p.valueBEnd = p.valueBFirst + p.situationB;
+          lineTwo = `B received another ${
+            Math.abs(p.situationB) * p.multiplier
+          } ${p.object} from A.`;
+        }
+        if (p.situationB < 0) {
+          p.valueAEnd = p.valueAFirst - p.situationB;
+          p.valueBEnd = p.valueBFirst + p.situationB;
+          lineTwo = `B transferred ${Math.abs(p.situationB) * p.multiplier} ${
+            p.object
+          } to A.`;
+        }
+      }
+      if (p.valueAEnd == 0 || p.valueBEnd == 0) {
+        return updateProblems();
+      }
+      console.log(p.valueAFirst, p.valueBFirst, p.valueAEnd, p.valueBEnd);
+
+      // PREP
+      [unitAF, unitBF] = simplify(p.valueAFirst, p.valueBFirst);
+      [unitAE, unitBE] = simplify(p.valueAEnd, p.valueBEnd);
+      if (p.valueAFirst == unitAF || p.valueAEnd == unitAE) {
+        console.log("Values unable to be simplified");
+        return updateProblems();
+      }
+
+      // LINE ONE
+      let lineOne = genNumbers(4);
+      if (lineOne == 0) {
+        lineOne = `The ratio of A : B is ${unitAF} : ${unitBF} at first.`;
+      }
+      if (lineOne == 1) {
+        lineOne = ` A  is ${unitAF}/${unitBF} of B at first.`;
+      }
+      if (lineOne == 2) {
+        lineOne = ` A  is ${unitAF}/${unitAF + unitBF} of the total at first.`;
+      }
+      if (lineOne == 3) {
+        lineOne = `The ratio of A to the total is ${unitAF}:${
+          unitAF + unitBF
+        } at first.`;
+      }
+
+      // LINE THREE
+      let lineThree = genNumbers(2);
+      if (lineThree == 0) {
+        lineThree = `
+              The ratio of A : B in the end is ${unitAE} : ${unitBE}.`;
+      }
+      if (lineThree == 1) {
+        lineThree = `
+              A is ${unitAE}/${unitBE} of B in the end.`;
+      }
+
+      // LINE FOUR
+      let lineFour = "";
+      if (p.question == "AF")
+        lineFour = `How many ${p.object} does A have at first?`;
+      if (p.question == "BF")
+        lineFour = `How many ${p.object} does B have at first?`;
+      if (p.question == "AE")
+        lineFour = `How many ${p.object} does A have in the end?`;
+      if (p.question == "BE")
+        lineFour = `How many ${p.object} does B have in the end?`;
+
+      displayProblem.innerHTML = `
+      ${lineOne}</p>
+      ${lineTwo}</p>
+      ${lineThree}</p>
+      ${lineFour}`;
     }
   }
 
@@ -10832,10 +10958,16 @@ function handleSubmit(e) {
         }
       }
     }
-    // WORK ON ANSWER
 
     if (level == "heuFiveb") {
       if (setting == 1) {
+        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
+        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
+        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
+        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
+      }
+      // WORK ON ANSWER
+      if (setting == 2) {
         if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
         if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
         if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
@@ -13329,7 +13461,6 @@ function genProblems() {
     }
   }
 
-  // WORKING ON SETTING
   if (level == "heuFiveb") {
     if (setting == 1) {
       console.log("Unchanged Object");
@@ -13341,6 +13472,24 @@ function genProblems() {
         happensTo: ["A", "B"][genNumbers(2)],
         valueAEnd: genNumbers(40) + 10,
         valueBEnd: genNumbers(40) + 10,
+        question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
+      };
+    }
+    // WORKING ON SETTING
+    if (setting == 2) {
+      console.log("Unchanged Total");
+      valueA = genNumbers(40) + 10;
+      valueB = genNumbers(40) + 10;
+      return {
+        object: ["sweets", "toys", "books"][genNumbers(3)],
+        valueAFirst: valueA,
+        valueBFirst: valueB,
+        situationA: genNumbers(valueA) * [-1, 1][genNumbers(2)],
+        situationB: genNumbers(valueB) * [-1, 1][genNumbers(2)],
+        // multiplier: genNumbers(5) + 2,
+        multiplier: 1,
+        valueAEnd: undefined,
+        valueBEnd: undefined,
         question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
       };
     }
