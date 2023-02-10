@@ -7922,7 +7922,7 @@ function updateProblems() {
       ${lineFour}
       `;
     }
-    // WORKING ON DISPLAY
+
     if (setting == 2) {
       let unitAF = "";
       let unitBF = "";
@@ -8026,6 +8026,90 @@ function updateProblems() {
       ${lineTwo}</p>
       ${lineThree}</p>
       ${lineFour}`;
+    }
+    // WORKING ON DISPLAY
+    if (setting == 3) {
+      let unitAF = "";
+      let unitBF = "";
+      let unitAE = "";
+      let unitBE = "";
+
+      p.valueAEnd = p.valueAFirst + p.situation;
+      p.valueBEnd = p.valueBFirst + p.situation;
+      [unitAF, unitBF] = simplify(p.valueAFirst, p.valueBFirst);
+      [unitAE, unitBE] = simplify(p.valueAEnd, p.valueBEnd);
+      if (p.valueAFirst == unitAF || p.valueAEnd == unitAE) {
+        return updateProblems();
+      }
+
+      // LINE ONE
+      let lineOne = genNumbers(4);
+      if (lineOne == 0) {
+        lineOne = `The ratio of A:B is ${unitAF}:${unitBF}.`;
+      }
+      if (lineOne == 1) {
+        lineOne = `A is ${unitAF}/${unitBF} of B .`;
+      }
+      if (lineOne == 2) {
+        lineOne = `The ratio of A to the total is ${unitAF}:${
+          unitAF + unitBF
+        }.`;
+      }
+      if (lineOne == 3) {
+        lineOne = `A is ${unitAF}/${unitAF + unitBF} of the total.`;
+      }
+
+      // LINE TWO
+      let lineTwo = "";
+      let positive = ["bought another", "increased by", "received another"][
+        genNumbers(3)
+      ];
+      let negative = ["sold away", "decreased by", "removed"][genNumbers(3)];
+      if (p.situation < 0) {
+        lineTwo = `Both ${negative} by ${Math.abs(p.situation)} ${p.object}.`;
+      } else {
+        lineTwo = `Both ${positive} by ${p.situation} ${p.object}.`;
+      }
+
+      // LINE THREE
+
+      [unitAE, unitBE] = simplify(p.valueAEnd, p.valueBEnd);
+      let lineThree = genNumbers(4);
+      if (lineThree == 0) {
+        lineThree = `The ratio of A:B in the end is ${unitAE}:${unitBE}.`;
+      }
+      if (lineThree == 1) {
+        lineThree = `A is ${unitAE}/${unitBE} of B in the end.`;
+      }
+      if (lineThree == 2) {
+        lineThree = `The ratio of A to A and B in the end is ${unitAE}:${
+          unitAE + unitBE
+        }.`;
+      }
+      if (lineThree == 3) {
+        lineThree = `A is ${unitAE}/${
+          unitAE + unitBE
+        } of the total in the end.`;
+      }
+
+      // LINE FOUR
+      let lineFour = "";
+      if (p.question == "AF")
+        lineFour = `How many ${p.object} does A have at first?`;
+      if (p.question == "BF")
+        lineFour = `How many ${p.object} does B have at first?`;
+      if (p.question == "AE")
+        lineFour = `How many ${p.object} does A have in the end?`;
+      if (p.question == "BE")
+        lineFour = `How many ${p.object} does B have in the end?`;
+
+      // EXCECUTE
+      displayProblem.innerHTML = `
+      ${lineOne}</p>
+      ${lineTwo}</p>
+      ${lineThree}</p>
+      ${lineFour}
+      `;
     }
   }
 
@@ -10966,8 +11050,14 @@ function handleSubmit(e) {
         if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
         if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
       }
-      // WORK ON ANSWER
       if (setting == 2) {
+        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
+        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
+        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
+        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
+      }
+      // WORK ON ANSWER
+      if (setting == 3) {
         if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
         if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
         if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
@@ -13475,7 +13565,7 @@ function genProblems() {
         question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
       };
     }
-    // WORKING ON SETTING
+
     if (setting == 2) {
       console.log("Unchanged Total");
       valueA = genNumbers(40) + 10;
@@ -13486,6 +13576,25 @@ function genProblems() {
         valueBFirst: valueB,
         situationA: genNumbers(valueA) * [-1, 1][genNumbers(2)],
         situationB: genNumbers(valueB) * [-1, 1][genNumbers(2)],
+        // multiplier: genNumbers(5) + 2,
+        multiplier: 1,
+        valueAEnd: undefined,
+        valueBEnd: undefined,
+        question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
+      };
+    }
+    // WORKING ON SETTING
+    if (setting == 3) {
+      console.log("Unchanged Difference");
+      valueA = genNumbers(40) + 10;
+      valueB = genNumbers(40) + 10;
+      let minValue = 0;
+      valueA > valueB ? (minValue = valueA) : (minValue = valueB);
+      return {
+        object: ["sweets", "toys", "books"][genNumbers(3)],
+        valueAFirst: valueA,
+        valueBFirst: valueB,
+        situation: genNumbers(minValue) * [-1, 1][genNumbers(2)],
         // multiplier: genNumbers(5) + 2,
         multiplier: 1,
         valueAEnd: undefined,
