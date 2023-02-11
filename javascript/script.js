@@ -6476,6 +6476,17 @@ function updateProblems() {
       operator.textContent = "+";
       workingAnswer.textContent = "?";
     }
+    if (setting == 4) {
+      p.numOne = p.numOne + p.numTwo;
+      p.numThree = p.numThree + p.numFour;
+      if (p.numOne % 10 == 0 && p.numThree % 10 == 0) {
+        return updateProblems();
+      }
+      firstNum.textContent = p.numOne;
+      secondNum.textContent = p.numThree;
+      operator.textContent = "-";
+      workingAnswer.textContent = "?";
+    }
   }
 
   // Heuristics display
@@ -10141,7 +10152,7 @@ function handleSubmit(e) {
       if (setting == 1 || setting == 3) {
         correctAnswer = p.numOne + p.numThree;
       }
-      if (setting == 2) {
+      if (setting == 2 || setting == 4) {
         correctAnswer = p.numOne - p.numThree;
       }
     }
@@ -12784,6 +12795,16 @@ function genProblems() {
         numFour: genNumbers(10),
       };
     }
+    if (setting == 4) {
+      let ones = genNumbers(10);
+      let tens = genNumbers(8) + 2;
+      return {
+        numOne: tens * 10,
+        numTwo: genNumbers(ones),
+        numThree: genNumbers(tens) * 10,
+        numFour: ones,
+      };
+    }
   }
   // heuristics value
   if (level == "heuOne") {
@@ -15259,7 +15280,7 @@ function buttonLevelSetting() {
       level = "calOne";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (1-100) (No carrying)\n2. Subtraction (1-100) (No Borrowing)\n3. Addition (1-100) Carrying\n\n9. Everything"
+        "What level?\n1. Addition (1-100) (No carrying)\n2. Subtraction (1-100) (No Borrowing)\n3. Addition (1-100) (Carrying)\n4. Subtraction (1-100) (Borrowing)\n\n9. Everything"
       );
       break;
 
