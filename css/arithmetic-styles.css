@@ -218,7 +218,7 @@ table {
 .working {
   font-size: 1.5em;
   /* position: relative; */
-  margin-bottom: 100px;
+  margin-bottom: 20%;
 }
 
 .working td {
@@ -285,11 +285,6 @@ button {
   width: 100px;
 }
 
-.btn-cal {
-  background-color: #90ee90;
-  border-color: black;
-}
-
 .btn-percentage {
   background-color: orange;
 }
@@ -332,10 +327,18 @@ button {
   color: #512e5f;
   border-color: #512e5f;
 }
+
+.btn-cal {
+  background-color: #f1c40f;
+  color: #512e5f;
+  border-color: #512e5f;
+}
+
 .btn-cal:hover {
-  background-color: black;
-  color: white;
-  border-color: white;
+  background-color: #512e5f;
+  color: #f1c40f;
+  border-color: #f1c40f;
+  border: solid 2px;
 }
 
 .submit2 {

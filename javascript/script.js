@@ -57,6 +57,7 @@ const highScoreMistakes = document.querySelector(".highScoreMistakes");
 const fractionChoice = document.querySelector(".fraction-choice");
 const wholeNumberContainer = document.querySelector(".whole-numbers-container");
 const fractionsContainer = document.querySelector(".fractions-container");
+const workingContainer = document.querySelector(".working");
 const numeratorOne = document.querySelector(".numeratorOne");
 const numeratorTwo = document.querySelector(".numeratorTwo");
 const denominatorOne = document.querySelector(".denominatorOne");
@@ -72,6 +73,12 @@ const threeWholeNumber = document.querySelector(".three-whole-number");
 const threeNumerator = document.querySelector(".three-numerator");
 const threeDenominator = document.querySelector(".three-denominator");
 const equalSymbol = document.querySelector(".equal-symbol");
+
+// WORKING AND CALCULATION DISPLAY
+const firstNum = document.querySelector(".firstNum");
+const secondNum = document.querySelector(".secondNum");
+const workingAnswer = document.querySelector(".workingAnswer");
+const operator = document.querySelector(".operator");
 
 const firstCanvas = document.querySelector(".first-canvas");
 const canvas = document.getElementById("canvas1");
@@ -6428,6 +6435,21 @@ function updateProblems() {
     displayProblem.innerHTML = `${p.numOne} ${p.operator} ${p.numTwo}`;
   }
 
+  // WORKING CALCULATION DISPLAY
+  if (level == "calOne") {
+    if (setting == 1) {
+      p.numOne = p.numOne + p.numTwo;
+      p.numThree = p.numThree + p.numFour;
+      if (p.numOne < p.numThree) {
+        [p.numOne, p.numThree] = [p.numThree, p.numOne];
+      }
+      firstNum.textContent = p.numOne;
+      secondNum.textContent = p.numThree;
+      operator.textContent = "+";
+      workingAnswer.textContent = "?";
+    }
+  }
+
   // Heuristics display
 
   if (level == "heuOne") {
@@ -10086,6 +10108,13 @@ function handleSubmit(e) {
       if (p.operator == "-") correctAnswer = p.numOne - p.numTwo;
     }
 
+    // CALCULATION WORKING ANSWER
+    if (level == "calOne") {
+      if (setting == 1) {
+        correctAnswer = p.numOne + p.numThree;
+      }
+    }
+
     // heuristics Answer
     if (level == "heuOne") {
       if (p.rollAB == "A" && p.rollVar == 0) {
@@ -12693,6 +12722,18 @@ function genProblems() {
     };
   }
 
+  // WORKING CALCULATION SETTING
+  if (level == "calOne") {
+    if (setting == 1) {
+      let ones = genNumbers(10);
+      return {
+        numOne: (genNumbers(4) + 1) * 10,
+        numTwo: ones,
+        numThree: (genNumbers(5) + 1) * 10,
+        numFour: genNumbers(9 - ones),
+      };
+    }
+  }
   // heuristics value
   if (level == "heuOne") {
     return {
@@ -13583,7 +13624,7 @@ function genProblems() {
         question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
       };
     }
-    // WORKING ON SETTING
+
     if (setting == 3) {
       console.log("Unchanged Difference");
       valueA = genNumbers(40) + 10;
@@ -13744,6 +13785,7 @@ for (let i = 0; i < settingButton.length; i++) {
 
     buttonLevelSetting();
     levelBox();
+    workingContainer.classList.add("hidden");
   });
 }
 
@@ -13776,6 +13818,8 @@ calBtn.forEach((item) => {
 
     buttonLevelSetting();
     levelBox();
+    wholeNumberContainer.classList.toggle("hidden");
+    workingContainer.classList.toggle("hidden");
   });
 });
 
@@ -15163,6 +15207,9 @@ function buttonLevelSetting() {
     case "Cal.1":
       level = "calOne";
       scoreNeeded = 10;
+      setting = prompt(
+        "What level?\n1. Addition (1-100) (No borrowing)\n\n9. Everything"
+      );
       break;
 
     // HEURISTICS SETTINGS
