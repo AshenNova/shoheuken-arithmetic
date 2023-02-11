@@ -46,6 +46,8 @@ const mainBox = document.querySelector(".main-box");
 const mistakesCountCl = document.querySelector(".mistakesCount");
 const settingButton = document.querySelectorAll(".settingButton");
 const heuristics = document.querySelectorAll(".heuristics");
+const calBtn = document.querySelectorAll(".calButton");
+console.log(calBtn);
 const toMultiplesBtn = document.querySelector(".toMultiples");
 
 const highScoreName = document.querySelector(".highScoreName");
@@ -11447,7 +11449,7 @@ function handleSubmit(e) {
             helpMe.innerHTML = `
             Observation:</p>
             Note that the question gave <u>difference</u> instead of the total (other version).</p>
-            1) Let all the the variable that has more. ${moreVariable}</p>
+            1) Let all be the variable that has more. In this case"${moreVariable}"</p>
             2) Find big difference.</p>
             3) Find small difference. ${p.chosenOneQ} + ${p.chosenTwoQ}</p>
             The difference grows smaller by ${
@@ -13757,6 +13759,26 @@ for (let i = 0; i < heuristics.length; i++) {
   });
 }
 
+// for (let i = 0; i < calBtn.length; i++) {
+//   calBtn[i].addEventListener("dblclick", function () {
+//     buttonLevel = this.innerHTML;
+//     mulLevel = "nil";
+
+//     buttonLevelSetting();
+//     levelBox();
+//   });
+// }
+
+calBtn.forEach((item) => {
+  item.addEventListener("dblclick", function () {
+    buttonLevel = this.innerHTML;
+    mulLevel = "nil";
+
+    buttonLevelSetting();
+    levelBox();
+  });
+});
+
 hardcoreMode.addEventListener("click", function () {
   if (hardcore == 0) {
     hardcore = 1;
@@ -15137,7 +15159,13 @@ function buttonLevelSetting() {
       scoreNeeded = 30;
       break;
 
-    // heuristics settings
+    // CALCULATION WORKING SETTINGS
+    case "Cal.1":
+      level = "calOne";
+      scoreNeeded = 10;
+      break;
+
+    // HEURISTICS SETTINGS
 
     case "Heu.1":
       level = "heuOne";
