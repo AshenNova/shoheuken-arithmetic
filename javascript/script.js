@@ -6531,6 +6531,47 @@ function updateProblems() {
         workingAnswer.textContent = p.answerValue;
       }
     }
+    if (setting == 6) {
+      if (p.operator == "+") {
+        operator.textContent = p.operator;
+        while (p.numOne + p.numTwo > 100) {
+          if (p.numOne > 20) {
+            p.numOne -= 10;
+          } else {
+            p.numTwo -= 10;
+          }
+        }
+        console.log(p.numOne.toString().length, p.numTwo.toString().length);
+        if (p.identity == "C") {
+          firstNum.textContent = "?".repeat(p.numOne.toString().length);
+          secondNum.textContent = p.numTwo;
+          workingAnswer.textContent = p.numOne + p.numTwo;
+        }
+        if (p.identity == "D") {
+          firstNum.textContent = p.numOne;
+          secondNum.textContent = "?".repeat(p.numTwo.toString().length);
+          workingAnswer.textContent = p.numOne + p.numTwo;
+        }
+      }
+      if (p.operator == "-") {
+        operator.textContent = p.operator;
+        if (p.numTwo > p.numOne) {
+          [p.numTwo, p.numOne] = [p.numOne, p.numTwo];
+        }
+        console.log(p.numOne.toString().length, p.numTwo.toString().length);
+        if (p.identity == "C") {
+          firstNum.textContent = "?".repeat(p.numOne.toString().length);
+          secondNum.textContent = p.numTwo;
+          workingAnswer.textContent = p.numOne - p.numTwo;
+        }
+        if (p.identity == "D") {
+          firstNum.textContent = p.numOne;
+          secondNum.textContent = "?".repeat(p.numTwo.toString().length);
+          workingAnswer.textContent = p.numOne - p.numTwo;
+        }
+      }
+      console.log(p.numOne, p.numTwo);
+    }
   }
 
   // Heuristics display
@@ -10201,6 +10242,10 @@ function handleSubmit(e) {
       }
       if (setting == 5 && p.version == "+") correctAnswer = p.numTwo;
       if (setting == 5 && p.version == "-") correctAnswer = p.numTwo;
+      if (setting == 6) {
+        if (p.identity == "D") correctAnswer = p.numTwo;
+        if (p.identity == "C") correctAnswer = p.numOne;
+      }
     }
 
     // heuristics Answer
@@ -12853,7 +12898,7 @@ function genProblems() {
     }
     if (setting == 5) {
       return {
-        version: ["-", "-"][genNumbers(2)],
+        version: ["+", "-"][genNumbers(2)],
         numOne: genNumbers(10),
         numTwo: genNumbers(10),
         numThree: undefined,
@@ -12861,6 +12906,14 @@ function genProblems() {
         rowOneValue: undefined,
         rowTwoValue: undefined,
         answerValue: undefined,
+      };
+    }
+    if (setting == 6) {
+      return {
+        operator: ["+", "-"][genNumbers(2)],
+        identity: ["C", "D"][genNumbers(2)],
+        numOne: genNumbers(90) + 10,
+        numTwo: genNumbers(90) + 10,
       };
     }
   }
@@ -15338,7 +15391,7 @@ function buttonLevelSetting() {
       level = "calOne";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (1-100) (No carrying)\n2. Subtraction (1-100) (No Borrowing)\n3. Addition (1-100) (Carrying)\n4. Subtraction (1-100) (Borrowing)\n5. Single blank\n\n9. Everything"
+        "What level?\n1. Addition (1-100) (No carrying)\n2. Subtraction (1-100) (No Borrowing)\n3. Addition (1-100) (Carrying)\n4. Subtraction (1-100) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n\n9. Everything"
       );
       break;
 
