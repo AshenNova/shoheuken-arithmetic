@@ -6574,6 +6574,29 @@ function updateProblems() {
     }
   }
 
+  if (level == "calTwo") {
+    if (setting == 1) {
+      const numOneStr = p.numOne.toString();
+      let numTwoStr = p.numTwo.toString();
+      // if (countA != countB) {
+      //   numTwoStr.padStart(countA, "0");
+      // }
+      // console.log(numTwoStr);
+      for (let i = 0; i < numOneStr.length + 1; i++) {
+        console.log(numOneStr[i] * 1 + numTwoStr[i] * 1);
+        if (numOneStr[i] * 1 + numTwoStr[i] * 1 >= 10) {
+          return updateProblems();
+        } else {
+          console.log(numOneStr[i], numTwoStr[i]);
+        }
+      }
+      firstNum.textContent = p.numOne;
+      secondNum.textContent = p.numTwo;
+      operator.textContent = "+";
+      workingAnswer.textContent = "?";
+    }
+  }
+
   // Heuristics display
 
   if (level == "heuOne") {
@@ -10247,6 +10270,11 @@ function handleSubmit(e) {
         if (p.identity == "C") correctAnswer = p.numOne;
       }
     }
+    if (level == "calTwo") {
+      if (setting == 1) {
+        correctAnswer = p.numOne + p.numTwo;
+      }
+    }
 
     // heuristics Answer
     if (level == "heuOne") {
@@ -12934,6 +12962,22 @@ function genProblems() {
       numTwo: genNumbers(9) + 1,
     };
   }
+
+  if (level == "calTwo") {
+    if (setting == 1) {
+      let hundreds = genNumbers(9) + 1;
+      let tens = genNumbers(9) + 1;
+      let ones = genNumbers(9) + 1;
+      return {
+        numOne: hundreds * 100 + tens * 10 + ones,
+        numTwo:
+          (genNumbers(hundreds) + 1) * 100 +
+          (genNumbers(tens) + 1) * 10 +
+          genNumbers(ones) +
+          1,
+      };
+    }
+  }
   // setting
   if (level == "heuTwo") {
     let roll = undefined;
@@ -15394,7 +15438,11 @@ function buttonLevelSetting() {
         "What level?\n1. Addition (1-100) (No carrying)\n2. Subtraction (1-100) (No Borrowing)\n3. Addition (1-100) (Carrying)\n4. Subtraction (1-100) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n\n9. Everything"
       );
       break;
-
+    case "Cal.2":
+      level = "calTwo";
+      scoreNeeded = 10;
+      setting = prompt("What level?\n1. Addition (to 1000)");
+      break;
     // HEURISTICS SETTINGS
 
     case "Heu.1":
