@@ -219,6 +219,7 @@ table {
   font-size: 1.5em;
   /* position: relative; */
   margin-bottom: 20%;
+  letter-spacing: 5px;
 }
 
 .working td {

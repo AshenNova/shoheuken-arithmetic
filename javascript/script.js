@@ -6487,6 +6487,50 @@ function updateProblems() {
       operator.textContent = "-";
       workingAnswer.textContent = "?";
     }
+
+    if (setting == 5) {
+      if (p.numOne == p.numTwo || p.numFour == p.numTwo) {
+        return updateProblems();
+      }
+      if (p.version == "+") {
+        p.numOne = genNumbers(4) + 1;
+        p.numTwo = genNumbers(4) + 1;
+        if (p.numOne == p.numTwo || p.numFour == p.numTwo) {
+          return updateProblems();
+        }
+        p.rowOneValue = p.numOne * 10 + p.numTwo;
+        p.rowTwoValue = p.numTwo * 10 + p.numFour;
+        p.answerValue = p.rowOneValue + p.rowTwoValue;
+        let rowOne = `${p.numOne.toString()}?`;
+        let rowTwo = "?" + p.numFour.toString();
+        console.log(rowOne, rowTwo);
+        firstNum.textContent = rowOne;
+        secondNum.textContent = rowTwo;
+        operator.textContent = "+";
+        workingAnswer.textContent = p.answerValue;
+      }
+      if (p.version == "-") {
+        if (p.numOne == p.numTwo || p.numFour == p.numTwo) {
+          return updateProblems();
+        }
+        p.rowOneValue = p.numOne * 10 + p.numTwo;
+        p.rowTwoValue = p.numTwo * 10 + p.numFour;
+        if (p.rowTwoValue > p.rowOneValue) {
+          [p.rowTwoValue, p.rowOneValue] = [p.rowOneValue, p.rowTwoValue];
+        }
+        p.answerValue = p.rowOneValue - p.rowTwoValue;
+        let rowOne = p.rowOneValue.toString();
+        let rowTwo = p.rowTwoValue.toString();
+        console.log(rowOne, rowTwo);
+        rowOne = rowOne.replace(p.numTwo.toString(), "?");
+        rowTwo = rowTwo.replace(p.numTwo.toString(), "?");
+        console.log(rowOne, rowTwo);
+        firstNum.textContent = rowOne;
+        secondNum.textContent = rowTwo;
+        operator.textContent = "-";
+        workingAnswer.textContent = p.answerValue;
+      }
+    }
   }
 
   // Heuristics display
@@ -10155,6 +10199,8 @@ function handleSubmit(e) {
       if (setting == 2 || setting == 4) {
         correctAnswer = p.numOne - p.numThree;
       }
+      if (setting == 5 && p.version == "+") correctAnswer = p.numTwo;
+      if (setting == 5 && p.version == "-") correctAnswer = p.numTwo;
     }
 
     // heuristics Answer
@@ -12805,6 +12851,18 @@ function genProblems() {
         numFour: ones,
       };
     }
+    if (setting == 5) {
+      return {
+        version: ["-", "-"][genNumbers(2)],
+        numOne: genNumbers(10),
+        numTwo: genNumbers(10),
+        numThree: undefined,
+        numFour: genNumbers(10),
+        rowOneValue: undefined,
+        rowTwoValue: undefined,
+        answerValue: undefined,
+      };
+    }
   }
   // heuristics value
   if (level == "heuOne") {
@@ -15280,7 +15338,7 @@ function buttonLevelSetting() {
       level = "calOne";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (1-100) (No carrying)\n2. Subtraction (1-100) (No Borrowing)\n3. Addition (1-100) (Carrying)\n4. Subtraction (1-100) (Borrowing)\n\n9. Everything"
+        "What level?\n1. Addition (1-100) (No carrying)\n2. Subtraction (1-100) (No Borrowing)\n3. Addition (1-100) (Carrying)\n4. Subtraction (1-100) (Borrowing)\n5. Single blank\n\n9. Everything"
       );
       break;
 
