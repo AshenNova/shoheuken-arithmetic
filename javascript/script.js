@@ -6582,7 +6582,7 @@ function updateProblems() {
       //   numTwoStr.padStart(countA, "0");
       // }
       // console.log(numTwoStr);
-      for (let i = 0; i < numOneStr.length + 1; i++) {
+      for (let i = 0; i < numOneStr.length; i++) {
         console.log(numOneStr[i] * 1 + numTwoStr[i] * 1);
         if (numOneStr[i] * 1 + numTwoStr[i] * 1 >= 10) {
           return updateProblems();
@@ -6593,6 +6593,28 @@ function updateProblems() {
       firstNum.textContent = p.numOne;
       secondNum.textContent = p.numTwo;
       operator.textContent = "+";
+      workingAnswer.textContent = "?";
+    }
+    if (setting == 2) {
+      // if (p.numTwo > p.numOne) {
+      //   [p.numTwo, p.numOne] = [p.numOne, p.numTwo];
+      // }
+      const numOneStr = p.numOne.toString();
+      let numTwoStr = p.numTwo.toString();
+      // if (countA != countB) {
+      //   numTwoStr.padStart(countA, "0");
+      // }
+      // console.log(numTwoStr);
+      for (let i = 0; i < numOneStr.length; i++) {
+        if (numOneStr[i] * 1 - numTwoStr[i] * 1 < 0) {
+          return updateProblems();
+        } else {
+          console.log(numOneStr[i], numTwoStr[i]);
+        }
+      }
+      firstNum.textContent = p.numOne;
+      secondNum.textContent = p.numTwo;
+      operator.textContent = "-";
       workingAnswer.textContent = "?";
     }
   }
@@ -10274,6 +10296,9 @@ function handleSubmit(e) {
       if (setting == 1) {
         correctAnswer = p.numOne + p.numTwo;
       }
+      if (setting == 2) {
+        correctAnswer = p.numOne - p.numTwo;
+      }
     }
 
     // heuristics Answer
@@ -12977,6 +13002,19 @@ function genProblems() {
           1,
       };
     }
+    if (setting == 2) {
+      let hundreds = genNumbers(9) + 1;
+      let tens = genNumbers(9) + 1;
+      let ones = genNumbers(9) + 1;
+      return {
+        numOne: hundreds * 100 + tens * 10 + ones,
+        numTwo:
+          (genNumbers(hundreds) + 1) * 100 +
+          (genNumbers(tens) + 1) * 10 +
+          genNumbers(ones) +
+          1,
+      };
+    }
   }
   // setting
   if (level == "heuTwo") {
@@ -15441,7 +15479,9 @@ function buttonLevelSetting() {
     case "Cal.2":
       level = "calTwo";
       scoreNeeded = 10;
-      setting = prompt("What level?\n1. Addition (to 1000)");
+      setting = prompt(
+        "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing"
+      );
       break;
     // HEURISTICS SETTINGS
 
