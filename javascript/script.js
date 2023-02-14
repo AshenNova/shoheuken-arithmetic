@@ -6736,7 +6736,7 @@ function updateProblems() {
       if (p.numOne == p.numTwo) {
         return updateProblems();
       }
-      [p.numOne, p.numTwo] = simplify(p.numOne, p.numTwo)
+      [p.numOne, p.numTwo] = simplify(p.numOne, p.numTwo);
       wholeNumberContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
       // END CHANGE DISPLAY
@@ -11883,6 +11883,16 @@ function handleSubmit(e) {
           2. Find the total amount of extra work.</p>
           3. Find what each worker were suppose to do.</p>
           Maybe 4. Find the total.</p>
+          `;
+        }
+        if (level == "heuFour" && p.rollz == 4) {
+          helpMe.innerHTML = `
+          1. Subtraction the second equation with the first equation.</p>
+          2. Subtraction the units of ${p.objectThree} and ${p.objectTwo}.</p>
+          ${p.unitSentence} - 1</p>
+          3. Find 1 unit.</p>
+          ${p.groupTwo - p.groupOne}/${p.unitSentence - 1} = ${p.objectTwo}</p>
+          4. Find ${p.objectOne} using the first equation.
           `;
         }
 
