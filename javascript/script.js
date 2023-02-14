@@ -6629,6 +6629,36 @@ function updateProblems() {
     }
   }
 
+  if (level == "calFour") {
+    if (setting == 1) {
+      if (p.numOne == p.numTwo) {
+        return updateProblems();
+      }
+      let multiplePos = [
+        "",
+        "",
+        "2nd",
+        "3rd",
+        "4th",
+        "5th",
+        "6th",
+        "7th",
+        "8th",
+      ][p.multiple];
+      wholeNumberContainer.classList.remove("hidden");
+      workingContainer.classList.add("hidden");
+      let holdingNum = p.numOne;
+      displayProblem.innerHTML = `
+      What is the first common multiple of ${p.numOne} and ${p.numTwo}.</p>
+      What is its ${multiplePos} common multiple?
+      `;
+      while (holdingNum % p.numTwo != 0) {
+        holdingNum += p.numOne;
+      }
+      p.numOne = holdingNum;
+    }
+    console.log(p.numOne, p.numTwo, p.multiple);
+  }
   // Heuristics display
 
   if (level == "heuOne") {
@@ -10310,6 +10340,11 @@ function handleSubmit(e) {
         correctAnswer = p.numOne - p.numTwo;
       }
     }
+    if (level == "calFour") {
+      if (setting == 1) {
+        correctAnswer = `${p.numOne}, ${p.numOne * p.multiple}`;
+      }
+    }
 
     // heuristics Answer
     if (level == "heuOne") {
@@ -13036,6 +13071,19 @@ function genProblems() {
       };
     }
   }
+
+  if (level == "calFour") {
+    if (setting == 1) {
+      let number = genNumbers(8) + 2;
+      return {
+        numOne: number,
+        numTwo: genNumbers(number) + 2,
+        commonMultiple: undefined,
+        nextMultiples: undefined,
+        multiple: genNumbers(7) + 2,
+      };
+    }
+  }
   // setting
   if (level == "heuTwo") {
     let roll = undefined;
@@ -15502,6 +15550,17 @@ function buttonLevelSetting() {
       setting = prompt(
         "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing\n3. Addition (to-1000) (Carrying)\n4. Subtraction (to 1000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)"
       );
+      break;
+
+    case "Cal.4":
+      level = "calFour";
+      scoreNeeded = 10;
+      setting = prompt(
+        "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication"
+      );
+      document.querySelector("#user-input").setAttribute("type", "text");
+      displayProblem.style.fontSize = "18px";
+      displayProblem.style.textAlign = "left";
       break;
     // HEURISTICS SETTINGS
 
