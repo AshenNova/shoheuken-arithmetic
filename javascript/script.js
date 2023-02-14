@@ -6715,10 +6715,22 @@ function updateProblems() {
           console.log(el, arr3);
         });
       }
+      displayProblem.innerHTML = `
+      What is/are the common factors of ${p.numOne} and ${p.numTwo}?</p>
+      <i>List in ascending order.</i>`;
     }
-    displayProblem.innerHTML = `
-    What is/are the common factors of ${p.numOne} and ${p.numTwo}?</p>
-    <i>List in ascending order.</i>`;
+    if (setting == 4) {
+      if (p.numOne % 10 == 0) {
+        p.numOne += 1;
+      }
+      if (p.numTwo % 10 == 0) {
+        p.numTwo += 1;
+      }
+      firstNum.textContent = p.numOne;
+      secondNum.textContent = p.numTwo;
+      operator.textContent = "x";
+      workingAnswer.textContent = "?";
+    }
   }
   // Heuristics display
 
@@ -10411,6 +10423,9 @@ function handleSubmit(e) {
       if (setting == 3) {
         correctAnswer = arr3.join(", ");
       }
+      if (setting == 4) {
+        correctAnswer = p.numOne * p.numTwo;
+      }
     }
 
     // heuristics Answer
@@ -13161,6 +13176,12 @@ function genProblems() {
       return {
         numOne: genNumbers(30) + 6,
         numTwo: genNumbers(num) + 5,
+      };
+    }
+    if (setting == 4) {
+      return {
+        numOne: genNumbers(900) + 100,
+        numTwo: genNumbers(89) + 10,
       };
     }
   }
