@@ -6645,8 +6645,11 @@ function updateProblems() {
         "7th",
         "8th",
       ][p.multiple];
+
+      // START CHANGE DISPLAY
       wholeNumberContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
+      // END CHANGE DISPLAY
       let holdingNum = p.numOne;
       displayProblem.innerHTML = `
       What is the first common multiple of ${p.numOne} and ${p.numTwo}.</p>
@@ -6657,7 +6660,26 @@ function updateProblems() {
       }
       p.numOne = holdingNum;
     }
-    console.log(p.numOne, p.numTwo, p.multiple);
+    if (setting == 2) {
+      // START CHANGE DISPLAY
+      wholeNumberContainer.classList.remove("hidden");
+      workingContainer.classList.add("hidden");
+      // END CHANGE DISPLAY
+      let exclude = [7, 11, 13, 17, 23, 29, 31];
+      if (exclude.includes(p.numOne)) {
+        console.log("Prime number detected!");
+        return updateProblems();
+      }
+      for (let i = 1; i <= p.numOne; i++) {
+        if (p.numOne % i == 0) {
+          arr.push(i);
+        }
+      }
+      displayProblem.innerHTML = `
+      What are the factors of ${p.numOne}?</p>
+      <i>List in ascending order.</i>`;
+      console.log(arr);
+    }
   }
   // Heuristics display
 
@@ -10344,6 +10366,9 @@ function handleSubmit(e) {
       if (setting == 1) {
         correctAnswer = `${p.numOne}, ${p.numOne * p.multiple}`;
       }
+      if (setting == 2) {
+        correctAnswer = arr.join(", ");
+      }
     }
 
     // heuristics Answer
@@ -11463,6 +11488,7 @@ function handleSubmit(e) {
         "heuFive",
         "heuSix",
         "heuTwob",
+        "calFour",
       ];
       levelDoNotClearNum = [
         2.05,
@@ -13081,6 +13107,11 @@ function genProblems() {
         commonMultiple: undefined,
         nextMultiples: undefined,
         multiple: genNumbers(7) + 2,
+      };
+    }
+    if (setting == 2) {
+      return {
+        numOne: genNumbers(30) + 6,
       };
     }
   }
