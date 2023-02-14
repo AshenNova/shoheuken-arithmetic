@@ -6731,7 +6731,135 @@ function updateProblems() {
       operator.textContent = "x";
       workingAnswer.textContent = "?";
     }
+    if (setting == 5) {
+      // START CHANGE DISPLAY
+      if (p.numOne == p.numTwo) {
+        return updateProblems();
+      }
+      wholeNumberContainer.classList.remove("hidden");
+      workingContainer.classList.add("hidden");
+      // END CHANGE DISPLAY
+      if (genNumbers(2) == 0) {
+        displayProblem.innerHTML = `
+      ${p.numOne}/${p.numTwo} ≈ ?</p>
+      Round off your answer to ${p.roundOff} places.
+      `;
+      } else {
+        displayProblem.innerHTML = ` Divide
+            ${p.numOne} by ${p.numTwo}.</p>
+            Round off your answer to ${p.roundOff} places.
+            `;
+      }
+    }
   }
+
+  // if (level == "calFive") {
+  //   if (setting == 1) {
+  //     // START CHANGE DISPLAY
+  //     wholeNumberContainer.classList.remove("hidden");
+  //     workingContainer.classList.add("hidden");
+  //     // END CHANGE DISPLAY
+  //     let str = "";
+  //     let numOne = genNumbers(10) + 1;
+  //     let operators = ["+", "-", "x", "/"];
+  //     let firstNum = p.answer;
+  //     // 1. FIRST NUMBER
+  //     opsOne = operators[p.operatorOne];
+  //     if (opsOne == "+") {
+  //       str = `+${numOne}`;
+  //       firstNum = firstNum - numOne;
+  //     }
+  //     if (opsOne == "-") {
+  //       str = `-${numOne}`;
+  //       firstNum = firstNum + numOne;
+  //     }
+  //     firstNum = firstNum - numOne;
+  //     operators.splice(p.operatorOne, 1);
+  //     console.log(operators);
+  //     if (firstNum % 1 != 0 || firstNum < 0) {
+  //       return updateProblems();
+  //     }
+  //     // 2. SECOND NUMBER
+  //     opsTwo = operators[p.operatorTwo];
+  //     console.log(opsTwo);
+  //     let numTwo = genNumbers(10) + 1;
+  //     if (opsTwo == "+") {
+  //       if (genNumbers(2) == 1) {
+  //         str = `${str}${opsTwo}${numTwo}`;
+  //         firstNum = firstNum - numTwo;
+  //       } else {
+  //         str = `${opsTwo}${numTwo}${str}`;
+  //         firstNum = numTwo - firstNum;
+  //       }
+  //     }
+  //     if (opsTwo == "-") {
+  //       if (genNumbers(2) == 1) {
+  //         str = `${str}${opsTwo}${numTwo}`;
+  //         firstNum = firstNum + numTwo;
+  //       } else {
+  //         str = `${opsTwo}${numTwo}${str}`;
+  //         firstNum = numTwo + firstNum;
+  //       }
+  //     }
+  //     if (firstNum % 1 != 0 || firstNum < 0) {
+  //       return updateProblems();
+  //     }
+  //     operators.splice(p.operatorTwo, 1);
+  //     // // 3. NUMBER THREE
+  //     // opsThree = operators[p.operatorThree];
+  //     // console.log(opsThree);
+  //     // let numThree = genNumbers(10) + 1;
+  //     // if (opsThree == "x") {
+  //     //   if (genNumbers(2) == 1) {
+  //     //     str = `${str}${opsThree}${numThree}`;
+  //     //     firstNum = firstNum / numThree;
+  //     //   } else {
+  //     //     str = `${opsThree}${numThree}${str}`;
+  //     //     firstNum = numThree / firstNum;
+  //     //   }
+  //     // }
+  //     // if (opsThree == "/") {
+  //     //   if (genNumbers(2) == 1) {
+  //     //     str = `${str}${opsThree}${numThree}`;
+  //     //     firstNum = firstNum * numThree;
+  //     //   } else {
+  //     //     str = `${opsThree}${numThree}${str}`;
+  //     //     firstNum = numThree * firstNum;
+  //     //   }
+  //     // }
+  //     // operators.splice(p.operatorThree, 1);
+  //     // if (firstNum % 1 != 0 || firstNum < 0) {
+  //     //   return updateProblems();
+  //     // }
+  //     // // 4. NUMBER FOUR
+  //     // opsFour = operators[p.operatorFour];
+  //     // let numFour = genNumbers(10) + 1;
+  //     // if (opsFour == "x") {
+  //     //   if (genNumbers(2) == 1) {
+  //     //     str = `${str}${opsFour}${numFour}`;
+  //     //     firstNum = firstNum / numFour;
+  //     //   } else {
+  //     //     str = `${opsFour}${numFour}${str}`;
+  //     //     firstNum = numFour / firstNum;
+  //     //   }
+  //     // }
+  //     // if (opsFour == "/") {
+  //     //   if (genNumbers(2) == 1) {
+  //     //     str = `${str}${opsFour}${numFour}`;
+  //     //     firstNum = firstNum * numFour;
+  //     //   } else {
+  //     //     str = `${opsFour}${numFour}${str}`;
+  //     //     firstNum = numFour * firstNum;
+  //     //   }
+  //     // }
+  //     // if (firstNum % 1 != 0 || firstNum < 0) {
+  //     //   return updateProblems();
+  //     // }
+  //     // str = `${firstNum}${str}=`;
+  //     // LAST. DISPLAY
+  //     displayProblem.textContent = str;
+  //   }
+  // }
   // Heuristics display
 
   if (level == "heuOne") {
@@ -10426,8 +10554,15 @@ function handleSubmit(e) {
       if (setting == 4) {
         correctAnswer = p.numOne * p.numTwo;
       }
+      if (setting == 5) {
+        correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
+      }
     }
-
+    if (level == "calFive") {
+      if (setting == 1) {
+        correctAnswer = p.answer;
+      }
+    }
     // heuristics Answer
     if (level == "heuOne") {
       if (p.rollAB == "A" && p.rollVar == 0) {
@@ -13184,6 +13319,24 @@ function genProblems() {
         numTwo: genNumbers(89) + 10,
       };
     }
+    if (setting == 5) {
+      return {
+        numOne: genNumbers(10) + 1,
+        numTwo: [3, 7, 9, 11][genNumbers(4)],
+        roundOff: genNumbers(3) + 1,
+      };
+    }
+  }
+  if (level == "calFive") {
+    if (setting == 1) {
+      return {
+        answer: genNumbers(100) + 1,
+        operatorOne: genNumbers(2),
+        operatorTwo: genNumbers(1),
+        operatorThree: genNumbers(2),
+        operatorFour: genNumbers(1),
+      };
+    }
   }
   // setting
   if (level == "heuTwo") {
@@ -15657,8 +15810,17 @@ function buttonLevelSetting() {
       level = "calFour";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication"
+        "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Fractions to Decimal (Limit)"
       );
+      document.querySelector("#user-input").setAttribute("type", "text");
+      displayProblem.style.fontSize = "18px";
+      displayProblem.style.textAlign = "left";
+      break;
+
+    case "Cal.5":
+      level = "calFive";
+      scoreNeeded = 5;
+      setting = prompt("What level?\n1. BODMAS or Operator of Operation");
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
