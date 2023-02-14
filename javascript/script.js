@@ -6665,7 +6665,7 @@ function updateProblems() {
       wholeNumberContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
       // END CHANGE DISPLAY
-      let exclude = [7, 11, 13, 17, 23, 29, 31];
+      let exclude = [7, 11, 13, 17, 19, 23, 29, 31];
       if (exclude.includes(p.numOne)) {
         console.log("Prime number detected!");
         return updateProblems();
@@ -6678,8 +6678,47 @@ function updateProblems() {
       displayProblem.innerHTML = `
       What are the factors of ${p.numOne}?</p>
       <i>List in ascending order.</i>`;
-      console.log(arr);
     }
+    if (setting == 3) {
+      // START CHANGE DISPLAY
+      wholeNumberContainer.classList.remove("hidden");
+      workingContainer.classList.add("hidden");
+      // END CHANGE DISPLAY
+      let exclude = [7, 11, 13, 17, 19, 23, 29, 31];
+      if (
+        exclude.includes(p.numOne) ||
+        exclude.includes(p.numTwo) ||
+        p.numOne == p.numTwo
+      ) {
+        // console.log("Prime number detected!");
+        return updateProblems();
+      }
+      console.log(p.numOne, p.numTwo);
+      for (let i = 1; i <= p.numOne; i++) {
+        if (p.numOne % i == 0) {
+          arr.push(i);
+        }
+      }
+      for (let i = 1; i <= p.numTwo; i++) {
+        if (p.numTwo % i == 0) {
+          arr2.push(i);
+        }
+      }
+      if (arr.length <= arr2.length) {
+        arr.forEach((el) => {
+          if (arr2.includes(el)) arr3.push(el);
+          console.log(el, arr3);
+        });
+      } else {
+        arr2.forEach((el) => {
+          if (arr.includes(el)) arr3.push(el);
+          console.log(el, arr3);
+        });
+      }
+    }
+    displayProblem.innerHTML = `
+    What is/are the common factors of ${p.numOne} and ${p.numTwo}?</p>
+    <i>List in ascending order.</i>`;
   }
   // Heuristics display
 
@@ -10369,6 +10408,9 @@ function handleSubmit(e) {
       if (setting == 2) {
         correctAnswer = arr.join(", ");
       }
+      if (setting == 3) {
+        correctAnswer = arr3.join(", ");
+      }
     }
 
     // heuristics Answer
@@ -11408,7 +11450,7 @@ function handleSubmit(e) {
       if (level == 3.15 || level == 3.16) {
         arr2.length = 0;
       }
-      if (level == 4.17) {
+      if (level == 4.17 || level == "calFour") {
         arr = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
         arr2.length = 0;
         arr3.length = 0;
@@ -13112,6 +13154,13 @@ function genProblems() {
     if (setting == 2) {
       return {
         numOne: genNumbers(30) + 6,
+      };
+    }
+    if (setting == 3) {
+      let num = genNumbers(30) + 6;
+      return {
+        numOne: genNumbers(30) + 6,
+        numTwo: genNumbers(num) + 5,
       };
     }
   }
