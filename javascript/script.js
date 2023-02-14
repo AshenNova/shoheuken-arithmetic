@@ -6617,6 +6617,16 @@ function updateProblems() {
       operator.textContent = "-";
       workingAnswer.textContent = "?";
     }
+    if (setting == 3) {
+      while (p.numOne + p.numTwo >= 1000) {
+        if (p.numOne > p.numTwo) p.numOne -= 100;
+        if (p.numTwo > p.numOne) p.numTwo -= 100;
+      }
+      firstNum.textContent = p.numOne;
+      secondNum.textContent = p.numTwo;
+      operator.textContent = "+";
+      workingAnswer.textContent = "?";
+    }
   }
 
   // Heuristics display
@@ -10293,7 +10303,7 @@ function handleSubmit(e) {
       }
     }
     if (level == "calTwo") {
-      if (setting == 1) {
+      if (setting == 1 || setting == 3) {
         correctAnswer = p.numOne + p.numTwo;
       }
       if (setting == 2) {
@@ -13015,6 +13025,16 @@ function genProblems() {
           1,
       };
     }
+    if (setting == 3) {
+      let ones = genNumbers(10);
+      return {
+        numOne: (genNumbers(9) + 1) * 100 + (genNumbers(9) + 1) * 10 + ones,
+        numTwo:
+          (genNumbers(9) + 1) * 100 +
+          (genNumbers(9) + 1) * 10 +
+          (genNumbers(9) + 1 + (10 - ones)),
+      };
+    }
   }
   // setting
   if (level == "heuTwo") {
@@ -15480,7 +15500,7 @@ function buttonLevelSetting() {
       level = "calTwo";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing"
+        "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing\n3. Addition (to-1000) (Carrying)\n4. Subtraction (to 1000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)"
       );
       break;
     // HEURISTICS SETTINGS
