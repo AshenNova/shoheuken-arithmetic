@@ -330,15 +330,15 @@ button {
 }
 
 .btn-cal {
-  background-color: #f1c40f;
-  color: #512e5f;
-  border-color: #512e5f;
+  background-color: #acadbc;
+  color: #000500;
+  border-color: #6665dd;
 }
 
 .btn-cal:hover {
-  background-color: #512e5f;
-  color: #f1c40f;
-  border-color: #f1c40f;
+  background-color: #6665dd;
+  color: #000500;
+  border-color: #acadbc;
   border: solid 2px;
 }
 
