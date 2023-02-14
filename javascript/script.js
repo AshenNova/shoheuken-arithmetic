@@ -6736,6 +6736,7 @@ function updateProblems() {
       if (p.numOne == p.numTwo) {
         return updateProblems();
       }
+      [p.numOne, p.numTwo] = simplify(p.numOne, p.numTwo)
       wholeNumberContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
       // END CHANGE DISPLAY
