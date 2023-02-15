@@ -11863,37 +11863,81 @@ function handleSubmit(e) {
         }
 
         // HEURISTICS FOUR
-        if (
-          (level == "heuFour" && p.rollz == 1) ||
-          (level == "heuFour" && p.rollz == 2)
-        ) {
-          helpMe.innerHTML = `
-          excess & excess = -</p>
-          short & short = -</p>
-          excess & short = + </p>
-          1. Find big difference.</p>
-          2. Find small difference.</p>
-          3. Big difference / small difference = Groups </p> 
-          Maybe 4. Find ${p.rollz == 1 ? `Person ${p.objectOne}` : "sweets"}.
-          `;
-        }
-        if (level == "heuFour" && p.rollz == 3) {
-          helpMe.innerHTML = `
-          1. Find the number of workers that turned up.</p>
-          2. Find the total amount of extra work.</p>
-          3. Find what each worker were suppose to do.</p>
-          Maybe 4. Find the total.</p>
-          `;
-        }
-        if (level == "heuFour" && p.rollz == 4) {
-          helpMe.innerHTML = `
-          1. Subtraction the second equation with the first equation.</p>
-          2. Subtraction the units of ${p.objectThree} and ${p.objectTwo}.</p>
-          ${p.unitSentence} - 1</p>
-          3. Find 1 unit.</p>
-          ${p.groupTwo - p.groupOne}/${p.unitSentence - 1} = ${p.objectTwo}</p>
-          4. Find ${p.objectOne} using the first equation.
-          `;
+        if (level == "heuFour") {
+          if (p.rollz == 1 || p.rollz == 2) {
+            helpMe.innerHTML = `
+            excess & excess = -</p>
+            short & short = -</p>
+            excess & short = + </p>
+            1. Find big difference.</p>
+            2. Find small difference.</p>
+            3. Big difference / small difference = Groups </p> 
+            Maybe 4. Find ${p.rollz == 1 ? `Person ${p.objectOne}` : "sweets"}.
+            `;
+          }
+          if (p.rollz == 3) {
+            helpMe.innerHTML = `
+            1. Find the number of workers that turned up.</p>
+            2. Find the total amount of extra work.</p>
+            3. Find what each worker were suppose to do.</p>
+            Maybe 4. Find the total.</p>
+            `;
+          }
+          if (p.rollz == 4) {
+            helpMe.innerHTML = `
+            1. Subtraction the larger equation with the smaller equation.</p>
+            ${p.objectOne} + 1 unit = ${p.groupOne}</p>
+            ${p.objectOne} + ${p.unitSentence} units = ${p.groupTwo}</p>
+            ${p.groupTwo} - ${p.groupOne}</p>
+            2. Subtraction the units of ${p.objectThree} and ${p.objectTwo}.</p>
+            ${p.unitSentence} - 1</p>
+            3. Find 1 unit.</p>
+            ${p.groupTwo - p.groupOne}/${p.unitSentence - 1} = 1 unit => ${
+              p.objectTwo
+            }</p>
+            4. Find ${p.objectOne} using the first equation.
+            `;
+          }
+          if (p.rollz == 6) {
+            let quotient = Math.floor(p.total / (p.objectTwoQ + 1));
+            let remainder = p.total % (p.objectTwoQ + 1);
+            if (remainder == 0) {
+              helpMe.innerHTML = `
+              Calculation: ${p.objectOne}${p.objectTwo.repeat(
+                p.objectTwoQ
+              )} x ${quotient}</p>
+              Adjusted: ${p.objectOne}${p.objectTwo.repeat(p.objectTwoQ)} x ${
+                quotient - 1
+              } ... ${p.objectTwo.repeat(p.objectTwoQ)}${
+                p.objectOne
+              } (Swap positions)</p>
+              `;
+            }
+            if (remainder > 0) {
+              helpMe.innerHTML = `
+            Calculation: ${p.objectOne}${p.objectTwo.repeat(
+                p.objectTwoQ
+              )} x ${quotient}... ${p.objectOne}${p.objectTwo.repeat(
+                remainder - 1
+              )} </p>
+            `;
+            }
+            if (remainder > 1) {
+              let html = `Adjusted: ${p.objectOne}${p.objectTwo.repeat(
+                p.objectTwoQ
+              )} x ${quotient}... ${p.objectTwo.repeat(remainder - 1)}${
+                p.objectOne
+              } (swap positions)</p>`;
+              helpMe.insertAdjacentHTML("beforeend", html);
+            }
+            let html = `${p.objectOne}${p.objectTwo.repeat(p.objectTwoQ)}${
+              p.objectOne
+            }</p>
+            but 1 group is ${p.objectOne}${p.objectTwo.repeat(
+              p.objectTwoQ
+            )}</p>`;
+            helpMe.insertAdjacentHTML("afterbegin", html);
+          }
         }
 
         if (level == "heuFive") {
