@@ -62,6 +62,7 @@ const numeratorOne = document.querySelector(".numeratorOne");
 const numeratorTwo = document.querySelector(".numeratorTwo");
 const denominatorOne = document.querySelector(".denominatorOne");
 const denominatorTwo = document.querySelector(".denominatorTwo");
+const fractionsOperator = document.querySelector(".fractions-operator");
 
 const fractionsContainerTwo = document.querySelector(
   ".fractions-container-two"
@@ -6754,7 +6755,80 @@ function updateProblems() {
     }
   }
 
-  // if (level == "calFive") {
+  if (level == "calFive") {
+    if (setting == 1) {
+      // START CHANGE DISPLAY TO FRACTIONS
+      fractionsContainer.classList.remove("hidden");
+      workingContainer.classList.add("hidden");
+      const common = genNumbers(2);
+      if (common == 1) {
+        console.log("common");
+        let commonNumbers = [10, 100, 1000];
+        let commonPairs = [2, 5, 8, 25, 50, 100];
+        const numOrDeno = ["num", "deno"][genNumbers(2)];
+        const leftOrRightOne = ["L", "R"][genNumbers(2)];
+        const leftOrRightTwo = ["L", "R"][genNumbers(2)];
+        if (numOrDeno == "num") {
+          if (leftOrRightOne == "L") {
+            numeratorOne.textContent = p.numeratorOne =
+              commonNumbers[genNumbers(commonNumbers.length)];
+            numeratorTwo.textContent = p.numeratorTwo;
+          }
+          if (leftOrRightOne == "R") {
+            numeratorTwo.textContent = p.numeratorTwo;
+            commonNumbers[genNumbers(commonNumbers.length)];
+            numeratorOne.textContent = p.numeratorOne;
+          }
+          if (leftOrRightTwo == "L") {
+            denominatorOne.textContent = p.denominatorOne =
+              commonPairs[genNumbers(commonPairs.length)];
+            denominatorTwo.textContent = p.denominatorTwo;
+          }
+          if (leftOrRightTwo == "R") {
+            denominatorTwo.textContent = p.denominatorTwo =
+              commonPairs[genNumbers(commonPairs.length)];
+            denominatorOne.textContent = p.denominatorOne;
+          }
+        }
+        if (numOrDeno == "deno") {
+          if (leftOrRightOne == "L") {
+            denominatorOne.textContent = p.denominatorOne =
+              commonNumbers[genNumbers(commonNumbers.length)];
+            denominatorTwo.textContent = p.denominatorTwo;
+          }
+          if (leftOrRightOne == "R") {
+            denominatorTwo.textContent = p.denominatorTwo =
+              commonNumbers[genNumbers(commonNumbers.length)];
+            denominatorOne.textContent = p.denominatorOne;
+          }
+          if (leftOrRightTwo == "L") {
+            numeratorOne.textContent = p.numeratorOne =
+              commonPairs[genNumbers(commonPairs.length)];
+            numeratorTwo.textContent = p.numeratorTwo;
+          }
+          if (leftOrRightTwo == "R") {
+            numeratorTwo.textContent = p.numeratorTwo =
+              commonPairs[genNumbers(commonPairs.length)];
+            numeratorOne.textContent = p.numeratorOne;
+          }
+        }
+      } else {
+        if (
+          p.numeratorOne == p.denominatorOne ||
+          p.numeratorTwo == p.denominatorTwo
+        ) {
+          return updateProblems();
+        }
+        numeratorOne.textContent = p.numeratorOne;
+        denominatorOne.textContent = p.denominatorOne;
+        numeratorTwo.textContent = p.numeratorTwo;
+        denominatorTwo.textContent = p.denominatorTwo;
+      }
+      fractionsOperator.textContent = "x";
+      fractionChoice.textContent = "";
+      // END DISPLAY
+    }
+  }
   //   if (setting == 1) {
   //     // START CHANGE DISPLAY
   //     wholeNumberContainer.classList.remove("hidden");
@@ -10561,7 +10635,24 @@ function handleSubmit(e) {
     }
     if (level == "calFive") {
       if (setting == 1) {
-        correctAnswer = p.answer;
+        console.log(
+          p.numeratorOne,
+          p.denominatorOne,
+          p.numeratorTwo,
+          p.denominatorTwo
+        );
+        const totalNum = p.numeratorOne * p.numeratorTwo;
+        let totalDeno = p.denominatorOne * p.denominatorTwo;
+        const wholeNum = Math.floor(totalNum / totalDeno);
+        let remainder = totalNum % totalDeno;
+        [remainder, totalDeno] = simplify(remainder, totalDeno);
+        if (wholeNum == 0) {
+          correctAnswer = `${remainder}/${totalDeno}`;
+        } else if (remainder == 0) {
+          correctAnswer = wholeNum;
+        } else {
+          correctAnswer = `${wholeNum} ${remainder}/${totalDeno}`;
+        }
       }
     }
     // heuristics Answer
@@ -13434,11 +13525,10 @@ function genProblems() {
   if (level == "calFive") {
     if (setting == 1) {
       return {
-        answer: genNumbers(100) + 1,
-        operatorOne: genNumbers(2),
-        operatorTwo: genNumbers(1),
-        operatorThree: genNumbers(2),
-        operatorFour: genNumbers(1),
+        numeratorOne: genNumbers(10) + 1,
+        denominatorOne: genNumbers(10) + 1,
+        numeratorTwo: genNumbers(10) + 1,
+        denominatorTwo: genNumbers(10) + 1,
       };
     }
   }
@@ -15924,7 +16014,9 @@ function buttonLevelSetting() {
     case "Cal.5":
       level = "calFive";
       scoreNeeded = 5;
-      setting = prompt("What level?\n1. BODMAS or Operator of Operation");
+      setting = prompt(
+        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication"
+      );
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
