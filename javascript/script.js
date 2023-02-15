@@ -64,6 +64,8 @@ const denominatorOne = document.querySelector(".denominatorOne");
 const denominatorTwo = document.querySelector(".denominatorTwo");
 const fractionsOperator = document.querySelector(".fractions-operator");
 
+const displayTwoFractions = document.querySelector(".display-problems-two");
+const fractionsUnitOfMeasurement = document.querySelector(".unitOfMeasurement");
 const fractionsContainerTwo = document.querySelector(
   ".fractions-container-two"
 );
@@ -6758,11 +6760,13 @@ function updateProblems() {
   }
 
   if (level == "calFive") {
-    if (setting == 1) {
+    if (setting == 1 || setting == 2 || setting == 3) {
       // START CHANGE DISPLAY TO FRACTIONS
-      fractionsContainer.classList.remove("hidden");
+      fractionsContainerTwo.classList.remove("hidden");
       workingContainer.classList.add("hidden");
       // END DISPLAY
+    }
+    if (setting == 1) {
       const common = genNumbers(2);
       if (common == 1) {
         console.log("common");
@@ -6832,10 +6836,6 @@ function updateProblems() {
     }
 
     if (setting == 2) {
-      // START CHANGE DISPLAY TO FRACTIONS
-      fractionsContainerTwo.classList.remove("hidden");
-      workingContainer.classList.add("hidden");
-      // END DISPLAY
       threeNumerator.classList.add("hidden");
       threeDenominator.classList.add("hidden");
       if (p.numeratorOne == p.denominatorOne) {
@@ -6852,6 +6852,27 @@ function updateProblems() {
       twoDenominator.textContent = p.denominatorOne;
       threeWholeNumber.textContent = p.wholeTwo;
       equalSymbol.textContent = "x";
+    }
+    if (setting == 3) {
+      if (p.numeratorOne == p.denominatorOne) {
+        return updateProblems();
+      }
+      [p.numeratorOne, p.denominatorOne] = simplify(
+        p.numeratorOne,
+        p.denominatorOne
+      );
+      if (p.unitsMeasurement == "min " || p.unitsMeasurement == "h ") {
+        p.denominatorOne = [2, 5, 6, 10, 12, 15, 30, 60][genNumbers(8)];
+      }
+      displayTwoFractions.style.fontSize = "30px";
+      displayTwoFractions.style.marginBottom = "50px";
+      threeNumerator.classList.add("hidden");
+      threeDenominator.classList.add("hidden");
+      fractionsUnitOfMeasurement.textContent = p.unitsMeasurement;
+      twoWholeNumber.textContent = p.wholeOne;
+      twoNumerator.textContent = p.numeratorOne;
+      twoDenominator.textContent = p.denominatorOne;
+      threeWholeNumber.textContent = `? ${p.unitsPair}`;
     }
   }
   //   if (setting == 1) {
@@ -13577,6 +13598,16 @@ function genProblems() {
         wholeTwo: genNumbers(9) + 2,
       };
     }
+    if (setting == 3) {
+      let positions = genNumbers(6);
+      return {
+        unitsMeasurement: ["m ", "L ", "kg ", "h ", "min ", "km "][positions],
+        unitsPair: ["cm", "ml", "g", "mins", "secs", "m"][positions],
+        wholeOne: genNumbers(4) + 2,
+        numeratorOne: genNumbers(10) + 1,
+        denominatorOne: [2, 5, 8, 10, 20, 50, 100, 125][genNumbers(8)],
+      };
+    }
   }
   // setting
   if (level == "heuTwo") {
@@ -16061,11 +16092,11 @@ function buttonLevelSetting() {
       level = "calFive";
       scoreNeeded = 5;
       setting = prompt(
-        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication"
+        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion"
       );
       document.querySelector("#user-input").setAttribute("type", "text");
-      displayProblem.style.fontSize = "18px";
-      displayProblem.style.textAlign = "left";
+      // displayProblem.style.fontSize = "18px";
+      // displayProblem.style.textAlign = "left";
       break;
     // HEURISTICS SETTINGS
 
