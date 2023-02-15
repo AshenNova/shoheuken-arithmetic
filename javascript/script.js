@@ -11898,6 +11898,55 @@ function handleSubmit(e) {
             4. Find ${p.objectOne} using the first equation.
             `;
           }
+          if (p.rollz == 5) {
+            helpMe.innerHTML = `
+            1. Find the value of ${p.objectOneUnit} ${p.objectOne}.</p>
+            eg. Quantity x value</p>
+            2. Find the value of ${p.objectTwoUnit} ${p.objectTwo}.</p>
+            3. Find the value of a group.</p>
+            4. Find the number of groups. </p>
+            `;
+            if (p.rollQn2 == "many") {
+              if (p.rollQn == "A") {
+                let html = `
+                5. Find the total number of ${p.objectOne}.</p>
+                Groups x Quantity per group
+                `;
+                helpMe.insertAdjacentHTML("beforeend", html);
+              } else {
+                let html = `
+                5. Find the total number of ${p.objectTwo}.</p>
+                Groups x Quantity per group
+                `;
+                helpMe.insertAdjacentHTML("beforeend", html);
+              }
+            }
+            if (p.rollQn2 == "what") {
+              if (p.rollQn == "A") {
+                let html = `
+                6. Find the total value of ${p.objectOne}.</p>
+                Total Quantity x ${p.objectOneV}
+                `;
+                helpMe.insertAdjacentHTML("beforeend", html);
+              }
+              if (p.rollQn == "B") {
+                let html = `
+                6. Find the total value of ${p.objectTwo}.</p>
+                Total Quantity x ${p.objectTwoV}
+                `;
+                helpMe.insertAdjacentHTML("beforeend", html);
+              }
+            }
+            if (p.rollQn2 == "total") {
+              let html = `
+              5. Find the total quantity in a group.</p>
+              ${p.objectOneUnit} + ${p.objectTwoUnit} = Quantity in 1 group</p>
+              6. Find the total quantity.</p>
+              No. of Groups x Quantity in 1 group = ? </p>
+              `;
+              helpMe.insertAdjacentHTML("beforeend", html);
+            }
+          }
           if (p.rollz == 6) {
             let quotient = Math.floor(p.total / (p.objectTwoQ + 1));
             let remainder = p.total % (p.objectTwoQ + 1);
