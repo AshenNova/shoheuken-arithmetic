@@ -484,6 +484,8 @@ toMultiplesBtn.addEventListener("click", function () {
 const resetStuff = function () {
   fractionsContainer.classList.add("hidden");
   fractionsContainerTwo.classList.add("hidden");
+  threeNumerator.classList.remove("hidden");
+  threeDenominator.classList.remove("hidden");
   wholeNumberContainer.classList.remove("hidden");
   multiplesSettingCl.classList.add("hidden");
   firstCanvas.classList.add("hidden");
@@ -6760,6 +6762,7 @@ function updateProblems() {
       // START CHANGE DISPLAY TO FRACTIONS
       fractionsContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
+      // END DISPLAY
       const common = genNumbers(2);
       if (common == 1) {
         console.log("common");
@@ -6826,7 +6829,29 @@ function updateProblems() {
       }
       fractionsOperator.textContent = "x";
       fractionChoice.textContent = "";
+    }
+
+    if (setting == 2) {
+      // START CHANGE DISPLAY TO FRACTIONS
+      fractionsContainerTwo.classList.remove("hidden");
+      workingContainer.classList.add("hidden");
       // END DISPLAY
+      threeNumerator.classList.add("hidden");
+      threeDenominator.classList.add("hidden");
+      if (p.numeratorOne == p.denominatorOne) {
+        return updateProblems();
+      }
+      [p.numeratorOne, p.denominatorOne] = simplify(
+        p.numeratorOne,
+        p.denominatorOne
+      );
+      if (p.numeratorOne > p.denominatorOne)
+        [p.numeratorOne, p.denominatorOne] = [p.denominatorOne, p.numeratorOne];
+      twoWholeNumber.textContent = p.wholeOne;
+      twoNumerator.textContent = p.numeratorOne;
+      twoDenominator.textContent = p.denominatorOne;
+      threeWholeNumber.textContent = p.wholeTwo;
+      equalSymbol.textContent = "x";
     }
   }
   //   if (setting == 1) {
@@ -10654,6 +10679,19 @@ function handleSubmit(e) {
           correctAnswer = `${wholeNum} ${remainder}/${totalDeno}`;
         }
       }
+      if (setting == 2) {
+        let totalNum =
+          (p.denominatorOne * p.wholeOne + p.numeratorOne) * p.wholeTwo;
+        let totalDeno = p.denominatorOne;
+        const wholeNum = Math.floor(totalNum / totalDeno);
+        let remainder = totalNum % totalDeno;
+        [remainder, totalDeno] = simplify(remainder, totalDeno);
+        if (remainder == 0) {
+          correctAnswer = wholeNum;
+        } else {
+          correctAnswer = `${wholeNum} ${remainder}/${totalDeno}`;
+        }
+      }
     }
     // heuristics Answer
     if (level == "heuOne") {
@@ -13529,6 +13567,14 @@ function genProblems() {
         denominatorOne: genNumbers(10) + 1,
         numeratorTwo: genNumbers(10) + 1,
         denominatorTwo: genNumbers(10) + 1,
+      };
+    }
+    if (setting == 2) {
+      return {
+        wholeOne: genNumbers(4) + 2,
+        numeratorOne: genNumbers(10) + 1,
+        denominatorOne: genNumbers(10) + 1,
+        wholeTwo: genNumbers(9) + 2,
       };
     }
   }
