@@ -6647,9 +6647,14 @@ function updateProblems() {
       setting == 2 ||
       setting == 3 ||
       setting == 4 ||
-      setting ||
-      5
+      setting == 5 ||
+      setting == 6
     ) {
+      wholeNumberContainer.classList.add("hidden");
+      workingContainer.classList.remove("hidden");
+    }
+    if (setting == 7 || setting == 8) {
+      displayProblem.style.fontSize = "24px";
       wholeNumberContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
     }
@@ -6752,48 +6757,6 @@ function updateProblems() {
       console.log(arrOneStr, arrTwoStr);
       p.rowOne = arrOneStr.replace(p.value, "?");
       p.rowTwo = arrTwoStr.replace(p.value, "?");
-
-      // const rowOne = p.numOne.toString().replace(p.value, "?");
-      // const rowTwo = p.numTwo.toString().replace(p.value, "?");
-      // const rowTotal = p.numOne + p.numTwo;
-      // console.log(p.numOne, p.numTwo);
-      // if (p.numOne == p.numTwo || p.numFour == p.numTwo) {
-      //   return updateCalc();
-      // }
-      // if (p.version == "+") {
-      //   p.numOne = genNumbers(4) + 1;
-      //   p.numTwo = genNumbers(4) + 1;
-      //   if (p.numOne == p.numTwo || p.numFour == p.numTwo) {
-      //     return updateCalc();
-      //   }
-      //   p.rowOneValue = p.numOne * 10 + p.numTwo;
-      //   p.rowTwoValue = p.numTwo * 10 + p.numFour;
-      //   p.answerValue = p.rowOneValue + p.rowTwoValue;
-      //   let rowOne = `${p.numOne.toString()}?`;
-      //   let rowTwo = "?" + p.numFour.toString();
-      //   console.log(rowOne, rowTwo);
-      //   firstNum.textContent = rowOne;
-      //   secondNum.textContent = rowTwo;
-      //   operator.textContent = "+";
-      //   workingAnswer.textContent = p.answerValue;
-      // }
-      // if (p.version == "-") {
-      //   if (p.numOne == p.numTwo || p.numFour == p.numTwo) {
-      //     return updateCalc();
-      //   }
-      //   p.rowOneValue = p.numOne * 10 + p.numTwo;
-      //   p.rowTwoValue = p.numTwo * 10 + p.numFour;
-      //   if (p.rowTwoValue > p.rowOneValue) {
-      //     [p.rowTwoValue, p.rowOneValue] = [p.rowOneValue, p.rowTwoValue];
-      //   }
-      //   p.answerValue = p.rowOneValue - p.rowTwoValue;
-      //   let rowOne = p.rowOneValue.toString();
-      //   let rowTwo = p.rowTwoValue.toString();
-      //   console.log(rowOne, rowTwo);
-      //   rowOne = rowOne.replace(p.numTwo.toString(), "?");
-      //   rowTwo = rowTwo.replace(p.numTwo.toString(), "?");
-
-      // console.log(rowOne, rowTwo);
       firstNum.textContent = p.rowOne;
       secondNum.textContent = p.rowTwo;
       operator.textContent = p.operator;
@@ -6809,6 +6772,62 @@ function updateProblems() {
         }
         workingAnswer.textContent = p.numOne + p.numTwo;
       }
+    }
+    if (setting == 6) {
+      if (p.operator == "+") {
+        operator.textContent = p.operator;
+        while (p.numOne + p.numTwo > 1000) {
+          if (p.numOne > 200) {
+            p.numOne -= 100;
+          } else {
+            p.numTwo -= 100;
+          }
+        }
+        console.log(p.numOne.toString().length, p.numTwo.toString().length);
+        if (p.identity == "C") {
+          firstNum.textContent = "?".repeat(p.numOne.toString().length);
+          secondNum.textContent = p.numTwo;
+          workingAnswer.textContent = p.numOne + p.numTwo;
+        }
+        if (p.identity == "D") {
+          firstNum.textContent = p.numOne;
+          secondNum.textContent = "?".repeat(p.numTwo.toString().length);
+          workingAnswer.textContent = p.numOne + p.numTwo;
+        }
+      }
+      if (p.operator == "-") {
+        operator.textContent = p.operator;
+        if (p.numTwo > p.numOne) {
+          [p.numTwo, p.numOne] = [p.numOne, p.numTwo];
+        }
+        console.log(p.numOne.toString().length, p.numTwo.toString().length);
+        if (p.identity == "C") {
+          firstNum.textContent = "?".repeat(p.numOne.toString().length);
+          secondNum.textContent = p.numTwo;
+          workingAnswer.textContent = p.numOne - p.numTwo;
+        }
+        if (p.identity == "D") {
+          firstNum.textContent = p.numOne;
+          secondNum.textContent = "?".repeat(p.numTwo.toString().length);
+          workingAnswer.textContent = p.numOne - p.numTwo;
+        }
+      }
+      console.log(p.numOne, p.numTwo);
+    }
+
+    if (setting == 7) {
+      for (let i = 0; i < 6; i++) {
+        arr.push(p.startNum);
+        p.startNum += p.difference;
+      }
+      if (arr[5] > 1000 || arr[5] < 0 || p.difference == 0) {
+        arr = [];
+        return updateCalc();
+      }
+      p.answer = arr[p.position];
+      arr[p.position] = "____";
+      let displayStr = arr.join(", "); //Change arr to string
+      displayProblem.innerHTML = displayStr;
     }
   }
   if (level == "calThree") {
@@ -10913,6 +10932,13 @@ function handleSubmit(e) {
       if (setting == 5) {
         correctAnswer = p.value;
       }
+      if (setting == 6) {
+        if (p.identity == "D") correctAnswer = p.numTwo;
+        if (p.identity == "C") correctAnswer = p.numOne;
+      }
+      if (setting == 7 || setting == 8) {
+        correctAnswer = p.answer;
+      }
       skipGlobalUpdateProblem = 0;
     }
     if (level == "calThree") {
@@ -13867,6 +13893,22 @@ function genProblems() {
         rowTwo: undefined,
       };
     }
+    if (setting == 6) {
+      return {
+        operator: ["+", "-"][genNumbers(2)],
+        identity: ["C", "D"][genNumbers(2)],
+        numOne: genNumbers(999) + 1,
+        numTwo: genNumbers(999) + 1,
+      };
+    }
+    if (setting == 7) {
+      return {
+        startNum: genNumbers(500) + 500,
+        difference: genNumbers(200) - 100,
+        position: genNumbers(6),
+        answer: undefined,
+      };
+    }
   }
 
   if (level == "calThree") {
@@ -13975,7 +14017,7 @@ function genProblems() {
     if (setting == 3) {
       let positions = genNumbers(6);
       return {
-        unitsMeasurement: ["m ", "L ", "kg ", "h ", "min ", "km "][positions],
+        unitsMeasurement: ["m ", "ℓ ", "kg ", "h ", "min ", "km "][positions],
         unitsPair: ["cm", "ml", "g", "mins", "secs", "m"][positions],
         conversion: [100, 1000, 1000, 60, 60, 1000][positions],
         wholeOne: genNumbers(4) + 2,
