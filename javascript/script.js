@@ -6650,8 +6650,8 @@ function updateProblems() {
       setting ||
       5
     ) {
-      wholeNumberContainer.classList.toggle("hidden");
-      workingContainer.classList.toggle("hidden");
+      wholeNumberContainer.classList.remove("hidden");
+      workingContainer.classList.add("hidden");
     }
     if (setting == 1) {
       const numOneStr = p.numOne.toString();
