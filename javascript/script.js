@@ -515,6 +515,8 @@ const resetStuff = function () {
   ourForm2.classList.add("hidden");
   accumulatedScore = 0;
   heuArr.length = 0;
+  global = 0;
+  calArr = [];
 
   gold = 0;
   silver = 0;
@@ -6713,6 +6715,90 @@ function updateProblems() {
       operator.textContent = "-";
       workingAnswer.textContent = "?";
     }
+    if (setting == 5) {
+      let arrOne = p.numOne.toString().split("");
+      let arrTwo = p.numTwo.toString().split("");
+      let join = [...arrOne, ...arrTwo];
+      let unique = [...new Set(join)];
+      list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+      console.log(unique, list);
+      unique.forEach((el) => {
+        console.log(el);
+        let index = list.indexOf(el * 1);
+        list.splice(index, 1);
+      });
+      console.log(list);
+
+      p.value = list[genNumbers(list.length)];
+      arrOneStr = arrOne.join("");
+      arrTwoStr = arrTwo.join("");
+      console.log("Old: " + p.numOne, p.numTwo);
+      arrOneStr = arrOneStr.replace(arrOne[genNumbers(4)], p.value);
+      arrTwoStr = arrTwoStr.replace(arrTwo[genNumbers(4)], p.value);
+      p.numOne = arrOneStr * 1;
+      p.numTwo = arrTwoStr * 1;
+      console.log("New: " + p.numOne, p.numTwo);
+      console.log(arrOneStr, arrTwoStr);
+      p.rowOne = arrOneStr.replace(p.value, "?");
+      p.rowTwo = arrTwoStr.replace(p.value, "?");
+
+      // const rowOne = p.numOne.toString().replace(p.value, "?");
+      // const rowTwo = p.numTwo.toString().replace(p.value, "?");
+      // const rowTotal = p.numOne + p.numTwo;
+      // console.log(p.numOne, p.numTwo);
+      // if (p.numOne == p.numTwo || p.numFour == p.numTwo) {
+      //   return updateCalc();
+      // }
+      // if (p.version == "+") {
+      //   p.numOne = genNumbers(4) + 1;
+      //   p.numTwo = genNumbers(4) + 1;
+      //   if (p.numOne == p.numTwo || p.numFour == p.numTwo) {
+      //     return updateCalc();
+      //   }
+      //   p.rowOneValue = p.numOne * 10 + p.numTwo;
+      //   p.rowTwoValue = p.numTwo * 10 + p.numFour;
+      //   p.answerValue = p.rowOneValue + p.rowTwoValue;
+      //   let rowOne = `${p.numOne.toString()}?`;
+      //   let rowTwo = "?" + p.numFour.toString();
+      //   console.log(rowOne, rowTwo);
+      //   firstNum.textContent = rowOne;
+      //   secondNum.textContent = rowTwo;
+      //   operator.textContent = "+";
+      //   workingAnswer.textContent = p.answerValue;
+      // }
+      // if (p.version == "-") {
+      //   if (p.numOne == p.numTwo || p.numFour == p.numTwo) {
+      //     return updateCalc();
+      //   }
+      //   p.rowOneValue = p.numOne * 10 + p.numTwo;
+      //   p.rowTwoValue = p.numTwo * 10 + p.numFour;
+      //   if (p.rowTwoValue > p.rowOneValue) {
+      //     [p.rowTwoValue, p.rowOneValue] = [p.rowOneValue, p.rowTwoValue];
+      //   }
+      //   p.answerValue = p.rowOneValue - p.rowTwoValue;
+      //   let rowOne = p.rowOneValue.toString();
+      //   let rowTwo = p.rowTwoValue.toString();
+      //   console.log(rowOne, rowTwo);
+      //   rowOne = rowOne.replace(p.numTwo.toString(), "?");
+      //   rowTwo = rowTwo.replace(p.numTwo.toString(), "?");
+
+      // console.log(rowOne, rowTwo);
+      firstNum.textContent = p.rowOne;
+      secondNum.textContent = p.rowTwo;
+      operator.textContent = p.operator;
+      if (p.operator == "-") {
+        if (p.numOne - p.numTwo < 0 || p.numTwo > p.numOne) {
+          return updateCalc();
+        }
+        workingAnswer.textContent = p.numOne - p.numTwo;
+      }
+      if (p.operator == "+") {
+        if (p.numOne + p.numTwo > 10000) {
+          return updateCalc();
+        }
+        workingAnswer.textContent = p.numOne + p.numTwo;
+      }
+    }
   }
   if (level == "calThree") {
     if (setting == 1) {
@@ -8825,6 +8911,10 @@ function updateProblems() {
 }
 
 // updateProblems()
+const updateCalc = function () {
+  skipGlobalUpdateProblem = 1; // Skip global
+  updateProblems();
+};
 
 ourForm.addEventListener("submit", handleSubmit);
 ourForm2.addEventListener("submit", handleSubmit);
@@ -10804,6 +10894,9 @@ function handleSubmit(e) {
       if (setting == 2 || setting == 4) {
         correctAnswer = p.numOne - p.numTwo;
       }
+      if (setting == 5) {
+        correctAnswer = p.value;
+      }
       skipGlobalUpdateProblem = 0;
     }
     if (level == "calThree") {
@@ -10813,6 +10906,7 @@ function handleSubmit(e) {
       if (setting == 2) {
         correctAnswer = p.numOne - p.numTwo;
       }
+      skipGlobalUpdateProblem = 0;
     }
     if (level == "calFour") {
       if (setting == 1) {
@@ -10830,6 +10924,7 @@ function handleSubmit(e) {
       if (setting == 5) {
         correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
       }
+      skipGlobalUpdateProblem = 0;
     }
     if (level == "calFive") {
       if (setting == 1) {
@@ -10865,6 +10960,7 @@ function handleSubmit(e) {
           correctAnswer = `${wholeNum} ${remainder}/${totalDeno}`;
         }
       }
+      skipGlobalUpdateProblem = 0;
     }
     // heuristics Answer
     if (level == "heuOne") {
@@ -13646,7 +13742,6 @@ function genProblems() {
     }
     if (setting == 5) {
       return {
-        roll: undefined,
         version: ["+", "-"][genNumbers(2)],
         numOne: genNumbers(10),
         numTwo: genNumbers(10),
@@ -13690,7 +13785,7 @@ function genProblems() {
   if (level == "calTwo") {
     if (setting == 99 || (global == 1 && skipGlobalUpdateProblem == 0)) {
       global = 1;
-      setting = calArrAll(4, calArr);
+      setting = calArrAll(5, calArr);
     }
     if (setting == 1) {
       let hundreds = genNumbers(9) + 1;
@@ -13736,6 +13831,16 @@ function genProblems() {
         numOne: hundreds * 100 + tens * 10 + ones * 1,
         numTwo:
           genNumbers(hundreds) * 100 + genNumbers(10) * 10 + genNumbers(10) * 1,
+      };
+    }
+    if (setting == 5) {
+      return {
+        operator: ["+", "-"][genNumbers(2)],
+        numOne: genNumbers(8999) + 1000,
+        numTwo: genNumbers(8999) + 1000,
+        value: undefined,
+        rowOne: undefined,
+        rowTwo: undefined,
       };
     }
   }
