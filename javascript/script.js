@@ -10971,6 +10971,8 @@ function handleSubmit(e) {
           correctAnswer = `${wholeNum} ${remainder}/${totalDeno}`;
         }
       }
+      if (setting == 3) {
+      }
       skipGlobalUpdateProblem = 0;
     }
     // heuristics Answer
@@ -12201,7 +12203,7 @@ function handleSubmit(e) {
 
           if (p.rollz == 2) {
             helpMe.innerHTML = `
-          1. All it all be the other variable.<p>
+          1. Let all be the other variable.<p>
           2. Find big difference. </p>
           3. Find small difference </p>
           4. big difference/small difference</p>
