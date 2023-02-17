@@ -113,12 +113,15 @@ let arr = [];
 let arr2 = [];
 let arr3 = [];
 let heuArr = [];
+let calArr = [];
 let multiplesArr = [0];
 let gold = 0;
 let silver = 0;
 let bronze = 0;
 let hardcore = 0;
 let easy = 0;
+let global = 0;
+let skipGlobalUpdateProblem = 0;
 const commonMultipleArr = [];
 const commonMultipleArrTwo = [];
 let cutoff = 600;
@@ -6442,6 +6445,22 @@ function updateProblems() {
 
   // WORKING CALCULATION DISPLAY
   if (level == "calOne") {
+    if (
+      setting == 1 ||
+      setting == 2 ||
+      setting == 3 ||
+      setting == 4 ||
+      setting == 5 ||
+      setting == 6
+    ) {
+      wholeNumberContainer.classList.add("hidden");
+      workingContainer.classList.remove("hidden");
+    }
+    if (setting == 7 || setting == 8) {
+      displayProblem.style.fontSize = "24px";
+      wholeNumberContainer.classList.remove("hidden");
+      workingContainer.classList.add("hidden");
+    }
     if (setting == 1) {
       p.numOne = p.numOne + p.numTwo;
       p.numThree = p.numThree + p.numFour;
@@ -6457,6 +6476,7 @@ function updateProblems() {
       p.numOne = p.numOne + p.numTwo;
       p.numThree = p.numThree + p.numFour;
       if (p.numOne == p.numThree) {
+        skipGlobalUpdateProblem = 1;
         return updateProblems();
       }
       firstNum.textContent = p.numOne;
@@ -6466,6 +6486,7 @@ function updateProblems() {
     }
     if (setting == 3) {
       if (p.numTwo + p.numFour < 10) {
+        skipGlobalUpdateProblem = 1;
         return updateProblems();
       }
       p.numOne = p.numOne + p.numTwo;
@@ -6474,6 +6495,7 @@ function updateProblems() {
         [p.numOne, p.numThree] = [p.numThree, p.numOne];
       }
       if (p.numOne + p.numThree > 100) {
+        skipGlobalUpdateProblem = 1;
         return updateProblems();
       }
       firstNum.textContent = p.numOne;
@@ -6485,6 +6507,7 @@ function updateProblems() {
       p.numOne = p.numOne + p.numTwo;
       p.numThree = p.numThree + p.numFour;
       if (p.numOne % 10 == 0 && p.numThree % 10 == 0) {
+        skipGlobalUpdateProblem = 1;
         return updateProblems();
       }
       firstNum.textContent = p.numOne;
@@ -6495,12 +6518,14 @@ function updateProblems() {
 
     if (setting == 5) {
       if (p.numOne == p.numTwo || p.numFour == p.numTwo) {
+        skipGlobalUpdateProblem = 1;
         return updateProblems();
       }
       if (p.version == "+") {
         p.numOne = genNumbers(4) + 1;
         p.numTwo = genNumbers(4) + 1;
         if (p.numOne == p.numTwo || p.numFour == p.numTwo) {
+          skipGlobalUpdateProblem = 1;
           return updateProblems();
         }
         p.rowOneValue = p.numOne * 10 + p.numTwo;
@@ -6516,6 +6541,7 @@ function updateProblems() {
       }
       if (p.version == "-") {
         if (p.numOne == p.numTwo || p.numFour == p.numTwo) {
+          skipGlobalUpdateProblem = 1;
           return updateProblems();
         }
         p.rowOneValue = p.numOne * 10 + p.numTwo;
@@ -6578,14 +6604,13 @@ function updateProblems() {
       console.log(p.numOne, p.numTwo);
     }
     if (setting == 7) {
-      displayProblem.style.fontSize = "24px";
-      wholeNumberContainer.classList.remove("hidden");
-      workingContainer.classList.add("hidden");
       for (let i = 0; i < 6; i++) {
         arr.push(p.startNum);
         p.startNum += p.difference;
       }
-      if (arr[5] > 100 || arr[5] < 0) {
+      if (arr[5] > 100 || arr[5] < 0 || p.difference == 0) {
+        arr = [];
+        skipGlobalUpdateProblem = 1;
         return updateProblems();
       }
       p.answer = arr[p.position];
@@ -6594,6 +6619,23 @@ function updateProblems() {
       displayProblem.innerHTML = displayStr;
     }
     if (setting == 8) {
+      for (let i = 0; i < 6; i++) {
+        arr.push(p.startNum);
+        i++;
+        p.startNum += p.diffOne;
+        arr.push(p.startNum);
+        p.startNum += p.diffTwo;
+      }
+      if (arr[5] > 100 || arr[5] < 0 || p.diffOne == 0 || p.diffTwo == 0) {
+        console.log(arr[5]);
+        arr = [];
+        skipGlobalUpdateProblem = 1;
+        return updateProblems();
+      }
+      p.answer = arr[p.position];
+      arr[p.position] = "____";
+      let displayStr = arr.join(", "); //Change arr to string
+      displayProblem.innerHTML = displayStr;
     }
   }
 
@@ -6608,6 +6650,7 @@ function updateProblems() {
       for (let i = 0; i < numOneStr.length; i++) {
         console.log(numOneStr[i] * 1 + numTwoStr[i] * 1);
         if (numOneStr[i] * 1 + numTwoStr[i] * 1 >= 10) {
+          skipGlobalUpdateProblem = 1;
           return updateProblems();
         } else {
           console.log(numOneStr[i], numTwoStr[i]);
@@ -6630,6 +6673,7 @@ function updateProblems() {
       // console.log(numTwoStr);
       for (let i = 0; i < numOneStr.length; i++) {
         if (numOneStr[i] * 1 - numTwoStr[i] * 1 < 0) {
+          skipGlobalUpdateProblem = 1;
           return updateProblems();
         } else {
           console.log(numOneStr[i], numTwoStr[i]);
@@ -6650,6 +6694,25 @@ function updateProblems() {
       operator.textContent = "+";
       workingAnswer.textContent = "?";
     }
+
+    if (setting == 4) {
+      const arr = p.numOne.toString().split("");
+      const arr2 = p.numTwo.toString().split("");
+      for (let i = 0; i < 5; i++) {
+        if (arr[i] - arr2[i] < 0) {
+          break;
+        }
+        if (i == 4) {
+          updateProblem == 1;
+          return updateProblems();
+        }
+      }
+      console.log(arr, arr2);
+      firstNum.textContent = p.numOne;
+      secondNum.textContent = p.numTwo;
+      operator.textContent = "-";
+      workingAnswer.textContent = "?";
+    }
   }
   if (level == "calThree") {
     if (setting == 1) {
@@ -6662,6 +6725,7 @@ function updateProblems() {
       for (let i = 0; i < numOneStr.length; i++) {
         console.log(numOneStr[i] * 1 + numTwoStr[i] * 1);
         if (numOneStr[i] * 1 + numTwoStr[i] * 1 >= 10) {
+          skipGlobalUpdateProblem = 1;
           return updateProblems();
         } else {
           console.log(numOneStr[i], numTwoStr[i]);
@@ -10728,17 +10792,19 @@ function handleSubmit(e) {
         if (p.identity == "D") correctAnswer = p.numTwo;
         if (p.identity == "C") correctAnswer = p.numOne;
       }
-      if (setting == 7) {
+      if (setting == 7 || setting == 8) {
         correctAnswer = p.answer;
       }
+      skipGlobalUpdateProblem = 0;
     }
     if (level == "calTwo") {
       if (setting == 1 || setting == 3) {
         correctAnswer = p.numOne + p.numTwo;
       }
-      if (setting == 2) {
+      if (setting == 2 || setting == 4) {
         correctAnswer = p.numOne - p.numTwo;
       }
+      skipGlobalUpdateProblem = 0;
     }
     if (level == "calThree") {
       if (setting == 1 || setting == 3) {
@@ -12285,6 +12351,11 @@ function handleSubmit(e) {
           console.log(heuArr);
         }
       }
+      // adds cal back into array if wrong
+      if (!calArr.includes(setting)) {
+        calArr.push(setting);
+        console.log(`Incorrect, try setting ${setting} again!`);
+      }
     }
   }
 }
@@ -13512,10 +13583,30 @@ function genProblems() {
   }
 
   // WORKING CALCULATION SETTING
+  function calArrAll(max, arr) {
+    if (!arr.length) {
+      for (let i = 1; i < max + 1; i++) {
+        arr.push(i);
+      }
+    }
+    setting = arr[genNumbers(arr.length)];
+    arr.splice(arr.indexOf(setting), 1);
+    console.log(
+      `Setting: ${setting} chosen. The remaining settings in calculation arr is ${arr}`
+    );
+    return setting;
+  }
+
   if (level == "calOne") {
+    if (setting == 99 || (global == 1 && skipGlobalUpdateProblem == 0)) {
+      global = 1;
+      setting = calArrAll(8, calArr);
+    }
+
     if (setting == 1) {
       let ones = genNumbers(10);
       return {
+        roll: undefined,
         numOne: (genNumbers(4) + 1) * 10,
         numTwo: ones,
         numThree: (genNumbers(5) + 1) * 10,
@@ -13526,6 +13617,7 @@ function genProblems() {
       let ones = genNumbers(9) + 1;
       let tens = genNumbers(9) + 1;
       return {
+        roll: undefined,
         numOne: tens * 10,
         numTwo: ones * 1,
         numThree: (genNumbers(tens) + 1) * 10,
@@ -13533,9 +13625,8 @@ function genProblems() {
       };
     }
     if (setting == 3) {
-      let firstOnes = genNumbers(10);
-      let secondOnes = genNumbers(10);
       return {
+        roll: undefined,
         numOne: (genNumbers(5) + 1) * 10,
         numTwo: genNumbers(10),
         numThree: (genNumbers(5) + 1) * 10,
@@ -13546,6 +13637,7 @@ function genProblems() {
       let ones = genNumbers(10);
       let tens = genNumbers(8) + 2;
       return {
+        roll: undefined,
         numOne: tens * 10,
         numTwo: genNumbers(ones),
         numThree: genNumbers(tens) * 10,
@@ -13554,6 +13646,7 @@ function genProblems() {
     }
     if (setting == 5) {
       return {
+        roll: undefined,
         version: ["+", "-"][genNumbers(2)],
         numOne: genNumbers(10),
         numTwo: genNumbers(10),
@@ -13566,6 +13659,7 @@ function genProblems() {
     }
     if (setting == 6) {
       return {
+        roll: undefined,
         operator: ["+", "-"][genNumbers(2)],
         identity: ["C", "D"][genNumbers(2)],
         numOne: genNumbers(90) + 10,
@@ -13574,8 +13668,19 @@ function genProblems() {
     }
     if (setting == 7) {
       return {
+        roll: undefined,
         startNum: genNumbers(100) + 1,
         difference: genNumbers(41) - 20,
+        position: genNumbers(6),
+        answer: undefined,
+      };
+    }
+    if (setting == 8) {
+      return {
+        roll: undefined,
+        startNum: genNumbers(100) + 1,
+        diffOne: genNumbers(41) - 20,
+        diffTwo: genNumbers(41) - 20,
         position: genNumbers(6),
         answer: undefined,
       };
@@ -13583,6 +13688,10 @@ function genProblems() {
   }
 
   if (level == "calTwo") {
+    if (setting == 99 || (global == 1 && skipGlobalUpdateProblem == 0)) {
+      global = 1;
+      setting = calArrAll(4, calArr);
+    }
     if (setting == 1) {
       let hundreds = genNumbers(9) + 1;
       let tens = genNumbers(9) + 1;
@@ -13619,7 +13728,18 @@ function genProblems() {
           (genNumbers(9) + 1 + (10 - ones)),
       };
     }
+    if (setting == 4) {
+      let ones = genNumbers(10);
+      let tens = genNumbers(10);
+      let hundreds = genNumbers(9) + 1;
+      return {
+        numOne: hundreds * 100 + tens * 10 + ones * 1,
+        numTwo:
+          genNumbers(hundreds) * 100 + genNumbers(10) * 10 + genNumbers(10) * 1,
+      };
+    }
   }
+
   if (level == "calThree") {
     if (setting == 1) {
       let thousands = genNumbers(9) + 1;
