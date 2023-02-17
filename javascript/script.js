@@ -6642,6 +6642,17 @@ function updateProblems() {
   }
 
   if (level == "calTwo") {
+    if (
+      setting == 1 ||
+      setting == 2 ||
+      setting == 3 ||
+      setting == 4 ||
+      setting ||
+      5
+    ) {
+      wholeNumberContainer.classList.toggle("hidden");
+      workingContainer.classList.toggle("hidden");
+    }
     if (setting == 1) {
       const numOneStr = p.numOne.toString();
       let numTwoStr = p.numTwo.toString();
