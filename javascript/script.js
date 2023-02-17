@@ -7093,12 +7093,17 @@ function updateProblems() {
       if (p.numeratorOne == p.denominatorOne) {
         return updateProblems();
       }
-      [p.numeratorOne, p.denominatorOne] = simplify(
-        p.numeratorOne,
-        p.denominatorOne
-      );
+      // [p.numeratorOne, p.denominatorOne] = simplify(
+      //   p.numeratorOne,
+      //   p.denominatorOne
+      // );
+
       if (p.unitsMeasurement == "min " || p.unitsMeasurement == "h ") {
         p.denominatorOne = [2, 5, 6, 10, 12, 15, 30, 60][genNumbers(8)];
+      }
+      if (p.numeratorOne > p.denominatorOne) {
+        p.wholeOne += Math.floor(p.numeratorOne / p.denominatorOne);
+        p.numeratorOne = p.numeratorOne % p.denominatorOne;
       }
       displayTwoFractions.style.fontSize = "30px";
       displayTwoFractions.style.marginBottom = "50px";
@@ -10972,6 +10977,11 @@ function handleSubmit(e) {
         }
       }
       if (setting == 3) {
+        let numerator =
+          p.wholeOne * p.conversion +
+          p.conversion * (p.numeratorOne / p.denominatorOne);
+
+        correctAnswer = numerator;
       }
       skipGlobalUpdateProblem = 0;
     }
@@ -13967,6 +13977,7 @@ function genProblems() {
       return {
         unitsMeasurement: ["m ", "L ", "kg ", "h ", "min ", "km "][positions],
         unitsPair: ["cm", "ml", "g", "mins", "secs", "m"][positions],
+        conversion: [100, 1000, 1000, 60, 60, 1000][positions],
         wholeOne: genNumbers(4) + 2,
         numeratorOne: genNumbers(10) + 1,
         denominatorOne: [2, 5, 8, 10, 20, 50, 100, 125][genNumbers(8)],
