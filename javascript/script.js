@@ -13941,6 +13941,10 @@ function genProblems() {
   }
 
   if (level == "calThree") {
+    if (setting == 99 || (global == 1 && skipGlobalUpdateProblem == 0)) {
+      global = 1;
+      setting = calArrAll(3, calArr);
+    }
     if (setting == 1) {
       let thousands = genNumbers(9) + 1;
       let hundreds = genNumbers(9) + 1;
