@@ -12205,8 +12205,9 @@ function handleSubmit(e) {
             helpMe.innerHTML = `
           1. Let all be the other variable.<p>
           2. Find big difference. </p>
-          3. Find small difference </p>
-          4. big difference/small difference</p>
+          3. Find small difference. </p>
+          eg. This allows you to change 1 variable to another.</p>
+          4. Big difference/small difference</p>
           `;
           }
           if (p.rollz == 3) {
