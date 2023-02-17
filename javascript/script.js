@@ -6829,6 +6829,25 @@ function updateProblems() {
       let displayStr = arr.join(", "); //Change arr to string
       displayProblem.innerHTML = displayStr;
     }
+
+    if (setting == 8) {
+      for (let i = 0; i < 6; i++) {
+        arr.push(p.startNum);
+        i++;
+        p.startNum += p.diffOne;
+        arr.push(p.startNum);
+        p.startNum += p.diffTwo;
+      }
+      if (arr[5] > 1000 || arr[5] < 0 || p.diffOne == 0 || p.diffTwo == 0) {
+        console.log(arr[5]);
+        arr = [];
+        updateCalc();
+      }
+      p.answer = arr[p.position];
+      arr[p.position] = "____";
+      let displayStr = arr.join(", "); //Change arr to string
+      displayProblem.innerHTML = displayStr;
+    }
   }
   if (level == "calThree") {
     if (setting == 1) {
@@ -13835,7 +13854,7 @@ function genProblems() {
   if (level == "calTwo") {
     if (setting == 99 || (global == 1 && skipGlobalUpdateProblem == 0)) {
       global = 1;
-      setting = calArrAll(5, calArr);
+      setting = calArrAll(8, calArr);
     }
     if (setting == 1) {
       let hundreds = genNumbers(9) + 1;
@@ -13905,6 +13924,16 @@ function genProblems() {
       return {
         startNum: genNumbers(500) + 500,
         difference: genNumbers(200) - 100,
+        position: genNumbers(6),
+        answer: undefined,
+      };
+    }
+    if (setting == 8) {
+      return {
+        roll: undefined,
+        startNum: genNumbers(500) + 500,
+        diffOne: genNumbers(200) - 100,
+        diffTwo: genNumbers(200) - 100,
         position: genNumbers(6),
         answer: undefined,
       };
@@ -16507,7 +16536,7 @@ function buttonLevelSetting() {
       level = "calTwo";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing\n3. Addition (to-1000) (Carrying)\n4. Subtraction (to 1000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)"
+        "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing\n3. Addition (to-1000) (Carrying)\n4. Subtraction (to 1000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger"
       );
       break;
     case "Cal.3":
