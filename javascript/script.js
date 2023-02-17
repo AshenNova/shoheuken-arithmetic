@@ -6577,6 +6577,24 @@ function updateProblems() {
       }
       console.log(p.numOne, p.numTwo);
     }
+    if (setting == 7) {
+      displayProblem.style.fontSize = "24px";
+      wholeNumberContainer.classList.remove("hidden");
+      workingContainer.classList.add("hidden");
+      for (let i = 0; i < 6; i++) {
+        arr.push(p.startNum);
+        p.startNum += p.difference;
+      }
+      if (arr[5] > 100 || arr[5] < 0) {
+        return updateProblems();
+      }
+      p.answer = arr[p.position];
+      arr[p.position] = "____";
+      let displayStr = arr.join(", "); //Change arr to string
+      displayProblem.innerHTML = displayStr;
+    }
+    if (setting == 8) {
+    }
   }
 
   if (level == "calTwo") {
@@ -6626,6 +6644,60 @@ function updateProblems() {
       while (p.numOne + p.numTwo >= 1000) {
         if (p.numOne > p.numTwo) p.numOne -= 100;
         if (p.numTwo > p.numOne) p.numTwo -= 100;
+      }
+      firstNum.textContent = p.numOne;
+      secondNum.textContent = p.numTwo;
+      operator.textContent = "+";
+      workingAnswer.textContent = "?";
+    }
+  }
+  if (level == "calThree") {
+    if (setting == 1) {
+      const numOneStr = p.numOne.toString();
+      let numTwoStr = p.numTwo.toString();
+      // if (countA != countB) {
+      //   numTwoStr.padStart(countA, "0");
+      // }
+      // console.log(numTwoStr);
+      for (let i = 0; i < numOneStr.length; i++) {
+        console.log(numOneStr[i] * 1 + numTwoStr[i] * 1);
+        if (numOneStr[i] * 1 + numTwoStr[i] * 1 >= 10) {
+          return updateProblems();
+        } else {
+          console.log(numOneStr[i], numTwoStr[i]);
+        }
+      }
+      firstNum.textContent = p.numOne;
+      secondNum.textContent = p.numTwo;
+      operator.textContent = "+";
+      workingAnswer.textContent = "?";
+    }
+    if (setting == 2) {
+      // if (p.numTwo > p.numOne) {
+      //   [p.numTwo, p.numOne] = [p.numOne, p.numTwo];
+      // }
+      const numOneStr = p.numOne.toString();
+      let numTwoStr = p.numTwo.toString();
+      // if (countA != countB) {
+      //   numTwoStr.padStart(countA, "0");
+      // }
+      // console.log(numTwoStr);
+      for (let i = 0; i < numOneStr.length; i++) {
+        if (numOneStr[i] * 1 - numTwoStr[i] * 1 < 0) {
+          return updateProblems();
+        } else {
+          console.log(numOneStr[i], numTwoStr[i]);
+        }
+      }
+      firstNum.textContent = p.numOne;
+      secondNum.textContent = p.numTwo;
+      operator.textContent = "-";
+      workingAnswer.textContent = "?";
+    }
+    if (setting == 3) {
+      while (p.numOne + p.numTwo >= 10000) {
+        if (p.numOne > p.numTwo) p.numOne -= 1000;
+        if (p.numTwo > p.numOne) p.numTwo -= 1000;
       }
       firstNum.textContent = p.numOne;
       secondNum.textContent = p.numTwo;
@@ -6760,13 +6832,15 @@ function updateProblems() {
   }
 
   if (level == "calFive") {
-    if (setting == 1 || setting == 2 || setting == 3) {
+    if (setting == 2 || setting == 3) {
       // START CHANGE DISPLAY TO FRACTIONS
       fractionsContainerTwo.classList.remove("hidden");
       workingContainer.classList.add("hidden");
       // END DISPLAY
     }
     if (setting == 1) {
+      fractionsContainer.classList.remove("hidden");
+      workingContainer.classList.add("hidden");
       const common = genNumbers(2);
       if (common == 1) {
         console.log("common");
@@ -6777,48 +6851,49 @@ function updateProblems() {
         const leftOrRightTwo = ["L", "R"][genNumbers(2)];
         if (numOrDeno == "num") {
           if (leftOrRightOne == "L") {
-            numeratorOne.textContent = p.numeratorOne =
-              commonNumbers[genNumbers(commonNumbers.length)];
+            p.numeratorOne = commonNumbers[genNumbers(commonNumbers.length)];
+            numeratorOne.textContent = p.numeratorOne;
             numeratorTwo.textContent = p.numeratorTwo;
           }
           if (leftOrRightOne == "R") {
+            p.numeratorTwo = commonNumbers[genNumbers(commonNumbers.length)];
             numeratorTwo.textContent = p.numeratorTwo;
-            commonNumbers[genNumbers(commonNumbers.length)];
             numeratorOne.textContent = p.numeratorOne;
           }
           if (leftOrRightTwo == "L") {
-            denominatorOne.textContent = p.denominatorOne =
-              commonPairs[genNumbers(commonPairs.length)];
+            p.denominatorOne = commonPairs[genNumbers(commonPairs.length)];
+            denominatorOne.textContent = p.denominatorOne;
             denominatorTwo.textContent = p.denominatorTwo;
           }
           if (leftOrRightTwo == "R") {
-            denominatorTwo.textContent = p.denominatorTwo =
-              commonPairs[genNumbers(commonPairs.length)];
+            p.denominatorTwo = commonPairs[genNumbers(commonPairs.length)];
+            denominatorTwo.textContent = p.denominatorTwo;
             denominatorOne.textContent = p.denominatorOne;
           }
         }
         if (numOrDeno == "deno") {
           if (leftOrRightOne == "L") {
-            denominatorOne.textContent = p.denominatorOne =
-              commonNumbers[genNumbers(commonNumbers.length)];
+            p.denominatorOne = commonNumbers[genNumbers(commonNumbers.length)];
+            denominatorOne.textContent = p.denominatorOne;
             denominatorTwo.textContent = p.denominatorTwo;
           }
           if (leftOrRightOne == "R") {
-            denominatorTwo.textContent = p.denominatorTwo =
-              commonNumbers[genNumbers(commonNumbers.length)];
+            p.denominatorTwo = commonNumbers[genNumbers(commonNumbers.length)];
+            denominatorTwo.textContent = p.denominatorTwo;
             denominatorOne.textContent = p.denominatorOne;
           }
           if (leftOrRightTwo == "L") {
-            numeratorOne.textContent = p.numeratorOne =
-              commonPairs[genNumbers(commonPairs.length)];
+            p.numeratorOne = commonPairs[genNumbers(commonPairs.length)];
+            numeratorOne.textContent = p.numeratorOne;
             numeratorTwo.textContent = p.numeratorTwo;
           }
           if (leftOrRightTwo == "R") {
-            numeratorTwo.textContent = p.numeratorTwo =
-              commonPairs[genNumbers(commonPairs.length)];
+            p.numeratorTwo = commonPairs[genNumbers(commonPairs.length)];
+            numeratorTwo.textContent = p.numeratorTwo;
             numeratorOne.textContent = p.numeratorOne;
           }
         }
+        console.log("End");
       } else {
         if (
           p.numeratorOne == p.denominatorOne ||
@@ -10653,8 +10728,19 @@ function handleSubmit(e) {
         if (p.identity == "D") correctAnswer = p.numTwo;
         if (p.identity == "C") correctAnswer = p.numOne;
       }
+      if (setting == 7) {
+        correctAnswer = p.answer;
+      }
     }
     if (level == "calTwo") {
+      if (setting == 1 || setting == 3) {
+        correctAnswer = p.numOne + p.numTwo;
+      }
+      if (setting == 2) {
+        correctAnswer = p.numOne - p.numTwo;
+      }
+    }
+    if (level == "calThree") {
       if (setting == 1 || setting == 3) {
         correctAnswer = p.numOne + p.numTwo;
       }
@@ -13486,23 +13572,14 @@ function genProblems() {
         numTwo: genNumbers(90) + 10,
       };
     }
-  }
-  // heuristics value
-  if (level == "heuOne") {
-    return {
-      roll: [
-        ["more", "less", "ml"],
-        ["greater", "smaller", ""],
-        ["taller", "shorter", "cm"],
-        ["longer", "shorter", "m"],
-        ["heavier", "lighter", "kg"],
-      ],
-      rollPosition: genNumbers(5),
-      rollAB: ["A", "B"][genNumbers(2)],
-      rollVar: [0, 1][genNumbers(2)],
-      numOne: genNumbers(9) + 1,
-      numTwo: genNumbers(9) + 1,
-    };
+    if (setting == 7) {
+      return {
+        startNum: genNumbers(100) + 1,
+        difference: genNumbers(41) - 20,
+        position: genNumbers(6),
+        answer: undefined,
+      };
+    }
   }
 
   if (level == "calTwo") {
@@ -13537,6 +13614,53 @@ function genProblems() {
       return {
         numOne: (genNumbers(9) + 1) * 100 + (genNumbers(9) + 1) * 10 + ones,
         numTwo:
+          (genNumbers(9) + 1) * 100 +
+          (genNumbers(9) + 1) * 10 +
+          (genNumbers(9) + 1 + (10 - ones)),
+      };
+    }
+  }
+  if (level == "calThree") {
+    if (setting == 1) {
+      let thousands = genNumbers(9) + 1;
+      let hundreds = genNumbers(9) + 1;
+      let tens = genNumbers(9) + 1;
+      let ones = genNumbers(9) + 1;
+      return {
+        numOne: thousands * 1000 + hundreds * 100 + tens * 10 + ones,
+        numTwo:
+          (genNumbers(thousands) + 1) * 100 +
+          (genNumbers(hundreds) + 1) * 100 +
+          (genNumbers(tens) + 1) * 10 +
+          genNumbers(ones) +
+          1,
+      };
+    }
+    if (setting == 2) {
+      let thousands = genNumbers(9) + 1;
+      let hundreds = genNumbers(9) + 1;
+      let tens = genNumbers(9) + 1;
+      let ones = genNumbers(9) + 1;
+      return {
+        numOne: thousands * 1000 + hundreds * 100 + tens * 10 + ones,
+        numTwo:
+          (genNumbers(thousands) + 1) * 1000 +
+          (genNumbers(hundreds) + 1) * 100 +
+          (genNumbers(tens) + 1) * 10 +
+          genNumbers(ones) +
+          1,
+      };
+    }
+    if (setting == 3) {
+      let ones = genNumbers(10);
+      return {
+        numOne:
+          (genNumbers(9) + 1) * 1000 +
+          (genNumbers(9) + 1) * 100 +
+          (genNumbers(9) + 1) * 10 +
+          ones,
+        numTwo:
+          (genNumbers(9) + 1) * 1000 +
           (genNumbers(9) + 1) * 100 +
           (genNumbers(9) + 1) * 10 +
           (genNumbers(9) + 1 + (10 - ones)),
@@ -13583,6 +13707,7 @@ function genProblems() {
   }
   if (level == "calFive") {
     if (setting == 1) {
+      console.log("setting 1");
       return {
         numeratorOne: genNumbers(10) + 1,
         denominatorOne: genNumbers(10) + 1,
@@ -13609,7 +13734,24 @@ function genProblems() {
       };
     }
   }
+  // heuristics value
   // setting
+  if (level == "heuOne") {
+    return {
+      roll: [
+        ["more", "less", "ml"],
+        ["greater", "smaller", ""],
+        ["taller", "shorter", "cm"],
+        ["longer", "shorter", "m"],
+        ["heavier", "lighter", "kg"],
+      ],
+      rollPosition: genNumbers(5),
+      rollAB: ["A", "B"][genNumbers(2)],
+      rollVar: [0, 1][genNumbers(2)],
+      numOne: genNumbers(9) + 1,
+      numTwo: genNumbers(9) + 1,
+    };
+  }
   if (level == "heuTwo") {
     let roll = undefined;
     let settingText = setting.toString();
@@ -16066,7 +16208,7 @@ function buttonLevelSetting() {
       level = "calOne";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (1-100) (No carrying)\n2. Subtraction (1-100) (No Borrowing)\n3. Addition (1-100) (Carrying)\n4. Subtraction (1-100) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n\n9. Everything"
+        "What level?\n1. Addition (1-100) (No carrying)\n2. Subtraction (1-100) (No Borrowing)\n3. Addition (1-100) (Carrying)\n4. Subtraction (1-100) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n\n9. Everything"
       );
       break;
     case "Cal.2":
@@ -16074,6 +16216,13 @@ function buttonLevelSetting() {
       scoreNeeded = 10;
       setting = prompt(
         "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing\n3. Addition (to-1000) (Carrying)\n4. Subtraction (to 1000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)"
+      );
+      break;
+    case "Cal.3":
+      level = "calThree";
+      scoreNeeded = 10;
+      setting = prompt(
+        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)"
       );
       break;
 
