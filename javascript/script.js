@@ -6909,6 +6909,11 @@ function updateProblems() {
   }
 
   if (level == "calFour") {
+    if (setting == 4) {
+      // displayProblem.style.fontSize = "24px";
+      wholeNumberContainer.classList.add("hidden");
+      workingContainer.classList.remove("hidden");
+    }
     if (setting == 1) {
       if (p.numOne == p.numTwo) {
         return updateProblems();
