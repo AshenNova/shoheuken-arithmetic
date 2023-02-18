@@ -7027,12 +7027,12 @@ function updateProblems() {
       if (genNumbers(2) == 0) {
         displayProblem.innerHTML = `
       ${p.numOne}/${p.numTwo} ≈ ?</p>
-      Round off your answer to ${p.roundOff} places.
+      Round off your answer to ${p.roundOff} decimal place.
       `;
       } else {
         displayProblem.innerHTML = ` Divide
             ${p.numOne} by ${p.numTwo}.</p>
-            Round off your answer to ${p.roundOff} places.
+            Round off your answer to ${p.roundOff} decimal place.
             `;
       }
     }
