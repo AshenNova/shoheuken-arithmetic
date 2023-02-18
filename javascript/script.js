@@ -6721,7 +6721,7 @@ function updateProblems() {
           break;
         }
         if (i == 4) {
-          updateProblem == 1;
+          updateProblem = 1;
           return updateProblems();
         }
       }
@@ -6749,8 +6749,11 @@ function updateProblems() {
       arrOneStr = arrOne.join("");
       arrTwoStr = arrTwo.join("");
       console.log("Old: " + p.numOne, p.numTwo);
-      arrOneStr = arrOneStr.replace(arrOne[genNumbers(4)], p.value);
-      arrTwoStr = arrTwoStr.replace(arrTwo[genNumbers(4)], p.value);
+      let replaceOne = genNumbers(arrOne.length);
+      let replaceTwo = genNumbers(arrTwo.length);
+      if (replaceOne == replaceTwo) return updateCalc();
+      arrOneStr = arrOneStr.replace(arrOne[replaceOne], p.value);
+      arrTwoStr = arrTwoStr.replace(arrTwo[replaceTwo], p.value);
       p.numOne = arrOneStr * 1;
       p.numTwo = arrTwoStr * 1;
       console.log("New: " + p.numOne, p.numTwo);
