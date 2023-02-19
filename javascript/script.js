@@ -12205,7 +12205,8 @@ function handleSubmit(e) {
         // helpMe.style.textAlign = "left";
         helpMe.style.lineHeight = "50%";
         helpMe.style.marginTop = "5%";
-        let object = "🎈";
+        let object = "";
+        p.operator == "x" ? (object = "🎈") : (object = "🧩");
         let string = object.repeat(p.numThree);
         console.log(string);
         for (let i = 0; i < p.numFour; i++) {
@@ -12213,6 +12214,25 @@ function handleSubmit(e) {
         }
         let help = arr.join(" ");
         helpMe.innerHTML = help;
+        if (p.operator == "x") {
+          let repeatText = ` + ${p.numFour}`;
+          let html = `
+          ${p.numThree} ${p.operator} ${p.numFour} = ${
+            p.numFour
+          } ${repeatText.repeat(p.numThree - 1)}</p><hr>
+          `;
+          helpMe.insertAdjacentHTML("afterbegin", html);
+        }
+        if (p.operator == "÷") {
+          const result = p.numThree * p.numFour;
+          let repeatText = ` + ${p.numFour}`;
+          let html = `
+          ${result} ${p.operator} ${p.numThree} = ${
+            p.numThree
+          } ${repeatText.repeat(p.numThree - 1)}</p><hr>
+          `;
+          helpMe.insertAdjacentHTML("afterbegin", html);
+        }
         // }
         // if (p.operator == "÷") {
         //   let result = p.numThree * p.numFour;
