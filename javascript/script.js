@@ -511,6 +511,8 @@ const resetStuff = function () {
   fractionsContainerTwo.style.margin = "0 25px 15px";
   helpMe.textContent = "";
   helpMe.style.fontSize = "30px";
+  helpMe.style.lineHeight = "normal";
+  helpMe.style.marginTop = "revert";
   inputBoxCl.classList.remove("hidden");
   ourForm2.classList.add("hidden");
   accumulatedScore = 0;
@@ -12091,6 +12093,7 @@ function handleSubmit(e) {
 
       // remove help me text
       const removeHelpMe = [
+        1.01,
         3.04,
         3.05,
         3.06,
@@ -12189,6 +12192,38 @@ function handleSubmit(e) {
       }
 
       //  HELP!!!
+      if (level == 1.01) {
+        // if (p.operator == "x") {
+        //   let repeatSum = " + " + p.numThree;
+        //   helpMe.innerHTML = `
+        //   ${p.numThree} ${p.operator} ${p.numFour} = ${
+        //     p.numThree
+        //   }${repeatSum.repeat(p.numFour - 1)}
+        //   `;
+        // }
+        // if (p.operator == "x") {
+        // helpMe.style.textAlign = "left";
+        helpMe.style.lineHeight = "50%";
+        helpMe.style.marginTop = "5%";
+        let object = "🎈";
+        let string = object.repeat(p.numThree);
+        console.log(string);
+        for (let i = 0; i < p.numFour; i++) {
+          arr.push(`${string}</p>`);
+        }
+        let help = arr.join(" ");
+        helpMe.innerHTML = help;
+        // }
+        // if (p.operator == "÷") {
+        //   let result = p.numThree * p.numFour;
+        //   let repeatSum = " - " + p.numThree;
+        //   helpMe.innerHTML = `
+        //   ${result} ${p.operator} ${p.numThree} = ${result}${repeatSum.repeat(
+        //     p.numFour
+        //   )}
+        //   `;
+        // }
+      }
       if (level == 2.09) {
         if (state.mistake > 5) {
           ctx.fillText("am: 1 2 3 4 5 6 7 8 9 10 11 12", -115, -100);
