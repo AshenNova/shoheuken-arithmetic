@@ -3972,9 +3972,12 @@ function updateProblems() {
     }
     // Whole number fake /
     // if (p.secondVar == "fake" && p.operator == "/")
-    if (p.secondVar == "whole" && p.operator == "/")
+    if (p.secondVar == "whole" && p.operator == "/") {
+      if (p.numThree == 1) {
+        p.numThree += 1;
+      }
       lineTwo = `${firstGender} has ${p.numThree} times of ${p.otherPerson}.`;
-
+    }
     // if real
     if (p.secondVar == "real" && p.operator == "x")
       lineTwo = `${firstGender} ${positive} another ${p.numThree}/${p.numFour} of it.`;
