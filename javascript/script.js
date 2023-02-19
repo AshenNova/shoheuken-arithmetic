@@ -11979,7 +11979,9 @@ function handleSubmit(e) {
         (setting == 9 && p.rollz == 6) ||
         (range == 1 && p.rollz == 6)
       ) {
-        correctAnswer = `${p.people}x${p.people - 1}/2`;
+        correctAnswer = `${p.people}x${p.people - 1}/2=${
+          (p.people * (p.people - 1)) / 2
+        }`;
       }
       if (
         setting == 7 ||
