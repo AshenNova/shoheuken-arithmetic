@@ -6864,7 +6864,8 @@ function updateProblems() {
       setting == 3 ||
       setting == 4 ||
       setting == 5 ||
-      setting == 6
+      setting == 6 ||
+      setting == 9
     ) {
       wholeNumberContainer.classList.add("hidden");
       workingContainer.classList.remove("hidden");
@@ -7069,6 +7070,13 @@ function updateProblems() {
       let displayStr = arr.join(", "); //Change arr to string
       displayProblem.innerHTML = displayStr;
     }
+
+    if (setting == 9) {
+      firstNum.textContent = p.numOne;
+      secondNum.textContent = p.multiple;
+      operator.textContent = "x";
+      workingAnswer.textContent = "?";
+    }
   }
 
   if (level == "calFour") {
@@ -7076,7 +7084,13 @@ function updateProblems() {
       wholeNumberContainer.classList.add("hidden");
       workingContainer.classList.remove("hidden");
     }
-    if (setting == 1 || setting == 2 || setting == 3 || setting == 5) {
+    if (
+      setting == 1 ||
+      setting == 2 ||
+      setting == 3 ||
+      setting == 5 ||
+      setting == 6
+    ) {
       displayProblem.style.fontSize = "20px";
       wholeNumberContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
@@ -7203,6 +7217,22 @@ function updateProblems() {
             Round off your answer to ${p.roundOff} decimal place.
             `;
       }
+    }
+    if (setting == 6) {
+      p.numOne = p.numTwo * (genNumbers(99) + 2);
+      if (p.operator == "x") {
+        p.comparison = p.numOne * p.multiOne;
+        let placeValue = p.multiTwo.toString().split().length;
+        p.divisor = p.numTwo / p.multiTwo.toFixed(placeValue);
+      }
+      if (p.operator == "÷") {
+        let placeValue = p.multiOne.toString().split().length;
+        p.comparison = p.numOne / p.multiOne.toFixed(placeValue);
+        p.divisor = p.numTwo * p.multiTwo;
+      }
+      displayProblem.innerHTML = `
+      ${p.comparison} ${p.operator} ${p.divisor} = ?
+      `;
     }
   }
 
@@ -11153,6 +11183,9 @@ function handleSubmit(e) {
       if (setting == 7 || setting == 8) {
         correctAnswer = p.answer;
       }
+      if (setting == 9) {
+        correctAnswer = p.numOne * p.multiple;
+      }
       skipGlobalUpdateProblem = 0;
     }
 
@@ -11171,6 +11204,14 @@ function handleSubmit(e) {
       }
       if (setting == 5) {
         correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
+      }
+      if (setting == 6) {
+        if (p.operator == "x") {
+          correctAnswer = p.comparison * p.divisor;
+        }
+        if (p.operator == "÷") {
+          correctAnswer = p.comparison / p.divisor;
+        }
       }
       skipGlobalUpdateProblem = 0;
     }
@@ -14266,7 +14307,6 @@ function genProblems() {
     }
     if (setting == 8) {
       return {
-        roll: undefined,
         startNum: genNumbers(5000) + 5000,
         diffOne: genNumbers(2000) - 1000,
         diffTwo: genNumbers(2000) - 1000,
@@ -14274,12 +14314,18 @@ function genProblems() {
         answer: undefined,
       };
     }
+    if (setting == 9) {
+      return {
+        numOne: genNumbers(899) + 100,
+        multiple: genNumbers(8) + 2,
+      };
+    }
   }
 
   if (level == "calFour") {
     if (setting == 99 || (global == 1 && skipGlobalUpdateProblem == 0)) {
       global = 1;
-      setting = calArrAll(5, calArr);
+      setting = calArrAll(6, calArr);
     }
     if (setting == 1) {
       let number = genNumbers(8) + 2;
@@ -14314,6 +14360,17 @@ function genProblems() {
         numOne: genNumbers(10) + 1,
         numTwo: [3, 7, 9, 11][genNumbers(4)],
         roundOff: genNumbers(3) + 1,
+      };
+    }
+    if (setting == 6) {
+      return {
+        operator: ["x", "÷"][genNumbers(2)],
+        numOne: undefined,
+        multiOne: [10, 100][genNumbers(2)],
+        numTwo: genNumbers(7) + 2,
+        multiTwo: [10, 100, 100][genNumbers(3)],
+        divisor: undefined,
+        comparison: undefined,
       };
     }
   }
@@ -16835,7 +16892,7 @@ function buttonLevelSetting() {
       level = "calThree";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger"
+        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication"
       );
       break;
 
@@ -16843,7 +16900,7 @@ function buttonLevelSetting() {
       level = "calFour";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Fractions to Decimal (Limit)"
+        "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Fractions to Decimal (Limit)\n6. Division decimals"
       );
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";
