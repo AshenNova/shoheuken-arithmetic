@@ -6858,6 +6858,22 @@ function updateProblems() {
     }
   }
   if (level == "calThree") {
+    if (
+      setting == 1 ||
+      setting == 2 ||
+      setting == 3 ||
+      setting == 4 ||
+      setting == 5 ||
+      setting == 6
+    ) {
+      wholeNumberContainer.classList.add("hidden");
+      workingContainer.classList.remove("hidden");
+    }
+    if (setting == 7 || setting == 8) {
+      displayProblem.style.fontSize = "24px";
+      wholeNumberContainer.classList.remove("hidden");
+      workingContainer.classList.add("hidden");
+    }
     if (setting == 1) {
       const numOneStr = p.numOne.toString();
       let numTwoStr = p.numTwo.toString();
@@ -7018,6 +7034,40 @@ function updateProblems() {
         }
       }
       console.log(p.numOne, p.numTwo);
+    }
+
+    if (setting == 7) {
+      for (let i = 0; i < 6; i++) {
+        arr.push(p.startNum);
+        p.startNum += p.difference;
+      }
+      if (arr[5] > 10000 || arr[5] < 0 || p.difference == 0) {
+        arr = [];
+        return updateCalc();
+      }
+      p.answer = arr[p.position];
+      arr[p.position] = "____";
+      let displayStr = arr.join(", "); //Change arr to string
+      displayProblem.innerHTML = displayStr;
+    }
+
+    if (setting == 8) {
+      for (let i = 0; i < 6; i++) {
+        arr.push(p.startNum);
+        i++;
+        p.startNum += p.diffOne;
+        arr.push(p.startNum);
+        p.startNum += p.diffTwo;
+      }
+      if (arr[5] > 10000 || arr[5] < 0 || p.diffOne == 0 || p.diffTwo == 0) {
+        console.log(arr[5]);
+        arr = [];
+        updateCalc();
+      }
+      p.answer = arr[p.position];
+      arr[p.position] = "____";
+      let displayStr = arr.join(", "); //Change arr to string
+      displayProblem.innerHTML = displayStr;
     }
   }
 
@@ -11095,6 +11145,9 @@ function handleSubmit(e) {
         if (p.identity == "D") correctAnswer = p.numTwo;
         if (p.identity == "C") correctAnswer = p.numOne;
       }
+      if (setting == 7 || setting == 8) {
+        correctAnswer = p.answer;
+      }
       skipGlobalUpdateProblem = 0;
     }
 
@@ -14198,6 +14251,24 @@ function genProblems() {
         numTwo: genNumbers(9999) + 1,
       };
     }
+    if (setting == 7) {
+      return {
+        startNum: genNumbers(5000) + 5000,
+        difference: genNumbers(2000) - 1000,
+        position: genNumbers(6),
+        answer: undefined,
+      };
+    }
+    if (setting == 8) {
+      return {
+        roll: undefined,
+        startNum: genNumbers(5000) + 5000,
+        diffOne: genNumbers(2000) - 1000,
+        diffTwo: genNumbers(2000) - 1000,
+        position: genNumbers(6),
+        answer: undefined,
+      };
+    }
   }
 
   if (level == "calFour") {
@@ -16755,7 +16826,7 @@ function buttonLevelSetting() {
       level = "calThree";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)"
+        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger"
       );
       break;
 
