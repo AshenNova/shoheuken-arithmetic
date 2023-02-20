@@ -6775,7 +6775,7 @@ function updateProblems() {
         workingAnswer.textContent = p.numOne - p.numTwo;
       }
       if (p.operator == "+") {
-        if (p.numOne + p.numTwo > 10000) {
+        if (p.numOne + p.numTwo > 1000) {
           return updateCalc();
         }
         workingAnswer.textContent = p.numOne + p.numTwo;
@@ -6910,6 +6910,114 @@ function updateProblems() {
       secondNum.textContent = p.numTwo;
       operator.textContent = "+";
       workingAnswer.textContent = "?";
+    }
+
+    if (setting == 4) {
+      if (p.numTwo > p.numOne) {
+        [p.numTwo, p.numOne] = [p.numOne, p.numTwo];
+      }
+      const numOneArr = p.numOne.toString().split("");
+      const numTwoArr = p.numTwo.toString().split("");
+      for (let i = 0; i < numOneArr.length; i++) {
+        if (numOneArr[i] - numTwoArr[i] < 0) {
+          break;
+        }
+        if (numOneArr.length == i) {
+          return updateCalc();
+        }
+      }
+      firstNum.textContent = p.numOne;
+      secondNum.textContent = p.numTwo;
+      operator.textContent = "-";
+      workingAnswer.textContent = "?";
+    }
+
+    if (setting == 5) {
+      let arrOne = p.numOne.toString().split("");
+      let arrTwo = p.numTwo.toString().split("");
+      let join = [...arrOne, ...arrTwo];
+      let unique = [...new Set(join)];
+      list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+      console.log(unique, list);
+      unique.forEach((el) => {
+        console.log(el);
+        let index = list.indexOf(el * 1);
+        list.splice(index, 1);
+      });
+      console.log(list);
+
+      p.value = list[genNumbers(list.length)];
+      arrOneStr = arrOne.join("");
+      arrTwoStr = arrTwo.join("");
+      console.log("Old: " + p.numOne, p.numTwo);
+      let replaceOne = genNumbers(arrOne.length);
+      let replaceTwo = genNumbers(arrTwo.length);
+      if (replaceOne == replaceTwo) return updateCalc();
+      arrOneStr = arrOneStr.replace(arrOne[replaceOne], p.value);
+      arrTwoStr = arrTwoStr.replace(arrTwo[replaceTwo], p.value);
+      p.numOne = arrOneStr * 1;
+      p.numTwo = arrTwoStr * 1;
+      console.log("New: " + p.numOne, p.numTwo);
+      console.log(arrOneStr, arrTwoStr);
+      p.rowOne = arrOneStr.replace(p.value, "?");
+      p.rowTwo = arrTwoStr.replace(p.value, "?");
+      firstNum.textContent = p.rowOne;
+      secondNum.textContent = p.rowTwo;
+      operator.textContent = p.operator;
+      if (p.operator == "-") {
+        if (p.numOne - p.numTwo < 0 || p.numTwo > p.numOne) {
+          return updateCalc();
+        }
+        workingAnswer.textContent = p.numOne - p.numTwo;
+      }
+      if (p.operator == "+") {
+        if (p.numOne + p.numTwo > 10000) {
+          return updateCalc();
+        }
+        workingAnswer.textContent = p.numOne + p.numTwo;
+      }
+    }
+
+    if (setting == 6) {
+      if (p.operator == "+") {
+        operator.textContent = p.operator;
+        while (p.numOne + p.numTwo > 10000) {
+          if (p.numOne > 2000) {
+            p.numOne -= 1000;
+          } else {
+            p.numTwo -= 1000;
+          }
+        }
+        console.log(p.numOne.toString().length, p.numTwo.toString().length);
+        if (p.identity == "C") {
+          firstNum.textContent = "?".repeat(p.numOne.toString().length);
+          secondNum.textContent = p.numTwo;
+          workingAnswer.textContent = p.numOne + p.numTwo;
+        }
+        if (p.identity == "D") {
+          firstNum.textContent = p.numOne;
+          secondNum.textContent = "?".repeat(p.numTwo.toString().length);
+          workingAnswer.textContent = p.numOne + p.numTwo;
+        }
+      }
+      if (p.operator == "-") {
+        operator.textContent = p.operator;
+        if (p.numTwo > p.numOne) {
+          [p.numTwo, p.numOne] = [p.numOne, p.numTwo];
+        }
+        console.log(p.numOne.toString().length, p.numTwo.toString().length);
+        if (p.identity == "C") {
+          firstNum.textContent = "?".repeat(p.numOne.toString().length);
+          secondNum.textContent = p.numTwo;
+          workingAnswer.textContent = p.numOne - p.numTwo;
+        }
+        if (p.identity == "D") {
+          firstNum.textContent = p.numOne;
+          secondNum.textContent = "?".repeat(p.numTwo.toString().length);
+          workingAnswer.textContent = p.numOne - p.numTwo;
+        }
+      }
+      console.log(p.numOne, p.numTwo);
     }
   }
 
@@ -10977,11 +11085,19 @@ function handleSubmit(e) {
       if (setting == 1 || setting == 3) {
         correctAnswer = p.numOne + p.numTwo;
       }
-      if (setting == 2) {
+      if (setting == 2 || setting == 4) {
         correctAnswer = p.numOne - p.numTwo;
+      }
+      if (setting == 5) {
+        correctAnswer = p.value;
+      }
+      if (setting == 6) {
+        if (p.identity == "D") correctAnswer = p.numTwo;
+        if (p.identity == "C") correctAnswer = p.numOne;
       }
       skipGlobalUpdateProblem = 0;
     }
+
     if (level == "calFour") {
       if (setting == 1) {
         correctAnswer = `${p.numOne}, ${p.numOne * p.multiple}`;
@@ -13973,8 +14089,8 @@ function genProblems() {
     if (setting == 5) {
       return {
         operator: ["+", "-"][genNumbers(2)],
-        numOne: genNumbers(8999) + 1000,
-        numTwo: genNumbers(8999) + 1000,
+        numOne: genNumbers(899) + 100,
+        numTwo: genNumbers(899) + 100,
         value: undefined,
         rowOne: undefined,
         rowTwo: undefined,
@@ -14011,7 +14127,7 @@ function genProblems() {
   if (level == "calThree") {
     if (setting == 99 || (global == 1 && skipGlobalUpdateProblem == 0)) {
       global = 1;
-      setting = calArrAll(3, calArr);
+      setting = calArrAll(6, calArr);
     }
     if (setting == 1) {
       let thousands = genNumbers(9) + 1;
@@ -14056,6 +14172,30 @@ function genProblems() {
           (genNumbers(9) + 1) * 100 +
           (genNumbers(9) + 1) * 10 +
           (genNumbers(9) + 1 + (10 - ones)),
+      };
+    }
+    if (setting == 4) {
+      return {
+        numOne: (genNumbers(9) + 1) * 1000 + genNumbers(999),
+        numTwo: (genNumbers(9) + 1) * 1000 + genNumbers(999),
+      };
+    }
+    if (setting == 5) {
+      return {
+        operator: ["+", "-"][genNumbers(2)],
+        numOne: genNumbers(8999) + 1000,
+        numTwo: genNumbers(8999) + 1000,
+        value: undefined,
+        rowOne: undefined,
+        rowTwo: undefined,
+      };
+    }
+    if (setting == 6) {
+      return {
+        operator: ["+", "-"][genNumbers(2)],
+        identity: ["C", "D"][genNumbers(2)],
+        numOne: genNumbers(9999) + 1,
+        numTwo: genNumbers(9999) + 1,
       };
     }
   }
