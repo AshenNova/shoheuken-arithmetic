@@ -7073,9 +7073,13 @@ function updateProblems() {
 
   if (level == "calFour") {
     if (setting == 4) {
-      // displayProblem.style.fontSize = "24px";
       wholeNumberContainer.classList.add("hidden");
       workingContainer.classList.remove("hidden");
+    }
+    if (setting == 1 || setting == 2 || setting == 3 || setting == 5) {
+      displayProblem.style.fontSize = "24px";
+      wholeNumberContainer.classList.remove("hidden");
+      workingContainer.classList.add("hidden");
     }
     if (setting == 1) {
       if (p.numOne == p.numTwo) {
@@ -14272,6 +14276,10 @@ function genProblems() {
   }
 
   if (level == "calFour") {
+    if (setting == 99 || (global == 1 && skipGlobalUpdateProblem == 0)) {
+      global = 1;
+      setting = calArrAll(5, calArr);
+    }
     if (setting == 1) {
       let number = genNumbers(8) + 2;
       return {
