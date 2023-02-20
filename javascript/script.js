@@ -7077,10 +7077,11 @@ function updateProblems() {
       workingContainer.classList.remove("hidden");
     }
     if (setting == 1 || setting == 2 || setting == 3 || setting == 5) {
-      displayProblem.style.fontSize = "24px";
+      displayProblem.style.fontSize = "20px";
       wholeNumberContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
     }
+
     if (setting == 1) {
       if (p.numOne == p.numTwo) {
         return updateProblems();
