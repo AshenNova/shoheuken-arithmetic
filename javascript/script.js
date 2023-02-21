@@ -2674,24 +2674,53 @@ function updateProblems() {
     }
   }
 
+  // if (level == 4.13) {
+  //   if (p.numOne == p.numTwo) {
+  //     p.numOne += 1;
+  //   }
+  //   if (p.numOne > p.numTwo) {
+  //     [p.numOne, p.numTwo] = [p.numTwo, p.numOne];
+  //   }
+  //   for (let i = p.numTwo; i > 1; i--) {
+  //     if (p.numOne % i == 0 && p.numTwo % i == 0) {
+  //       p.numOne /= i;
+  //       p.numTwo /= i;
+  //     }
+  //   }
+  //   displayProblem.innerHTML = `
+  //   A has ${p.numTwo * p.numMulti} of something.</br>
+  //   A used ${p.numOne}/${p.numTwo} of it.</br>
+  //   How much did A ${p.options}?
+  //   `;
+  // }
   if (level == 4.13) {
-    if (p.numOne == p.numTwo) {
-      p.numOne += 1;
+    if (p.type == 24) {
+      displayProblem.innerHTML = `
+      What is the time below in 12 hour clock?</p>
+    ${p.hours.toLocaleString("en-US", {
+      minimumIntegerDigits: 2,
+    })} ${p.mins.toLocaleString("en-US", { minimumIntegerDigits: 2 })}
+    `;
     }
-    if (p.numOne > p.numTwo) {
-      [p.numOne, p.numTwo] = [p.numTwo, p.numOne];
-    }
-    for (let i = p.numTwo; i > 1; i--) {
-      if (p.numOne % i == 0 && p.numTwo % i == 0) {
-        p.numOne /= i;
-        p.numTwo /= i;
+    if (p.type == 12) {
+      let time12hr = p.hours;
+      if (p.hours > 12) {
+        time12hr = p.hours - 12;
+        displayProblem.innerHTML = `
+        What is the time below in 24 hour clock?</p>
+      ${time12hr}.${p.mins.toLocaleString("en-US", {
+          minimumIntegerDigits: 2,
+        })} p.m`;
+      } else {
+        displayProblem.innerHTML = `
+        What is the time below in 24 hour clock?</p>
+      ${time12hr}.${p.mins.toLocaleString("en-US", {
+          minimumIntegerDigits: 2,
+        })} a.m
+    `;
       }
     }
-    displayProblem.innerHTML = `
-    A has ${p.numTwo * p.numMulti} of something.</br>
-    A used ${p.numOne}/${p.numTwo} of it.</br>
-    How much did A ${p.options}?
-    `;
+    console.log(p.hours);
   }
   if (level == 4.14) {
     if (p.numTwo == p.numThree) {
@@ -10223,14 +10252,37 @@ function handleSubmit(e) {
       }
     }
 
+    // if (level == 4.13) {
+    //   if (p.options == "use") {
+    //     correctAnswer = `${p.numTwo * p.numMulti}x${p.numOne}/${p.numTwo}`;
+    //   }
+    //   if (p.options == "have left") {
+    //     correctAnswer = `${p.numTwo * p.numMulti}x${p.numTwo - p.numOne}/${
+    //       p.numTwo
+    //     }`;
+    //   }
+    // }
+
     if (level == 4.13) {
-      if (p.options == "use") {
-        correctAnswer = `${p.numTwo * p.numMulti}x${p.numOne}/${p.numTwo}`;
+      if (p.type == 24) {
+        let time12hr = p.hours;
+        if (p.hours > 12) time12hr = p.hours - 12;
+        if (p.hours > 0 && p.hours < 12) {
+          correctAnswer = `${time12hr}.${p.mins.toLocaleString("en-US", {
+            minimumIntegerDigits: 2,
+          })}am`;
+        } else {
+          correctAnswer = `${time12hr}.${p.mins.toLocaleString("en-US", {
+            minimumIntegerDigits: 2,
+          })}pm`;
+        }
       }
-      if (p.options == "have left") {
-        correctAnswer = `${p.numTwo * p.numMulti}x${p.numTwo - p.numOne}/${
-          p.numTwo
-        }`;
+      if (p.type == 12) {
+        correctAnswer = `${p.hours.toLocaleString("en-US", {
+          minimumIntegerDigits: 2,
+        })} ${p.mins.toLocaleString("en-US", {
+          minimumIntegerDigits: 2,
+        })}`;
       }
     }
 
@@ -13433,12 +13485,20 @@ function genProblems() {
     }
   }
 
+  // if (level == 4.13) {
+  //   return {
+  //     numOne: genNumbers(8) + 2,
+  //     numTwo: genNumbers(8) + 2,
+  //     numMulti: genNumbers(99) + 2,
+  //     options: ["have left", "use"][genNumbers(2)],
+  //   };
+  // }
+
   if (level == 4.13) {
     return {
-      numOne: genNumbers(8) + 2,
-      numTwo: genNumbers(8) + 2,
-      numMulti: genNumbers(99) + 2,
-      options: ["have left", "use"][genNumbers(2)],
+      type: [12, 24][genNumbers(2)],
+      hours: genNumbers(24),
+      mins: genNumbers(60),
     };
   }
 
