@@ -12428,14 +12428,14 @@ function handleSubmit(e) {
           let string = object.repeat(p.numFour);
           console.log(string);
           for (let i = 0; i < p.numThree; i++) {
-            arr.push(`${string}</p>`);
+            arr.push(`${string}  ${p.numFour * (i + 1)}</p>`);
           }
         }
         if (p.operator == "÷") {
           object = "🧩";
           let string = object.repeat(p.numThree);
           for (let i = 0; i < p.numFour; i++) {
-            arr.push(`${string}</p>`);
+            arr.push(`${string}  ${i + 1}</p>`);
           }
         }
         let help = arr.join(" ");
@@ -12455,8 +12455,8 @@ function handleSubmit(e) {
         if (p.operator == "÷") {
           const result = p.numThree * p.numFour;
           let repeatText = ` + ${p.numThree}`;
-          let html = `? groups of ${p.numThree} in ${result} </p>
-          = ${p.numThree} ${repeatText.repeat(p.numFour - 1)}</p><hr>
+          let html = `? groups of ${p.numThree} in ${result}, </p>
+          ${p.numThree} ${repeatText.repeat(p.numFour - 1)}</p><hr>
           `;
           helpMe.insertAdjacentHTML("afterbegin", html);
         }
