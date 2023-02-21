@@ -12420,19 +12420,33 @@ function handleSubmit(e) {
         // helpMe.style.textAlign = "left";
         helpMe.style.lineHeight = "50%";
         helpMe.style.marginTop = "5%";
+        helpMe.style.textAlign = "center";
+
         let object = "";
-        p.operator == "x" ? (object = "🎈") : (object = "🧩");
-        let string = object.repeat(p.numThree);
-        console.log(string);
-        for (let i = 0; i < p.numFour; i++) {
-          arr.push(`${string}</p>`);
+        if (p.operator == "x") {
+          object = "🎈";
+          let string = object.repeat(p.numFour);
+          console.log(string);
+          for (let i = 0; i < p.numThree; i++) {
+            arr.push(`${string}</p>`);
+          }
+        }
+        if (p.operator == "÷") {
+          object = "🧩";
+          let string = object.repeat(p.numThree);
+          for (let i = 0; i < p.numFour; i++) {
+            arr.push(`${string}</p>`);
+          }
         }
         let help = arr.join(" ");
         helpMe.innerHTML = help;
+        const grammer = "groups";
+        if (p.numThree == 1) {
+          const grammer = "group";
+        }
         if (p.operator == "x") {
           let repeatText = ` + ${p.numFour}`;
-          let html = `
-          ${p.numThree} ${p.operator} ${p.numFour} = ${
+          let html = `${p.numThree} ${grammer} of ${p.numFour}</p>= ${
             p.numFour
           } ${repeatText.repeat(p.numThree - 1)}</p><hr>
           `;
@@ -12440,11 +12454,9 @@ function handleSubmit(e) {
         }
         if (p.operator == "÷") {
           const result = p.numThree * p.numFour;
-          let repeatText = ` + ${p.numFour}`;
-          let html = `
-          ${result} ${p.operator} ${p.numThree} = ${
-            p.numThree
-          } ${repeatText.repeat(p.numThree - 1)}</p><hr>
+          let repeatText = ` + ${p.numThree}`;
+          let html = `? groups of ${p.numThree} in ${result} </p>
+          = ${p.numThree} ${repeatText.repeat(p.numFour - 1)}</p><hr>
           `;
           helpMe.insertAdjacentHTML("afterbegin", html);
         }
