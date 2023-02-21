@@ -14117,12 +14117,38 @@ function genProblems() {
     return setting;
   }
 
+  function checkRange(setting, arr) {
+    console.log(typeof setting);
+    let str = "";
+    if (typeof setting == "string") {
+      console.log(setting.length);
+      if (setting.length > 1) str = setting.split("");
+      state.min = str[0] * 1;
+      state.max = str[str.length - 1] * 1;
+    }
+    if (str.includes("-") || state.range == 1) {
+      state.range = 1;
+      console.log(str, state.min, state.max);
+      console.log("String detected");
+      if (!arr.length) {
+        console.log("push push push!");
+        for (let i = state.min; i < state.max + 1; i++) {
+          arr.push(i);
+        }
+      }
+    }
+    setting = arr[genNumbers(arr.length)];
+    const chosen = arr.splice(arr.indexOf(setting), 1);
+    console.log(chosen, arr);
+    return setting;
+  }
+
   if (level == "calOne") {
     if (setting == 99 || (global == 1 && skipGlobalUpdateProblem == 0)) {
       global = 1;
       setting = calArrAll(8, calArr);
     }
-
+    setting = checkRange(setting, calArr);
     if (setting == 1) {
       let ones = genNumbers(10);
       return {
@@ -14211,6 +14237,7 @@ function genProblems() {
       global = 1;
       setting = calArrAll(8, calArr);
     }
+    setting = checkRange(setting, calArr);
     if (setting == 1) {
       let hundreds = genNumbers(9) + 1;
       let tens = genNumbers(9) + 1;
@@ -14300,6 +14327,7 @@ function genProblems() {
       global = 1;
       setting = calArrAll(6, calArr);
     }
+    setting = checkRange(setting, calArr);
     if (setting == 1) {
       let thousands = genNumbers(9) + 1;
       let hundreds = genNumbers(9) + 1;
@@ -14399,6 +14427,7 @@ function genProblems() {
       global = 1;
       setting = calArrAll(6, calArr);
     }
+    setting = checkRange(setting, calArr);
     if (setting == 1) {
       let number = genNumbers(8) + 2;
       return {
@@ -14447,6 +14476,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
+    setting = checkRange(setting, calArr);
     if (setting == 1) {
       console.log("setting 1");
       return {
