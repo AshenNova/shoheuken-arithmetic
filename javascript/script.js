@@ -7379,7 +7379,7 @@ function updateProblems() {
     }
     if (setting == 3) {
       if (p.numeratorOne == p.denominatorOne) {
-        return updateProblems();
+        return updateCalc();
       }
       // [p.numeratorOne, p.denominatorOne] = simplify(
       //   p.numeratorOne,
@@ -7393,6 +7393,11 @@ function updateProblems() {
         p.wholeOne += Math.floor(p.numeratorOne / p.denominatorOne);
         p.numeratorOne = p.numeratorOne % p.denominatorOne;
       }
+      [p.numeratorOne, p.denominatorOne] = simplify(
+        p.numeratorOne,
+        p.denominatorOne
+      );
+      if (p.numeratorOne == 0) return updateCalc();
       displayTwoFractions.style.fontSize = "30px";
       displayTwoFractions.style.marginBottom = "50px";
       threeNumerator.classList.add("hidden");
