@@ -14103,18 +14103,22 @@ function genProblems() {
   }
 
   // WORKING CALCULATION SETTING
-  function calArrAll(max, arr) {
-    if (!arr.length) {
-      for (let i = 1; i < max + 1; i++) {
-        arr.push(i);
+  function calArrAll(max, arr, setting) {
+    if (setting == 99 || (state.global == 1 && skipGlobalUpdateProblem == 0)) {
+      state.global = 1;
+
+      if (!arr.length) {
+        for (let i = 1; i < max + 1; i++) {
+          arr.push(i);
+        }
       }
+      setting = arr[genNumbers(arr.length)];
+      arr.splice(arr.indexOf(setting), 1);
+      console.log(
+        `Setting: ${setting} chosen. The remaining settings in calculation arr is ${arr}`
+      );
+      return setting;
     }
-    setting = arr[genNumbers(arr.length)];
-    arr.splice(arr.indexOf(setting), 1);
-    console.log(
-      `Setting: ${setting} chosen. The remaining settings in calculation arr is ${arr}`
-    );
-    return setting;
   }
 
   function checkRange(setting, arr) {
@@ -14144,10 +14148,11 @@ function genProblems() {
   }
 
   if (level == "calOne") {
-    if (setting == 99 || (global == 1 && skipGlobalUpdateProblem == 0)) {
-      global = 1;
-      setting = calArrAll(8, calArr);
-    }
+    // if (setting == 99 || (global == 1 && skipGlobalUpdateProblem == 0)) {
+    //   global = 1;
+    //   setting = calArrAll(8, calArr);
+    // }
+    setting = calArrAll(8, calArr, setting);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let ones = genNumbers(10);
@@ -14233,10 +14238,11 @@ function genProblems() {
   }
 
   if (level == "calTwo") {
-    if (setting == 99 || (global == 1 && skipGlobalUpdateProblem == 0)) {
-      global = 1;
-      setting = calArrAll(8, calArr);
-    }
+    // if (setting == 99 || (global == 1 && skipGlobalUpdateProblem == 0)) {
+    //   global = 1;
+    //   setting = calArrAll(8, calArr);
+    // }
+    setting = calArrAll(8, calArr, setting);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let hundreds = genNumbers(9) + 1;
@@ -14323,10 +14329,7 @@ function genProblems() {
   }
 
   if (level == "calThree") {
-    if (setting == 99 || (global == 1 && skipGlobalUpdateProblem == 0)) {
-      global = 1;
-      setting = calArrAll(6, calArr);
-    }
+    setting = calArrAll(9, calArr, setting);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let thousands = genNumbers(9) + 1;
@@ -14423,10 +14426,11 @@ function genProblems() {
   }
 
   if (level == "calFour") {
-    if (setting == 99 || (global == 1 && skipGlobalUpdateProblem == 0)) {
-      global = 1;
-      setting = calArrAll(6, calArr);
-    }
+    // if (setting == 99 || (global == 1 && skipGlobalUpdateProblem == 0)) {
+    //   global = 1;
+    //   setting = calArrAll(6, calArr);
+    // }
+    setting = calArrAll(6, calArr, setting);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let number = genNumbers(8) + 2;
@@ -14476,6 +14480,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
+    setting = calArrAll(3, calArr, setting);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       console.log("setting 1");
