@@ -114,6 +114,7 @@ let arr2 = [];
 let arr3 = [];
 let heuArr = [];
 let calArr = [];
+let calArrQns = [];
 let multiplesArr = [0];
 let gold = 0;
 let silver = 0;
@@ -519,6 +520,7 @@ const resetStuff = function () {
   heuArr.length = 0;
   global = 0;
   calArr = [];
+  calArrQns = [];
 
   gold = 0;
   silver = 0;
@@ -7272,6 +7274,13 @@ function updateProblems() {
       workingContainer.classList.add("hidden");
       // END DISPLAY
     }
+    if (setting == 4) {
+      displayProblem.style.textAlign = "left";
+      displayProblem.style.fontSize = "18px";
+      wholeNumberContainer.classList.remove("hidden");
+      fractionsContainerTwo.classList.add("hidden");
+      workingContainer.classList.add("hidden");
+    }
     if (setting == 1) {
       fractionsContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
@@ -7387,6 +7396,68 @@ function updateProblems() {
       twoNumerator.textContent = p.numeratorOne;
       twoDenominator.textContent = p.denominatorOne;
       threeWholeNumber.textContent = `? ${p.unitsPair}`;
+    }
+    // CURRENT WORK
+    if (setting == 4) {
+      let lineOne = "";
+      if (p.firstSentence == "unit") {
+        p.unitTwo = 1;
+        lineOne = `
+        ${p.personOne} has ${p.unitOne} times as many ${p.something} as ${p.personTwo}.</p>
+        `;
+      }
+      if (p.firstSentence == "ratio") {
+        if (p.unitOne == p.unitTwo) p.unitTwo += 1;
+        [p.unitOne, p.unitTwo] = simplify(p.unitOne, p.unitTwo);
+        lineOne = `
+        ${p.personOne}'s ratio of ${p.something} is ${p.unitOne}:${p.unitTwo} to ${p.personTwo}.</p>
+        `;
+      }
+      const position = genNumbers(2);
+      p.repeatedId = [p.personOne, p.personTwo][position];
+      let lineTwo = "";
+      if (p.secondSentence == "unit") {
+        p.unitFour = 1;
+        lineTwo = `
+        ${p.repeatedId} has ${p.unitThree} times as many ${p.something} as ${p.personThree}.</p>
+        `;
+      }
+      if (p.secondSentence == "ratio") {
+        if (p.unitThree == p.unitFour) p.unitFour += 1;
+        [p.unitThree, p.unitFour] = simplify(p.unitThree, p.unitFour);
+        lineTwo = `
+        ${p.repeatedId}'s ratio of ${p.something} is ${p.unitThree}:${p.unitFour} to ${p.personThree}.</p>
+        `;
+      }
+      calArrQns.push(p.unitOne);
+      calArrQns.push(p.unitTwo);
+      position == 0 ? calArrQns.push(p.unitOne) : calArrQns.push(p.unitTwo);
+      calArrQns.push(p.unitThree);
+      calArrQns.push(p.unitFour);
+      if (calArrQns[3] == calArrQns[4]) {
+        calArrQns = [];
+        return updateCalc();
+      }
+
+      let i = 0;
+      let count = 1;
+      while ((calArrQns[2] + i) % calArrQns[3] != 0) {
+        i += calArrQns[2];
+        count += 1;
+        console.log(i, count);
+      }
+      calArrQns.push(calArrQns[0] * count);
+      calArrQns.push(calArrQns[1] * count);
+      const multiTwo = (calArrQns[2] * count) / calArrQns[3];
+      calArrQns.push(calArrQns[3] * multiTwo);
+      calArrQns.push(calArrQns[4] * multiTwo);
+      const lineThree = `What is the ratio of ${p.personOne} to ${p.personTwo} to ${p.personThree}?`;
+
+      displayProblem.innerHTML = `
+      ${lineOne}</p>
+      ${lineTwo}</p>
+      ${lineThree}
+      `;
     }
   }
   //   if (setting == 1) {
@@ -9096,7 +9167,6 @@ function updateProblems() {
       ${lineThree}</p>
       ${lineFour}`;
     }
-    // WORKING ON DISPLAY
     if (setting == 3) {
       let unitAF = "";
       let unitBF = "";
@@ -11180,7 +11250,6 @@ function handleSubmit(e) {
       if (p.operator == "-") correctAnswer = p.numOne - p.numTwo;
     }
 
-    // CALCULATION WORKING ANSWER
     if (level == "calOne") {
       if (setting == 1 || setting == 3) {
         correctAnswer = p.numOne + p.numThree;
@@ -11307,6 +11376,10 @@ function handleSubmit(e) {
           p.conversion * (p.numeratorOne / p.denominatorOne);
 
         correctAnswer = numerator;
+      }
+      // CURRENT WORK (ANSWER)
+      if (setting == 4) {
+        correctAnswer = `${calArrQns[5]}:${calArrQns[6]}:${calArrQns[8]}`;
       }
       skipGlobalUpdateProblem = 0;
     }
@@ -14102,8 +14175,8 @@ function genProblems() {
     };
   }
 
-  // WORKING CALCULATION SETTING
   function calArrAll(max, arr, setting) {
+    // setting = setting.toString();
     if (setting == 99 || state.global == 1) {
       state.global = 1;
 
@@ -14122,33 +14195,34 @@ function genProblems() {
   }
 
   function checkRange(setting, arr) {
-    console.log(typeof setting);
-    let str = "";
-    if (typeof setting == "string") {
-      console.log(setting.length);
-      if (setting.length > 1) str = setting.split("-");
-      // console.log(str);
-      state.min = str[0] * 1;
-      state.max = str[1] * 1;
-    }
-    if (setting.includes("-") || state.range == 1) {
-      state.range = 1;
-      console.log(str, state.min, state.max);
-      console.log("String detected");
-      if (!arr.length) {
-        console.log("push push push!");
-        for (let i = state.min; i < state.max + 1; i++) {
-          arr.push(i);
-        }
+    if (state.global != 1) {
+      console.log(typeof setting);
+      let str = "";
+      if (typeof setting == "string") {
+        console.log(setting.length);
+        if (setting.length > 1) str = setting.split("-");
+        // console.log(str);
+        state.min = str[0] * 1;
+        state.max = str[1] * 1;
       }
-      setting = arr[genNumbers(arr.length)];
-      const chosen = arr.splice(arr.indexOf(setting), 1);
-      console.log(chosen, arr);
-      return setting;
+      if (setting.includes("-") || state.range == 1) {
+        state.range = 1;
+        console.log(str, state.min, state.max);
+        console.log("String detected");
+        if (!arr.length) {
+          console.log("push push push!");
+          for (let i = state.min; i < state.max + 1; i++) {
+            arr.push(i);
+          }
+        }
+        setting = arr[genNumbers(arr.length)];
+        const chosen = arr.splice(arr.indexOf(setting), 1);
+        console.log(chosen, arr);
+      }
+      if ((setting * 1) % 1 == 0) {
+      }
     }
-    if ((setting * 1) % 1 == 0) {
-      return setting;
-    }
+    return setting;
   }
 
   if (level == "calOne") {
@@ -14489,7 +14563,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(3, calArr, setting);
+    setting = calArrAll(4, calArr, setting);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       console.log("setting 1");
@@ -14517,6 +14591,28 @@ function genProblems() {
         wholeOne: genNumbers(4) + 2,
         numeratorOne: genNumbers(10) + 1,
         denominatorOne: [2, 5, 8, 10, 20, 50, 100, 125][genNumbers(8)],
+      };
+    }
+    //repeated identity [Ratio]
+    // CURRENT WORK (SETTING)
+    if (setting == 4) {
+      const arrSomething = ["books", "homeworks", "pencils", "pens"];
+      return {
+        something: arrSomething[genNumbers(arrSomething.length)],
+        personOne: ["Liam", "Noah", "Oliver", "Elijah", "Jake"][genNumbers(5)],
+        personTwo: ["Olivia", "Emma", "Charlotte", "Amelia", "Camila"][
+          genNumbers(5)
+        ],
+        repeatedId: undefined,
+        personThree: ["Theodore", "Harper", "Luna", "Jack", "Ella"][
+          genNumbers(5)
+        ],
+        unitOne: genNumbers(5) + 2,
+        unitTwo: genNumbers(5) + 2,
+        unitThree: genNumbers(5) + 2,
+        unitFour: genNumbers(5) + 2,
+        firstSentence: ["unit", "ratio"][genNumbers(2)],
+        secondSentence: ["unit", "ratio"][genNumbers(2)],
       };
     }
   }
@@ -16989,7 +17085,6 @@ function buttonLevelSetting() {
       scoreNeeded = 30;
       break;
 
-    // CALCULATION WORKING SETTINGS
     case "Cal.1":
       level = "calOne";
       scoreNeeded = 10;
@@ -17027,7 +17122,7 @@ function buttonLevelSetting() {
       level = "calFive";
       scoreNeeded = 5;
       setting = prompt(
-        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion"
+        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Ratio: Repeated Identity"
       );
       document.querySelector("#user-input").setAttribute("type", "text");
       // displayProblem.style.fontSize = "18px";
@@ -17130,7 +17225,6 @@ function buttonLevelSetting() {
       helpMe.style.textAlign = "left";
       break;
 
-    // WORKING ON CASE
     case "Heu.5b":
       level = "heuFiveb";
       setting = prompt(
