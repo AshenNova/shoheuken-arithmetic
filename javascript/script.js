@@ -115,6 +115,7 @@ let arr3 = [];
 let heuArr = [];
 let calArr = [];
 let calArrQns = [];
+let calRange = [];
 let multiplesArr = [0];
 let gold = 0;
 let silver = 0;
@@ -521,6 +522,7 @@ const resetStuff = function () {
   global = 0;
   calArr = [];
   calArrQns = [];
+  calRange = [];
 
   gold = 0;
   silver = 0;
@@ -2710,13 +2712,17 @@ function updateProblems() {
         time12hr = p.hours - 12;
         displayProblem.innerHTML = `
         What is the time below in 24 hour clock?</p>
-      ${time12hr}.${p.mins.toLocaleString("en-US", {
+      ${time12hr.toLocaleString("en-US", {
+        minimumIntegerDigits: 2,
+      })}.${p.mins.toLocaleString("en-US", {
           minimumIntegerDigits: 2,
         })} p.m`;
       } else {
         displayProblem.innerHTML = `
         What is the time below in 24 hour clock?</p>
-      ${time12hr}.${p.mins.toLocaleString("en-US", {
+      ${time12hr.toLocaleString("en-US", {
+        minimumIntegerDigits: 2,
+      })}.${p.mins.toLocaleString("en-US", {
           minimumIntegerDigits: 2,
         })} a.m
     `;
@@ -10347,6 +10353,7 @@ function handleSubmit(e) {
           })}pm`;
         }
       }
+      // ANSWER IN 24 HOUR CLOCK
       if (p.type == 12) {
         correctAnswer = `${p.hours.toLocaleString("en-US", {
           minimumIntegerDigits: 2,
@@ -14196,19 +14203,32 @@ function genProblems() {
 
   function checkRange(setting, arr) {
     if (state.global != 1) {
-      console.log(typeof setting);
-      let str = "";
-      if (typeof setting == "string") {
-        console.log(setting.length);
-        if (setting.length > 1) str = setting.split("-");
-        // console.log(str);
-        state.min = str[0] * 1;
-        state.max = str[1] * 1;
-      }
-      if (setting.includes("-") || state.range == 1) {
-        state.range = 1;
-        console.log(str, state.min, state.max);
-        console.log("String detected");
+      // console.log(typeof setting);
+      // let str = setting.split("");
+
+      // console.log(str);
+      // str.forEach((el) => {
+      //   calRange.push(el);
+      // });
+      // console.log(calRange);
+      // if (typeof setting == "string") {
+      //   console.log(setting.length);
+      //   if (setting.length > 1) str = setting.split("-");
+      //   // console.log(str);
+      // state.min = str[0] * 1;
+      // state.max = str[1] * 1;
+      // }
+      calRange.push(setting);
+      console.log(calRange);
+      // if ((calRange[0] * 1) % 1 != 0) {
+      //   state.min = calRange[0].split("-")[0] * 1;
+      //   state.max = calRange[0].split("-")[1] * 1;
+      // }
+      if (calRange[0].includes("-")) {
+        console.log("Range Detected!");
+        state.min = calRange[0].split("-")[0] * 1;
+        state.max = calRange[0].split("-")[1] * 1;
+        console.log(state.min, state.max);
         if (!arr.length) {
           console.log("push push push!");
           for (let i = state.min; i < state.max + 1; i++) {
@@ -14218,8 +14238,6 @@ function genProblems() {
         setting = arr[genNumbers(arr.length)];
         const chosen = arr.splice(arr.indexOf(setting), 1);
         console.log(chosen, arr);
-      }
-      if ((setting * 1) % 1 == 0) {
       }
     }
     return setting;
