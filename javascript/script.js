@@ -14126,11 +14126,12 @@ function genProblems() {
     let str = "";
     if (typeof setting == "string") {
       console.log(setting.length);
-      if (setting.length > 1) str = setting.split("");
+      if (setting.length > 1) str = setting.split("-");
+      // console.log(str);
       state.min = str[0] * 1;
-      state.max = str[str.length - 1] * 1;
+      state.max = str[1] * 1;
     }
-    if (str.includes("-") || state.range == 1) {
+    if (setting.includes("-") || state.range == 1) {
       state.range = 1;
       console.log(str, state.min, state.max);
       console.log("String detected");
