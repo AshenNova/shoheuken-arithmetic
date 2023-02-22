@@ -14104,7 +14104,7 @@ function genProblems() {
 
   // WORKING CALCULATION SETTING
   function calArrAll(max, arr, setting) {
-    if (setting == 99 || (state.global == 1 && skipGlobalUpdateProblem == 0)) {
+    if (setting == 99 || state.global == 1) {
       state.global = 1;
 
       if (!arr.length) {
@@ -14117,8 +14117,8 @@ function genProblems() {
       console.log(
         `Setting: ${setting} chosen. The remaining settings in calculation arr is ${arr}`
       );
-      return setting;
     }
+    return setting;
   }
 
   function checkRange(setting, arr) {
@@ -14140,11 +14140,14 @@ function genProblems() {
           arr.push(i);
         }
       }
+      setting = arr[genNumbers(arr.length)];
+      const chosen = arr.splice(arr.indexOf(setting), 1);
+      console.log(chosen, arr);
+      return setting;
     }
-    setting = arr[genNumbers(arr.length)];
-    const chosen = arr.splice(arr.indexOf(setting), 1);
-    console.log(chosen, arr);
-    return setting;
+    if ((setting * 1) % 1 == 0) {
+      return setting;
+    }
   }
 
   if (level == "calOne") {
@@ -14154,6 +14157,7 @@ function genProblems() {
     // }
     setting = calArrAll(8, calArr, setting);
     setting = checkRange(setting, calArr);
+    console.log(setting);
     if (setting == 1) {
       let ones = genNumbers(10);
       return {
@@ -14329,6 +14333,10 @@ function genProblems() {
   }
 
   if (level == "calThree") {
+    // if (setting == 99 || (global == 1 && skipGlobalUpdateProblem == 0)) {
+    //   global = 1;
+    //   setting = calArrAll(6, calArr);
+    // }
     setting = calArrAll(9, calArr, setting);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
