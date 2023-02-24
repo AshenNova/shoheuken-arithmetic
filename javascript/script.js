@@ -2712,17 +2712,14 @@ function updateProblems() {
         time12hr = p.hours - 12;
         displayProblem.innerHTML = `
         What is the time below in 24 hour clock?</p>
-      ${time12hr.toLocaleString("en-US", {
-        minimumIntegerDigits: 2,
-      })}.${p.mins.toLocaleString("en-US", {
+      ${time12hr}.${p.mins.toLocaleString("en-US", {
           minimumIntegerDigits: 2,
         })} p.m`;
       } else {
+        if (p.hours == 0) time12hr = 12;
         displayProblem.innerHTML = `
         What is the time below in 24 hour clock?</p>
-      ${time12hr.toLocaleString("en-US", {
-        minimumIntegerDigits: 2,
-      })}.${p.mins.toLocaleString("en-US", {
+      ${time12hr}.${p.mins.toLocaleString("en-US", {
           minimumIntegerDigits: 2,
         })} a.m
     `;
@@ -10350,6 +10347,10 @@ function handleSubmit(e) {
         if (p.hours > 12) time12hr = p.hours - 12;
         if (p.hours > 0 && p.hours < 12) {
           correctAnswer = `${time12hr}.${p.mins.toLocaleString("en-US", {
+            minimumIntegerDigits: 2,
+          })}am`;
+        } else if (p.hours == 0) {
+          correctAnswer = `12.${p.mins.toLocaleString("en-US", {
             minimumIntegerDigits: 2,
           })}am`;
         } else {
