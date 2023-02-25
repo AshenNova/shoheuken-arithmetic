@@ -6911,6 +6911,7 @@ function updateProblems() {
     }
   }
   if (level == "calThree") {
+    // WORKING DISPLAY
     if (
       setting == 1 ||
       setting == 2 ||
@@ -6923,7 +6924,8 @@ function updateProblems() {
       wholeNumberContainer.classList.add("hidden");
       workingContainer.classList.remove("hidden");
     }
-    if (setting == 7 || setting == 8) {
+    // NORMAL DISPLAY
+    if (setting == 7 || setting == 8 || setting == 10) {
       displayProblem.style.fontSize = "24px";
       wholeNumberContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
@@ -7129,6 +7131,11 @@ function updateProblems() {
       secondNum.textContent = p.multiple;
       operator.textContent = "x";
       workingAnswer.textContent = "?";
+    }
+
+    if (setting == 10) {
+      let num = p.multiplier * p.divisor;
+      displayProblem.innerHTML = `${num} ÷ ${p.divisor} = ?`;
     }
   }
 
@@ -11398,6 +11405,7 @@ function handleSubmit(e) {
       if (setting == 9) {
         correctAnswer = p.numOne * p.multiple;
       }
+      if (setting == 10) correctAnswer = p.multiplier;
       skipGlobalUpdateProblem = 0;
     }
 
@@ -14649,6 +14657,12 @@ function genProblems() {
         multiple: genNumbers(8) + 2,
       };
     }
+    if (setting == 10) {
+      return {
+        divisor: genNumbers(7) + 3,
+        multiplier: genNumbers(1100) + 11,
+      };
+    }
   }
 
   if (level == "calFour") {
@@ -17266,7 +17280,7 @@ function buttonLevelSetting() {
       level = "calThree";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication"
+        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Working: Long Division ( No remainder )"
       );
       break;
 
