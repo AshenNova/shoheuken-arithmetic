@@ -502,6 +502,7 @@ const resetStuff = function () {
   document.querySelector("#user-input").setAttribute("type", "number");
   document.querySelector("#user-input").setAttribute("step", "1");
   displayProblem.style.fontSize = "50px";
+  instructions.style.fontSize = "revert";
   userInput.style.width = "175px";
   document.querySelector("#user-input").style.marginTop = "0";
   document.querySelector("#user-input").setAttribute("max", "99999");
@@ -7273,6 +7274,7 @@ function updateProblems() {
   if (level == "calFive") {
     if (setting == 2 || setting == 3) {
       // START CHANGE DISPLAY TO FRACTIONS
+      fractionsContainer.classList.add("hidden");
       fractionsContainerTwo.classList.remove("hidden");
       workingContainer.classList.add("hidden");
       // END DISPLAY
@@ -7281,10 +7283,16 @@ function updateProblems() {
       displayProblem.style.textAlign = "left";
       displayProblem.style.fontSize = "18px";
       wholeNumberContainer.classList.remove("hidden");
+      fractionsContainer.classList.add("hidden");
       fractionsContainerTwo.classList.add("hidden");
       workingContainer.classList.add("hidden");
     }
+    if (setting != 3) {
+      threeNumerator.classList.remove("hidden");
+      threeDenominator.classList.remove("hidden");
+    }
     if (setting == 1) {
+      fractionsContainerTwo.classList.add("hidden");
       fractionsContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
       const common = genNumbers(2);
@@ -7375,6 +7383,10 @@ function updateProblems() {
       equalSymbol.textContent = "x";
     }
     if (setting == 3) {
+      displayTwoFractions.style.fontSize = "30px";
+      displayTwoFractions.style.marginBottom = "50px";
+      threeNumerator.classList.add("hidden");
+      threeDenominator.classList.add("hidden");
       if (p.numeratorOne == p.denominatorOne) {
         return updateCalc();
       }
@@ -7395,14 +7407,12 @@ function updateProblems() {
         p.denominatorOne
       );
       if (p.numeratorOne == 0) return updateCalc();
-      displayTwoFractions.style.fontSize = "30px";
-      displayTwoFractions.style.marginBottom = "50px";
-      threeNumerator.classList.add("hidden");
-      threeDenominator.classList.add("hidden");
+
       fractionsUnitOfMeasurement.textContent = p.unitsMeasurement;
       twoWholeNumber.textContent = p.wholeOne;
       twoNumerator.textContent = p.numeratorOne;
       twoDenominator.textContent = p.denominatorOne;
+      equalSymbol.textContent = `${p.unitsMeasurement} =`;
       threeWholeNumber.textContent = `? ${p.unitsPair}`;
     }
     // CURRENT WORK
@@ -14609,7 +14619,7 @@ function genProblems() {
     if (setting == 3) {
       let positions = genNumbers(6);
       return {
-        unitsMeasurement: ["m ", "ℓ ", "kg ", "h ", "min ", "km "][positions],
+        unitsMeasurement: ["m ", "L ", "kg ", "h ", "min ", "km "][positions],
         unitsPair: ["cm", "ml", "g", "mins", "secs", "m"][positions],
         conversion: [100, 1000, 1000, 60, 60, 1000][positions],
         wholeOne: genNumbers(4) + 2,
@@ -17144,7 +17154,7 @@ function buttonLevelSetting() {
 
     case "Cal.5":
       level = "calFive";
-      scoreNeeded = 5;
+      scoreNeeded = 10;
       setting = prompt(
         "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Ratio: Repeated Identity"
       );
@@ -17165,6 +17175,11 @@ function buttonLevelSetting() {
       bronze = heuOne.time + ((cutoff - heuOne.time) / 3) * 2;
       highScoreName.innerHTML = heuOne.name;
       highScoreTime.innerHTML = heuOne.time;
+      instructions.style.fontSize = "16px";
+      instructions.innerHTML = `
+        A comparison statement tells us the difference.</p>
+        Which allows us to change one variable to another.</p>
+        `;
       break;
 
     case "Heu.2":
