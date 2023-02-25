@@ -370,18 +370,18 @@ function swap(first, second) {
   return ([first, second] = [second, first]);
 }
 
-function simplify(first, second) {
-  console.log("Simplifying fractions");
-  let max = first;
-  if (first < second) max = second;
-  for (let i = 2; i < max; i++) {
-    while (first % i == 0 && second % i == 0) {
-      first /= i;
-      second /= i;
-    }
-  }
-  return [first, second];
-}
+// function simplify(first, second) {
+//   console.log("Simplifying fractions");
+//   let max = first;
+//   if (first < second) max = second;
+//   for (let i = 2; i < max; i++) {
+//     while (first % i == 0 && second % i == 0) {
+//       first /= i;
+//       second /= i;
+//     }
+//   }
+//   return [first, second];
+// }
 
 function commonDeno(first, second) {
   console.log("Finding common denominator");
@@ -6925,7 +6925,7 @@ function updateProblems() {
       workingContainer.classList.remove("hidden");
     }
     // NORMAL DISPLAY
-    if (setting == 7 || setting == 8 || setting == 10) {
+    if (setting == 7 || setting == 8 || setting == 10 || setting == 11) {
       displayProblem.style.fontSize = "24px";
       wholeNumberContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
@@ -7135,6 +7135,11 @@ function updateProblems() {
 
     if (setting == 10) {
       let num = p.multiplier * p.divisor;
+      displayProblem.innerHTML = `${num} ÷ ${p.divisor} = ?`;
+    }
+
+    if (setting == 11) {
+      let num = p.multiplier * p.divisor + p.remainder;
       displayProblem.innerHTML = `${num} ÷ ${p.divisor} = ?`;
     }
   }
@@ -11406,6 +11411,7 @@ function handleSubmit(e) {
         correctAnswer = p.numOne * p.multiple;
       }
       if (setting == 10) correctAnswer = p.multiplier;
+      if (setting == 11) correctAnswer = `${p.multiplier}r${p.remainder}`;
       skipGlobalUpdateProblem = 0;
     }
 
@@ -14657,10 +14663,12 @@ function genProblems() {
         multiple: genNumbers(8) + 2,
       };
     }
-    if (setting == 10) {
+    if (setting == 10 || setting == 11) {
+      let num = genNumbers(7) + 3;
       return {
-        divisor: genNumbers(7) + 3,
+        divisor: num,
         multiplier: genNumbers(1100) + 11,
+        remainder: genNumbers(num),
       };
     }
   }
