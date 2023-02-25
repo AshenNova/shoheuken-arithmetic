@@ -76,6 +76,7 @@ const threeWholeNumber = document.querySelector(".three-whole-number");
 const threeNumerator = document.querySelector(".three-numerator");
 const threeDenominator = document.querySelector(".three-denominator");
 const equalSymbol = document.querySelector(".equal-symbol");
+const equalSymbolTwo = document.querySelector(".equal-symbol-two");
 
 // WORKING AND CALCULATION DISPLAY
 const firstNum = document.querySelector(".firstNum");
@@ -7115,22 +7116,35 @@ function updateProblems() {
   }
 
   if (level == "calFour") {
+    // WORKING DISPLAY
     if (setting == 4) {
       wholeNumberContainer.classList.add("hidden");
       workingContainer.classList.remove("hidden");
     }
+
+    // NORMAL DISPLAY
     if (
       setting == 1 ||
       setting == 2 ||
       setting == 3 ||
-      setting == 5 ||
-      setting == 6
+      setting == 8 ||
+      setting == 9
     ) {
       displayProblem.style.fontSize = "20px";
       wholeNumberContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
     }
-
+    //MIXED FRACTIONS DISPLAY
+    if (setting == 5 || setting == 6) {
+      wholeNumberContainer.classList.add("hidden");
+      workingContainer.classList.add("hidden");
+      fractionsContainerTwo.classList.remove("hidden");
+      equalSymbolTwo.classList.remove("hidden");
+    }
+    if (setting != 5 && setting != 6) {
+      equalSymbolTwo.classList.add("hidden");
+      equalSymbol.textContent = "=";
+    }
     if (setting == 1) {
       if (p.numOne == p.numTwo) {
         return updateProblems();
@@ -7233,6 +7247,22 @@ function updateProblems() {
       workingAnswer.textContent = "?";
     }
     if (setting == 5) {
+      if (p.numOne > p.denoOne) [p.numOne, p.denoOne] = [p.denoOne, p.numOne];
+      if (p.numOne == p.denoOne) p.denoOne += 1;
+      if (p.numTwo > p.denoTwo) [p.numTwo, p.denoTwo] = [p.denoTwo, p.numTwo];
+      if (p.numTwo == p.denoTwo) p.denoTwo += 1;
+      if (p.denoOne == p.denoTwo) p.denoTwo += 1;
+      [p.numOne, p.denoOne] = simplify(p.numOne, p.denoOne);
+      [p.numTwo, p.denoTwo] = simplify(p.numTwo, p.denoTwo);
+      twoWholeNumber.textContent = p.wholeOne;
+      twoNumerator.textContent = p.numOne;
+      twoDenominator.textContent = p.denoOne;
+      threeWholeNumber.textContent = p.wholeTwo;
+      threeNumerator.textContent = p.numTwo;
+      threeDenominator.textContent = p.denoTwo;
+      equalSymbol.textContent = "+";
+    }
+    if (setting == 8) {
       // START CHANGE DISPLAY
       if (p.numOne == p.numTwo) {
         return updateProblems();
@@ -7253,7 +7283,7 @@ function updateProblems() {
             `;
       }
     }
-    if (setting == 6) {
+    if (setting == 9) {
       p.numOne = p.numTwo * (genNumbers(99) + 2);
       if (p.operator == "x") {
         p.comparison = p.numOne * p.multiOne;
@@ -7408,7 +7438,7 @@ function updateProblems() {
       );
       if (p.numeratorOne == 0) return updateCalc();
 
-      fractionsUnitOfMeasurement.textContent = p.unitsMeasurement;
+      // fractionsUnitOfMeasurement.textContent = p.unitsMeasurement;
       twoWholeNumber.textContent = p.wholeOne;
       twoNumerator.textContent = p.numeratorOne;
       twoDenominator.textContent = p.denominatorOne;
@@ -11347,9 +11377,34 @@ function handleSubmit(e) {
         correctAnswer = p.numOne * p.numTwo;
       }
       if (setting == 5) {
+        let max = p.denoOne;
+        let min = p.denoTwo;
+        if (p.denoTwo > p.denoOne) [max, min] = [p.denoTwo, p.denoOne];
+        let count = 1;
+        let common = [min, max];
+        let temp = max;
+        while (temp % min != 0) {
+          temp += max;
+          count += 1;
+          common.push(temp);
+          console.log(common);
+        }
+        const multiOne = common[common.length - 1] / p.denoOne;
+        const multiTwo = common[common.length - 1] / p.denoTwo;
+        const totalWhole = p.wholeOne + p.wholeTwo;
+        const totalNum = p.numOne * multiOne + p.numTwo * multiTwo;
+        let totalDeno = p.denoOne * multiOne;
+        const quotient = Math.floor(totalNum / totalDeno);
+        let remainder = totalNum % totalDeno;
+        const lastWhole = totalWhole + quotient;
+        [remainder, totalDeno] = simplify(remainder, totalDeno);
+
+        correctAnswer = `${lastWhole} ${remainder}/${totalDeno}`;
+      }
+      if (setting == 8) {
         correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
       }
-      if (setting == 6) {
+      if (setting == 9) {
         if (p.operator == "x") {
           correctAnswer = p.comparison * p.divisor;
         }
@@ -14579,12 +14634,22 @@ function genProblems() {
     }
     if (setting == 5) {
       return {
+        wholeOne: genNumbers(9) + 1,
+        numOne: genNumbers(9) + 1,
+        denoOne: genNumbers(9) + 1,
+        wholeTwo: genNumbers(9) + 1,
+        numTwo: genNumbers(9) + 1,
+        denoTwo: genNumbers(9) + 1,
+      };
+    }
+    if (setting == 8) {
+      return {
         numOne: genNumbers(10) + 1,
         numTwo: [3, 7, 9, 11][genNumbers(4)],
         roundOff: genNumbers(3) + 1,
       };
     }
-    if (setting == 6) {
+    if (setting == 9) {
       return {
         operator: ["x", "÷"][genNumbers(2)],
         numOne: undefined,
@@ -17145,7 +17210,7 @@ function buttonLevelSetting() {
       level = "calFour";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Fractions to Decimal (Limit)\n6. Division decimals"
+        "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Fractions: Addition: Mixed Fractions\n6.\n7.\n8. Fractions to Decimal (Limit)\n9. Division decimals"
       );
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";
