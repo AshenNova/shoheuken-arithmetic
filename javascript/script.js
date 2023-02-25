@@ -383,6 +383,23 @@ function simplify(first, second) {
   return [first, second];
 }
 
+function commonDeno(first, second) {
+  console.log("Finding common denominator");
+  let max = first;
+  let min = second;
+  if (second > first) [max, min] = [second, first];
+  let count = 1;
+  let common = [min, max];
+  let temp = max;
+  while (temp % min != 0) {
+    temp += max;
+    count += 1;
+    common.push(temp);
+    console.log(common);
+  }
+  return common[common.length - 1];
+}
+
 function clickStart() {
   buttonLevel = this.innerHTML;
   console.log("start button clicked");
@@ -7262,6 +7279,27 @@ function updateProblems() {
       threeDenominator.textContent = p.denoTwo;
       equalSymbol.textContent = "+";
     }
+    if (setting == 6) {
+      if (p.wholeTwo > p.wholeOne)
+        [p.wholeOne, p.wholeTwo] = [p.wholeTwo, p.wholeOne];
+      if (p.wholeOne == p.wholeTwo) p.wholeOne += 1;
+      if (p.numOne > p.denoOne) [p.numOne, p.denoOne] = [p.denoOne, p.numOne];
+      if (p.numOne == p.denoOne) p.denoOne += 1;
+      if (p.numTwo > p.denoTwo) [p.numTwo, p.denoTwo] = [p.denoTwo, p.numTwo];
+      if (p.numTwo == p.denoTwo) p.denoTwo += 1;
+      if (p.denoOne == p.denoTwo) p.denoTwo += 1;
+      console.log(p.numOne, p.denoOne, p.numTwo, p.denoTwo);
+      [p.numOne, p.denoOne] = simplify(p.numOne, p.denoOne);
+      [p.numTwo, p.denoTwo] = simplify(p.numTwo, p.denoTwo);
+      if (p.denoOne == p.denoTwo) return updateCalc();
+      twoWholeNumber.textContent = p.wholeOne;
+      twoNumerator.textContent = p.numOne;
+      twoDenominator.textContent = p.denoOne;
+      threeWholeNumber.textContent = p.wholeTwo;
+      threeNumerator.textContent = p.numTwo;
+      threeDenominator.textContent = p.denoTwo;
+      equalSymbol.textContent = "-";
+    }
     if (setting == 8) {
       // START CHANGE DISPLAY
       if (p.numOne == p.numTwo) {
@@ -11401,6 +11439,22 @@ function handleSubmit(e) {
 
         correctAnswer = `${lastWhole} ${remainder}/${totalDeno}`;
       }
+      if (setting == 6) {
+        let common = commonDeno(p.denoOne, p.denoTwo);
+        console.log(common);
+        const multiOne = common / p.denoOne;
+        const multiTwo = common / p.denoTwo;
+        const adjNumOne = p.wholeOne * common + multiOne * p.numOne;
+        const adjNumTwo = p.wholeTwo * common + multiTwo * p.numTwo;
+        const calNum = adjNumOne - adjNumTwo;
+        const lastWhole = Math.floor(calNum / common);
+        let remainder = calNum % common;
+        [remainder, common] = simplify(remainder, common);
+        correctAnswer = `${lastWhole} ${remainder}/${common}`;
+        if (lastWhole == 0) {
+          correctAnswer = `${remainder}/${common}`;
+        }
+      }
       if (setting == 8) {
         correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
       }
@@ -14642,6 +14696,16 @@ function genProblems() {
         denoTwo: genNumbers(9) + 1,
       };
     }
+    if (setting == 6) {
+      return {
+        wholeOne: genNumbers(9) + 1,
+        numOne: genNumbers(9) + 1,
+        denoOne: genNumbers(9) + 1,
+        wholeTwo: genNumbers(9) + 1,
+        numTwo: genNumbers(9) + 1,
+        denoTwo: genNumbers(9) + 1,
+      };
+    }
     if (setting == 8) {
       return {
         numOne: genNumbers(10) + 1,
@@ -17210,7 +17274,7 @@ function buttonLevelSetting() {
       level = "calFour";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Fractions: Addition: Mixed Fractions\n6.\n7.\n8. Fractions to Decimal (Limit)\n9. Division decimals"
+        "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Fractions: Addition: Mixed Fractions\n6. Fractions: Subtraction: Mixed Fractions\n7.\n8. Fractions to Decimal (Limit)\n9. Division decimals"
       );
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";
