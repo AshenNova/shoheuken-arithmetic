@@ -370,6 +370,14 @@ function swap(first, second) {
   return ([first, second] = [second, first]);
 }
 
+function decimalCheck(decimal) {
+  let str = decimal.toString();
+  if (decimal.length > 10) {
+    console.log(str);
+    return updateCalc();
+  }
+}
+
 function simplify(first, second) {
   console.log("Simplifying fractions");
   let max = first;
@@ -2341,7 +2349,9 @@ function updateProblems() {
     ) {
       p.numTwo = 1000;
     }
-    p.numFinal = Math.floor((p.numOne / (p.numTwo * 1)) * p.numTwo) / p.numTwo;
+    // p.numFinal = Math.floor((p.numOne / (p.numTwo * 1)) * p.numTwo) / p.numTwo;
+    p.numFinal = p.numOne / p.numTwo;
+
     while (p.numFinal > 1000) {
       p.numFinal -= 1000;
     }
@@ -10282,6 +10292,7 @@ function handleSubmit(e) {
         // }
         correctAnswer = p.ansFinal.toFixed(2);
       }
+      decimalCheck(correctAnswer);
     }
 
     if (level == 4.04) {
@@ -11525,6 +11536,7 @@ function handleSubmit(e) {
         if (p.operator == "÷") {
           correctAnswer = p.comparison / p.divisor;
         }
+        decimalCheck(correctAnswer);
       }
       skipGlobalUpdateProblem = 0;
     }
