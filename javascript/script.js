@@ -10471,6 +10471,7 @@ function handleSubmit(e) {
     // }
 
     if (level == 4.13) {
+      console.log(p.type, p.hours);
       if (p.type == 24) {
         let time12hr = p.hours;
         if (p.hours > 12) time12hr = p.hours - 12;
@@ -10490,11 +10491,17 @@ function handleSubmit(e) {
       }
       // ANSWER IN 24 HOUR CLOCK
       if (p.type == 12) {
-        correctAnswer = `${p.hours.toLocaleString("en-US", {
-          minimumIntegerDigits: 2,
-        })} ${p.mins.toLocaleString("en-US", {
-          minimumIntegerDigits: 2,
-        })}`;
+        if (p.hours == 12) {
+          correctAnswer = `00 ${p.mins.toLocaleString("en-US", {
+            minimumIntegerDigits: 2,
+          })}`;
+        } else {
+          correctAnswer = `${p.hours.toLocaleString("en-US", {
+            minimumIntegerDigits: 2,
+          })} ${p.mins.toLocaleString("en-US", {
+            minimumIntegerDigits: 2,
+          })}`;
+        }
       }
     }
 
@@ -13755,7 +13762,8 @@ function genProblems() {
   if (level == 4.13) {
     return {
       type: [12, 24][genNumbers(2)],
-      hours: genNumbers(24),
+      // hours: genNumbers(24),
+      hours: [0, 12][genNumbers(2)],
       mins: genNumbers(60),
     };
   }
