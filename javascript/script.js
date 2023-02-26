@@ -370,18 +370,18 @@ function swap(first, second) {
   return ([first, second] = [second, first]);
 }
 
-// function simplify(first, second) {
-//   console.log("Simplifying fractions");
-//   let max = first;
-//   if (first < second) max = second;
-//   for (let i = 2; i < max; i++) {
-//     while (first % i == 0 && second % i == 0) {
-//       first /= i;
-//       second /= i;
-//     }
-//   }
-//   return [first, second];
-// }
+function simplify(first, second) {
+  console.log("Simplifying fractions");
+  let max = first;
+  if (first < second) max = second;
+  for (let i = 2; i < max; i++) {
+    while (first % i == 0 && second % i == 0) {
+      first /= i;
+      second /= i;
+    }
+  }
+  return [first, second];
+}
 
 function commonDeno(first, second) {
   console.log("Finding common denominator");
@@ -7371,6 +7371,45 @@ function updateProblems() {
       threeNumerator.classList.remove("hidden");
       threeDenominator.classList.remove("hidden");
     }
+
+    // if (setting == 0) {
+    //   let equationArr = [1, "A", 3, "B", 5, "C", 7, "D", 9];
+    //   let holdNum = [p.numOne, p.numTwo, p.numThree, p.numFour, p.numFive];
+    //   let holdSym = ["+", "-", "*", "/"];
+    //   console.log(equationArr);
+    //   let numArr = [1, 3, 5, 7, 9];
+    //   for (let i = 0; i < 5; i++) {
+    //     const chosenNum = numArr[genNumbers(numArr.length)];
+    //     console.log(chosenNum);
+    //     const position = numArr.indexOf(chosenNum);
+    //     const splicedNum = numArr.splice(position, 1);
+    //     console.log(numArr, splicedNum);
+    //     const positionInArr = equationArr.indexOf(chosenNum);
+    //     console.log("PositionInArr: " + positionInArr);
+    //     equationArr.splice(positionInArr, 1);
+    //     equationArr.splice(positionInArr, 0, holdNum[i]);
+    //     console.log(equationArr);
+    //   }
+    //   let alpArr = ["A", "B", "C", "D"];
+    //   for (let i = 0; i < 4; i++) {
+    //     const chosenNum = alpArr[genNumbers(alpArr.length)];
+    //     console.log(chosenNum);
+    //     const position = alpArr.indexOf(chosenNum);
+    //     const splicedNum = alpArr.splice(position, 1);
+    //     console.log(alpArr, splicedNum);
+    //     const positionInArr = equationArr.indexOf(chosenNum);
+    //     console.log("PositionInArr: " + positionInArr);
+    //     equationArr.splice(positionInArr, 1);
+    //     equationArr.splice(positionInArr, 0, holdSym[i]);
+    //   }
+    //   console.log(equationArr);
+    //   let str = equationArr.join("");
+    //   let n = eval(str);
+    //   if (n % 1 != 1) {
+    //     return updateCalc();
+    //   }
+    // }
+
     if (setting == 1) {
       fractionsContainerTwo.classList.add("hidden");
       fractionsContainer.classList.remove("hidden");
@@ -14750,6 +14789,16 @@ function genProblems() {
   if (level == "calFive") {
     setting = calArrAll(4, calArr, setting);
     setting = checkRange(setting, calArr);
+
+    if (setting == 0) {
+      return {
+        numOne: genNumbers(20) + 1,
+        numTwo: genNumbers(20) + 1,
+        numThree: genNumbers(20) + 1,
+        numFour: genNumbers(20) + 1,
+        numFive: genNumbers(20) + 1,
+      };
+    }
     if (setting == 1) {
       console.log("setting 1");
       return {
