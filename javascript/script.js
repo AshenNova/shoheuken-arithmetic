@@ -7242,6 +7242,7 @@ function updateProblems() {
       setting == 8 ||
       setting == 9 ||
       setting == 10 ||
+      setting == 11 ||
       setting == 12 ||
       setting == 13
     ) {
@@ -7431,6 +7432,13 @@ function updateProblems() {
       decimalCheck(p.numOne);
       displayProblem.innerHTML = `
       ${p.numOne} x ${p.numTwo} = ?`;
+    }
+    if (setting == 11) {
+      p.numTwo = p.numOne;
+      p.numOne = (p.numOne * p.multiplier) / p.divisor;
+      decimalCheck(p.numOne);
+      displayProblem.innerHTML = `
+      ${p.numOne} ÷ ${p.numTwo} = ?`;
     }
     if (setting == 12) {
       // START CHANGE DISPLAY
@@ -11695,6 +11703,10 @@ function handleSubmit(e) {
         correctAnswer = p.numOne * p.numTwo;
         decimalCheck(correctAnswer);
       }
+      if (setting == 11) {
+        correctAnswer = p.numOne / p.numTwo;
+        decimalCheck(correctAnswer);
+      }
       if (setting == 12) {
         correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
       }
@@ -15011,6 +15023,13 @@ function genProblems() {
         numTwo: genNumbers(89) + 11,
       };
     }
+    if (setting == 11) {
+      return {
+        numOne: genNumbers(7) + 2,
+        multiplier: genNumbers(989) + 11,
+        divisor: [10, 100, 1000][genNumbers(3)],
+      };
+    }
     if (setting == 12) {
       return {
         numOne: genNumbers(10) + 1,
@@ -17618,7 +17637,7 @@ function buttonLevelSetting() {
       level = "calFour";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Fractions: Addition: Mixed Fractions\n6. Fractions: Subtraction: Mixed Fractions\n7. Decimals: Addition\n8. Decimals: Subtraction\n9. Decimals: Multiplication (Single)\n10. Decimals: Multiplication (Double)\n\n12. Fractions to Decimal (Limit)\n13. Division decimals"
+        "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Fractions: Addition: Mixed Fractions\n6. Fractions: Subtraction: Mixed Fractions\n7. Decimals: Addition\n8. Decimals: Subtraction\n9. Decimals: Multiplication (Single)\n10. Decimals: Multiplication (Double)\n11. Decimals: Division \n12. Fractions to Decimal (Limit)\n13. Decimals: Division and Multiplication with splitting"
       );
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";
