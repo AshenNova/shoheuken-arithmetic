@@ -7405,7 +7405,19 @@ function updateProblems() {
       decimalCheck(oneDisplay);
       decimalCheck(twoDisplay);
     }
+
     if (setting == 8) {
+      console.log("The current setting is: " + setting);
+      p.numOne = p.numOne / p.convenientNumOne;
+      p.numTwo = p.numTwo / p.convenientNumTwo;
+      if (p.numTwo > p.numOne) [p.numOne, p.numTwo] = [p.numTwo, p.numOne];
+      displayProblem.innerHTML = `
+      ${p.numOne} - ${p.numTwo} = ?`;
+      decimalCheck(p.numOne);
+      decimalCheck(p.numTwo);
+    }
+
+    if (setting == 12) {
       // START CHANGE DISPLAY
       if (p.numOne == p.numTwo) {
         return updateProblems();
@@ -7426,7 +7438,7 @@ function updateProblems() {
             `;
       }
     }
-    if (setting == 9) {
+    if (setting == 13) {
       p.numOne = p.numTwo * (genNumbers(99) + 2);
       if (p.operator == "x") {
         p.comparison = p.numOne * p.multiOne;
@@ -10281,6 +10293,7 @@ function handleSubmit(e) {
         console.log(remainder);
         correctAnswer = arr[remainder];
       }
+      skipGlobalUpdateProblem = 0;
     }
 
     if (level == 3.17) {
@@ -11656,9 +11669,13 @@ function handleSubmit(e) {
         decimalCheck(correctAnswer);
       }
       if (setting == 8) {
+        correctAnswer = p.numOne - p.numTwo;
+        decimalCheck(correctAnswer);
+      }
+      if (setting == 12) {
         correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
       }
-      if (setting == 9) {
+      if (setting == 13) {
         if (p.operator == "x") {
           correctAnswer = p.comparison * p.divisor;
         }
@@ -14898,7 +14915,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(7, calArr, setting, 99);
+    setting = calArrAll(13, calArr, setting, 99);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let number = genNumbers(8) + 2;
@@ -14949,7 +14966,7 @@ function genProblems() {
       };
     }
     //DECIMALS
-    if (setting == 7) {
+    if (setting == 7 || setting == 8) {
       return {
         numOne: genNumbers(999) + 1,
         convenientNumOne: [1, 10, 100][genNumbers(3)],
@@ -14957,14 +14974,14 @@ function genProblems() {
         convenientNumTwo: [10, 100][genNumbers(2)],
       };
     }
-    if (setting == 8) {
+    if (setting == 12) {
       return {
         numOne: genNumbers(10) + 1,
         numTwo: [3, 7, 9, 11][genNumbers(4)],
         roundOff: genNumbers(3) + 1,
       };
     }
-    if (setting == 9) {
+    if (setting == 13) {
       return {
         operator: ["x", "÷"][genNumbers(2)],
         numOne: undefined,
@@ -17564,7 +17581,7 @@ function buttonLevelSetting() {
       level = "calFour";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Fractions: Addition: Mixed Fractions\n6. Fractions: Subtraction: Mixed Fractions\n7. Decimals: Addition\n8. Fractions to Decimal (Limit)\n9. Division decimals"
+        "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Fractions: Addition: Mixed Fractions\n6. Fractions: Subtraction: Mixed Fractions\n7. Decimals: Addition\n8. Decimals: Subtraction\n\n12. Fractions to Decimal (Limit)\n13. Division decimals"
       );
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";
