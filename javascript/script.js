@@ -379,6 +379,10 @@ function decimalCheck(decimal) {
   }
 }
 
+function accDecimal(decimal) {
+  return Math.round(decimal * 1000) / 1000;
+}
+
 function simplify(first, second) {
   console.log("Simplifying fractions");
   let max = first;
@@ -7431,7 +7435,7 @@ function updateProblems() {
       decimalCheck(p.numOne * p.numTwo);
     }
     if (setting == 10) {
-      p.numOne = p.numOne / p.convenientNumOne; 
+      p.numOne = p.numOne / p.convenientNumOne;
       decimalCheck(p.numOne);
       displayProblem.innerHTML = `
       ${p.numOne} x ${p.numTwo} = ?`;
@@ -7442,6 +7446,7 @@ function updateProblems() {
       decimalCheck(p.numOne);
       displayProblem.innerHTML = `
       ${p.numOne} ÷ ${p.numTwo} = ?`;
+      decimalCheck(p.numOne / p.numTwo);
     }
     if (setting == 12) {
       // START CHANGE DISPLAY
@@ -11690,25 +11695,29 @@ function handleSubmit(e) {
         }
       }
       if (setting == 7) {
-        correctAnswer =
-          p.numOne / p.convenientNumOne + p.numTwo / p.convenientNumTwo;
-        decimalCheck(correctAnswer);
+        // correctAnswer =
+        //   p.numOne / p.convenientNumOne + p.numTwo / p.convenientNumTwo;
+        // decimalCheck(correctAnswer);
+        let answer = [
+          p.numOne / p.convenientNumOne + p.numTwo / p.convenientNumTwo,
+        ];
+        correctAnswer = answer[0];
       }
       if (setting == 8) {
         correctAnswer = p.numOne - p.numTwo;
-        decimalCheck(correctAnswer);
+        correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 9) {
         correctAnswer = p.numOne * p.numTwo;
-        decimalCheck(correctAnswer);
+        correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 10) {
         correctAnswer = p.numOne * p.numTwo;
-        decimalCheck(correctAnswer);
+        correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 11) {
         correctAnswer = p.numOne / p.numTwo;
-        decimalCheck(correctAnswer);
+        correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 12) {
         correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
