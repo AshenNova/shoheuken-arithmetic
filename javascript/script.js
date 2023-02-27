@@ -373,7 +373,7 @@ function swap(first, second) {
 function decimalCheck(decimal) {
   let str = decimal.toString();
   if (decimal.length > 10) {
-    console.log(str);
+    console.log("Recurring decimal detected: " + str);
     return updateCalc();
   }
 }
@@ -7238,6 +7238,7 @@ function updateProblems() {
       setting == 1 ||
       setting == 2 ||
       setting == 3 ||
+      setting == 7 ||
       setting == 8 ||
       setting == 9
     ) {
@@ -7393,6 +7394,16 @@ function updateProblems() {
       threeNumerator.textContent = p.numTwo;
       threeDenominator.textContent = p.denoTwo;
       equalSymbol.textContent = "-";
+    }
+    //DECIMALS
+    if (setting == 7) {
+      console.log("The current setting is: " + setting);
+      const oneDisplay = p.numOne / p.convenientNumOne;
+      const twoDisplay = p.numTwo / p.convenientNumTwo;
+      displayProblem.innerHTML = `
+      ${oneDisplay} + ${twoDisplay} = ?`;
+      decimalCheck(oneDisplay);
+      decimalCheck(twoDisplay);
     }
     if (setting == 8) {
       // START CHANGE DISPLAY
@@ -11639,6 +11650,11 @@ function handleSubmit(e) {
           correctAnswer = `${remainder}/${common}`;
         }
       }
+      if (setting == 7) {
+        correctAnswer =
+          p.numOne / p.convenientNumOne + p.numTwo / p.convenientNumTwo;
+        decimalCheck(correctAnswer);
+      }
       if (setting == 8) {
         correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
       }
@@ -14525,7 +14541,7 @@ function genProblems() {
 
   function calArrAll(max, arr, setting, maxSetting) {
     // setting = setting.toString();
-    if (!maxSetting) maxSetting = 99;
+    // if (!maxSetting) maxSetting = 99;
     console.log(maxSetting);
     if (setting == maxSetting || state.global == 1) {
       state.global = 1;
@@ -14591,7 +14607,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(8, calArr);
     // }
-    setting = calArrAll(8, calArr, setting);
+    setting = calArrAll(8, calArr, setting, 99);
     setting = checkRange(setting, calArr);
     console.log(setting);
     if (setting == 1) {
@@ -14682,7 +14698,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(8, calArr);
     // }
-    setting = calArrAll(8, calArr, setting);
+    setting = calArrAll(8, calArr, setting, 99);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let hundreds = genNumbers(9) + 1;
@@ -14773,7 +14789,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(11, calArr, setting);
+    setting = calArrAll(11, calArr, setting, 99);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let thousands = genNumbers(9) + 1;
@@ -14882,7 +14898,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(6, calArr, setting);
+    setting = calArrAll(7, calArr, setting, 99);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let number = genNumbers(8) + 2;
@@ -14932,6 +14948,15 @@ function genProblems() {
         denoTwo: genNumbers(9) + 1,
       };
     }
+    //DECIMALS
+    if (setting == 7) {
+      return {
+        numOne: genNumbers(999) + 1,
+        convenientNumOne: [1, 10, 100][genNumbers(3)],
+        numTwo: genNumbers(999) + 1,
+        convenientNumTwo: [10, 100][genNumbers(2)],
+      };
+    }
     if (setting == 8) {
       return {
         numOne: genNumbers(10) + 1,
@@ -14952,7 +14977,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(4, calArr, setting);
+    setting = calArrAll(4, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -17539,7 +17564,7 @@ function buttonLevelSetting() {
       level = "calFour";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Fractions: Addition: Mixed Fractions\n6. Fractions: Subtraction: Mixed Fractions\n7.\n8. Fractions to Decimal (Limit)\n9. Division decimals"
+        "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Fractions: Addition: Mixed Fractions\n6. Fractions: Subtraction: Mixed Fractions\n7. Decimals: Addition\n8. Fractions to Decimal (Limit)\n9. Division decimals"
       );
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";
