@@ -11725,9 +11725,11 @@ function handleSubmit(e) {
       if (setting == 13) {
         if (p.operator == "x") {
           correctAnswer = p.comparison * p.divisor;
+          correctAnswer = accDecimal(correctAnswer);
         }
         if (p.operator == "÷") {
           correctAnswer = p.comparison / p.divisor;
+          correctAnswer = accDecimal(correctAnswer);
         }
         decimalCheck(correctAnswer);
       }
