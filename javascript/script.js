@@ -7240,7 +7240,10 @@ function updateProblems() {
       setting == 3 ||
       setting == 7 ||
       setting == 8 ||
-      setting == 9
+      setting == 9 ||
+      setting == 10 ||
+      setting == 12 ||
+      setting == 13
     ) {
       displayProblem.style.fontSize = "20px";
       wholeNumberContainer.classList.remove("hidden");
@@ -7417,6 +7420,18 @@ function updateProblems() {
       decimalCheck(p.numTwo);
     }
 
+    if (setting == 9) {
+      p.numOne = p.numOne / p.convenientNumOne;
+      decimalCheck(p.numOne);
+      displayProblem.innerHTML = `
+      ${p.numOne} x ${p.numTwo} = ?`;
+    }
+    if (setting == 10) {
+      p.numOne = p.numOne / p.convenientNumOne;
+      decimalCheck(p.numOne);
+      displayProblem.innerHTML = `
+      ${p.numOne} x ${p.numTwo} = ?`;
+    }
     if (setting == 12) {
       // START CHANGE DISPLAY
       if (p.numOne == p.numTwo) {
@@ -11672,6 +11687,14 @@ function handleSubmit(e) {
         correctAnswer = p.numOne - p.numTwo;
         decimalCheck(correctAnswer);
       }
+      if (setting == 9) {
+        correctAnswer = p.numOne * p.numTwo;
+        decimalCheck(correctAnswer);
+      }
+      if (setting == 10) {
+        correctAnswer = p.numOne * p.numTwo;
+        decimalCheck(correctAnswer);
+      }
       if (setting == 12) {
         correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
       }
@@ -14974,6 +14997,20 @@ function genProblems() {
         convenientNumTwo: [10, 100][genNumbers(2)],
       };
     }
+    if (setting == 9) {
+      return {
+        numOne: genNumbers(999) + 1,
+        convenientNumOne: [10, 100, 1000][genNumbers(3)],
+        numTwo: genNumbers(9) + 1,
+      };
+    }
+    if (setting == 10) {
+      return {
+        numOne: genNumbers(999) + 1,
+        convenientNumOne: [10, 100, 1000][genNumbers(3)],
+        numTwo: genNumbers(89) + 11,
+      };
+    }
     if (setting == 12) {
       return {
         numOne: genNumbers(10) + 1,
@@ -17581,7 +17618,7 @@ function buttonLevelSetting() {
       level = "calFour";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Fractions: Addition: Mixed Fractions\n6. Fractions: Subtraction: Mixed Fractions\n7. Decimals: Addition\n8. Decimals: Subtraction\n\n12. Fractions to Decimal (Limit)\n13. Division decimals"
+        "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Fractions: Addition: Mixed Fractions\n6. Fractions: Subtraction: Mixed Fractions\n7. Decimals: Addition\n8. Decimals: Subtraction\n9. Decimals: Multiplication (Single)\n10. Decimals: Multiplication (Double)\n\n12. Fractions to Decimal (Limit)\n13. Division decimals"
       );
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";
