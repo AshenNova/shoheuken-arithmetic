@@ -372,6 +372,7 @@ function swap(first, second) {
 
 function decimalCheck(decimal) {
   let str = decimal.toString();
+  console.log(str.length);
   if (decimal.length > 10) {
     console.log("Recurring decimal detected: " + str);
     return updateCalc();
@@ -7427,9 +7428,10 @@ function updateProblems() {
       decimalCheck(p.numOne);
       displayProblem.innerHTML = `
       ${p.numOne} x ${p.numTwo} = ?`;
+      decimalCheck(p.numOne * p.numTwo);
     }
     if (setting == 10) {
-      p.numOne = p.numOne / p.convenientNumOne;
+      p.numOne = p.numOne / p.convenientNumOne; 
       decimalCheck(p.numOne);
       displayProblem.innerHTML = `
       ${p.numOne} x ${p.numTwo} = ?`;
@@ -15014,7 +15016,7 @@ function genProblems() {
       return {
         numOne: genNumbers(999) + 1,
         convenientNumOne: [10, 100, 1000][genNumbers(3)],
-        numTwo: genNumbers(9) + 1,
+        numTwo: genNumbers(8) + 2,
       };
     }
     if (setting == 10) {
