@@ -7248,6 +7248,7 @@ function updateProblems() {
     ) {
       displayProblem.style.fontSize = "20px";
       wholeNumberContainer.classList.remove("hidden");
+      fractionsContainerTwo.classList.add("hidden");
       workingContainer.classList.add("hidden");
     }
     //MIXED FRACTIONS DISPLAY
