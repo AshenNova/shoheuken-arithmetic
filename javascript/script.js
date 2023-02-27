@@ -1918,13 +1918,85 @@ function updateProblems() {
   }
 
   if (level == 3.16) {
+    // // level 3.12
+    // if (p.optionFinal == 5) {
+    //   displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne - 2} + ${
+    //     p.numOne - 1
+    //   } + ${p.numOne}</br> = ?`;
+    // }
+    // if (p.optionFinal == 1) {
+    //   displayProblem.innerHTML = `
+    //   Pattern 1: 1</br>
+    //   Pattern 2: 3</br>
+    //   Pattern 3: 6</br>
+    //   Pattern 4: 10</br>
+    //   ...</br>
+    //   Pattern ${p.numOne}: ?
+    //   `;
+    // }
+    // // level 3.13
+    // if (p.optionFinal == 2) {
+    //   displayProblem.innerHTML = `
+    //   Pattern 1: ${p.numTwo}</br>
+    //   Pattern 2: ${p.numTwo + p.numThree}</br>
+    //   Pattern 3: ${p.numTwo + p.numThree * 2}</br>
+    //   ...</br>
+    //   Pattern ${p.numFour}: ?
+    //   `;
+    // }
+    // // level 3.14
+    // if (p.optionFinal == 3) {
+    //   displayProblem.innerHTML = `
+    //   Pattern 1: 1</br>
+    //   Pattern 2: 4</br>
+    //   Pattern 3: 9</br>
+    //   ...</br>
+    //   Pattern ${p.numFive}: ?</br>
+    //   Pattern ?: ${(p.numFive + p.numSix) * (p.numFive + p.numSix)}
+    //   `;
+    // }
+    // // level 3.15
+    // if (p.optionFinal == 4) {
+    //   if (p.rollType == "A") {
+    //     for (let i = 0; i < p.rollTimes; i++) {
+    //       p.rollA = genNumbers(5);
+    //       arr.push(p.rollA);
+    //     }
+    //     while (arr[2] == arr[1] && arr[2] == arr[0]) {
+    //       arr.pop(arr[3]);
+    //       arr.push(genNumbers(5));
+    //     }
+    //   }
+    //   if (p.rollType == "B") {
+    //     for (let i = 0; i < p.rollTimes; i++) {
+    //       p.rollB = ["A", "B", "C", "D", "E"][genNumbers(5)];
+    //       arr.push(p.rollB);
+    //     }
+    //     while (arr[2] == arr[1] && arr[2] == arr[0]) {
+    //       arr.pop(arr[2]);
+    //       p.rollB = ["A", "B", "C", "D", "E"][genNumbers(5)];
+    //       arr.push(p.rollB);
+    //     }
+    //   }
+    //   console.log(arr);
+    //   for (let i = 0; arr2.length < 13; i++) {
+    //     arr2.push(arr[i % p.rollTimes]);
+    //   }
+    //   console.log(arr2);
+    //   arr2.push("...");
+    //   displayProblem.innerHTML = `
+    //   What is in position ${p.position}?</br>
+    //   ${arr2.toString()}
+    //   `;
+    // }
     // level 3.12
-    if (p.optionFinal == 5) {
+    console.log(setting);
+    if (setting == 5) {
       displayProblem.innerHTML = `1 + 2 + 3 ... ... + ${p.numOne - 2} + ${
         p.numOne - 1
       } + ${p.numOne}</br> = ?`;
     }
-    if (p.optionFinal == 1) {
+    if (setting == 1) {
       displayProblem.innerHTML = `
       Pattern 1: 1</br>
       Pattern 2: 3</br>
@@ -1935,7 +2007,7 @@ function updateProblems() {
       `;
     }
     // level 3.13
-    if (p.optionFinal == 2) {
+    if (setting == 2) {
       displayProblem.innerHTML = `
       Pattern 1: ${p.numTwo}</br>
       Pattern 2: ${p.numTwo + p.numThree}</br>
@@ -1945,7 +2017,7 @@ function updateProblems() {
       `;
     }
     // level 3.14
-    if (p.optionFinal == 3) {
+    if (setting == 3) {
       displayProblem.innerHTML = `
       Pattern 1: 1</br>
       Pattern 2: 4</br>
@@ -1956,7 +2028,7 @@ function updateProblems() {
       `;
     }
     // level 3.15
-    if (p.optionFinal == 4) {
+    if (setting == 4) {
       if (p.rollType == "A") {
         for (let i = 0; i < p.rollTimes; i++) {
           p.rollA = genNumbers(5);
@@ -10116,15 +10188,56 @@ function handleSubmit(e) {
     }
 
     if (level == 3.16) {
-      if (p.optionFinal == 5) {
+      // if (p.optionFinal == 5) {
+      //   correctAnswer = `${p.numOne + 1}x${p.numOne}/2`;
+      // }
+      // // level 3.12
+      // if (p.optionFinal == 1) {
+      //   correctAnswer = p.numOne + 1 + "x" + p.numOne + "/2";
+      // }
+      // // level 3.13
+      // if (p.optionFinal == 2) {
+      //   if (p.numThree > p.numTwo) {
+      //     correctAnswer = `${p.numThree}n-${p.numThree - p.numTwo} ${
+      //       p.numThree * p.numFour + (p.numTwo - p.numThree)
+      //     }`;
+      //   } else if (p.numThree == p.numTwo) {
+      //     correctAnswer = `${p.numThree}n ${p.numThree * p.numFour}`;
+      //   } else {
+      //     correctAnswer = `${p.numThree}n+${p.numTwo - p.numThree} ${
+      //       p.numThree * p.numFour + (p.numTwo - p.numThree)
+      //     }`;
+      //   }
+      // }
+      // // level 3.14
+      // if (p.optionFinal == 3) {
+      //   correctAnswer =
+      //     p.numFive +
+      //     "x" +
+      //     p.numFive +
+      //     "=" +
+      //     p.numFive * p.numFive +
+      //     " " +
+      //     (p.numFive + p.numSix);
+      // }
+      // // level 3.15
+      // if (p.optionFinal == 4) {
+      //   let remainder = (p.position % arr.length) - 1;
+      //   if (remainder < 0) {
+      //     remainder = arr.length - 1;
+      //   }
+      //   console.log(remainder);
+      //   correctAnswer = arr[remainder];
+      // }
+      if (setting == 5) {
         correctAnswer = `${p.numOne + 1}x${p.numOne}/2`;
       }
       // level 3.12
-      if (p.optionFinal == 1) {
+      if (setting == 1) {
         correctAnswer = p.numOne + 1 + "x" + p.numOne + "/2";
       }
       // level 3.13
-      if (p.optionFinal == 2) {
+      if (setting == 2) {
         if (p.numThree > p.numTwo) {
           correctAnswer = `${p.numThree}n-${p.numThree - p.numTwo} ${
             p.numThree * p.numFour + (p.numTwo - p.numThree)
@@ -10138,7 +10251,7 @@ function handleSubmit(e) {
         }
       }
       // level 3.14
-      if (p.optionFinal == 3) {
+      if (setting == 3) {
         correctAnswer =
           p.numFive +
           "x" +
@@ -10149,7 +10262,7 @@ function handleSubmit(e) {
           (p.numFive + p.numSix);
       }
       // level 3.15
-      if (p.optionFinal == 4) {
+      if (setting == 4) {
         let remainder = (p.position % arr.length) - 1;
         if (remainder < 0) {
           remainder = arr.length - 1;
@@ -13508,25 +13621,55 @@ function genProblems() {
   }
 
   if (level == 3.16) {
-    return {
-      numOne: genNumbers(94) + 5,
+    // return {
+    //   numOne: genNumbers(94) + 5,
 
-      numTwo: genNumbers(10) + 1,
-      numThree: genNumbers(5) + 2,
+    //   numTwo: genNumbers(10) + 1,
+    //   numThree: genNumbers(5) + 2,
 
-      numFour: genNumbers(5) + 5,
-      numFive: genNumbers(8) + 5,
-      numSix: [-1, 1, 2][genNumbers(3)],
+    //   numFour: genNumbers(5) + 5,
+    //   numFive: genNumbers(8) + 5,
+    //   numSix: [-1, 1, 2][genNumbers(3)],
 
-      optionFinal: [1, 2, 3, 4, 5][genNumbers(5)],
+    //   optionFinal: [1, 2, 3, 4, 5][genNumbers(5)],
 
-      // 3.15
-      rollType: ["A", "B"][genNumbers(2)],
-      rollA: undefined,
-      rollB: undefined,
-      rollTimes: genNumbers(3) + 3,
-      position: genNumbers(30) + 20,
-    };
+    //   // 3.15
+    //   rollType: ["A", "B"][genNumbers(2)],
+    //   rollA: undefined,
+    //   rollB: undefined,
+    //   rollTimes: genNumbers(3) + 3,
+    //   position: genNumbers(30) + 20,
+    // };
+    setting = calArrAll(5, calArr, setting, 9);
+    setting = checkRange(setting, calArr);
+    console.log(state.global);
+    if (setting == 1 || setting == 5) {
+      return {
+        numOne: genNumbers(94) + 5,
+      };
+    }
+    if (setting == 2) {
+      return {
+        numTwo: genNumbers(10) + 1,
+        numThree: genNumbers(5) + 2,
+        numFour: genNumbers(5) + 5,
+      };
+    }
+    if (setting == 3) {
+      return {
+        numFive: genNumbers(8) + 5,
+        numSix: [-1, 1, 2][genNumbers(3)],
+      };
+    }
+    if (setting == 4) {
+      return {
+        rollType: ["A", "B"][genNumbers(2)],
+        rollA: undefined,
+        rollB: undefined,
+        rollTimes: genNumbers(3) + 3,
+        position: genNumbers(30) + 20,
+      };
+    }
   }
 
   if (level == 3.17) {
@@ -14380,9 +14523,11 @@ function genProblems() {
     };
   }
 
-  function calArrAll(max, arr, setting) {
+  function calArrAll(max, arr, setting, maxSetting) {
     // setting = setting.toString();
-    if (setting == 99 || state.global == 1) {
+    if (!maxSetting) maxSetting = 99;
+    console.log(maxSetting);
+    if (setting == maxSetting || state.global == 1) {
       state.global = 1;
 
       if (!arr.length) {
@@ -16431,83 +16576,112 @@ function buttonLevelSetting() {
       instructions.textContent = "";
       break;
 
-    case "Level 3.12":
-      level = 3.12;
-      scoreNeeded = 20;
-      gold = 72;
-      highScoreName.innerHTML = highScore3DotZero12.name;
-      highScoreTime.innerHTML = highScore3DotZero12.time;
-      highScoreMistakes.innerHTML = highScore3DotZero12.mistake;
-      document.querySelector("#user-input").setAttribute("type", "text");
-      displayProblem.style.fontSize = "25px";
-      displayProblem.style.marginTop = "0";
-      instructions.textContent = "Form an Equation from the pattern";
-      break;
+    // case "Level 3.12":
+    //   level = 3.12;
+    //   scoreNeeded = 20;
+    //   gold = 72;
+    //   highScoreName.innerHTML = highScore3DotZero12.name;
+    //   highScoreTime.innerHTML = highScore3DotZero12.time;
+    //   highScoreMistakes.innerHTML = highScore3DotZero12.mistake;
+    //   document.querySelector("#user-input").setAttribute("type", "text");
+    //   displayProblem.style.fontSize = "25px";
+    //   displayProblem.style.marginTop = "0";
+    //   instructions.textContent = "Form an Equation from the pattern";
+    //   break;
 
-    case "Level 3.13":
-      level = 3.13;
-      scoreNeeded = 20;
-      gold = 471;
-      highScoreName.innerHTML = highScore3DotZero13.name;
-      highScoreTime.innerHTML = highScore3DotZero13.time;
-      highScoreMistakes.innerHTML = highScore3DotZero13.mistake;
-      document.querySelector("#user-input").setAttribute("type", "text");
-      displayProblem.style.fontSize = "25px";
-      displayProblem.style.marginTop = "0";
-      instructions.textContent =
-        "Form an Equation using 'n' from the pattern and provide an answer";
-      break;
+    // case "Level 3.13":
+    //   level = 3.13;
+    //   scoreNeeded = 20;
+    //   gold = 471;
+    //   highScoreName.innerHTML = highScore3DotZero13.name;
+    //   highScoreTime.innerHTML = highScore3DotZero13.time;
+    //   highScoreMistakes.innerHTML = highScore3DotZero13.mistake;
+    //   document.querySelector("#user-input").setAttribute("type", "text");
+    //   displayProblem.style.fontSize = "25px";
+    //   displayProblem.style.marginTop = "0";
+    //   instructions.textContent =
+    //     "Form an Equation using 'n' from the pattern and provide an answer";
+    //   break;
 
-    case "Level 3.14":
-      level = 3.14;
-      scoreNeeded = 20;
-      gold = highScore3DotZero14.time;
-      highScoreName.innerHTML = highScore3DotZero14.name;
-      highScoreTime.innerHTML = highScore3DotZero14.time;
-      highScoreMistakes.innerHTML = highScore3DotZero14.mistake;
-      document.querySelector("#user-input").setAttribute("type", "text");
-      displayProblem.style.fontSize = "25px";
-      displayProblem.style.marginTop = "0";
-      instructions.textContent =
-        "Form an Equation from the pattern and provide an answer";
-      break;
+    // case "Level 3.14":
+    //   level = 3.14;
+    //   scoreNeeded = 20;
+    //   gold = highScore3DotZero14.time;
+    //   highScoreName.innerHTML = highScore3DotZero14.name;
+    //   highScoreTime.innerHTML = highScore3DotZero14.time;
+    //   highScoreMistakes.innerHTML = highScore3DotZero14.mistake;
+    //   document.querySelector("#user-input").setAttribute("type", "text");
+    //   displayProblem.style.fontSize = "25px";
+    //   displayProblem.style.marginTop = "0";
+    //   instructions.textContent =
+    //     "Form an Equation from the pattern and provide an answer";
+    //   break;
 
-    case "Level 3.15":
-      level = 3.15;
-      scoreNeeded = 20;
-      gold = highScore3DotZero15.time;
-      silver =
-        highScore3DotZero15.time + (cutoff - highScore3DotZero15.time) / 3;
-      bronze =
-        highScore3DotZero15.time +
-        ((cutoff - highScore3DotZero15.time) / 3) * 2;
-      highScoreName.innerHTML = highScore3DotZero15.name;
-      highScoreTime.innerHTML = highScore3DotZero15.time;
-      highScoreMistakes.innerHTML = highScore3DotZero15.mistake;
-      document.querySelector("#user-input").setAttribute("type", "text");
-      displayProblem.style.fontSize = "25px";
-      displayProblem.style.marginTop = "0";
-      instructions.textContent =
-        "Take note of the repeated pattern and use it to find the position of the other pattern";
-      break;
+    // case "Level 3.15":
+    //   level = 3.15;
+    //   scoreNeeded = 20;
+    //   gold = highScore3DotZero15.time;
+    //   silver =
+    //     highScore3DotZero15.time + (cutoff - highScore3DotZero15.time) / 3;
+    //   bronze =
+    //     highScore3DotZero15.time +
+    //     ((cutoff - highScore3DotZero15.time) / 3) * 2;
+    //   highScoreName.innerHTML = highScore3DotZero15.name;
+    //   highScoreTime.innerHTML = highScore3DotZero15.time;
+    //   highScoreMistakes.innerHTML = highScore3DotZero15.mistake;
+    //   document.querySelector("#user-input").setAttribute("type", "text");
+    //   displayProblem.style.fontSize = "25px";
+    //   displayProblem.style.marginTop = "0";
+    //   instructions.textContent =
+    //     "Take note of the repeated pattern and use it to find the position of the other pattern";
+    //   break;
 
     case "Level 3.16":
       level = 3.16;
+      setting = prompt(
+        "1. Triangle Pattern\n2. Continuous Pattern\n3. Square Number Pattern\n4. Position Pattern\n\n9. All"
+      );
+      if (!setting.includes("-")) {
+        let settingIncludes = [1, 2, 3, 4, 9];
+        if (!settingIncludes.includes(setting * 1)) setting = 9;
+      }
+      // level = 3.16;
+      // scoreNeeded = 20;
+      // gold = highScore3DotZero16.time;
+      // silver =
+      //   highScore3DotZero16.time + (cutoff - highScore3DotZero16.time) / 3;
+      // bronze =
+      //   highScore3DotZero16.time +
+      //   ((cutoff - highScore3DotZero16.time) / 3) * 2;
+      // highScoreName.innerHTML = highScore3DotZero16.name;
+      // highScoreTime.innerHTML = highScore3DotZero16.time;
+      // highScoreMistakes.innerHTML = highScore3DotZero16.mistake;
+      // document.querySelector("#user-input").setAttribute("type", "text");
+      // displayProblem.style.fontSize = "25px";
+      // displayProblem.style.marginTop = "0";
+      // instructions.textContent =
+      //   "Form an Equation using 'n' from the pattern and provide an answer";
+      // break;
       scoreNeeded = 20;
-      gold = highScore3DotZero16.time;
-      silver =
-        highScore3DotZero16.time + (cutoff - highScore3DotZero16.time) / 3;
-      bronze =
-        highScore3DotZero16.time +
-        ((cutoff - highScore3DotZero16.time) / 3) * 2;
-      highScoreName.innerHTML = highScore3DotZero16.name;
-      highScoreTime.innerHTML = highScore3DotZero16.time;
-      highScoreMistakes.innerHTML = highScore3DotZero16.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "25px";
       displayProblem.style.marginTop = "0";
-      instructions.textContent =
-        "Form an Equation using 'n' from the pattern and provide an answer";
+      if (setting == 1) {
+        instructions.textContent =
+          "Form an Equation using 'n' from the pattern and provide an answer";
+      }
+      if (setting == 2) {
+        instructions.textContent =
+          "Form an Equation from the pattern and provide an answer";
+      }
+      if (setting == 3) {
+        instructions.textContent =
+          "Take note of the repeated pattern and use it to find the position of the other pattern";
+      }
+      if (setting == 4) {
+        instructions.textContent =
+          "Form an Equation using 'n' from the pattern and provide an answer";
+      }
       break;
 
     case "Level 3.17":
