@@ -11642,7 +11642,7 @@ function handleSubmit(e) {
 
     if (level == "calFour") {
       if (setting == 1) {
-        correctAnswer = `${p.numOne * p.multiple}`;
+        correctAnswer = `${p.numOne, p.numOne * p.multiple}`;
       }
       if (setting == 2) {
         correctAnswer = arr.join(", ");
