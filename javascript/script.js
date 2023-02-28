@@ -11642,7 +11642,7 @@ function handleSubmit(e) {
 
     if (level == "calFour") {
       if (setting == 1) {
-        correctAnswer = `${p.numOne}, ${p.numOne * p.multiple}`;
+        correctAnswer = `${p.numOne * p.multiple}`;
       }
       if (setting == 2) {
         correctAnswer = arr.join(", ");
@@ -14606,8 +14606,6 @@ function genProblems() {
   }
 
   function calArrAll(max, arr, setting, maxSetting) {
-    // setting = setting.toString();
-    // if (!maxSetting) maxSetting = 99;
     console.log(maxSetting);
     if (setting == maxSetting || state.global == 1) {
       state.global = 1;
@@ -14655,6 +14653,8 @@ function genProblems() {
         state.max = calRange[0].split("-")[1] * 1;
         console.log(state.min, state.max);
         if (!arr.length) {
+          scoreNeeded = arr.length;
+          scoreNeededCl.textContent = scoreNeeded;
           console.log("push push push!");
           for (let i = state.min; i < state.max + 1; i++) {
             arr.push(i);
@@ -17643,7 +17643,7 @@ function buttonLevelSetting() {
       level = "calThree";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Working: Long Division ( No remainder )"
+        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Working: Long Division ( No remainder )\n11. Working: Long Division ( Remainder )"
       );
       break;
 
