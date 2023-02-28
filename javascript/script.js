@@ -7451,11 +7451,10 @@ function updateProblems() {
     if (setting == 12) {
       // START CHANGE DISPLAY
       if (p.numOne == p.numTwo) {
-        return updateProblems();
+        return updateCalc();
       }
       [p.numOne, p.numTwo] = simplify(p.numOne, p.numTwo);
-      wholeNumberContainer.classList.remove("hidden");
-      workingContainer.classList.add("hidden");
+      if (p.numTwo == 1) return updateCalc();
       // END CHANGE DISPLAY
       if (genNumbers(2) == 0) {
         displayProblem.innerHTML = `
