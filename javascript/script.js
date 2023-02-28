@@ -11642,7 +11642,7 @@ function handleSubmit(e) {
 
     if (level == "calFour") {
       if (setting == 1) {
-        correctAnswer = `${p.numOne, p.numOne * p.multiple}`;
+        correctAnswer = `${(p.numOne, p.numOne * p.multiple)}`;
       }
       if (setting == 2) {
         correctAnswer = arr.join(", ");
@@ -12333,8 +12333,8 @@ function handleSubmit(e) {
         if (p.rollQn == "total") {
           correctAnswer = `${firstLine}\n${p.objectTwoQ}-${
             p.objectOneQ
-          }=${smallDiff}\n${bigDiff}/${smallDiff}=${p.price}\n${p.price}x${
-            p.objectOneQ
+          }=${smallDiff}\n${bigDiff}/${smallDiff}=${p.price}\n${p.objectOneQ}x${
+            p.price
           }${p.objectOneS >= 0 ? "+" : "-"}${newObjectOneS}=${p.totalValue}`;
         }
       }
