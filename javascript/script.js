@@ -383,7 +383,7 @@ function decimalCheck(decimal) {
 }
 
 function accDecimal(decimal) {
-  return Math.round(decimal * 1000) / 1000;
+  return Math.round(decimal * 10000) / 10000;
 }
 
 function simplify(first, second) {
@@ -11856,7 +11856,7 @@ function handleSubmit(e) {
 
     if (level == "calFour") {
       if (setting == 1) {
-        correctAnswer = `${(p.numOne, p.numOne * p.multiple)}`;
+        correctAnswer = `${p.numOne}, ${p.numOne * p.multiple}`;
       }
       if (setting == 2) {
         correctAnswer = arr.join(", ");
@@ -13095,7 +13095,7 @@ function handleSubmit(e) {
       if (level == 3.15 || level == 3.16) {
         arr2.length = 0;
       }
-      if (level == 4.17 || level == "calFour") {
+      if (level == 4.17) {
         arr = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
         arr2.length = 0;
         arr3.length = 0;
