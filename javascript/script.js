@@ -512,6 +512,69 @@ function timer2() {
   }, 1000);
 }
 
+function calArrAll(max, arr, setting, maxSetting) {
+  console.log(maxSetting);
+  if (setting == maxSetting || state.global == 1) {
+    state.global = 1;
+
+    if (!arr.length) {
+      for (let i = 1; i < max + 1; i++) {
+        arr.push(i);
+      }
+    }
+    setting = arr[genNumbers(arr.length)];
+    arr.splice(arr.indexOf(setting), 1);
+    console.log(
+      `Setting: ${setting} chosen. The remaining settings in calculation arr is ${arr}`
+    );
+  }
+  return setting;
+}
+
+function checkRange(setting, arr) {
+  if (state.global != 1) {
+    // console.log(typeof setting);
+    // let str = setting.split("");
+
+    // console.log(str);
+    // str.forEach((el) => {
+    //   calRange.push(el);
+    // });
+    // console.log(calRange);
+    // if (typeof setting == "string") {
+    //   console.log(setting.length);
+    //   if (setting.length > 1) str = setting.split("-");
+    //   // console.log(str);
+    // state.min = str[0] * 1;
+    // state.max = str[1] * 1;
+    // }
+    calRange.push(setting);
+    console.log(calRange);
+    // if ((calRange[0] * 1) % 1 != 0) {
+    //   state.min = calRange[0].split("-")[0] * 1;
+    //   state.max = calRange[0].split("-")[1] * 1;
+    // }
+    if (calRange[0].includes("-")) {
+      console.log("Range Detected!");
+      state.min = calRange[0].split("-")[0] * 1;
+      state.max = calRange[0].split("-")[1] * 1;
+      console.log(state.min, state.max);
+      if (!arr.length) {
+        scoreNeeded = arr.length;
+        scoreNeededCl.textContent = scoreNeeded;
+        console.log("push push push!");
+        for (let i = state.min; i < state.max + 1; i++) {
+          arr.push(i);
+        }
+      }
+      setting = arr[genNumbers(arr.length)];
+      const chosen = arr.splice(arr.indexOf(setting), 1);
+      console.log(chosen, arr);
+    }
+  }
+  return setting;
+}
+
 buttonStart.addEventListener("click", clickStart);
 
 toMultiplesBtn.addEventListener("click", function () {
@@ -8971,6 +9034,64 @@ function updateProblems() {
       `;
     }
   }
+
+  if (level == "heuFourb") {
+    setting = calArrAll(1, calArr, setting, 9);
+    setting = checkRange(setting, calArr);
+    [p.numOne, p.numTwo] = simplify(p.numOne, p.numTwo);
+    if (p.numOne == 1 || p.numTwo == 1) return updateCalc();
+    if (p.personOne == p.personTwo || p.numOne == p.numTwo) return updateCalc();
+    if (setting == 1) {
+      if (p.version == 0) {
+        displayProblem.innerHTML = `
+      ${p.personOne} set ${p.arrGender[p.firstPosition]} alarm to ring every ${
+          p.numOne
+        } mins.</p>
+      ${p.personTwo} set ${p.arrGender[p.secondPosition]} alarm to ring every ${
+          p.numTwo
+        } mins.</p>
+      How many minutes later did the alarm ring together for the ${
+        p.times
+      } time?</p>
+      `;
+      }
+      if (p.version == 1) {
+        console.log(p.numOne, p.numTwo);
+        let ordinalPosition = [
+          "0",
+          "1st",
+          "2nd",
+          "3rd",
+          "4th",
+          "5th",
+          "6th",
+          "7th",
+          "8th",
+          "9th",
+          "10th",
+        ];
+        const things = ["sweets", "chocolates", "cups", "a key chain"];
+        displayProblem.innerHTML = `
+        Every ${ordinalPosition[p.numOne]} participant receives ${
+          things[genNumbers(2)]
+        }.</p>
+        Every ${ordinalPosition[p.numTwo]} participant receives ${
+          things[genNumbers(2) + 2]
+        }.</p>
+        Which is the ${p.times} participant to receive both?
+        `;
+      }
+      if (p.version == 2) {
+        const things = ["sweets", "chocolates", "snacks", "key chains"];
+        const thing = things[things.length - 1];
+        displayProblem.innerHTML = `
+        ${p.personOne} has some ${thing}.</p>
+        The ${thing} can be shared among ${p.numOne} or ${p.numTwo} children.</p>
+        How many ${thing} are there?
+        `;
+      }
+    }
+  }
   // Display
   if (level == "heuFive") {
     if (
@@ -12561,6 +12682,27 @@ function handleSubmit(e) {
       }
     }
 
+    if (level == "heuFourb") {
+      if (setting == 1) {
+        const common = commonDeno(p.numOne, p.numTwo);
+        correctAnswer = common * (p.timesNum + 1);
+        if (p.version == 1) {
+          let str = correctAnswer.toString();
+          if (str[str.length - 1 - 1] == "1") {
+            correctAnswer = `${correctAnswer}st`;
+          } else if (str[str.length - 1] == "2") {
+            correctAnswer = `${correctAnswer}nd`;
+          } else if (str[str.length - 1] == "3") {
+            correctAnswer = `${correctAnswer}rd`;
+          } else {
+            correctAnswer = `${correctAnswer}th`;
+          }
+        }
+        if (p.version == 2) {
+          correctAnswer = common;
+        }
+      }
+    }
     // Answers
     if (level == "heuFive") {
       if (
@@ -14604,68 +14746,68 @@ function genProblems() {
     };
   }
 
-  function calArrAll(max, arr, setting, maxSetting) {
-    console.log(maxSetting);
-    if (setting == maxSetting || state.global == 1) {
-      state.global = 1;
+  // function calArrAll(max, arr, setting, maxSetting) {
+  //   console.log(maxSetting);
+  //   if (setting == maxSetting || state.global == 1) {
+  //     state.global = 1;
 
-      if (!arr.length) {
-        for (let i = 1; i < max + 1; i++) {
-          arr.push(i);
-        }
-      }
-      setting = arr[genNumbers(arr.length)];
-      arr.splice(arr.indexOf(setting), 1);
-      console.log(
-        `Setting: ${setting} chosen. The remaining settings in calculation arr is ${arr}`
-      );
-    }
-    return setting;
-  }
+  //     if (!arr.length) {
+  //       for (let i = 1; i < max + 1; i++) {
+  //         arr.push(i);
+  //       }
+  //     }
+  //     setting = arr[genNumbers(arr.length)];
+  //     arr.splice(arr.indexOf(setting), 1);
+  //     console.log(
+  //       `Setting: ${setting} chosen. The remaining settings in calculation arr is ${arr}`
+  //     );
+  //   }
+  //   return setting;
+  // }
 
-  function checkRange(setting, arr) {
-    if (state.global != 1) {
-      // console.log(typeof setting);
-      // let str = setting.split("");
+  // function checkRange(setting, arr) {
+  //   if (state.global != 1) {
+  //     // console.log(typeof setting);
+  //     // let str = setting.split("");
 
-      // console.log(str);
-      // str.forEach((el) => {
-      //   calRange.push(el);
-      // });
-      // console.log(calRange);
-      // if (typeof setting == "string") {
-      //   console.log(setting.length);
-      //   if (setting.length > 1) str = setting.split("-");
-      //   // console.log(str);
-      // state.min = str[0] * 1;
-      // state.max = str[1] * 1;
-      // }
-      calRange.push(setting);
-      console.log(calRange);
-      // if ((calRange[0] * 1) % 1 != 0) {
-      //   state.min = calRange[0].split("-")[0] * 1;
-      //   state.max = calRange[0].split("-")[1] * 1;
-      // }
-      if (calRange[0].includes("-")) {
-        console.log("Range Detected!");
-        state.min = calRange[0].split("-")[0] * 1;
-        state.max = calRange[0].split("-")[1] * 1;
-        console.log(state.min, state.max);
-        if (!arr.length) {
-          scoreNeeded = arr.length;
-          scoreNeededCl.textContent = scoreNeeded;
-          console.log("push push push!");
-          for (let i = state.min; i < state.max + 1; i++) {
-            arr.push(i);
-          }
-        }
-        setting = arr[genNumbers(arr.length)];
-        const chosen = arr.splice(arr.indexOf(setting), 1);
-        console.log(chosen, arr);
-      }
-    }
-    return setting;
-  }
+  //     // console.log(str);
+  //     // str.forEach((el) => {
+  //     //   calRange.push(el);
+  //     // });
+  //     // console.log(calRange);
+  //     // if (typeof setting == "string") {
+  //     //   console.log(setting.length);
+  //     //   if (setting.length > 1) str = setting.split("-");
+  //     //   // console.log(str);
+  //     // state.min = str[0] * 1;
+  //     // state.max = str[1] * 1;
+  //     // }
+  //     calRange.push(setting);
+  //     console.log(calRange);
+  //     // if ((calRange[0] * 1) % 1 != 0) {
+  //     //   state.min = calRange[0].split("-")[0] * 1;
+  //     //   state.max = calRange[0].split("-")[1] * 1;
+  //     // }
+  //     if (calRange[0].includes("-")) {
+  //       console.log("Range Detected!");
+  //       state.min = calRange[0].split("-")[0] * 1;
+  //       state.max = calRange[0].split("-")[1] * 1;
+  //       console.log(state.min, state.max);
+  //       if (!arr.length) {
+  //         scoreNeeded = arr.length;
+  //         scoreNeededCl.textContent = scoreNeeded;
+  //         console.log("push push push!");
+  //         for (let i = state.min; i < state.max + 1; i++) {
+  //           arr.push(i);
+  //         }
+  //       }
+  //       setting = arr[genNumbers(arr.length)];
+  //       const chosen = arr.splice(arr.indexOf(setting), 1);
+  //       console.log(chosen, arr);
+  //     }
+  //   }
+  //   return setting;
+  // }
 
   if (level == "calOne") {
     // if (setting == 99 || (global == 1 && skipGlobalUpdateProblem == 0)) {
@@ -15790,6 +15932,28 @@ function genProblems() {
         max: undefined,
         arrFirstNum: [],
         arrSecondNum: [],
+      };
+    }
+  }
+  if (level == "heuFourb") {
+    if (setting == 1) {
+      const arrObj = ["sweets", "bags"];
+      const arrPerson = ["Liam", "Olivia", "Emma", "Noah", "Amelia", "Elijah"];
+      const genTimesNum = genNumbers(5);
+      const genFirstPosition = genNumbers(arrPerson.length);
+      const genSecondPosition = genNumbers(arrPerson.length);
+      return {
+        version: genNumbers(3),
+        arrGender: ["his", "her", "her", "his", "her", "his"],
+        object: arrObj[arrObj.length],
+        firstPosition: genFirstPosition,
+        secondPosition: genSecondPosition,
+        personOne: arrPerson[genFirstPosition],
+        personTwo: arrPerson[genSecondPosition],
+        numOne: genNumbers(7) + 2,
+        numTwo: genNumbers(7) + 2,
+        timesNum: genTimesNum,
+        times: ["1st", "2nd", "3rd", "4th", "5th"][genTimesNum],
       };
     }
   }
@@ -17753,6 +17917,16 @@ function buttonLevelSetting() {
       helpMe.style.fontSize = "18px";
       helpMe.style.textAlign = "left";
       document.querySelector("#user-input").setAttribute("type", "text");
+      break;
+
+    case "Heu.4b":
+      setting = prompt("What level?\n1. Common Multiples\n\n9. All");
+      level = "heuFourb";
+      scoreNeeded = 2;
+      displayProblem.style.fontSize = "18px";
+      displayProblem.style.textAlign = "left";
+      document.querySelector("#user-input").setAttribute("type", "text");
+      document.querySelector("#user-input").style.width = "300px";
       break;
 
     case "Heu.5":
