@@ -117,6 +117,9 @@ let heuArr = [];
 let calArr = [];
 let calArrQns = [];
 let calRange = [];
+let primeNumbers = [
+  2, 3, 5, 7, 9, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53,
+];
 let multiplesArr = [0];
 let gold = 0;
 let silver = 0;
@@ -411,6 +414,19 @@ function commonDeno(first, second) {
     console.log(common);
   }
   return common[common.length - 1];
+}
+
+function commonFactors(first, second) {
+  let max = first;
+  let min = second;
+  let arr = [];
+  if (second > first) [max, min] = [second, first];
+  for (let i = 1; i <= min; i++) {
+    if (min % i == 0 && max % i == 0) {
+      arr.push(i);
+    }
+  }
+  return arr;
 }
 
 function clickStart() {
@@ -9036,12 +9052,14 @@ function updateProblems() {
   }
 
   if (level == "heuFourb") {
-    setting = calArrAll(1, calArr, setting, 9);
+    setting = calArrAll(2, calArr, setting, 9);
     setting = checkRange(setting, calArr);
-    [p.numOne, p.numTwo] = simplify(p.numOne, p.numTwo);
-    if (p.numOne == 1 || p.numTwo == 1) return updateCalc();
-    if (p.personOne == p.personTwo || p.numOne == p.numTwo) return updateCalc();
+
     if (setting == 1) {
+      [p.numOne, p.numTwo] = simplify(p.numOne, p.numTwo);
+      if (p.numOne == 1 || p.numTwo == 1) return updateCalc();
+      if (p.personOne == p.personTwo || p.numOne == p.numTwo)
+        return updateCalc();
       if (p.version == 0) {
         displayProblem.innerHTML = `
       ${p.personOne} set ${p.arrGender[p.firstPosition]} alarm to ring every ${
@@ -9090,6 +9108,50 @@ function updateProblems() {
         How many ${thing} are there?
         `;
       }
+    }
+    if (setting == 2) {
+      if (primeNumbers.includes(p.numOne) || primeNumbers.includes(p.numTwo)) {
+        console.log(p.numOne, p.numTwo);
+        return updateCalc();
+      }
+      if (p.numOne == p.numTwo) return updateCalc();
+      const personArr = ["Lucas", "Mia", "Luna", "Jacob", "Sofia", "Jackson"];
+      const thingsArr = [
+        "oranges",
+        "mangoes",
+        "blueberries",
+        "bananas",
+        "apples",
+      ];
+      const person = personArr[personArr.length - 1];
+      const thingsOne = thingsArr[genNumbers(thingsArr.length - 1)];
+      const thingsTwo = thingsArr[genNumbers(thingsArr.length - 1)];
+      if (thingsOne == thingsTwo) return updateCalc();
+      if (commonFactors(p.numOne, p.numTwo).length <= 2) return updateCalc();
+      let question = "";
+      if (p.version == 0) {
+        question = `
+        How many bags are there?
+        `;
+      }
+      if (p.version == 1) {
+        question = `
+        How many ${thingsOne} are there in each bag?`;
+      }
+      if (p.version == 2) {
+        question = `
+        How many ${thingsTwo} are there in each bag?`;
+      }
+      if (p.version == 3) {
+        question = `
+        How many items are there in each bag?`;
+      }
+
+      displayProblem.innerHTML = `
+      ${person} has ${p.numOne} ${thingsOne} and ${p.numTwo} ${thingsTwo}.</p>
+      The items are to be distributed equally into as many bags as possible.</p>
+      ${question}      
+      `;
     }
   }
   // Display
@@ -12702,6 +12764,16 @@ function handleSubmit(e) {
           correctAnswer = common;
         }
       }
+      if (setting == 2) {
+        const commonFactorsArr = commonFactors(p.numOne, p.numTwo);
+        const bags = commonFactorsArr[commonFactorsArr.length - 1];
+        if (p.version == 0)
+          correctAnswer = commonFactorsArr[commonFactorsArr.length - 1];
+        if (p.version == 1) correctAnswer = p.numOne / bags;
+        if (p.version == 2) correctAnswer = p.numTwo / bags;
+        if (p.version == 3) correctAnswer = p.numOne / bags + p.numTwo / bags;
+      }
+      skipGlobalUpdateProblem = 0;
     }
     // Answers
     if (level == "heuFive") {
@@ -15956,6 +16028,13 @@ function genProblems() {
         times: ["1st", "2nd", "3rd", "4th", "5th"][genTimesNum],
       };
     }
+    if (setting == 2) {
+      return {
+        version: genNumbers(4),
+        numOne: genNumbers(50) + 4,
+        numTwo: genNumbers(50) + 4,
+      };
+    }
   }
   // Stats
   if (level == "heuFive") {
@@ -17920,7 +17999,9 @@ function buttonLevelSetting() {
       break;
 
     case "Heu.4b":
-      setting = prompt("What level?\n1. Common Multiples\n\n9. All");
+      setting = prompt(
+        "What level?\n1. Lowest Common Multiples ( Indirect )\n2. Highest Common Factor ( Indirect )\n\n9. All"
+      );
       level = "heuFourb";
       scoreNeeded = 2;
       displayProblem.style.fontSize = "18px";
