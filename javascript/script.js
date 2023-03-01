@@ -7954,7 +7954,7 @@ function updateProblems() {
       `;
     }
   }
-
+  // HEUTWO DISPLAY
   if (level == "heuTwo") {
     if (
       setting == 1 ||
@@ -8023,6 +8023,38 @@ function updateProblems() {
       ${p.objectOne} must give ${p.difference} to ${p.objectTwo} to be the same.</br>
       What is their difference at first?
       `;
+    }
+    //  WORKING DISPLAY HEUTWO
+    if (
+      setting == 4 ||
+      (setting == 9 && p.rollz == 4) ||
+      (range == 1 && p.rollz == 4)
+    ) {
+      if (p.version == 1) {
+        let things = ["people", "objects"][genNumbers(2)];
+        displayProblem.innerHTML = `
+      ${p.objectOne} is in the ${p.positionOne} position.</p>
+      ${p.objectTwo} is in the ${p.positionTwo} position.</p>
+      How many ${things} are there between ${p.objectOne} and ${p.objectTwo}?`;
+      }
+      if (p.version == 2) {
+        if (p.positionOne == "5th" && p.positionTwo == "6th")
+          return updateCalc();
+        let things = ["people", "objects"][genNumbers(2)];
+        displayProblem.innerHTML = `
+      ${p.objectOne} is in the ${p.positionOne} floor.</p>
+      ${p.objectTwo} is in the ${p.positionTwo} floor.</p>
+      How many floors are there between ${p.objectOne} and ${p.objectTwo}?`;
+      }
+      if (p.version == 3) {
+        let things = ["people", "objects"][genNumbers(2)];
+        displayProblem.innerHTML = `
+        ${p.objectOne} is in the ${p.positionOne} position.</p>
+        ${p.objectTwo} is behind ${p.objectOne}.</p>
+        There are ${p.between} ${things} in between.</p>
+        What is ${p.objectTwo}'s position?
+        `;
+      }
     }
   }
   // display
@@ -12011,6 +12043,35 @@ function handleSubmit(e) {
       ) {
         correctAnswer = `${p.difference}x2=${p.difference * 2}`;
       }
+      if (
+        setting == 4 ||
+        (setting == 9 && p.rollz == 4) ||
+        (range == 1 && p.rollz == 4)
+      ) {
+        if (p.version == 1 || p.version == 2) {
+          const intervals = p.twoPos + 6 - (p.onePos + 1);
+          const lineOne = `${p.twoPos + 6}-${p.onePos + 1}=${intervals}`;
+          const lineTwo = `${intervals}-1=${intervals - 1}`;
+          correctAnswer = `${lineOne}\n${lineTwo}`;
+        }
+        if (p.version == 3) {
+          const intervals = p.between + 1;
+          const total = p.onePos + 1 + intervals;
+          let conclusion = "";
+          if (total == 1) {
+            conclusion = `${total}st`;
+          } else if (total == 2) {
+            conclusion = `${total}nd`;
+          } else if (total == 3) {
+            conclusion = `${total}rd`;
+          } else {
+            conclusion = `${total}th`;
+          }
+          correctAnswer = `${p.between}+1=${intervals}\n${intervals}+${
+            p.onePos + 1
+          }=${total}\n${conclusion}`;
+        }
+      }
     }
 
     // answers
@@ -15318,7 +15379,6 @@ function genProblems() {
       };
     }
     //repeated identity [Ratio]
-    // CURRENT WORK (SETTING)
     if (setting == 4) {
       const arrSomething = ["books", "homeworks", "pencils", "pens"];
       return {
@@ -15443,8 +15503,29 @@ function genProblems() {
       return {
         objectOne: ["B", "C", "D"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
-        difference: genNumbers(5) + 5,
-        rollz: 3,
+        difference: genNumbers(5) + 1,
+        rollz: 4,
+      };
+    }
+
+    // WORKING SETTING
+    if (
+      (setting == 4 && range == 0) ||
+      (setting == 9 && roll == 4) ||
+      (range == 1 && roll == 4)
+    ) {
+      genOnePos = genNumbers(5);
+      genTwoPos = genNumbers(5);
+      return {
+        version: genNumbers(3) + 1,
+        onePos: genOnePos,
+        twoPos: genTwoPos,
+        positionOne: ["1st", "2nd", "3rd", "4th", "5th"][genOnePos],
+        positionTwo: ["6th", "7th", "8th", "9th", "10th"][genTwoPos],
+        objectOne: ["B", "C", "D"][genNumbers(3)],
+        objectTwo: ["X", "Y", "Z"][genNumbers(3)],
+        between: genNumbers(5) + 5,
+        rollz: 4,
       };
     }
   }
@@ -17932,7 +18013,7 @@ function buttonLevelSetting() {
 
     case "Heu.2":
       setting = prompt(
-        "What level?\n1. Parts and Interval\n2. Internal Transfer (Same)\n3. Internal Transfer ( Same reverse )\n\n9.All"
+        "What level?\n1. Parts and Interval\n2. Internal Transfer (Same)\n3. Internal Transfer ( Same reverse )\n4. Parts and Intervals ( Others )\n\n9.All"
       );
       level = "heuTwo";
       scoreNeeded = 10;
