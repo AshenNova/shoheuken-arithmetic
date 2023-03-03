@@ -11998,15 +11998,19 @@ function handleSubmit(e) {
     if (level == "heuOne") {
       if (p.rollAB == "A" && p.rollVar == 0) {
         correctAnswer = `${p.numOne}-${p.numTwo}=${p.numOne - p.numTwo}`;
+        correctAnswerTwo = p.numOne - p.numTwo;
       }
       if (p.rollAB == "A" && p.rollVar == 1) {
         correctAnswer = `${p.numOne}+${p.numTwo}=${p.numOne + p.numTwo}`;
+        correctAnswerTwo = p.numOne + p.numTwo;
       }
       if (p.rollAB == "B" && p.rollVar == 0) {
         correctAnswer = `${p.numOne}+${p.numTwo}=${p.numOne + p.numTwo}`;
+        correctAnswerTwo = p.numOne + p.numTwo;
       }
       if (p.rollAB == "B" && p.rollVar == 1) {
         correctAnswer = `${p.numOne}-${p.numTwo}=${p.numOne - p.numTwo}`;
+        correctAnswerTwo = p.numOne - p.numTwo;
       }
     }
     // answers
@@ -12024,6 +12028,7 @@ function handleSubmit(e) {
         }-${p.indexThree + 1}=${p.indexFour - p.indexThree}\n${interval}x${
           p.indexFour - p.indexThree
         }=${p.rollDistance * (p.indexFour - p.indexThree)}`;
+        correctAnswerTwo = p.rollDistance * (p.indexFour - p.indexThree);
       }
       if (
         setting == 2 ||
@@ -12033,6 +12038,7 @@ function handleSubmit(e) {
         correctAnswer = `${p.numOne}-${p.numTwo}=${p.numOne - p.numTwo}\n${
           p.numOne - p.numTwo
         }/2=${(p.numOne - p.numTwo) / 2}`;
+        correctAnswerTwo = (p.numOne - p.numTwo) / 2;
       }
       if (
         setting == 3 ||
@@ -12040,6 +12046,7 @@ function handleSubmit(e) {
         (range == 1 && p.rollz == 3)
       ) {
         correctAnswer = `${p.difference}x2=${p.difference * 2}`;
+        correctAnswerTwo = p.difference * 2;
       }
       if (
         setting == 4 ||
@@ -12051,6 +12058,7 @@ function handleSubmit(e) {
           const lineOne = `${p.twoPos + 6}-${p.onePos + 1}=${intervals}`;
           const lineTwo = `${intervals}-1=${intervals - 1}`;
           correctAnswer = `${lineOne}\n${lineTwo}`;
+          correctAnswerTwo = intervals - 1;
         }
         if (p.version == 3) {
           const intervals = p.between + 1;
@@ -12068,6 +12076,7 @@ function handleSubmit(e) {
           correctAnswer = `${p.between}+1=${intervals}\n${intervals}+${
             p.onePos + 1
           }=${total}\n${conclusion}`;
+          correctAnswerTwo = conclusion;
         }
       }
     }
@@ -12168,6 +12177,7 @@ function handleSubmit(e) {
           }${Math.abs(p.numOne - p.numTwo)}=${adjustment}\n${adjustment}/2=${
             p.numOne
           }`;
+          correctAnswerTwo = p.numOne;
         }
         if (p.rollAnswer == 1) {
           correctAnswer = `${p.numOne + p.numTwo}${
@@ -12175,6 +12185,7 @@ function handleSubmit(e) {
           }${Math.abs(p.numOne - p.numTwo)}=${adjustment}\n${adjustment}/2=${
             p.numTwo
           }`;
+          correctAnswerTwo = p.numTwo;
         }
       }
       if (
@@ -12195,6 +12206,7 @@ function handleSubmit(e) {
           }=${smallDifference}\n${bigDifference}/${smallDifference}=${
             p.numOne
           }`;
+          correctAnswerTwo = p.numOne;
         }
         if (p.rollQn == "B") {
           let bigDifference = p.total - totalAnimal * p.legOne;
@@ -12207,6 +12219,7 @@ function handleSubmit(e) {
           }=${smallDifference}\n${bigDifference}/${smallDifference}=${
             p.numTwo
           }`;
+          correctAnswerTwo = p.numTwo;
         }
       }
 
@@ -12221,6 +12234,7 @@ function handleSubmit(e) {
         let oneUnit = p.totalValue / totalUnit;
         if (p.rollQn == "B") {
           correctAnswer = `${p.objectOneX}x${p.unitSentence}=${unitOne}\n${p.objectTwoX}x1=${unitTwo}\n${unitOne}+${unitTwo}=${totalUnit}\n${p.totalValue}/${totalUnit}=${oneUnit}`;
+          correctAnswerTwo = oneUnit;
         } else {
           correctAnswer = `${p.objectOneX}x${p.unitSentence}=${unitOne}\n${
             p.objectTwoX
@@ -12229,6 +12243,7 @@ function handleSubmit(e) {
           }/${totalUnit}=${oneUnit}\n${oneUnit}x${p.unitSentence}=${
             oneUnit * p.unitSentence
           }`;
+          correctAnswerTwo = oneUnit * p.unitSentence;
         }
       }
 
@@ -12274,6 +12289,7 @@ function handleSubmit(e) {
         let fourthLine = `${newTotal}/${totalUnit}=${oneUnit}`;
 
         correctAnswer = `${firstLine}\n${secondLine}\n${thirdLine}\n${fourthLine}`;
+        correctAnswerTwo = oneUnit;
       }
 
       if (
@@ -12288,14 +12304,17 @@ function handleSubmit(e) {
 
         if (p.rollQn2 == "many") {
           correctAnswer = `${p.objectOneV}+${p.objectTwoV}=${oneSet}\n${p.total}/${oneSet}=${totalSets}`;
+          correctAnswerTwo = totalSets;
         }
 
         if (p.rollQn2 == "what") {
           if (p.rollQn == "A") {
             correctAnswer = `${p.objectOneV}+${p.objectTwoV}=${oneSet}\n${p.total}/${oneSet}=${totalSets}\n${totalSets}x${p.objectOneV}=${totalValueOne}`;
+            correctAnswerTwo = totalValueOne;
           }
           if (p.rollQn == "B") {
             correctAnswer = `${p.objectOneV}+${p.objectTwoV}=${oneSet}\n${p.total}/${oneSet}=${totalSets}\n${totalSets}x${p.objectTwoV}=${totalValueTwo}`;
+            correctAnswerTwo = totalValueTwo;
           }
         }
 
@@ -12303,6 +12322,7 @@ function handleSubmit(e) {
           correctAnswer = `${p.objectOneV}+${p.objectTwoV}=${oneSet}\n${
             p.total
           }/${oneSet}=${totalSets}\n${totalSets}x2=${totalSets * 2}`;
+          correctAnswerTwo = totalSets * 2;
         }
       }
 
@@ -12315,11 +12335,13 @@ function handleSubmit(e) {
           correctAnswer = `${p.total}/${p.objectV}=${Math.floor(
             p.total / p.objectV
           )}r${p.total % p.objectV}\n${Math.floor(p.total / p.objectV)}`;
+          correctAnswerTwo = Math.floor(p.total / p.objectV);
         }
         if (p.rollQn == "B") {
           correctAnswer = `${p.total}/${p.objectV}=${Math.floor(
             p.total / p.objectV
           )}r${p.total % p.objectV}\n${Math.floor(p.total / p.objectV) + 1}`;
+          correctAnswerTwo = Math.floor(p.total / p.objectV) + 1;
         }
       }
 
@@ -12353,6 +12375,7 @@ function handleSubmit(e) {
             p.transferV
           }=${newDifference}`;
         }
+        correctAnswerTwo = newDifference;
       }
 
       if (
@@ -12374,8 +12397,10 @@ function handleSubmit(e) {
           let lineThree = `${packetBought}+${sets}=${totalPacket}`;
           if (sets == 0) {
             correctAnswer = `${p.value}/${p.cost}=${packetBought}\n${lineTwo}`;
+            correctAnswerTwo = sets;
           } else {
             correctAnswer = `${p.value}/${p.cost}=${packetBought}\n${lineTwo}\n${sets}x1=${sets}\n${lineThree}`;
+            correctAnswerTwo = totalPacket;
           }
         }
 
@@ -12392,6 +12417,7 @@ function handleSubmit(e) {
           let totalCost = p.value * p.cost;
           let actualCost = totalCost - valueDiscounts;
           correctAnswer = `${lineOne}\n${discountSets}x${p.discount}=${valueDiscounts}\n${p.value}x${p.cost}=${totalCost}\n${totalCost}-${valueDiscounts}=${actualCost}`;
+          correctAnswerTwo = actualCost;
         }
       }
     }
@@ -12570,6 +12596,7 @@ function handleSubmit(e) {
 
         if (p.rollQn == "price") {
           correctAnswer = `${firstLine}\n${p.objectTwoQ}-${p.objectOneQ}=${smallDiff}\n${bigDiff}/${smallDiff}=${p.price}`;
+          correctAnswerTwo = p.price;
         }
         if (p.rollQn == "total") {
           correctAnswer = `${firstLine}\n${p.objectTwoQ}-${
@@ -12577,6 +12604,7 @@ function handleSubmit(e) {
           }=${smallDiff}\n${bigDiff}/${smallDiff}=${p.price}\n${p.objectOneQ}x${
             p.price
           }${p.objectOneS >= 0 ? "+" : "-"}${newObjectOneS}=${p.totalValue}`;
+          correctAnswerTwo = p.totalValue;
         }
       }
 
@@ -12642,6 +12670,7 @@ function handleSubmit(e) {
         // }
         if (p.rollAnswer == 1) {
           correctAnswer = `${firstLine}\n${secondLine}\n${thirdLine}`;
+          correctAnswerTwo = groups;
         }
 
         let total = groups * p.sceneOne - Math.abs(p.situationOne);
@@ -12657,6 +12686,7 @@ function handleSubmit(e) {
 
         if (p.rollAnswer == 2) {
           correctAnswer = `${firstLine}\n${secondLine}\n${thirdLine}\n${fourthLine}`;
+          correctAnswerTwo = total;
         }
       }
 
@@ -12670,9 +12700,11 @@ function handleSubmit(e) {
         let totalWork = eachPerson * p.peopleAtFirst;
         if (p.rollQn == "A") {
           correctAnswer = `${p.peopleAtFirst}-${p.absentPeople}=${p.remainingPeople}\n${p.remainingPeople}x${p.giveUp}=${extraWork}\n${extraWork}/${p.absentPeople}=${eachPerson}`;
+          correctAnswerTwo = eachPerson;
         }
         if (p.rollQn == "B") {
           correctAnswer = `${p.peopleAtFirst}-${p.absentPeople}=${p.remainingPeople}\n${p.remainingPeople}x${p.giveUp}=${extraWork}\n${extraWork}/${p.absentPeople}=${eachPerson}\n${p.peopleAtFirst}x${eachPerson}=${totalWork}`;
+          correctAnswerTwo = totalWork;
         }
       }
 
@@ -12690,6 +12722,7 @@ function handleSubmit(e) {
         }-1=${unitDifference}\n${difference}/${
           p.unitSentence - 1
         }=${eachUnit}\n${p.groupOne}-${eachUnit}=${objectOne}`;
+        correctAnswerTwo = objectOne;
       }
 
       if (
@@ -12711,18 +12744,22 @@ function handleSubmit(e) {
         if (p.rollQn2 == "many") {
           if (p.rollQn == "A") {
             correctAnswer = `${p.objectOneUnit}x${p.objectOneV}=${setOne}\n${p.objectTwoUnit}x${p.objectTwoV}=${setTwo}\n${setOne}+${setTwo}=${oneSet}\n${p.total}/${oneSet}=${totalSets}\n${totalSets}x${p.objectOneUnit}=${oneQuantity}`;
+            correctAnswerTwo = oneQuantity;
           }
           if (p.rollQn == "B") {
             correctAnswer = `${p.objectOneUnit}x${p.objectOneV}=${setOne}\n${p.objectTwoUnit}x${p.objectTwoV}=${setTwo}\n${setOne}+${setTwo}=${oneSet}\n${p.total}/${oneSet}=${totalSets}\n${totalSets}x${p.objectTwoUnit}=${twoQuantity}`;
+            correctAnswerTwo = twoQuantity;
           }
         }
 
         if (p.rollQn2 == "what") {
           if (p.rollQn == "A") {
             correctAnswer = `${p.objectOneUnit}x${p.objectOneV}=${setOne}\n${p.objectTwoUnit}x${p.objectTwoV}=${setTwo}\n${setOne}+${setTwo}=${oneSet}\n${p.total}/${oneSet}=${totalSets}\n${totalSets}x${p.objectOneUnit}=${oneQuantity}\n${oneQuantity}x${p.objectOneV}=${totalValueOne}`;
+            correctAnswerTwo = totalValueOne;
           }
           if (p.rollQn == "B") {
             correctAnswer = `${p.objectOneUnit}x${p.objectOneV}=${setOne}\n${p.objectTwoUnit}x${p.objectTwoV}=${setTwo}\n${setOne}+${setTwo}=${oneSet}\n${p.total}/${oneSet}=${totalSets}\n${totalSets}x${p.objectTwoUnit}=${twoQuantity}\n${twoQuantity}x${p.objectTwoV}=${totalValueTwo}`;
+            correctAnswerTwo = totalValueTwo;
           }
         }
 
@@ -12736,6 +12773,7 @@ function handleSubmit(e) {
           }=${groupQuantity}\n${totalSets}x${groupQuantity}=${
             totalSets * groupQuantity
           }`;
+          correctAnswerTwo = totalSets * groupQuantity;
         }
       }
 
@@ -12751,6 +12789,7 @@ function handleSubmit(e) {
             correctAnswer = `${p.objectTwoQ}+1=${p.objectTwoQ + 1}\n${
               p.total
             }/${p.objectTwoQ + 1}=${sets}`;
+            correctAnswerTwo = sets;
           }
           if (p.rollQn == "B") {
             correctAnswer = `${p.objectTwoQ}+1=${p.objectTwoQ + 1}\n${
@@ -12758,12 +12797,14 @@ function handleSubmit(e) {
             }/${p.objectTwoQ + 1}=${sets}\n${sets}x${p.objectTwoQ}=${
               sets * p.objectTwoQ
             }`;
+            correctAnswerTwo = sets * p.objectTwoQ;
           }
         } else if (remainder == 1) {
           if (p.rollQn == "A") {
             correctAnswer = `${p.objectTwoQ}+1=${p.objectTwoQ + 1}\n${
               p.total
             }/${p.objectTwoQ + 1}=${sets}r1\n${sets}+1=${sets + 1}`;
+            correctAnswerTwo = sets + 1;
           }
           if (p.rollQn == "B") {
             correctAnswer = `${p.objectTwoQ}+1=${p.objectTwoQ + 1}\n${
@@ -12771,12 +12812,14 @@ function handleSubmit(e) {
             }/${p.objectTwoQ + 1}=${sets}r1\n${sets}x${p.objectTwoQ}=${
               sets * p.objectTwoQ
             }`;
+            correctAnswerTwo = sets * p.objectTwoQ;
           }
         } else {
           if (p.rollQn == "A") {
             correctAnswer = `${p.objectTwoQ}+1=${p.objectTwoQ + 1}\n${
               p.total
             }/${p.objectTwoQ + 1}=${sets}r${remainder}\n${sets}+1=${sets + 1}`;
+            correctAnswerTwo = sets + 1;
           }
           if (p.rollQn == "B") {
             correctAnswer = `${p.objectTwoQ}+1=${p.objectTwoQ + 1}\n${
@@ -12784,6 +12827,7 @@ function handleSubmit(e) {
             }/${p.objectTwoQ + 1}=${sets}r${remainder}\n${sets}x${
               p.objectTwoQ
             }+${remainder - 1}=${sets * p.objectTwoQ + remainder - 1}`;
+            correctAnswerTwo = sets * p.objectTwoQ + remainder - 1;
           }
         }
       }
@@ -12800,6 +12844,7 @@ function handleSubmit(e) {
         correctAnswer = `${firstLine}\n${secondLine}\n${thirdLine}\n${fourthLine}\n${
           p.arrFirstNum[p.arrFirstNum.length - 1]
         }`;
+        correctAnswerTwo = p.arrFirstNum[p.arrFirstNum.length - 1];
       }
     }
 
@@ -12861,17 +12906,21 @@ function handleSubmit(e) {
             correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${
               p.group
             }+${p.difference}=${p.group + p.difference}`;
+            correctAnswerTwo = p.group + p.difference;
           } else {
             correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}`;
+            correctAnswerTwo = p.group;
           }
         }
         if (p.choice == "boys") {
           if (p.difference > 0) {
             correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}`;
+            correctAnswerTwo = p.group;
           } else {
             correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${
               p.group
             }+${-p.difference}=${p.group - p.difference}`;
+            correctAnswerTwo = p.group - p.difference;
           }
         }
       }
@@ -12888,8 +12937,10 @@ function handleSubmit(e) {
         let fifthSentence = `${p.questions}-${p.wrong}=${p.correct}`;
         if (p.choice == "wrong") {
           correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}`;
+          correctAnswerTwo = p.wrong;
         } else {
           correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${fifthSentence}`;
+          correctAnswerTwo = p.correct;
         }
       }
 
@@ -12925,15 +12976,19 @@ function handleSubmit(e) {
 
         if (p.choice == 0 && p.difference < 0) {
           correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}`;
+          correctAnswerTwo = bDifference / sDifference;
         }
         if (p.choice == 0 && p.difference > 0) {
           correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${sixthSentence}`;
+          correctAnswerTwo = p.chosenOneN;
         }
         if (p.choice == 1 && p.difference < 0) {
           correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}\n${fifthSentence}`;
+          correctAnswerTwo = p.chosenTwoN;
         }
         if (p.choice == 1 && p.difference > 0) {
           correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}`;
+          correctAnswerTwo = bDifference / sDifference;
         }
       }
 
@@ -12953,6 +13008,7 @@ function handleSubmit(e) {
 
         if (p.choice == 0 || p.choice == 1) {
           correctAnswer = `${firstSentence}\n${secondSentence}`;
+          correctAnswerTwo = groups;
         }
 
         let thirdSentence = undefined;
@@ -12960,16 +13016,19 @@ function handleSubmit(e) {
           let quantityT = groups * 2;
           thirdSentence = `${groups}x2=${quantityT}`;
           correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}`;
+          correctAnswerTwo = quantityT;
         }
         if (p.choice == 3) {
           let objectOneT = groups * p.objectOneV;
           thirdSentence = `${groups}x${p.objectOneV}=${objectOneT}`;
           correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}`;
+          correctAnswerTwo = quantityT;
         }
         if (p.choice == 4) {
           let objectTwoT = groups * p.objectTwoV;
           thirdSentence = `${groups}x${p.objectTwoV}=${objectTwoT}`;
           correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}`;
+          correctAnswerTwo = quantityT;
         }
         if (p.choice == 5) {
           let groupValue = p.objectOneV + p.objectTwoV;
@@ -12977,6 +13036,7 @@ function handleSubmit(e) {
           let fourthSentence = `${groups}x${groupValue}=${groupValue * groups}`;
 
           correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}\n${fourthSentence}`;
+          correctAnswerTwo = groupValue * groups;
         }
       }
 
@@ -12986,6 +13046,7 @@ function handleSubmit(e) {
         (range == 1 && p.rollz == 5)
       ) {
         correctAnswer = `${p.objectOneQ}${p.objectOneC[0]}=${p.objectTwoQ}${p.objectTwoC[0]}\n${p.objectOneFQ}${p.objectOneC[0]}=${p.objectTwoAV}${p.objectTwoC[0]}\n${p.objectTwoAV}${p.objectTwoC[0]}+${p.objectTwoFQ}${p.objectTwoC[0]}=${p.objectTwoLQ}${p.objectTwoC[0]}\n${p.total}/${p.objectTwoLQ}=${p.oneUnit}`;
+        correctAnswerTwo = p.oneUnit;
       }
       if (
         setting == 6 ||
@@ -12995,6 +13056,7 @@ function handleSubmit(e) {
         correctAnswer = `${p.people}x${p.people - 1}/2=${
           (p.people * (p.people - 1)) / 2
         }`;
+        correctAnswerTwo = (p.people * (p.people - 1)) / 2;
       }
       if (
         setting == 7 ||
@@ -13011,6 +13073,7 @@ function handleSubmit(e) {
           let lineThree = `${p.remainder * p.cost}/${p.cost}=${p.remainder}`;
           let lineFour = `${p.quotient}x${quantityOneGroup}+${p.remainder}=${p.totalItems}`;
           correctAnswer = `${lineZero}\n${lineOne}\n${lineTwo}\n${lineThree}\n${lineFour}`;
+          correctAnswerTwo = p.totalItems;
         }
       }
     }
@@ -13057,7 +13120,8 @@ function handleSubmit(e) {
     if (
       userInput.value.trim() == correctAnswer ||
       userInput2.value.trim() == correctAnswer ||
-      userInput.value.trim() == correctAnswerTwo
+      userInput.value.trim() == correctAnswerTwo ||
+      userInput2.value.trim() == correctAnswerTwo
     ) {
       console.log("correct");
       state.score++;
@@ -13410,7 +13474,7 @@ function handleSubmit(e) {
               `;
             }
             if (p.options == "B") {
-              helpMe.innerHTML`
+              helpMe.innerHTML = `
               1) Find the number of sets with remainder.</p>
               2) Find the total discount given.</p>
               3) Find the original cost.</p>
@@ -15447,7 +15511,7 @@ function genProblems() {
 
     if (setting == 9) {
       if (!heuArr.length) {
-        heuArr = [1, 2, 3];
+        heuArr = [1, 2, 3, 4];
         console.log("Array renewed");
       }
       roll = heuArr[genNumbers(heuArr.length)];
@@ -15502,7 +15566,7 @@ function genProblems() {
         objectOne: ["B", "C", "D"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
         difference: genNumbers(5) + 1,
-        rollz: 4,
+        rollz: 3,
       };
     }
 
