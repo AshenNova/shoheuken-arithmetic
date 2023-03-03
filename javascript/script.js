@@ -14272,7 +14272,7 @@ function genProblems() {
 
   if (level == 4.13) {
     return {
-      type: [12, 24][genNumbers(2)],
+      type: genNumbers(24),
       // hours: genNumbers(24),
       hours: [0, 12][genNumbers(2)],
       mins: genNumbers(60),
