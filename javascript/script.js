@@ -576,8 +576,6 @@ function checkRange(setting, arr) {
       state.max = calRange[0].split("-")[1] * 1;
       console.log(state.min, state.max);
       if (!arr.length) {
-        scoreNeeded = arr.length;
-        scoreNeededCl.textContent = scoreNeeded;
         console.log("push push push!");
         for (let i = state.min; i < state.max + 1; i++) {
           arr.push(i);
