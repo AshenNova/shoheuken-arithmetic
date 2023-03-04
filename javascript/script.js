@@ -636,6 +636,7 @@ const resetStuff = function () {
   calArr = [];
   calArrQns = [];
   calRange = [];
+  setting = "";
 
   gold = 0;
   silver = 0;
