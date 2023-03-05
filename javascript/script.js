@@ -14063,7 +14063,7 @@ function genProblems() {
     //   rollTimes: genNumbers(3) + 3,
     //   position: genNumbers(30) + 20,
     // };
-    setting = calArrAll(5, calArr, setting, 9);
+    setting = calArrAll(4, calArr, setting, 9);
     setting = checkRange(setting, calArr);
     console.log(state.global);
     if (setting == 1 || setting == 5) {
@@ -17143,7 +17143,7 @@ function buttonLevelSetting() {
       setting = prompt(
         "1. Triangle Pattern\n2. Continuous Pattern\n3. Square Number Pattern\n4. Position Pattern\n\n9. All"
       );
-      checkRange(setting, calcArr);
+      // checkRange(setting, calcArr);
 
       // level = 3.16;
       // scoreNeeded = 20;
