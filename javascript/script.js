@@ -14339,9 +14339,9 @@ function genProblems() {
 
   if (level == 4.13) {
     return {
-      type: genNumbers(24),
-      // hours: genNumbers(24),
-      hours: [0, 12][genNumbers(2)],
+      type: [12, 24][genNumbers(2)],
+      hours: genNumbers(24),
+      // hours: [0, 12][genNumbers(2)],
       mins: genNumbers(60),
     };
   }
@@ -17143,10 +17143,8 @@ function buttonLevelSetting() {
       setting = prompt(
         "1. Triangle Pattern\n2. Continuous Pattern\n3. Square Number Pattern\n4. Position Pattern\n\n9. All"
       );
-      if (!setting.includes("-")) {
-        let settingIncludes = [1, 2, 3, 4, 9];
-        if (!settingIncludes.includes(setting * 1)) setting = 9;
-      }
+      checkRange(setting, calcArr);
+
       // level = 3.16;
       // scoreNeeded = 20;
       // gold = highScore3DotZero16.time;
