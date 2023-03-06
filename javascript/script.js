@@ -429,6 +429,22 @@ function commonFactors(first, second) {
   return arr;
 }
 
+function genUniqNum(max) {
+  let valueArr = [];
+  const unique = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  for (i = 0; i < max; i++) {
+    let position = genNumbers(unique.length);
+    if (valueArr.length == 0 && position == 0) {
+      position += 1;
+    }
+    valueArr.push(unique[position]);
+    unique.splice(position, 1);
+    console.log(unique);
+  }
+  const value = valueArr.join("");
+  return value;
+}
+
 function clickStart() {
   buttonLevel = this.innerHTML;
   console.log("start button clicked");
@@ -7153,7 +7169,8 @@ function updateProblems() {
       setting == 4 ||
       setting == 5 ||
       setting == 6 ||
-      setting == 9
+      setting == 9 ||
+      setting == 12
     ) {
       wholeNumberContainer.classList.add("hidden");
       workingContainer.classList.remove("hidden");
@@ -7375,6 +7392,18 @@ function updateProblems() {
     if (setting == 11) {
       let num = p.multiplier * p.divisor + p.remainder;
       displayProblem.innerHTML = `${num} ÷ ${p.divisor} = ?`;
+    }
+    if (setting == 12) {
+      num = genUniqNum(3);
+      let str = num.toString();
+      console.log(str);
+      const position = genNumbers(str.length);
+      const replaceNum = str[position];
+      p.replaced = replaceNum;
+      str = str.replace(replaceNum, "?");
+      firstNum.textContent = str;
+      secondNum.textContent = p.multiplier;
+      workingAnswer.textContent = num * p.multiplier;
     }
   }
 
@@ -11950,6 +11979,7 @@ function handleSubmit(e) {
       }
       if (setting == 10) correctAnswer = p.multiplier;
       if (setting == 11) correctAnswer = `${p.multiplier}r${p.remainder}`;
+      if (setting == 12) correctAnswer = p.replaced;
       skipGlobalUpdateProblem = 0;
     }
 
@@ -15324,7 +15354,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(11, calArr, setting, 99);
+    setting = calArrAll(12, calArr, setting, 99);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let thousands = genNumbers(9) + 1;
@@ -15424,6 +15454,13 @@ function genProblems() {
         divisor: num,
         multiplier: genNumbers(1100) + 11,
         remainder: genNumbers(num),
+      };
+    }
+    if (setting == 12) {
+      return {
+        num: undefined,
+        multiplier: genNumbers(8) + 2,
+        replaced: undefined,
       };
     }
   }
@@ -18164,7 +18201,7 @@ function buttonLevelSetting() {
       level = "calThree";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Working: Long Division ( No remainder )\n11. Working: Long Division ( Remainder )"
+        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Working: Long Division ( No remainder )\n11. Working: Long Division ( Remainder )\n12. Working: Multiplication ( Single Blank )"
       );
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
