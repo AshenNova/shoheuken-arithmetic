@@ -4231,28 +4231,93 @@ function updateProblems() {
     displayProblem.innerHTML = `${lineOne}</p>${lineTwo}</p>${lineThree}`;
   }
   if (level == 5.01) {
-    for (let i = p.numTwo; i > 1; i--) {
-      if (p.numOne % i == 0 && p.numTwo % i == 0) {
-        p.numOne /= i;
-        p.numTwo /= i;
+    if (setting == 1) {
+      [p.numOne, p.denoOne] = simplify(p.numOne, p.denoOne);
+      [p.numTwo, p.denoTwo] = simplify(p.numTwo, p.denoTwo);
+      console.log("This is Level 5.01.1");
+      // PLUS
+      if (p.version == 0) {
+        if (p.numOne + p.numTwo >= p.denoOne) return updateCalc();
+        displayProblem.innerHTML = `
+      ${p.numOne}/${p.denoOne} of ${p.identity} is ${p.ref}.</p>
+      ${p.numTwo}/${p.denoTwo} of ${p.identity} is ${p.ref}.</p>
+      What fraction of of ${p.identity} is ${
+          p.ref == "shaded" ? "unshaded" : "shaded"
+        }?
+      `;
+      }
+      // MINUS
+      if (p.version == 1) {
+        if (p.numOne + p.numTwo >= p.denoOne) return updateCalc();
+        const colorArr = ["red", "blue", "green", "yellow"];
+        let refColor2 = colorArr[genNumbers(4)];
+        while (refColor2 == p.refColor) {
+          refColor2 = colorArr[genNumbers(4)];
+        }
+        let refColor3 = colorArr[genNumbers(4)];
+        while (refColor3 == refColor2 || refColor3 == p.refColor) {
+          refColor3 = colorArr[genNumbers(4)];
+        }
+        displayProblem.innerHTML = `
+      ${p.numOne}/${p.denoOne} of ${p.identity} is ${p.refColor}.</p>
+      ${p.numTwo}/${p.denoTwo} of ${p.identity} is ${refColor2}.</p>
+      The rest of ${p.identity} is ${refColor3}.</p>
+      What fraction of of ${p.identity} is ${refColor3}?
+      `;
       }
     }
-    for (let i = p.numFour; i > 1; i--) {
-      if (p.numThree % i == 0 && p.numFour % i == 0) {
-        p.numThree /= i;
-        p.numFour /= i;
+    if (setting == 2) {
+      console.log("This is Level 5.01.2");
+      if (p.numOne == p.denoOne) return updateCalc();
+      if (p.remainderNum >= p.remainderDeno) return updateCalc();
+      [p.numOne, p.denoOne] = simplify(p.numOne, p.denoOne);
+      [p.remainderNum, p.remainderDeno] = simplify(
+        p.remainderNum,
+        p.remainderDeno
+      );
+      let colorArr = ["red", "blue", "green", "yellow"];
+      let refColor2 = colorArr[genNumbers(4)];
+      while (refColor2 == p.refColor) {
+        refColor2 = colorArr[genNumbers(4)];
       }
-    }
-    for (let i = p.numSix; i > 1; i--) {
-      if (p.numFive % i == 0 && p.numSix % i == 0) {
-        p.numFive /= i;
-        p.numSix /= i;
+      let refColor3 = colorArr[genNumbers(4)];
+      while (refColor3 == refColor2 || refColor3 == p.refColor) {
+        refColor3 = colorArr[genNumbers(4)];
       }
+
+      displayProblem.innerHTML = `
+      ${p.numOne}/${p.denoOne} of ${p.identity} is ${p.refColor}.</p>
+      ${p.remainderNum}/${p.remainderDeno} of the remainder is ${refColor2}.</p>
+      The rest are ${refColor3}.</p>
+      What fraction of ${p.identity} are ${
+        p.question == 0 ? refColor2 : refColor3
+      }.
+      `;
     }
-    displayProblem.innerHTML = `A is ${p.numOne}/${p.numTwo} of ${p.letterBTotal}.</br>
+    if (setting == 3) {
+      for (let i = p.numTwo; i > 1; i--) {
+        if (p.numOne % i == 0 && p.numTwo % i == 0) {
+          p.numOne /= i;
+          p.numTwo /= i;
+        }
+      }
+      for (let i = p.numFour; i > 1; i--) {
+        if (p.numThree % i == 0 && p.numFour % i == 0) {
+          p.numThree /= i;
+          p.numFour /= i;
+        }
+      }
+      for (let i = p.numSix; i > 1; i--) {
+        if (p.numFive % i == 0 && p.numSix % i == 0) {
+          p.numFive /= i;
+          p.numSix /= i;
+        }
+      }
+      displayProblem.innerHTML = `A is ${p.numOne}/${p.numTwo} of ${p.letterBTotal}.</br>
     ${p.numThree}/${p.numFour} of A was removed.</br>
     ${p.numFive}/${p.numSix} of B was removed.</br>
     What fraction of the total was ${p.letterAB} ${p.letterLeftRemoved}?`;
+    }
   }
 
   if (level == 5.02) {
@@ -11172,42 +11237,73 @@ function handleSubmit(e) {
     }
 
     if (level == 5.01) {
-      p.varA = p.numOne;
-      p.varB = p.numTwo;
-      p.varTotal = p.numOne + p.numTwo;
+      if (setting == 1) {
+        if (p.version == 0) {
+          const common = commonDeno(p.denoOne, p.denoTwo);
+          const multiOne = common / p.denoOne;
+          const multiTwo = common / p.denoTwo;
+          correctAnswer = `${p.numOne * multiOne}/${common}+${
+            p.numTwo * multiTwo
+          }/${common}=${p.numOne * multiOne + p.numTwo * multiTwo}/${common}`;
+        }
+        if (p.version == 1) {
+          const common = commonDeno(p.denoOne, p.denoTwo);
+          const multiOne = common / p.denoOne;
+          const newNumOne = p.numOne * multiOne;
+          const multiTwo = common / p.denoTwo;
+          const newNumTwo = p.numTwo * multiTwo;
+          correctAnswer = `1-${newNumOne}/${common}-${newNumTwo}/${common}`;
+        }
+      }
+      if (setting == 2) {
+        const topNum = p.denoOne - p.numOne;
+        if (p.question == 0) {
+          correctAnswer = `${topNum}/${p.denoOne}x${p.remainderNum}/${p.remainderDeno}`;
+        }
+        if (p.question == 1) {
+          correctAnswer = `${topNum}/${p.denoOne}x${
+            p.remainderDeno - p.remainderNum
+          }/${p.remainderDeno}`;
+        }
+      }
+      if (setting == 3) {
+        p.varA = p.numOne;
+        p.varB = p.numTwo;
+        p.varTotal = p.numOne + p.numTwo;
 
-      if (p.letterBTotal == "A and B") {
-        p.varB = p.numTwo - p.numOne;
-        p.varTotal = p.numTwo;
-      }
+        if (p.letterBTotal == "A and B") {
+          p.varB = p.numTwo - p.numOne;
+          p.varTotal = p.numTwo;
+        }
 
-      if (p.letterAB == "A" && p.letterLeftRemoved == "left") {
-        correctAnswer =
-          p.varA +
-          "/" +
-          p.varTotal +
-          "x" +
-          (p.numFour - p.numThree) +
-          "/" +
-          p.numFour;
-      }
-      if (p.letterAB == "A" && p.letterLeftRemoved == "removed") {
-        correctAnswer =
-          p.varA + "/" + p.varTotal + "x" + p.numThree + "/" + p.numFour;
-      }
-      if (p.letterAB == "B" && p.letterLeftRemoved == "left") {
-        correctAnswer =
-          p.varB +
-          "/" +
-          p.varTotal +
-          "x" +
-          (p.numSix - p.numFive) +
-          "/" +
-          p.numSix;
-      }
-      if (p.letterAB == "B" && p.letterLeftRemoved == "removed") {
-        correctAnswer =
-          p.varB + "/" + p.varTotal + "x" + p.numFive + "/" + p.numSix;
+        if (p.letterAB == "A" && p.letterLeftRemoved == "left") {
+          correctAnswer =
+            p.varA +
+            "/" +
+            p.varTotal +
+            "x" +
+            (p.numFour - p.numThree) +
+            "/" +
+            p.numFour;
+        }
+        if (p.letterAB == "A" && p.letterLeftRemoved == "removed") {
+          correctAnswer =
+            p.varA + "/" + p.varTotal + "x" + p.numThree + "/" + p.numFour;
+        }
+        if (p.letterAB == "B" && p.letterLeftRemoved == "left") {
+          correctAnswer =
+            p.varB +
+            "/" +
+            p.varTotal +
+            "x" +
+            (p.numSix - p.numFive) +
+            "/" +
+            p.numSix;
+        }
+        if (p.letterAB == "B" && p.letterLeftRemoved == "removed") {
+          correctAnswer =
+            p.varB + "/" + p.varTotal + "x" + p.numFive + "/" + p.numSix;
+        }
       }
     }
 
@@ -14552,20 +14648,52 @@ function genProblems() {
   }
 
   if (level == 5.01) {
-    return {
-      numOne: genNumbers(5) + 1,
-      numTwo: genNumbers(5) + 6,
-      numThree: genNumbers(5) + 1,
-      numFour: genNumbers(5) + 6,
-      numFive: genNumbers(5) + 1,
-      numSix: genNumbers(5) + 6,
-      varA: 0,
-      varB: 0,
-      varTotal: 0,
-      letterBTotal: ["B", "A and B"][genNumbers(2)],
-      letterAB: ["A", "B"][genNumbers(2)],
-      letterLeftRemoved: ["left", "removed"][genNumbers(2)],
-    };
+    setting = calArrAll(3, calArr, setting, 9);
+    setting = checkRange(setting, calArr);
+    if (setting == 1) {
+      const total = genNumbers(5) + 5;
+      return {
+        // version: genNumbers(2),
+        version: 1,
+        numOne: genNumbers(total) + 1,
+        denoOne: total,
+        numTwo: genNumbers(total) + 1,
+        denoTwo: total,
+        identity: ["A", "B"][genNumbers(2)],
+        ref: ["shaded", "unshaded"][genNumbers(2)],
+        refColor: ["red", "blue", "green", "yellow"][genNumbers(4)],
+      };
+    }
+    if (setting == 2) {
+      const total = genNumbers(4) + 2;
+      const num = genNumbers(total) + 1;
+      const remainder = (total - num) * (genNumbers(3) + 1);
+      return {
+        numOne: num,
+        denoOne: total,
+        remainderDeno: remainder,
+        remainderNum: genNumbers(remainder) + 1,
+        identity: ["A", "B"][genNumbers(2)],
+        refColor: ["red", "blue", "green", "yellow"][genNumbers(4)],
+        question: genNumbers(2),
+      };
+    }
+    if (setting == 3) {
+      return {
+        numOne: genNumbers(5) + 1,
+        numTwo: genNumbers(5) + 6,
+        numThree: genNumbers(5) + 1,
+        numFour: genNumbers(5) + 6,
+        numFive: genNumbers(5) + 1,
+        numSix: genNumbers(5) + 6,
+        varA: 0,
+        varB: 0,
+        varTotal: 0,
+        letterBTotal: ["B", "A and B"][genNumbers(2)],
+        letterAB: ["A", "B"][genNumbers(2)],
+        letterLeftRemoved: ["left", "removed"][genNumbers(2)],
+      };
+    }
   }
 
   if (level == 5.02) {
@@ -17618,6 +17746,9 @@ function buttonLevelSetting() {
       break;
 
     case "Level 5.01":
+      setting = prompt(
+        "1. Like Fractions\n2. Remainder Concept ( Friendly )\n3. Remainder Concept ( UnFriendly )\n\n9. All"
+      );
       level = 5.01;
       scoreNeeded = 10;
       gold = 80;
@@ -17625,7 +17756,8 @@ function buttonLevelSetting() {
       highScoreTime.innerHTML = highScore5DotZero1.time;
       highScoreMistakes.innerHTML = highScore5DotZero1.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
-      displayProblem.style.fontSize = "25px";
+      displayProblem.style.fontSize = "18px";
+      displayProblem.style.textAlign = "left";
       instructions.innerHTML =
         "Form an equation using</br> multiplication of fraction </br> RC = from x want";
       break;
