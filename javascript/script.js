@@ -1,3 +1,8 @@
+const timeElapsed = Date.now();
+const today = new Date(timeElapsed);
+// console.log(today.toDateString());
+console.log(today);
+
 const displayProblem = document.querySelector(".display-problems");
 const helpMe = document.querySelector(".help-me-text");
 const ourForm = document.querySelector(".our-form");
@@ -47,7 +52,6 @@ const mistakesCountCl = document.querySelector(".mistakesCount");
 const settingButton = document.querySelectorAll(".settingButton");
 const heuristics = document.querySelectorAll(".heuristics");
 const calBtn = document.querySelectorAll(".calButton");
-console.log(calBtn);
 const toMultiplesBtn = document.querySelector(".toMultiples");
 
 const highScoreName = document.querySelector(".highScoreName");
