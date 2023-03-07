@@ -2811,7 +2811,34 @@ function updateProblems() {
 
   if (level == 4.11) {
     // level 4.09
-    if (p.optionFinal == "1") {
+    // if (p.optionFinal == "1") {
+    //   threeWholeNumber.textContent = "";
+    //   threeNumerator.textContent = "?";
+    //   threeDenominator.textContent = "?";
+    //   if (p.numTwo >= p.numThree) {
+    //     p.numTwo = p.numTwo - 1 - (p.numTwo - p.numThree);
+    //   }
+    //   twoWholeNumber.textContent = p.numOne;
+    //   twoNumerator.textContent = p.numTwo;
+    //   twoDenominator.textContent = p.numThree;
+    //   arr.push(p.numThree);
+    // }
+    // // level 4.11
+    // if (p.optionFinal == "2") {
+    //   threeWholeNumber.textContent = "?";
+    //   threeNumerator.textContent = "?";
+    //   threeDenominator.textContent = "?";
+    //   if (p.numTwo >= p.numThree) {
+    //     p.numTwo = p.numTwo - 1 - (p.numTwo - p.numThree);
+    //   }
+    //   twoWholeNumber.textContent = "";
+    //   arr.push(p.numTwo);
+    //   p.numTwo = p.numOne * p.numThree + p.numTwo;
+    //   twoNumerator.textContent = p.numTwo;
+    //   twoDenominator.textContent = p.numThree;
+    //   arr.push(p.numThree);
+    // }
+    if (setting == 1) {
       threeWholeNumber.textContent = "";
       threeNumerator.textContent = "?";
       threeDenominator.textContent = "?";
@@ -2823,8 +2850,7 @@ function updateProblems() {
       twoDenominator.textContent = p.numThree;
       arr.push(p.numThree);
     }
-    // level 4.11
-    if (p.optionFinal == "2") {
+    if (setting == 2) {
       threeWholeNumber.textContent = "?";
       threeNumerator.textContent = "?";
       threeDenominator.textContent = "?";
@@ -10904,7 +10930,42 @@ function handleSubmit(e) {
 
     if (level == 4.11) {
       // level 4.09
-      if (p.optionFinal == "1") {
+      // if (p.optionFinal == "1") {
+      //   for (let i = p.numThree; i > 1; i--) {
+      //     if (p.numTwo % i == 0 && p.numThree % i == 0) {
+      //       p.numTwo /= i;
+      //       p.numThree /= i;
+      //     }
+      //   }
+      //   console.log(p.numThree, arr[0]);
+      //   p.numFour = p.numOne * p.numThree + p.numTwo;
+      //   if (p.numThree != arr[0]) {
+      //     correctAnswer = `${p.numOne} ${p.numTwo}/${p.numThree}=${p.numFour}/${p.numThree}`;
+      //   } else if (p.numTwo == 1) {
+      //     p.numFour = p.numOne * p.numThree + p.numTwo;
+      //     correctAnswer = p.numFour + "/" + p.numThree;
+      //   } else {
+      //     correctAnswer = p.numFour + "/" + p.numThree;
+      //   }
+      // }
+      // if (p.optionFinal == "2") {
+      //   // level 4.10
+      //   for (let i = p.numTwo; i > 1; i--) {
+      //     if (p.numTwo % i == 0 && p.numThree % i == 0) {
+      //       p.numTwo /= i;
+      //       p.numThree /= i;
+      //     }
+      //   }
+      //   if (p.numThree != arr[1]) {
+      //     correctAnswer = `${p.numOne} ${arr[0]}/${arr[1]}=${p.numOne} ${
+      //       p.numTwo % p.numThree
+      //     }/${p.numThree}`;
+      //   } else {
+      //     correctAnswer =
+      //       p.numOne + " " + (p.numTwo % p.numThree) + "/" + p.numThree;
+      //   }
+      // }
+      if (setting == 1) {
         for (let i = p.numThree; i > 1; i--) {
           if (p.numTwo % i == 0 && p.numThree % i == 0) {
             p.numTwo /= i;
@@ -10922,7 +10983,7 @@ function handleSubmit(e) {
           correctAnswer = p.numFour + "/" + p.numThree;
         }
       }
-      if (p.optionFinal == "2") {
+      if (setting == 2) {
         // level 4.10
         for (let i = p.numTwo; i > 1; i--) {
           if (p.numTwo % i == 0 && p.numThree % i == 0) {
@@ -10939,6 +11000,7 @@ function handleSubmit(e) {
             p.numOne + " " + (p.numTwo % p.numThree) + "/" + p.numThree;
         }
       }
+      skipGlobalUpdateProblem = 0;
     }
     if (level == 4.12) {
       if (setting == 1 || (setting == 9 && p.rollChoice == 1)) {
@@ -14397,32 +14459,51 @@ function genProblems() {
     };
   }
 
-  if (level == 4.09) {
-    return {
-      numOne: genNumbers(9) + 1,
-      numTwo: genNumbers(9) + 2,
-      numThree: genNumbers(10) + 2,
-      numFour: 0,
-    };
-  }
+  // if (level == 4.09) {
+  //   return {
+  //     numOne: genNumbers(9) + 1,
+  //     numTwo: genNumbers(9) + 2,
+  //     numThree: genNumbers(10) + 2,
+  //     numFour: 0,
+  //   };
+  // }
 
-  if (level == 4.1) {
-    return {
-      numOne: genNumbers(9) + 1,
-      numTwo: genNumbers(9) + 2,
-      numThree: genNumbers(10) + 2,
-      numFour: 0,
-    };
-  }
+  // if (level == 4.1) {
+  //   return {
+  //     numOne: genNumbers(9) + 1,
+  //     numTwo: genNumbers(9) + 2,
+  //     numThree: genNumbers(10) + 2,
+  //     numFour: 0,
+  //   };
+  // }
 
   if (level == 4.11) {
-    return {
-      numOne: genNumbers(9) + 1,
-      numTwo: genNumbers(9) + 2,
-      numThree: genNumbers(10) + 2,
-      numFour: 0,
-      optionFinal: ["1", "2"][genNumbers(2)],
-    };
+    setting = calArrAll(2, calArr, setting, 9);
+    // setting = checkRange(setting, calArr);
+    if (setting == 1) {
+      return {
+        numOne: genNumbers(9) + 1,
+        numTwo: genNumbers(9) + 2,
+        numThree: genNumbers(10) + 2,
+        numFour: 0,
+      };
+    }
+
+    if (setting == 2) {
+      return {
+        numOne: genNumbers(9) + 1,
+        numTwo: genNumbers(9) + 2,
+        numThree: genNumbers(10) + 2,
+        numFour: 0,
+      };
+    }
+    // return {
+    //   numOne: genNumbers(9) + 1,
+    //   numTwo: genNumbers(9) + 2,
+    //   numThree: genNumbers(10) + 2,
+    //   numFour: 0,
+    //   optionFinal: ["1", "2"][genNumbers(2)],
+    // };
   }
 
   if (level == 4.12) {
@@ -17498,35 +17579,38 @@ function buttonLevelSetting() {
       document.querySelector("#user-input").setAttribute("step", "0.000001");
       break;
 
-    case "Level 4.09":
-      level = 4.09;
-      scoreNeeded = 30;
-      highScoreName.innerHTML = highScore4DotZero9.name;
-      highScoreTime.innerHTML = highScore4DotZero9.time;
-      highScoreMistakes.innerHTML = highScore4DotZero9.mistake;
-      wholeNumberContainer.classList.add("hidden");
-      fractionsContainerTwo.classList.remove("hidden");
-      document.querySelector("#user-input").setAttribute("type", "text");
-      instructions.innerHTML = `
-        Mixed to Improper Fraction</br>
-        Format: 9/2`;
-      break;
+    // case "Level 4.09":
+    //   level = 4.09;
+    //   scoreNeeded = 30;
+    //   highScoreName.innerHTML = highScore4DotZero9.name;
+    //   highScoreTime.innerHTML = highScore4DotZero9.time;
+    //   highScoreMistakes.innerHTML = highScore4DotZero9.mistake;
+    //   wholeNumberContainer.classList.add("hidden");
+    //   fractionsContainerTwo.classList.remove("hidden");
+    //   document.querySelector("#user-input").setAttribute("type", "text");
+    //   instructions.innerHTML = `
+    //     Mixed to Improper Fraction</br>
+    //     Format: 9/2`;
+    //   break;
 
-    case "Level 4.10":
-      level = 4.1;
-      scoreNeeded = 30;
-      highScoreName.innerHTML = highScore4DotZero10.name;
-      highScoreTime.innerHTML = highScore4DotZero10.time;
-      highScoreMistakes.innerHTML = highScore4DotZero10.mistake;
-      wholeNumberContainer.classList.add("hidden");
-      fractionsContainerTwo.classList.remove("hidden");
-      document.querySelector("#user-input").setAttribute("type", "text");
-      instructions.innerHTML = `
-        Improper to Mixed Fractions </br>
-        Format: 2 4/5`;
-      break;
+    // case "Level 4.10":
+    //   level = 4.1;
+    //   scoreNeeded = 30;
+    //   highScoreName.innerHTML = highScore4DotZero10.name;
+    //   highScoreTime.innerHTML = highScore4DotZero10.time;
+    //   highScoreMistakes.innerHTML = highScore4DotZero10.mistake;
+    //   wholeNumberContainer.classList.add("hidden");
+    //   fractionsContainerTwo.classList.remove("hidden");
+    //   document.querySelector("#user-input").setAttribute("type", "text");
+    //   instructions.innerHTML = `
+    //     Improper to Mixed Fractions </br>
+    //     Format: 2 4/5`;
+    //   break;
 
     case "Level 4.11":
+      setting = prompt(
+        "1. Mixed to improper fraction\n2. Improper to Mixed fraction\n\n9. All"
+      );
       level = 4.11;
       scoreNeeded = 20;
       gold = highScore4DotZero11.time;
