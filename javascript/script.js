@@ -13635,16 +13635,16 @@ function handleSubmit(e) {
           str = str.slice(0, length - 3);
         }
         let str2 = str * 1 + 1;
-        str2 = str2.toString();
+        str2 = str2.toString().padEnd(length, "*");
         str = str.padEnd(length, "*");
-        str2 = str2.padEnd(length, "*");
+        // str2 = str2.padEnd(length, "*");
         if (p.choice == "Smallest") {
           helpMe.innerHTML = `
           1) <u>Minus</u> 1 up to the place value</p>
           ${str2}-1</p>
           2) Next number will be as small as possible up allow it to round off.</p>
           5</p>
-          3) And then the rest are 0s.</p>
+          3) And then the rest are 0s. (If there are digits left)</p>
           `;
         }
         if (p.choice == "Largest") {
@@ -13653,7 +13653,7 @@ function handleSubmit(e) {
           ${str}</p>
           2) Next number will be as big as possible but <u>not</u> allow it to round off.</p>
           4</p>
-          3) And then the rest are 9s.</p>
+          3) And then the rest are 9s. (If there are digits left)</p>
           `;
         }
       }
