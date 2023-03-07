@@ -2781,32 +2781,58 @@ function updateProblems() {
     }
   }
 
-  if (level == 4.09) {
-    threeWholeNumber.textContent = "";
-    threeNumerator.textContent = "?";
-    threeDenominator.textContent = "?";
-    if (p.numTwo >= p.numThree) {
-      p.numTwo = p.numTwo - 1 - (p.numTwo - p.numThree);
-    }
-    twoWholeNumber.textContent = p.numOne;
-    twoNumerator.textContent = p.numTwo;
-    twoDenominator.textContent = p.numThree;
-    arr.push(p.numThree);
-  }
+  // if (level == 4.09) {
+  //   threeWholeNumber.textContent = "";
+  //   threeNumerator.textContent = "?";
+  //   threeDenominator.textContent = "?";
+  //   if (p.numTwo >= p.numThree) {
+  //     p.numTwo = p.numTwo - 1 - (p.numTwo - p.numThree);
+  //   }
+  //   twoWholeNumber.textContent = p.numOne;
+  //   twoNumerator.textContent = p.numTwo;
+  //   twoDenominator.textContent = p.numThree;
+  //   arr.push(p.numThree);
+  // }
 
+  // if (level == 4.1) {
+  //   threeWholeNumber.textContent = "?";
+  //   threeNumerator.textContent = "?";
+  //   threeDenominator.textContent = "?";
+  //   if (p.numTwo >= p.numThree) {
+  //     p.numTwo = p.numTwo - 1 - (p.numTwo - p.numThree);
+  //   }
+  //   twoWholeNumber.textContent = "";
+  //   arr.push(p.numTwo);
+  //   p.numTwo = p.numOne * p.numThree + p.numTwo;
+  //   twoNumerator.textContent = p.numTwo;
+  //   twoDenominator.textContent = p.numThree;
+  //   arr.push(p.numThree);
+  // }
   if (level == 4.1) {
-    threeWholeNumber.textContent = "?";
-    threeNumerator.textContent = "?";
-    threeDenominator.textContent = "?";
-    if (p.numTwo >= p.numThree) {
-      p.numTwo = p.numTwo - 1 - (p.numTwo - p.numThree);
+    if (setting == 1) {
+      const halfOne = Math.floor(p.denoOne / 2);
+      const halfTwo = Math.floor(p.denoTwo / 2);
+      //left side less than half
+      if (p.chosen == 0) {
+        p.numOne = genNumbers(halfOne) + 1;
+        p.numTwo = genNumbers(halfTwo) + Math.round(p.denoTwo / 2);
+      }
+      if (p.chosen == 1) {
+        p.numTwo = genNumbers(halfTwo) + 1;
+        p.numOne = genNumbers(halfOne) + Math.round(p.denoOne / 2);
+      }
+      if (p.numOne == p.numTwo && p.denoOne == p.denoTwo) return updateCalc();
+      if (p.denoOne / 2 == p.numOne && p.denoTwo / 2 == p.numTwo)
+        return updateCalc();
+      numeratorOne.textContent = p.numOne;
+      denominatorOne.textContent = p.denoOne;
+      numeratorTwo.textContent = p.numTwo;
+      denominatorTwo.textContent = p.denoTwo;
+      fractionChoice.textContent = p.size;
     }
-    twoWholeNumber.textContent = "";
-    arr.push(p.numTwo);
-    p.numTwo = p.numOne * p.numThree + p.numTwo;
-    twoNumerator.textContent = p.numTwo;
-    twoDenominator.textContent = p.numThree;
-    arr.push(p.numThree);
+    if (setting == 2) {
+      console.log("Developing");
+    }
   }
 
   if (level == 4.11) {
@@ -10892,42 +10918,61 @@ function handleSubmit(e) {
         }
       }
     }
-    if (level == 4.09) {
-      for (let i = p.numThree; i > 1; i--) {
-        if (p.numTwo % i == 0 && p.numThree % i == 0) {
-          p.numTwo /= i;
-          p.numThree /= i;
-        }
-      }
-      console.log(p.numThree, arr[0]);
-      p.numFour = p.numOne * p.numThree + p.numTwo;
-      if (p.numThree != arr[0]) {
-        correctAnswer = `${p.numOne} ${p.numTwo}/${p.numThree}=${p.numFour}/${p.numThree}`;
-      } else if (p.numTwo == 1) {
-        p.numFour = p.numOne * p.numThree + p.numTwo;
-        correctAnswer = p.numFour + "/" + p.numThree;
-      } else {
-        correctAnswer = p.numFour + "/" + p.numThree;
-      }
-    }
+    // if (level == 4.09) {
+    //   for (let i = p.numThree; i > 1; i--) {
+    //     if (p.numTwo % i == 0 && p.numThree % i == 0) {
+    //       p.numTwo /= i;
+    //       p.numThree /= i;
+    //     }
+    //   }
+    //   console.log(p.numThree, arr[0]);
+    //   p.numFour = p.numOne * p.numThree + p.numTwo;
+    //   if (p.numThree != arr[0]) {
+    //     correctAnswer = `${p.numOne} ${p.numTwo}/${p.numThree}=${p.numFour}/${p.numThree}`;
+    //   } else if (p.numTwo == 1) {
+    //     p.numFour = p.numOne * p.numThree + p.numTwo;
+    //     correctAnswer = p.numFour + "/" + p.numThree;
+    //   } else {
+    //     correctAnswer = p.numFour + "/" + p.numThree;
+    //   }
+    // }
 
+    // if (level == 4.1) {
+    //   for (let i = p.numTwo; i > 1; i--) {
+    //     if (p.numTwo % i == 0 && p.numThree % i == 0) {
+    //       p.numTwo /= i;
+    //       p.numThree /= i;
+    //     }
+    //   }
+    //   if (p.numThree != arr[1]) {
+    //     correctAnswer = `${p.numOne} ${arr[0]}/${arr[1]}=${p.numOne} ${
+    //       p.numTwo % p.numThree
+    //     }/${p.numThree}`;
+    //   } else {
+    //     correctAnswer =
+    //       p.numOne + " " + (p.numTwo % p.numThree) + "/" + p.numThree;
+    //   }
+    // }
     if (level == 4.1) {
-      for (let i = p.numTwo; i > 1; i--) {
-        if (p.numTwo % i == 0 && p.numThree % i == 0) {
-          p.numTwo /= i;
-          p.numThree /= i;
+      if (setting == 1) {
+        console.log(p.chosen, p.size);
+        if (p.chosen == 0 && p.size == "Smaller") {
+          correctAnswer = 1;
+        }
+        if (p.chosen == 1 && p.size == "Smaller") {
+          correctAnswer = 2;
+        }
+        if (p.chosen == 0 && p.size == "Bigger") {
+          correctAnswer = 2;
+        }
+        if (p.chosen == 1 && p.size == "Bigger") {
+          correctAnswer = 1;
+        }
+        if (setting == 2) {
+          console.log("Developing");
         }
       }
-      if (p.numThree != arr[1]) {
-        correctAnswer = `${p.numOne} ${arr[0]}/${arr[1]}=${p.numOne} ${
-          p.numTwo % p.numThree
-        }/${p.numThree}`;
-      } else {
-        correctAnswer =
-          p.numOne + " " + (p.numTwo % p.numThree) + "/" + p.numThree;
-      }
     }
-
     if (level == 4.11) {
       // level 4.09
       // if (p.optionFinal == "1") {
@@ -14476,7 +14521,25 @@ function genProblems() {
   //     numFour: 0,
   //   };
   // }
-
+  if (level == 4.1) {
+    setting = calArrAll(2, calArr, setting, 9);
+    setting = 1;
+    if (setting == 1) {
+      const one = genNumbers(10) + 3;
+      const two = genNumbers(10) + 3;
+      return {
+        chosen: genNumbers(2),
+        numOne: genNumbers(one - 1) + 1,
+        denoOne: one,
+        numTwo: genNumbers(two - 1) + 1,
+        denoTwo: two,
+        size: ["Smaller", "Bigger"][genNumbers(2)],
+      };
+    }
+    if (setting == 2) {
+      console.log("Developing");
+    }
+  }
   if (level == 4.11) {
     setting = calArrAll(2, calArr, setting, 9);
     // setting = checkRange(setting, calArr);
@@ -14491,9 +14554,10 @@ function genProblems() {
 
     if (setting == 2) {
       return {
-        numOne: genNumbers(9) + 1,
+        chosen: genNumbers(2),
+        numOne: undefined,
         numTwo: genNumbers(9) + 2,
-        numThree: genNumbers(10) + 2,
+        numThree: undefined,
         numFour: 0,
       };
     }
@@ -17593,19 +17657,17 @@ function buttonLevelSetting() {
     //     Format: 9/2`;
     //   break;
 
-    // case "Level 4.10":
-    //   level = 4.1;
-    //   scoreNeeded = 30;
-    //   highScoreName.innerHTML = highScore4DotZero10.name;
-    //   highScoreTime.innerHTML = highScore4DotZero10.time;
-    //   highScoreMistakes.innerHTML = highScore4DotZero10.mistake;
-    //   wholeNumberContainer.classList.add("hidden");
-    //   fractionsContainerTwo.classList.remove("hidden");
-    //   document.querySelector("#user-input").setAttribute("type", "text");
-    //   instructions.innerHTML = `
-    //     Improper to Mixed Fractions </br>
-    //     Format: 2 4/5`;
-    //   break;
+    case "Level 4.10":
+      level = 4.1;
+      setting = prompt("1. Halfing\n2. Opposite\n\n9. All");
+      scoreNeeded = 20;
+      wholeNumberContainer.classList.add("hidden");
+      fractionsContainer.classList.remove("hidden");
+      document.querySelector("#user-input").setAttribute("type", "text");
+      // instructions.innerHTML = `
+      //   Improper to Mixed Fractions </br>
+      //   Format: 2 4/5`;
+      break;
 
     case "Level 4.11":
       setting = prompt(
