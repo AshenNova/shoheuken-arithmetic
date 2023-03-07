@@ -14554,10 +14554,9 @@ function genProblems() {
 
     if (setting == 2) {
       return {
-        chosen: genNumbers(2),
-        numOne: undefined,
+        numOne: genNumbers(9) + 1,
         numTwo: genNumbers(9) + 2,
-        numThree: undefined,
+        numThree: genNumbers(10) + 2,
         numFour: 0,
       };
     }
