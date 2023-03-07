@@ -10800,7 +10800,7 @@ function handleSubmit(e) {
         correctAnswer = p.numFinal.toFixed();
       }
       if (p.placeValue == "1 decimal place" || p.placeValue == "tenth place") {
-        p.ansFinal = Math.round(p.numFinal * 10) / 10;
+        p.ansFinal = Math.round(p.numFinal * 10000) / 10000;
         // if ((p.ansFinal*10)%10 == 0){
         //   correctAnswer = (p.ansFinal + ".0").toString()
         // } else {
@@ -10812,7 +10812,7 @@ function handleSubmit(e) {
         p.placeValue == "2 decimal place" ||
         p.placeValue == "hundredth place"
       ) {
-        p.ansFinal = Math.round(p.numFinal * 100) / 100;
+        p.ansFinal = Math.round(p.numFinal * 10000) / 10000;
         // console.log(p.ansFinal)
         // if ((p.ansFinal*100)%(100) == 0){
         //   correctAnswer = (p.ansFinal + ".00").toString()
