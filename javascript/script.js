@@ -13411,6 +13411,7 @@ function handleSubmit(e) {
         3.05,
         3.06,
         4.06,
+        4.16,
         4.07,
         4.08,
         6.05,
@@ -13618,6 +13619,39 @@ function handleSubmit(e) {
         }
         if (p.unitMeasurement == "ℓ") {
           helpMe.textContent = `1 ℓ  = 1000 mℓ`;
+        }
+      }
+      if (level == 4.16) {
+        let str = p.numOne.toString();
+        const length = str.length;
+        console.log(str, length);
+        if (p.placeValue == "tens") {
+          str = str.slice(0, length - 1);
+        }
+        if (p.placeValue == "hundreds") {
+          str = str.slice(0, length - 2);
+        }
+        if (p.placeValue == "thousands") {
+          str = str.slice(0, length - 3);
+        }
+        str = str.padEnd(length, "*");
+        if (p.choice == "Smallest") {
+          helpMe.innerHTML = `
+          1) <u>Minus</u> 1 up to the place value</p>
+          ${str * 1 + 1}-1=${str}</p>
+          2) Next number will be as small as possible up allow it to round off.</p>
+          5</p>
+          3) And then the rest are 0s.</p>
+          `;
+        }
+        if (p.choice == "Largest") {
+          helpMe.innerHTML = `
+          1) <u>Nothing happens</u> up to the place value.</p>
+          ${str}</p>
+          2) Next number will be as big as possible but <u>not</u> allow it to round off.</p>
+          4</p>
+          3) And then the rest are 9s.</p>
+          `;
         }
       }
       if (level == 6.05) {
@@ -17767,6 +17801,8 @@ function buttonLevelSetting() {
       highScoreTime.innerHTML = highScore4DotZero16.time;
       highScoreMistakes.innerHTML = highScore4DotZero16.mistake;
       displayProblem.style.fontSize = "25px";
+      helpMe.style.fontSize = "18px";
+      helpMe.style.textAlign = "left";
       break;
 
     case "Level 4.17":
