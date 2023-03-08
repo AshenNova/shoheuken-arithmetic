@@ -2835,7 +2835,12 @@ function updateProblems() {
       fractionChoice.textContent = p.size;
     }
     if (setting == 2) {
-      console.log("Developing");
+      if (p.denoOneUse == p.denoTwoUse) return updateCalc();
+      numeratorOne.textContent = p.numOne;
+      denominatorOne.textContent = p.denoOneUse;
+      numeratorTwo.textContent = p.numTwo;
+      denominatorTwo.textContent = p.denoTwoUse;
+      fractionChoice.textContent = p.size;
     }
   }
 
@@ -7563,19 +7568,8 @@ function updateProblems() {
     }
 
     // NORMAL DISPLAY
-    if (
-      setting == 1 ||
-      setting == 2 ||
-      setting == 3 ||
-      setting == 7 ||
-      setting == 8 ||
-      setting == 9 ||
-      setting == 10 ||
-      setting == 11 ||
-      setting == 12 ||
-      setting == 13 ||
-      setting == 14
-    ) {
+    let normalArr = [1, 2, 3, 7, 8, 9, 10, 11, 12, 13, 14];
+    if (normalArr.includes(setting)) {
       displayProblem.style.fontSize = "20px";
       wholeNumberContainer.classList.remove("hidden");
       fractionsContainerTwo.classList.add("hidden");
@@ -11153,6 +11147,22 @@ function handleSubmit(e) {
         if (setting == 2) {
           console.log("Developing");
         }
+      }
+      if (setting == 2) {
+        const deciOne = (p.numOne / p.denoOneUse).toFixed(3);
+        const deciTwo = (p.numTwo / p.denoTwoUse).toFixed(3);
+        let min = deciOne;
+        let max = deciTwo;
+        deciTwo < deciOne ? ([min, max] = [deciTwo, deciOne]) : null;
+        if (p.size == "Smaller") {
+          if (min == deciOne) correctAnswer = 1;
+          if (min == deciTwo) correctAnswer = 2;
+        }
+        if (p.size == "Bigger") {
+          if (max == deciOne) correctAnswer = 1;
+          if (max == deciTwo) correctAnswer = 2;
+        }
+        console.log(min, max);
       }
     }
     if (level == 4.11) {
@@ -14791,8 +14801,8 @@ function genProblems() {
   //   };
   // }
   if (level == 4.1) {
+    if (setting != 1 && setting != 2 && setting != 9) setting = 9;
     setting = calArrAll(2, calArr, setting, 9);
-    setting = 1;
     if (setting == 1) {
       const one = genNumbers(10) + 3;
       const two = genNumbers(10) + 3;
@@ -14806,7 +14816,15 @@ function genProblems() {
       };
     }
     if (setting == 2) {
-      console.log("Developing");
+      const denoOne = genNumbers(7) + 4;
+      const denoTwo = genNumbers(7) + 4;
+      return {
+        numOne: denoOne - 1,
+        denoOneUse: denoOne,
+        numTwo: denoTwo - 1,
+        denoTwoUse: denoTwo,
+        size: ["Smaller", "Bigger"][genNumbers(2)],
+      };
     }
   }
   if (level == 4.11) {
@@ -17511,6 +17529,9 @@ function buttonLevelSetting() {
       wholeNumberContainer.classList.add("hidden");
       fractionsContainer.classList.remove("hidden");
       instructions.textContent = "Answer using '1' or '2' only";
+      document.querySelector("#user-input").setAttribute("type", "number");
+      document.querySelector("#user-input").setAttribute("min", "1");
+      document.querySelector("#user-input").setAttribute("max", "2");
       break;
 
     case "Level 2.08":
@@ -17957,10 +17978,13 @@ function buttonLevelSetting() {
       scoreNeeded = 20;
       wholeNumberContainer.classList.add("hidden");
       fractionsContainer.classList.remove("hidden");
-      document.querySelector("#user-input").setAttribute("type", "text");
-      // instructions.innerHTML = `
-      //   Improper to Mixed Fractions </br>
-      //   Format: 2 4/5`;
+      instructions.innerHTML = `
+        Answer using 1 or 2.
+        `;
+      document.querySelector("#user-input").setAttribute("type", "number");
+      document.querySelector("#user-input").setAttribute("min", "1");
+      document.querySelector("#user-input").setAttribute("max", "2");
+
       break;
 
     case "Level 4.11":
