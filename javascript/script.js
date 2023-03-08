@@ -7232,7 +7232,13 @@ function updateProblems() {
       workingContainer.classList.remove("hidden");
     }
     // NORMAL DISPLAY
-    if (setting == 7 || setting == 8 || setting == 10 || setting == 11) {
+    if (
+      setting == 7 ||
+      setting == 8 ||
+      setting == 10 ||
+      setting == 11 ||
+      setting == 13
+    ) {
       displayProblem.style.fontSize = "24px";
       wholeNumberContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
@@ -7460,6 +7466,92 @@ function updateProblems() {
       firstNum.textContent = str;
       secondNum.textContent = p.multiplier;
       workingAnswer.textContent = num * p.multiplier;
+    }
+
+    if (setting == 13) {
+      let arrOne = [p.sets, "x", p.sums];
+      let arrTwo = [p.sets, "x", p.numOne];
+      let arrThree = [p.sets, "x", "?"];
+      genNumbers[2] == 0
+        ? ([arrOne[0], arrOne[2]] = [arrOne[2], arrOne[0]])
+        : null;
+      arrOne = arrOne.join(" ");
+      genNumbers[2] == 0
+        ? ([arrTwo[0], arrTwo[2]] = [arrTwo[2], arrTwo[0]])
+        : null;
+      arrTwo = arrTwo.join(" ");
+      genNumbers[2] == 0
+        ? ([arrThree[0], arrThree[2]] = [arrThree[2], arrThree[0]])
+        : null;
+      arrThree = arrThree.join(" ");
+      let arrDisplay = [arrOne];
+      const equalPosition = [0, 2][genNumbers(2)];
+      arrDisplay.splice(equalPosition, 0, "=");
+      if (equalPosition == 0) {
+        // console.log(p.sums, p.numOne);
+        let tempLeft = [];
+        if (genNumbers(2) == 0) {
+          tempLeft = [arrThree, arrTwo];
+          if (p.sums > p.numOne) {
+            tempLeft.splice(1, 0, "+");
+            p.version = 1;
+          }
+          if (p.sums <= p.numOne) {
+            tempLeft.splice(1, 0, "-");
+            p.version = 2;
+          }
+          if (p.blank == 1 || p.blank == 2) {
+            tempLeft[0] = "_____";
+          }
+          tempLeft = tempLeft.join(" ");
+        } else {
+          tempLeft = [arrTwo, arrThree];
+          if (p.sums > p.numOne) {
+            tempLeft.splice(1, 0, "+");
+            p.version = 3;
+          }
+          if (p.sums <= p.numOne) {
+            tempLeft.splice(1, 0, "-");
+            p.version = 4;
+          }
+          if (p.blank == 1 || p.blank == 2) {
+            tempLeft[2] = "_____";
+          }
+          tempLeft = tempLeft.join(" ");
+        }
+        arrDisplay.unshift(tempLeft);
+      }
+      if (equalPosition == 2) {
+        let tempRight = [];
+        if (genNumbers(2) == 0) {
+          tempRight = [arrThree, arrTwo];
+          if (p.sums > p.numOne) {
+            tempRight.splice(1, 0, "+");
+            p.version = 5;
+          }
+          if (p.sums <= p.numOne) {
+            tempRight.splice(1, 0, "-");
+            p.version = 6;
+          }
+          if (p.blank == 1 || p.blank == 2) tempRight[0] = "_____";
+          tempRight = tempRight.join(" ");
+        } else {
+          tempRight = [arrTwo, arrThree];
+          if (p.sums > p.numOne) {
+            tempRight.splice(1, 0, "+");
+            p.version = 7;
+          }
+          if (p.sums <= p.numOne) {
+            tempRight.splice(1, 0, "-");
+            p.version = 8;
+          }
+          if (p.blank == 1 || p.blank == 2) tempRight[2] = "_____";
+          tempRight = tempRight.join(" ");
+        }
+        arrDisplay.push(tempRight);
+      }
+      arrDisplay = arrDisplay.join(" ");
+      displayProblem.textContent = `${arrDisplay}`;
     }
   }
 
@@ -12091,6 +12183,31 @@ function handleSubmit(e) {
       if (setting == 10) correctAnswer = p.multiplier;
       if (setting == 11) correctAnswer = `${p.multiplier}r${p.remainder}`;
       if (setting == 12) correctAnswer = p.replaced;
+      if (setting == 13) {
+        console.log(p.sums, p.numOne, p.version);
+
+        if (p.version == 4 || p.version == 8) {
+          if (p.numTwo < 0) {
+            p.numTwo = p.numTwo * -1;
+          }
+          correctAnswer = p.numTwo;
+        }
+
+        if (
+          p.version == 1 ||
+          p.version == 3 ||
+          p.version == 5 ||
+          p.version == 7
+        ) {
+          correctAnswer = p.numTwo;
+        }
+        if (p.version == 2 || p.version == 6) {
+          correctAnswer = p.sums + p.numOne;
+        }
+        if (p.blank == 1 || p.blank == 2) {
+          correctAnswer = correctAnswer * p.sets;
+        }
+      }
       skipGlobalUpdateProblem = 0;
     }
 
@@ -15646,6 +15763,19 @@ function genProblems() {
         num: undefined,
         multiplier: genNumbers(8) + 2,
         replaced: undefined,
+      };
+    }
+    // Multiplication in sets
+    if (setting == 13) {
+      const sum = genNumbers(5) + 1;
+      const genNumOne = genNumbers(5) + 1;
+      return {
+        sums: sum,
+        sets: genNumbers(89) + 10,
+        numOne: genNumOne,
+        numTwo: sum - genNumOne,
+        version: undefined,
+        blank: genNumbers(3),
       };
     }
   }
