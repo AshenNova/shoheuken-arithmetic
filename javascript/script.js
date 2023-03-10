@@ -2,7 +2,13 @@ const timeElapsed = Date.now();
 const today = new Date(timeElapsed);
 // console.log(today.toDateString());
 console.log(today);
-
+import { swap, decimalCheck, accDecimal, simplify } from "./otherFunctions.js";
+let buttonLevel = 0;
+let mulLevel = 0;
+let scoreNeeded = 0;
+let time = 0;
+let setting = 0;
+let range = 0;
 const displayProblem = document.querySelector(".display-problems");
 const helpMe = document.querySelector(".help-me-text");
 const ourForm = document.querySelector(".our-form");
@@ -373,81 +379,81 @@ let state = {
   correctAnswer: 0,
 };
 
-function swap(first, second) {
-  return ([first, second] = [second, first]);
-}
+// function swap(first, second) {
+//   return ([first, second] = [second, first]);
+// }
 
-function decimalCheck(decimal) {
-  let str = decimal.toString();
-  console.log(str.length);
-  if (decimal.length > 10) {
-    console.log("Recurring decimal detected: " + str);
-    return updateCalc();
-  }
-}
+// function decimalCheck(decimal) {
+//   let str = decimal.toString();
+//   console.log(str.length);
+//   if (decimal.length > 10) {
+//     console.log("Recurring decimal detected: " + str);
+//     return updateCalc();
+//   }
+// }
 
-function accDecimal(decimal) {
-  return Math.round(decimal * 10000) / 10000;
-}
+// function accDecimal(decimal) {
+//   return Math.round(decimal * 10000) / 10000;
+// }
 
-function simplify(first, second) {
-  console.log("Simplifying fractions");
-  let max = first;
-  if (first < second) max = second;
-  for (let i = 2; i < max; i++) {
-    while (first % i == 0 && second % i == 0) {
-      first /= i;
-      second /= i;
-    }
-  }
-  return [first, second];
-}
+// function simplify(first, second) {
+//   console.log("Simplifying fractions");
+//   let max = first;
+//   if (first < second) max = second;
+//   for (let i = 2; i < max; i++) {
+//     while (first % i == 0 && second % i == 0) {
+//       first /= i;
+//       second /= i;
+//     }
+//   }
+//   return [first, second];
+// }
 
-function commonDeno(first, second) {
-  console.log("Finding common denominator");
-  let max = first;
-  let min = second;
-  if (second > first) [max, min] = [second, first];
-  let count = 1;
-  let common = [min, max];
-  let temp = max;
-  while (temp % min != 0) {
-    temp += max;
-    count += 1;
-    common.push(temp);
-    console.log(common);
-  }
-  return common[common.length - 1];
-}
+// function commonDeno(first, second) {
+//   console.log("Finding common denominator");
+//   let max = first;
+//   let min = second;
+//   if (second > first) [max, min] = [second, first];
+//   let count = 1;
+//   let common = [min, max];
+//   let temp = max;
+//   while (temp % min != 0) {
+//     temp += max;
+//     count += 1;
+//     common.push(temp);
+//     console.log(common);
+//   }
+//   return common[common.length - 1];
+// }
 
-function commonFactors(first, second) {
-  let max = first;
-  let min = second;
-  let arr = [];
-  if (second > first) [max, min] = [second, first];
-  for (let i = 1; i <= min; i++) {
-    if (min % i == 0 && max % i == 0) {
-      arr.push(i);
-    }
-  }
-  return arr;
-}
+// function commonFactors(first, second) {
+//   let max = first;
+//   let min = second;
+//   let arr = [];
+//   if (second > first) [max, min] = [second, first];
+//   for (let i = 1; i <= min; i++) {
+//     if (min % i == 0 && max % i == 0) {
+//       arr.push(i);
+//     }
+//   }
+//   return arr;
+// }
 
-function genUniqNum(max) {
-  let valueArr = [];
-  const unique = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-  for (i = 0; i < max; i++) {
-    let position = genNumbers(unique.length);
-    if (valueArr.length == 0 && position == 0) {
-      position += 1;
-    }
-    valueArr.push(unique[position]);
-    unique.splice(position, 1);
-    console.log(unique);
-  }
-  const value = valueArr.join("");
-  return value;
-}
+// function genUniqNum(max) {
+//   let valueArr = [];
+//   const unique = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+//   for (i = 0; i < max; i++) {
+//     let position = genNumbers(unique.length);
+//     if (valueArr.length == 0 && position == 0) {
+//       position += 1;
+//     }
+//     valueArr.push(unique[position]);
+//     unique.splice(position, 1);
+//     console.log(unique);
+//   }
+//   const value = valueArr.join("");
+//   return value;
+// }
 
 function clickStart() {
   buttonLevel = this.innerHTML;
@@ -13687,12 +13693,12 @@ function handleSubmit(e) {
     console.log(typeof correctAnswer, typeof userInput.value);
 
     // adjust to uppercase
-    levelToCaps = [3.18, 4.17, 4.18, 5.02, 5.06];
+    const levelToCaps = [3.18, 4.17, 4.18, 5.02, 5.06];
     if (levelToCaps.includes(level) || (level == 3.16 && p.optionFinal == 4)) {
       userInput.value = userInput.value.toUpperCase();
     }
     //  adjust to lowercase
-    levelToLower = [1.04, 1.05];
+    const levelToLower = [1.04, 1.05];
     if (levelToLower.includes(level)) {
       userInput.value = userInput.value.toLowerCase();
     }
@@ -13812,7 +13818,7 @@ function handleSubmit(e) {
         () => mainContainer.classList.remove("animate-wrong-container"),
         331
       );
-      levelDoNotClear = [
+      const levelDoNotClear = [
         "heuOne",
         "heuTwo",
         "heuThree",
@@ -13822,7 +13828,7 @@ function handleSubmit(e) {
         "heuTwob",
         "calFour",
       ];
-      levelDoNotClearNum = [
+      const levelDoNotClearNum = [
         2.05,
         2.09,
         2.08,
@@ -14321,8 +14327,8 @@ function genNumbers(max) {
 function genProblems() {
   if (level == 1.0) {
     return {
-      numOne: genNumbers(5),
-      numTwo: genNumbers(5),
+      numOne: genNumbers(5) + 1,
+      numTwo: genNumbers(5) + 1,
       operator: ["+", "-"][genNumbers(2)],
     };
   }
@@ -17346,8 +17352,9 @@ function levelBox() {
 //////////////////////////// SET CLICK ///////////////////////////////
 
 for (let i = 0; i < settingButton.length; i++) {
-  settingButton[i].addEventListener("dblclick", function () {
+  settingButton[i].addEventListener("dblclick", function (e) {
     buttonLevel = this.innerHTML;
+    // console.log(e);
     mulLevel = "nil";
 
     buttonLevelSetting();
