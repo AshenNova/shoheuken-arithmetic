@@ -648,6 +648,7 @@ const resetStuff = function () {
   helpMe.style.fontSize = "30px";
   helpMe.style.lineHeight = "normal";
   helpMe.style.marginTop = "revert";
+  helpMe.style.letterSpacing = "revert";
   inputBoxCl.classList.remove("hidden");
   ourForm2.classList.add("hidden");
   accumulatedScore = 0;
@@ -4101,6 +4102,40 @@ function updateProblems() {
     ctx.restore();
   }
 
+  if (level == 4.26) {
+    if (((p.oneSideNoCorners + 2) * 4) % 4 != 0) return updateCalc();
+    let objects = ["chairs", "boxes", "tables"][genNumbers(3)];
+    if (p.version == 0) {
+      displayProblem.innerHTML = `
+      There are ${p.oneSideNoCorners + 2} ${objects} on 1 side of a square.</p>
+      How many ${objects} would be needed to form a full square?</p>
+      
+      `;
+    }
+    if (p.version == 1) {
+      displayProblem.innerHTML = `
+      There are ${p.oneSideNoCorners + 2} ${objects} on 1 side of a square.</p>
+      How many ${objects} would be needed to form 3 sides of a square?</p>
+      
+      `;
+    }
+    if (p.version == 2) {
+      let fullSquare = p.oneSideNoCorners * 4 + 4;
+      displayProblem.innerHTML = `
+        ${fullSquare} ${objects} is used to form 4 sides of a square.</p>
+        How many ${objects} would be needed to form 1 side of the square?</p>
+        
+        `;
+    }
+    if (p.version == 3) {
+      let fullSquare = p.oneSideNoCorners * 4 + 4;
+      displayProblem.innerHTML = `
+      ${fullSquare} ${objects} is used to form 4 sides of a square.</p>
+      How many ${objects} would be needed to form 3 sides of the square?</p>
+      
+      `;
+    }
+  }
   // if (level == 5.0) {
   //   let alignXText = 15;
   //   ctx.font = "1em serif";
@@ -11502,6 +11537,18 @@ function handleSubmit(e) {
       }
     }
 
+    if (level == 4.26) {
+      if (p.version == 0) {
+        correctAnswer = p.oneSideNoCorners * 4 + 4;
+      }
+      if (p.version == 1 || p.version == 3) {
+        correctAnswer = p.oneSideNoCorners * 3 + 4;
+      }
+      if (p.version == 2) {
+        correctAnswer = p.oneSideNoCorners + 2;
+      }
+    }
+
     // if (level == 5.0) {
     //   if (p.sidesBH == "base") {
     //     correctAnswer = `${p.labelABC}${p.labelGHI}`;
@@ -13656,6 +13703,7 @@ function handleSubmit(e) {
         4.16,
         4.07,
         4.08,
+        4.26,
         6.05,
         "heuThree",
         "heuThreeb",
@@ -13899,6 +13947,19 @@ function handleSubmit(e) {
           3) And then the rest are 9s. (If there are digits left)</p>
           `;
         }
+      }
+      if (level == 4.26) {
+        // if (p.version == 0){
+        let start = "❌" + "⭕️".repeat(p.oneSideNoCorners) + "❌";
+        let html = `⭕️${"⬜️".repeat(p.oneSideNoCorners)}⭕️</p>`.repeat(
+          p.oneSideNoCorners
+        );
+        helpMe.innerHTML = `
+          ${start}</p>`;
+        helpMe.insertAdjacentHTML("beforeend", html);
+        let end = "❌" + "⭕️".repeat(p.oneSideNoCorners) + "❌";
+        helpMe.insertAdjacentHTML("beforeend", end);
+        // }
       }
       if (level == 6.05) {
         helpMe.textContent = `Distance = Speed x Time`;
@@ -15072,6 +15133,12 @@ function genProblems() {
     };
   }
 
+  if (level == 4.26) {
+    return {
+      oneSideNoCorners: genNumbers(10) + 2,
+      version: genNumbers(3),
+    };
+  }
   // if (level == 5.0) {
   //   return {
   //     pointX1: genNumbers(70) + 50,
@@ -18232,6 +18299,17 @@ function buttonLevelSetting() {
       document.querySelector("#user-input").setAttribute("type", "text");
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
+      break;
+
+    case "Level 4.26":
+      level = 4.26;
+      scoreNeeded = 10;
+      displayProblem.style.fontSize = "20px";
+      displayProblem.style.textAlign = "left";
+      helpMe.style.fontSize = "10px";
+      helpMe.style.lineHeight = "0";
+      helpMe.style.letterSpacing = "4px";
+
       break;
 
     case "Level 5.0":
