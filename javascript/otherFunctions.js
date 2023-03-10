@@ -74,6 +74,12 @@ function genUniqNum(max) {
   return value;
 }
 
+// End of updateProblems()
+const updateCalc = function () {
+  skipGlobalUpdateProblem = 1; // Skip global
+  updateProblems();
+};
+
 export {
   swap,
   decimalCheck,
@@ -82,4 +88,5 @@ export {
   commonDeno,
   commonFactors,
   genUniqNum,
+  updateCalc,
 };

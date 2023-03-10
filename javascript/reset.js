@@ -1,4 +1,13 @@
 export function resetStuff() {
+  player = 1;
+  levelSetting.classList.remove("hidden");
+  finalBox.classList.add("hidden");
+  state.score = 0;
+  state.mistake = 0;
+  currentScore.textContent = state.score;
+  currentMistake.textContent = state.mistake;
+  document.getElementById("timer").innerHTML = 0;
+  timerD.innerHTML = 4;
   fractionsContainer.classList.add("hidden");
   fractionsContainerTwo.classList.add("hidden");
   threeNumerator.classList.remove("hidden");
