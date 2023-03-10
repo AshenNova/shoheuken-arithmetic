@@ -1,3 +1,5 @@
+import { updateProblems } from "./script.js";
+
 function swap(first, second) {
   return ([first, second] = [second, first]);
 }
@@ -75,8 +77,9 @@ function genUniqNum(max) {
 }
 
 // End of updateProblems()
-const updateCalc = function () {
+const updateCalc = function (skipGlobalUpdateProblem) {
   skipGlobalUpdateProblem = 1; // Skip global
+  console.log("UPDATING!");
   updateProblems();
 };
 

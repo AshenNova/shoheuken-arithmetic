@@ -7,6 +7,7 @@ import {
   swap,
   decimalCheck,
   accDecimal,
+  commonDeno,
   simplify,
   updateCalc,
 } from "./otherFunctions.js";
@@ -7486,6 +7487,7 @@ function updateProblems() {
     if (setting == 4) {
       wholeNumberContainer.classList.add("hidden");
       workingContainer.classList.remove("hidden");
+      fractionsContainerTwo.classList.add("hidden");
     }
 
     // NORMAL DISPLAY
@@ -7568,7 +7570,7 @@ function updateProblems() {
         p.numOne == p.numTwo
       ) {
         // console.log("Prime number detected!");
-        return updateProblems();
+        return updateCalc();
       }
       console.log(p.numOne, p.numTwo);
       for (let i = 1; i <= p.numOne; i++) {
@@ -12309,7 +12311,7 @@ function handleSubmit(e) {
         let answer = [
           p.numOne / p.convenientNumOne + p.numTwo / p.convenientNumTwo,
         ];
-        correctAnswer = answer[0];
+        correctAnswer = accDecimal(answer[0]);
       }
       if (setting == 8) {
         correctAnswer = p.numOne - p.numTwo;
@@ -13562,6 +13564,7 @@ function handleSubmit(e) {
       setTimeout(() => currentScore.classList.remove("animate-right"), 331);
       state.numSix++;
       arr.length = 0;
+      arr3.length = 0;
       commonMultipleArr.length = 0;
       commonMultipleArrTwo.length = 0;
       console.log(arr, commonMultipleArr, commonMultipleArrTwo);
@@ -18940,3 +18943,5 @@ reviewAnswer.addEventListener("click", function () {
     reviewCount = 0;
   }
 });
+
+export { updateProblems };
