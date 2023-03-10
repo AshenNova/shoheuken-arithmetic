@@ -3,6 +3,7 @@ const today = new Date(timeElapsed);
 // console.log(today.toDateString());
 console.log(today);
 import { swap, decimalCheck, accDecimal, simplify } from "./otherFunctions.js";
+import { resetStuff } from "./reset.js";
 let buttonLevel = 0;
 let mulLevel = 0;
 let scoreNeeded = 0;
@@ -575,27 +576,9 @@ function calArrAll(max, arr, setting, maxSetting) {
 
 function checkRange(setting, arr) {
   if (state.global != 1) {
-    // console.log(typeof setting);
-    // let str = setting.split("");
-
-    // console.log(str);
-    // str.forEach((el) => {
-    //   calRange.push(el);
-    // });
-    // console.log(calRange);
-    // if (typeof setting == "string") {
-    //   console.log(setting.length);
-    //   if (setting.length > 1) str = setting.split("-");
-    //   // console.log(str);
-    // state.min = str[0] * 1;
-    // state.max = str[1] * 1;
-    // }
     calRange.push(setting);
     console.log(calRange);
-    // if ((calRange[0] * 1) % 1 != 0) {
-    //   state.min = calRange[0].split("-")[0] * 1;
-    //   state.max = calRange[0].split("-")[1] * 1;
-    // }
+
     if (calRange[0].includes("-")) {
       console.log("Range Detected!");
       state.min = calRange[0].split("-")[0] * 1;
@@ -626,68 +609,68 @@ toMultiplesBtn.addEventListener("click", function () {
   levelSetting.classList.add("hidden");
 });
 
-const resetStuff = function () {
-  fractionsContainer.classList.add("hidden");
-  fractionsContainerTwo.classList.add("hidden");
-  threeNumerator.classList.remove("hidden");
-  threeDenominator.classList.remove("hidden");
-  wholeNumberContainer.classList.remove("hidden");
-  multiplesSettingCl.classList.add("hidden");
-  firstCanvas.classList.add("hidden");
+// const resetStuff = function () {
+//   fractionsContainer.classList.add("hidden");
+//   fractionsContainerTwo.classList.add("hidden");
+//   threeNumerator.classList.remove("hidden");
+//   threeDenominator.classList.remove("hidden");
+//   wholeNumberContainer.classList.remove("hidden");
+//   multiplesSettingCl.classList.add("hidden");
+//   firstCanvas.classList.add("hidden");
 
-  secondUnitMeasurement.textContent = "";
-  instructions.innerHTML = "";
-  document.querySelector("#user-input").setAttribute("type", "number");
-  document.querySelector("#user-input").setAttribute("step", "1");
-  displayProblem.style.fontSize = "50px";
-  instructions.style.fontSize = "revert";
-  userInput.style.width = "175px";
-  document.querySelector("#user-input").style.marginTop = "0";
-  document.querySelector("#user-input").setAttribute("max", "99999");
-  canvas.setAttribute("height", "275px");
-  displayProblem.style.margin = "30px 0";
-  displayProblem.style.textAlign = "center";
-  threeNumerator.classList.add("line");
-  equalSymbol.innerHTML = "=";
-  fractionsContainerTwo.style.margin = "0 25px 15px";
-  helpMe.textContent = "";
-  helpMe.style.fontSize = "30px";
-  helpMe.style.lineHeight = "normal";
-  helpMe.style.marginTop = "revert";
-  helpMe.style.letterSpacing = "revert";
-  inputBoxCl.classList.remove("hidden");
-  ourForm2.classList.add("hidden");
-  accumulatedScore = 0;
-  heuArr.length = 0;
-  global = 0;
-  calArr = [];
-  calArrQns = [];
-  calRange = [];
-  setting = "";
+//   secondUnitMeasurement.textContent = "";
+//   instructions.innerHTML = "";
+//   document.querySelector("#user-input").setAttribute("type", "number");
+//   document.querySelector("#user-input").setAttribute("step", "1");
+//   displayProblem.style.fontSize = "50px";
+//   instructions.style.fontSize = "revert";
+//   userInput.style.width = "175px";
+//   document.querySelector("#user-input").style.marginTop = "0";
+//   document.querySelector("#user-input").setAttribute("max", "99999");
+//   canvas.setAttribute("height", "275px");
+//   displayProblem.style.margin = "30px 0";
+//   displayProblem.style.textAlign = "center";
+//   threeNumerator.classList.add("line");
+//   equalSymbol.innerHTML = "=";
+//   fractionsContainerTwo.style.margin = "0 25px 15px";
+//   helpMe.textContent = "";
+//   helpMe.style.fontSize = "30px";
+//   helpMe.style.lineHeight = "normal";
+//   helpMe.style.marginTop = "revert";
+//   helpMe.style.letterSpacing = "revert";
+//   inputBoxCl.classList.remove("hidden");
+//   ourForm2.classList.add("hidden");
+//   accumulatedScore = 0;
+//   heuArr.length = 0;
+//   global = 0;
+//   calArr = [];
+//   calArrQns = [];
+//   calRange = [];
+//   setting = "";
 
-  gold = 0;
-  silver = 0;
-  bronze = 0;
-  if (document.querySelector(".trophy").childNodes.length > 0) {
-    // document.querySelector('.trophy').removeChild(imageG)
-    // document.querySelector('.trophy').removeChild(imageS)
-    // document.querySelector('.trophy').removeChild(imageB)
-    // document.querySelector('.trophy').removeChild(imageNMP)
-    imageG.remove();
-    imageS.remove();
-    imageB.remove();
-    imageNMP.remove();
-    imageFailed.remove();
-    imageCompleted.remove();
-    arr.length = 0;
-    arr2.length = 0;
-    multiplesArr = [0];
-  }
+//   gold = 0;
+//   silver = 0;
+//   bronze = 0;
+//   if (document.querySelector(".trophy").childNodes.length > 0) {
+//     // document.querySelector('.trophy').removeChild(imageG)
+//     // document.querySelector('.trophy').removeChild(imageS)
+//     // document.querySelector('.trophy').removeChild(imageB)
+//     // document.querySelector('.trophy').removeChild(imageNMP)
+//     imageG.remove();
+//     imageS.remove();
+//     imageB.remove();
+//     imageNMP.remove();
+//     imageFailed.remove();
+//     imageCompleted.remove();
+//     arr.length = 0;
+//     arr2.length = 0;
+//     multiplesArr = [0];
+//   }
 
-  ctx.clearRect(0, 0, 400, 275);
+//   ctx.clearRect(0, 0, 400, 275);
 
-  console.log("reset button activated");
-};
+//   console.log("reset button activated");
+// };
 
 resetButton.addEventListener("click", function () {
   levelSetting.classList.remove("hidden");
