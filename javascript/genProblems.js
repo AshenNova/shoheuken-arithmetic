@@ -2,7 +2,7 @@ export function genNumbers(max) {
   return Math.floor(Math.random() * max);
 }
 
-export function genProblems(level) {
+export function genProblems(level, setting) {
   if (level == 1.0) {
     return {
       numOne: genNumbers(5) + 1,

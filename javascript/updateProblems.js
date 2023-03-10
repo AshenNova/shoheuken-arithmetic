@@ -1,3 +1,5 @@
+import { genProblems } from "./genProblems.js";
+
 export function updateProblems(state) {
   state.currentProblem = state.drawProblem = genProblems();
   // state.drawProblem = genProblems()
