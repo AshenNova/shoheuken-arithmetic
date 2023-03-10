@@ -18249,9 +18249,11 @@ function buttonLevelSetting() {
       break;
 
     case "Level 5.01":
+      const settingExclude = [1, 2, 3, 9];
       setting = prompt(
         "1. Like Fractions\n2. Remainder Concept ( Friendly )\n3. Remainder Concept ( UnFriendly )\n\n9. All"
       );
+      if (!settingExclude.includes(setting)) setting = 9;
       level = 5.01;
       scoreNeeded = 10;
       gold = 80;
