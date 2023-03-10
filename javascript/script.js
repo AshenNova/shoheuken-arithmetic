@@ -3813,7 +3813,7 @@ function updateProblems() {
       ctx.lineTo(0, -p.bigSquare + 10);
       ctx.stroke();
 
-      ctx.fillText(`${p.bigSquare} cm`, -55, -p.bigSquare / 2);
+      ctx.fillText(`${p.bigSquare} cmE`, 0, -p.bigSquare / 2);
 
       ctx.beginPath();
       ctx.moveTo(0, 5);
