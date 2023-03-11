@@ -13867,22 +13867,22 @@ function handleSubmit(e) {
         level == 4.07 ||
         level == 4.08
       ) {
-        if (p.unitMeasurement == "$") {
+        if (p.firstUnit == "$") {
           helpMe.textContent = `$1 = 100¢`;
         }
-        if (p.unitMeasurement == "m") {
+        if (p.firstUnit == "m") {
           helpMe.textContent = `1 m  = 100 cm`;
         }
-        if (p.unitMeasurement == "min") {
+        if (p.firstUnit == "min") {
           helpMe.textContent = `1 min  = 60 s`;
         }
-        if (p.unitMeasurement == "km") {
+        if (p.firstUnit == "km") {
           helpMe.textContent = `1 km  = 1000 m`;
         }
-        if (p.unitMeasurement == "kg") {
+        if (p.firstUnit == "kg") {
           helpMe.textContent = `1 kg  = 1000 g`;
         }
-        if (p.unitMeasurement == "ℓ") {
+        if (p.firstUnit == "ℓ") {
           helpMe.textContent = `1 ℓ  = 1000 mℓ`;
         }
       }
