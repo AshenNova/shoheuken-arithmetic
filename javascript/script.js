@@ -5320,7 +5320,7 @@ function updateProblems() {
         -p.paraLength + adjustX,
         -p.paraBreadth
       );
-      paraAngleR = (paraAngle * Math.PI) / 180;
+      let paraAngleR = (paraAngle * Math.PI) / 180;
       p.paraAngleD = Math.abs(Math.floor(paraAngle));
       console.log(paraAngle, p.paraAngleD);
 
