@@ -10,6 +10,7 @@ import {
   commonDeno,
   simplify,
   updateCalc,
+  genUniqNum,
 } from "./otherFunctions.js";
 // import { resetStuff } from "./reset.js";
 
@@ -141,7 +142,7 @@ let calRange = [];
 let primeNumbers = [
   2, 3, 5, 7, 9, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53,
 ];
-let compassArr = [
+const compassArr = [
   "north",
   "north-east",
   "east",
@@ -7470,7 +7471,7 @@ function updateProblems() {
       displayProblem.innerHTML = `${num} ÷ ${p.divisor} = ?`;
     }
     if (setting == 12) {
-      num = genUniqNum(3);
+      let num = genUniqNum(3);
       let str = num.toString();
       console.log(str);
       const position = genNumbers(str.length);
@@ -19024,4 +19025,4 @@ reviewAnswer.addEventListener("click", function () {
   }
 });
 
-export { updateProblems };
+export { updateProblems, genNumbers };

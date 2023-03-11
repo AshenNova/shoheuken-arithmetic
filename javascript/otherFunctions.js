@@ -1,4 +1,4 @@
-import { updateProblems } from "./script.js";
+import { updateProblems, genNumbers } from "./script.js";
 
 function swap(first, second) {
   return ([first, second] = [second, first]);
@@ -63,7 +63,7 @@ function commonFactors(first, second) {
 function genUniqNum(max) {
   let valueArr = [];
   const unique = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-  for (i = 0; i < max; i++) {
+  for (let i = 0; i < max; i++) {
     let position = genNumbers(unique.length);
     if (valueArr.length == 0 && position == 0) {
       position += 1;
