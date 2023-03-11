@@ -141,6 +141,16 @@ let calRange = [];
 let primeNumbers = [
   2, 3, 5, 7, 9, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53,
 ];
+let compassArr = [
+  "north",
+  "north-east",
+  "east",
+  "south-east",
+  "south",
+  "south-west",
+  "west",
+  "north-west",
+];
 let multiplesArr = [0];
 let gold = 0;
 let silver = 0;
@@ -2893,7 +2903,7 @@ function updateProblems() {
       if (p.deno > p.nume) {
         biggest = p.deno;
       }
-      for (i = 2; i < biggest; i++) {
+      for (let i = 2; i < biggest; i++) {
         if (p.nume % i == 0 && p.deno % i == 0) {
           p.nume /= i;
           p.deno /= i;
@@ -18196,16 +18206,6 @@ function buttonLevelSetting() {
       wholeNumberContainer.classList.add("hidden");
       firstCanvas.classList.remove("hidden");
       arr = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
-      compassArr = [
-        "north",
-        "north-east",
-        "east",
-        "south-east",
-        "south",
-        "south-west",
-        "west",
-        "north-west",
-      ];
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
 
