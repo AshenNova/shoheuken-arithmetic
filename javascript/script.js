@@ -11,13 +11,15 @@ import {
   simplify,
   updateCalc,
 } from "./otherFunctions.js";
-import { resetStuff } from "./reset.js";
+// import { resetStuff } from "./reset.js";
+
 let buttonLevel = 0;
 let mulLevel = 0;
 let scoreNeeded = 0;
 let time = 0;
 let setting = 0;
 let range = 0;
+// let player = 1;
 const displayProblem = document.querySelector(".display-problems");
 const helpMe = document.querySelector(".help-me-text");
 const ourForm = document.querySelector(".our-form");
@@ -388,6 +390,10 @@ let state = {
   correctAnswer: 0,
 };
 
+// function adjustScore(arr){
+//   if (arr.length) < 10
+// }
+
 function clickStart() {
   buttonLevel = this.innerHTML;
   console.log("start button clicked");
@@ -485,6 +491,77 @@ function timer2() {
       player = 0;
     }
   }, 1000);
+}
+function resetStuff() {
+  player = 1;
+  levelSetting.classList.remove("hidden");
+  finalBox.classList.add("hidden");
+  state.score = 0;
+  state.mistake = 0;
+  currentScore.textContent = state.score;
+  currentMistake.textContent = state.mistake;
+  document.getElementById("timer").innerHTML = 0;
+  timerD.innerHTML = 4;
+  fractionsContainer.classList.add("hidden");
+  fractionsContainerTwo.classList.add("hidden");
+  threeNumerator.classList.remove("hidden");
+  threeDenominator.classList.remove("hidden");
+  wholeNumberContainer.classList.remove("hidden");
+  multiplesSettingCl.classList.add("hidden");
+  firstCanvas.classList.add("hidden");
+
+  secondUnitMeasurement.textContent = "";
+  instructions.innerHTML = "";
+  document.querySelector("#user-input").setAttribute("type", "number");
+  document.querySelector("#user-input").setAttribute("step", "1");
+  displayProblem.style.fontSize = "50px";
+  instructions.style.fontSize = "revert";
+  userInput.style.width = "175px";
+  document.querySelector("#user-input").style.marginTop = "0";
+  document.querySelector("#user-input").setAttribute("max", "99999");
+  canvas.setAttribute("height", "275px");
+  displayProblem.style.margin = "30px 0";
+  displayProblem.style.textAlign = "center";
+  threeNumerator.classList.add("line");
+  equalSymbol.innerHTML = "=";
+  fractionsContainerTwo.style.margin = "0 25px 15px";
+  helpMe.textContent = "";
+  helpMe.style.fontSize = "30px";
+  helpMe.style.lineHeight = "normal";
+  helpMe.style.marginTop = "revert";
+  helpMe.style.letterSpacing = "revert";
+  inputBoxCl.classList.remove("hidden");
+  ourForm2.classList.add("hidden");
+  accumulatedScore = 0;
+  heuArr.length = 0;
+  global = 0;
+  calArr = [];
+  calArrQns = [];
+  calRange = [];
+  setting = "";
+
+  gold = 0;
+  silver = 0;
+  bronze = 0;
+  if (document.querySelector(".trophy").childNodes.length > 0) {
+    // document.querySelector('.trophy').removeChild(imageG)
+    // document.querySelector('.trophy').removeChild(imageS)
+    // document.querySelector('.trophy').removeChild(imageB)
+    // document.querySelector('.trophy').removeChild(imageNMP)
+    imageG.remove();
+    imageS.remove();
+    imageB.remove();
+    imageNMP.remove();
+    imageFailed.remove();
+    imageCompleted.remove();
+    arr.length = 0;
+    arr2.length = 0;
+    multiplesArr = [0];
+  }
+
+  ctx.clearRect(0, 0, 400, 275);
+
+  console.log("reset button activated");
 }
 
 function calArrAll(max, arr, setting, maxSetting) {
@@ -10231,8 +10308,8 @@ function handleSubmit(e) {
 
     if (level == 2.07) {
       if (p.option == "1") {
-        a = p.numOne / p.numThree;
-        b = p.numOne / p.numFour;
+        const a = p.numOne / p.numThree;
+        const b = p.numOne / p.numFour;
         if (p.bigOrSmall == "1") {
           if (a > b) {
             correctAnswer = "2";
@@ -10249,8 +10326,8 @@ function handleSubmit(e) {
         }
       }
       if (p.option == "2") {
-        a = p.numFive / p.numTwo;
-        b = p.numSix / p.numTwo;
+        const a = p.numFive / p.numTwo;
+        const b = p.numSix / p.numTwo;
         if (p.bigOrSmall == "1") {
           if (a > b) {
             correctAnswer = "2";

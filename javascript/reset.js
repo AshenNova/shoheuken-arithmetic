@@ -1,4 +1,4 @@
-export function resetStuff() {
+export function resetStuff(player, levelSetting) {
   player = 1;
   levelSetting.classList.remove("hidden");
   finalBox.classList.add("hidden");
