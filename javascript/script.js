@@ -19,6 +19,7 @@ let scoreNeeded = 0;
 let time = 0;
 let setting = 0;
 let range = 0;
+let difficulty = 0;
 const displayProblem = document.querySelector(".display-problems");
 const helpMe = document.querySelector(".help-me-text");
 const ourForm = document.querySelector(".our-form");
