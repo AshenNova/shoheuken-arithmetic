@@ -19,7 +19,6 @@ let scoreNeeded = 0;
 let time = 0;
 let setting = 0;
 let range = 0;
-// let player = 1;
 const displayProblem = document.querySelector(".display-problems");
 const helpMe = document.querySelector(".help-me-text");
 const ourForm = document.querySelector(".our-form");
@@ -7114,8 +7113,8 @@ function updateProblems() {
       console.log(list);
 
       p.value = list[genNumbers(list.length)];
-      arrOneStr = arrOne.join("");
-      arrTwoStr = arrTwo.join("");
+      let arrOneStr = arrOne.join("");
+      let arrTwoStr = arrTwo.join("");
       console.log("Old: " + p.numOne, p.numTwo);
       let replaceOne = genNumbers(arrOne.length);
       let replaceTwo = genNumbers(arrTwo.length);
@@ -7326,7 +7325,7 @@ function updateProblems() {
       let arrTwo = p.numTwo.toString().split("");
       let join = [...arrOne, ...arrTwo];
       let unique = [...new Set(join)];
-      list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+      let list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
       console.log(unique, list);
       unique.forEach((el) => {
         console.log(el);
@@ -7336,8 +7335,8 @@ function updateProblems() {
       console.log(list);
 
       p.value = list[genNumbers(list.length)];
-      arrOneStr = arrOne.join("");
-      arrTwoStr = arrTwo.join("");
+      let arrOneStr = arrOne.join("");
+      let arrTwoStr = arrTwo.join("");
       console.log("Old: " + p.numOne, p.numTwo);
       let replaceOne = genNumbers(arrOne.length);
       let replaceTwo = genNumbers(arrTwo.length);
@@ -17343,6 +17342,9 @@ easyMode.addEventListener("click", function () {
   console.log(hardcore);
 });
 
+// function easyMode(easy) {}
+
+// function hardcoreMode(hardcore) {}
 // SINGLE CLICK
 // for (let i = 0; i <  settingButton.length; i++){
 //   settingButton[i].addEventListener("click", function(){
