@@ -4236,7 +4236,7 @@ function updateProblems() {
     if (p.numOne == p.numTwo) {
       p.numTwo += 1;
     }
-
+    let lineOne = "";
     [p.numThree, p.numFour] = simplify(p.numThree, p.numFour);
     [p.numOne, p.numTwo] = simplify(p.numOne, p.numTwo);
     let positive = ["bought", "received"][genNumbers(2)];
@@ -18352,11 +18352,11 @@ function buttonLevelSetting() {
       break;
 
     case "Level 5.01":
-      const settingExclude = [1, 2, 3, 9];
       setting = prompt(
         "1. Like Fractions\n2. Remainder Concept ( Friendly )\n3. Remainder Concept ( UnFriendly )\n\n9. All"
       );
-      if (!settingExclude.includes(setting)) setting = 9;
+      if (setting != 1 && setting != 2 && setting != 3 && setting != 9)
+        setting = 9;
       level = 5.01;
       scoreNeeded = 10;
       gold = 80;
