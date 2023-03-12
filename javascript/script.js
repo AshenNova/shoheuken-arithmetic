@@ -13653,7 +13653,9 @@ function handleSubmit(e) {
       setTimeout(() => currentScore.classList.remove("animate-right"), 331);
       state.numSix++;
       arr.length = 0;
+      arr2.length = 0;
       arr3.length = 0;
+      console.log(arr, arr2, arr3);
       commonMultipleArr.length = 0;
       commonMultipleArrTwo.length = 0;
       console.log(arr, commonMultipleArr, commonMultipleArrTwo);
