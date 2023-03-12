@@ -21,6 +21,7 @@ let time = 0;
 let setting = 0;
 let range = 0;
 let difficulty = 0;
+let digit = 0;
 const displayProblem = document.querySelector(".display-problems");
 const helpMe = document.querySelector(".help-me-text");
 const ourForm = document.querySelector(".our-form");
@@ -13878,22 +13879,22 @@ function handleSubmit(e) {
         level == 4.07 ||
         level == 4.08
       ) {
-        if (p.firstUnit == "$") {
+        if (p.firstUnit == "$" || p.unitMeasurement == "$") {
           helpMe.textContent = `$1 = 100¢`;
         }
-        if (p.firstUnit == "m") {
+        if (p.firstUnit == "m" || p.unitMeasurement == "m") {
           helpMe.textContent = `1 m  = 100 cm`;
         }
-        if (p.firstUnit == "min") {
+        if (p.firstUnit == "min" || p.unitMeasurement == "min") {
           helpMe.textContent = `1 min  = 60 s`;
         }
-        if (p.firstUnit == "km") {
+        if (p.firstUnit == "km" || p.unitMeasurement == "km") {
           helpMe.textContent = `1 km  = 1000 m`;
         }
-        if (p.firstUnit == "kg") {
+        if (p.firstUnit == "kg" || p.unitMeasurement == "kg") {
           helpMe.textContent = `1 kg  = 1000 g`;
         }
-        if (p.firstUnit == "ℓ") {
+        if (p.firstUnit == "ℓ" || p.unitMeasurement == "ℓ") {
           helpMe.textContent = `1 ℓ  = 1000 mℓ`;
         }
       }
