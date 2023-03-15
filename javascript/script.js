@@ -3790,7 +3790,7 @@ function updateProblems() {
       ctx.lineTo(0, -p.bigSquare + 10);
       ctx.stroke();
 
-      ctx.fillText(`${p.bigSquare} cmE`, 0, -p.bigSquare / 2);
+      ctx.fillText(`${p.bigSquare} cm`, 0, -p.bigSquare / 2);
 
       ctx.beginPath();
       ctx.moveTo(0, 5);
@@ -7683,6 +7683,7 @@ function updateProblems() {
           console.log(el, arr3);
         });
       }
+      if (arr3.length < 3) return updateCalc();
       displayProblem.innerHTML = `
       What is/are the common factors of ${p.numOne} and ${p.numTwo}?</p>
       <i>List in ascending order.</i>`;
