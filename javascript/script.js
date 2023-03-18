@@ -9600,7 +9600,7 @@ function updateProblems() {
       (setting == 9 && p.rollz == 3) ||
       (range == 1 && p.rollz == 3)
     ) {
-      chosenRoll = genNumbers(p.objects.length);
+      let chosenRoll = genNumbers(p.objects.length);
       p.chosenOne = p.objects[chosenRoll][0];
       p.chosenTwo = p.objects[chosenRoll][1];
       p.variableName = p.objects[chosenRoll][4];
