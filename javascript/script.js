@@ -13922,7 +13922,7 @@ function handleSubmit(e) {
           helpMe.innerHTML = `
           1) <u>Minus</u> 1 up to the place value</p>
           ${str2}-1</p>
-          2) Next number will be as small as possible up allow it to round off.</p>
+          2) Next number will be as small as possible but still allow it to round off.</p>
           5</p>
           3) And then the rest are 0s. (If there are digits left)</p>
           `;
