@@ -16301,8 +16301,8 @@ function genProblems() {
       (setting == 9 && roll == 4) ||
       (range == 1 && roll == 4)
     ) {
-      genOnePos = genNumbers(5);
-      genTwoPos = genNumbers(5);
+      let genOnePos = genNumbers(5);
+      let genTwoPos = genNumbers(5);
       return {
         version: genNumbers(3) + 1,
         onePos: genOnePos,
