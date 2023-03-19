@@ -3255,6 +3255,7 @@ function updateProblems() {
   }
 
   if (level == 4.18) {
+    console.log(arr2);
     const gridX = 380;
     const gridY = 210;
     ctx.font = "1em serif";
@@ -13655,6 +13656,9 @@ function handleSubmit(e) {
       state.numSix++;
       arr.length = 0;
       arr2.length = 0;
+      if (level == 4.18) {
+        arr2 = ["B", "C", "F", "I", "H", "G", "D", "A"];
+      }
       arr3.length = 0;
       console.log(arr, arr2, arr3);
       commonMultipleArr.length = 0;
