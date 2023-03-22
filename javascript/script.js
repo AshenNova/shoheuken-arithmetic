@@ -2738,7 +2738,9 @@ function updateProblems() {
     if (setting == 1) {
       displayProblem.textContent = `${p.sumOfNum} ${p.firstUnit} = ? ${p.secondUnit} `;
       if (p.firstUnit == "$") {
-        displayProblem.textContent = `${p.firstUnit.toFixed(2)} ${p.sumOfNum} = ? ${p.secondUnit} `;
+        displayProblem.textContent = `${p.firstUnit.toFixed(2)} ${
+          p.sumOfNum
+        } = ? ${p.secondUnit} `;
       }
     }
     if (setting == 2) {
@@ -18198,6 +18200,7 @@ function buttonLevelSetting() {
       displayProblem.style.fontSize = "25px";
       helpMe.style.fontSize = "18px";
       helpMe.style.textAlign = "left";
+      document.querySelector("#user-input").setAttribute("max", "200000");
       break;
 
     case "Level 4.17":
