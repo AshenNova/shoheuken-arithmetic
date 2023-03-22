@@ -13526,8 +13526,8 @@ function handleSubmit(e) {
         }
 
         let thirdSentence = undefined;
+        let quantityT = groups * 2;
         if (p.choice == 2) {
-          let quantityT = groups * 2;
           thirdSentence = `${groups}x2=${quantityT}`;
           correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}`;
           correctAnswerTwo = quantityT;
