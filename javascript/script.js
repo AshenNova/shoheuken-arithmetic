@@ -2738,7 +2738,7 @@ function updateProblems() {
     if (setting == 1) {
       displayProblem.textContent = `${p.sumOfNum} ${p.firstUnit} = ? ${p.secondUnit} `;
       if (p.firstUnit == "$") {
-        displayProblem.textContent = `${p.firstUnit} ${p.sumOfNum} = ? ${p.secondUnit} `;
+        displayProblem.textContent = `${p.firstUnit.toFixed(2)} ${p.sumOfNum} = ? ${p.secondUnit} `;
       }
     }
     if (setting == 2) {
