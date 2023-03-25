@@ -614,6 +614,7 @@ function checkRange(setting, arr) {
         if (arr.length < 10) {
           scoreNeeded = 10;
         }
+        console.log(`The score needed is : ${scoreNeeded}`);
       }
       setting = arr[genNumbers(arr.length)];
       const chosen = arr.splice(arr.indexOf(setting), 1);
