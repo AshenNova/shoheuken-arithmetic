@@ -22,6 +22,7 @@ let setting = 0;
 let range = 0;
 let difficulty = 0;
 let digit = 0;
+let choice = 0;
 const displayProblem = document.querySelector(".display-problems");
 const helpMe = document.querySelector(".help-me-text");
 const ourForm = document.querySelector(".our-form");
