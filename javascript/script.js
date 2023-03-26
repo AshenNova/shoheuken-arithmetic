@@ -7714,6 +7714,7 @@ function updateProblems() {
       if (p.denoOne == p.denoTwo) p.denoTwo += 1;
       [p.numOne, p.denoOne] = simplify(p.numOne, p.denoOne);
       [p.numTwo, p.denoTwo] = simplify(p.numTwo, p.denoTwo);
+      if (p.denoOne == p.denoTwo) p.denoTwo += 1;
       twoWholeNumber.textContent = p.wholeOne;
       twoNumerator.textContent = p.numOne;
       twoDenominator.textContent = p.denoOne;
