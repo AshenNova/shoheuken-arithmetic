@@ -2452,33 +2452,50 @@ function updateProblems() {
     `;
   }
 
+  // if (level == 4.03) {
+  //   if (p.numOne % 10 == 0) {
+  //     p.numOne += 1;
+  //   }
+  //   if (p.placeValue == "Whole Number") {
+  //     p.numTwo = [10, 100, 1000][genNumbers(3)];
+  //   }
+  //   if (p.placeValue == "1 decimal place" || p.placeValue == "tenth place") {
+  //     p.numTwo = [100, 1000][genNumbers(2)];
+  //   }
+  //   if (
+  //     p.placeValue == "2 decimal place" ||
+  //     p.placeValue == "hundredth place"
+  //   ) {
+  //     p.numTwo = 1000;
+  //   }
+  //   // p.numFinal = Math.floor((p.numOne / (p.numTwo * 1)) * p.numTwo) / p.numTwo;
+  //   p.numFinal = p.numOne / p.numTwo;
+
+  //   while (p.numFinal > 1000) {
+  //     p.numFinal -= 1000;
+  //   }
+  //   console.log(p.numOne, p.numTwo, p.numFinal);
+  //   helpMe.textContent = `${p.placeValue}`;
+  //   displayProblem.textContent = `${p.numFinal} ≈ `;
+  // }
   if (level == 4.03) {
-    if (p.numOne % 10 == 0) {
-      p.numOne += 1;
-    }
-    if (p.placeValue == "Whole Number") {
-      p.numTwo = [10, 100, 1000][genNumbers(3)];
-    }
-    if (p.placeValue == "1 decimal place" || p.placeValue == "tenth place") {
-      p.numTwo = [100, 1000][genNumbers(2)];
-    }
-    if (
-      p.placeValue == "2 decimal place" ||
-      p.placeValue == "hundredth place"
-    ) {
-      p.numTwo = 1000;
-    }
-    // p.numFinal = Math.floor((p.numOne / (p.numTwo * 1)) * p.numTwo) / p.numTwo;
-    p.numFinal = p.numOne / p.numTwo;
-
-    while (p.numFinal > 1000) {
-      p.numFinal -= 1000;
-    }
-    console.log(p.numOne, p.numTwo, p.numFinal);
     helpMe.textContent = `${p.placeValue}`;
-    displayProblem.textContent = `${p.numFinal} ≈ `;
+    let activateOne = genNumbers(2);
+    let activateTwo = genNumbers(2);
+    let activateThree = genNumbers(2);
+    p.wholeNum = p.wholeNum * genNumbers(2);
+    if (p.pos == 0) {
+      activateOne = 1;
+      p.wholeNum = genNumbers(999) + 1;
+    }
+    if (p.pos == 1) activateTwo = 1;
+    if (p.pos == 2) activateThree = 1;
+    p.decOne = (p.decOne / 10) * activateOne;
+    p.decTwo = (p.decTwo / 100) * activateTwo;
+    p.decThree = (p.decThree / 1000) * activateThree;
+    p.num = p.wholeNum + p.decOne + p.decTwo + p.decThree;
+    displayProblem.textContent = `${accDecimal(p.num)} ≈ ?`;
   }
-
   if (level == 4.04) {
     if (p.numOne % 10 == 0) {
       p.numOne += p.numOne + 1;
@@ -10984,36 +11001,42 @@ function handleSubmit(e) {
       if (p.placeValue == "thousands") correctAnswer = arr2[6];
     }
 
+    // if (level == 4.03) {
+    //   if (p.placeValue == "Whole Number") {
+    //     // correctAnswer = (Math.round(p.numFinal)).toString()
+    //     correctAnswer = p.numFinal.toFixed();
+    //   }
+    //   if (p.placeValue == "1 decimal place" || p.placeValue == "tenth place") {
+    //     p.ansFinal = Math.round(p.numFinal * 10000) / 10000;
+    //     // if ((p.ansFinal*10)%10 == 0){
+    //     //   correctAnswer = (p.ansFinal + ".0").toString()
+    //     // } else {
+    //     // correctAnswer = p.ansFinal.toString()
+    //     // }
+    //     correctAnswer = p.ansFinal.toFixed(1);
+    //   }
+    //   if (
+    //     p.placeValue == "2 decimal place" ||
+    //     p.placeValue == "hundredth place"
+    //   ) {
+    //     p.ansFinal = Math.round(p.numFinal * 10000) / 10000;
+    //     // console.log(p.ansFinal)
+    //     // if ((p.ansFinal*100)%(100) == 0){
+    //     //   correctAnswer = (p.ansFinal + ".00").toString()
+    //     // } else if ((p.ansFinal*100)%(10) == 0){
+    //     //   correctAnswer = (p.ansFinal + "0").toString()
+    //     // } else {
+    //     // correctAnswer = p.ansFinal.toString()
+    //     // }
+    //     correctAnswer = p.ansFinal.toFixed(2);
+    //   }
+    //   decimalCheck(correctAnswer);
+    // }
     if (level == 4.03) {
-      if (p.placeValue == "Whole Number") {
-        // correctAnswer = (Math.round(p.numFinal)).toString()
-        correctAnswer = p.numFinal.toFixed();
-      }
-      if (p.placeValue == "1 decimal place" || p.placeValue == "tenth place") {
-        p.ansFinal = Math.round(p.numFinal * 10000) / 10000;
-        // if ((p.ansFinal*10)%10 == 0){
-        //   correctAnswer = (p.ansFinal + ".0").toString()
-        // } else {
-        // correctAnswer = p.ansFinal.toString()
-        // }
-        correctAnswer = p.ansFinal.toFixed(1);
-      }
-      if (
-        p.placeValue == "2 decimal place" ||
-        p.placeValue == "hundredth place"
-      ) {
-        p.ansFinal = Math.round(p.numFinal * 10000) / 10000;
-        // console.log(p.ansFinal)
-        // if ((p.ansFinal*100)%(100) == 0){
-        //   correctAnswer = (p.ansFinal + ".00").toString()
-        // } else if ((p.ansFinal*100)%(10) == 0){
-        //   correctAnswer = (p.ansFinal + "0").toString()
-        // } else {
-        // correctAnswer = p.ansFinal.toString()
-        // }
-        correctAnswer = p.ansFinal.toFixed(2);
-      }
-      decimalCheck(correctAnswer);
+      if (p.pos == 0) correctAnswer = p.num.toFixed(0);
+      if (p.pos == 1) correctAnswer = p.num.toFixed(1);
+      if (p.pos == 2) correctAnswer = p.num.toFixed(2);
+      if (p.pos == 3) correctAnswer = p.num.toFixed(3);
     }
 
     if (level == 4.04) {
@@ -14768,21 +14791,37 @@ function genProblems() {
     };
   }
 
+  // if (level == 4.03) {
+  //   return {
+  //     numOne: genNumbers(9999) + 1,
+  //     numTwo: 0,
+  //     placeValue: [
+  //       "1 decimal place",
+  //       "tenth place",
+  //       "2 decimal place",
+  //       "hundredth place",
+  //       "Whole Number",
+  //     ][genNumbers(5)],
+  //     numFinal: 0,
+  //   };
+  // }
   if (level == 4.03) {
+    let position = genNumbers(3);
     return {
-      numOne: genNumbers(9999) + 1,
-      numTwo: 0,
+      pos: position,
+      wholeNum: genNumbers(999) + 1,
+      decOne: genNumbers(9) + 1,
+      decTwo: genNumbers(9) + 1,
+      decThree: genNumbers(9) + 1,
       placeValue: [
-        "1 decimal place",
-        "tenth place",
-        "2 decimal place",
-        "hundredth place",
-        "Whole Number",
-      ][genNumbers(5)],
-      numFinal: 0,
+        ["whole Number", "whole Number"],
+        ["1 decimal place", "tenth place"],
+        ["2 decimal place", "hundredth place"],
+        // ["3 decimal place", "thousandth place"],
+      ][position][genNumbers(2)],
+      num: undefined,
     };
   }
-
   if (level == 4.04) {
     return {
       numOne: genNumbers(999) + 1,
