@@ -7935,7 +7935,8 @@ function updateProblems() {
       workingContainer.classList.add("hidden");
       // END DISPLAY
     }
-    if (setting == 4) {
+    // NORMAL DISPLAY
+    if (setting == 4 || setting == 5) {
       displayProblem.style.textAlign = "left";
       displayProblem.style.fontSize = "18px";
       wholeNumberContainer.classList.remove("hidden");
@@ -8171,6 +8172,36 @@ function updateProblems() {
       ${lineTwo}</p>
       ${lineThree}
       `;
+    }
+    if (setting == 5) {
+      let lineOne = undefined;
+      let tempArr = [];
+      if (p.choice == "B") {
+        lineOne = `A is ${p.varA}% of B.`;
+        tempArr.push(p.varA, 100);
+      } else {
+        lineOne = `A is ${p.varA}% of B and C.`;
+        tempArr.push(p.varA, 100 - p.varA);
+      }
+      // console.log(`A: ${p.varA}, B: ${tempArr[1]}`);
+      [tempArr[0], tempArr[1]] = simplify(tempArr[0], tempArr[1]);
+      // console.log(`A: ${tempArr[0]}, B: ${tempArr[1]}`);
+      const lineTwo = `B is ${p.varB}% of C.`;
+      let tempArr2 = [];
+      tempArr2.push(p.varB, 100);
+      [tempArr2[0], tempArr2[1]] = simplify(tempArr2[0], tempArr2[1]);
+      // console.log(`B: ${tempArr2[0]}, C: ${tempArr2[1]}`);
+      const theCommonDeno = commonDeno(tempArr[1], tempArr2[0]);
+      if (theCommonDeno > 100) return updateCalc();
+      // console.log(theCommonDeno);
+      const multiOne = theCommonDeno / tempArr[1];
+      const multiTwo = theCommonDeno / tempArr2[0];
+      p.answer = [tempArr[0] * multiOne, theCommonDeno, tempArr2[1] * multiTwo];
+
+      displayProblem.innerHTML = `
+      ${lineOne}</p>
+      ${lineTwo}</p>
+      What is the ratio of A:B:C?`;
     }
   }
   //   if (setting == 1) {
@@ -12535,6 +12566,8 @@ function handleSubmit(e) {
       if (setting == 4) {
         correctAnswer = `${calArrQns[5]}:${calArrQns[6]}:${calArrQns[8]}`;
       }
+      if (setting == 5)
+        correctAnswer = `${p.answer[0]}:${p.answer[1]}:${p.answer[2]}`;
       skipGlobalUpdateProblem = 0;
     }
     // heuristics Answer
@@ -16174,7 +16207,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(4, calArr, setting, 99);
+    setting = calArrAll(5, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -16233,6 +16266,18 @@ function genProblems() {
         unitFour: genNumbers(5) + 2,
         firstSentence: ["unit", "ratio"][genNumbers(2)],
         secondSentence: ["unit", "ratio"][genNumbers(2)],
+      };
+    }
+
+    if (setting == 5) {
+      let A = (genNumbers(18) + 1) * 5;
+      return {
+        varA: A,
+        choice: ["B", "total"][genNumbers(2)],
+        varB: (genNumbers(12) + 1) * 5,
+        // choiceTwo: ["A", "B"][genNumbers(2)],
+        varC: undefined,
+        answer: undefined,
       };
     }
   }
