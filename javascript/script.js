@@ -18891,7 +18891,7 @@ function buttonLevelSetting() {
       level = "calFive";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Ratio: Repeated Identity"
+        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Ratio: Repeated Identity\n5. Percentage: Repeated Identity"
       );
       document.querySelector("#user-input").setAttribute("type", "text");
       // displayProblem.style.fontSize = "18px";
