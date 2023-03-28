@@ -7936,7 +7936,7 @@ function updateProblems() {
       // END DISPLAY
     }
     // NORMAL DISPLAY
-    if (setting == 4 || setting == 5) {
+    if (setting == 4 || setting == 5 || setting == 7 || setting == 8) {
       displayProblem.style.textAlign = "left";
       displayProblem.style.fontSize = "18px";
       wholeNumberContainer.classList.remove("hidden");
@@ -8111,8 +8111,36 @@ function updateProblems() {
       equalSymbol.textContent = `${p.unitsMeasurement} =`;
       threeWholeNumber.textContent = `? ${p.unitsPair}`;
     }
-    // CURRENT WORK
+    // FRACTIONS: REMAINDER CONCEPT
     if (setting == 4) {
+      [p.numA, p.denoA] = simplify(p.numA, p.denoA);
+      [p.numB, p.denoB] = simplify(p.numB, p.denoB);
+      [p.numC, p.denoC] = simplify(p.numC, p.denoC);
+      displayProblem.innerHTML = `
+      There are 3 variables: A, B and C.</p>
+      A has ${p.partA} units, B has ${p.partB} units, C has ${
+        p.partC
+      } units.</p>
+      ${p.numA}/${p.denoA} of A is removed.</p>
+      ${p.numB}/${p.denoB} of B is removed.</p>
+      ${p.numC}/${p.denoC} of C is removed.</p>
+      What fraction of the total from ${p.choiceVar} ${
+        p.choice == "left" ? `is ${p.choice}` : `was ${p.choice}`
+      }?
+      `;
+    }
+    //FRACTIONS: IDENTICAL NUMERATOR
+    if (setting == 5) {
+      // return console.log("test");
+      [p.numA, p.denoA] = simplify(p.numA, p.denoA);
+      [p.numB, p.denoB] = simplify(p.numB, p.denoB);
+      displayProblem.innerHTML = `
+      ${p.numA}/${p.denoA} of A is equal to ${p.numB}/${p.denoB} of B.</p>
+      What is the ratio of A : B?
+      `;
+    }
+
+    if (setting == 7) {
       let lineOne = "";
       if (p.firstSentence == "unit") {
         p.unitTwo = 1;
@@ -8173,7 +8201,7 @@ function updateProblems() {
       ${lineThree}
       `;
     }
-    if (setting == 5) {
+    if (setting == 8) {
       let lineOne = undefined;
       let tempArr = [];
       if (p.choice == "B") {
@@ -12562,11 +12590,54 @@ function handleSubmit(e) {
 
         correctAnswer = numerator;
       }
-      // CURRENT WORK (ANSWER)
       if (setting == 4) {
+        const total = p.partA + p.partB + p.partC;
+        let num = undefined;
+        let deno = undefined;
+        if (p.choiceVar == "A") {
+          if (p.choice == "left") {
+            num = p.partA * (p.denoA - p.numA);
+            deno = total * p.denoA;
+          }
+          if (p.choice == "removed") {
+            num = p.partA * p.numA;
+            deno = total * p.denoA;
+          }
+        }
+        if (p.choiceVar == "B") {
+          if (p.choice == "left") {
+            num = p.partB * (p.denoB - p.numB);
+            deno = total * p.denoB;
+          }
+          if (p.choice == "removed") {
+            num = p.partB * p.numB;
+            deno = total * p.denoB;
+          }
+        }
+        if (p.choiceVar == "C") {
+          if (p.choice == "left") {
+            num = p.partC * (p.denoC - p.numC);
+            deno = total * p.denoC;
+          }
+          if (p.choice == "removed") {
+            num = p.partC * p.numC;
+            deno = total * p.denoC;
+          }
+        }
+        [num, deno] = simplify(num, deno);
+        correctAnswer = `${num}/${deno}`;
+      }
+      if (setting == 5) {
+        const commonNum = commonDeno(p.numA, p.numB);
+        const multiOne = commonNum / p.numA;
+        const multiTwo = commonNum / p.numB;
+        correctAnswer = `${p.denoA * multiOne}:${p.denoB * multiTwo}`;
+      }
+
+      if (setting == 7) {
         correctAnswer = `${calArrQns[5]}:${calArrQns[6]}:${calArrQns[8]}`;
       }
-      if (setting == 5)
+      if (setting == 8)
         correctAnswer = `${p.answer[0]}:${p.answer[1]}:${p.answer[2]}`;
       skipGlobalUpdateProblem = 0;
     }
@@ -16247,8 +16318,46 @@ function genProblems() {
         denominatorOne: [2, 5, 8, 10, 20, 50, 100, 125][genNumbers(8)],
       };
     }
-    //repeated identity [Ratio]
     if (setting == 4) {
+      const Aparts = genNumbers(4) + 2;
+      const Bparts = genNumbers(4) + 2;
+      const Cparts = genNumbers(4) + 2;
+      const A = genNumbers(9) + 2;
+      const B = genNumbers(9) + 2;
+      const C = genNumbers(9) + 2;
+      const ANum = genNumbers(A - 1) + 1;
+      const BNum = genNumbers(B - 1) + 1;
+      const CNum = genNumbers(C - 1) + 1;
+
+      return {
+        partA: Aparts,
+        partB: Bparts,
+        partC: Cparts,
+        denoA: A,
+        denoB: B,
+        denoC: C,
+        numA: ANum,
+        numB: BNum,
+        numC: CNum,
+        choiceVar: ["A", "B", "C"][genNumbers(3)],
+        choice: ["left", "removed"][genNumbers(2)],
+      };
+    }
+    // FRACTIONS: Identical Numerator
+    if (setting == 5) {
+      const A = genNumbers(9) + 2;
+      const B = genNumbers(9) + 2;
+      const ANum = genNumbers(A - 1) + 1;
+      const BNum = genNumbers(B - 1) + 1;
+      return {
+        denoA: A,
+        denoB: B,
+        numA: ANum,
+        numB: BNum,
+      };
+    }
+    //repeated identity [Ratio]
+    if (setting == 7) {
       const arrSomething = ["books", "homeworks", "pencils", "pens"];
       return {
         something: arrSomething[genNumbers(arrSomething.length)],
@@ -16269,7 +16378,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 5) {
+    if (setting == 8) {
       let A = (genNumbers(18) + 1) * 5;
       return {
         varA: A,
@@ -18891,7 +19000,7 @@ function buttonLevelSetting() {
       level = "calFive";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Ratio: Repeated Identity\n5. Percentage: Repeated Identity"
+        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Ratio: Repeated Identity\n8. Percentage: Repeated Identity"
       );
       document.querySelector("#user-input").setAttribute("type", "text");
       // displayProblem.style.fontSize = "18px";
