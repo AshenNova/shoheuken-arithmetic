@@ -11529,11 +11529,11 @@ function handleSubmit(e) {
     }
 
     if (level == 4.21) {
-      numSquareLength = Math.floor(p.length / p.dimension);
-      numSquareBreadth = Math.floor(p.breadth / p.dimension);
-      numSquareHeight = Math.floor(p.height / p.dimension);
-      totalSquare = numSquareLength * numSquareBreadth;
-      totalCube = numSquareLength * numSquareBreadth * numSquareHeight;
+      const numSquareLength = Math.floor(p.length / p.dimension);
+      const numSquareBreadth = Math.floor(p.breadth / p.dimension);
+      const numSquareHeight = Math.floor(p.height / p.dimension);
+      const totalSquare = numSquareLength * numSquareBreadth;
+      const totalCube = numSquareLength * numSquareBreadth * numSquareHeight;
       if (
         difficulty == 0 ||
         difficulty == 1 ||
