@@ -7595,6 +7595,7 @@ function updateProblems() {
   }
 
   if (level == "calFour") {
+    console.log(setting);
     // WORKING DISPLAY
     if (setting == 4) {
       wholeNumberContainer.classList.add("hidden");
@@ -7603,8 +7604,8 @@ function updateProblems() {
     }
 
     // NORMAL DISPLAY
-    let normalArr = [1, 2, 3, 7, 8, 9, 10, 11, 12, 13, 14];
-    if (normalArr.includes(setting)) {
+  
+    if ([1, 2, 3, 7, 8, 9, 10, 11, 12, 13, 14].includes(setting * 1)) {
       displayProblem.style.fontSize = "20px";
       wholeNumberContainer.classList.remove("hidden");
       fractionsContainerTwo.classList.add("hidden");
