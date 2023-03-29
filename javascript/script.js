@@ -7604,7 +7604,7 @@ function updateProblems() {
     }
 
     // NORMAL DISPLAY
-  
+
     if ([1, 2, 3, 7, 8, 9, 10, 11, 12, 13, 14].includes(setting * 1)) {
       displayProblem.style.fontSize = "20px";
       wholeNumberContainer.classList.remove("hidden");
@@ -7937,7 +7937,13 @@ function updateProblems() {
       // END DISPLAY
     }
     // NORMAL DISPLAY
-    if (setting == 4 || setting == 5 || setting == 7 || setting == 8) {
+    if (
+      setting == 4 ||
+      setting == 5 ||
+      setting == 6 ||
+      setting == 7 ||
+      setting == 8
+    ) {
       displayProblem.style.textAlign = "left";
       displayProblem.style.fontSize = "18px";
       wholeNumberContainer.classList.remove("hidden");
@@ -8135,9 +8141,39 @@ function updateProblems() {
       // return console.log("test");
       [p.numA, p.denoA] = simplify(p.numA, p.denoA);
       [p.numB, p.denoB] = simplify(p.numB, p.denoB);
-      displayProblem.innerHTML = `
+      if (p.version == 1) {
+        displayProblem.innerHTML = `
       ${p.numA}/${p.denoA} of A is equal to ${p.numB}/${p.denoB} of B.</p>
       What is the ratio of A : B?
+      `;
+      }
+      if (p.version == 2) {
+        displayProblem.innerHTML = `
+      ${p.numA}/${p.denoA} of A are ${p.colors}.</p>
+      ${p.numB}/${p.denoB} of B are ${p.colors}.</p>
+      A and B have the same number of ${p.colors}.</p>
+      What is the ratio of A : B?
+      `;
+      }
+      if (p.version == 3) {
+        displayProblem.innerHTML = `
+        ${p.numA}/${p.denoA} of A were removed.</p>
+        ${p.numB}/${p.denoB} of B were removed.</p>
+        A and B has the same amount left.</p>
+        What is the ratio of A : B at first?
+        `;
+      }
+    }
+    if (setting == 6) {
+      [p.numA, p.denoA] = simplify(p.numA, p.denoA);
+      [p.numB, p.denoB] = simplify(p.numB, p.denoB);
+      displayProblem.innerHTML = `
+      A and B are the same.</p>
+      ${p.numA}/${p.denoA} of A was removed.</p>
+      ${p.numB}/${p.denoB} of B was removed.</p>
+      What fraction of the total ${
+        p.choice == "left" ? "is left" : "was removed"
+      }? 
       `;
     }
 
@@ -12629,12 +12665,37 @@ function handleSubmit(e) {
         correctAnswer = `${num}/${deno}`;
       }
       if (setting == 5) {
-        const commonNum = commonDeno(p.numA, p.numB);
-        const multiOne = commonNum / p.numA;
-        const multiTwo = commonNum / p.numB;
-        correctAnswer = `${p.denoA * multiOne}:${p.denoB * multiTwo}`;
+        if (p.version == 1 || p.version == 2) {
+          const commonNum = commonDeno(p.numA, p.numB);
+          const multiOne = commonNum / p.numA;
+          const multiTwo = commonNum / p.numB;
+          correctAnswer = `${p.denoA * multiOne}:${p.denoB * multiTwo}`;
+        }
+        if (p.version == 3) {
+          const otherNumA = p.denoA - p.numA;
+          const otherNumB = p.denoB - p.numB;
+          const commonNum = commonDeno(otherNumA, otherNumB);
+          const multiOne = commonNum / otherNumA;
+          const multiTwo = commonNum / otherNumB;
+          correctAnswer = `${p.denoA * multiOne}:${p.denoB * multiTwo}`;
+        }
       }
-
+      if (setting == 6) {
+        const deno = commonDeno(p.denoA, p.denoB);
+        const multiOne = deno / p.denoA;
+        const multiTwo = deno / p.denoB;
+        let removed = p.numA * multiOne + p.numB * multiTwo;
+        let left = deno * 2 - removed;
+        let total = deno * 2;
+        if (p.choice == "removed") {
+          [removed, total] = simplify(removed, total);
+          correctAnswer = `${removed}/${total}`;
+        }
+        if (p.choice == "left") {
+          [left, total] = simplify(left, total);
+          correctAnswer = `${left}/${total}`;
+        }
+      }
       if (setting == 7) {
         correctAnswer = `${calArrQns[5]}:${calArrQns[6]}:${calArrQns[8]}`;
       }
@@ -16279,7 +16340,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(5, calArr, setting, 99);
+    setting = calArrAll(8, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -16355,6 +16416,24 @@ function genProblems() {
         denoB: B,
         numA: ANum,
         numB: BNum,
+        version: [3, 1, 2, 3][genNumbers(1)],
+        colors: ["red", "blue", "green", "yellow", "pink", "blue", "orange"][
+          genNumbers(7)
+        ],
+        optionTwo: ["left", "removed"][genNumbers(2)],
+      };
+    }
+    // FRACTIONS: UNLIKE FRACTIONS WITH PERMISSION
+
+    if (setting == 6) {
+      const A = genNumbers(9) + 2;
+      const B = genNumbers(9) + 2;
+      return {
+        numA: genNumbers(A - 1) + 1,
+        denoA: A,
+        numB: genNumbers(B - 1) + 1,
+        denoB: B,
+        choice: ["left", "removed"][genNumbers(2)],
       };
     }
     //repeated identity [Ratio]
