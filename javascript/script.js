@@ -8141,9 +8141,12 @@ function updateProblems() {
       // return console.log("test");
       [p.numA, p.denoA] = simplify(p.numA, p.denoA);
       [p.numB, p.denoB] = simplify(p.numB, p.denoB);
+      if (p.numA == p.numB && p.denoA == p.denoB) p.denoB += 1;
       if (p.version == 1) {
         displayProblem.innerHTML = `
-      ${p.numA}/${p.denoA} of A is equal to ${p.numB}/${p.denoB} of B.</p>
+      ${p.numA}/${p.denoA} of A is ${
+          genNumbers(2) == 0 ? "the same as" : "equal to"
+        } ${p.numB}/${p.denoB} of B.</p>
       What is the ratio of A : B?
       `;
       }
@@ -8157,9 +8160,11 @@ function updateProblems() {
       }
       if (p.version == 3) {
         displayProblem.innerHTML = `
-        ${p.numA}/${p.denoA} of A were removed.</p>
-        ${p.numB}/${p.denoB} of B were removed.</p>
-        A and B has the same amount left.</p>
+        ${p.numA}/${p.denoA} of A were ${p.choice}.</p>
+        ${p.numB}/${p.denoB} of B were ${p.choice}.</p>
+        A and B has the same amount ${
+          p.choice == "left" ? "removed" : "left"
+        }.</p>
         What is the ratio of A : B at first?
         `;
       }
@@ -12669,7 +12674,10 @@ function handleSubmit(e) {
           const commonNum = commonDeno(p.numA, p.numB);
           const multiOne = commonNum / p.numA;
           const multiTwo = commonNum / p.numB;
-          correctAnswer = `${p.denoA * multiOne}:${p.denoB * multiTwo}`;
+          let unitA = p.denoA * multiOne;
+          let unitB = p.denoB * multiTwo;
+          [unitA, unitB] = simplify(unitA, unitB);
+          correctAnswer = `${unitA}:${unitB}`;
         }
         if (p.version == 3) {
           const otherNumA = p.denoA - p.numA;
@@ -16416,11 +16424,11 @@ function genProblems() {
         denoB: B,
         numA: ANum,
         numB: BNum,
-        version: [3, 1, 2, 3][genNumbers(1)],
+        version: [1, 2, 3][genNumbers(3)],
         colors: ["red", "blue", "green", "yellow", "pink", "blue", "orange"][
           genNumbers(7)
         ],
-        optionTwo: ["left", "removed"][genNumbers(2)],
+        choice: ["left", "removed"][genNumbers(2)],
       };
     }
     // FRACTIONS: UNLIKE FRACTIONS WITH PERMISSION
