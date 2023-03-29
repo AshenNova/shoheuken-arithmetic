@@ -7934,6 +7934,7 @@ function updateProblems() {
       fractionsContainer.classList.add("hidden");
       fractionsContainerTwo.classList.remove("hidden");
       workingContainer.classList.add("hidden");
+      wholeNumberContainer.classList.add("hidden");
       // END DISPLAY
     }
     // NORMAL DISPLAY
