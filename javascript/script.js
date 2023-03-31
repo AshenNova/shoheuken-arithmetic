@@ -8025,7 +8025,7 @@ function updateProblems() {
       fractionsContainerTwo.classList.add("hidden");
       fractionsContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
-      wholeNumberContainer.classList.add("hidden")
+      wholeNumberContainer.classList.add("hidden");
       const common = genNumbers(2);
       if (common == 1) {
         console.log("common");
@@ -8278,7 +8278,7 @@ function updateProblems() {
         lineOne = `A is ${p.varA}% of B.`;
         tempArr.push(p.varA, 100);
       } else {
-        lineOne = `A is ${p.varA}% of B and C.`;
+        lineOne = `A is ${p.varA}% of A and B.`;
         tempArr.push(p.varA, 100 - p.varA);
       }
       // console.log(`A: ${p.varA}, B: ${tempArr[1]}`);
