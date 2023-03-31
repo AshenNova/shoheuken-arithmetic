@@ -577,13 +577,18 @@ function resetStuff() {
   console.log("reset button activated");
 }
 
-function calArrAll(max, arr, setting, maxSetting) {
+function calArrAll(max, arr, setting, maxSetting, level) {
   console.log(maxSetting);
   if (setting == maxSetting || state.global == 1) {
     state.global = 1;
 
     if (!arr.length) {
-      for (let i = 1; i < max + 1; i++) {
+      let min = 1;
+      console.log(level);
+      if (level == "calOne" || level == "calTwo" || level == "calThree") {
+        min = 3;
+      }
+      for (let i = min; i < max + 1; i++) {
         arr.push(i);
       }
     }
@@ -7275,7 +7280,8 @@ function updateProblems() {
       setting == 8 ||
       setting == 10 ||
       setting == 11 ||
-      setting == 13
+      setting == 13 ||
+      setting == 14
     ) {
       displayProblem.style.fontSize = "24px";
       wholeNumberContainer.classList.remove("hidden");
@@ -7591,6 +7597,26 @@ function updateProblems() {
       }
       arrDisplay = arrDisplay.join(" ");
       displayProblem.textContent = `${arrDisplay}`;
+    }
+
+    if (setting == 14) {
+      displayProblem.style.fontSize = "18px";
+      displayProblem.style.textAlign = "left";
+      p.num = p.quotient * p.divisor + p.remainder;
+      const version = genNumbers(2);
+      if (version == 0) {
+        displayProblem.innerHTML = `
+      A number when divided by ${p.divisor}, returns ${p.quotient} as its quotient with a remainder of ${p.remainder}.</p>
+      What is the original number?</p>
+      
+      `;
+      }
+      if (version == 1) {
+        displayProblem.innerHTML = `
+        A number has a quotient of ${p.quotient} and has ${p.remainder} as its remainder when divided by ${p.divisor}.</p>
+        What is the original number?
+        `;
+      }
     }
   }
 
@@ -7999,6 +8025,7 @@ function updateProblems() {
       fractionsContainerTwo.classList.add("hidden");
       fractionsContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
+      wholeNumberContainer.classList.add("hidden")
       const common = genNumbers(2);
       if (common == 1) {
         console.log("common");
@@ -12469,6 +12496,9 @@ function handleSubmit(e) {
           correctAnswer = correctAnswer * p.sets;
         }
       }
+      if (setting == 14) {
+        correctAnswer = p.num;
+      }
       skipGlobalUpdateProblem = 0;
     }
 
@@ -13909,6 +13939,16 @@ function handleSubmit(e) {
         "heuFive",
         "heuFiveb",
       ];
+
+      // CALCULATIONS
+
+      if (level == "calThree") {
+        if (setting == 14) {
+          displayProblem.style.fontSize = "revert";
+          displayProblem.style.textAlign = "revert";
+        }
+      }
+
       if (removeHelpMe.includes(level)) helpMe.textContent = "";
 
       console.log("new questions generated");
@@ -14172,6 +14212,7 @@ function handleSubmit(e) {
         "heuFive",
         "heuFiveb",
       ];
+
       // HEURISTICS
       if (allHeuArray.includes(level)) {
         console.log(`Heurisics: ${level} incorrect.`);
@@ -15926,7 +15967,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(8, calArr);
     // }
-    setting = calArrAll(8, calArr, setting, 99);
+    setting = calArrAll(8, calArr, setting, 99, level);
     setting = checkRange(setting, calArr);
     console.log(setting);
     if (setting == 1) {
@@ -16017,7 +16058,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(8, calArr);
     // }
-    setting = calArrAll(8, calArr, setting, 99);
+    setting = calArrAll(8, calArr, setting, 99, level);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let hundreds = genNumbers(9) + 1;
@@ -16108,7 +16149,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(13, calArr, setting, 99);
+    setting = calArrAll(14, calArr, setting, 99, level);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let thousands = genNumbers(9) + 1;
@@ -16228,6 +16269,16 @@ function genProblems() {
         numTwo: sum - genNumOne,
         version: undefined,
         blank: genNumbers(3),
+      };
+    }
+
+    if (setting == 14) {
+      const gen_divisor = genNumbers(8) + 2;
+      return {
+        divisor: gen_divisor,
+        quotient: genNumbers(989) + 10,
+        remainder: genNumbers(gen_divisor - 1) + 1,
+        num: undefined,
       };
     }
   }
@@ -19070,7 +19121,7 @@ function buttonLevelSetting() {
       level = "calThree";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Working: Long Division ( No remainder )\n11. Working: Long Division ( Remainder )\n12. Working: Multiplication ( Single Blank )\n13. Multiplication in sets"
+        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Working: Long Division ( No remainder )\n11. Working: Long Division ( Remainder )\n12. Working: Multiplication ( Single Blank )\n13. Multiplication in sets\n14. Long Division: Simple Statement"
       );
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
