@@ -13860,6 +13860,7 @@ function handleSubmit(e) {
       state.numSix++;
       arr.length = 0;
       arr2.length = 0;
+      calArrQns.length = 0;
       if (level == 4.18) {
         arr2 = ["B", "C", "F", "I", "H", "G", "D", "A"];
       }
@@ -19081,7 +19082,9 @@ function buttonLevelSetting() {
         "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Fractions: Addition: Mixed Fractions\n6. Fractions: Subtraction: Mixed Fractions\n7. Decimals: Addition\n8. Decimals: Subtraction\n9. Decimals: Multiplication (Single)\n10. Decimals: Multiplication (Double)\n11. Decimals: Division \n12. Fractions to Decimal (Limit)\n13. Decimals: Division and Multiplication with splitting\n14. Multiplication in Sets"
       );
       if (
-        ![1, 2, 3, 4, 5, 6, 7, 8, 9, , 10, 11, 12, 13, 14, 99].includes(setting)
+        ![1, 2, 3, 4, 5, 6, 7, 8, 9, , 10, 11, 12, 13, 14, 99].includes(
+          setting * 1
+        )
       )
         setting = 99;
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -19095,7 +19098,7 @@ function buttonLevelSetting() {
       setting = prompt(
         "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Ratio: Repeated Identity\n8. Percentage: Repeated Identity"
       );
-      if (![1, 2, 3, 4, 5, 6, 7, 8, 9, 99].includes(setting)) setting = 99;
+      if (![1, 2, 3, 4, 5, 6, 7, 8, 9, 99].includes(setting * 1)) setting = 99;
       console.log(setting);
       document.querySelector("#user-input").setAttribute("type", "text");
       // displayProblem.style.fontSize = "18px";
