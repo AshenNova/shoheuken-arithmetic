@@ -7497,7 +7497,7 @@ function updateProblems() {
 
     if (setting == 11) {
       let num = p.multiplier * p.divisor + p.remainder;
-      if (p.remainder == 0) return updateCalc;
+      if (p.remainder == 0) return updateCalc();
       displayProblem.innerHTML = `${num} ÷ ${p.divisor} = ?`;
     }
     if (setting == 12) {
