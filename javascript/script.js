@@ -7977,7 +7977,8 @@ function updateProblems() {
       setting == 5 ||
       setting == 6 ||
       setting == 7 ||
-      setting == 8
+      setting == 8 ||
+      setting == 9
     ) {
       displayProblem.style.textAlign = "left";
       displayProblem.style.fontSize = "18px";
@@ -8279,7 +8280,33 @@ function updateProblems() {
       ${lineThree}
       `;
     }
+    //  REPEATED GROUP RATIO
     if (setting == 8) {
+      if (p.firstScene == "total" && p.secondScene == "total") {
+        let total = p.varA + p.varB + p.varC;
+        let firstTotal = undefined;
+        let secondTotal = undefined;
+        [p.varA, firstTotal] = simplify(p.varA, total);
+        [p.varB, secondTotal] = simplify(p.varB, total);
+
+        if (firstTotal == secondTotal) return updateCalc();
+        console.log(`Scene One = ${p.varA}, ${p.varB}, ${p.varC}`);
+        // p.answer = [finalA, finalB, finalC];
+
+        displayProblem.innerHTML = `
+        A is ${p.varA} : ${
+          p.firstScene == "B and C" ? p.varB + p.varC : firstTotal
+        } of ${p.firstScene}.</p>
+        B is ${p.varB} : ${p.secondScene == "C" ? p.varC : secondTotal} of ${
+          p.secondScene
+        }.</p>
+        What is the ratio of A : B : C?</p>
+        `;
+      }
+    }
+
+    // REPEATED IDENTITY PERCENTAGE
+    if (setting == 9) {
       let lineOne = undefined;
       let tempArr = [];
       if (p.choice == "B") {
@@ -12746,8 +12773,15 @@ function handleSubmit(e) {
       if (setting == 7) {
         correctAnswer = `${calArrQns[5]}:${calArrQns[6]}:${calArrQns[8]}`;
       }
-      if (setting == 8)
+      if (setting == 8) {
+        if (p.firstScene == "total" && p.secondScene == "total") {
+          correctAnswer = `${p.varA}:${p.varB}:${p.varC}`;
+        }
+      }
+
+      if (setting == 9)
         correctAnswer = `${p.answer[0]}:${p.answer[1]}:${p.answer[2]}`;
+
       skipGlobalUpdateProblem = 0;
     }
     // heuristics Answer
@@ -16410,7 +16444,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(8, calArr, setting, 99);
+    setting = calArrAll(9, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -16527,8 +16561,21 @@ function genProblems() {
         secondSentence: ["unit", "ratio"][genNumbers(2)],
       };
     }
-
+    // REPEATED GROUP RATIO
     if (setting == 8) {
+      let A = genNumbers(10) + 1;
+      return {
+        varA: A,
+        firstScene: ["total", "B and C", "total"][genNumbers(0)],
+        varB: genNumbers(9) + 1,
+        secondScene: ["total", "C", "total"][genNumbers(0)],
+        varC: genNumbers(9) + 1,
+        answer: [],
+      };
+    }
+
+    // REPEATED IDENTITY PERCENTAGE
+    if (setting == 9) {
       let A = (genNumbers(18) + 1) * 5;
       return {
         varA: A,
@@ -19156,7 +19203,7 @@ function buttonLevelSetting() {
       level = "calFive";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Ratio: Repeated Identity\n8. Percentage: Repeated Identity"
+        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Ratio: Repeated Identity\n8. Ratio: Repeated Group\n9. Percentage: Repeated Identity"
       );
       if (![1, 2, 3, 4, 5, 6, 7, 8, 9, 99].includes(setting * 1)) setting = 99;
       console.log(setting);
