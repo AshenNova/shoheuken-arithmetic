@@ -548,10 +548,11 @@ function resetStuff() {
   accumulatedScore = 0;
   heuArr.length = 0;
   global = 0;
-  calArr = [];
-  calArrQns = [];
-  calRange = [];
-  setting = "";
+  calArr.length = 0;
+  calArrQns.length = 0;
+  calRange.length = [];
+  setting = null;
+  console.log(calArr, calRange, setting);
 
   gold = 0;
   silver = 0;
@@ -2760,11 +2761,11 @@ function updateProblems() {
     p.sumOfNum = accDecimal(p.wholeNum + p.deciOne + p.deciTwo + p.deciThree);
 
     if (setting == 1) {
-      displayProblem.textContent = `${p.sumOfNum} ${p.firstUnit} = ? ${p.secondUnit} `;
+      displayProblem.textContent = `${p.sumOfNum} ${p.firstUnit}  = ? ${p.secondUnit} `;
       if (p.firstUnit == "$") {
-        displayProblem.textContent = `${p.firstUnit.toFixed(2)} ${
-          p.sumOfNum
-        } = ? ${p.secondUnit} `;
+        displayProblem.textContent = `${p.firstUnit} ${p.sumOfNum.toFixed(
+          2
+        )} = ? ${p.secondUnit} `;
       }
     }
     if (setting == 2) {
@@ -7397,7 +7398,14 @@ function updateProblems() {
         if (p.numOne - p.numTwo < 0 || p.numTwo > p.numOne) {
           return updateCalc();
         }
+        let numOneArr = p.rowOne.split("");
+        let numTwoArr = p.rowTwo.split("");
+        const indexOne = numOneArr.indexOf("?");
+        const indexTwo = numTwoArr.indexOf("?");
+        console.log(numOneArr, numTwoArr, indexOne, indexTwo);
         workingAnswer.textContent = p.numOne - p.numTwo;
+        if (indexOne == indexTwo && workingAnswer.split("")[indexTwo] == 0)
+          return updateCalc();
       }
       if (p.operator == "+") {
         if (p.numOne + p.numTwo > 10000) {
@@ -13955,6 +13963,7 @@ function handleSubmit(e) {
       reviewAnswer.classList.add("hidden");
       updateProblems();
     } else {
+      // WHEN INCORRECT
       console.log("incorrect");
 
       state.mistake++;
@@ -16204,7 +16213,7 @@ function genProblems() {
     }
     if (setting == 5) {
       return {
-        operator: ["+", "-"][genNumbers(2)],
+        operator: ["-", "+", "-"][genNumbers(0)],
         numOne: genNumbers(8999) + 1000,
         numTwo: genNumbers(8999) + 1000,
         value: undefined,
