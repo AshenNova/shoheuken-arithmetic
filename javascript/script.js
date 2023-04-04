@@ -8220,6 +8220,47 @@ function updateProblems() {
     }
 
     if (setting == 7) {
+      [p.nume, p.deno] = simplify(p.nume, p.deno);
+      [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
+      const commonNumber = commonDeno(p.deno - p.nume, p.numeTwo);
+      const multiOne = commonNumber / (p.deno - p.nume);
+      const multiTwo = commonNumber / p.numeTwo;
+      const newDenoOne = p.deno * multiOne;
+      const newDenoTwo = p.denoTwo * multiTwo;
+      console.log(commonNumber, multiOne, multiTwo, newDenoOne, newDenoTwo);
+      if (newDenoOne >= newDenoTwo) return updateCalc();
+      p.numOne = (genNumbers(10) + 2) * (newDenoTwo - newDenoOne);
+
+      displayProblem.innerHTML = `
+      ${p.person} ${genNumbers(2) == 0 ? "used" : "spent"} $${
+        p.numOne
+      } on something.</p>
+      He then ${genNumbers(2) == 0 ? "used" : "spent"} another ${p.nume}/${
+        p.deno
+      } of ${genNumbers(2) == 0 ? "the remainder" : "the amount left"} on ${
+        p.somethingElse
+      }.</p>
+      He is left with ${p.numeTwo}/${p.denoTwo} of ${
+        genNumbers(2) == 0 ? "what he has at first" : "the total"
+      }.</p>
+      `;
+      if (p.version == 0) {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          "How much does he have at first?"
+        );
+        p.answer = (p.numOne / (newDenoTwo - newDenoOne)) * newDenoTwo;
+      }
+      if (p.version == 1) {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `How much did he spend on ${p.somethingElse}?`
+        );
+        p.answer = (p.numOne / (newDenoTwo - newDenoOne)) * (p.nume * multiOne);
+      }
+    }
+
+    if (setting == 8) {
       let lineOne = "";
       if (p.firstSentence == "unit") {
         p.unitTwo = 1;
@@ -8281,7 +8322,7 @@ function updateProblems() {
       `;
     }
     //  REPEATED GROUP RATIO
-    if (setting == 8) {
+    if (setting == 9) {
       let total = p.varA + p.varB + p.varC;
       let firstTotal = undefined;
       let secondTotal = undefined;
@@ -8337,7 +8378,7 @@ function updateProblems() {
     }
 
     // REPEATED IDENTITY PERCENTAGE
-    if (setting == 9) {
+    if (setting == 10) {
       let lineOne = undefined;
       let tempArr = [];
       if (p.choice == "B") {
@@ -12802,15 +12843,18 @@ function handleSubmit(e) {
         }
       }
       if (setting == 7) {
-        correctAnswer = `${calArrQns[5]}:${calArrQns[6]}:${calArrQns[8]}`;
+        correctAnswer = p.answer;
       }
       if (setting == 8) {
+        correctAnswer = `${calArrQns[5]}:${calArrQns[6]}:${calArrQns[8]}`;
+      }
+      if (setting == 9) {
         // if (p.firstScene == "total" && p.secondScene == "total") {
         correctAnswer = `${p.answer[0]}:${p.answer[1]}:${p.answer[2]}`;
         // }
       }
 
-      if (setting == 9)
+      if (setting == 10)
         correctAnswer = `${p.answer[0]}:${p.answer[1]}:${p.answer[2]}`;
 
       skipGlobalUpdateProblem = 0;
@@ -16475,7 +16519,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(9, calArr, setting, 99);
+    setting = calArrAll(10, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -16571,8 +16615,25 @@ function genProblems() {
         choice: ["left", "removed"][genNumbers(2)],
       };
     }
-    //repeated identity [Ratio]
+    // IDENTICAL NUMERATOR TYPE 2
     if (setting == 7) {
+      const denominator = genNumbers(6) + 2;
+      const numerator = genNumbers(denominator - 1) + 1;
+      const denominatorTwo = genNumbers(10) + 2;
+      return {
+        person: ["Jonathan", "Javen", "Jeremy"][genNumbers(3)],
+        deno: denominator,
+        nume: numerator,
+        numOne: undefined,
+        denoTwo: denominatorTwo,
+        numeTwo: genNumbers(denominatorTwo - 1) + 1,
+        answer: undefined,
+        version: [1, 0][genNumbers(2)],
+        somethingElse: ["toys", "sweets", "games", "pens"][genNumbers(4)],
+      };
+    }
+    //repeated identity [Ratio]
+    if (setting == 8) {
       const arrSomething = ["books", "homeworks", "pencils", "pens"];
       return {
         something: arrSomething[genNumbers(arrSomething.length)],
@@ -16593,7 +16654,7 @@ function genProblems() {
       };
     }
     // REPEATED GROUP RATIO
-    if (setting == 8) {
+    if (setting == 9) {
       let A = genNumbers(10) + 1;
       return {
         varA: A,
@@ -16606,7 +16667,7 @@ function genProblems() {
     }
 
     // REPEATED IDENTITY PERCENTAGE
-    if (setting == 9) {
+    if (setting == 10) {
       let A = (genNumbers(18) + 1) * 5;
       return {
         varA: A,
@@ -19234,7 +19295,7 @@ function buttonLevelSetting() {
       level = "calFive";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Ratio: Repeated Identity\n8. Ratio: Repeated Group\n9. Percentage: Repeated Identity"
+        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Fractions: Identical Numerator (Type 2)\n\n8. Ratio: Repeated Identity\n9. Ratio: Repeated Group\n10. Percentage: Repeated Identity"
       );
       if (![1, 2, 3, 4, 5, 6, 7, 8, 9, 99].includes(setting * 1)) setting = 99;
       console.log(setting);
