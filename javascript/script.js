@@ -17694,9 +17694,9 @@ function genProblems() {
       };
     }
     if (setting == 4) {
-      const gen_denoOne = genNumbers(8) + 2;
-      const gen_denoTwo = genNumbers(8) + 2;
-      const gen_denoThree = genNumbers(8) + 2;
+      const gen_denoOne = genNumbers(4) + 2;
+      const gen_denoTwo = genNumbers(4) + 2;
+      const gen_denoThree = genNumbers(4) + 2;
       const situation = ["+", "-"][genNumbers(2)];
       return {
         denoOne: gen_denoOne,
