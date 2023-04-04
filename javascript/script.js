@@ -10328,6 +10328,65 @@ function updateProblems() {
       ${lineFour}
       `;
     }
+    if (setting == 4) {
+      [p.numeOne, p.denoOne] = simplify(p.numeOne, p.denoOne);
+      [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
+      [p.numeThree, p.denoThree] = simplify(p.numeThree, p.denoThree);
+      if (
+        p.situationThree == "+" &&
+        p.situationTwo == "+" &&
+        p.situationOne == "+"
+      ) {
+        if (p.numLast < p.numThree) return updateCalc();
+        const third = p.numLast + p.numThree;
+        if (third % (p.denoThree - p.numeThree) != 0) return updateCalc();
+        const second =
+          (third / (p.denoThree - p.numeThree)) * p.denoThree + p.numTwo;
+        if (second % (p.denoTwo - p.numeTwo) != 0) return updateCalc();
+        const first = (second / (p.denoTwo - p.numeTwo)) * p.denoTwo + p.numOne;
+        if (first % (p.denoOne - p.numeOne) != 0) return updateCalc();
+        p.answer = (first / (p.denoOne - p.numeOne)) * p.denoOne;
+        console.log(third, second, first, p.answer);
+      }
+      if (
+        p.situationThree == "-" &&
+        p.situationTwo == "-" &&
+        p.situationOne == "-"
+      ) {
+        if (p.numLast < p.numThree) return updateCalc();
+        const third = p.numLast - p.numThree;
+        if (third % (p.denoThree - p.numeThree) != 0) return updateCalc();
+        const second =
+          (third / (p.denoThree - p.numeThree)) * p.denoThree - p.numTwo;
+        if (second % (p.denoTwo - p.numeTwo) != 0 || second <= 0)
+          return updateCalc();
+        const first = (second / (p.denoTwo - p.numeTwo)) * p.denoTwo - p.numOne;
+        if (first % (p.denoOne - p.numeOne) != 0 || third <= 0)
+          return updateCalc();
+        p.answer = (first / (p.denoOne - p.numeOne)) * p.denoOne;
+        // console.log(third, second, first, p.answer);
+      }
+      displayProblem.innerHTML = `
+      Person A took ${p.numeOne}/${p.denoOne} ${
+        p.situationOne == "+"
+          ? `and another $${p.numOne}`
+          : `and put back $${p.numOne}`
+      } from the total.</p>
+      Person B took ${p.numeTwo}/${p.denoTwo} ${
+        p.situationTwo == "+"
+          ? `and another $${p.numTwo}`
+          : `and put back $${p.numTwo}`
+      } from the remainder.</p>
+      Person C took ${p.numeThree}/${p.denoThree} ${
+        p.situationThree == "+"
+          ? `and another $${p.numThree}`
+          : `and put back $${p.numThree}`
+      } from the remainder.</p>
+      There was $${p.numLast} left.</p>
+      What was the total at first?</p>
+      
+      `;
+    }
   }
 
   // MULTIPLES
@@ -13955,6 +14014,9 @@ function handleSubmit(e) {
         if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
         if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
         if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
+      }
+      if (setting == 4) {
+        correctAnswer = p.answer;
       }
     }
     if (mulLevel == "multiples") {
@@ -17631,6 +17693,28 @@ function genProblems() {
         question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
       };
     }
+    if (setting == 4) {
+      const gen_denoOne = genNumbers(8) + 2;
+      const gen_denoTwo = genNumbers(8) + 2;
+      const gen_denoThree = genNumbers(8) + 2;
+      const situation = ["+", "-"][genNumbers(2)];
+      return {
+        denoOne: gen_denoOne,
+        situationOne: situation,
+        denoTwo: gen_denoTwo,
+        situationTwo: situation,
+        denoThree: gen_denoThree,
+        situationThree: situation,
+        numeOne: genNumbers(gen_denoOne - 1) + 1,
+        numeTwo: genNumbers(gen_denoTwo - 1) + 1,
+        numeThree: genNumbers(gen_denoThree - 1) + 1,
+        numOne: genNumbers(899) + 100,
+        numTwo: genNumbers(899) + 100,
+        numThree: genNumbers(899) + 100,
+        numLast: genNumbers(899) + 100,
+        answer: undefined,
+      };
+    }
   }
 
   if (level == "1 times table") {
@@ -19414,9 +19498,8 @@ function buttonLevelSetting() {
     case "Heu.5b":
       level = "heuFiveb";
       setting = prompt(
-        "What level?\n1. Unchanged Object\n2. Unchanged Total\n3. Unchanged Difference\n\n9. All"
+        "What level?\n1. Ratio: Unchanged Object\n2. Ratio: Unchanged Total\n3. Ratio: Unchanged Difference\n4. Fractions: Working Backwards (Type 1)\n\n9. All"
       );
-      range = 0;
       scoreNeeded = 3;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
