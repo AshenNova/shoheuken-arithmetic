@@ -8282,13 +8282,14 @@ function updateProblems() {
     }
     //  REPEATED GROUP RATIO
     if (setting == 8) {
+      let total = p.varA + p.varB + p.varC;
+      let firstTotal = undefined;
+      let secondTotal = undefined;
+      p.answer = [p.varA, p.varB, p.varC];
+
       if (p.firstScene == "total" && p.secondScene == "total") {
-        let total = p.varA + p.varB + p.varC;
-        let firstTotal = undefined;
-        let secondTotal = undefined;
         [p.varA, firstTotal] = simplify(p.varA, total);
         [p.varB, secondTotal] = simplify(p.varB, total);
-
         if (firstTotal == secondTotal) return updateCalc();
         console.log(`Scene One = ${p.varA}, ${p.varB}, ${p.varC}`);
         // p.answer = [finalA, finalB, finalC];
@@ -8296,10 +8297,40 @@ function updateProblems() {
         displayProblem.innerHTML = `
         A is ${p.varA} : ${
           p.firstScene == "B and C" ? p.varB + p.varC : firstTotal
-        } of ${p.firstScene}.</p>
-        B is ${p.varB} : ${p.secondScene == "C" ? p.varC : secondTotal} of ${
-          p.secondScene
-        }.</p>
+        } of the ${p.firstScene}.</p>
+        B is ${p.varB} : ${
+          p.secondScene == "C" ? p.varC : secondTotal
+        } of the ${p.secondScene}.</p>
+        What is the ratio of A : B : C?</p>
+        `;
+      }
+
+      if (p.firstScene == "B and C" && p.secondScene == "total") {
+        let sceneOne = p.varB + p.varC;
+        [p.varA, sceneOne] = simplify(p.varA, sceneOne);
+        [p.varB, secondTotal] = simplify(p.varB, total);
+        displayProblem.innerHTML = `
+        A is ${p.varA} : ${sceneOne} of ${p.firstScene}.</p>
+        B is ${p.varB} : ${secondTotal} of the ${p.secondScene}.</p>
+        What is the ratio of A : B : C?</p>
+        `;
+      }
+      if (p.firstScene == "B and C" && p.secondScene == "C") {
+        let sceneOne = p.varB + p.varC;
+        [p.varA, sceneOne] = simplify(p.varA, sceneOne);
+        [p.varB, p.varC] = simplify(p.varB, p.varC);
+        displayProblem.innerHTML = `
+        A is ${p.varA} : ${sceneOne} of ${p.firstScene}.</p>
+        B is ${p.varB} : ${p.varC} of ${p.secondScene}.</p>
+        What is the ratio of A : B : C?</p>
+        `;
+      }
+      if (p.firstScene == "total" && p.secondScene == "C") {
+        [p.varA, firstTotal] = simplify(p.varA, total);
+        [p.varB, p.varC] = simplify(p.varB, p.varC);
+        displayProblem.innerHTML = `
+        A is ${p.varA} : ${firstTotal} of the ${p.firstScene}.</p>
+        B is ${p.varB} : ${p.varC} of ${p.secondScene}.</p>
         What is the ratio of A : B : C?</p>
         `;
       }
@@ -12774,9 +12805,9 @@ function handleSubmit(e) {
         correctAnswer = `${calArrQns[5]}:${calArrQns[6]}:${calArrQns[8]}`;
       }
       if (setting == 8) {
-        if (p.firstScene == "total" && p.secondScene == "total") {
-          correctAnswer = `${p.varA}:${p.varB}:${p.varC}`;
-        }
+        // if (p.firstScene == "total" && p.secondScene == "total") {
+        correctAnswer = `${p.answer[0]}:${p.answer[1]}:${p.answer[2]}`;
+        // }
       }
 
       if (setting == 9)
@@ -16566,9 +16597,9 @@ function genProblems() {
       let A = genNumbers(10) + 1;
       return {
         varA: A,
-        firstScene: ["total", "B and C", "total"][genNumbers(0)],
+        firstScene: ["B and C", "total"][genNumbers(2)],
         varB: genNumbers(9) + 1,
-        secondScene: ["total", "C", "total"][genNumbers(0)],
+        secondScene: ["C", "total"][genNumbers(2)],
         varC: genNumbers(9) + 1,
         answer: [],
       };
