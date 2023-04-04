@@ -18650,6 +18650,7 @@ function buttonLevelSetting() {
     case "Level 4.10":
       level = 4.1;
       setting = prompt("1. Halfing\n2. Opposite\n\n9. All");
+      if (setting != 1 && setting != 2) setting = 9;
       scoreNeeded = 20;
       wholeNumberContainer.classList.add("hidden");
       fractionsContainer.classList.remove("hidden");
