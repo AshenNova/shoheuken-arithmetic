@@ -19375,7 +19375,10 @@ function buttonLevelSetting() {
       setting = prompt(
         "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Fractions: Identical Numerator (Type 2)\n\n8. Ratio: Repeated Identity\n9. Ratio: Repeated Group\n10. Percentage: Repeated Identity"
       );
-      if (![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 99].includes(setting * 1))
+      if (
+        ![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 99].includes(setting * 1) &&
+        !setting.split("").includes("-")
+      )
         setting = 99;
       console.log(setting);
       document.querySelector("#user-input").setAttribute("type", "text");
