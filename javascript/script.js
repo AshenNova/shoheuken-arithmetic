@@ -11,6 +11,7 @@ import {
   simplify,
   updateCalc,
   genUniqNum,
+  reverseCalculation,
 } from "./otherFunctions.js";
 // import { resetStuff } from "./reset.js";
 

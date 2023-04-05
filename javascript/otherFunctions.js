@@ -1,5 +1,18 @@
 import { updateProblems, genNumbers } from "./script.js";
 
+reverseCalculation = (method, numerator, denominator, value) => {
+  // Using the opposite numerator
+  if (method == 0) {
+    const newValue = (value / (denominator - numerator)) * denominator;
+    return newValue;
+  }
+  // Using the current numerator
+  if (method == 1) {
+    const newValue = (value / numerator) * denominator;
+    return newValue;
+  }
+};
+
 function swap(first, second) {
   return ([first, second] = [second, first]);
 }
@@ -92,4 +105,5 @@ export {
   commonFactors,
   genUniqNum,
   updateCalc,
+  reverseCalculation,
 };
