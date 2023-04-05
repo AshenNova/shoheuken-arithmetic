@@ -1,6 +1,6 @@
 import { updateProblems, genNumbers } from "./script.js";
 
-reverseCalculation = (method, numerator, denominator, value) => {
+const reverseCalculation = (method, numerator, denominator, value) => {
   // Using the opposite numerator
   if (method == 0) {
     const newValue = (value / (denominator - numerator)) * denominator;
