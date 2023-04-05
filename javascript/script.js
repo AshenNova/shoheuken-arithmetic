@@ -16759,7 +16759,7 @@ function genProblems() {
         answer: [],
       };
     }
-    if (setting == 11) {
+    if (setting == 10) {
       console.log("Unchanged Object");
       return {
         object: ["sweets", "toys", "books"][genNumbers(3)],
@@ -16773,10 +16773,10 @@ function genProblems() {
       };
     }
 
-    if (setting == 12) {
+    if (setting == 11) {
       console.log("Unchanged Total");
-      valueA = genNumbers(40) + 10;
-      valueB = genNumbers(40) + 10;
+      const valueA = genNumbers(40) + 10;
+      const valueB = genNumbers(40) + 10;
       return {
         object: ["sweets", "toys", "books"][genNumbers(3)],
         valueAFirst: valueA,
@@ -16791,10 +16791,10 @@ function genProblems() {
       };
     }
 
-    if (setting == 13) {
+    if (setting == 12) {
       console.log("Unchanged Difference");
-      valueA = genNumbers(40) + 10;
-      valueB = genNumbers(40) + 10;
+      const valueA = genNumbers(40) + 10;
+      const valueB = genNumbers(40) + 10;
       let minValue = 0;
       valueA > valueB ? (minValue = valueA) : (minValue = valueB);
       return {
