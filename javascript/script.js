@@ -10415,14 +10415,11 @@ function updateProblems() {
       if (four_A <= 0 || four_B <= 0 || four_C <= 0) return updateCalc();
       if (four_A % 1 != 0 || four_B % 1 != 0 || four_C % 1 != 0)
         return updateCalc();
-
-      console.log(each, each, each);
-      console.log(two_A, two_B, two_C);
-      console.log(three_A, three_B, three_C);
-      console.log(four_A, four_B, four_C);
-
+      p.answer = four_A;
       displayProblem.innerHTML = `
-      People A, B and C have a total of $${p.total} at first.</p>
+      People A, B and C have a total of $${p.total.toLocaleString(
+        "en-US"
+      )} at first.</p>
       A gave ${p.numeOne}/${p.denoOne} to B.</p>
       B then gave ${p.numeTwo}/${p.denoTwo} to C.</p>
       C then gave ${p.numeThree}/${p.denoThree} to A.</p>
@@ -14057,7 +14054,7 @@ function handleSubmit(e) {
     }
 
     if (level == "heuFiveb") {
-      if (setting == 1) {
+      if (setting == 1 || setting == 2) {
         correctAnswer = p.answer;
       }
     }
@@ -17768,6 +17765,7 @@ function genProblems() {
         numeTwo: genNumbers(gen_denoTwo - 1) + 1,
         numeThree: genNumbers(gen_denoThree - 1) + 1,
         total: (genNumbers(1000) + 99) * 3,
+        answer: undefined,
       };
     }
   }
