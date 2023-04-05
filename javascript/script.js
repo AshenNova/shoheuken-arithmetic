@@ -7972,7 +7972,7 @@ function updateProblems() {
       // END DISPLAY
     }
     // NORMAL DISPLAY
-    if ([4, 5, 6, 7, 8, 9, 10].includes(setting * 1)) {
+    if ([4, 5, 6, 7, 8, 9, 10, 11, 12, 13].includes(setting * 1)) {
       displayProblem.style.textAlign = "left";
       displayProblem.style.fontSize = "18px";
       wholeNumberContainer.classList.remove("hidden");
@@ -8369,9 +8369,316 @@ function updateProblems() {
         `;
       }
     }
-
-    // REPEATED IDENTITY PERCENTAGE
     if (setting == 10) {
+      let unitAF = "";
+      let unitBF = "";
+      let unitAE = "";
+      let unitBE = "";
+      [unitAF, unitBF] = simplify(p.valueAFirst, p.valueBFirst);
+      if (p.valueAFirst == unitAF || p.valueBFirst == unitBF) {
+        return updateCalc();
+      }
+      if (p.happensTo == "A") {
+        [unitAE, unitBE] = simplify(p.valueAEnd, p.valueBFirst);
+      }
+      if (p.happensTo == "B") {
+        [unitAE, unitBE] = simplify(p.valueAFirst, p.valueBEnd);
+      }
+      if (p.valueAEnd == unitAE || p.valueBEnd == unitBF) {
+        return updateCalc();
+      }
+      // LINE ONE
+      let lineOne = genNumbers(4);
+      if (lineOne == 0) {
+        lineOne = `The ratio of A : B is ${unitAF} : ${unitBF} at first.`;
+      }
+      if (lineOne == 1) {
+        lineOne = `A is ${unitAF}/${unitBF} of B at first.`;
+      }
+      if (lineOne == 2) {
+        lineOne = `The ratio of A to A and B is ${unitAF} : ${
+          unitAF + unitBF
+        } at first.`;
+      }
+      if (lineOne == 3) {
+        lineOne = ` A is ${unitAF}/${unitAF + unitBF} of the total at first.`;
+      }
+      // LINE TWO
+
+      let lineTwo = "";
+      let positive = ["received", "bought"][genNumbers(2)];
+      let negative = ["sold away", "gave away"][genNumbers(2)];
+
+      if (p.happensTo == "A") {
+        if (p.valueAEnd - p.valueAFirst == 0) {
+          return updateCalc();
+        }
+
+        if (p.valueAEnd - p.valueAFirst > 0) {
+          lineTwo = `A ${positive} another ${
+            Math.abs(p.valueAEnd - p.valueAFirst) * p.multiplier
+          } ${p.object}.`;
+        } else {
+          lineTwo = `A ${negative} ${
+            Math.abs(p.valueAEnd - p.valueAFirst) * p.multiplier
+          } ${p.object}.`;
+        }
+      }
+      if (p.happensTo == "B") {
+        if (p.valueBEnd - p.valueBFirst == 0) {
+          return updateCalc();
+        }
+        if (p.valueBEnd - p.valueBFirst > 0) {
+          lineTwo = `B ${positive} another ${
+            Math.abs(p.valueBEnd - p.valueBFirst) * p.multiplier
+          } ${p.object}.`;
+        } else {
+          lineTwo = `B ${negative} ${
+            Math.abs(p.valueBEnd - p.valueBFirst) * p.multiplier
+          } ${p.object}.`;
+        }
+      }
+
+      // LINE THREE
+      let lineThree = genNumbers(4);
+      if (lineThree == 0) {
+        lineThree = `The ratio of A : B in the end is ${unitAE} : ${unitBE}.`;
+      }
+      if (lineThree == 1) {
+        lineThree = `A became ${unitAE}/${unitBE} of B.`;
+      }
+      if (lineThree == 2) {
+        lineThree = `The ratio of A to the total is ${unitAE} : ${
+          unitAE + unitBE
+        } in the end.`;
+      }
+      if (lineThree == 3) {
+        lineThree = `A became ${unitAE}/${unitAE + unitBE} of the total.`;
+      }
+
+      //LINE FOUR
+      let lineFour = "";
+      console.log(p.situation, p.question);
+      if (p.happensTo == "A") {
+        if (p.question == "BF" || p.question == "BE") {
+          lineFour = "What is the value of B?";
+        }
+        if (p.question == "AF") {
+          lineFour = "What is A at first?";
+        }
+        if (p.question == "AE") {
+          lineFour = "What is A in the end?";
+        }
+      }
+      if (p.happensTo == "B") {
+        if (p.question == "AF" || p.question == "AE") {
+          lineFour = "What is the value of A?";
+        }
+        if (p.question == "BF") {
+          lineFour = "What is B at first?";
+        }
+        if (p.question == "BE") {
+          lineFour = "What is B in the end?";
+        }
+      }
+
+      displayProblem.innerHTML = `
+      ${lineOne}</p>
+      ${lineTwo}</p>
+      ${lineThree}</p>
+      ${lineFour}
+      `;
+    }
+
+    if (setting == 11) {
+      let unitAF = "";
+      let unitBF = "";
+      let unitAE = "";
+      let unitBE = "";
+
+      // LINE TWO
+      let happensTo = ["A", "A"][genNumbers(2)];
+      let lineTwo = "";
+      let direction = "";
+      // let direction = ["transferred", "received"][genNumbers(2)];
+      if (p.situationA == 0 || p.situationB == 0) {
+        return updateCalc();
+      }
+      if (happensTo == "A") {
+        if (p.situationA > 0) {
+          p.valueAEnd = p.valueAFirst + p.situationA;
+          p.valueBEnd = p.valueBFirst - p.situationA;
+          lineTwo = `A received another ${
+            Math.abs(p.situationA) * p.multiplier
+          } ${p.object} from B.`;
+        }
+        if (p.situationA < 0) {
+          p.valueAEnd = p.valueAFirst + p.situationA;
+          p.valueBEnd = p.valueBFirst - p.situationA;
+          lineTwo = `A transferred ${Math.abs(p.situationA) * p.multiplier} ${
+            p.object
+          } to B.`;
+        }
+      }
+      if (happensTo == "B") {
+        if (p.situationB > 0) {
+          p.valueAEnd = p.valueAFirst - p.situationB;
+          p.valueBEnd = p.valueBFirst + p.situationB;
+          lineTwo = `B received another ${
+            Math.abs(p.situationB) * p.multiplier
+          } ${p.object} from A.`;
+        }
+        if (p.situationB < 0) {
+          p.valueAEnd = p.valueAFirst - p.situationB;
+          p.valueBEnd = p.valueBFirst + p.situationB;
+          lineTwo = `B transferred ${Math.abs(p.situationB) * p.multiplier} ${
+            p.object
+          } to A.`;
+        }
+      }
+      if (p.valueAEnd == 0 || p.valueBEnd == 0) {
+        return updateCalc();
+      }
+      console.log(p.valueAFirst, p.valueBFirst, p.valueAEnd, p.valueBEnd);
+
+      // PREP
+      [unitAF, unitBF] = simplify(p.valueAFirst, p.valueBFirst);
+      [unitAE, unitBE] = simplify(p.valueAEnd, p.valueBEnd);
+      if (p.valueAFirst == unitAF || p.valueAEnd == unitAE) {
+        console.log("Values unable to be simplified");
+        return updateCalc();
+      }
+
+      // LINE ONE
+      let lineOne = genNumbers(4);
+      if (lineOne == 0) {
+        lineOne = `The ratio of A : B is ${unitAF} : ${unitBF} at first.`;
+      }
+      if (lineOne == 1) {
+        lineOne = ` A  is ${unitAF}/${unitBF} of B at first.`;
+      }
+      if (lineOne == 2) {
+        lineOne = ` A  is ${unitAF}/${unitAF + unitBF} of the total at first.`;
+      }
+      if (lineOne == 3) {
+        lineOne = `The ratio of A to the total is ${unitAF}:${
+          unitAF + unitBF
+        } at first.`;
+      }
+
+      // LINE THREE
+      let lineThree = genNumbers(2);
+      if (lineThree == 0) {
+        lineThree = `
+              The ratio of A : B in the end is ${unitAE} : ${unitBE}.`;
+      }
+      if (lineThree == 1) {
+        lineThree = `
+              A is ${unitAE}/${unitBE} of B in the end.`;
+      }
+
+      // LINE FOUR
+      let lineFour = "";
+      if (p.question == "AF")
+        lineFour = `How many ${p.object} does A have at first?`;
+      if (p.question == "BF")
+        lineFour = `How many ${p.object} does B have at first?`;
+      if (p.question == "AE")
+        lineFour = `How many ${p.object} does A have in the end?`;
+      if (p.question == "BE")
+        lineFour = `How many ${p.object} does B have in the end?`;
+
+      displayProblem.innerHTML = `
+      ${lineOne}</p>
+      ${lineTwo}</p>
+      ${lineThree}</p>
+      ${lineFour}`;
+    }
+    if (setting == 12) {
+      let unitAF = "";
+      let unitBF = "";
+      let unitAE = "";
+      let unitBE = "";
+
+      p.valueAEnd = p.valueAFirst + p.situation;
+      p.valueBEnd = p.valueBFirst + p.situation;
+      [unitAF, unitBF] = simplify(p.valueAFirst, p.valueBFirst);
+      [unitAE, unitBE] = simplify(p.valueAEnd, p.valueBEnd);
+      if (p.valueAFirst == unitAF || p.valueAEnd == unitAE) {
+        return updateCalc();
+      }
+
+      // LINE ONE
+      let lineOne = genNumbers(4);
+      if (lineOne == 0) {
+        lineOne = `The ratio of A:B is ${unitAF}:${unitBF}.`;
+      }
+      if (lineOne == 1) {
+        lineOne = `A is ${unitAF}/${unitBF} of B .`;
+      }
+      if (lineOne == 2) {
+        lineOne = `The ratio of A to the total is ${unitAF}:${
+          unitAF + unitBF
+        }.`;
+      }
+      if (lineOne == 3) {
+        lineOne = `A is ${unitAF}/${unitAF + unitBF} of the total.`;
+      }
+
+      // LINE TWO
+      let lineTwo = "";
+      let positive = ["bought another", "increased by", "received another"][
+        genNumbers(3)
+      ];
+      let negative = ["sold away", "decreased by", "removed"][genNumbers(3)];
+      if (p.situation < 0) {
+        lineTwo = `Both ${negative} ${Math.abs(p.situation)} ${p.object}.`;
+      } else {
+        lineTwo = `Both ${positive} ${p.situation} ${p.object}.`;
+      }
+
+      // LINE THREE
+
+      [unitAE, unitBE] = simplify(p.valueAEnd, p.valueBEnd);
+      let lineThree = genNumbers(4);
+      if (lineThree == 0) {
+        lineThree = `The ratio of A:B in the end is ${unitAE}:${unitBE}.`;
+      }
+      if (lineThree == 1) {
+        lineThree = `A is ${unitAE}/${unitBE} of B in the end.`;
+      }
+      if (lineThree == 2) {
+        lineThree = `The ratio of A to A and B in the end is ${unitAE}:${
+          unitAE + unitBE
+        }.`;
+      }
+      if (lineThree == 3) {
+        lineThree = `A is ${unitAE}/${
+          unitAE + unitBE
+        } of the total in the end.`;
+      }
+
+      // LINE FOUR
+      let lineFour = "";
+      if (p.question == "AF")
+        lineFour = `How many ${p.object} does A have at first?`;
+      if (p.question == "BF")
+        lineFour = `How many ${p.object} does B have at first?`;
+      if (p.question == "AE")
+        lineFour = `How many ${p.object} does A have in the end?`;
+      if (p.question == "BE")
+        lineFour = `How many ${p.object} does B have in the end?`;
+
+      // EXCECUTE
+      displayProblem.innerHTML = `
+      ${lineOne}</p>
+      ${lineTwo}</p>
+      ${lineThree}</p>
+      ${lineFour}
+      `;
+    }
+    // REPEATED IDENTITY PERCENTAGE
+    if (setting == 13) {
       let lineOne = undefined;
       let tempArr = [];
       if (p.choice == "B") {
@@ -10021,314 +10328,6 @@ function updateProblems() {
 
   if (level == "heuFiveb") {
     if (setting == 1) {
-      let unitAF = "";
-      let unitBF = "";
-      let unitAE = "";
-      let unitBE = "";
-      [unitAF, unitBF] = simplify(p.valueAFirst, p.valueBFirst);
-      if (p.valueAFirst == unitAF || p.valueBFirst == unitBF) {
-        return updateProblems();
-      }
-      if (p.happensTo == "A") {
-        [unitAE, unitBE] = simplify(p.valueAEnd, p.valueBFirst);
-      }
-      if (p.happensTo == "B") {
-        [unitAE, unitBE] = simplify(p.valueAFirst, p.valueBEnd);
-      }
-      if (p.valueAEnd == unitAE || p.valueBEnd == unitBF) {
-        return updateProblems();
-      }
-      // LINE ONE
-      let lineOne = genNumbers(4);
-      if (lineOne == 0) {
-        lineOne = `The ratio of A : B is ${unitAF} : ${unitBF} at first.`;
-      }
-      if (lineOne == 1) {
-        lineOne = `A is ${unitAF}/${unitBF} of B at first.`;
-      }
-      if (lineOne == 2) {
-        lineOne = `The ratio of A to A and B is ${unitAF} : ${
-          unitAF + unitBF
-        } at first.`;
-      }
-      if (lineOne == 3) {
-        lineOne = ` A is ${unitAF}/${unitAF + unitBF} of the total at first.`;
-      }
-      // LINE TWO
-
-      let lineTwo = "";
-      let positive = ["received", "bought"][genNumbers(2)];
-      let negative = ["sold away", "gave away"][genNumbers(2)];
-
-      if (p.happensTo == "A") {
-        if (p.valueAEnd - p.valueAFirst == 0) {
-          return updateProblems();
-        }
-
-        if (p.valueAEnd - p.valueAFirst > 0) {
-          lineTwo = `A ${positive} another ${
-            Math.abs(p.valueAEnd - p.valueAFirst) * p.multiplier
-          } ${p.object}.`;
-        } else {
-          lineTwo = `A ${negative} ${
-            Math.abs(p.valueAEnd - p.valueAFirst) * p.multiplier
-          } ${p.object}.`;
-        }
-      }
-      if (p.happensTo == "B") {
-        if (p.valueBEnd - p.valueBFirst == 0) {
-          return updateProblems();
-        }
-        if (p.valueBEnd - p.valueBFirst > 0) {
-          lineTwo = `B ${positive} another ${
-            Math.abs(p.valueBEnd - p.valueBFirst) * p.multiplier
-          } ${p.object}.`;
-        } else {
-          lineTwo = `B ${negative} ${
-            Math.abs(p.valueBEnd - p.valueBFirst) * p.multiplier
-          } ${p.object}.`;
-        }
-      }
-
-      // LINE THREE
-      let lineThree = genNumbers(4);
-      if (lineThree == 0) {
-        lineThree = `The ratio of A : B in the end is ${unitAE} : ${unitBE}.`;
-      }
-      if (lineThree == 1) {
-        lineThree = `A became ${unitAE}/${unitBE} of B.`;
-      }
-      if (lineThree == 2) {
-        lineThree = `The ratio of A to the total is ${unitAE} : ${
-          unitAE + unitBE
-        } in the end.`;
-      }
-      if (lineThree == 3) {
-        lineThree = `A became ${unitAE}/${unitAE + unitBE} of the total.`;
-      }
-
-      //LINE FOUR
-      let lineFour = "";
-      console.log(p.situation, p.question);
-      if (p.happensTo == "A") {
-        if (p.question == "BF" || p.question == "BE") {
-          lineFour = "What is the value of B?";
-        }
-        if (p.question == "AF") {
-          lineFour = "What is A at first?";
-        }
-        if (p.question == "AE") {
-          lineFour = "What is A in the end?";
-        }
-      }
-      if (p.happensTo == "B") {
-        if (p.question == "AF" || p.question == "AE") {
-          lineFour = "What is the value of A?";
-        }
-        if (p.question == "BF") {
-          lineFour = "What is B at first?";
-        }
-        if (p.question == "BE") {
-          lineFour = "What is B in the end?";
-        }
-      }
-
-      displayProblem.innerHTML = `
-      ${lineOne}</p>
-      ${lineTwo}</p>
-      ${lineThree}</p>
-      ${lineFour}
-      `;
-    }
-
-    if (setting == 2) {
-      let unitAF = "";
-      let unitBF = "";
-      let unitAE = "";
-      let unitBE = "";
-
-      // LINE TWO
-      let happensTo = ["A", "A"][genNumbers(2)];
-      let lineTwo = "";
-      let direction = "";
-      // let direction = ["transferred", "received"][genNumbers(2)];
-      if (p.situationA == 0 || p.situationB == 0) {
-        return updateProblems();
-      }
-      if (happensTo == "A") {
-        if (p.situationA > 0) {
-          p.valueAEnd = p.valueAFirst + p.situationA;
-          p.valueBEnd = p.valueBFirst - p.situationA;
-          lineTwo = `A received another ${
-            Math.abs(p.situationA) * p.multiplier
-          } ${p.object} from B.`;
-        }
-        if (p.situationA < 0) {
-          p.valueAEnd = p.valueAFirst + p.situationA;
-          p.valueBEnd = p.valueBFirst - p.situationA;
-          lineTwo = `A transferred ${Math.abs(p.situationA) * p.multiplier} ${
-            p.object
-          } to B.`;
-        }
-      }
-      if (happensTo == "B") {
-        if (p.situationB > 0) {
-          p.valueAEnd = p.valueAFirst - p.situationB;
-          p.valueBEnd = p.valueBFirst + p.situationB;
-          lineTwo = `B received another ${
-            Math.abs(p.situationB) * p.multiplier
-          } ${p.object} from A.`;
-        }
-        if (p.situationB < 0) {
-          p.valueAEnd = p.valueAFirst - p.situationB;
-          p.valueBEnd = p.valueBFirst + p.situationB;
-          lineTwo = `B transferred ${Math.abs(p.situationB) * p.multiplier} ${
-            p.object
-          } to A.`;
-        }
-      }
-      if (p.valueAEnd == 0 || p.valueBEnd == 0) {
-        return updateProblems();
-      }
-      console.log(p.valueAFirst, p.valueBFirst, p.valueAEnd, p.valueBEnd);
-
-      // PREP
-      [unitAF, unitBF] = simplify(p.valueAFirst, p.valueBFirst);
-      [unitAE, unitBE] = simplify(p.valueAEnd, p.valueBEnd);
-      if (p.valueAFirst == unitAF || p.valueAEnd == unitAE) {
-        console.log("Values unable to be simplified");
-        return updateProblems();
-      }
-
-      // LINE ONE
-      let lineOne = genNumbers(4);
-      if (lineOne == 0) {
-        lineOne = `The ratio of A : B is ${unitAF} : ${unitBF} at first.`;
-      }
-      if (lineOne == 1) {
-        lineOne = ` A  is ${unitAF}/${unitBF} of B at first.`;
-      }
-      if (lineOne == 2) {
-        lineOne = ` A  is ${unitAF}/${unitAF + unitBF} of the total at first.`;
-      }
-      if (lineOne == 3) {
-        lineOne = `The ratio of A to the total is ${unitAF}:${
-          unitAF + unitBF
-        } at first.`;
-      }
-
-      // LINE THREE
-      let lineThree = genNumbers(2);
-      if (lineThree == 0) {
-        lineThree = `
-              The ratio of A : B in the end is ${unitAE} : ${unitBE}.`;
-      }
-      if (lineThree == 1) {
-        lineThree = `
-              A is ${unitAE}/${unitBE} of B in the end.`;
-      }
-
-      // LINE FOUR
-      let lineFour = "";
-      if (p.question == "AF")
-        lineFour = `How many ${p.object} does A have at first?`;
-      if (p.question == "BF")
-        lineFour = `How many ${p.object} does B have at first?`;
-      if (p.question == "AE")
-        lineFour = `How many ${p.object} does A have in the end?`;
-      if (p.question == "BE")
-        lineFour = `How many ${p.object} does B have in the end?`;
-
-      displayProblem.innerHTML = `
-      ${lineOne}</p>
-      ${lineTwo}</p>
-      ${lineThree}</p>
-      ${lineFour}`;
-    }
-    if (setting == 3) {
-      let unitAF = "";
-      let unitBF = "";
-      let unitAE = "";
-      let unitBE = "";
-
-      p.valueAEnd = p.valueAFirst + p.situation;
-      p.valueBEnd = p.valueBFirst + p.situation;
-      [unitAF, unitBF] = simplify(p.valueAFirst, p.valueBFirst);
-      [unitAE, unitBE] = simplify(p.valueAEnd, p.valueBEnd);
-      if (p.valueAFirst == unitAF || p.valueAEnd == unitAE) {
-        return updateProblems();
-      }
-
-      // LINE ONE
-      let lineOne = genNumbers(4);
-      if (lineOne == 0) {
-        lineOne = `The ratio of A:B is ${unitAF}:${unitBF}.`;
-      }
-      if (lineOne == 1) {
-        lineOne = `A is ${unitAF}/${unitBF} of B .`;
-      }
-      if (lineOne == 2) {
-        lineOne = `The ratio of A to the total is ${unitAF}:${
-          unitAF + unitBF
-        }.`;
-      }
-      if (lineOne == 3) {
-        lineOne = `A is ${unitAF}/${unitAF + unitBF} of the total.`;
-      }
-
-      // LINE TWO
-      let lineTwo = "";
-      let positive = ["bought another", "increased by", "received another"][
-        genNumbers(3)
-      ];
-      let negative = ["sold away", "decreased by", "removed"][genNumbers(3)];
-      if (p.situation < 0) {
-        lineTwo = `Both ${negative} ${Math.abs(p.situation)} ${p.object}.`;
-      } else {
-        lineTwo = `Both ${positive} ${p.situation} ${p.object}.`;
-      }
-
-      // LINE THREE
-
-      [unitAE, unitBE] = simplify(p.valueAEnd, p.valueBEnd);
-      let lineThree = genNumbers(4);
-      if (lineThree == 0) {
-        lineThree = `The ratio of A:B in the end is ${unitAE}:${unitBE}.`;
-      }
-      if (lineThree == 1) {
-        lineThree = `A is ${unitAE}/${unitBE} of B in the end.`;
-      }
-      if (lineThree == 2) {
-        lineThree = `The ratio of A to A and B in the end is ${unitAE}:${
-          unitAE + unitBE
-        }.`;
-      }
-      if (lineThree == 3) {
-        lineThree = `A is ${unitAE}/${
-          unitAE + unitBE
-        } of the total in the end.`;
-      }
-
-      // LINE FOUR
-      let lineFour = "";
-      if (p.question == "AF")
-        lineFour = `How many ${p.object} does A have at first?`;
-      if (p.question == "BF")
-        lineFour = `How many ${p.object} does B have at first?`;
-      if (p.question == "AE")
-        lineFour = `How many ${p.object} does A have in the end?`;
-      if (p.question == "BE")
-        lineFour = `How many ${p.object} does B have in the end?`;
-
-      // EXCECUTE
-      displayProblem.innerHTML = `
-      ${lineOne}</p>
-      ${lineTwo}</p>
-      ${lineThree}</p>
-      ${lineFour}
-      `;
-    }
-    if (setting == 4) {
       [p.numeOne, p.denoOne] = simplify(p.numeOne, p.denoOne);
       [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
       [p.numeThree, p.denoThree] = simplify(p.numeThree, p.denoThree);
@@ -10385,6 +10384,49 @@ function updateProblems() {
       There was $${p.numLast} left.</p>
       What was the total at first?</p>
       
+      `;
+    }
+    if (setting == 2) {
+      // A gives to B, B to C, C to A
+      [p.numeOne, p.denoOne] = simplify(p.numeOne, p.denoOne);
+      [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
+      [p.numeThree, p.denoThree] = simplify(p.numeThree, p.denoThree);
+      const each = p.total / 3;
+      const two_C = (each / (p.denoThree - p.numeThree)) * p.denoThree; // C
+      const two_diff = two_C - each;
+      const two_A = each - two_diff; //Take back from A
+      const two_B = each;
+      if (two_A <= 0 || two_B <= 0 || two_C <= 0) return updateCalc();
+      if (two_A % 1 != 0 || two_B % 1 != 0 || two_C % 1 != 0)
+        return updateCalc();
+
+      const three_B = (two_B / (p.denoTwo - p.numeTwo)) * p.denoTwo;
+      const three_diff = three_B - two_B;
+      const three_C = two_C - three_diff;
+      const three_A = two_A;
+      if (three_A <= 0 || three_B <= 0 || three_C <= 0) return updateCalc();
+      if (three_A % 1 != 0 || three_B % 1 != 0 || three_C % 1 != 0)
+        return updateCalc();
+      const four_A = (three_A / (p.denoOne - p.numeOne)) * p.denoOne;
+      const four_diff = four_A - three_A;
+      const four_B = three_B - four_diff;
+      const four_C = three_C;
+      if (four_A <= 0 || four_B <= 0 || four_C <= 0) return updateCalc();
+      if (four_A % 1 != 0 || four_B % 1 != 0 || four_C % 1 != 0)
+        return updateCalc();
+
+      console.log(each, each, each);
+      console.log(two_A, two_B, two_C);
+      console.log(three_A, three_B, three_C);
+      console.log(four_A, four_B, four_C);
+
+      displayProblem.innerHTML = `
+      People A, B and C have a total of $${p.total} at first.</p>
+      A gave ${p.numeOne}/${p.denoOne} to B.</p>
+      B then gave ${p.numeTwo}/${p.denoTwo} to C.</p>
+      C then gave ${p.numeThree}/${p.denoThree} to A.</p>
+      All 3 people ended with the same amount.</p>
+      How much did A have at first?
       `;
     }
   }
@@ -12905,8 +12947,26 @@ function handleSubmit(e) {
         correctAnswer = `${p.answer[0]}:${p.answer[1]}:${p.answer[2]}`;
         // }
       }
-
-      if (setting == 10)
+      if (setting == 10) {
+        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
+        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
+        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
+        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
+      }
+      if (setting == 11) {
+        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
+        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
+        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
+        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
+      }
+      // WORK ON ANSWER
+      if (setting == 12) {
+        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
+        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
+        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
+        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
+      }
+      if (setting == 13)
         correctAnswer = `${p.answer[0]}:${p.answer[1]}:${p.answer[2]}`;
 
       skipGlobalUpdateProblem = 0;
@@ -13997,25 +14057,6 @@ function handleSubmit(e) {
 
     if (level == "heuFiveb") {
       if (setting == 1) {
-        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
-        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
-        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
-        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
-      }
-      if (setting == 2) {
-        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
-        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
-        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
-        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
-      }
-      // WORK ON ANSWER
-      if (setting == 3) {
-        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
-        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
-        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
-        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
-      }
-      if (setting == 4) {
         correctAnswer = p.answer;
       }
     }
@@ -16574,7 +16615,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(10, calArr, setting, 99);
+    setting = calArrAll(13, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -16720,9 +16761,58 @@ function genProblems() {
         answer: [],
       };
     }
+    if (setting == 11) {
+      console.log("Unchanged Object");
+      return {
+        object: ["sweets", "toys", "books"][genNumbers(3)],
+        valueAFirst: genNumbers(40) + 10,
+        valueBFirst: genNumbers(40) + 10,
+        multiplier: genNumbers(5) + 2,
+        happensTo: ["A", "B"][genNumbers(2)],
+        valueAEnd: genNumbers(40) + 10,
+        valueBEnd: genNumbers(40) + 10,
+        question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
+      };
+    }
 
+    if (setting == 12) {
+      console.log("Unchanged Total");
+      valueA = genNumbers(40) + 10;
+      valueB = genNumbers(40) + 10;
+      return {
+        object: ["sweets", "toys", "books"][genNumbers(3)],
+        valueAFirst: valueA,
+        valueBFirst: valueB,
+        situationA: genNumbers(valueA) * [-1, 1][genNumbers(2)],
+        situationB: genNumbers(valueB) * [-1, 1][genNumbers(2)],
+        // multiplier: genNumbers(5) + 2,
+        multiplier: 1,
+        valueAEnd: undefined,
+        valueBEnd: undefined,
+        question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
+      };
+    }
+
+    if (setting == 13) {
+      console.log("Unchanged Difference");
+      valueA = genNumbers(40) + 10;
+      valueB = genNumbers(40) + 10;
+      let minValue = 0;
+      valueA > valueB ? (minValue = valueA) : (minValue = valueB);
+      return {
+        object: ["sweets", "toys", "books"][genNumbers(3)],
+        valueAFirst: valueA,
+        valueBFirst: valueB,
+        situation: genNumbers(minValue) * [-1, 1][genNumbers(2)],
+        // multiplier: genNumbers(5) + 2,
+        multiplier: 1,
+        valueAEnd: undefined,
+        valueBEnd: undefined,
+        question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
+      };
+    }
     // REPEATED IDENTITY PERCENTAGE
-    if (setting == 10) {
+    if (setting == 13) {
       let A = (genNumbers(18) + 1) * 5;
       return {
         varA: A,
@@ -17644,56 +17734,6 @@ function genProblems() {
 
   if (level == "heuFiveb") {
     if (setting == 1) {
-      console.log("Unchanged Object");
-      return {
-        object: ["sweets", "toys", "books"][genNumbers(3)],
-        valueAFirst: genNumbers(40) + 10,
-        valueBFirst: genNumbers(40) + 10,
-        multiplier: genNumbers(5) + 2,
-        happensTo: ["A", "B"][genNumbers(2)],
-        valueAEnd: genNumbers(40) + 10,
-        valueBEnd: genNumbers(40) + 10,
-        question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
-      };
-    }
-
-    if (setting == 2) {
-      console.log("Unchanged Total");
-      valueA = genNumbers(40) + 10;
-      valueB = genNumbers(40) + 10;
-      return {
-        object: ["sweets", "toys", "books"][genNumbers(3)],
-        valueAFirst: valueA,
-        valueBFirst: valueB,
-        situationA: genNumbers(valueA) * [-1, 1][genNumbers(2)],
-        situationB: genNumbers(valueB) * [-1, 1][genNumbers(2)],
-        // multiplier: genNumbers(5) + 2,
-        multiplier: 1,
-        valueAEnd: undefined,
-        valueBEnd: undefined,
-        question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
-      };
-    }
-
-    if (setting == 3) {
-      console.log("Unchanged Difference");
-      valueA = genNumbers(40) + 10;
-      valueB = genNumbers(40) + 10;
-      let minValue = 0;
-      valueA > valueB ? (minValue = valueA) : (minValue = valueB);
-      return {
-        object: ["sweets", "toys", "books"][genNumbers(3)],
-        valueAFirst: valueA,
-        valueBFirst: valueB,
-        situation: genNumbers(minValue) * [-1, 1][genNumbers(2)],
-        // multiplier: genNumbers(5) + 2,
-        multiplier: 1,
-        valueAEnd: undefined,
-        valueBEnd: undefined,
-        question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
-      };
-    }
-    if (setting == 4) {
       const gen_denoOne = genNumbers(4) + 2;
       const gen_denoTwo = genNumbers(4) + 2;
       const gen_denoThree = genNumbers(4) + 2;
@@ -17713,6 +17753,20 @@ function genProblems() {
         numThree: genNumbers(899) + 100,
         numLast: genNumbers(899) + 100,
         answer: undefined,
+      };
+    }
+    if (setting == 2) {
+      const gen_denoOne = genNumbers(4) + 2;
+      const gen_denoTwo = genNumbers(4) + 2;
+      const gen_denoThree = genNumbers(4) + 2;
+      return {
+        denoOne: gen_denoOne,
+        denoTwo: gen_denoTwo,
+        denoThree: gen_denoThree,
+        numeOne: genNumbers(gen_denoOne - 1) + 1,
+        numeTwo: genNumbers(gen_denoTwo - 1) + 1,
+        numeThree: genNumbers(gen_denoThree - 1) + 1,
+        total: (genNumbers(1000) + 99) * 3,
       };
     }
   }
@@ -19349,6 +19403,13 @@ function buttonLevelSetting() {
       setting = prompt(
         "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Working: Long Division ( No remainder )\n11. Working: Long Division ( Remainder )\n12. Working: Multiplication ( Single Blank )\n13. Multiplication in sets\n14. Long Division: Simple Statement"
       );
+      if (
+        ![1, 2, 3, 4, 5, 6, 7, 8, 9, , 10, 11, 12, 13, 14, 99].includes(
+          setting * 1
+        ) &&
+        !setting.split("").includes("-")
+      )
+        setting = 99;
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
 
@@ -19359,9 +19420,10 @@ function buttonLevelSetting() {
         "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Fractions: Addition: Mixed Fractions\n6. Fractions: Subtraction: Mixed Fractions\n7. Decimals: Addition\n8. Decimals: Subtraction\n9. Decimals: Multiplication (Single)\n10. Decimals: Multiplication (Double)\n11. Decimals: Division \n12. Fractions to Decimal (Limit)\n13. Decimals: Division and Multiplication with splitting\n14. Multiplication in Sets"
       );
       if (
-        ![1, 2, 3, 4, 5, 6, 7, 8, 9, , 10, 11, 12, 13, 14, 99].includes(
+        ![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 99].includes(
           setting * 1
-        )
+        ) &&
+        !setting.split("").includes("-")
       )
         setting = 99;
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -19373,10 +19435,12 @@ function buttonLevelSetting() {
       level = "calFive";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Fractions: Identical Numerator (Type 2)\n\n8. Ratio: Repeated Identity\n9. Ratio: Repeated Group\n10. Percentage: Repeated Identity"
+        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Fractions: Identical Numerator (Type 2)\n\n8. Ratio: Repeated Identity\n9. Ratio: Repeated Group\n10. Ratio: Unchanged Object\n11. Ratio: Unchanged Total\n12. Ratio: Unchanged Difference\n\n10. Percentage: Repeated Identity"
       );
       if (
-        ![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 99].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 99].includes(
+          setting * 1
+        ) &&
         !setting.split("").includes("-")
       )
         setting = 99;
@@ -19502,7 +19566,7 @@ function buttonLevelSetting() {
     case "Heu.5b":
       level = "heuFiveb";
       setting = prompt(
-        "What level?\n1. Ratio: Unchanged Object\n2. Ratio: Unchanged Total\n3. Ratio: Unchanged Difference\n4. Fractions: Working Backwards (Type 1)\n\n9. All"
+        "What level?\n1. Fractions: Working Backwards (Type 1)\n2. Fractions: Working Backwards (Type 2)\n\n9. All"
       );
       scoreNeeded = 3;
       displayProblem.style.fontSize = "18px";
