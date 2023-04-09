@@ -8375,6 +8375,7 @@ function updateProblems() {
       let unitBF = "";
       let unitAE = "";
       let unitBE = "";
+      let value = "";
       [unitAF, unitBF] = simplify(p.valueAFirst, p.valueBFirst);
       if (p.valueAFirst == unitAF || p.valueBFirst == unitBF) {
         return updateCalc();
@@ -8419,10 +8420,12 @@ function updateProblems() {
           lineTwo = `A ${positive} another ${
             Math.abs(p.valueAEnd - p.valueAFirst) * p.multiplier
           } ${p.object}.`;
+          value = Math.abs(p.valueAEnd - p.valueAFirst) * p.multiplier;
         } else {
           lineTwo = `A ${negative} ${
             Math.abs(p.valueAEnd - p.valueAFirst) * p.multiplier
           } ${p.object}.`;
+          value = Math.abs(p.valueAEnd - p.valueAFirst) * p.multiplier;
         }
       }
       if (p.happensTo == "B") {
@@ -8433,10 +8436,12 @@ function updateProblems() {
           lineTwo = `B ${positive} another ${
             Math.abs(p.valueBEnd - p.valueBFirst) * p.multiplier
           } ${p.object}.`;
+          value = Math.abs(p.valueBEnd - p.valueBFirst) * p.multiplier;
         } else {
           lineTwo = `B ${negative} ${
             Math.abs(p.valueBEnd - p.valueBFirst) * p.multiplier
           } ${p.object}.`;
+          value = Math.abs(p.valueBEnd - p.valueBFirst) * p.multiplier;
         }
       }
 
@@ -8482,7 +8487,46 @@ function updateProblems() {
           lineFour = "What is B in the end?";
         }
       }
+      let commonUnit = undefined;
+      let newAF = undefined;
+      let newAE = undefined;
+      let newBF = undefined;
+      let newBE = undefined;
+      console.log(unitAF, unitBF, unitAE, unitBE);
 
+      let oneUnit = undefined;
+      if (p.happensTo == "B") {
+        commonUnit = commonDeno(unitAF, unitAE);
+        newAF = newAE = commonUnit;
+        const sceneOne = commonUnit / unitAF;
+        newBF = sceneOne * unitBF;
+        const sceneTwo = commonUnit / unitAE;
+        newBE = sceneTwo * unitBE;
+        console.log(sceneOne, sceneTwo);
+        oneUnit = value / Math.abs(newBF - newBE);
+        if (p.question == "AF" || p.question == "AE") {
+          p.answer = newAE * oneUnit;
+        }
+        if (p.question == "BF") p.answer = newBF * oneUnit;
+        if (p.question == "BE") p.answer = newBE * oneUnit;
+      }
+      if (p.happensTo == "A") {
+        commonUnit = commonDeno(unitBF, unitBE);
+        newBF = newBE = commonUnit;
+        const sceneOne = commonUnit / unitBF;
+        newAF = sceneOne * unitAF;
+        const sceneTwo = commonUnit / unitBE;
+        newAE = sceneTwo * unitAE;
+        console.log(sceneOne, sceneTwo);
+        oneUnit = value / Math.abs(newAF - newAE);
+        if (p.question == "BF" || p.question == "BE") {
+          p.answer = newAE * oneUnit;
+        }
+        if (p.question == "AF") p.answer = newAF * oneUnit;
+        if (p.question == "AE") p.answer = newAE * oneUnit;
+      }
+
+      console.log(commonUnit, newAF, newBF, newAE, newBE, value, oneUnit);
       displayProblem.innerHTML = `
       ${lineOne}</p>
       ${lineTwo}</p>
@@ -12945,11 +12989,19 @@ function handleSubmit(e) {
         correctAnswer = `${p.answer[0]}:${p.answer[1]}:${p.answer[2]}`;
         // }
       }
+      // if (setting == 10) {
+      //   if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
+      //   if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
+      //   if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
+      //   if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
+      // }
       if (setting == 10) {
-        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
-        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
-        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
-        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
+        console.log(p.valueAFirst, p.valueBFirst, p.valueAEnd, p.valueBEnd);
+        // if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
+        // if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
+        // if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
+        // if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
+        correctAnswer = p.answer;
       }
       if (setting == 11) {
         if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
@@ -16770,6 +16822,7 @@ function genProblems() {
         valueAEnd: genNumbers(40) + 10,
         valueBEnd: genNumbers(40) + 10,
         question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
+        answer: undefined,
       };
     }
 
