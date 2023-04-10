@@ -19599,7 +19599,7 @@ function buttonLevelSetting() {
       level = "calFive";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Fractions: Identical Numerator (Type 2)\n\n8. Ratio: Repeated Identity\n9. Ratio: Repeated Group\n10. Ratio: Unchanged Object\n11. Ratio: Unchanged Total\n12. Ratio: Unchanged Difference]\n13. Ratio: Manipulation in units\n\n14. Percentage: Repeated Identity"
+        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Fractions: Identical Numerator (Type 2)\n\n8. Ratio: Repeated Identity\n9. Ratio: Repeated Group\n10. Ratio: Unchanged Object\n11. Ratio: Unchanged Total\n12. Ratio: Unchanged Difference\n13. Ratio: Manipulation in units\n\n14. Percentage: Repeated Identity"
       );
       if (
         ![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 99].includes(
