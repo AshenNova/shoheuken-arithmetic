@@ -8151,21 +8151,73 @@ function updateProblems() {
     }
     // FRACTIONS: REMAINDER CONCEPT
     if (setting == 4) {
-      [p.numA, p.denoA] = simplify(p.numA, p.denoA);
-      [p.numB, p.denoB] = simplify(p.numB, p.denoB);
-      [p.numC, p.denoC] = simplify(p.numC, p.denoC);
-      displayProblem.innerHTML = `
+      if (p.version == 0) {
+        [p.numA, p.denoA] = simplify(p.numA, p.denoA);
+        [p.numB, p.denoB] = simplify(p.numB, p.denoB);
+        [p.numC, p.denoC] = simplify(p.numC, p.denoC);
+        displayProblem.innerHTML = `
       There are 3 variables: A, B and C.</p>
       A has ${p.partA} units, B has ${p.partB} units, C has ${
-        p.partC
-      } units.</p>
+          p.partC
+        } units.</p>
       ${p.numA}/${p.denoA} of A is removed.</p>
       ${p.numB}/${p.denoB} of B is removed.</p>
       ${p.numC}/${p.denoC} of C is removed.</p>
       What fraction of the total from ${p.choiceVar} ${
-        p.choice == "left" ? `is ${p.choice}` : `was ${p.choice}`
-      }?
+          p.choice == "left" ? `is ${p.choice}` : `was ${p.choice}`
+        }?
       `;
+      }
+      if (p.version == 1) {
+        if (p.partA > p.denoA) [p.partA, p.denoA] = [p.denoA, p.partA];
+        if (p.partB > p.denoB) [p.partB, p.denoB] = [p.denoB, p.partB];
+        if (p.partA == p.denoA) p.denoA += 1;
+        if (p.partB == p.denoB) p.denoB += 1;
+        [p.partA, p.denoA] = simplify(p.partA, p.denoA);
+        [p.partB, p.denoB] = simplify(p.partB, p.denoB);
+        //after applying remainder concept
+        let newNumerator = (p.denoA - p.partA) * p.partB;
+        let newDenominator = p.denoA * p.denoB;
+        [newNumerator, newDenominator] = simplify(newNumerator, newDenominator);
+        //Finding common denominator
+        const commonDenominator = commonDeno(p.denoA, newDenominator);
+        const multiOne = commonDenominator / p.denoA;
+        const multiTwo = commonDenominator / newDenominator;
+        // changing first fraction
+        const finalNumOne = p.partA * multiOne;
+        const finalDenoOne = p.denoA * multiOne;
+        // changing remainder concept
+        p.finalNumTwo = newNumerator * multiTwo;
+        p.finalDenoTwo = newDenominator * multiTwo;
+        // Numerator of the value
+        p.likeNumerator = finalNumOne + p.finalNumTwo;
+        p.likeDenominator = finalDenoOne;
+        p.value = p.likeNumerator * (genNumbers(99) + 100);
+        const position = genNumbers(2);
+        const gender = ["he", "she"][position];
+        const genderTwo = ["his", "her"][position];
+        displayProblem.innerHTML = `
+        Person ${p.choiceVar} used ${p.partA}/${
+          p.denoA
+        } of ${genderTwo} money to buy ${p.objects}.</p>
+        ${gender[0].toUpperCase() + gender.slice(1)} spent another ${p.partB}/${
+          p.denoB
+        } of the remainder on ${p.objectsTwo}.</p>
+        $${p.value.toLocaleString("en-US")} was spent.</p>
+        `;
+        if (p.versionOne == 0) {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            `How much does Person ${p.choiceVar} have left?`
+          );
+        }
+        if (p.versionOne == 1) {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            `How much does Person ${p.choiceVar} spend on ${p.objectsTwo}?`
+          );
+        }
+      }
     }
     //FRACTIONS: IDENTICAL NUMERATOR
     if (setting == 5) {
@@ -12907,41 +12959,53 @@ function handleSubmit(e) {
         correctAnswer = numerator;
       }
       if (setting == 4) {
-        const total = p.partA + p.partB + p.partC;
-        let num = undefined;
-        let deno = undefined;
-        if (p.choiceVar == "A") {
-          if (p.choice == "left") {
-            num = p.partA * (p.denoA - p.numA);
-            deno = total * p.denoA;
+        if (p.version == 0) {
+          const total = p.partA + p.partB + p.partC;
+          let num = undefined;
+          let deno = undefined;
+          if (p.choiceVar == "A") {
+            if (p.choice == "left") {
+              num = p.partA * (p.denoA - p.numA);
+              deno = total * p.denoA;
+            }
+            if (p.choice == "removed") {
+              num = p.partA * p.numA;
+              deno = total * p.denoA;
+            }
           }
-          if (p.choice == "removed") {
-            num = p.partA * p.numA;
-            deno = total * p.denoA;
+          if (p.choiceVar == "B") {
+            if (p.choice == "left") {
+              num = p.partB * (p.denoB - p.numB);
+              deno = total * p.denoB;
+            }
+            if (p.choice == "removed") {
+              num = p.partB * p.numB;
+              deno = total * p.denoB;
+            }
+          }
+          if (p.choiceVar == "C") {
+            if (p.choice == "left") {
+              num = p.partC * (p.denoC - p.numC);
+              deno = total * p.denoC;
+            }
+            if (p.choice == "removed") {
+              num = p.partC * p.numC;
+              deno = total * p.denoC;
+            }
+          }
+          [num, deno] = simplify(num, deno);
+          correctAnswer = `${num}/${deno}`;
+        }
+        if (p.version == 1) {
+          if (p.versionOne == 0) {
+            correctAnswer =
+              (p.value / p.likeNumerator) *
+              (p.likeDenominator - p.likeNumerator);
+          }
+          if (p.versionOne == 1) {
+            correctAnswer = (p.value / p.likeNumerator) * p.finalNumTwo;
           }
         }
-        if (p.choiceVar == "B") {
-          if (p.choice == "left") {
-            num = p.partB * (p.denoB - p.numB);
-            deno = total * p.denoB;
-          }
-          if (p.choice == "removed") {
-            num = p.partB * p.numB;
-            deno = total * p.denoB;
-          }
-        }
-        if (p.choiceVar == "C") {
-          if (p.choice == "left") {
-            num = p.partC * (p.denoC - p.numC);
-            deno = total * p.denoC;
-          }
-          if (p.choice == "removed") {
-            num = p.partC * p.numC;
-            deno = total * p.denoC;
-          }
-        }
-        [num, deno] = simplify(num, deno);
-        correctAnswer = `${num}/${deno}`;
       }
       if (setting == 5) {
         if (p.version == 1 || p.version == 2) {
@@ -16717,6 +16781,7 @@ function genProblems() {
       const CNum = genNumbers(C - 1) + 1;
 
       return {
+        version: [0, 1][genNumbers(2)],
         partA: Aparts,
         partB: Bparts,
         partC: Cparts,
@@ -16728,6 +16793,15 @@ function genProblems() {
         numC: CNum,
         choiceVar: ["A", "B", "C"][genNumbers(3)],
         choice: ["left", "removed"][genNumbers(2)],
+        objects: ["sweets", "toys", "games"][genNumbers(3)],
+        objectsTwo: ["flowers", "fruits", "chocolates"][genNumbers(3)],
+        finalNumTwo: undefined,
+        finalDenoTwo: undefined,
+        likeNumerator: undefined,
+        likeDenominator: undefined,
+        value: undefined,
+        spent: undefined,
+        versionOne: [0, 1][genNumbers(2)],
       };
     }
     // FRACTIONS: Identical Numerator
