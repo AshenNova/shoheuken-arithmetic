@@ -19720,6 +19720,13 @@ function buttonLevelSetting() {
       setting = prompt(
         "What level?\n1. Parts and Interval\n2. Internal Transfer (Same)\n3. Internal Transfer ( Same reverse )\n4. Parts and Intervals ( Others )\n\n9.All"
       );
+      if (
+        ![1, 2, 3, 4, 9].includes(
+          setting * 1
+        ) &&
+        !setting.split("").includes("-")
+      )
+        setting = 9;
       level = "heuTwo";
       scoreNeeded = 10;
       displayProblem.style.fontSize = "18px";
