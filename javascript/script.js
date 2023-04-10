@@ -7973,7 +7973,7 @@ function updateProblems() {
       // END DISPLAY
     }
     // NORMAL DISPLAY
-    if ([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].includes(setting * 1)) {
+    if ([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].includes(setting * 1)) {
       displayProblem.style.textAlign = "left";
       displayProblem.style.fontSize = "18px";
       wholeNumberContainer.classList.remove("hidden");
@@ -8422,7 +8422,47 @@ function updateProblems() {
         `;
       }
     }
+    // RATIO: IDENTICAL TOTAL
     if (setting == 10) {
+      console.log(p.objects);
+      const objectA = p.objects[0];
+      const objectB = p.objects[1];
+      [p.ratioA, p.ratioB] = simplify(p.ratioA, p.ratioB);
+      [p.ratioC, p.ratioD] = simplify(p.ratioC, p.ratioD);
+      displayProblem.innerHTML = `
+      Group A and B have ${
+        p.position == 2
+          ? "the same chocolates and sweets"
+          : "the same number of people"
+      }.</p>
+      Group A is made up of ${objectA} and ${objectB} in the ratio of ${
+        p.ratioA
+      } : ${p.ratioB}.</p>
+      Group B is made up of ${objectA} and ${objectB} in the ratio of ${
+        p.ratioC
+      } : ${p.ratioD}.</p>
+      
+      `;
+      if (p.question == 1) {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `What is the ratio of total ${objectA} to ${objectB}?`
+        );
+      }
+      if (p.question == 2) {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `What is the ratio of ${objectA} in A to the ratio of ${objectA} in B?`
+        );
+      }
+      if (p.question == 3) {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `What is the ratio of ${objectB} in A to the raito of ${objectB} in B?`
+        );
+      }
+    }
+    if (setting == 11) {
       let unitAF = "";
       let unitBF = "";
       let unitAE = "";
@@ -8587,7 +8627,7 @@ function updateProblems() {
       `;
     }
 
-    if (setting == 11) {
+    if (setting == 12) {
       let unitAF = "";
       let unitBF = "";
       let unitAE = "";
@@ -8691,7 +8731,7 @@ function updateProblems() {
       ${lineThree}</p>
       ${lineFour}`;
     }
-    if (setting == 12) {
+    if (setting == 13) {
       let unitAF = "";
       let unitBF = "";
       let unitAE = "";
@@ -8775,7 +8815,7 @@ function updateProblems() {
       `;
     }
     // RATIO: MANIPULATION IN UNITS
-    if (setting == 13) {
+    if (setting == 14) {
       [p.ratioA, p.ratioB] = simplify(p.ratioA, p.ratioB);
       [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
       if (p.numeA > p.denoA) [p.numeA, p.denoA] = [p.denoA, p.numeA];
@@ -8791,7 +8831,7 @@ function updateProblems() {
       `;
     }
     // REPEATED IDENTITY PERCENTAGE
-    if (setting == 14) {
+    if (setting == 15) {
       let lineOne = undefined;
       let tempArr = [];
       if (p.choice == "B") {
@@ -13075,7 +13115,33 @@ function handleSubmit(e) {
       //   if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
       //   if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
       // }
+
+      // RATIO: IDENTICAL TOTAL
       if (setting == 10) {
+        const totalA = p.ratioA + p.ratioB;
+        const totalB = p.ratioC + p.ratioD;
+        const commonTotal = commonDeno(totalA, totalB);
+        const multiOne = commonTotal / totalA;
+        const multiTwo = commonTotal / totalB;
+        let newA = p.ratioA * multiOne;
+        let newB = p.ratioB * multiOne;
+        let newC = p.ratioC * multiTwo;
+        let newD = p.ratioD * multiTwo;
+
+        if (p.question == 1) {
+          [totalA, totalB] = simplify(totalA, totalB);
+          correctAnswer = `${totalA}:${totalB}`;
+        }
+        if (p.question == 2) {
+          [newA, newC] = simplify(newA, newC);
+          correctAnswer = `${newA}:${newC}`;
+        }
+        if (p.question == 3) {
+          [newB, newD] = simplify(newB, newD);
+          correctAnswer = `${newB}:${newD}`;
+        }
+      }
+      if (setting == 11) {
         console.log(p.valueAFirst, p.valueBFirst, p.valueAEnd, p.valueBEnd);
         // if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
         // if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
@@ -13083,27 +13149,27 @@ function handleSubmit(e) {
         // if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
         correctAnswer = p.answer;
       }
-      if (setting == 11) {
-        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
-        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
-        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
-        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
-      }
-      // WORK ON ANSWER
       if (setting == 12) {
         if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
         if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
         if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
         if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
       }
+      // WORK ON ANSWER
       if (setting == 13) {
+        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
+        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
+        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
+        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
+      }
+      if (setting == 14) {
         const commonNumber = commonDeno(p.denoA, p.denoB);
         let end_A = ((p.ratioA * (p.denoA - p.numeA)) / p.denoA) * commonNumber;
         let end_B = ((p.ratioB * (p.denoB - p.numeB)) / p.denoB) * commonNumber;
         [end_A, end_B] = simplify(end_A, end_B);
         correctAnswer = `${end_A}:${end_B}`;
       }
-      if (setting == 14)
+      if (setting == 15)
         correctAnswer = `${p.answer[0]}:${p.answer[1]}:${p.answer[2]}`;
 
       skipGlobalUpdateProblem = 0;
@@ -16752,7 +16818,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(14, calArr, setting, 99);
+    setting = calArrAll(15, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -16908,7 +16974,24 @@ function genProblems() {
         answer: [],
       };
     }
+    // RATIO: IDENTICAL TOTAL
     if (setting == 10) {
+      const genObjects = genNumbers(3);
+      return {
+        position: genObjects,
+        objects: [
+          ["girls", "boys"],
+          ["males", "females"],
+          ["chocolates", "sweets"],
+        ][genObjects],
+        ratioA: genNumbers(5) + 1,
+        ratioB: genNumbers(5) + 1,
+        ratioC: genNumbers(5) + 1,
+        ratioD: genNumbers(5) + 1,
+        question: [1, 2, 3][genNumbers(3)],
+      };
+    }
+    if (setting == 11) {
       console.log("Unchanged Object");
       return {
         object: ["sweets", "toys", "books"][genNumbers(3)],
@@ -16923,7 +17006,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 11) {
+    if (setting == 12) {
       console.log("Unchanged Total");
       const valueA = genNumbers(40) + 10;
       const valueB = genNumbers(40) + 10;
@@ -16941,7 +17024,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 12) {
+    if (setting == 13) {
       console.log("Unchanged Difference");
       const valueA = genNumbers(40) + 10;
       const valueB = genNumbers(40) + 10;
@@ -16960,7 +17043,7 @@ function genProblems() {
       };
     }
     // RATIO: MANIPULATION IN UNITS
-    if (setting == 13) {
+    if (setting == 14) {
       const gen_A = genNumbers(5) + 2;
       const gen_B = genNumbers(5) + 2;
       const genDeno_A = [genNumbers(gen_A - 2) + 2, gen_A * 2][genNumbers(2)];
@@ -16975,7 +17058,7 @@ function genProblems() {
       };
     }
     // REPEATED IDENTITY PERCENTAGE
-    if (setting == 14) {
+    if (setting == 15) {
       let A = (genNumbers(18) + 1) * 5;
       return {
         varA: A,
@@ -19599,10 +19682,10 @@ function buttonLevelSetting() {
       level = "calFive";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Fractions: Identical Numerator (Type 2)\n\n8. Ratio: Repeated Identity\n9. Ratio: Repeated Group\n10. Ratio: Unchanged Object\n11. Ratio: Unchanged Total\n12. Ratio: Unchanged Difference\n13. Ratio: Manipulation in units\n\n14. Percentage: Repeated Identity"
+        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Fractions: Identical Numerator (Type 2)\n\n8. Ratio: Repeated Identity\n9. Ratio: Repeated Group\n10. Ratio: Identical Total\n11. Ratio: Unchanged Object\n12. Ratio: Unchanged Total\n13. Ratio: Unchanged Difference\n14. Ratio: Manipulation in units\n\n15. Percentage: Repeated Identity"
       );
       if (
-        ![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 99].includes(
+        ![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 99].includes(
           setting * 1
         ) &&
         !setting.split("").includes("-")
