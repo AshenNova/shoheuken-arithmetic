@@ -7973,7 +7973,7 @@ function updateProblems() {
       // END DISPLAY
     }
     // NORMAL DISPLAY
-    if ([4, 5, 6, 7, 8, 9, 10, 11, 12, 13].includes(setting * 1)) {
+    if ([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].includes(setting * 1)) {
       displayProblem.style.textAlign = "left";
       displayProblem.style.fontSize = "18px";
       wholeNumberContainer.classList.remove("hidden");
@@ -8774,8 +8774,24 @@ function updateProblems() {
       ${lineFour}
       `;
     }
-    // REPEATED IDENTITY PERCENTAGE
+    // RATIO: MANIPULATION IN UNITS
     if (setting == 13) {
+      [p.ratioA, p.ratioB] = simplify(p.ratioA, p.ratioB);
+      [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
+      if (p.numeA > p.denoA) [p.numeA, p.denoA] = [p.denoA, p.numeA];
+      [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
+      if (p.numeB > p.denoB) [p.numeB, p.denoB] = [p.denoB, p.numeB];
+
+      displayProblem.innerHTML = `
+      The ratio of A : B is ${p.ratioA} : ${p.ratioB}.</p>
+      ${p.numeA}/${p.denoA} of A was removed.</p>
+      ${p.numeB}/${p.denoB} of B was removed.</p>
+      What is the ratio of A : B in the end?
+
+      `;
+    }
+    // REPEATED IDENTITY PERCENTAGE
+    if (setting == 14) {
       let lineOne = undefined;
       let tempArr = [];
       if (p.choice == "B") {
@@ -13080,7 +13096,14 @@ function handleSubmit(e) {
         if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
         if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
       }
-      if (setting == 13)
+      if (setting == 13) {
+        const commonNumber = commonDeno(p.denoA, p.denoB);
+        let end_A = ((p.ratioA * (p.denoA - p.numeA)) / p.denoA) * commonNumber;
+        let end_B = ((p.ratioB * (p.denoB - p.numeB)) / p.denoB) * commonNumber;
+        [end_A, end_B] = simplify(end_A, end_B);
+        correctAnswer = `${end_A}:${end_B}`;
+      }
+      if (setting == 14)
         correctAnswer = `${p.answer[0]}:${p.answer[1]}:${p.answer[2]}`;
 
       skipGlobalUpdateProblem = 0;
@@ -16729,7 +16752,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(13, calArr, setting, 99);
+    setting = calArrAll(14, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -16936,8 +16959,23 @@ function genProblems() {
         question: ["AF", "BF", "AE", "BE"][genNumbers(4)],
       };
     }
-    // REPEATED IDENTITY PERCENTAGE
+    // RATIO: MANIPULATION IN UNITS
     if (setting == 13) {
+      const gen_A = genNumbers(5) + 2;
+      const gen_B = genNumbers(5) + 2;
+      const genDeno_A = [genNumbers(gen_A - 2) + 2, gen_A * 2][genNumbers(2)];
+      const genDeno_B = [genNumbers(gen_B - 2) + 2, gen_A * 2][genNumbers(2)];
+      return {
+        ratioA: gen_A,
+        ratioB: gen_B,
+        numeA: genNumbers(genDeno_A - 1) + 1,
+        denoA: genDeno_A,
+        numeB: genNumbers(genDeno_B - 1) + 1,
+        denoB: genDeno_B,
+      };
+    }
+    // REPEATED IDENTITY PERCENTAGE
+    if (setting == 14) {
       let A = (genNumbers(18) + 1) * 5;
       return {
         varA: A,
@@ -19561,7 +19599,7 @@ function buttonLevelSetting() {
       level = "calFive";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Fractions: Identical Numerator (Type 2)\n\n8. Ratio: Repeated Identity\n9. Ratio: Repeated Group\n10. Ratio: Unchanged Object\n11. Ratio: Unchanged Total\n12. Ratio: Unchanged Difference\n\n10. Percentage: Repeated Identity"
+        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Fractions: Identical Numerator (Type 2)\n\n8. Ratio: Repeated Identity\n9. Ratio: Repeated Group\n10. Ratio: Unchanged Object\n11. Ratio: Unchanged Total\n12. Ratio: Unchanged Difference]\n13. Ratio: Manipulation in units\n\n14. Percentage: Repeated Identity"
       );
       if (
         ![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 99].includes(
