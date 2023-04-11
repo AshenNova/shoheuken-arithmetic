@@ -7973,7 +7973,9 @@ function updateProblems() {
       // END DISPLAY
     }
     // NORMAL DISPLAY
-    if ([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].includes(setting * 1)) {
+    if (
+      [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17].includes(setting * 1)
+    ) {
       displayProblem.style.textAlign = "left";
       displayProblem.style.fontSize = "18px";
       wholeNumberContainer.classList.remove("hidden");
@@ -8934,6 +8936,68 @@ function updateProblems() {
       B is ${displayB}% of ${p.secondSentence}.</p>
       What is the ratio of A : B : C?
       `;
+    }
+    // PERCENTAGE: REMAINDER CONCEPT
+    if (setting == 17) {
+      displayProblem.innerHTML = `
+      Person A spent ${p.percA}% of his money on ${p.itemOne}.</p>
+      He then spent another ${p.percR}% of his remaining money on ${p.itemTwo}.</p>
+      `;
+      if (p.question == "percentage") {
+        const remaining = 100 - p.percA;
+        const itemTwoP = (remaining / 100) * p.percR;
+        if (itemTwoP % 1 != 0) return updateCalc();
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `What percentage of his money did he spend on ${p.itemTwo}?`
+        );
+      }
+      if (p.question == "percentage left") {
+        const remaining = 100 - p.percA;
+        const itemTwoP = (remaining / 100) * p.percR;
+        if (itemTwoP % 1 != 0) return updateCalc();
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `What percentage of his money did he have left?`
+        );
+      }
+      if (
+        p.question == "amount left" ||
+        p.question == "firstItem" ||
+        p.question == "secondItem"
+      ) {
+        const remaining = 100 - p.percA;
+        const itemTwoP = (remaining / 100) * p.percR;
+        if (itemTwoP % 1 != 0) return updateCalc();
+        const spentP = (genNumbers(99) + 10) * (p.percA + itemTwoP);
+        const onePercent = spentP / (p.percA + itemTwoP);
+        const leftAmount = onePercent * (100 - itemTwoP - p.percA);
+
+        if (p.question == "amount left") {
+          p.answer = leftAmount;
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            `He spent $${spentP.toLocaleString("en-US")}.</p>
+          How much does he have left?`
+          );
+        }
+        if (p.question == "firstItem") {
+          p.answer = onePercent * p.percA;
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            `He spent $${spentP.toLocaleString("en-US")}.</p>
+          How much did he spend on ${p.itemOne}?`
+          );
+        }
+        if (p.question == "secondItem") {
+          p.answer = onePercent * itemTwoP;
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            `He spent $${spentP.toLocaleString("en-US")}.</p>
+            How much did he spend on ${p.itemTwo}?`
+          );
+        }
+      }
     }
   }
   //   if (setting == 1) {
@@ -13247,6 +13311,20 @@ function handleSubmit(e) {
         correctAnswer = `${p.answer[0]}:${p.answer[1]}:${p.answer[2]}`;
 
       if (setting == 16) correctAnswer = p.answer;
+
+      if (setting == 17) {
+        if (p.question == "percentage") {
+          const remaining = 100 - p.percA;
+          const itemTwoP = (remaining / 100) * p.percR;
+          correctAnswer = itemTwoP;
+        } else if (p.question == "percentage left") {
+          const remaining = 100 - p.percA;
+          const itemTwoP = (remaining / 100) * p.percR;
+          correctAnswer = 100 - itemTwoP - p.percA;
+        } else {
+          correctAnswer = p.answer;
+        }
+      }
       skipGlobalUpdateProblem = 0;
     }
     // heuristics Answer
@@ -16893,7 +16971,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(16, calArr, setting, 99);
+    setting = calArrAll(17, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -17145,12 +17223,30 @@ function genProblems() {
       };
     }
 
+    //PERCETAGE: REPEATED GROUP
     if (setting == 16) {
       return {
         percA: (genNumbers(20) + 1) * 5,
         firstSentence: ["B and C", "the total"][genNumbers(2)],
         percB: (genNumbers(20) + 1) * 5,
         secondSentence: ["C", "the total"][genNumbers(2)],
+        answer: undefined,
+      };
+    }
+    //PERCENTAGE: REMAINDER CONCEPT
+    if (setting == 17) {
+      return {
+        percA: (genNumbers(20 - 1) + 1) * 5,
+        itemOne: ["toys", "chocolates", "food"][genNumbers(3)],
+        percR: (genNumbers(20 - 1) + 1) * 5,
+        itemTwo: ["sweets", "candy", "erasers"][genNumbers(3)],
+        question: [
+          "percentage left",
+          "percentage",
+          "amount left",
+          "firstItem",
+          "secondItem",
+        ][genNumbers(5)],
         answer: undefined,
       };
     }
@@ -19767,12 +19863,12 @@ function buttonLevelSetting() {
       level = "calFive";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Fractions: Identical Numerator (Type 2)\n\n8. Ratio: Repeated Identity\n9. Ratio: Repeated Group\n10. Ratio: Identical Total\n11. Ratio: Unchanged Object\n12. Ratio: Unchanged Total\n13. Ratio: Unchanged Difference\n14. Ratio: Manipulation in units\n\n15. Percentage: Repeated Identity\n16. Percentage: Repeated Group"
+        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Fractions: Identical Numerator (Type 2)\n\n8. Ratio: Repeated Identity\n9. Ratio: Repeated Group\n10. Ratio: Identical Total\n11. Ratio: Unchanged Object\n12. Ratio: Unchanged Total\n13. Ratio: Unchanged Difference\n14. Ratio: Manipulation in units\n\n15. Percentage: Repeated Identity\n16. Percentage: Repeated Group\n17. Percentage: Remainder Concept"
       );
       if (
-        ![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 99].includes(
-          setting * 1
-        ) &&
+        ![
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 99,
+        ].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 99;
