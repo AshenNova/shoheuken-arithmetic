@@ -13,6 +13,25 @@ const reverseCalculation = (method, numerator, denominator, value) => {
   }
 };
 
+const simplifyThree = (first, second, third) => {
+  let sortArr = [first, second, third];
+  sortArr.sort(function (a, b) {
+    return b - a;
+  });
+  const max = sortArr[0];
+  const min = sortArr[sortArr.length - 1];
+  for (let i = min; i <= max; i++) {
+    if (i == 1) i += 1;
+    while (first % i == 0 && second % i == 0 && third % i == 0) {
+      console.log(min, max);
+      first /= i;
+      second /= i;
+      third /= i;
+    }
+  }
+  return [first, second, third];
+};
+
 function swap(first, second) {
   return ([first, second] = [second, first]);
 }
@@ -106,4 +125,5 @@ export {
   genUniqNum,
   updateCalc,
   reverseCalculation,
+  simplifyThree,
 };

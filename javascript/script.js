@@ -12,9 +12,9 @@ import {
   updateCalc,
   genUniqNum,
   reverseCalculation,
+  simplifyThree,
 } from "./otherFunctions.js";
 // import { resetStuff } from "./reset.js";
-
 let buttonLevel = 0;
 let mulLevel = 0;
 let scoreNeeded = 0;
@@ -7973,7 +7973,7 @@ function updateProblems() {
       // END DISPLAY
     }
     // NORMAL DISPLAY
-    if ([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].includes(setting * 1)) {
+    if ([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].includes(setting * 1)) {
       displayProblem.style.textAlign = "left";
       displayProblem.style.fontSize = "18px";
       wholeNumberContainer.classList.remove("hidden");
@@ -8860,6 +8860,80 @@ function updateProblems() {
       ${lineOne}</p>
       ${lineTwo}</p>
       What is the ratio of A:B:C?`;
+    }
+
+    if (setting == 16) {
+      const displayA = p.percA;
+      const displayB = p.percB;
+      if (p.firstSentence == "the total" && p.secondSentence == "the total") {
+        if (p.percA + p.percB >= 100) return updateCalc();
+      }
+      let commonGroup = undefined;
+      let newA = undefined;
+      let newB = undefined;
+      let newC = undefined;
+      if (p.firstSentence == "B and C" && p.secondSentence == "C") {
+        let bAndc = 100;
+        [p.percA, bAndc] = simplify(p.percA, bAndc);
+        let c = 100;
+        [p.percB, c] = simplify(p.percB, c);
+        commonGroup = commonDeno(bAndc, p.percB + c);
+        const multiplierOne = commonGroup / bAndc;
+        newA = p.percA * multiplierOne;
+        const multiplierTwo = commonGroup / (p.percB + c);
+        newB = p.percB * multiplierTwo;
+        newC = c * multiplierTwo;
+        [newA, newB, newC] = simplifyThree(newA, newB, newC);
+        p.answer = `${newA}:${newB}:${newC}`;
+      }
+      if (p.firstSentence == "the total" && p.secondSentence == "C") {
+        let bAndc = 100 - p.percA;
+        [p.percA, bAndc] = simplify(p.percA, bAndc);
+        let c = 100;
+        [p.percB, c] = simplify(p.percB, c);
+        commonGroup = commonDeno(bAndc, p.percB + c);
+        const multiplierOne = commonGroup / bAndc;
+        newA = p.percA * multiplierOne;
+        const multiplierTwo = commonGroup / (p.percB + c);
+        newB = p.percB * multiplierTwo;
+        newC = c * multiplierTwo;
+        [newA, newB, newC] = simplifyThree(newA, newB, newC);
+        p.answer = `${newA}:${newB}:${newC}`;
+      }
+      if (p.firstSentence == "B and C" && p.secondSentence == "the total") {
+        let bAndc = 100;
+        [p.percA, bAndc] = simplify(p.percA, bAndc);
+        let aAndc = 100 - p.percB;
+        [p.percB, aAndc] = simplify(p.percB, aAndc);
+        commonGroup = commonDeno(p.percA + bAndc, p.percB + aAndc);
+        const multiplierOne = commonGroup / (p.percA + bAndc);
+        newA = p.percA * multiplierOne;
+        const multiplierTwo = commonGroup / (p.percB + aAndc);
+        newB = p.percB * multiplierTwo;
+        newC = aAndc * multiplierTwo - newA;
+        [newA, newB, newC] = simplifyThree(newA, newB, newC);
+        p.answer = `${newA}:${newB}:${newC}`;
+      }
+      if (p.firstSentence == "the total" && p.secondSentence == "the total") {
+        let bAndc = 100 - p.percA;
+        [p.percA, bAndc] = simplify(p.percA, bAndc);
+        let aAndc = 100 - p.percB;
+        [p.percB, aAndc] = simplify(p.percB, aAndc);
+        commonGroup = commonDeno(p.percA + bAndc, p.percB + aAndc);
+        const multiplierOne = commonGroup / (p.percA + bAndc);
+        newA = p.percA * multiplierOne;
+        const multiplierTwo = commonGroup / (p.percB + aAndc);
+        newB = p.percB * multiplierTwo;
+        newC = aAndc * multiplierTwo - newA;
+        [newA, newB, newC] = simplifyThree(newA, newB, newC);
+        p.answer = `${newA}:${newB}:${newC}`;
+      }
+      if (newA > 150 || newB > 150 || newC > 150) return updateCalc();
+      displayProblem.innerHTML = `
+      A is ${displayA}% of ${p.firstSentence}.</p>
+      B is ${displayB}% of ${p.secondSentence}.</p>
+      What is the ratio of A : B : C?
+      `;
     }
   }
   //   if (setting == 1) {
@@ -13172,6 +13246,7 @@ function handleSubmit(e) {
       if (setting == 15)
         correctAnswer = `${p.answer[0]}:${p.answer[1]}:${p.answer[2]}`;
 
+      if (setting == 16) correctAnswer = p.answer;
       skipGlobalUpdateProblem = 0;
     }
     // heuristics Answer
@@ -16818,7 +16893,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(15, calArr, setting, 99);
+    setting = calArrAll(16, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -17066,6 +17141,16 @@ function genProblems() {
         varB: (genNumbers(12) + 1) * 5,
         // choiceTwo: ["A", "B"][genNumbers(2)],
         varC: undefined,
+        answer: undefined,
+      };
+    }
+
+    if (setting == 16) {
+      return {
+        percA: (genNumbers(20) + 1) * 5,
+        firstSentence: ["B and C", "the total"][genNumbers(2)],
+        percB: (genNumbers(20) + 1) * 5,
+        secondSentence: ["C", "the total"][genNumbers(2)],
         answer: undefined,
       };
     }
@@ -19682,10 +19767,10 @@ function buttonLevelSetting() {
       level = "calFive";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Fractions: Identical Numerator (Type 2)\n\n8. Ratio: Repeated Identity\n9. Ratio: Repeated Group\n10. Ratio: Identical Total\n11. Ratio: Unchanged Object\n12. Ratio: Unchanged Total\n13. Ratio: Unchanged Difference\n14. Ratio: Manipulation in units\n\n15. Percentage: Repeated Identity"
+        "What level?\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Fractions: Identical Numerator (Type 2)\n\n8. Ratio: Repeated Identity\n9. Ratio: Repeated Group\n10. Ratio: Identical Total\n11. Ratio: Unchanged Object\n12. Ratio: Unchanged Total\n13. Ratio: Unchanged Difference\n14. Ratio: Manipulation in units\n\n15. Percentage: Repeated Identity\n16. Percentage: Repeated Group"
       );
       if (
-        ![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 99].includes(
+        ![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 99].includes(
           setting * 1
         ) &&
         !setting.split("").includes("-")
