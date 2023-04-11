@@ -7974,7 +7974,9 @@ function updateProblems() {
     }
     // NORMAL DISPLAY
     if (
-      [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17].includes(setting * 1)
+      [0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17].includes(
+        setting * 1
+      )
     ) {
       displayProblem.style.textAlign = "left";
       displayProblem.style.fontSize = "18px";
@@ -7988,43 +7990,53 @@ function updateProblems() {
       threeDenominator.classList.remove("hidden");
     }
 
-    // if (setting == 0) {
-    //   let equationArr = [1, "A", 3, "B", 5, "C", 7, "D", 9];
-    //   let holdNum = [p.numOne, p.numTwo, p.numThree, p.numFour, p.numFive];
-    //   let holdSym = ["+", "-", "*", "/"];
-    //   console.log(equationArr);
-    //   let numArr = [1, 3, 5, 7, 9];
-    //   for (let i = 0; i < 5; i++) {
-    //     const chosenNum = numArr[genNumbers(numArr.length)];
-    //     console.log(chosenNum);
-    //     const position = numArr.indexOf(chosenNum);
-    //     const splicedNum = numArr.splice(position, 1);
-    //     console.log(numArr, splicedNum);
-    //     const positionInArr = equationArr.indexOf(chosenNum);
-    //     console.log("PositionInArr: " + positionInArr);
-    //     equationArr.splice(positionInArr, 1);
-    //     equationArr.splice(positionInArr, 0, holdNum[i]);
-    //     console.log(equationArr);
-    //   }
-    //   let alpArr = ["A", "B", "C", "D"];
-    //   for (let i = 0; i < 4; i++) {
-    //     const chosenNum = alpArr[genNumbers(alpArr.length)];
-    //     console.log(chosenNum);
-    //     const position = alpArr.indexOf(chosenNum);
-    //     const splicedNum = alpArr.splice(position, 1);
-    //     console.log(alpArr, splicedNum);
-    //     const positionInArr = equationArr.indexOf(chosenNum);
-    //     console.log("PositionInArr: " + positionInArr);
-    //     equationArr.splice(positionInArr, 1);
-    //     equationArr.splice(positionInArr, 0, holdSym[i]);
-    //   }
-    //   console.log(equationArr);
-    //   let str = equationArr.join("");
-    //   let n = eval(str);
-    //   if (n % 1 != 1) {
-    //     return updateCalc();
-    //   }
-    // }
+    if (setting == 0) {
+      for (let i = 0; i < 5; i++) {
+        if (p.arrConstructor.length == 0) {
+          p.arrConstructor.push(genNumbers(50) * 2);
+        } else {
+          p.arrConstructor.push(genNumbers(100 - 1) + 1);
+        }
+        if (p.arrConstructor[p.arrConstructor.length - 3] == "/") {
+          console.log(p.arrConstructor);
+          p.arrConstructor.pop();
+          console.log(p.arrConstructor);
+        }
+
+        let symbolChoice = p.arrSymbol[genNumbers(p.arrSymbol.length)];
+        if (symbolChoice == "/") {
+          // const value = eval(p.arrConstructor.join(""));
+          const value = p.arrConstructor[p.arrConstructor.length - 1];
+          console.log(value);
+          if (value <= 0) return updateCalc();
+          let arrFactor = [];
+          for (let i = 2; i <= value; i++) {
+            if (value % i == 0) {
+              arrFactor.push(i);
+            }
+          }
+          console.log(arrFactor);
+          p.arrConstructor.push(symbolChoice);
+          if (arrFactor.length < 4) return updateCalc();
+          const factor = arrFactor[genNumbers(arrFactor.length / 2 - 1) + 1];
+          p.arrConstructor.push(factor);
+        } else {
+          p.arrConstructor.push(symbolChoice);
+        }
+        let index = p.arrSymbol.indexOf(symbolChoice);
+        p.arrSymbol.splice(index, 1);
+        console.log(`${p.arrSymbol} remaining`);
+        console.log(p.arrConstructor);
+      }
+      p.arrConstructor.pop();
+      console.log(p.arrConstructor);
+      p.answer = eval(p.arrConstructor.join(""));
+      if (p.answer <= 0) return updateCalc();
+      console.log(p.answer);
+      const replaceTimes = p.arrConstructor.join(" ").replace("*", "x");
+      const final = replaceTimes.replace("/", "÷");
+      displayProblem.innerHTML = `Solve:</p>${final}`;
+    }
 
     if (setting == 1) {
       fractionsContainerTwo.classList.add("hidden");
@@ -13112,6 +13124,9 @@ function handleSubmit(e) {
       skipGlobalUpdateProblem = 0;
     }
     if (level == "calFive") {
+      if (setting == 0) {
+        correctAnswer = p.answer;
+      }
       if (setting == 1) {
         console.log(
           p.numeratorOne,
@@ -16976,11 +16991,10 @@ function genProblems() {
 
     if (setting == 0) {
       return {
-        numOne: genNumbers(20) + 1,
-        numTwo: genNumbers(20) + 1,
-        numThree: genNumbers(20) + 1,
-        numFour: genNumbers(20) + 1,
-        numFive: genNumbers(20) + 1,
+        arrSymbol: ["+", "-", "*", "/"],
+        arrBrackets: ["(", ")"],
+        arrConstructor: [],
+        answer: undefined,
       };
     }
     if (setting == 1) {
@@ -19867,7 +19881,7 @@ function buttonLevelSetting() {
       );
       if (
         ![
-          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 99,
+          0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 99,
         ].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
