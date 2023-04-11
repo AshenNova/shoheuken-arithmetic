@@ -13232,7 +13232,10 @@ function handleSubmit(e) {
           const commonNum = commonDeno(otherNumA, otherNumB);
           const multiOne = commonNum / otherNumA;
           const multiTwo = commonNum / otherNumB;
-          correctAnswer = `${p.denoA * multiOne}:${p.denoB * multiTwo}`;
+          let lastA = p.denoA * multiOne
+          let lastB = p.denoB * multiTwo
+          [lastA, lastB] = simplify(lastA, lastB);
+          correctAnswer = `${lastA}:${lastB}`;
         }
       }
       if (setting == 6) {
