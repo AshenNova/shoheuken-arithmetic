@@ -8030,12 +8030,35 @@ function updateProblems() {
       }
       p.arrConstructor.pop();
       console.log(p.arrConstructor);
+      // inserting brackets
+      const bracketSymbols = ["+", "-", "*"];
+      const chosenSymbol = bracketSymbols[genNumbers(3)];
+      const indexSymbol = p.arrConstructor.indexOf(chosenSymbol);
+      bracketSymbols.splice(bracketSymbols.indexOf(chosenSymbol), 1);
+      p.arrConstructor.splice(indexSymbol - 1, 0, "(");
+      let chosenSymbolTwo = bracketSymbols[genNumbers(2)];
+      let indexSymbolTwo = p.arrConstructor.indexOf(chosenSymbolTwo);
+      // while (indexSymbolTwo < indexSymbol) {
+      //   chosenSymbolTwo = bracketSymbols[genNumbers(2)];
+      //   indexSymbolTwo = p.arrConstructor.indexOf(chosenSymbolTwo);
+      // }
+      if (indexSymbolTwo < indexSymbol) return updateCalc();
+      p.arrConstructor.splice(indexSymbolTwo + 2, 0, ")");
+      if (
+        p.arrConstructor[0] == "(" &&
+        p.arrConstructor[p.arrConstructor.length - 1] == ")"
+      ) {
+        p.arrConstructor.pop();
+        p.arrConstructor.shift();
+      }
+      //Evaluting number statement
       p.answer = eval(p.arrConstructor.join(""));
-      if (p.answer <= 0) return updateCalc();
+      if (p.answer <= 0 || p.answer % 1 != 0) return updateCalc();
       console.log(p.answer);
       const replaceTimes = p.arrConstructor.join(" ").replace("*", "x");
       const final = replaceTimes.replace("/", "÷");
-      displayProblem.innerHTML = `Solve:</p>${final}`;
+      const statement = ["Solve", "Evaluate", "Simplify"][genNumbers(3)];
+      displayProblem.innerHTML = `${statement}:</p>${final}`;
     }
 
     if (setting == 1) {
