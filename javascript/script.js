@@ -8002,7 +8002,9 @@ function updateProblems() {
           p.arrConstructor.pop();
           console.log(p.arrConstructor);
         }
-
+        const equation = p.arrConstructor.join(" ");
+        console.log(equation);
+        if (equation < 0) return updateCalc();
         let symbolChoice = p.arrSymbol[genNumbers(p.arrSymbol.length)];
         if (symbolChoice == "/") {
           // const value = eval(p.arrConstructor.join(""));
@@ -8054,7 +8056,7 @@ function updateProblems() {
       //Evaluting number statement
       p.answer = eval(p.arrConstructor.join(""));
       if (p.answer <= 0 || p.answer % 1 != 0) return updateCalc();
-      console.log(p.answer);
+      // console.log(p.answer);
       const replaceTimes = p.arrConstructor.join(" ").replace("*", "x");
       const final = replaceTimes.replace("/", "÷");
       const statement = ["Solve", "Evaluate", "Simplify"][genNumbers(3)];
