@@ -9105,6 +9105,76 @@ function updateProblems() {
         `<p><i>Round your answer to 2 decimal places if needed.</i>`
       );
     }
+    // PERCENTAGE: GST AND SERVICE CHARGE
+    if (setting == 19) {
+      if (p.optionOne == "simple gst") {
+        displayProblem.innerHTML = `
+      Person ${p.person} bought something which cost $${p.value.toLocaleString(
+          "en-US"
+        )}.</p>
+      He has to also pay a GST of ${p.gst}%.</p>
+      `;
+      }
+      if (p.optionTwo == "gst") {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          "How much was the cost of GST?"
+        );
+      }
+      if (p.optionTwo == "cost") {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          "How much did he have to pay in the end?"
+        );
+      }
+      if (p.optionOne == "service") {
+        // const serviceCharge = (p.value / 100) * 10;
+        // if (serviceCharge.toString().split(".")[1] > 2) return updateCalc();
+        // const gst = (serviceCharge / 100) * p.gst;
+        // if (gst.toString().split(".")[1] > 2) return updateCalc();
+        // const bill = p.value + serviceCharge + gst;
+        const furtherIncrease = (110 / 100) * 108;
+        console.log(accDecimal(furtherIncrease));
+        const bill = (genNumbers(89) + 10) * furtherIncrease;
+        p.value = bill / furtherIncrease;
+        if (bill.toString().split(".")[1].length > 2) return updateCalc();
+        displayProblem.innerHTML = `
+        Person ${p.person} hosted a party at a ${
+          genNumbers(2) == 0 ? "restaurant" : "cafe"
+        }.</p>
+        There was a 10% service charge,</p>
+        and GST of ${p.gst}%.</p>
+        The final bill was $${bill.toLocaleString("en-US")}.</p>
+        How much was cost of the sub-total?</p>
+        `;
+      }
+      if (p.optionOne == "discount gst") {
+        if (p.optionThree == "final cost") {
+          displayProblem.innerHTML = `
+        Person ${
+          p.person
+        } bought something which cost $${p.value.toLocaleString("en-US")}.</p>
+        He was given a ${p.discount}% discount,</p>
+        and has to pay ${p.gst}% GST.</p>
+        What was the final cost?</p>
+        <i>Round off your answer to 2 decimal places if needed</i>`;
+        }
+        if (p.optionThree == "initial cost") {
+          const percFinal = ((100 - p.discount) / 100) * (100 + p.gst);
+          const bill = ((genNumbers(89) + 10) / 100) * percFinal;
+          console.log(bill.toString().split(".")[1].length > 2);
+          if (bill.toString().split(".")[1].length > 2) return updateCalc();
+          p.value = bill / (percFinal / 100);
+          displayProblem.innerHTML = `
+        Person ${p.person} bought something.</p>
+        He was given a ${p.discount}% discount,</p>
+        and has to pay ${p.gst}% GST.</p>
+        The final cost was $${bill.toLocaleString("en-US")}.</p>
+        How much did the item cost at first?
+        `;
+        }
+      }
+    }
   }
   //   if (setting == 1) {
   //     // START CHANGE DISPLAY
@@ -13485,6 +13555,29 @@ function handleSubmit(e) {
         }
         correctAnswer = accDecimal(correctAnswer.toFixed(2));
       }
+      if (setting == 19) {
+        if (p.optionOne == "simple gst") {
+          if (p.optionTwo == "gst") {
+            correctAnswer = (p.value / 100) * p.gst;
+          }
+          if (p.optionTwo == "cost") {
+            correctAnswer = (p.value / 100) * (100 + p.gst);
+          }
+        }
+        if (p.optionOne == "service") {
+          correctAnswer = p.value;
+        }
+        if (p.optionOne == "discount gst") {
+          if (p.optionThree == "final cost") {
+            correctAnswer =
+              (((p.value / 100) * (100 - p.discount)) / 100) *
+              (100 + p.gst).toFixed(2);
+          }
+          if (p.optionThree == "initial cost") {
+            correctAnswer = accDecimal(p.value);
+          }
+        }
+      }
       skipGlobalUpdateProblem = 0;
     }
     // heuristics Answer
@@ -17421,6 +17514,18 @@ function genProblems() {
         furtherDiscount: (genNumbers(10 - 1) + 1) * 5,
       };
     }
+    // PERCENTAGE: GST AND SERVICE CHARGE
+    if (setting == 19) {
+      return {
+        person: ["A", "B", "C"][genNumbers(3)],
+        optionOne: ["discount gst", "service", "simple gst"][genNumbers(3)],
+        value: genNumbers(8999) + 1000,
+        gst: 8,
+        optionTwo: ["gst", "cost"][genNumbers(2)],
+        discount: (genNumbers(10) + 1) * 5,
+        optionThree: ["final cost", "initial cost"][genNumbers(2)],
+      };
+    }
   }
   // heuristics value
   // setting
@@ -20034,7 +20139,7 @@ function buttonLevelSetting() {
       level = "calFive";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n0. Order of Operation\n\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Fractions: Identical Numerator (Type 2)\n\n8. Ratio: Repeated Identity\n9. Ratio: Repeated Group\n10. Ratio: Identical Total\n11. Ratio: Unchanged Object\n12. Ratio: Unchanged Total\n13. Ratio: Unchanged Difference\n14. Ratio: Manipulation in units\n\n15. Percentage: Repeated Identity\n16. Percentage: Repeated Group\n17. Percentage: Remainder Concept\n18. Percentage: Simple and Further discount"
+        "What level?\n0. Order of Operation\n\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Fractions: Identical Numerator (Type 2)\n\n8. Ratio: Repeated Identity\n9. Ratio: Repeated Group\n10. Ratio: Identical Total\n11. Ratio: Unchanged Object\n12. Ratio: Unchanged Total\n13. Ratio: Unchanged Difference\n14. Ratio: Manipulation in units\n\n15. Percentage: Repeated Identity\n16. Percentage: Repeated Group\n17. Percentage: Remainder Concept\n18. Percentage: Simple and Further discount\n19. Percentage: GST, discount and Service Charge"
       );
       if (
         ![
