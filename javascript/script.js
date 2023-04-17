@@ -590,6 +590,7 @@ function calArrAll(max, arr, setting, maxSetting, level) {
       if (level == "calOne" || level == "calTwo" || level == "calThree") {
         min = 3;
       }
+      if (level == "calFive") min = 0;
       for (let i = min; i < max + 1; i++) {
         arr.push(i);
       }
@@ -7974,9 +7975,9 @@ function updateProblems() {
     }
     // NORMAL DISPLAY
     if (
-      [0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19].includes(
-        setting * 1
-      )
+      [
+        0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+      ].includes(setting * 1)
     ) {
       displayProblem.style.textAlign = "left";
       displayProblem.style.fontSize = "18px";
@@ -8344,8 +8345,59 @@ function updateProblems() {
         p.answer = (p.numOne / (newDenoTwo - newDenoOne)) * (p.nume * multiOne);
       }
     }
-
+    // FRACTIONS: BEFORE AND AFTER LIKE FRACTIONS
     if (setting == 8) {
+      const gender = genNumbers(2) == 0 ? "he" : "she";
+      [p.numeOne, p.denoOne] = simplify(p.numeOne, p.denoOne);
+      [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
+      if (p.numeOne == p.numeTwo && p.denoOne == p.denoTwo) return updateCalc();
+
+      p.last_deno = commonDeno(p.denoOne, p.denoTwo);
+      const mulOne = p.last_deno / p.denoOne;
+      const mulTwo = p.last_deno / p.denoTwo;
+      const new_numeOne = mulOne * p.numeOne;
+      const new_numeTwo = mulTwo * p.numeTwo;
+
+      if (p.direction == "+" && p.version == 0) {
+        if (p.numeTwo / p.denoTwo <= p.numeOne / p.denOne) return updateCalc();
+        const valueUnit = p.last_deno - new_numeOne - new_numeTwo;
+        while (p.situation % valueUnit != 0) p.situation -= 1;
+        p.oneUnit = p.situation / valueUnit;
+        displayProblem.innerHTML = `
+      Person ${p.person} wanted to buy something, but only had ${p.numeOne}/${p.denoOne} of the amount.</p>
+      After receiving another $${p.situation}, ${gender} is still short of ${p.numeTwo}/${p.denoTwo}.</p>
+      How much is the item?
+      `;
+      }
+      if (p.direction == "+" && p.version == 1) {
+        // if (p.numeTwo / p.denoTwo <= p.numeOne / p.denOne) return updateCalc();
+        const valueUnit = p.last_deno + new_numeTwo - new_numeOne;
+        while (p.situation % valueUnit != 0) p.situation -= 1;
+        p.oneUnit = p.situation / valueUnit;
+        displayProblem.innerHTML = `
+      Person ${p.person} wanted to buy something, but only had ${p.numeOne}/${p.denoOne} of the cost.</p>
+      After receiving another $${p.situation}, ${gender} has an extra of ${p.numeTwo}/${p.denoTwo} of the cost.</p>
+      How much is the item?
+      `;
+      }
+      if (p.direction == "-") {
+        if (p.numeTwo / p.denoTwo >= p.numeOne / p.denoOne) return updateCalc();
+        const valueUnit = new_numeOne - new_numeTwo;
+        while (p.situation % valueUnit != 0) p.situation -= 1;
+        p.oneUnit = p.situation / valueUnit;
+        displayProblem.innerHTML = `
+      Person ${p.person} gave away some of ${
+          gender == "she" ? "her" : "his"
+        } money and had ${p.numeOne}/${p.denoOne} of it left.</p>
+      ${gender} then spent another $${p.situation}, and now has ${p.numeTwo}/${
+          p.denoTwo
+        } of it left.</p>
+      How much did ${gender} have at first?
+      `;
+      }
+    }
+    // RATIO: REPEATED IDENTITY
+    if (setting == 9) {
       let lineOne = "";
       if (p.firstSentence == "unit") {
         p.unitTwo = 1;
@@ -8407,7 +8459,7 @@ function updateProblems() {
       `;
     }
     //  REPEATED GROUP RATIO
-    if (setting == 9) {
+    if (setting == 10) {
       let total = p.varA + p.varB + p.varC;
       let firstTotal = undefined;
       let secondTotal = undefined;
@@ -8462,7 +8514,7 @@ function updateProblems() {
       }
     }
     // RATIO: IDENTICAL TOTAL
-    if (setting == 10) {
+    if (setting == 11) {
       console.log(p.objects);
       const objectA = p.objects[0];
       const objectB = p.objects[1];
@@ -8501,7 +8553,7 @@ function updateProblems() {
         );
       }
     }
-    if (setting == 11) {
+    if (setting == 12) {
       let unitAF = "";
       let unitBF = "";
       let unitAE = "";
@@ -8666,7 +8718,7 @@ function updateProblems() {
       `;
     }
 
-    if (setting == 12) {
+    if (setting == 13) {
       let unitAF = "";
       let unitBF = "";
       let unitAE = "";
@@ -8770,7 +8822,7 @@ function updateProblems() {
       ${lineThree}</p>
       ${lineFour}`;
     }
-    if (setting == 13) {
+    if (setting == 14) {
       let unitAF = "";
       let unitBF = "";
       let unitAE = "";
@@ -8854,7 +8906,7 @@ function updateProblems() {
       `;
     }
     // RATIO: MANIPULATION IN UNITS
-    if (setting == 14) {
+    if (setting == 15) {
       [p.ratioA, p.ratioB] = simplify(p.ratioA, p.ratioB);
       [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
       if (p.numeA > p.denoA) [p.numeA, p.denoA] = [p.denoA, p.numeA];
@@ -8870,7 +8922,7 @@ function updateProblems() {
       `;
     }
     // REPEATED IDENTITY PERCENTAGE
-    if (setting == 15) {
+    if (setting == 16) {
       let lineOne = undefined;
       let tempArr = [];
       if (p.choice == "B") {
@@ -8900,8 +8952,8 @@ function updateProblems() {
       ${lineTwo}</p>
       What is the ratio of A:B:C?`;
     }
-
-    if (setting == 16) {
+    // RATIO: REPEATED GROUP
+    if (setting == 17) {
       const displayA = p.percA;
       const displayB = p.percB;
       if (p.firstSentence == "the total" && p.secondSentence == "the total") {
@@ -8975,7 +9027,7 @@ function updateProblems() {
       `;
     }
     // PERCENTAGE: REMAINDER CONCEPT
-    if (setting == 17) {
+    if (setting == 18) {
       displayProblem.innerHTML = `
       Person A spent ${p.percA}% of his money on ${p.itemOne}.</p>
       He then spent another ${p.percR}% of his remaining money on ${p.itemTwo}.</p>
@@ -9037,7 +9089,7 @@ function updateProblems() {
       }
     }
     // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-    if (setting == 18) {
+    if (setting == 19) {
       if (p.frontBack == "front") {
         if (p.moreDiscount == 0) {
           displayProblem.innerHTML = `
@@ -9106,7 +9158,7 @@ function updateProblems() {
       );
     }
     // PERCENTAGE: GST AND SERVICE CHARGE
-    if (setting == 19) {
+    if (setting == 20) {
       if (p.optionOne == "simple gst") {
         displayProblem.innerHTML = `
       Person ${p.person} bought something which cost $${p.value.toLocaleString(
@@ -13422,9 +13474,17 @@ function handleSubmit(e) {
         correctAnswer = p.answer;
       }
       if (setting == 8) {
+        // if (p.direction == "+") {
+        //   correctAnswer = p.oneUnit * p.last_deno;
+        // }
+        correctAnswer = p.oneUnit * p.last_deno;
+      }
+      // RATIO: REPEATED IDENTITY
+      if (setting == 9) {
         correctAnswer = `${calArrQns[5]}:${calArrQns[6]}:${calArrQns[8]}`;
       }
-      if (setting == 9) {
+      // RATIO: REPEATED GROUP
+      if (setting == 10) {
         // if (p.firstScene == "total" && p.secondScene == "total") {
         correctAnswer = `${p.answer[0]}:${p.answer[1]}:${p.answer[2]}`;
         // }
@@ -13437,7 +13497,7 @@ function handleSubmit(e) {
       // }
 
       // RATIO: IDENTICAL TOTAL
-      if (setting == 10) {
+      if (setting == 11) {
         const totalA = p.ratioA + p.ratioB;
         const totalB = p.ratioC + p.ratioD;
         const commonTotal = commonDeno(totalA, totalB);
@@ -13461,7 +13521,8 @@ function handleSubmit(e) {
           correctAnswer = `${newB}:${newD}`;
         }
       }
-      if (setting == 11) {
+      // RATIO: UNCHANGED OBJ
+      if (setting == 12) {
         console.log(p.valueAFirst, p.valueBFirst, p.valueAEnd, p.valueBEnd);
         // if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
         // if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
@@ -13469,32 +13530,36 @@ function handleSubmit(e) {
         // if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
         correctAnswer = p.answer;
       }
-      if (setting == 12) {
-        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
-        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
-        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
-        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
-      }
-      // WORK ON ANSWER
+      // RATIO: UNCHANGED TOTAL
       if (setting == 13) {
         if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
         if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
         if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
         if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
       }
+      // RATIO: UNCHANGED DIFFERENCE
       if (setting == 14) {
+        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
+        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
+        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
+        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
+      }
+      // RATIO: MANIPULATION IN UNITS
+      if (setting == 15) {
         const commonNumber = commonDeno(p.denoA, p.denoB);
         let end_A = ((p.ratioA * (p.denoA - p.numeA)) / p.denoA) * commonNumber;
         let end_B = ((p.ratioB * (p.denoB - p.numeB)) / p.denoB) * commonNumber;
         [end_A, end_B] = simplify(end_A, end_B);
         correctAnswer = `${end_A}:${end_B}`;
       }
-      if (setting == 15)
+      // PERCENTAGE: REPEATED IDENTITY
+      if (setting == 16)
         correctAnswer = `${p.answer[0]}:${p.answer[1]}:${p.answer[2]}`;
 
-      if (setting == 16) correctAnswer = p.answer;
+      if (setting == 17) correctAnswer = p.answer;
 
-      if (setting == 17) {
+      // PERCENTAGE: REMAINDER CONCEPT
+      if (setting == 18) {
         if (p.question == "percentage") {
           const remaining = 100 - p.percA;
           const itemTwoP = (remaining / 100) * p.percR;
@@ -13508,7 +13573,7 @@ function handleSubmit(e) {
         }
       }
       // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-      if (setting == 18) {
+      if (setting == 19) {
         if (p.frontBack == "front") {
           if (p.moreDiscount == 0) {
             if (p.discountOrPrice == "price") {
@@ -13555,7 +13620,9 @@ function handleSubmit(e) {
         }
         correctAnswer = accDecimal(correctAnswer.toFixed(2));
       }
-      if (setting == 19) {
+
+      // PERCENTAGE: GST, DISCOUNT AND SERVICE CHARGE
+      if (setting == 20) {
         if (p.optionOne == "simple gst") {
           if (p.optionTwo == "gst") {
             correctAnswer = (p.value / 100) * p.gst;
@@ -17224,7 +17291,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(19, calArr, setting, 99);
+    setting = calArrAll(20, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -17346,8 +17413,27 @@ function genProblems() {
         somethingElse: ["toys", "sweets", "games", "pens"][genNumbers(4)],
       };
     }
-    //repeated identity [Ratio]
+
+    // FRACTION: BEFORE AND AFTER LIKE FRACTIONS
     if (setting == 8) {
+      const gen_denoOne = genNumbers(10 - 2) + 2;
+      const gen_denoTwo = genNumbers(10 - 2) + 2;
+      return {
+        person: ["A", "B", "C"][genNumbers(3)],
+        denoOne: gen_denoOne,
+        numeOne: genNumbers(gen_denoOne - 1) + 1,
+        denoTwo: gen_denoTwo,
+        numeTwo: genNumbers(gen_denoTwo - 1) + 1,
+        situation: genNumbers(899) + 10,
+        direction: ["+", "-"][genNumbers(2)],
+        oneUnit: undefined,
+        last_deno: undefined,
+        version: genNumbers(2),
+      };
+    }
+
+    //repeated identity [Ratio]
+    if (setting == 9) {
       const arrSomething = ["books", "homeworks", "pencils", "pens"];
       return {
         something: arrSomething[genNumbers(arrSomething.length)],
@@ -17368,7 +17454,7 @@ function genProblems() {
       };
     }
     // REPEATED GROUP RATIO
-    if (setting == 9) {
+    if (setting == 10) {
       let A = genNumbers(10) + 1;
       return {
         varA: A,
@@ -17380,7 +17466,7 @@ function genProblems() {
       };
     }
     // RATIO: IDENTICAL TOTAL
-    if (setting == 10) {
+    if (setting == 11) {
       const genObjects = genNumbers(3);
       return {
         position: genObjects,
@@ -17396,7 +17482,7 @@ function genProblems() {
         question: [1, 2, 3][genNumbers(3)],
       };
     }
-    if (setting == 11) {
+    if (setting == 12) {
       console.log("Unchanged Object");
       return {
         object: ["sweets", "toys", "books"][genNumbers(3)],
@@ -17411,7 +17497,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 12) {
+    if (setting == 13) {
       console.log("Unchanged Total");
       const valueA = genNumbers(40) + 10;
       const valueB = genNumbers(40) + 10;
@@ -17429,7 +17515,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 13) {
+    if (setting == 14) {
       console.log("Unchanged Difference");
       const valueA = genNumbers(40) + 10;
       const valueB = genNumbers(40) + 10;
@@ -17448,7 +17534,7 @@ function genProblems() {
       };
     }
     // RATIO: MANIPULATION IN UNITS
-    if (setting == 14) {
+    if (setting == 15) {
       const gen_A = genNumbers(5) + 2;
       const gen_B = genNumbers(5) + 2;
       const genDeno_A = [genNumbers(gen_A - 2) + 2, gen_A * 2][genNumbers(2)];
@@ -17463,7 +17549,7 @@ function genProblems() {
       };
     }
     // REPEATED IDENTITY PERCENTAGE
-    if (setting == 15) {
+    if (setting == 16) {
       let A = (genNumbers(18) + 1) * 5;
       return {
         varA: A,
@@ -17476,7 +17562,7 @@ function genProblems() {
     }
 
     //PERCETAGE: REPEATED GROUP
-    if (setting == 16) {
+    if (setting == 17) {
       return {
         percA: (genNumbers(20) + 1) * 5,
         firstSentence: ["B and C", "the total"][genNumbers(2)],
@@ -17486,7 +17572,7 @@ function genProblems() {
       };
     }
     //PERCENTAGE: REMAINDER CONCEPT
-    if (setting == 17) {
+    if (setting == 18) {
       return {
         percA: (genNumbers(20 - 1) + 1) * 5,
         itemOne: ["toys", "chocolates", "food"][genNumbers(3)],
@@ -17503,7 +17589,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-    if (setting == 18) {
+    if (setting == 19) {
       return {
         person: ["A", "B", "C"][genNumbers(3)],
         cost: genNumbers(899) + 100,
@@ -17515,7 +17601,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: GST AND SERVICE CHARGE
-    if (setting == 19) {
+    if (setting == 20) {
       return {
         person: ["A", "B", "C"][genNumbers(3)],
         optionOne: ["discount gst", "service", "simple gst"][genNumbers(3)],
@@ -20139,12 +20225,12 @@ function buttonLevelSetting() {
       level = "calFive";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n0. Order of Operation\n\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Fractions: Identical Numerator (Type 2)\n\n8. Ratio: Repeated Identity\n9. Ratio: Repeated Group\n10. Ratio: Identical Total\n11. Ratio: Unchanged Object\n12. Ratio: Unchanged Total\n13. Ratio: Unchanged Difference\n14. Ratio: Manipulation in units\n\n15. Percentage: Repeated Identity\n16. Percentage: Repeated Group\n17. Percentage: Remainder Concept\n18. Percentage: Simple and Further discount\n19. Percentage: GST, discount and Service Charge"
+        "What level?\n0. Order of Operation\n\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Fractions: Identical Numerator (Type 2)\n8. Fractions: Before and after like fractions\n\n9. Ratio: Repeated Identity\n10. Ratio: Repeated Group\n11. Ratio: Identical Total\n12. Ratio: Unchanged Object\n13. Ratio: Unchanged Total\n14. Ratio: Unchanged Difference\n15. Ratio: Manipulation in units\n\n16. Percentage: Repeated Identity\n17. Percentage: Repeated Group\n18. Percentage: Remainder Concept\n19. Percentage: Simple and Further discount\n20. Percentage: GST, discount and Service Charge"
       );
       if (
         ![
           0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-          99,
+          20, 99,
         ].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
