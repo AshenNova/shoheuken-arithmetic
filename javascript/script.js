@@ -8361,7 +8361,9 @@ function updateProblems() {
       const new_numeTwo = mulTwo * p.numeTwo;
 
       if (p.direction == "+" && p.version == 0) {
-        if (p.numeTwo / p.denoTwo <= p.numeOne / p.denOne) return updateCalc();
+        const firstFraction = p.numeOne / p.denoOne;
+        const secondFraction = p.numeTwo / p.denoTwo;
+        if (secondFraction <= firstFraction) return updateCalc();
         const valueUnit = p.last_deno - new_numeOne - new_numeTwo;
         while (p.situation % valueUnit != 0) p.situation -= 1;
         p.oneUnit = p.situation / valueUnit;
@@ -17456,10 +17458,12 @@ function genProblems() {
         denoTwo: gen_denoTwo,
         numeTwo: genNumbers(gen_denoTwo - 1) + 1,
         situation: genNumbers(899) + 10,
-        direction: ["+", "-"][genNumbers(2)],
+        // direction: ["+", "-"][genNumbers(2)],
+        direction: "-",
         oneUnit: undefined,
         last_deno: undefined,
         version: genNumbers(2),
+        // version: 1,
       };
     }
 
