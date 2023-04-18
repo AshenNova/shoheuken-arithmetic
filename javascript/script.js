@@ -29,6 +29,7 @@ const helpMe = document.querySelector(".help-me-text");
 const ourForm = document.querySelector(".our-form");
 const ourForm2 = document.querySelector(".our-form2");
 const userInput = document.getElementById("user-input");
+// const userInputOptions = document.getElementById("user-input-options");
 const userInput2 = document.getElementById("user-input2");
 const currentScore = document.getElementById("current-score");
 const currentMistake = document.getElementById("current-mistake");
@@ -51,6 +52,7 @@ const hardcoreMode = document.querySelector(".hardcore-mode");
 const easyMode = document.querySelector(".easy-mode");
 const reviewAnswer = document.querySelector(".fa-hire-a-helper");
 const inputBoxCl = document.querySelector(".input-box");
+const optionsBox = document.querySelector(".optionsBox");
 
 const imageG = document.createElement("img");
 const imageS = document.createElement("img");
@@ -7976,7 +7978,7 @@ function updateProblems() {
     // NORMAL DISPLAY
     if (
       [
-        0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+        0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
       ].includes(setting * 1)
     ) {
       displayProblem.style.textAlign = "left";
@@ -9226,6 +9228,31 @@ function updateProblems() {
         `;
         }
       }
+    }
+    //AVERAGE: SIMPLE
+    if (setting == 21) {
+      const averageList = [];
+      for (let i = 0; i < p.variables; i++) {
+        const zero = genNumbers(5);
+        if (zero == 0 && !averageList.includes(0)) {
+          averageList.push(0);
+        } else {
+          averageList.push(genNumbers(50) + 1);
+        }
+      }
+      const sum = averageList.reduce(function (a, b) {
+        return a + b;
+      });
+      p.answer = sum / averageList.length;
+
+      // console.log(p.answer.toString().split(".")[1].length > 3);
+      if (p.answer % 1 != 0) {
+        if (p.answer.toString().split(".")[1].length > 3) return updateCalc();
+      }
+      // if (p.answer.toString().split(".")[1].length > 3) return updateCalc();
+      displayProblem.innerHTML = `
+      Find the average of: </p>${averageList.join(", ")}
+      `;
     }
   }
   //   if (setting == 1) {
@@ -13645,6 +13672,10 @@ function handleSubmit(e) {
           }
         }
       }
+
+      if (setting == 21) {
+        correctAnswer = p.answer;
+      }
       skipGlobalUpdateProblem = 0;
     }
     // heuristics Answer
@@ -17291,7 +17322,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(20, calArr, setting, 99);
+    setting = calArrAll(21, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -17610,6 +17641,14 @@ function genProblems() {
         optionTwo: ["gst", "cost"][genNumbers(2)],
         discount: (genNumbers(10) + 1) * 5,
         optionThree: ["final cost", "initial cost"][genNumbers(2)],
+      };
+    }
+
+    // AVERAGE: SIMPLE
+    if (setting == 21) {
+      return {
+        variables: genNumbers(5) + 2,
+        answer: undefined,
       };
     }
   }
@@ -20224,13 +20263,25 @@ function buttonLevelSetting() {
     case "Cal.5":
       level = "calFive";
       scoreNeeded = 10;
+      // optionsBox.classList.remove("hidden");
+      // const html = `
+      // 0. Order of Operation</p>
+      // </p>
+      // 1. Fractions: Multiplication of Fractions</p>
+      // `;
+      // optionsBox.insertAdjacentHTML("afterbegin", html);
+      // console.log(userInputOptions);
+      // calBtn[4].addEventListener("click", function () {
       setting = prompt(
-        "What level?\n0. Order of Operation\n\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Fractions: Identical Numerator (Type 2)\n8. Fractions: Before and after like fractions\n\n9. Ratio: Repeated Identity\n10. Ratio: Repeated Group\n11. Ratio: Identical Total\n12. Ratio: Unchanged Object\n13. Ratio: Unchanged Total\n14. Ratio: Unchanged Difference\n15. Ratio: Manipulation in units\n\n16. Percentage: Repeated Identity\n17. Percentage: Repeated Group\n18. Percentage: Remainder Concept\n19. Percentage: Simple and Further discount\n20. Percentage: GST, discount and Service Charge"
+        "What level?\n0. Order of Operation\n\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Fractions: Identical Numerator (Type 2)\n8. Fractions: Before and after like fractions\n\n9. Ratio: Repeated Identity\n10. Ratio: Repeated Group\n11. Ratio: Identical Total\n12. Ratio: Unchanged Object\n13. Ratio: Unchanged Total\n14. Ratio: Unchanged Difference\n15. Ratio: Manipulation in units\n\n16. Percentage: Repeated Identity\n17. Percentage: Repeated Group\n18. Percentage: Remainder Concept\n19. Percentage: Simple and Further discount\n20. Percentage: GST, discount and Service Charge\n\n 21. Average: Simple\n\n99. All"
       );
+      // });
+
+      // optionsBox.classList.add("hidden");
       if (
         ![
           0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-          20, 99,
+          20, 21, 99,
         ].includes(setting * 1) &&
         !setting.split("").includes("-")
       )

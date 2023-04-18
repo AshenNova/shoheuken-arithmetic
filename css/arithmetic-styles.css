@@ -141,10 +141,29 @@ table {
   justify-content: center;
   align-items: center;
 }
+
+.optionsBox {
+  text-align: left;
+  position: absolute;
+  margin: auto;
+  top: 11%;
+  left: 5%;
+  height: auto;
+  max-height: 100%;
+  width: auto;
+  border-radius: 10px;
+  background-color: white;
+  z-index: 9;
+  text-align: left;
+  border-style: solid;
+  overflow: auto;
+}
+
 .title-box {
   margin-bottom: 25px;
   text-align: center;
 }
+
 .main-box {
   width: 400px;
   height: 400px;
