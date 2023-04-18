@@ -19320,7 +19320,8 @@ function buttonLevelSetting() {
     case "Level 3.16":
       level = 3.16;
       setting = prompt(
-        "1. Triangle Pattern\n2. Continuous Pattern\n3. Square Number Pattern\n4. Position Pattern\n\n9. All"
+        "1. Triangle Pattern\n2. Continuous Pattern\n3. Square Number Pattern\n4. Position Pattern\n\n9. All",
+        9
       );
       // checkRange(setting, calcArr);
 
@@ -19393,7 +19394,7 @@ function buttonLevelSetting() {
       break;
 
     case "Level 3.19":
-      difficulty = prompt("1. Basics\n2. Reverse\n\n9. All");
+      difficulty = prompt("1. Basics\n2. Reverse\n\n9. All", 9);
       level = 3.19;
       scoreNeeded = 20;
       gold = highScore3DotZero19.time;
@@ -19504,7 +19505,8 @@ function buttonLevelSetting() {
 
     case "Level 4.08":
       setting = prompt(
-        "1. Decimal Conversion: Big to Small\n2. Decimal Conversion: Small to Big\n\n9. All"
+        "1. Decimal Conversion: Big to Small\n2. Decimal Conversion: Small to Big\n\n9. All",
+        9
       );
       if (setting != 1 && setting != 2 && setting != 9) setting = 9;
       level = 4.08;
@@ -19548,7 +19550,8 @@ function buttonLevelSetting() {
 
     case "Level 4.11":
       setting = prompt(
-        "1. Mixed to improper fraction\n2. Improper to Mixed fraction\n\n9. All"
+        "1. Mixed to improper fraction\n2. Improper to Mixed fraction\n\n9. All",
+        9
       );
       level = 4.11;
       scoreNeeded = 20;
@@ -19572,7 +19575,8 @@ function buttonLevelSetting() {
       scoreNeeded = 30;
       setting = Math.abs(
         prompt(
-          "1. Numerator with value\n2. Multiplication of Fractions\n\n9. All"
+          "1. Numerator with value\n2. Multiplication of Fractions\n\n9. All",
+          9
         )
       );
       gold = 134;
@@ -19811,7 +19815,8 @@ function buttonLevelSetting() {
 
     case "Level 5.01":
       setting = prompt(
-        "1. Like Fractions\n2. Remainder Concept ( Friendly )\n3. Remainder Concept ( UnFriendly )\n\n9. All"
+        "1. Like Fractions\n2. Remainder Concept ( Friendly )\n3. Remainder Concept ( UnFriendly )\n\n9. All",
+        9
       );
       if (setting != 1 && setting != 2 && setting != 3 && setting != 9)
         setting = 9;
@@ -19883,7 +19888,7 @@ function buttonLevelSetting() {
       break;
 
     case "Level 5.06":
-      choice = prompt("1. Right-angled Triangle\n2. Obtuse-triangle");
+      choice = prompt("1. Right-angled Triangle\n2. Obtuse-triangle", 2);
       if (choice != 1 && choice != 2) {
         choice = 2;
       }
