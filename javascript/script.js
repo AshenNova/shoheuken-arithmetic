@@ -7979,7 +7979,7 @@ function updateProblems() {
     // NORMAL DISPLAY
     if (
       [
-        0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+        0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
       ].includes(setting * 1)
     ) {
       displayProblem.style.textAlign = "left";
@@ -9270,6 +9270,52 @@ function updateProblems() {
         The average of the following numbers is ${sum / averageList.length}.</p>
         ${str}
         `;
+      }
+    }
+
+    //AVERAGE: INTERNAL CHANGE
+    if (setting == 22) {
+      const oldAverage = (p.numOne + p.numTwo + p.numThree) / 3;
+      if (oldAverage % 1 != 0) {
+        if (oldAverage.toString().split(".")[1].length > 3) return updateCalc();
+      }
+      const newAverage = (p.numOne + p.numTwo + p.numThree + p.situation) / 3;
+      if (newAverage % 1 != 0) {
+        if (newAverage.toString().split(".")[1].length > 3) return updateCalc();
+      }
+      if (p.version == 0) {
+        p.answer = newAverage;
+        displayProblem.innerHTML = `
+      Person A has ${p.numOne}.</p>
+      Person B has ${p.numTwo}.</p>
+      Person C has ${p.numThree}.</p>
+      Person ${p.choice} ${
+          p.situation > 0 ? "increased" : "decreased"
+        } by ${Math.abs(p.situation)}.</p>
+      What is the new average?</p>
+      `;
+      }
+      if (p.version == 1) {
+        p.answer = p.numThree;
+        displayProblem.innerHTML = `
+      There are 3 people in a group.</p>
+      The average at first was ${oldAverage}.</p>
+      Something happened to Person C.</p>
+      Person C became ${p.numThree + p.situation} in the end.</p>
+      The average became ${newAverage}.</p>
+      What was Person C at first?
+      `;
+      }
+      if (p.version == 2) {
+        p.answer = p.numThree + p.situation;
+        displayProblem.innerHTML = `
+      There are 3 people in a group.</p>
+      The average at first was ${oldAverage}.</p>
+      Something happened to Person C.</p>
+      Person C was ${p.numThree} at first.</p>
+      The average became ${newAverage}.</p>
+      What is Person C in the end?
+      `;
       }
     }
   }
@@ -13694,6 +13740,7 @@ function handleSubmit(e) {
       if (setting == 21) {
         correctAnswer = p.answer;
       }
+      if (setting == 22) correctAnswer = p.answer;
       skipGlobalUpdateProblem = 0;
     }
     // heuristics Answer
@@ -17340,7 +17387,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(21, calArr, setting, 99);
+    setting = calArrAll(22, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -17670,6 +17717,20 @@ function genProblems() {
         version: genNumbers(2),
         // version: 0,
         variables: genNumbers(5) + 2,
+        answer: undefined,
+      };
+    }
+
+    //AVERAGE:INTERNAL CHANGE
+    if (setting == 22) {
+      return {
+        version: genNumbers(3),
+        // version: 2,
+        numOne: genNumbers(25) + 25,
+        numTwo: genNumbers(25) + 25,
+        numThree: genNumbers(25) + 25,
+        choice: ["A", "B", "C"][genNumbers(3)],
+        situation: genNumbers(50) - 25,
         answer: undefined,
       };
     }
@@ -20318,6 +20379,7 @@ function buttonLevelSetting() {
       20. Percentage: GST, discount and Service Charge</p>
       <hr></hr>
       21. Average: Simple</p>
+      22. Average: Internal change</p>
       <hr></hr>
       </p>99. All
       
@@ -20332,7 +20394,7 @@ function buttonLevelSetting() {
       if (
         ![
           0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-          20, 21, 99,
+          20, 21, 22, 99,
         ].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
