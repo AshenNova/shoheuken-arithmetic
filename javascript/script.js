@@ -651,6 +651,7 @@ for (let x = 0; x < backButton.length; x++) {
   backButton[x].addEventListener("click", function () {
     levelSetting.classList.remove("hidden");
     startBox.classList.add("hidden");
+    optionsBox.classList.add("hidden")
 
     resetStuff();
   });
@@ -13613,8 +13614,8 @@ function handleSubmit(e) {
 
       // RATIO: IDENTICAL TOTAL
       if (setting == 11) {
-        const totalA = p.ratioA + p.ratioB;
-        const totalB = p.ratioC + p.ratioD;
+        let totalA = p.ratioA + p.ratioB;
+        let totalB = p.ratioC + p.ratioD;
         const commonTotal = commonDeno(totalA, totalB);
         const multiOne = commonTotal / totalA;
         const multiTwo = commonTotal / totalB;
