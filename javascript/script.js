@@ -439,6 +439,7 @@ function clickStart() {
         userInput.focus();
       }
       timer2();
+      optionsBox.classList.add("hidden");
       updateProblems();
     }
   }, 1000);
@@ -9245,16 +9246,31 @@ function updateProblems() {
       const sum = averageList.reduce(function (a, b) {
         return a + b;
       });
-      p.answer = sum / averageList.length;
-
+      const average = sum / averageList.length;
       // console.log(p.answer.toString().split(".")[1].length > 3);
-      if (p.answer % 1 != 0) {
-        if (p.answer.toString().split(".")[1].length > 3) return updateCalc();
+      if (average % 1 != 0) {
+        if (average.toString().split(".")[1].length > 3) return updateCalc();
       }
       // if (p.answer.toString().split(".")[1].length > 3) return updateCalc();
-      displayProblem.innerHTML = `
+      if (p.version == 0) {
+        p.answer = average;
+        displayProblem.innerHTML = `
       Find the average of: </p>${averageList.join(", ")}
       `;
+      }
+      if (p.version == 1) {
+        const unknownNum = averageList[genNumbers(averageList.length)];
+        console.log(unknownNum, averageList);
+        p.answer = unknownNum;
+        let str = averageList.join(", ");
+        console.log(str);
+        str = str.replace(unknownNum, "? ");
+        displayProblem.innerHTML = `
+        Find the missing number.</p>
+        The average of the following numbers is ${sum / averageList.length}.</p>
+        ${str}
+        `;
+      }
     }
   }
   //   if (setting == 1) {
@@ -17651,6 +17667,8 @@ function genProblems() {
     // AVERAGE: SIMPLE
     if (setting == 21) {
       return {
+        version: genNumbers(2),
+        // version: 0,
         variables: genNumbers(5) + 2,
         answer: undefined,
       };
@@ -20272,18 +20290,42 @@ function buttonLevelSetting() {
     case "Cal.5":
       level = "calFive";
       scoreNeeded = 10;
-      // optionsBox.classList.remove("hidden");
-      // const html = `
-      // 0. Order of Operation</p>
-      // </p>
-      // 1. Fractions: Multiplication of Fractions</p>
-      // `;
-      // optionsBox.insertAdjacentHTML("afterbegin", html);
+      optionsBox.classList.remove("hidden");
+      const html = `
+      0. Order of Operation</p>
+      <hr></hr>
+      1. Fractions: Multiplication of Fractions</p>
+      2. Fractions: Mixed Fraction Multiplication</p>
+      3. Fractions: Conversion</p>
+      4. Fractions: Remainder Concept</p>
+      5. Fractions: Identical Numerator</p>
+      6. Fractions: Unlike Fraction with Permission</p>
+      7. Fractions: Identical Numerator (Type 2)</p>
+      8. Fractions: Before and after like fractions</p>
+      <hr></hr>
+      9. Ratio: Repeated Identity</p>
+      10. Ratio: Repeated Group</p>
+      11. Ratio: Identical Total</p>
+      12. Ratio: Unchanged Object</p>
+      13. Ratio: Unchanged Total</p>
+      14. Ratio: Unchanged Difference</p>
+      15. Ratio: Manipulation in units</p>
+      <hr></hr>
+      16. Percentage: Repeated Identity</p>
+      17. Percentage: Repeated Group</p>
+      18. Percentage: Remainder Concept</p>
+      19. Percentage: Simple and Further discount</p>
+      20. Percentage: GST, discount and Service Charge</p>
+      <hr></hr>
+      21. Average: Simple</p>
+      <hr></hr>
+      </p>99. All
+      
+      `;
+      optionsBox.insertAdjacentHTML("beforeend", html);
       // console.log(userInputOptions);
       // calBtn[4].addEventListener("click", function () {
-      setting = prompt(
-        "What level?\n0. Order of Operation\n\n1. Fractions: Multiplication of Fractions\n2. Fractions: Mixed Fraction Multiplication\n3. Fractions: Conversion\n4. Fractions: Remainder Concept\n5. Fractions: Identical Numerator\n6. Fractions: Unlike Fraction with Permission\n7. Fractions: Identical Numerator (Type 2)\n8. Fractions: Before and after like fractions\n\n9. Ratio: Repeated Identity\n10. Ratio: Repeated Group\n11. Ratio: Identical Total\n12. Ratio: Unchanged Object\n13. Ratio: Unchanged Total\n14. Ratio: Unchanged Difference\n15. Ratio: Manipulation in units\n\n16. Percentage: Repeated Identity\n17. Percentage: Repeated Group\n18. Percentage: Remainder Concept\n19. Percentage: Simple and Further discount\n20. Percentage: GST, discount and Service Charge\n\n 21. Average: Simple\n\n99. All"
-      );
+      setting = prompt("What level?", 99);
       // });
 
       // optionsBox.classList.add("hidden");

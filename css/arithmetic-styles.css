@@ -146,15 +146,15 @@ table {
   text-align: left;
   position: absolute;
   margin: auto;
-  top: 11%;
+  padding-bottom: 2%;
+  top: 2%;
   left: 5%;
   height: auto;
-  max-height: 100%;
+  max-height: 95%;
   width: auto;
   border-radius: 10px;
-  background-color: white;
+  background-color: whitesmoke;
   z-index: 9;
-  text-align: left;
   border-style: solid;
   overflow: auto;
 }
