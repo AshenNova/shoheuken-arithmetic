@@ -7980,6 +7980,7 @@ function updateProblems() {
     if (
       [
         0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
+        23,
       ].includes(setting * 1)
     ) {
       displayProblem.style.textAlign = "left";
@@ -9317,6 +9318,29 @@ function updateProblems() {
       What is Person C in the end?
       `;
       }
+    }
+    //AVERAGE: EXTERNAL CHANGE
+    if (setting == 23) {
+      if (p.changeQuantity == 0) return updateCalc();
+      p.changeQuantity > 0 ? (p.situation = "joined") : (p.situation = "left");
+      const oldTotal = p.oldQuantity * p.oldAverage;
+      // const newTotal = (p.oldQuantity + p.changeQuantity) * p.newAverage;
+      const newTotal = oldTotal + p.changeQuantity * p.average;
+      if (p.oldQuantity + p.changeQuantity == 0) return updateCalc();
+      const newAverage = newTotal / (p.oldQuantity + p.changeQuantity);
+
+      if (newAverage <= 0) return updateCalc();
+      if (newAverage % 1 != 0) {
+        if (newAverage.toString().split(".")[1] > 3) return updateCalc();
+      }
+      displayProblem.innerHTML = `
+      A group's average at first was ${p.oldAverage}.</p>
+      After ${Math.abs(p.changeQuantity)} students ${p.situation}, ${
+        p.changeQuantity == 1 ? "whose" : "their"
+      } average is ${p.average}.</p>
+      The average became ${newAverage}.</p>
+      How many students were there ${p.question}?
+      `;
     }
   }
   //   if (setting == 1) {
@@ -13741,6 +13765,14 @@ function handleSubmit(e) {
         correctAnswer = p.answer;
       }
       if (setting == 22) correctAnswer = p.answer;
+      if (setting == 23) {
+        if (p.question == "at first") {
+          correctAnswer = p.oldQuantity;
+        }
+        if (p.question == "in the end") {
+          correctAnswer = p.oldQuantity + p.changeQuantity;
+        }
+      }
       skipGlobalUpdateProblem = 0;
     }
     // heuristics Answer
@@ -17387,7 +17419,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(22, calArr, setting, 99);
+    setting = calArrAll(23, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -17732,6 +17764,19 @@ function genProblems() {
         choice: ["A", "B", "C"][genNumbers(3)],
         situation: genNumbers(50) - 25,
         answer: undefined,
+      };
+    }
+
+    if (setting == 23) {
+      return {
+        oldQuantity: genNumbers(6) + 2,
+        oldAverage: genNumbers(40) + 10,
+        // newAverage: genNumbers(40) + 10,
+        average: genNumbers(40) + 10,
+        // sitAverage: genNumbers(40) + 10,
+        changeQuantity: genNumbers(6) - 3,
+        situation: undefined,
+        question: ["at first", "in the end"][genNumbers(2)],
       };
     }
   }
@@ -20352,7 +20397,9 @@ function buttonLevelSetting() {
       level = "calFive";
       scoreNeeded = 10;
       optionsBox.classList.remove("hidden");
+      optionsBox.textContent = `Available settings:`;
       const html = `
+      </p>
       0. Order of Operation</p>
       <hr></hr>
       1. Fractions: Multiplication of Fractions</p>
@@ -20380,6 +20427,7 @@ function buttonLevelSetting() {
       <hr></hr>
       21. Average: Simple</p>
       22. Average: Internal change</p>
+      23. Average: External Change</p>
       <hr></hr>
       </p>99. All
       
@@ -20394,7 +20442,7 @@ function buttonLevelSetting() {
       if (
         ![
           0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-          20, 21, 22, 99,
+          20, 21, 22, 23, 99,
         ].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
