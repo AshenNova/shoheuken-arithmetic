@@ -651,7 +651,7 @@ for (let x = 0; x < backButton.length; x++) {
   backButton[x].addEventListener("click", function () {
     levelSetting.classList.remove("hidden");
     startBox.classList.add("hidden");
-    optionsBox.classList.add("hidden")
+    optionsBox.classList.add("hidden");
 
     resetStuff();
   });
@@ -7067,10 +7067,14 @@ function updateProblems() {
       wholeNumberContainer.classList.add("hidden");
       workingContainer.classList.remove("hidden");
     }
-    if (setting == 7 || setting == 8) {
+    if (setting == 7 || setting == 8 || setting == 9) {
       displayProblem.style.fontSize = "24px";
       wholeNumberContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
+      if (setting == 9) {
+        displayProblem.style.fontSize = "20px";
+        displayProblem.style.textAlign = "left";
+      }
     }
     if (setting == 1) {
       const numOneStr = p.numOne.toString();
@@ -7264,6 +7268,60 @@ function updateProblems() {
       arr[p.position] = "____";
       let displayStr = arr.join(", "); //Change arr to string
       displayProblem.innerHTML = displayStr;
+    }
+
+    //TIME: TIMELINE
+    if (setting == 9) {
+      if (p.beforeAfter == "before") {
+        let timeHours = p.hours;
+        let zone = "a.m";
+        if (p.hours == 0) {
+          timeHours = 12;
+        }
+        if (p.hours > 12) {
+          timeHours -= 12;
+          zone = "p.m";
+        }
+        let minText = p.mins;
+        minText = minText.toString();
+        if (minText.length == 1) {
+          minText = `0${minText}`;
+        }
+        displayProblem.innerHTML = `
+        Something started at ${timeHours}.${minText} ${zone}</p>
+        It lasted for ${
+          p.hoursMins == "hours"
+            ? `${p.situationHours} h`
+            : `${p.situationMins} mins`
+        }.</p>
+        What time did it end?</p>
+        `;
+      }
+      if (p.beforeAfter == "after") {
+        let timeHours = p.hours;
+        let zone = "a.m";
+        if (p.hours == 0) {
+          timeHours = 12;
+        }
+        if (p.hours > 12) {
+          timeHours -= 12;
+          zone = "p.m";
+        }
+        let minText = p.mins;
+        minText = minText.toString();
+        if (minText.length == 1) {
+          minText = `0${minText}`;
+        }
+        displayProblem.innerHTML = `
+        Something ended at ${timeHours}.${minText} ${zone}</p>
+        It lasted for ${
+          p.hoursMins == "hours"
+            ? `${p.situationHours} h`
+            : `${p.situationMins} mins`
+        }.</p>
+        What time did it start?</p>
+        `;
+      }
     }
   }
   if (level == "calThree") {
@@ -13279,6 +13337,68 @@ function handleSubmit(e) {
       if (setting == 7 || setting == 8) {
         correctAnswer = p.answer;
       }
+      if (setting == 9) {
+        if (p.beforeAfter == "before") {
+          let totalTime = undefined;
+          if (p.hoursMins == "hours") {
+            totalTime = p.hours * 60 + p.mins + p.situationHours * 60;
+          }
+          if (p.hoursMins == "mins") {
+            totalTime = p.hours * 60 + p.mins + p.situationMins;
+          }
+          let hours = Math.floor(totalTime / 60);
+          let mins = totalTime % 60;
+          console.log(totalTime, hours, mins);
+          let zone = "am";
+          if (hours > 12 && hours < 24) {
+            hours -= 12;
+            zone = "pm";
+          }
+          if (hours == 24) {
+            hours -= 12;
+            zone = "am";
+          }
+          if (hours > 24) {
+            hours -= 24;
+            zone = "am";
+          }
+          correctAnswer = `${hours}.${mins}${zone}`;
+          if (mins.toString().length == 1) {
+            correctAnswer = `${hours}.0${mins}${zone}`;
+          }
+          if (mins.toString().length == 0) {
+            correctAnswer = `${hours}${zone}`;
+          }
+        }
+        if (p.beforeAfter == "after") {
+          let totalTime = undefined;
+          if (p.hoursMins == "hours") {
+            totalTime = p.hours * 60 + p.mins - p.situationHours * 60;
+          }
+          if (p.hoursMins == "mins") {
+            totalTime = p.hours * 60 + p.mins - p.situationMins;
+          }
+          if (totalTime < 0) {
+            totalTime = totalTime + 24 * 60;
+          }
+          let hours = Math.floor(totalTime / 60);
+          let mins = totalTime % 60;
+          console.log(totalTime, hours, mins);
+          let zone = "am";
+          if (hours > 12 && hours < 24) {
+            hours -= 12;
+            zone = "pm";
+          }
+          correctAnswer = `${hours}.${mins}${zone}`;
+          if (mins.toString().length == 1) {
+            correctAnswer = `${hours}.0${mins}${zone}`;
+          }
+          if (mins.toString().length == 0) {
+            correctAnswer = `${hours}${zone}`;
+          }
+        }
+      }
+
       skipGlobalUpdateProblem = 0;
     }
     if (level == "calThree") {
@@ -17077,7 +17197,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(8, calArr);
     // }
-    setting = calArrAll(8, calArr, setting, 99, level);
+    setting = calArrAll(9, calArr, setting, 99, level);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let hundreds = genNumbers(9) + 1;
@@ -17159,6 +17279,17 @@ function genProblems() {
         diffTwo: genNumbers(200) - 100,
         position: genNumbers(6),
         answer: undefined,
+      };
+    }
+    // TIME: TIMELINE
+    if (setting == 9) {
+      return {
+        hours: genNumbers(24),
+        mins: genNumbers(60),
+        hoursMins: ["hours", "mins"][genNumbers(2)],
+        situationHours: genNumbers(6) + 1,
+        situationMins: genNumbers(60 - 1) + 1,
+        beforeAfter: ["before", "after"][genNumbers(2)],
       };
     }
   }
@@ -20356,7 +20487,7 @@ function buttonLevelSetting() {
       level = "calTwo";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing\n3. Addition (to-1000) (Carrying)\n4. Subtraction (to 1000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger"
+        "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing\n3. Addition (to-1000) (Carrying)\n4. Subtraction (to 1000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Time: Timeline"
       );
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
