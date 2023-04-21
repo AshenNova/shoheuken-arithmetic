@@ -7346,11 +7346,16 @@ function updateProblems() {
       setting == 10 ||
       setting == 11 ||
       setting == 13 ||
-      setting == 14
+      setting == 14 ||
+      setting == 15
     ) {
       displayProblem.style.fontSize = "24px";
       wholeNumberContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
+      if (setting == 15) {
+        displayProblem.style.fontSize = "20px";
+        displayProblem.style.textAlign = "left";
+      }
     }
     if (setting == 1) {
       const numOneStr = p.numOne.toString();
@@ -7687,6 +7692,51 @@ function updateProblems() {
         displayProblem.innerHTML = `
         A number has a quotient of ${p.quotient} and has ${p.remainder} as its remainder when divided by ${p.divisor}.</p>
         What is the original number?
+        `;
+      }
+    }
+
+    if (setting == 15) {
+      if (p.beforeAfter == "before") {
+        let timeHours = p.hours;
+        let zone = "a.m";
+        if (p.hours == 0) {
+          timeHours = 12;
+        }
+        if (p.hours > 12) {
+          timeHours -= 12;
+          zone = "p.m";
+        }
+        let minText = p.mins;
+        minText = minText.toString();
+        if (minText.length == 1) {
+          minText = `0${minText}`;
+        }
+        displayProblem.innerHTML = `
+        Something started at ${timeHours}.${minText} ${zone}</p>
+        It lasted for ${p.situationHours} h ${p.situationMins} mins.</p>
+        What time did it end?</p>
+        `;
+      }
+      if (p.beforeAfter == "after") {
+        let timeHours = p.hours;
+        let zone = "a.m";
+        if (p.hours == 0) {
+          timeHours = 12;
+        }
+        if (p.hours > 12) {
+          timeHours -= 12;
+          zone = "p.m";
+        }
+        let minText = p.mins;
+        minText = minText.toString();
+        if (minText.length == 1) {
+          minText = `0${minText}`;
+        }
+        displayProblem.innerHTML = `
+        Something ended at ${timeHours}.${minText} ${zone}</p>
+        It lasted for ${p.situationHours} h ${p.situationMins} mins.</p>
+        What time did it start?</p>
         `;
       }
     }
@@ -13452,6 +13502,59 @@ function handleSubmit(e) {
       if (setting == 14) {
         correctAnswer = p.num;
       }
+      if (setting == 15) {
+        if (p.beforeAfter == "before") {
+          let totalTime = undefined;
+          totalTime =
+            (p.hours + p.situationHours) * 60 + (p.mins + p.situationMins);
+          let hours = Math.floor(totalTime / 60);
+          let mins = totalTime % 60;
+          console.log(totalTime, hours, mins);
+          let zone = "am";
+          if (hours > 12 && hours < 24) {
+            hours -= 12;
+            zone = "pm";
+          }
+          if (hours == 24) {
+            hours -= 12;
+            zone = "am";
+          }
+          if (hours > 24) {
+            hours -= 24;
+            zone = "am";
+          }
+          correctAnswer = `${hours}.${mins}${zone}`;
+          if (mins.toString().length == 1) {
+            correctAnswer = `${hours}.0${mins}${zone}`;
+          }
+          if (mins.toString().length == 0) {
+            correctAnswer = `${hours}${zone}`;
+          }
+        }
+        if (p.beforeAfter == "after") {
+          let totalTime = undefined;
+          totalTime =
+            (p.hours - p.situationHours) * 60 + (p.mins - p.situationMins);
+          if (totalTime < 0) {
+            totalTime = totalTime + 24 * 60;
+          }
+          let hours = Math.floor(totalTime / 60);
+          let mins = totalTime % 60;
+          console.log(totalTime, hours, mins);
+          let zone = "am";
+          if (hours > 12 && hours < 24) {
+            hours -= 12;
+            zone = "pm";
+          }
+          correctAnswer = `${hours}.${mins}${zone}`;
+          if (mins.toString().length == 1) {
+            correctAnswer = `${hours}.0${mins}${zone}`;
+          }
+          if (mins.toString().length == 0) {
+            correctAnswer = `${hours}${zone}`;
+          }
+        }
+      }
       skipGlobalUpdateProblem = 0;
     }
 
@@ -15081,10 +15184,10 @@ function handleSubmit(e) {
       // CALCULATIONS
 
       if (level == "calThree") {
-        if (setting == 14) {
-          displayProblem.style.fontSize = "revert";
-          displayProblem.style.textAlign = "revert";
-        }
+        // if (setting == 14) {
+        displayProblem.style.fontSize = "revert";
+        displayProblem.style.textAlign = "revert";
+        // }
       }
 
       if (removeHelpMe.includes(level)) helpMe.textContent = "";
@@ -17299,7 +17402,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(14, calArr, setting, 99, level);
+    setting = calArrAll(15, calArr, setting, 99, level);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let thousands = genNumbers(9) + 1;
@@ -17429,6 +17532,16 @@ function genProblems() {
         quotient: genNumbers(989) + 10,
         remainder: genNumbers(gen_divisor - 1) + 1,
         num: undefined,
+      };
+    }
+
+    if (setting == 15) {
+      return {
+        hours: genNumbers(24),
+        mins: genNumbers(60),
+        situationHours: genNumbers(6) + 1,
+        situationMins: genNumbers(60 - 1) + 1,
+        beforeAfter: ["before", "after"][genNumbers(2)],
       };
     }
   }
@@ -20495,10 +20608,11 @@ function buttonLevelSetting() {
       level = "calThree";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Working: Long Division ( No remainder )\n11. Working: Long Division ( Remainder )\n12. Working: Multiplication ( Single Blank )\n13. Multiplication in sets\n14. Long Division: Simple Statement"
+        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Working: Long Division ( No remainder )\n11. Working: Long Division ( Remainder )\n12. Working: Multiplication ( Single Blank )\n13. Multiplication in sets\n14. Long Division: Simple Statement\n15. Time: Timeline ( hours and mins )",
+        99
       );
       if (
-        ![1, 2, 3, 4, 5, 6, 7, 8, 9, , 10, 11, 12, 13, 14, 99].includes(
+        ![1, 2, 3, 4, 5, 6, 7, 8, 9, , 10, 11, 12, 13, 14, 15, 99].includes(
           setting * 1
         ) &&
         !setting.split("").includes("-")
