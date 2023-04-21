@@ -7274,27 +7274,14 @@ function updateProblems() {
 
     //TIME: TIMELINE
     if (setting == 9) {
+      console.log(`Hours at first: ${p.hours}, Minutes at first: ${p.mins}`);
       let zone = "am";
       let timeHours = p.hours;
       let totalTime = p.hours * 60;
-      if (totalTime < 0 && totalTime < 720) {
-        console.log("Nothing happens");
-      }
-      if (totalTime >= 720 && totalTime < 1440) {
-        zone = "pm";
-      }
-      if (totalTime >= 1440) {
-        zone = "am";
-      }
+      zone = zoneOfDay(totalTime);
+
       if (p.beforeAfter == "before") {
-        // let zone = "a.m";
-        if (p.hours == 0) {
-          timeHours = 12;
-        }
-        if (p.hours > 12) {
-          timeHours -= 12;
-          // zone = "p.m";
-        }
+        timeHours = day12Hours(timeHours);
         let minText = p.mins;
         minText = minText.toString();
         if (minText.length == 1) {
@@ -7311,15 +7298,8 @@ function updateProblems() {
         `;
       }
       if (p.beforeAfter == "after") {
-        // let timeHours = p.hours;
-        // let zone = "a.m";
-        if (p.hours == 0) {
-          timeHours = 12;
-        }
-        if (p.hours > 12) {
-          timeHours -= 12;
-          // zone = "p.m";
-        }
+        // zone = zoneOfDay(totalTime);
+        timeHours = day12Hours(timeHours);
         let minText = p.mins;
         minText = minText.toString();
         if (minText.length == 1) {
@@ -13403,27 +13383,9 @@ function handleSubmit(e) {
           console.log(totalTime, hours, mins);
           // let zone = "am";
           let zone = "am";
-          if (totalTime < 0 && totalTime < 720) {
-            console.log("Nothing happens");
-          }
-          if (totalTime > 721 && totalTime < 1440) {
-            zone = "pm";
-          }
-          if (totalTime >= 1440) {
-            zone = "am";
-          }
-          if (hours > 12 && hours < 24) {
-            hours -= 12;
-            // zone = "pm";
-          }
-          if (hours == 24) {
-            hours -= 12;
-            // zone = "am";
-          }
-          if (hours > 24) {
-            hours -= 24;
-            // zone = "am";
-          }
+          zone = zoneOfDay(totalTime);
+          hours = day12Hours(hours);
+
           correctAnswer = `${hours}.${mins}${zone}`;
           if (mins.toString().length == 1) {
             correctAnswer = `${hours}.0${mins}${zone}`;
@@ -13446,21 +13408,10 @@ function handleSubmit(e) {
           let hours = Math.floor(totalTime / 60);
           let mins = totalTime % 60;
           console.log(totalTime, hours, mins);
-          // let zone = "am";
+
           let zone = "am";
-          if (totalTime < 0 && totalTime < 720) {
-            console.log("Nothing happens");
-          }
-          if (totalTime > 721 && totalTime < 1440) {
-            zone = "pm";
-          }
-          if (totalTime >= 1440) {
-            zone = "am";
-          }
-          if (hours > 12 && hours < 24) {
-            hours -= 12;
-            // zone = "pm";
-          }
+          zone = zoneOfDay(totalTime);
+          hours = day12Hours(hours);
           correctAnswer = `${hours}.${mins}${zone}`;
           if (mins.toString().length == 1) {
             correctAnswer = `${hours}.0${mins}${zone}`;
