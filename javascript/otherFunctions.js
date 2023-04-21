@@ -1,5 +1,41 @@
 import { updateProblems, genNumbers } from "./script.js";
 
+const day12Hours = (hours) => {
+  if (hours == 0) {
+    hours = 12;
+  }
+  if (hours > 0 && hours < 12) {
+    console.log("Nothing happens");
+  }
+  if (hours > 12 && hours < 24) {
+    hours -= 12;
+  }
+  if (hours == 24) {
+    hours -= 12;
+  }
+  if (hours > 24) {
+    hours -= 24;
+  }
+  return hours;
+};
+
+const zoneOfDay = (minutes) => {
+  let zone = "am";
+  // am is 0 < 720
+  // pm is 720 to < 1440
+  if (minutes < 720) {
+    zone = "am";
+  }
+  if (minutes >= 720 && minutes < 1440) {
+    zone = "pm";
+  }
+  if (minutes > 1440 && minutes < 2160) {
+    zone = "am";
+  }
+  console.log(`12 hour format: ${zone}`);
+  return zone;
+};
+
 const reverseCalculation = (method, numerator, denominator, value) => {
   // Using the opposite numerator
   if (method == 0) {
@@ -126,4 +162,6 @@ export {
   updateCalc,
   reverseCalculation,
   simplifyThree,
+  zoneOfDay,
+  day12Hours,
 };
