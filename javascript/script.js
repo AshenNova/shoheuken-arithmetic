@@ -7579,6 +7579,7 @@ function updateProblems() {
       p.replaced = replaceNum;
       str = str.replace(replaceNum, "?");
       firstNum.textContent = str;
+      operator.textContent = "x";
       secondNum.textContent = p.multiplier;
       workingAnswer.textContent = num * p.multiplier;
     }
