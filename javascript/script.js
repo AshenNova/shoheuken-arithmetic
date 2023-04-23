@@ -2504,11 +2504,20 @@ function updateProblems() {
     }
     if (p.pos == 1) activateTwo = 1;
     if (p.pos == 2) activateThree = 1;
-    p.decOne = (p.decOne / 10) * activateOne;
-    p.decTwo = (p.decTwo / 100) * activateTwo;
-    p.decThree = (p.decThree / 1000) * activateThree;
-    p.num = p.wholeNum + p.decOne + p.decTwo + p.decThree;
-    displayProblem.textContent = `${accDecimal(p.num)} ≈ ?`;
+    p.decOne = p.decOne * activateOne;
+    p.decTwo = p.decTwo * activateTwo;
+    p.decThree = p.decThree * activateThree;
+    //bug?
+    if (p.decThree == 5) p.decThree += 1;
+
+    // p.num = p.wholeNum + p.decOne + p.decTwo + p.decThree;
+    // const displayDec = accDecimal(p.num);
+    console.log(p.num, p.wholeNum, p.decOne, p.decTwo, p.decThree);
+    // console.log(`Display: ${displayDec}`);
+    p.num = `${p.wholeNum}.${p.decOne}${p.decTwo}${p.decThree}`;
+    console.log(typeof p.num);
+    p.num *= 1;
+    displayProblem.textContent = `${p.num} ≈ ?`;
   }
   if (level == 4.04) {
     if (p.numOne % 10 == 0) {
@@ -12086,10 +12095,7 @@ function handleSubmit(e) {
     //   decimalCheck(correctAnswer);
     // }
     if (level == 4.03) {
-      if (p.pos == 0) correctAnswer = p.num.toFixed(0);
-      if (p.pos == 1) correctAnswer = p.num.toFixed(1);
-      if (p.pos == 2) correctAnswer = p.num.toFixed(2);
-      if (p.pos == 3) correctAnswer = p.num.toFixed(3);
+      correctAnswer = p.num.toFixed(p.pos);
     }
 
     if (level == 4.04) {
