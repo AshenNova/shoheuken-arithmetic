@@ -2508,7 +2508,7 @@ function updateProblems() {
     p.decTwo = p.decTwo * activateTwo;
     p.decThree = p.decThree * activateThree;
     //bug?
-    if (p.decTwo == 5) p.decTwo += 1;
+    // if (p.decTwo == 5) p.decTwo += 1;
     if (p.decThree == 5) p.decThree += 1;
 
     // p.num = p.wholeNum + p.decOne + p.decTwo + p.decThree;
@@ -10133,6 +10133,99 @@ function updateProblems() {
       (setting == 9 && p.rollz == 1) ||
       (range == 1 && p.rollz == 1)
     ) {
+      // 1. FIRST SENTENCE
+      let diffAB = "more";
+      let diffValueAB = Math.abs(p.valueA - p.valueB);
+      if (diffValueAB == 0) return updateCalc();
+      if (p.valueA < p.valueB) {
+        diffAB = "less";
+      }
+      let lineOne = undefined;
+      if (p.compA == "unit") {
+        lineOne = `A is ${p.unitA} times of B.`;
+        p.arrUnit.push(p.unitA);
+        p.arrUnit.push(1);
+      }
+      if (p.compA == "comp") {
+        lineOne = `A is ${diffValueAB} ${diffAB} than B.`;
+        p.arrUnit.push("comp");
+        p.arrUnit.push("comp");
+      }
+      // 2. SECOND SENTENCE
+      let diffBC = "more";
+      let diffValueBC = Math.abs(p.valueB - p.valueC);
+      if (diffValueBC == 0) return updateCalc();
+      if (p.valueB < p.valueC) {
+        diffBC = "less";
+      }
+      let lineTwo = undefined;
+      if (p.compB == "unit") {
+        lineTwo = `B is ${p.unitB} times of C.`;
+        p.arrUnit.push(p.unitB);
+        p.arrUnit.push(1);
+      }
+      if (p.compB == "comp") {
+        lineTwo = `B is ${diffValueBC} ${diffBC} than C.`;
+        p.arrUnit.push("comp");
+        p.arrUnit.push("comp");
+      }
+      let total = p.valueA + p.valueB + p.valueC;
+      if (p.compA == "unit" && p.compB == "unit") {
+        const commonNum = commonDeno(p.arrUnit[1], p.arrUnit[2]);
+        p.arrUnit.push((p.arrUnit[0] * commonNum) / p.arrUnit[1]);
+        p.arrUnit.push(commonNum);
+        p.arrUnit.push((p.arrUnit[3] * commonNum) / p.arrUnit[2]);
+        const totalUnit = p.arrUnit[4] + p.arrUnit[5] + p.arrUnit[6];
+        if (totalUnit > 10) return updateCalc();
+        total = totalUnit * p.oneUnit;
+      }
+      if (p.compA == "comp" && p.compB == "unit") {
+        p.valueC = p.valueB / p.unitB;
+        if (p.valueC % 1 != 0) return updateCalc();
+        //REVAMP LINEONE
+        diffValueAB = Math.abs(p.valueA - p.valueB);
+        if (diffValueAB == 0) return updateCalc();
+        if (p.valueA < p.valueB) {
+          diffAB = "less";
+        } else {
+          diffAB = "more";
+        }
+        lineOne = `A is ${diffValueAB} ${diffAB} than B.`;
+        total = p.valueA + p.valueB + p.valueC;
+      }
+      if (p.compA == "unit" && p.compB == "comp") {
+        p.valueB = p.valueA / p.unitA;
+        if (p.valueB % 1 != 0) return updateCalc();
+        //REVAMP LINETWO
+        diffValueBC = Math.abs(p.valueB - p.valueC);
+        if (diffValueBC == 0) return updateCalc();
+        if (p.valueB < p.valueC) {
+          diffBC = "less";
+        } else {
+          diffBC = "more";
+        }
+        lineTwo = `B is ${diffValueBC} ${diffBC} than C.`;
+        total = p.valueA + p.valueB + p.valueC;
+      }
+      console.log(p.arrUnit);
+      //3. THIRD SENTENCE (TOTAL)
+
+      const lineThree = `Their total is ${total}.`;
+      //4. FOURTH SENTENCE (QUESTIONS)
+      const lineFour = `Find the value of ${p.find}.`;
+      // Repeated identity
+      displayProblem.innerHTML = `
+      ${lineOne}</p>
+      ${lineTwo}</p>
+      ${lineThree}</p>
+      ${lineFour}`;
+    }
+
+    if (
+      setting == 2 ||
+      (setting == 9 && p.rollz == 2) ||
+      (range == 1 && p.rollz == 2)
+    ) {
       let choice = genNumbers(3);
       let swope = 0;
 
@@ -10262,9 +10355,9 @@ function updateProblems() {
     }
 
     if (
-      setting == 2 ||
-      (setting == 9 && p.rollz == 2) ||
-      (range == 1 && p.rollz == 2)
+      setting == 3 ||
+      (setting == 9 && p.rollz == 3) ||
+      (range == 1 && p.rollz == 3)
     ) {
       let choice = genNumbers(3);
 
@@ -10339,9 +10432,9 @@ function updateProblems() {
     }
 
     if (
-      setting == 3 ||
-      (setting == 9 && p.rollz == 3) ||
-      (range == 1 && p.rollz == 3)
+      setting == 4 ||
+      (setting == 9 && p.rollz == 4) ||
+      (range == 1 && p.rollz == 4)
     ) {
       let oneUnit = (p.startTwo = genNumbers(100) + 1);
       p.startOne = p.unitSentence * oneUnit;
@@ -14408,10 +14501,27 @@ function handleSubmit(e) {
     // answers
 
     if (level == "heuThreeb") {
+      // 1. REPEATED IDENTITY
       if (
         setting == 1 ||
         (setting == 9 && p.rollz == 1) ||
         (range == 1 && p.rollz == 1)
+      ) {
+        if (p.compA == "unit" && p.compB == "unit") {
+          if (p.find == "A") correctAnswer = p.arrUnit[4] * p.oneUnit;
+          if (p.find == "B") correctAnswer = p.arrUnit[5] * p.oneUnit;
+          if (p.find == "C") correctAnswer = p.arrUnit[6] * p.oneUnit;
+        } else {
+          if (p.find == "A") correctAnswer = p.valueA;
+          if (p.find == "B") correctAnswer = p.valueB;
+          if (p.find == "C") correctAnswer = p.valueC;
+        }
+      }
+      // 2.
+      if (
+        setting == 2 ||
+        (setting == 9 && p.rollz == 2) ||
+        (range == 1 && p.rollz == 2)
       ) {
         let difference = undefined;
 
@@ -14473,9 +14583,9 @@ function handleSubmit(e) {
       }
 
       if (
-        setting == 2 ||
-        (setting == 9 && p.roll == 2) ||
-        (range == 1 && p.rollz == 2)
+        setting == 3 ||
+        (setting == 9 && p.roll == 3) ||
+        (range == 1 && p.rollz == 3)
       ) {
         let difference = undefined;
         let oneUnit = undefined;
@@ -14529,9 +14639,9 @@ function handleSubmit(e) {
       }
 
       if (
-        setting == 3 ||
-        (setting == 9 && p.rollz == 3) ||
-        (range == 1 && p.rollz == 3)
+        setting == 4 ||
+        (setting == 9 && p.rollz == 4) ||
+        (range == 1 && p.rollz == 4)
       ) {
         if (p.answer == "A") {
           correctAnswer = p.startOne;
@@ -18473,16 +18583,17 @@ function genProblems() {
       (range == 1 && roll == 1)
     ) {
       return {
-        objectOne: ["A", "B", "C"][genNumbers(3)],
-        objectTwo: ["X", "Y", "Z"][genNumbers(3)],
-        unitSentence: genNumbers(4) + 2,
-        situationOne: genNumbers(100) - 50,
-        situationTwo: genNumbers(100) - 50,
-        // situationOne: genNumbers(50)-100,
-        // situationTwo: genNumbers(50)-100,
-        oneOrTwo: ["One", "Two"][genNumbers(2)],
-        firstOrEnd: ["at first", "in the end"][genNumbers(2)],
-        rollz: 1,
+        compA: ["unit", "comp"][genNumbers(2)],
+        compB: ["unit", "comp"][genNumbers(2)],
+        unitA: genNumbers(3) + 2,
+        valueA: genNumbers(20) + 10,
+        unitB: genNumbers(3) + 2,
+        valueB: genNumbers(20) + 10,
+        // unitC: genNumbers(3) + 2,
+        valueC: genNumbers(20) + 10,
+        find: ["A", "B", "C"][genNumbers(3)],
+        arrUnit: [],
+        oneUnit: genNumbers(9) + 2,
       };
     }
 
@@ -18495,10 +18606,12 @@ function genProblems() {
         objectOne: ["A", "B", "C"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
         unitSentence: genNumbers(4) + 2,
-        situationOne: genNumbers(200) - 100,
-        situationTwo: genNumbers(200) - 100,
+        situationOne: genNumbers(100) - 50,
+        situationTwo: genNumbers(100) - 50,
+        // situationOne: genNumbers(50)-100,
+        // situationTwo: genNumbers(50)-100,
         oneOrTwo: ["One", "Two"][genNumbers(2)],
-        firstOrEnd: ["at first", "at first", "in the end"][genNumbers(1)],
+        firstOrEnd: ["at first", "in the end"][genNumbers(2)],
         rollz: 2,
       };
     }
@@ -18512,6 +18625,23 @@ function genProblems() {
         objectOne: ["A", "B", "C"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
         unitSentence: genNumbers(4) + 2,
+        situationOne: genNumbers(200) - 100,
+        situationTwo: genNumbers(200) - 100,
+        oneOrTwo: ["One", "Two"][genNumbers(2)],
+        firstOrEnd: ["at first", "at first", "in the end"][genNumbers(1)],
+        rollz: 3,
+      };
+    }
+
+    if (
+      setting == 4 ||
+      (setting == 9 && roll == 4) ||
+      (range == 1 && roll == 4)
+    ) {
+      return {
+        objectOne: ["A", "B", "C"][genNumbers(3)],
+        objectTwo: ["X", "Y", "Z"][genNumbers(3)],
+        unitSentence: genNumbers(4) + 2,
         startOne: undefined,
         startTwo: undefined,
         situationOne: [-1, 1][genNumbers(2)],
@@ -18520,7 +18650,7 @@ function genProblems() {
         endTwo: undefined,
         oneOrTwo: ["One", "Two"][genNumbers(2)],
         answer: ["A", "B", "total", "other"][genNumbers(4)],
-        rollz: 3,
+        rollz: 4,
       };
     }
   }
@@ -20744,7 +20874,7 @@ function buttonLevelSetting() {
 
     case "Heu.3b":
       setting = prompt(
-        "What level?\n1. Equal Beginning\n2. Equal End\n3. Unchanged Object\n\n9. All"
+        "What level?\n\n 1. Repeated Identity\n2. Equal Beginning\n3. Equal End\n4. Unchanged Object\n\n9. All"
       );
       level = "heuThreeb";
       range = 0;
