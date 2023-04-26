@@ -7385,7 +7385,7 @@ function updateProblems() {
         }
       }
       fractionsOperator.textContent = p.operator;
-      fractionChoice.textContent = "";
+      fractionChoice.textContent = "Solve:";
     }
   }
   if (level == "calThree") {
@@ -7401,6 +7401,7 @@ function updateProblems() {
       setting == 12
     ) {
       wholeNumberContainer.classList.add("hidden");
+      fractionsContainer.classList.add("hidden");
       workingContainer.classList.remove("hidden");
     }
     // NORMAL DISPLAY
@@ -7413,6 +7414,7 @@ function updateProblems() {
       setting == 14 ||
       setting == 15
     ) {
+      fractionsContainer.classList.add("hidden");
       displayProblem.style.fontSize = "24px";
       wholeNumberContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
@@ -7420,6 +7422,12 @@ function updateProblems() {
         displayProblem.style.fontSize = "20px";
         displayProblem.style.textAlign = "left";
       }
+    }
+    // FRACTIONS DISPLAY
+    if (setting == 16) {
+      wholeNumberContainer.classList.add("hidden");
+      workingContainer.classList.add("hidden");
+      fractionsContainer.classList.remove("hidden");
     }
     if (setting == 1) {
       const numOneStr = p.numOne.toString();
@@ -7793,6 +7801,33 @@ function updateProblems() {
         What time did it start?</p>
         `;
       }
+    }
+
+    // FRACTIONS: ADDITION AND SUBTRACTION
+    if (setting == 16) {
+      [p.numeOne, p.denoOne] = simplify(p.numeOne, p.denoOne);
+      [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
+      if (p.denoOne == p.denoTwo) return updateCalc();
+      if (p.operator == "+") {
+        if (p.numeOne / p.denoOne + p.numeTwo / p.denoTwo >= 1)
+          return updateCalc();
+        numeratorOne.textContent = p.numeOne;
+        denominatorOne.textContent = p.denoOne;
+        numeratorTwo.textContent = p.numeTwo;
+        denominatorTwo.textContent = p.denoTwo;
+      }
+      if (p.operator == "-") {
+        if (p.numeOne / p.denoOne < p.numeTwo / p.denoTwo) {
+          [p.numeOne, p.numeTwo] = [p.numeTwo, p.numeOne];
+          [p.denoOne, p.denoTwo] = [p.denoTwo, p.denoOne];
+        }
+        numeratorOne.textContent = p.numeOne;
+        denominatorOne.textContent = p.denoOne;
+        numeratorTwo.textContent = p.numeTwo;
+        denominatorTwo.textContent = p.denoTwo;
+      }
+      fractionsOperator.textContent = p.operator;
+      fractionChoice.textContent = "Solve:";
     }
   }
 
@@ -13696,6 +13731,25 @@ function handleSubmit(e) {
           }
         }
       }
+
+      // FRACTIONS: ADDITION AND SUBTRACTION
+      if (setting == 16) {
+        const commonDenoFind = commonDeno(p.denoOne, p.denoTwo);
+        const newNumeOne = (commonDenoFind / p.denoOne) * p.numeOne;
+        const newNumeTwo = (commonDenoFind / p.denoTwo) * p.numeTwo;
+        if (p.operator == "+") {
+          let finalNume = newNumeOne + newNumeTwo;
+          let finalDeno = commonDenoFind;
+          [finalNume, finalDeno] = simplify(finalNume, finalDeno);
+          correctAnswer = `${finalNume}/${finalDeno}`;
+        }
+        if (p.operator == "-") {
+          let finalNume = newNumeOne - newNumeTwo;
+          let finalDeno = commonDenoFind;
+          [finalNume, finalDeno] = simplify(finalNume, finalDeno);
+          correctAnswer = `${finalNume}/${finalDeno}`;
+        }
+      }
       skipGlobalUpdateProblem = 0;
     }
 
@@ -17572,7 +17626,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(15, calArr, setting, 99, level);
+    setting = calArrAll(16, calArr, setting, 99, level);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let thousands = genNumbers(9) + 1;
@@ -17712,6 +17766,18 @@ function genProblems() {
         situationHours: genNumbers(6) + 1,
         situationMins: genNumbers(60 - 1) + 1,
         beforeAfter: ["before", "after"][genNumbers(2)],
+      };
+    }
+    // FRACTIONS: ADDITION AND SUBTRACTION
+    if (setting == 16) {
+      const gen_denoOne = genNumbers(9) + 2;
+      const gen_denoTwo = genNumbers(8) + 3;
+      return {
+        denoOne: gen_denoOne,
+        numeOne: genNumbers(gen_denoOne - 1) + 1,
+        denoTwo: gen_denoTwo,
+        numeTwo: genNumbers(gen_denoTwo - 1) + 1,
+        operator: ["+", "-"][genNumbers(2)],
       };
     }
   }
@@ -20804,11 +20870,11 @@ function buttonLevelSetting() {
       level = "calThree";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Working: Long Division ( No remainder )\n11. Working: Long Division ( Remainder )\n12. Working: Multiplication ( Single Blank )\n13. Multiplication in sets\n14. Long Division: Simple Statement\n15. Time: Timeline ( hours and mins )",
+        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Working: Long Division ( No remainder )\n11. Working: Long Division ( Remainder )\n12. Working: Multiplication ( Single Blank )\n13. Multiplication in sets\n14. Long Division: Simple Statement\n15. Time: Timeline ( hours and mins )\n16. Fractions: Addition and Subtraction\n\n99. All",
         99
       );
       if (
-        ![1, 2, 3, 4, 5, 6, 7, 8, 9, , 10, 11, 12, 13, 14, 15, 99].includes(
+        ![1, 2, 3, 4, 5, 6, 7, 8, 9, , 10, 11, 12, 13, 14, 15, 16, 99].includes(
           setting * 1
         ) &&
         !setting.split("").includes("-")
