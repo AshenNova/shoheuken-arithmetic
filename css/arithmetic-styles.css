@@ -218,10 +218,14 @@ table {
   margin: 0 25px 15px;
   letter-spacing: 2px;
 }
-.line {
+.line,
+.lineFrac {
   width: 70px;
   height: 0;
   border-bottom: 5px solid black;
+}
+.simple-fraction-whole-number {
+  font-size: 60px;
 }
 
 .fraction-choice,

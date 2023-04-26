@@ -92,6 +92,10 @@ const numeratorTwo = document.querySelector(".numeratorTwo");
 const denominatorOne = document.querySelector(".denominatorOne");
 const denominatorTwo = document.querySelector(".denominatorTwo");
 const fractionsOperator = document.querySelector(".fractions-operator");
+const fractionsWholeNum = document.querySelector(
+  ".simple-fraction-whole-number"
+);
+const fractionsLine = document.querySelector(".lineFrac");
 
 const displayTwoFractions = document.querySelector(".display-problems-two");
 const fractionsUnitOfMeasurement = document.querySelector(".unitOfMeasurement");
@@ -528,6 +532,11 @@ function resetStuff() {
   wholeNumberContainer.classList.remove("hidden");
   multiplesSettingCl.classList.add("hidden");
   firstCanvas.classList.add("hidden");
+
+  // calTwo setting 10
+  denominatorOne.classList.remove("hidden");
+  fractionsLine.classList.remove("hidden");
+  fractionChoice.textContent = "Choices...";
 
   secondUnitMeasurement.textContent = "";
   instructions.innerHTML = "";
@@ -7068,6 +7077,7 @@ function updateProblems() {
   }
 
   if (level == "calTwo") {
+    //WORKING DISPLAY
     if (
       setting == 1 ||
       setting == 2 ||
@@ -7077,16 +7087,25 @@ function updateProblems() {
       setting == 6
     ) {
       wholeNumberContainer.classList.add("hidden");
+      fractionsContainer.classList.add("hidden");
       workingContainer.classList.remove("hidden");
     }
+    // NORMAL DISPLAY
     if (setting == 7 || setting == 8 || setting == 9) {
       displayProblem.style.fontSize = "24px";
       wholeNumberContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
+      fractionsContainer.classList.add("hidden");
       if (setting == 9) {
         displayProblem.style.fontSize = "20px";
         displayProblem.style.textAlign = "left";
       }
+    }
+    // FRACTIONS DISPLAY
+    if (setting == 10) {
+      wholeNumberContainer.classList.add("hidden");
+      workingContainer.classList.add("hidden");
+      fractionsContainer.classList.remove("hidden");
     }
     if (setting == 1) {
       const numOneStr = p.numOne.toString();
@@ -7325,6 +7344,48 @@ function updateProblems() {
         What time did it start?</p>
         `;
       }
+    }
+    // FRACTIONS: ADDITION AND SUBTRACTION
+    if (setting == 10) {
+      denominatorOne.classList.remove("hidden");
+      fractionsLine.classList.remove("hidden");
+      fractionsWholeNum.textContent = "";
+      if (p.operator == "+") {
+        while (p.numeOne + p.numeTwo > p.deno) {
+          if (p.numeOne >= p.numeTwo) {
+            p.numeOne -= 1;
+            console.log(`Minus numeratorOne!`);
+          }
+          if (p.numeOne <= p.numeTwo) {
+            p.numeTwo -= 1;
+            console.log(`Minus numeratorOne!`);
+          }
+        }
+        numeratorOne.textContent = p.numeOne;
+        numeratorTwo.textContent = p.numeTwo;
+        denominatorOne.textContent = p.deno;
+        denominatorTwo.textContent = p.deno;
+      }
+
+      if (p.operator == "-") {
+        p.numeOne = genNumbers(p.deno) + 1;
+        if (p.numeOne == p.numeTwo && p.numeOne != p.deno) p.numeOne += 1;
+        if (p.numeTwo > p.numeOne)
+          [p.numeOne, p.numeTwo] = [p.numeTwo, p.numeOne];
+        numeratorOne.textContent = p.numeOne;
+        numeratorTwo.textContent = p.numeTwo;
+        denominatorOne.textContent = p.deno;
+        denominatorTwo.textContent = p.deno;
+        if (p.numeOne == p.deno) {
+          fractionsWholeNum.textContent = 1;
+          numeratorOne.textContent = "";
+          denominatorOne.classList.add("hidden");
+          // denominatorTwo.textContent = "";
+          fractionsLine.classList.add("hidden");
+        }
+      }
+      fractionsOperator.textContent = p.operator;
+      fractionChoice.textContent = "";
     }
   }
   if (level == "calThree") {
@@ -13522,6 +13583,15 @@ function handleSubmit(e) {
           }
         }
       }
+      if (setting == 10) {
+        if (p.operator == "+") {
+          correctAnswer = `${p.numeOne + p.numeTwo}/${p.deno}`;
+          if (p.numeOne + p.numeTwo == p.deno) correctAnswer = 1;
+        }
+        if (p.operator == "-") {
+          correctAnswer = `${p.numeOne - p.numeTwo}/${p.deno}`;
+        }
+      }
 
       skipGlobalUpdateProblem = 0;
     }
@@ -17483,6 +17553,18 @@ function genProblems() {
         beforeAfter: ["before", "after"][genNumbers(2)],
       };
     }
+
+    //FRACTIONS: ADDITION AND SUBTRACTION
+    if (setting == 10) {
+      const gen_deno = genNumbers(9) + 3;
+      const gen_diff = genNumbers(gen_deno - 1) + 1;
+      return {
+        deno: gen_deno,
+        numeOne: genNumbers(gen_diff - 1) + 1,
+        numeTwo: gen_diff,
+        operator: ["+", "-"][genNumbers(2)],
+      };
+    }
   }
 
   if (level == "calThree") {
@@ -20708,8 +20790,14 @@ function buttonLevelSetting() {
       level = "calTwo";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing\n3. Addition (to-1000) (Carrying)\n4. Subtraction (to 1000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Time: Timeline"
+        "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing\n3. Addition (to-1000) (Carrying)\n4. Subtraction (to 1000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Time: Timeline\n10. Fractions: Addition and Subtraction",
+        99
       );
+      if (
+        ![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 99].includes(setting * 1) &&
+        !setting.split("").includes("-")
+      )
+        setting = 99;
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
     case "Cal.3":
