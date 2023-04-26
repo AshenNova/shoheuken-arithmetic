@@ -7424,7 +7424,7 @@ function updateProblems() {
       }
     }
     // FRACTIONS DISPLAY
-    if (setting == 16) {
+    if (setting == 16 || setting == 17) {
       wholeNumberContainer.classList.add("hidden");
       workingContainer.classList.add("hidden");
       fractionsContainer.classList.remove("hidden");
@@ -7828,6 +7828,38 @@ function updateProblems() {
       }
       fractionsOperator.textContent = p.operator;
       fractionChoice.textContent = "Solve:";
+    }
+
+    //FRACTIONS: EXPANSION AND SIMPLIFICATION
+    if (setting == 17) {
+      [p.oriNume, p.oriDeno] = simplify(p.oriNume, p.oriDeno);
+      if (p.mulOne == p.mulTwo) p.mulTwo += 1;
+      const firstNume = p.oriNume * p.mulOne;
+      const firstDeno = p.oriDeno * p.mulOne;
+      const secondNume = p.oriNume * p.mulTwo;
+      const secondDeno = p.oriDeno * p.mulTwo;
+      numeratorOne.textContent = firstNume;
+      denominatorOne.textContent = firstDeno;
+      numeratorTwo.textContent = secondNume;
+      denominatorTwo.textContent = secondDeno;
+      fractionsOperator.textContent = "=";
+      fractionChoice.textContent = "Find the missing number";
+      if (p.replace == "1") {
+        numeratorOne.textContent = "?";
+        p.answer = firstNume;
+      }
+      if (p.replace == "2") {
+        numeratorTwo.textContent = "?";
+        p.answer = secondNume;
+      }
+      if (p.replace == "3") {
+        denominatorOne.textContent = "?";
+        p.answer = firstDeno;
+      }
+      if (p.replace == "4") {
+        denominatorTwo.textContent = "?";
+        p.answer = secondDeno;
+      }
     }
   }
 
@@ -13750,6 +13782,11 @@ function handleSubmit(e) {
           correctAnswer = `${finalNume}/${finalDeno}`;
         }
       }
+
+      //FRACTIONS: EXPANSION AND SIMPLIFICATION
+      if (setting == 17) {
+        correctAnswer = p.answer;
+      }
       skipGlobalUpdateProblem = 0;
     }
 
@@ -17780,6 +17817,19 @@ function genProblems() {
         operator: ["+", "-"][genNumbers(2)],
       };
     }
+    // FRACTIONS: EXPAND AND SIMPLIFICATION
+    if (setting == 17) {
+      const gen_deno = genNumbers(9) + 3;
+      const gen_nume = genNumbers(gen_deno - 2) + 2;
+      return {
+        oriNume: gen_nume,
+        oriDeno: gen_deno,
+        mulOne: genNumbers(5) + 2,
+        mulTwo: genNumbers(5) + 2,
+        replace: genNumbers(4) + 1,
+        answer: undefined,
+      };
+    }
   }
 
   if (level == "calFour") {
@@ -20870,13 +20920,31 @@ function buttonLevelSetting() {
       level = "calThree";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Working: Long Division ( No remainder )\n11. Working: Long Division ( Remainder )\n12. Working: Multiplication ( Single Blank )\n13. Multiplication in sets\n14. Long Division: Simple Statement\n15. Time: Timeline ( hours and mins )\n16. Fractions: Addition and Subtraction\n\n99. All",
+        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Working: Long Division ( No remainder )\n11. Working: Long Division ( Remainder )\n12. Working: Multiplication ( Single Blank )\n13. Multiplication in sets\n14. Long Division: Simple Statement\n15. Time: Timeline ( hours and mins )\n16. Fractions: Addition and Subtraction\n17. Fractions: Expansion and simplification\n\n99. All",
         99
       );
       if (
-        ![1, 2, 3, 4, 5, 6, 7, 8, 9, , 10, 11, 12, 13, 14, 15, 16, 99].includes(
-          setting * 1
-        ) &&
+        ![
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          ,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          99,
+        ].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 99;
