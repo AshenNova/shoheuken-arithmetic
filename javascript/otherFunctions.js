@@ -89,7 +89,7 @@ function simplify(first, second) {
   console.log("Simplifying fractions");
   let max = first;
   if (first < second) max = second;
-  for (let i = 2; i < max; i++) {
+  for (let i = 2; i <= max; i++) {
     while (first % i == 0 && second % i == 0) {
       first /= i;
       second /= i;

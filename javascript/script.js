@@ -8785,7 +8785,7 @@ function updateProblems() {
       if (p.question == 3) {
         displayProblem.insertAdjacentHTML(
           "beforeend",
-          `What is the ratio of ${objectB} in A to the raito of ${objectB} in B?`
+          `What is the ratio of ${objectB} in A to the ratio of ${objectB} in B?`
         );
       }
     }
@@ -14080,8 +14080,10 @@ function handleSubmit(e) {
         let newD = p.ratioD * multiTwo;
 
         if (p.question == 1) {
-          [totalA, totalB] = simplify(totalA, totalB);
-          correctAnswer = `${totalA}:${totalB}`;
+          let newTotalA = newA + newC;
+          let newTotalB = newB + newD;
+          [newTotalA, newTotalB] = simplify(newTotalA, newTotalB);
+          correctAnswer = `${newTotalA}:${newTotalB}`;
         }
         if (p.question == 2) {
           [newA, newC] = simplify(newA, newC);
