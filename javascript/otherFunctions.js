@@ -2,8 +2,8 @@ import { updateProblems, genNumbers } from "./script.js";
 
 const permutationAnswer = (inputAnswer, actualAnswer) => {
   console.log(typeof inputAnswer, typeof actualAnswer);
-  let input = inputAnswer.trim().split("");
-  let answer = actualAnswer.trim().split("");
+  let input = inputAnswer.toString().trim().split("");
+  let answer = actualAnswer.toString().trim().split("");
   while (input.includes(" ")) {
     let index = input.indexOf(" ");
     input.splice(index, 1);
