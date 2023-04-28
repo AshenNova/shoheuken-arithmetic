@@ -1,8 +1,17 @@
 import { updateProblems, genNumbers } from "./script.js";
 
 const permutationAnswer = (inputAnswer, actualAnswer) => {
+  console.log(typeof inputAnswer, typeof actualAnswer);
   let input = inputAnswer.trim().split("");
   let answer = actualAnswer.trim().split("");
+  while (input.includes(" ")) {
+    let index = input.indexOf(" ");
+    input.splice(index, 1);
+  }
+  // while (answer.includes("\n")) {
+  //   let index = answer.indexOf("\n");
+  //   answer.splice(index, 1);
+  // }
   console.log(input);
   console.log(answer);
   for (let i = 0; i < input.length; i++) {
