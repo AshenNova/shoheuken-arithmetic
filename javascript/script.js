@@ -15,6 +15,7 @@ import {
   simplifyThree,
   zoneOfDay,
   day12Hours,
+  permutationAnswer,
 } from "./otherFunctions.js";
 // import { resetStuff } from "./reset.js";
 let buttonLevel = 0;
@@ -15357,11 +15358,15 @@ function handleSubmit(e) {
       userInput.value = userInput.value.toLowerCase();
     }
 
+    permutationAnswer(userInput2.value, correctAnswer);
+
     if (
       userInput.value.trim() == correctAnswer ||
       userInput2.value.trim() == correctAnswer ||
       userInput.value.trim() == correctAnswerTwo ||
-      userInput2.value.trim() == correctAnswerTwo
+      userInput2.value.trim() == correctAnswerTwo ||
+      permutationAnswer(userInput2.value, correctAnswer) ==
+        "From permutation: Correct"
     ) {
       console.log("correct");
       state.score++;

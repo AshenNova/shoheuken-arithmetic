@@ -1,5 +1,24 @@
 import { updateProblems, genNumbers } from "./script.js";
 
+const permutationAnswer = (inputAnswer, actualAnswer) => {
+  let input = inputAnswer.trim().split("");
+  let answer = actualAnswer.trim().split("");
+  console.log(input);
+  console.log(answer);
+  for (let i = 0; i < input.length; i++) {
+    if (answer.includes(input[i])) {
+      const index = answer.indexOf(input[i]);
+      answer.splice(index, 1);
+      console.log(answer);
+    } else {
+      return "From permutation: Incorrect";
+    }
+  }
+  if (answer.length == 0) {
+    return "From permutation: Correct";
+  }
+};
+
 const day12Hours = (hours) => {
   if (hours == 0) {
     hours = 12;
@@ -164,4 +183,5 @@ export {
   simplifyThree,
   zoneOfDay,
   day12Hours,
+  permutationAnswer,
 };
