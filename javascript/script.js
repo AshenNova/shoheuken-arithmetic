@@ -8374,8 +8374,6 @@ function updateProblems() {
     }
 
     if (setting == 2) {
-      threeNumerator.classList.add("hidden");
-      threeDenominator.classList.add("hidden");
       if (p.numeratorOne == p.denominatorOne) {
         return updateProblems();
       }
@@ -8385,10 +8383,36 @@ function updateProblems() {
       );
       if (p.numeratorOne > p.denominatorOne)
         [p.numeratorOne, p.denominatorOne] = [p.denominatorOne, p.numeratorOne];
+      if (p.type == "mixed-whole") {
+        threeNumerator.classList.add("hidden");
+        threeDenominator.classList.add("hidden");
+
+        twoWholeNumber.textContent = p.wholeOne;
+        twoNumerator.textContent = p.numeratorOne;
+        twoDenominator.textContent = p.denominatorOne;
+        threeWholeNumber.textContent = p.wholeTwo;
+      }
+      if (p.type == "mixed-simple") {
+        if (p.numeratorTwo == p.denominatorTwo) p.numeratorTwo -= 1;
+        [p.numeratorTwo, p.denominatorTwo] = simplify(
+          p.numeratorTwo,
+          p.denominatorTwo
+        );
+        if (p.numeratorTwo > p.denominatorTwo) {
+          [p.numeratorTwo, p.denominatorTwo] = [
+            p.denominatorTwo,
+            p.numeratorTwo,
+          ];
+        }
+        threeNumerator.classList.remove("hidden");
+        threeDenominator.classList.remove("hidden");
+        threeWholeNumber.classList.add("hidden");
+        threeNumerator.textContent = p.numeratorTwo;
+        threeDenominator.textContent = p.denominatorTwo;
+      }
       twoWholeNumber.textContent = p.wholeOne;
       twoNumerator.textContent = p.numeratorOne;
       twoDenominator.textContent = p.denominatorOne;
-      threeWholeNumber.textContent = p.wholeTwo;
       equalSymbol.textContent = "x";
     }
     if (setting == 3) {
@@ -13936,16 +13960,35 @@ function handleSubmit(e) {
         }
       }
       if (setting == 2) {
-        let totalNum =
-          (p.denominatorOne * p.wholeOne + p.numeratorOne) * p.wholeTwo;
-        let totalDeno = p.denominatorOne;
-        const wholeNum = Math.floor(totalNum / totalDeno);
-        let remainder = totalNum % totalDeno;
-        [remainder, totalDeno] = simplify(remainder, totalDeno);
-        if (remainder == 0) {
-          correctAnswer = wholeNum;
-        } else {
+        if (p.type == "mixed-whole") {
+          let totalNum =
+            (p.denominatorOne * p.wholeOne + p.numeratorOne) * p.wholeTwo;
+          let totalDeno = p.denominatorOne;
+          const wholeNum = Math.floor(totalNum / totalDeno);
+          let remainder = totalNum % totalDeno;
+          [remainder, totalDeno] = simplify(remainder, totalDeno);
+          if (remainder == 0) {
+            correctAnswer = wholeNum;
+          } else {
+            correctAnswer = `${wholeNum} ${remainder}/${totalDeno}`;
+          }
+        }
+        if (p.type == "mixed-simple") {
+          let totalNume =
+            (p.denominatorOne * p.wholeOne + p.numeratorOne) * p.numeratorTwo;
+
+          let totalDeno = p.denominatorOne * p.denominatorTwo;
+          console.log(totalNume, totalDeno);
+          let wholeNum = Math.floor(totalNume / totalDeno);
+          let remainder = totalNume % totalDeno;
+          [remainder, totalDeno] = simplify(remainder, totalDeno);
           correctAnswer = `${wholeNum} ${remainder}/${totalDeno}`;
+          if (wholeNum == 0) {
+            correctAnswer = `${remainder}/${totalDeno}`;
+          }
+          if (remainder == 0) {
+            correctAnswer = `${wholeNum}`;
+          }
         }
       }
       if (setting == 3) {
@@ -17979,10 +18022,13 @@ function genProblems() {
     }
     if (setting == 2) {
       return {
+        type: ["mixed-simple", "mixed-whole", "mixed-simple"][genNumbers(1)],
         wholeOne: genNumbers(4) + 2,
         numeratorOne: genNumbers(10) + 1,
-        denominatorOne: genNumbers(10) + 1,
+        denominatorOne: genNumbers(10 - 1) + 2,
         wholeTwo: genNumbers(9) + 2,
+        numeratorTwo: genNumbers(10) + 1,
+        denominatorTwo: genNumbers(10 - 1) + 2,
       };
     }
     if (setting == 3) {
