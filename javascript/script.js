@@ -10416,7 +10416,7 @@ function updateProblems() {
         ) {
           p.situationOne = genNumbers(100) + 1;
           p.situationTwo = genNumbers(100) + 1;
-          (unitSentence = genNumbers(4) + 2),
+          (p.unitSentence = genNumbers(4) + 2),
             (valueOfOneUnit =
               (p.situationOne - p.situationTwo) / (p.unitSentence - 1));
           console.log(valueOfOneUnit, p.situationOne, p.situationTwo);
@@ -10428,7 +10428,7 @@ function updateProblems() {
         while ((p.situationTwo - p.situationOne) % (p.unitSentence - 1) != 0) {
           p.situationOne = genNumbers(100) - 200;
           p.situationTwo = genNumbers(100) - 200;
-          (unitSentence = genNumbers(4) + 2),
+          (p.unitSentence = genNumbers(4) + 2),
             (valueOfOneUnit =
               (p.situationOne - p.situationTwo) / (p.unitSentence - 1));
           console.log(valueOfOneUnit, p.situationOne, p.situationTwo);
@@ -10656,6 +10656,94 @@ function updateProblems() {
       ${lineThree}</br>
       ${lineFour}
       `;
+    }
+    if (
+      setting == 5 ||
+      (setting == 9 && p.rollz == 5) ||
+      (range == 1 && p.rollz == 5)
+    ) {
+      let operators = ["+", "-", "x", "/"];
+      let lastNum = p.num;
+      displayProblem.innerHTML = `
+      Person A has a number of something at first.</p>
+      `;
+      let count = 0;
+      console.log(`At first:${p.num}`);
+      for (let i = 0; i < 4; i++) {
+        let position = genNumbers(operators.length);
+        const op = operators[position];
+        console.log(op);
+
+        if (op == "+") {
+          lastNum = lastNum + p.sitPlus;
+          if (count == 0) {
+            displayProblem.insertAdjacentHTML(
+              "beforeend",
+              `It increased by ${p.sitPlus}.</p>`
+            );
+          } else {
+            displayProblem.insertAdjacentHTML(
+              "beforeend",
+              `Then, it increased by ${p.sitPlus}.</p>`
+            );
+          }
+          console.log(`+${p.sitPlus}: ${lastNum}`);
+        }
+        if (op == "-") {
+          lastNum = lastNum - p.sitMinus;
+          if (lastNum < 0) return updateCalc();
+          if (count == 0) {
+            displayProblem.insertAdjacentHTML(
+              "beforeend",
+              `It decreased by ${p.sitMinus}.</p>`
+            );
+          } else {
+            displayProblem.insertAdjacentHTML(
+              "beforeend",
+              `Then. it decreased by ${p.sitMinus}.</p>`
+            );
+          }
+          console.log(`-${p.sitMinus}: ${lastNum}`);
+        }
+        if (op == "x") {
+          lastNum = lastNum * p.sitTimes;
+          if (count == 0) {
+            displayProblem.insertAdjacentHTML(
+              "beforeend",
+              `It increased by ${p.sitTimes} times.</p>`
+            );
+          } else {
+            displayProblem.insertAdjacentHTML(
+              "beforeend",
+              `Then, it increased by ${p.sitTimes} times.</p>`
+            );
+          }
+          console.log(`x${p.sitTimes}: ${lastNum}`);
+        }
+        if (op == "/") {
+          if (lastNum % p.sitDivide != 0) return updateCalc();
+          lastNum = lastNum / p.sitDivide;
+          if (count == 0) {
+            displayProblem.insertAdjacentHTML(
+              "beforeend",
+              `It decreased by ${p.sitDivide} times.</p>`
+            );
+          } else {
+            displayProblem.insertAdjacentHTML(
+              "beforeend",
+              `Then, it decreased by ${p.sitDivide} times.</p>`
+            );
+          }
+          console.log(`/${p.sitDivide}: ${lastNum}`);
+        }
+        operators.splice(position, 1);
+        count += 1;
+      }
+
+      displayProblem.insertAdjacentHTML(
+        "beforeend",
+        `It became ${lastNum} in the end.</p>What was it at first?</p>`
+      );
     }
   }
 
@@ -14870,6 +14958,14 @@ function handleSubmit(e) {
           }
         }
       }
+      //WORKING BACKWARDS STRAIGHTLINE
+      if (
+        setting == 5 ||
+        (setting == 9 && p.rollz == 5) ||
+        (range == 1 && p.rollz == 5)
+      ) {
+        correctAnswer = p.num;
+      }
     }
     // answer
     if (level == "heuFour") {
@@ -18807,29 +18903,32 @@ function genProblems() {
   }
   // setting
   if (level == "heuThreeb") {
-    let roll = undefined;
-    let settingText = setting.toString();
+    // let roll = undefined;
+    // let settingText = setting.toString();
 
-    if (settingText.includes("-")) {
-      console.log("range detected");
-      range = 1;
-      settingText.split("-");
-      if (!heuArr.length) {
-        for (let i = 1; i <= settingText[settingText.length - 1]; i++) {
-          heuArr.push(i);
-        }
-        console.log(heuArr);
-      }
-      roll = heuArr[genNumbers(heuArr.length)];
-      let index = heuArr.indexOf(roll);
-      heuArr.splice(index, 1);
-    } else {
-      console.log("Not range detected");
-      setting = parseInt(setting);
-      if (isNaN(setting)) {
-        setting = 9;
-      }
-    }
+    // if (settingText.includes("-")) {
+    //   console.log("range detected");
+    //   range = 1;
+    //   settingText.split("-");
+    //   if (!heuArr.length) {
+    //     for (let i = 1; i <= settingText[settingText.length - 1]; i++) {
+    //       heuArr.push(i);
+    //     }
+    //     console.log(heuArr);
+    //   }
+    //   roll = heuArr[genNumbers(heuArr.length)];
+    //   let index = heuArr.indexOf(roll);
+    //   heuArr.splice(index, 1);
+    // } else {
+    //   console.log("Not range detected");
+    //   setting = parseInt(setting);
+    //   if (isNaN(setting)) {
+    //     setting = 9;
+    //   }
+    // }
+
+    setting = calArrAll(5, calArr, setting, 9);
+    setting = checkRange(setting, calArr);
 
     if (
       setting == 1 ||
@@ -18905,6 +19004,21 @@ function genProblems() {
         oneOrTwo: ["One", "Two"][genNumbers(2)],
         answer: ["A", "B", "total", "other"][genNumbers(4)],
         rollz: 4,
+      };
+    }
+    // WORKING BACKWARDS: STRAIGHTLINE
+    if (
+      setting == 5 ||
+      (setting == 9 && roll == 5) ||
+      (range == 1 && roll == 5)
+    ) {
+      return {
+        num: genNumbers(1000) + 2,
+        rollz: 5,
+        sitPlus: genNumbers(100) + 1,
+        sitMinus: genNumbers(100) + 1,
+        sitTimes: genNumbers(5) + 2,
+        sitDivide: genNumbers(5) + 2,
       };
     }
   }
@@ -21152,11 +21266,17 @@ function buttonLevelSetting() {
 
     case "Heu.3b":
       setting = prompt(
-        "What level?\n\n 1. Repeated Identity\n2. Equal Beginning\n3. Equal End\n4. Unchanged Object\n\n9. All"
+        "What level?\n\n 1. Repeated Identity\n2. Equal Beginning\n3. Equal End\n4. Unchanged Object\n5. Working Backwards Straightline\n\n9. All",
+        9
       );
       level = "heuThreeb";
+      if (
+        ![1, 2, 3, 4, 5, 9].includes(setting * 1) &&
+        !setting.split("").includes("-")
+      )
+        setting = 9;
       range = 0;
-      scoreNeeded = 2;
+      scoreNeeded = 3;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -21182,7 +21302,7 @@ function buttonLevelSetting() {
         "What level?\n1. Lowest Common Multiples ( Indirect )\n2. Highest Common Factor ( Indirect )\n\n9. All"
       );
       level = "heuFourb";
-      scoreNeeded = 2;
+      scoreNeeded = 3;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
       document.querySelector("#user-input").setAttribute("type", "text");
