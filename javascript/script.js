@@ -7966,18 +7966,28 @@ function updateProblems() {
           arr2.push(i);
         }
       }
+      console.log(arr, arr2);
       if (arr.length <= arr2.length) {
         arr.forEach((el) => {
-          if (arr2.includes(el)) arr3.push(el);
-          console.log(el, arr3);
+          if (arr2.includes(el)) {
+            arr3.push(el);
+            console.log(el, arr3);
+          }
         });
       } else {
         arr2.forEach((el) => {
-          if (arr.includes(el)) arr3.push(el);
-          console.log(el, arr3);
+          if (arr.includes(el)) {
+            arr3.push(el);
+            console.log(el, arr3);
+          }
         });
       }
-      if (arr3.length < 3) return updateCalc();
+      if (arr3.length < 3) {
+        arr.length = 0;
+        arr2.length = 0;
+        arr3.length = 0;
+        return updateCalc();
+      }
       displayProblem.innerHTML = `
       What is/are the common factors of ${p.numOne} and ${p.numTwo}?</p>
       <i>List in ascending order.</i>`;
@@ -15499,7 +15509,17 @@ function handleSubmit(e) {
       userInput.value = userInput.value.toLowerCase();
     }
 
-    permutationAnswer(userInput2.value, correctAnswer);
+    // if (typeof level == "String") {
+    //   console.log("Heuristics Answer!");
+    //   permutationAnswer(userInput2.value, correctAnswer);
+    // }
+
+    // if (
+    //   userInput.value.trim() == correctAnswer ||
+    //   userInput2.value.trim() == correctAnswer ||
+    //   userInput.value.trim() == correctAnswerTwo ||
+    //   userInput2.value.trim() == correctAnswerTwo
+    // ) {
 
     if (
       userInput.value.trim() == correctAnswer ||
