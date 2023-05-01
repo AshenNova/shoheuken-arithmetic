@@ -9083,6 +9083,7 @@ function updateProblems() {
       ${lineThree}</p>
       ${lineFour}`;
     }
+    //RATIO: UNCHANGED DIFFERENCE
     if (setting == 14) {
       let unitAF = "";
       let unitBF = "";
@@ -9093,6 +9094,7 @@ function updateProblems() {
       p.valueBEnd = p.valueBFirst + p.situation;
       [unitAF, unitBF] = simplify(p.valueAFirst, p.valueBFirst);
       [unitAE, unitBE] = simplify(p.valueAEnd, p.valueBEnd);
+      if (((unitAF == unitBF) == unitAE) == unitBE) return updateCalc();
       if (p.valueAFirst == unitAF || p.valueAEnd == unitAE) {
         return updateCalc();
       }
@@ -18229,6 +18231,7 @@ function genProblems() {
       };
     }
 
+    //RATIO: UNCHANGED DIFFERENCE
     if (setting == 14) {
       console.log("Unchanged Difference");
       const valueA = genNumbers(40) + 10;
