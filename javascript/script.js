@@ -9,6 +9,7 @@ import {
   accDecimal,
   commonDeno,
   simplify,
+  commonFactors,
   updateCalc,
   genUniqNum,
   reverseCalculation,
@@ -11062,11 +11063,8 @@ function updateProblems() {
       `;
     }
   }
-
+  //  DISPLAY
   if (level == "heuFourb") {
-    setting = calArrAll(2, calArr, setting, 9);
-    setting = checkRange(setting, calArr);
-
     if (setting == 1) {
       [p.numOne, p.numTwo] = simplify(p.numOne, p.numTwo);
       if (p.numOne == 1 || p.numTwo == 1) return updateCalc();
@@ -11164,6 +11162,51 @@ function updateProblems() {
       The items are to be distributed equally into as many bags as possible.</p>
       ${question}      
       `;
+    }
+    //UNCHANGED DIFFERENCE
+    if (setting == 3) {
+      //UNIT SENTENCE
+      [p.unitA, p.unitB] = simplify(p.unitA, p.unitB);
+      if (p.unitB > p.unitA) [p.unitA, p.unitB] = [p.unitB, p.unitA];
+      let unitSentence = `A has ${p.unitA} times of B in the end.`;
+      if (p.unitB > 1) {
+        unitSentence = `A is ${p.unitA}/${p.unitB} of B in the end.`;
+      }
+
+      let situationText = undefined;
+      if (p.situation == 1) {
+        situationText = "increased";
+        p.numA = p.valueOneUnit * p.unitA - p.situationValue;
+        p.numB = p.valueOneUnit * p.unitB - p.situationValue;
+      }
+      if (p.situation == -1) {
+        situationText = "decreased";
+        p.numA = p.valueOneUnit * p.unitA + p.situationValue;
+        p.numB = p.valueOneUnit * p.unitB + p.situationValue;
+      }
+      if (p.numA <= 0 || p.numB <= 0) return updateCalc();
+
+      const difference = p.numA - p.numB;
+      const diffUnit = p.unitA - p.unitB;
+      if (difference % diffUnit != 0) return updateCalc();
+      displayProblem.innerHTML = `
+      A has ${p.numA} while B has ${p.numB} at first.</p>
+      Both ${situationText} by an equal amount.</p>
+      ${unitSentence}</p>
+      `;
+      // FINAL QUESTION
+      if (p.question == "AE") {
+        displayProblem.insertAdjacentHTML("beforeend", "What is A in the end?");
+      }
+      if (p.question == "BE") {
+        displayProblem.insertAdjacentHTML("beforeend", "What is B in the end?");
+      }
+      if (p.question == "change") {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `What is each ${situationText} by?`
+        );
+      }
     }
   }
   // Display
@@ -15255,7 +15298,7 @@ function handleSubmit(e) {
         correctAnswerTwo = p.arrFirstNum[p.arrFirstNum.length - 1];
       }
     }
-
+    //ANSWERS
     if (level == "heuFourb") {
       if (setting == 1) {
         const common = commonDeno(p.numOne, p.numTwo);
@@ -15284,6 +15327,17 @@ function handleSubmit(e) {
         if (p.version == 1) correctAnswer = p.numOne / bags;
         if (p.version == 2) correctAnswer = p.numTwo / bags;
         if (p.version == 3) correctAnswer = p.numOne / bags + p.numTwo / bags;
+      }
+      if (setting == 3) {
+        if (p.question == "AE") {
+          correctAnswer = p.valueOneUnit * p.unitA;
+        }
+        if (p.question == "BE") {
+          correctAnswer = p.valueOneUnit * p.unitB;
+        }
+        if (p.question == "change") {
+          correctAnswer = p.situationValue;
+        }
       }
       skipGlobalUpdateProblem = 0;
     }
@@ -19209,7 +19263,11 @@ function genProblems() {
       };
     }
   }
+  //SETTINGS
   if (level == "heuFourb") {
+    setting = calArrAll(3, calArr, setting, 9);
+    setting = checkRange(setting, calArr);
+
     if (setting == 1) {
       const arrObj = ["sweets", "bags"];
       const arrPerson = ["Liam", "Olivia", "Emma", "Noah", "Amelia", "Elijah"];
@@ -19235,6 +19293,22 @@ function genProblems() {
         version: genNumbers(4),
         numOne: genNumbers(50) + 4,
         numTwo: genNumbers(50) + 4,
+      };
+    }
+
+    //UNCHANGED DIFFERENCE
+    if (setting == 3) {
+      const genValueOneUnit = genNumbers(900) + 100;
+      // const genB = genNumbers(1000 - 100) + 100;
+      return {
+        numA: undefined,
+        numB: undefined,
+        valueOneUnit: genNumbers(900) + 100,
+        unitA: genNumbers(5) + 1,
+        unitB: [genNumbers(5) + 2, 1][genNumbers(1)],
+        situation: [-1, 1][genNumbers(2)],
+        situationValue: genNumbers(genValueOneUnit),
+        question: ["AE", "BE", "change"][genNumbers(3)],
       };
     }
   }
@@ -21319,9 +21393,17 @@ function buttonLevelSetting() {
 
     case "Heu.4b":
       setting = prompt(
-        "What level?\n1. Lowest Common Multiples ( Indirect )\n2. Highest Common Factor ( Indirect )\n\n9. All"
+        "What level?\n1. Lowest Common Multiples ( Indirect )\n2. Highest Common Factor ( Indirect )\n3. Unchanged Difference\n\n9. All",
+        9
       );
       level = "heuFourb";
+
+      if (
+        ![1, 2, 3, 9].includes(setting * 1) &&
+        !setting.split("").includes("-")
+      )
+        setting = 9;
+
       scoreNeeded = 3;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
