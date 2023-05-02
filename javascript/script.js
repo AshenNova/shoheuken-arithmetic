@@ -21370,7 +21370,7 @@ function buttonLevelSetting() {
       )
         setting = 9;
       range = 0;
-      scoreNeeded = 3;
+      scoreNeeded = 10;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -21404,7 +21404,7 @@ function buttonLevelSetting() {
       )
         setting = 9;
 
-      scoreNeeded = 3;
+      scoreNeeded = 10;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -21430,7 +21430,7 @@ function buttonLevelSetting() {
       setting = prompt(
         "What level?\n1. Fractions: Working Backwards (Type 1)\n2. Fractions: Working Backwards (Type 2)\n\n9. All"
       );
-      scoreNeeded = 3;
+      scoreNeeded = 10;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
       document.querySelector("#user-input").setAttribute("type", "text");
