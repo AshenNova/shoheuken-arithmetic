@@ -10519,7 +10519,7 @@ function updateProblems() {
         `;
       }
     }
-
+    // EQUAL END
     if (
       setting == 3 ||
       (setting == 9 && p.rollz == 3) ||
@@ -10571,7 +10571,10 @@ function updateProblems() {
           p.unitSentence = genNumbers(4) + 2;
         }
       }
-
+      if (p.situationOne > 0 && p.situationTwo < 0) {
+        console.log("Impossibru!");
+        return updateCalc();
+      }
       // Both
 
       displayProblem.innerHTML = `
