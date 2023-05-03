@@ -11211,6 +11211,130 @@ function updateProblems() {
         );
       }
     }
+    //UNCHANGED TOTAL
+    if (setting == 4) {
+      // if (p.valueB > p.valueA) [p.valueA, p.valueB] = [p.valueB, p.valueA];
+
+      p.valueAEnd = p.unitA * p.valueOneUnit;
+      p.valueBEnd = p.unitB * p.valueOneUnit;
+      p.valueAFirst = p.valueAEnd + p.transfer;
+      p.valueBFirst = p.valueBEnd - p.transfer;
+      console.log(p.valueOneUnit, p.valueAEnd, p.valueBEnd, p.transfer);
+
+      if (p.version == "valueFirst") {
+        let total = p.valueAEnd + p.valueBEnd;
+        const transferText = genNumbers(2) == 0 ? "transferred" : "gave";
+        // const totalUnit = p.unitA + p.unitB;
+        let transferValueText = p.transfer;
+        const lineOneOptions = genNumbers(2);
+        if (p.question == "AE" || p.question == "BE") {
+          if (lineOneOptions == 1) {
+            transferValueText = "some";
+          } else {
+            transferValueText = ["some", p.transfer][genNumbers(1)];
+          }
+        }
+
+        // while (total % totalUnit != 0) {
+        //   p.valueB -= 1;
+        //   total = p.valueA + p.valueB;
+        // }
+
+        let firstLine =
+          lineOneOptions == 0
+            ? `A and B had a total of ${total} at first.</p>`
+            : `A has ${p.valueAFirst} while B has ${p.valueBFirst} at first</p>`;
+        let unitSentence = `
+      A is now ${p.unitA} times of B.</p>
+      `;
+
+        if (p.unitB > 1) {
+          unitSentence = `A is now ${p.unitA}/${p.unitB} of B.</p>`;
+        }
+        displayProblem.innerHTML = `
+      ${firstLine}
+        A ${transferText} ${transferValueText} to B.</p>
+        ${unitSentence}</p>
+      `;
+        if (lineOneOptions == 1) {
+          p.question = ["AE", "BE"][genNumbers(2)];
+        }
+
+        if (p.question == "AF") {
+          displayProblem.insertAdjacentHTML("beforeend", "What is A at first?");
+        }
+        if (p.question == "AE") {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            "What is A in the end?"
+          );
+        }
+        if (p.question == "BF") {
+          displayProblem.insertAdjacentHTML("beforeend", "What is B at first?");
+        }
+        if (p.question == "BE") {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            "What is B in the end?"
+          );
+        }
+      }
+
+      if (p.version == "valueEnd") {
+        const total = p.valueAEnd + p.valueBEnd;
+        let unitSentence = `
+      A was ${p.unitA} times of B at first.</p>
+      `;
+
+        if (p.unitB > 1) {
+          unitSentence = `A was ${p.unitA}/${p.unitB} of B at first.</p>`;
+        }
+        const lineThreeOptions = genNumbers(2);
+        const transferText = genNumbers(2) == 0 ? "transferred" : "gave";
+        let transferValueText = p.transfer;
+        if (p.question == "AF" || p.question == "BF") {
+          if (lineThreeOptions == 1) {
+            transferValueText = "some";
+          } else {
+            transferValueText = ["some", p.transfer][genNumbers(2)];
+          }
+        }
+
+        let thirdLine =
+          lineThreeOptions == 0
+            ? `A and B has a total of ${total} in the end.</p>`
+            : `A has ${p.valueAEnd} while B has ${p.valueBEnd} in the end.</p>`;
+
+        //DISPLAYPROBLEM!
+        displayProblem.innerHTML = `
+        ${unitSentence}
+        A ${transferText} ${transferValueText} to B.</p>
+        ${thirdLine}
+        `;
+        if (lineThreeOptions == 1) {
+          p.question = ["AF", "BF"][genNumbers(2)];
+        }
+
+        if (p.question == "AF") {
+          displayProblem.insertAdjacentHTML("beforeend", "What is A at first?");
+        }
+        if (p.question == "AE") {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            "What is A in the end?"
+          );
+        }
+        if (p.question == "BF") {
+          displayProblem.insertAdjacentHTML("beforeend", "What is B at first?");
+        }
+        if (p.question == "BE") {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            "What is B in the end?"
+          );
+        }
+      }
+    }
   }
   // Display
   if (level == "heuFive") {
@@ -15331,6 +15455,8 @@ function handleSubmit(e) {
         if (p.version == 2) correctAnswer = p.numTwo / bags;
         if (p.version == 3) correctAnswer = p.numOne / bags + p.numTwo / bags;
       }
+
+      //UNCHANGED DIFFERENCE
       if (setting == 3) {
         if (p.question == "AE") {
           correctAnswer = p.valueOneUnit * p.unitA;
@@ -15340,6 +15466,27 @@ function handleSubmit(e) {
         }
         if (p.question == "change") {
           correctAnswer = p.situationValue;
+        }
+      }
+      // UNCHANGED TOTAL
+      if (setting == 4) {
+        if (p.version == "valueFirst") {
+          if (p.question == "AF") correctAnswer = p.valueAFirst;
+          if (p.question == "AE") correctAnswer = p.valueAEnd;
+          if (p.question == "BF") correctAnswer = p.valueBFirst;
+          if (p.question == "BE") correctAnswer = p.valueBEnd;
+        }
+        //LAZINESS
+        if (p.version == "valueEnd") {
+          const total = p.valueAFirst + p.valueBFirst;
+          const oneUnit = total / (p.unitA + p.unitB);
+
+          if (p.question == "AF") correctAnswer = oneUnit * p.unitA;
+          if (p.question == "AE")
+            correctAnswer = oneUnit * p.unitA - p.transfer;
+          if (p.question == "BF") correctAnswer = oneUnit * p.unitB;
+          if (p.question == "BE")
+            correctAnswer = oneUnit * p.unitB + p.transfer;
         }
       }
       skipGlobalUpdateProblem = 0;
@@ -19268,7 +19415,7 @@ function genProblems() {
   }
   //SETTINGS
   if (level == "heuFourb") {
-    setting = calArrAll(3, calArr, setting, 9);
+    setting = calArrAll(4, calArr, setting, 9);
     setting = checkRange(setting, calArr);
 
     if (setting == 1) {
@@ -19312,6 +19459,24 @@ function genProblems() {
         situation: [-1, 1][genNumbers(2)],
         situationValue: genNumbers(genValueOneUnit),
         question: ["AE", "BE", "change"][genNumbers(3)],
+      };
+    }
+
+    //UNCHANGED TOTAL
+    if (setting == 4) {
+      const genTransfer = genNumbers(800) + 200;
+      const genOneUnit = genNumbers(500) + 100;
+      return {
+        version: ["valueEnd", "valueFirst"][genNumbers(2)],
+        question: ["AF", "AE", "BF", "BE"][genNumbers(4)],
+        unitA: genNumbers(5) + 2,
+        unitB: [1, genNumbers(5) + 2][genNumbers(1)],
+        valueAEnd: undefined,
+        valueBEnd: undefined,
+        valueAFirst: undefined,
+        valueBFirst: undefined,
+        transfer: genNumbers(genOneUnit - 100) + 100,
+        valueOneUnit: genOneUnit,
       };
     }
   }
@@ -21396,13 +21561,13 @@ function buttonLevelSetting() {
 
     case "Heu.4b":
       setting = prompt(
-        "What level?\n1. Lowest Common Multiples ( Indirect )\n2. Highest Common Factor ( Indirect )\n3. Unchanged Difference\n\n9. All",
+        "What level?\n1. Lowest Common Multiples ( Indirect )\n2. Highest Common Factor ( Indirect )\n3. Unchanged Difference\n4. Unchanged Total\n\n9. All",
         9
       );
       level = "heuFourb";
 
       if (
-        ![1, 2, 3, 9].includes(setting * 1) &&
+        ![1, 2, 3, 4, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 9;
