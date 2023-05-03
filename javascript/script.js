@@ -11214,7 +11214,7 @@ function updateProblems() {
     //UNCHANGED TOTAL
     if (setting == 4) {
       // if (p.valueB > p.valueA) [p.valueA, p.valueB] = [p.valueB, p.valueA];
-
+      [p.unitA, p.unitB] = simplify(p.unitA, p.unitB);
       p.valueAEnd = p.unitA * p.valueOneUnit;
       p.valueBEnd = p.unitB * p.valueOneUnit;
       p.valueAFirst = p.valueAEnd + p.transfer;
