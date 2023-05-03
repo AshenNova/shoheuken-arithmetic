@@ -8293,6 +8293,7 @@ function updateProblems() {
       // }
       if (indexSymbolTwo < indexSymbol) return updateCalc();
       p.arrConstructor.splice(indexSymbolTwo + 2, 0, ")");
+      if (eval(p.arrConstructor.toString()) <= 0) return updateCalc()
       if (
         p.arrConstructor[0] == "(" &&
         p.arrConstructor[p.arrConstructor.length - 1] == ")"
