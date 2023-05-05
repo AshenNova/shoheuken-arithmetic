@@ -9823,6 +9823,76 @@ function updateProblems() {
         `;
       }
     }
+    //SPEED: CATCH UP
+    if (setting == 4) {
+      if (p.speedA == p.speedB) p.speedB += 1;
+      p.gap = genNumbers(20) + 10;
+      p.diffSpeed = p.speedB - p.speedA;
+      if (p.roll == "A") {
+        while (p.gap % p.diffSpeed != 0) {
+          console.log(`Gap +1, ${p.speedA}, ${p.speedB}`);
+          p.gap += 1;
+        }
+        displayProblem.innerHTML = `
+        A is ${p.gap} units ahead of B.</p>
+        A travels at a speed of ${p.speedA} units/s.</p>
+        B travels at a speed of ${p.speedB} units/s.</p>
+        How long does it take B to catch up to A?</p>
+        
+        `;
+      }
+
+      if (p.roll == "B") {
+        p.gap = p.timeA * p.speedA;
+        while (p.gap % p.diffSpeed != 0) {
+          p.timeA += 1;
+          p.gap = p.timeA * p.speedA;
+        }
+        displayProblem.innerHTML = `
+        A and B started from the same place and were headed in the same direction.</p>
+        A left ${p.timeA} mins earlier travelling at ${p.speedA} units/min.</p>
+        B then left and travelled at ${p.speedB} units/min.</p>
+        How long did it take B to catch up to A?</p>
+        `;
+      }
+
+      //NATURAL GAP
+      if (p.roll == "C") {
+        let catchUp = p.gap / (p.speedB - p.speedA);
+        while (catchUp % p.diffSpeed != 0) {
+          p.gap += 1;
+          catchUp = p.gap / (p.speedB - p.speedA);
+        }
+        displayProblem.innerHTML = `
+        A left earlier than B.</p>
+        A moves at ${p.speedA} units/min.</p>
+        B moves at ${p.speedB} units/min.</p>
+        B took ${catchUp} mins to catch up.</p>
+        How far ahead was A before B set off?
+        
+        `;
+      }
+      if (p.roll == "D") {
+        while (p.gap % p.diffSpeed != 0) p.gap += 1;
+        const catchUp = p.gap / p.diffSpeed;
+        displayProblem.innerHTML = `
+        A was ${p.gap} units ahead of B.</p>
+        A moves at ${p.speedA} units/min.</p>
+        B took ${catchUp} mins to catch up to A.</p>
+        What was B's speed?</p>
+        `;
+      }
+      if (p.roll == "E") {
+        while (p.gap % p.diffSpeed != 0) p.gap += 1;
+        const catchUp = p.gap / p.diffSpeed;
+        displayProblem.innerHTML = `
+        A was ${p.gap} units ahead of B.</p>
+        B moves at ${p.speedB} units/min.</p>
+        B took ${catchUp} mins to catch up to A.</p>
+        What was A's speed?</p>
+        `;
+      }
+    }
   }
   if (level == "heuOne") {
     while (p.numOne == p.numTwo) {
@@ -14703,6 +14773,22 @@ function handleSubmit(e) {
           // correctAnswer = `(${p.speedA}+${p.speedB})x${p.timeA + p.timeB}`;
           correctAnswer = (p.speedA + p.speedB) * (p.timeA + p.timeB);
         }
+        //SPEED: CATCH UP
+      }
+      if (setting == 4) {
+        if (p.roll == "A" || p.roll == "B") {
+          // console.log(p.diffSpeed);
+          correctAnswer = p.gap / p.diffSpeed;
+        }
+        if (p.roll == "C") {
+          correctAnswer = p.gap;
+        }
+        if (p.roll == "D") {
+          correctAnswer = p.speedB;
+        }
+        if (p.roll == "E") {
+          correctAnswer = p.speedA;
+        }
       }
       skipGlobalUpdateProblem = 0;
     }
@@ -18865,6 +18951,18 @@ function genProblems() {
       };
     }
     // CATCH UP
+    if (setting == 4) {
+      const genSpeedB = genNumbers(10) + 5;
+      return {
+        roll: ["E", "D", "C", "B", "A"][genNumbers(5)],
+        gap: undefined,
+        speedA: genNumbers(genSpeedB) + 1,
+        timeA: genNumbers(8) + 2,
+        speedB: genSpeedB,
+        timeB: genNumbers(8) + 2,
+        diffSpeed: undefined,
+      };
+    }
   }
   // heuristics value
   // setting
