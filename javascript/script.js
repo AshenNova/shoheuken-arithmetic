@@ -8293,7 +8293,10 @@ function updateProblems() {
       // }
       if (indexSymbolTwo < indexSymbol) return updateCalc();
       p.arrConstructor.splice(indexSymbolTwo + 2, 0, ")");
-      if (eval(p.arrConstructor.toString()) <= 0) return updateCalc()
+      if (eval(p.arrConstructor.toString()) <= 0) {
+        console.log("IT TURNED NEGATIVE?!");
+        return updateCalc();
+      }
       if (
         p.arrConstructor[0] == "(" &&
         p.arrConstructor[p.arrConstructor.length - 1] == ")"
@@ -9719,7 +9722,108 @@ function updateProblems() {
   //   }
   // }
   // Heuristics display
+  if (level == "calSix") {
+    if (setting == 2) {
+      if (p.roll == "A") {
+        displayProblem.innerHTML = `
+        Someone moved from</br>
+        A to B at ${p.speedB} units/${p.timeUnits} for ${p.timeB}${p.timeUnits},</p>
+        then
+        B to C at ${p.speedC} units/${p.timeUnits} for ${p.timeC}${p.timeUnits}.</p>
+        Whats the average speed of the whole journey?
+  
+        `;
+      }
+      if (p.roll == "B") {
+        p.speedA = Math.ceil(
+          (p.speedB * p.timeB + p.speedC * p.timeC) / (p.timeB + p.timeC)
+        );
+        displayProblem.innerHTML = `
+        Someone moved from</br>
+        A to B at ${p.speedB} units/${p.timeUnits} for ${p.timeB} ${p.timeUnits},
+        then from B to C in ${p.timeC} ${p.timeUnits}.</p>
+        ${p.gender} travelled at ${p.speedA} units/${p.timeUnits} for the whole journey.</p>
+        At what speed did ${p.gender} travel between B to C?
+  
+        `;
+      }
+      if (p.roll == "C") {
+        p.speedA = Math.ceil(
+          (p.speedB * p.timeB + p.speedC * p.timeC) / (p.timeB + p.timeC)
+        );
+        p.timeA = p.timeB + p.timeC;
+        displayProblem.innerHTML = `
+        Someone moved from</p>
+        A to B at ${p.speedB} units/${p.timeUnits} for ${p.timeB} ${p.timeUnits},
+        then from B to C in ${p.speedC} units/${p.timeUnits}.</p>
+        ${p.gender} travelled at ${p.speedA} units/${p.timeUnits} for ${p.timeA} ${p.timeUnits} the whole journey.</p>
+        At what long did ${p.gender} take to travel between B to C?
+  
+        `;
+      }
+    }
+    //SPEED: MEET UP
+    if (setting == 3) {
+      p.distance = p.speedA * p.timeA + p.speedB * p.timeB;
+      // normal
+      if (p.roll == "A") {
+        while (p.distance % (p.speedA + p.speedB) != 0) {
+          p.distance += 1;
+        }
+        displayProblem.innerHTML = `
+        The distance between A and B is ${p.distance} units. </p>
+        A moves towards B at ${p.speedA} units/sec. </p>
+        B moves towards A at ${p.speedB} units/sec.  </p>
+        How long did it take both to meet?
+  
+        `;
+      }
+      if (p.roll == "B") {
+        // Natural
+        let remainingDistance = p.distance - p.timeA * p.speedA;
+        while (remainingDistance % (p.speedA + p.speedB) != 0) {
+          p.distance += 1;
+          remainingDistance = p.distance - p.timeA * p.speedA;
+        }
+        displayProblem.innerHTML = `
+        The distance between A and B is ${p.distance} units. </p>
+        A travels towards B for ${p.speedA * p.timeA} units at ${
+          p.speedA
+        } units/sec first. </p>
+        B <u>then</u> sets off towards A at ${p.speedB} units/sec.  </p>
+        How long did it take both to meet from the start?
+  
+        `;
+      }
+      if (p.roll == "C") {
+        // Head Start
+        let remainingDistance = p.distance - p.timeA * p.speedA;
+        while (remainingDistance % (p.speedA + p.speedB) != 0) {
+          p.distance += 1;
+          remainingDistance = p.distance - p.timeA * p.speedA;
+        }
+        displayProblem.innerHTML = `
+        The distance between A and B is ${p.distance} units. </p>
+        A sets off first towards B at ${p.speedA} units/sec for ${p.timeA}secs. </p>
+        B <u>then</u> sets off towards A at ${p.speedB} units/sec.  </p>
+        How long did it take both to meet from the start?
+  
+        `;
+      }
+      if (p.roll == "D") {
+        // Finding Distance
 
+        displayProblem.innerHTML = `
+         A and B are moving towards each other at the same time. </p>
+         A moves towards B at ${p.speedA} units/sec. </p>
+         B moves towards A at ${p.speedB} units/sec.  </p>
+        It took ${p.timeA + p.timeB} secs to meet up.</p>
+        How far apart are they?
+  
+        `;
+      }
+    }
+  }
   if (level == "heuOne") {
     while (p.numOne == p.numTwo) {
       p.numOne = genNumbers(9) + 1;
@@ -13810,26 +13914,31 @@ function handleSubmit(e) {
       }
     }
 
-    if (level == 6.06) {
-      // average speed whole journey
-      if (p.roll == "A") {
-        correctAnswer = `(${p.speedB * p.timeB}+${p.speedC * p.timeC})/${
-          p.timeB + p.timeC
-        }`;
-      }
-      // time between B to C
-      if (p.roll == "B") {
-        correctAnswer = `(${p.speedA * (p.timeB + p.timeC)}-${
-          p.speedB * p.timeB
-        })/${p.timeC}`;
-      }
-      // speed between B to C
-      if (p.roll == "C") {
-        correctAnswer = `(${p.speedA * p.timeA}-${p.speedB * p.timeB})/${
-          p.speedC
-        }`;
-      }
-    }
+    // if (level == 6.06) {
+    //   // average speed whole journey
+    //   if (p.roll == "A") {
+    //     // correctAnswer = `(${p.speedB * p.timeB}+${p.speedC * p.timeC})/${
+    //     //   p.timeB + p.timeC
+    //     // }`;
+    //     correctAnswer =
+    //       (p.speedB * p.timeB + p.speedC * p.timeC) / (p.timeB + p.timeC);
+    //   }
+    //   // time between B to C
+    //   if (p.roll == "B") {
+    //     correctAnswer = `(${p.speedA * (p.timeB + p.timeC)}-${
+    //       p.speedB * p.timeB
+    //     })/${p.timeC}`;
+    //     correctAnswer =
+    //       (p.speedA * (p.timeB + p.timeC) - p.speedB * p.timeB) / p.timeC;
+    //   }
+    //   // speed between B to C
+    //   if (p.roll == "C") {
+    //     // correctAnswer = `(${p.speedA * p.timeA}-${p.speedB * p.timeB})/${
+    //     //   p.speedC
+    //     // }`;
+    //     correctAnswer = (p.speedA * p.timeA - p.speedB * p.timeB) / p.speedC;
+    //   }
+    // }
 
     if (level == 6.07) {
       // normal
@@ -14544,6 +14653,55 @@ function handleSubmit(e) {
         }
         if (p.question == "in the end") {
           correctAnswer = p.oldQuantity + p.changeQuantity;
+        }
+      }
+      skipGlobalUpdateProblem = 0;
+    }
+
+    if (level == "calSix") {
+      // SPEED: AVERAGE SPEED OF WHOLE JOURNEY
+      if (setting == 2) {
+        // average speed whole journey
+        if (p.roll == "A") {
+          correctAnswer =
+            (p.speedB * p.timeB + p.speedC * p.timeC) / (p.timeB + p.timeC);
+        }
+        // time between B to C
+        if (p.roll == "B") {
+          correctAnswer =
+            (p.speedA * (p.timeB + p.timeC) - p.speedB * p.timeB) / p.timeC;
+        }
+        // speed between B to C
+        if (p.roll == "C") {
+          correctAnswer = (p.speedA * p.timeA - p.speedB * p.timeB) / p.speedC;
+        }
+      }
+      //SPEED: MEET UP
+      if (setting == 3) {
+        if (p.roll == "A") {
+          correctAnswer = p.distance / (p.speedA + p.speedB);
+        }
+        // natural
+        if (p.roll == "B") {
+          // correctAnswer = `(${p.distance}-${p.speedA * p.timeA})/(${p.speedA}+${
+          //   p.speedB
+          // })`;
+          correctAnswer =
+            (p.distance - p.timeA * p.speedA) / (p.speedA + p.speedB) + p.timeA;
+        }
+        // headstart
+        if (p.roll == "C") {
+          // correctAnswer = `(${p.distance}-${p.speedA * p.timeA})/(${p.speedA}+${
+          //   p.speedB
+          // })`;
+          correctAnswer =
+            (p.distance - p.speedA * p.timeA) / (p.speedA + p.speedB) + p.timeA;
+        }
+
+        // distance
+        if (p.roll == "D") {
+          // correctAnswer = `(${p.speedA}+${p.speedB})x${p.timeA + p.timeB}`;
+          correctAnswer = (p.speedA + p.speedB) * (p.timeA + p.timeB);
         }
       }
       skipGlobalUpdateProblem = 0;
@@ -17727,23 +17885,6 @@ function genProblems() {
     };
   }
 
-  if (level == 6.06) {
-    return {
-      roll: ["A", "B", "C"][genNumbers(3)],
-      speedA: genNumbers(5) + 2,
-      timeA: genNumbers(5) + 2,
-      distanceA: genNumbers(5) + 2,
-      speedB: genNumbers(5) + 2,
-      timeB: genNumbers(5) + 2,
-      distanceB: genNumbers(5) + 2,
-      speedC: genNumbers(5) + 2,
-      timeC: genNumbers(5) + 2,
-      distanceC: genNumbers(5) + 2,
-      timeUnits: ["s", "min", "h"][genNumbers(3)],
-      gender: ["he", "she"][genNumbers(2)],
-    };
-  }
-
   if (level == 6.07) {
     return {
       roll: ["D", "A", "B", "C"][genNumbers(4)],
@@ -18687,6 +18828,43 @@ function genProblems() {
         question: ["at first", "in the end"][genNumbers(2)],
       };
     }
+  }
+
+  if (level == "calSix") {
+    if (setting == 1) {
+      console.log("Finding Remainder");
+    }
+
+    //AVERAGE SPEED OF WHOLE JOURNEY
+    if (setting == 2) {
+      return {
+        roll: ["A", "B", "C"][genNumbers(3)],
+        speedA: genNumbers(5) + 2,
+        timeA: genNumbers(5) + 2,
+        distanceA: genNumbers(5) + 2,
+        speedB: genNumbers(5) + 2,
+        timeB: genNumbers(5) + 2,
+        distanceB: genNumbers(5) + 2,
+        speedC: genNumbers(5) + 2,
+        timeC: genNumbers(5) + 2,
+        distanceC: genNumbers(5) + 2,
+        timeUnits: ["s", "min", "h"][genNumbers(3)],
+        gender: ["he", "she"][genNumbers(2)],
+      };
+    }
+
+    //MEET UP
+    if (setting == 3) {
+      return {
+        roll: ["D", "A", "B", "C"][genNumbers(4)],
+        distance: undefined,
+        speedA: genNumbers(5) + 5,
+        timeA: genNumbers(8) + 2,
+        speedB: genNumbers(5) + 5,
+        timeB: genNumbers(8) + 2,
+      };
+    }
+    // CATCH UP
   }
   // heuristics value
   // setting
@@ -19886,8 +20064,10 @@ calBtn.forEach((item) => {
 
     buttonLevelSetting();
     levelBox();
-    wholeNumberContainer.classList.toggle("hidden");
-    workingContainer.classList.toggle("hidden");
+    if (buttonLevel != "Cal.6") {
+      wholeNumberContainer.classList.toggle("hidden");
+      workingContainer.classList.toggle("hidden");
+    }
   });
 });
 
@@ -21289,39 +21469,39 @@ function buttonLevelSetting() {
         `;
       break;
 
-    case "Level 6.06":
-      level = 6.06;
-      scoreNeeded = 10;
-      gold = highScore6DotZero6.time;
-      silver = highScore6DotZero6.time + (cutoff - highScore6DotZero6.time) / 3;
-      bronze =
-        highScore6DotZero6.time + ((cutoff - highScore6DotZero6.time) / 3) * 2;
-      highScoreName.innerHTML = highScore6DotZero6.name;
-      highScoreTime.innerHTML = highScore6DotZero6.time;
-      highScoreMistakes.innerHTML = highScore6DotZero6.mistake;
-      document.querySelector("#user-input").setAttribute("type", "text");
-      displayProblem.style.fontSize = "18px";
-      instructions.innerHTML = `
-        Average Speed of Whole Journey = Total Distance/Total Time
-        `;
-      break;
+    // case "Level 6.06":
+    //   level = 6.06;
+    //   scoreNeeded = 10;
+    //   gold = highScore6DotZero6.time;
+    //   silver = highScore6DotZero6.time + (cutoff - highScore6DotZero6.time) / 3;
+    //   bronze =
+    //     highScore6DotZero6.time + ((cutoff - highScore6DotZero6.time) / 3) * 2;
+    //   highScoreName.innerHTML = highScore6DotZero6.name;
+    //   highScoreTime.innerHTML = highScore6DotZero6.time;
+    //   highScoreMistakes.innerHTML = highScore6DotZero6.mistake;
+    //   document.querySelector("#user-input").setAttribute("type", "text");
+    //   displayProblem.style.fontSize = "18px";
+    //   instructions.innerHTML = `
+    //     Average Speed of Whole Journey = Total Distance/Total Time
+    //     `;
+    //   break;
 
-    case "Level 6.07":
-      level = 6.07;
-      scoreNeeded = 10;
-      gold = highScore6DotZero7.time;
-      silver = highScore6DotZero7.time + (cutoff - highScore6DotZero7.time) / 3;
-      bronze =
-        highScore6DotZero7.time + ((cutoff - highScore6DotZero7.time) / 3) * 2;
-      highScoreName.innerHTML = highScore6DotZero7.name;
-      highScoreTime.innerHTML = highScore6DotZero7.time;
-      highScoreMistakes.innerHTML = highScore6DotZero7.mistake;
-      document.querySelector("#user-input").setAttribute("type", "text");
-      displayProblem.style.fontSize = "18px";
-      instructions.innerHTML = `
-        Meet Up =</br> (Distance / Total Speed)</br> or</br> (Left over Distance / Total Speed)
-        `;
-      break;
+    // case "Level 6.07":
+    //   level = 6.07;
+    //   scoreNeeded = 10;
+    //   gold = highScore6DotZero7.time;
+    //   silver = highScore6DotZero7.time + (cutoff - highScore6DotZero7.time) / 3;
+    //   bronze =
+    //     highScore6DotZero7.time + ((cutoff - highScore6DotZero7.time) / 3) * 2;
+    //   highScoreName.innerHTML = highScore6DotZero7.name;
+    //   highScoreTime.innerHTML = highScore6DotZero7.time;
+    //   highScoreMistakes.innerHTML = highScore6DotZero7.mistake;
+    //   document.querySelector("#user-input").setAttribute("type", "text");
+    //   displayProblem.style.fontSize = "18px";
+    //   instructions.innerHTML = `
+    //     Meet Up =</br> (Distance / Total Speed)</br> or</br> (Left over Distance / Total Speed)
+    //     `;
+    //   break;
 
     case "Level 7":
       level = 7;
@@ -21462,6 +21642,23 @@ function buttonLevelSetting() {
       // displayProblem.style.textAlign = "left";
       break;
     // HEURISTICS SETTINGS
+
+    case "Cal.6":
+      level = "calSix";
+      scoreNeeded = 10;
+      setting = prompt(
+        "What level?\n1. Fractions: Finding remainder( In-progress)\n2. Speed: Average Speed\n3. Speed: Meet up\n4. Speed: Catch up\n\n99",
+        99
+      );
+      if (
+        ![1, 2, 3, 4, 99].includes(setting * 1) &&
+        !setting.split("").includes("-")
+      )
+        setting = 99;
+      document.querySelector("#user-input").setAttribute("type", "text");
+      displayProblem.style.fontSize = "18px";
+      displayProblem.style.textAlign = "left";
+      break;
 
     case "Heu.1":
       level = "heuOne";
