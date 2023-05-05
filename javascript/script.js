@@ -28,6 +28,7 @@ let range = 0;
 let difficulty = 0;
 let digit = 0;
 let choice = 0;
+let manipulation = 0;
 const displayProblem = document.querySelector(".display-problems");
 const helpMe = document.querySelector(".help-me-text");
 const ourForm = document.querySelector(".our-form");
@@ -8796,6 +8797,12 @@ function updateProblems() {
       const objectB = p.objects[1];
       [p.ratioA, p.ratioB] = simplify(p.ratioA, p.ratioB);
       [p.ratioC, p.ratioD] = simplify(p.ratioC, p.ratioD);
+      if (((p.ratioA == p.ratioB) == p.ratioC) == p.ratioD) return updateCalc();
+      if (manipulation > 0 && p.ratioA + p.ratioB == p.ratioC + p.ratioD) {
+        console.log("Manipulated!");
+        return updateCalc();
+      }
+      if (p.ratioA + p.ratioB == p.ratioC + p.ratioD) manipulation += 1;
       displayProblem.innerHTML = `
       Group A and B have ${
         p.position == 2
