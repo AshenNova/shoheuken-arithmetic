@@ -16120,7 +16120,12 @@ function handleSubmit(e) {
         "heuFive",
         "heuSix",
         "heuTwob",
+        "calOne",
+        "calTwo",
+        "calThree",
         "calFour",
+        "calFive",
+        "calSix"
       ];
       const levelDoNotClearNum = [
         2.05,
