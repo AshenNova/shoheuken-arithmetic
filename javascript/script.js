@@ -14784,15 +14784,45 @@ function handleSubmit(e) {
         if (p.roll == "A") {
           correctAnswer =
             (p.speedB * p.timeB + p.speedC * p.timeC) / (p.timeB + p.timeC);
+          console.log(correctAnswer);
+          if (correctAnswer - Math.floor(correctAnswer) > 0) {
+            const wholeNum = Math.floor(correctAnswer);
+            let remainder = accDecimal(
+              (correctAnswer - Math.floor(correctAnswer)) * (p.timeB + p.timeC)
+            );
+            let denominator = p.timeB + p.timeC;
+            [remainder, denominator] = simplify(remainder, denominator);
+            correctAnswer = `${wholeNum} ${remainder}/${denominator}`;
+          }
         }
         // time between B to C
         if (p.roll == "B") {
           correctAnswer =
             (p.speedA * (p.timeB + p.timeC) - p.speedB * p.timeB) / p.timeC;
+          console.log(correctAnswer);
+          if (correctAnswer - Math.floor(correctAnswer) > 0) {
+            const wholeNum = Math.floor(correctAnswer);
+            let remainder = accDecimal(
+              (correctAnswer - Math.floor(correctAnswer)) * p.timeC
+            );
+            let denominator = p.timeC;
+            [remainder, denominator] = simplify(remainder, denominator);
+            correctAnswer = `${wholeNum} ${remainder}/${denominator}`;
+          }
         }
         // speed between B to C
         if (p.roll == "C") {
           correctAnswer = (p.speedA * p.timeA - p.speedB * p.timeB) / p.speedC;
+          console.log(correctAnswer);
+          if (correctAnswer - Math.floor(correctAnswer) > 0) {
+            const wholeNum = Math.floor(correctAnswer);
+            let remainder = accDecimal(
+              (correctAnswer - Math.floor(correctAnswer)) * p.speedC
+            );
+            let denominator = p.speedC;
+            [remainder, denominator] = simplify(remainder, denominator);
+            correctAnswer = `${wholeNum} ${remainder}/${denominator}`;
+          }
         }
       }
       //SPEED: MEET UP
