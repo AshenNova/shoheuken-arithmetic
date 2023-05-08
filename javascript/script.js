@@ -17,6 +17,9 @@ import {
   zoneOfDay,
   day12Hours,
   permutationAnswer,
+  simplestForm,
+  resultSide,
+  blankSide,
 } from "./otherFunctions.js";
 // import { resetStuff } from "./reset.js";
 let buttonLevel = 0;
@@ -7415,7 +7418,8 @@ function updateProblems() {
       setting == 11 ||
       setting == 13 ||
       setting == 14 ||
-      setting == 15
+      setting == 15 ||
+      setting == 18
     ) {
       fractionsContainer.classList.add("hidden");
       displayProblem.style.fontSize = "24px";
@@ -7864,6 +7868,22 @@ function updateProblems() {
         p.answer = secondDeno;
       }
     }
+
+    //LEFT SIDE RIGHT SIDE
+    // if (setting == 18) {
+    //   let leftSide = resultSide(p.limit, p.multiMin, p.multiMax).join(" ");
+
+    //   console.log(typeof leftSide);
+    //   let rightSide = blankSide(
+    //     eval(leftSide),
+    //     p.limit,
+    //     p.multiMin,
+    //     p.multiMax
+    //   ).join(" ");
+    //   let tempStatementArr = `${leftSide} = ${rightSide}`;
+
+    //   displayProblem.innerHTML = tempStatementArr;
+    // }
   }
 
   if (level == "calFour") {
@@ -14269,6 +14289,9 @@ function handleSubmit(e) {
       if (setting == 17) {
         correctAnswer = p.answer;
       }
+      // LEFT SIDE RIGHT SIDE
+      if (setting == 18) {
+      }
       skipGlobalUpdateProblem = 0;
     }
 
@@ -14557,6 +14580,25 @@ function handleSubmit(e) {
       }
       // RATIO: REPEATED GROUP
       if (setting == 10) {
+        // console.log(p.answer);
+        // let sorting = [...p.answer];
+        // sorting.sort(function (a, b) {
+        //   return b - a;
+        // });
+        // for (let i = 2; i < sorting[0]; i++) {
+        //   const check = (item) => item % i == 0;
+        //   let divisible = sorting.every(check);
+        //   console.log(divisible);
+        //   while (divisible) {
+        //     // console.log(`Is the entire array divisble?: ${divisible}`);
+        //     console.log("SIMPLIFIED!");
+        //     sorting = sorting.map((x) => x / i);
+        //     p.answer = p.answer.map((x) => x / i);
+        //     divisible = sorting.every(check);
+        //   }
+        // }
+        p.answer = simplestForm(p.answer);
+        console.log(p.answer);
         // if (p.firstScene == "total" && p.secondScene == "total") {
         correctAnswer = `${p.answer[0]}:${p.answer[1]}:${p.answer[2]}`;
         // }
@@ -16125,7 +16167,7 @@ function handleSubmit(e) {
         "calThree",
         "calFour",
         "calFive",
-        "calSix"
+        "calSix",
       ];
       const levelDoNotClearNum = [
         2.05,
@@ -18269,13 +18311,14 @@ function genProblems() {
       };
     }
   }
+  //SETTINGS!
 
   if (level == "calThree") {
     // if (setting == 99 || (global == 1 && skipGlobalUpdateProblem == 0)) {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(16, calArr, setting, 99, level);
+    setting = calArrAll(17, calArr, setting, 99, level);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let thousands = genNumbers(9) + 1;
@@ -18440,6 +18483,21 @@ function genProblems() {
         mulTwo: genNumbers(5) + 2,
         replace: genNumbers(4) + 1,
         answer: undefined,
+      };
+    }
+    // LEFT SIDE RIGHT SIDE
+    if (setting == 18) {
+      return {
+        // symbolOne: ["+", "-", "x", "/"][genNumbers(1)],
+        // symbolTwo: ["+", "-", "x", "/"][genNumbers(1)],
+        // numOne: undefined,
+        // numTwo: undefined,
+        // numThree: undefined,
+        // numFour: undefined,
+        // leftRight: ["left", "right"][genNumbers(1)],
+        limit: 10000,
+        multiMin: 6,
+        multiMax: 9,
       };
     }
   }

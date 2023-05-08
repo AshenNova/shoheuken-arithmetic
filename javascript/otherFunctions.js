@@ -1,5 +1,39 @@
 import { updateProblems, genNumbers } from "./script.js";
 
+const resultSide = (plusLimit, multiMini, multiMax) => {
+  const symbol = ["+", "-", "x", "/"][genNumbers(1)];
+  let numOne;
+  let numTwo;
+  let numThree;
+  let numFour;
+  let statementArr = [];
+  if (symbol == "+") {
+    plusLimit /= 2;
+    numOne = genNumbers(plusLimit) + plusLimit / 5;
+    numTwo = genNumbers(plusLimit) + plusLimit / 5;
+  }
+  statementArr.push(numOne, symbol, numTwo);
+  return statementArr;
+};
+
+const blankSide = (results, plusLimit, multiMini, multiMax) => {
+  const symbol = ["+", "-", "x", "/"][genNumbers(1)];
+  let statementArr = [];
+  let numOne;
+  let numTwo;
+  if (symbol == "+") {
+    plusLimit /= 2;
+    numOne = genNumbers(plusLimit) + plusLimit / 5;
+    numTwo = results - numOne;
+    while (numTwo < 0) {
+      numOne -= 1;
+      numTwo = results - numOne;
+    }
+    statementArr.push(numOne, "+", "_____");
+    return statementArr;
+  }
+};
+
 const permutationAnswer = (inputAnswer, actualAnswer) => {
   console.log(typeof inputAnswer, typeof actualAnswer);
   let input = inputAnswer.toString().trim().split("");
@@ -28,6 +62,30 @@ const permutationAnswer = (inputAnswer, actualAnswer) => {
   }
 };
 
+const simplestForm = (array) => {
+  // let newArray = array;
+  let sorting = [...array];
+  sorting.sort(function (a, b) {
+    return b - a;
+  });
+  for (let i = 2; i <= sorting[0]; i++) {
+    const check = (item) => item % i == 0;
+    let divisible = sorting.every(check);
+    console.log(divisible);
+    while (divisible) {
+      // console.log(`Is the entire array divisble?: ${divisible}`);
+      console.log("SIMPLIFIED!");
+      sorting = sorting.map((x) => x / i);
+      array = array.map((x) => x / i);
+      // array.forEach((x) => {
+      //   x /= i;
+      // });
+      console.log(sorting, array);
+      divisible = sorting.every(check);
+    }
+  }
+  return array;
+};
 const day12Hours = (hours) => {
   if (hours == 0) {
     hours = 12;
@@ -193,4 +251,7 @@ export {
   zoneOfDay,
   day12Hours,
   permutationAnswer,
+  resultSide,
+  blankSide,
+  simplestForm,
 };
