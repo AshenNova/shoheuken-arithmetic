@@ -9789,8 +9789,70 @@ function updateProblems() {
         `;
       }
     }
-    //SPEED: MEET UP
+    // SPEED: MOVING APART
     if (setting == 3) {
+      const position = genNumbers(3);
+      p.distance = p.speedA * p.time + p.speedB * p.time;
+      const unitTime = ["sec", "min", "h"][position];
+      const unitTimeLong = ["seconds", "minutes", "hours"][position];
+      // FIND DISTANCE
+      if (p.version == "A") {
+        displayProblem.innerHTML = `
+        A and B started at the same point and moved away from each other.</p>
+        A moves at ${p.speedA} units/${unitTime}.</p>
+        B moves at ${p.speedB} units/${unitTime}.</p>
+        Both moved for ${p.time} ${unitTimeLong}.</p>
+        How far did apart are they?
+        `;
+      }
+      // FIND TIME
+      if (p.version == "B") {
+        displayProblem.innerHTML = `
+      A and B started at the same point and moved away from each other.</p>
+      A moves at ${p.speedA} units/${unitTime}.</p>
+      B moves at ${p.speedB} units/${unitTime}.</p>
+      Both travelled a total distance of ${p.distance} units.</p>
+      How long did they travel for?
+      `;
+      }
+      // FINDING B'S SPEED
+      if (p.version == "C") {
+        displayProblem.innerHTML = `
+    A and B started at the same point and moved away from each other.</p>
+    A moves at ${p.speedA} units/${unitTime}.</p>
+    Both travelled a total distance of ${p.distance} units in ${p.time} ${unitTimeLong}.</p>
+    What was B's speed?
+    `;
+      }
+      if (p.version == "D") {
+        displayProblem.innerHTML = `
+    A and B started at the same point and moved away from each other.</p>
+    B moves at ${p.speedB} units/${unitTime}.</p>
+    Both travelled a total distance of ${p.distance} units in ${p.time} ${unitTimeLong}.</p>
+    What was A's speed?
+    `;
+      }
+      if (p.version == "E") {
+        const diffSpeed = p.speedA - p.speedB;
+        if (p.speedA == p.speedB) return updateCalc();
+        const comparison = p.speedA > p.speedB ? "faster" : "slower";
+        displayProblem.innerHTML = `
+    A and B started at the same point and moved away from each other.</p>
+    A moves at ${Math.abs(
+      diffSpeed
+    )} units/${unitTime} ${comparison} than B.</p>
+    Both travelled a total distance of ${p.distance} units in ${
+          p.time
+        } ${unitTimeLong}.</p>
+    `;
+      }
+      if (p.which == "A")
+        displayProblem.insertAdjacentHTML("beforeend", "What is A's speed?");
+      if (p.which == "B")
+        displayProblem.insertAdjacentHTML("beforeend", "What is B's speed?");
+    }
+    //SPEED: MEET UP
+    if (setting == 4) {
       p.distance = p.speedA * p.timeA + p.speedB * p.timeB;
       // normal
       if (p.roll == "A") {
@@ -9851,7 +9913,7 @@ function updateProblems() {
       }
     }
     //SPEED: CATCH UP
-    if (setting == 4) {
+    if (setting == 5) {
       if (p.speedA == p.speedB) p.speedB += 1;
       p.gap = genNumbers(20) + 10;
       p.diffSpeed = p.speedB - p.speedA;
@@ -14825,8 +14887,27 @@ function handleSubmit(e) {
           }
         }
       }
-      //SPEED: MEET UP
+      // SPEED: MOVING APART
       if (setting == 3) {
+        if (p.version == "A") {
+          correctAnswer = p.distance;
+        }
+        if (p.version == "B") {
+          correctAnswer = p.time;
+        }
+        if (p.version == "C") {
+          correctAnswer = p.speedB;
+        }
+        if (p.version == "D") {
+          correctAnswer = p.speedA;
+        }
+        if (p.version == "E") {
+          if (p.which == "A") correctAnswer = p.speedA;
+          if (p.which == "B") correctAnswer = p.speedB;
+        }
+      }
+      //SPEED: MEET UP
+      if (setting == 4) {
         if (p.roll == "A") {
           correctAnswer = p.distance / (p.speedA + p.speedB);
         }
@@ -14854,7 +14935,7 @@ function handleSubmit(e) {
         }
         //SPEED: CATCH UP
       }
-      if (setting == 4) {
+      if (setting == 5) {
         if (p.roll == "A" || p.roll == "B") {
           // console.log(p.diffSpeed);
           correctAnswer = p.gap / p.diffSpeed;
@@ -19038,9 +19119,21 @@ function genProblems() {
         gender: ["he", "she"][genNumbers(2)],
       };
     }
+    // SPEED: MOVING APART
+
+    if (setting == 3) {
+      return {
+        version: ["E", "D", "C", "B", "A"][genNumbers(5)],
+        which: ["A", "B"][genNumbers(2)],
+        speedA: genNumbers(10) + 5,
+        time: genNumbers(14) + 2,
+        speedB: genNumbers(10) + 5,
+        distance: undefined,
+      };
+    }
 
     //MEET UP
-    if (setting == 3) {
+    if (setting == 4) {
       return {
         roll: ["D", "A", "B", "C"][genNumbers(4)],
         distance: undefined,
@@ -19051,7 +19144,7 @@ function genProblems() {
       };
     }
     // CATCH UP
-    if (setting == 4) {
+    if (setting == 5) {
       const genSpeedB = genNumbers(10) + 5;
       return {
         roll: ["E", "D", "C", "B", "A"][genNumbers(5)],
@@ -21845,11 +21938,11 @@ function buttonLevelSetting() {
       level = "calSix";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Fractions: Finding remainder( In-progress)\n2. Speed: Average Speed\n3. Speed: Meet up\n4. Speed: Catch up\n\n99",
+        "What level?\n1. Fractions: Finding remainder( In-progress)\n2. Speed: Average Speed\n3. Speed: Moving Apart\n4. Speed: Meet up\n5. Speed: Catch up\n\n99",
         99
       );
       if (
-        ![1, 2, 3, 4, 99].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 99].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 99;
