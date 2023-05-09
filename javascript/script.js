@@ -14638,6 +14638,7 @@ function handleSubmit(e) {
       }
       // RATIO: REPEATED IDENTITY
       if (setting == 9) {
+        calArrQns = simplestForm(calArrQns);
         correctAnswer = `${calArrQns[5]}:${calArrQns[6]}:${calArrQns[8]}`;
       }
       // RATIO: REPEATED GROUP
@@ -14731,10 +14732,17 @@ function handleSubmit(e) {
         correctAnswer = `${end_A}:${end_B}`;
       }
       // PERCENTAGE: REPEATED IDENTITY
-      if (setting == 16)
-        correctAnswer = `${p.answer[0]}:${p.answer[1]}:${p.answer[2]}`;
+      if (setting == 16) p.answer = simplestForm(p.answer);
+      correctAnswer = `${p.answer[0]}:${p.answer[1]}:${p.answer[2]}`;
 
-      if (setting == 17) correctAnswer = p.answer;
+      if (setting == 17) {
+        console.log(p.answer);
+        // got to change to an array
+        p.answer = p.answer.split(":");
+        console.log(p.answer, typeof p.answer);
+        p.answer = simplestForm(p.answer).join(":");
+        correctAnswer = p.answer;
+      }
 
       // PERCENTAGE: REMAINDER CONCEPT
       if (setting == 18) {
