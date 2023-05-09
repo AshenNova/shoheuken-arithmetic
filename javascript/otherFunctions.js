@@ -21,6 +21,9 @@ const resultSide = (plusLimit, multiMini, multiMax) => {
     numOne = genNumbers(plusLimit / multiMax);
     numTwo = genNumbers(multiMax - multiMini) + multiMini;
     console.log(numOne, numTwo);
+    if (numOne == 0) {
+      return "Error";
+    }
   }
   if (symbol == "/") {
     // plusLimit /= 2;

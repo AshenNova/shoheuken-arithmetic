@@ -7097,7 +7097,7 @@ function updateProblems() {
       workingContainer.classList.remove("hidden");
     }
     // NORMAL DISPLAY
-    if (setting == 7 || setting == 8 || setting == 9) {
+    if (setting == 7 || setting == 8 || setting == 9 || setting == 10) {
       displayProblem.style.fontSize = "24px";
       wholeNumberContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
@@ -7108,7 +7108,7 @@ function updateProblems() {
       }
     }
     // FRACTIONS DISPLAY
-    if (setting == 10) {
+    if (setting == 11) {
       wholeNumberContainer.classList.add("hidden");
       workingContainer.classList.add("hidden");
       fractionsContainer.classList.remove("hidden");
@@ -7306,9 +7306,40 @@ function updateProblems() {
       let displayStr = arr.join(", "); //Change arr to string
       displayProblem.innerHTML = displayStr;
     }
-
-    //TIME: TIMELINE
+    // LEFT SIDE RIGHT SIDE
     if (setting == 9) {
+      let leftSide = resultSide(p.limit, p.multiMin, p.multiMax);
+
+      // console.log(leftSide);
+      // let leftSide = blankSide(
+      //   eval(leftSide),
+      //   p.limit,
+      //   p.multiMin,
+      //   p.multiMax
+      // ).join(" ");
+
+      let rightSide = blankSide(
+        leftSide.result,
+        p.limit,
+        p.multiMin,
+        p.multiMax
+      );
+      // console.log(rightSide);
+      if (rightSide == "Error" || leftSide == "Error") {
+        console.log("Error");
+        return updateCalc();
+      }
+
+      let tempStatementArr =
+        genNumbers(2) == 0
+          ? `${leftSide.statementArr} = ${rightSide.statementArr}`
+          : `${rightSide.statementArr} = ${leftSide.statementArr}`;
+
+      p.answer = rightSide.answer;
+      displayProblem.innerHTML = tempStatementArr;
+    }
+    //TIME: TIMELINE
+    if (setting == 10) {
       console.log(`Hours at first: ${p.hours}, Minutes at first: ${p.mins}`);
       let zone = "am";
       let timeHours = p.hours;
@@ -7352,7 +7383,7 @@ function updateProblems() {
       }
     }
     // FRACTIONS: ADDITION AND SUBTRACTION
-    if (setting == 10) {
+    if (setting == 11) {
       denominatorOne.classList.remove("hidden");
       fractionsLine.classList.remove("hidden");
       fractionsWholeNum.textContent = "";
@@ -14180,6 +14211,9 @@ function handleSubmit(e) {
         correctAnswer = p.answer;
       }
       if (setting == 9) {
+        correctAnswer = p.answer;
+      }
+      if (setting == 10) {
         if (p.beforeAfter == "before") {
           let totalTime = undefined;
           if (p.hoursMins == "hours") {
@@ -14231,7 +14265,7 @@ function handleSubmit(e) {
           }
         }
       }
-      if (setting == 10) {
+      if (setting == 11) {
         if (p.operator == "+") {
           correctAnswer = `${p.numeOne + p.numeTwo}/${p.deno}`;
           if (p.numeOne + p.numeTwo == p.deno) correctAnswer = 1;
@@ -18341,7 +18375,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(8, calArr);
     // }
-    setting = calArrAll(9, calArr, setting, 99, level);
+    setting = calArrAll(10, calArr, setting, 99, level);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let hundreds = genNumbers(9) + 1;
@@ -18425,8 +18459,16 @@ function genProblems() {
         answer: undefined,
       };
     }
-    // TIME: TIMELINE
+    // LEFT SIDE RIGHT SIDE
     if (setting == 9) {
+      return {
+        limit: 50,
+        multiMin: 2,
+        multiMax: 5,
+      };
+    }
+    // TIME: TIMELINE
+    if (setting == 10) {
       return {
         hours: genNumbers(24),
         mins: genNumbers(60),
@@ -18438,7 +18480,7 @@ function genProblems() {
     }
 
     //FRACTIONS: ADDITION AND SUBTRACTION
-    if (setting == 10) {
+    if (setting == 11) {
       const gen_deno = genNumbers(9) + 3;
       const gen_diff = genNumbers(gen_deno - 1) + 1;
       return {
@@ -21838,11 +21880,11 @@ function buttonLevelSetting() {
       level = "calTwo";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing\n3. Addition (to-1000) (Carrying)\n4. Subtraction (to 1000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Time: Timeline\n10. Fractions: Addition and Subtraction",
+        "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing\n3. Addition (to-1000) (Carrying)\n4. Subtraction (to 1000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n\n9. Left Side Right Side + - x /\n10. Time: Timeline\n11. Fractions: Addition and Subtraction",
         99
       );
       if (
-        ![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 99].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 99].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 99;
