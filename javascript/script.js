@@ -7776,7 +7776,40 @@ function updateProblems() {
       }
     }
 
+    // LEFT SIDE RIGHT SIDE
     if (setting == 15) {
+      let leftSide = resultSide(p.limit, p.multiMin, p.multiMax);
+
+      // console.log(leftSide);
+      // let leftSide = blankSide(
+      //   eval(leftSide),
+      //   p.limit,
+      //   p.multiMin,
+      //   p.multiMax
+      // ).join(" ");
+
+      let rightSide = blankSide(
+        leftSide.result,
+        p.limit,
+        p.multiMin,
+        p.multiMax
+      );
+      // console.log(rightSide);
+      if (rightSide == "Error" || leftSide == "Error") {
+        console.log("Error");
+        return updateCalc();
+      }
+
+      let tempStatementArr =
+        genNumbers(2) == 0
+          ? `${leftSide.statementArr} = ${rightSide.statementArr}`
+          : `${rightSide.statementArr} = ${leftSide.statementArr}`;
+
+      p.answer = rightSide.answer;
+      displayProblem.innerHTML = tempStatementArr;
+    }
+
+    if (setting == 16) {
       let zone = "a.m";
       let totalTime = p.hours * 60;
       zone = zoneOfDay(totalTime);
@@ -7811,7 +7844,7 @@ function updateProblems() {
     }
 
     // FRACTIONS: ADDITION AND SUBTRACTION
-    if (setting == 16) {
+    if (setting == 17) {
       [p.numeOne, p.denoOne] = simplify(p.numeOne, p.denoOne);
       [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
       if (p.denoOne == p.denoTwo) return updateCalc();
@@ -7838,7 +7871,7 @@ function updateProblems() {
     }
 
     //FRACTIONS: EXPANSION AND SIMPLIFICATION
-    if (setting == 17) {
+    if (setting == 18) {
       [p.oriNume, p.oriDeno] = simplify(p.oriNume, p.oriDeno);
       if (p.mulOne == p.mulTwo) p.mulTwo += 1;
       const firstNume = p.oriNume * p.mulOne;
@@ -7867,35 +7900,6 @@ function updateProblems() {
         denominatorTwo.textContent = "?";
         p.answer = secondDeno;
       }
-    }
-
-    // LEFT SIDE RIGHT SIDE
-    if (setting == 18) {
-      let leftSide = resultSide(p.limit, p.multiMin, p.multiMax);
-
-      console.log(leftSide);
-      // let leftSide = blankSide(
-      //   eval(leftSide),
-      //   p.limit,
-      //   p.multiMin,
-      //   p.multiMax
-      // ).join(" ");
-
-      let rightSide = blankSide(
-        leftSide.result,
-        p.limit,
-        p.multiMin,
-        p.multiMax
-      );
-      console.log(rightSide);
-      if (rightSide == "Error" || leftSide == "Error") {
-        console.log("Error");
-        return updateCalc();
-      }
-      let tempStatementArr = `${leftSide.statementArr} = ${rightSide.statementArr}`;
-
-      p.answer = rightSide.answer;
-      displayProblem.innerHTML = tempStatementArr;
     }
   }
 
@@ -14290,7 +14294,12 @@ function handleSubmit(e) {
       if (setting == 14) {
         correctAnswer = p.num;
       }
+
+      // LEFT SIDE RIGHT SIDE
       if (setting == 15) {
+        correctAnswer = p.answer;
+      }
+      if (setting == 16) {
         if (p.beforeAfter == "before") {
           let totalTime = undefined;
           totalTime =
@@ -14342,7 +14351,7 @@ function handleSubmit(e) {
       }
 
       // FRACTIONS: ADDITION AND SUBTRACTION
-      if (setting == 16) {
+      if (setting == 17) {
         const commonDenoFind = commonDeno(p.denoOne, p.denoTwo);
         const newNumeOne = (commonDenoFind / p.denoOne) * p.numeOne;
         const newNumeTwo = (commonDenoFind / p.denoTwo) * p.numeTwo;
@@ -14361,10 +14370,6 @@ function handleSubmit(e) {
       }
 
       //FRACTIONS: EXPANSION AND SIMPLIFICATION
-      if (setting == 17) {
-        correctAnswer = p.answer;
-      }
-      // LEFT SIDE RIGHT SIDE
       if (setting == 18) {
         correctAnswer = p.answer;
       }
@@ -18584,42 +18589,8 @@ function genProblems() {
       };
     }
 
-    if (setting == 15) {
-      return {
-        hours: genNumbers(24),
-        mins: genNumbers(60),
-        situationHours: genNumbers(6) + 1,
-        situationMins: genNumbers(60 - 1) + 1,
-        beforeAfter: ["before", "after"][genNumbers(2)],
-      };
-    }
-    // FRACTIONS: ADDITION AND SUBTRACTION
-    if (setting == 16) {
-      const gen_denoOne = genNumbers(9) + 2;
-      const gen_denoTwo = genNumbers(8) + 3;
-      return {
-        denoOne: gen_denoOne,
-        numeOne: genNumbers(gen_denoOne - 1) + 1,
-        denoTwo: gen_denoTwo,
-        numeTwo: genNumbers(gen_denoTwo - 1) + 1,
-        operator: ["+", "-"][genNumbers(2)],
-      };
-    }
-    // FRACTIONS: EXPAND AND SIMPLIFICATION
-    if (setting == 17) {
-      const gen_deno = genNumbers(9) + 3;
-      const gen_nume = genNumbers(gen_deno - 2) + 2;
-      return {
-        oriNume: gen_nume,
-        oriDeno: gen_deno,
-        mulOne: genNumbers(5) + 2,
-        mulTwo: genNumbers(5) + 2,
-        replace: genNumbers(4) + 1,
-        answer: undefined,
-      };
-    }
     // LEFT SIDE RIGHT SIDE
-    if (setting == 18) {
+    if (setting == 15) {
       return {
         // symbolOne: ["+", "-", "x", "/"][genNumbers(1)],
         // symbolTwo: ["+", "-", "x", "/"][genNumbers(1)],
@@ -18631,6 +18602,41 @@ function genProblems() {
         limit: 10000,
         multiMin: 6,
         multiMax: 9,
+      };
+    }
+
+    if (setting == 16) {
+      return {
+        hours: genNumbers(24),
+        mins: genNumbers(60),
+        situationHours: genNumbers(6) + 1,
+        situationMins: genNumbers(60 - 1) + 1,
+        beforeAfter: ["before", "after"][genNumbers(2)],
+      };
+    }
+    // FRACTIONS: ADDITION AND SUBTRACTION
+    if (setting == 17) {
+      const gen_denoOne = genNumbers(9) + 2;
+      const gen_denoTwo = genNumbers(8) + 3;
+      return {
+        denoOne: gen_denoOne,
+        numeOne: genNumbers(gen_denoOne - 1) + 1,
+        denoTwo: gen_denoTwo,
+        numeTwo: genNumbers(gen_denoTwo - 1) + 1,
+        operator: ["+", "-"][genNumbers(2)],
+      };
+    }
+    // FRACTIONS: EXPAND AND SIMPLIFICATION
+    if (setting == 18) {
+      const gen_deno = genNumbers(9) + 3;
+      const gen_nume = genNumbers(gen_deno - 2) + 2;
+      return {
+        oriNume: gen_nume,
+        oriDeno: gen_deno,
+        mulOne: genNumbers(5) + 2,
+        mulTwo: genNumbers(5) + 2,
+        replace: genNumbers(4) + 1,
+        answer: undefined,
       };
     }
   }
@@ -21846,8 +21852,8 @@ function buttonLevelSetting() {
       level = "calThree";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Working: Long Division ( No remainder )\n11. Working: Long Division ( Remainder )\n12. Working: Multiplication ( Single Blank )\n13. Multiplication in sets\n14. Long Division: Simple Statement\n15. Time: Timeline ( hours and mins )\n16. Fractions: Addition and Subtraction\n17. Fractions: Expansion and simplification\n\n99. All",
-        18
+        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Working: Long Division ( No remainder )\n11. Working: Long Division ( Remainder )\n12. Working: Multiplication ( Single Blank )\n13. Multiplication in sets\n14. Long Division: Simple Statement\n15. Left Side Right Side + - x ÷\n16. Time: Timeline ( hours and mins )\n17. Fractions: Addition and Subtraction\n18. Fractions: Expansion and simplification\n\n99. All",
+        99
       );
       if (
         ![
