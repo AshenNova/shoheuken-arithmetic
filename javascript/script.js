@@ -10726,6 +10726,10 @@ function updateProblems() {
         if (-p.situationTwo < -p.situationOne) {
           [p.situationTwo, p.situationOne] = [p.situationOne, p.situationTwo];
         }
+        if (Math.abs(p.situationOne) > Math.abs(p.situationTwo)) {
+          console.log("Impossible numbers");
+          return updateCalc();
+        }
       }
 
       let valueOfOneUnit = undefined;
