@@ -7299,7 +7299,7 @@ function updateProblems() {
       if (arr[5] > 1000 || arr[5] < 0 || p.diffOne == 0 || p.diffTwo == 0) {
         console.log(arr[5]);
         arr = [];
-        updateCalc();
+        return updateCalc();
       }
       p.answer = arr[p.position];
       arr[p.position] = "____";
@@ -7631,7 +7631,7 @@ function updateProblems() {
       if (arr[5] > 10000 || arr[5] < 0 || p.diffOne == 0 || p.diffTwo == 0) {
         console.log(arr[5]);
         arr = [];
-        updateCalc();
+        return updateCalc();
       }
       p.answer = arr[p.position];
       arr[p.position] = "____";
