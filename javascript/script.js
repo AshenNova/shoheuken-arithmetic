@@ -18375,7 +18375,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(8, calArr);
     // }
-    setting = calArrAll(10, calArr, setting, 99, level);
+    setting = calArrAll(11, calArr, setting, 99, level);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let hundreds = genNumbers(9) + 1;
