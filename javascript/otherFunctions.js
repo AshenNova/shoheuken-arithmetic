@@ -1,37 +1,152 @@
 import { updateProblems, genNumbers } from "./script.js";
 
 const resultSide = (plusLimit, multiMini, multiMax) => {
-  const symbol = ["+", "-", "x", "/"][genNumbers(1)];
+  const symbol = ["+", "-", "*", "/"][genNumbers(4)];
   let numOne;
   let numTwo;
-  let numThree;
-  let numFour;
   let statementArr = [];
   if (symbol == "+") {
     plusLimit /= 2;
     numOne = genNumbers(plusLimit) + plusLimit / 5;
     numTwo = genNumbers(plusLimit) + plusLimit / 5;
   }
+  if (symbol == "-") {
+    // plusLimit /= 2;
+    numOne = genNumbers(plusLimit) + plusLimit / 5;
+    numTwo = genNumbers(numOne);
+    console.log(numOne, numTwo);
+  }
+  if (symbol == "*") {
+    // plusLimit /= 2;
+    numOne = genNumbers(plusLimit / multiMax);
+    numTwo = genNumbers(multiMax - multiMini) + multiMini;
+    console.log(numOne, numTwo);
+  }
+  if (symbol == "/") {
+    // plusLimit /= 2;
+    numOne = genNumbers(plusLimit);
+    numTwo = genNumbers(multiMax - multiMini) + multiMini;
+    while (numOne % numTwo != 0) {
+      numTwo -= 1;
+      if (numTwo < multiMini) {
+        console.log("Divisor is too small");
+        return "Error";
+      }
+    }
+  }
   statementArr.push(numOne, symbol, numTwo);
-  return statementArr;
+  const result = eval(statementArr.join(""));
+  if (result > plusLimit) {
+    console.log("Exceeded limit");
+    return "Error";
+  }
+  if (statementArr.includes("*")) {
+    const index = statementArr.indexOf("*");
+    statementArr.splice(index, 1, "x");
+  }
+  if (statementArr.includes("/")) {
+    const index = statementArr.indexOf("/");
+    statementArr.splice(index, 1, "÷");
+  }
+  return {
+    statementArr: statementArr.join(" "),
+    result,
+  };
 };
 
 const blankSide = (results, plusLimit, multiMini, multiMax) => {
-  const symbol = ["+", "-", "x", "/"][genNumbers(1)];
+  let symbol = ["+", "-", "x", "/"][genNumbers(4)];
+  const blank = ["A", "B"][genNumbers(1)];
   let statementArr = [];
-  let numOne;
-  let numTwo;
-  if (symbol == "+") {
-    plusLimit /= 2;
-    numOne = genNumbers(plusLimit) + plusLimit / 5;
-    numTwo = results - numOne;
-    while (numTwo < 0) {
-      numOne -= 1;
-      numTwo = results - numOne;
+  let num;
+  let answer;
+
+  if (blank == "A") {
+    // ____ +-x/ "Number"
+    statementArr.push("___");
+    if (symbol == "+") {
+      num = genNumbers(results - 1) + 1;
+      statementArr.push("+");
+      answer = results - num;
     }
-    statementArr.push(numOne, "+", "_____");
-    return statementArr;
+    if (symbol == "-") {
+      num = genNumbers(results - 1) + 1;
+      statementArr.push("-");
+      answer = results + num;
+      if (answer < 0) return "Error";
+    }
+
+    if (symbol == "x") {
+      num = genNumbers(multiMax - multiMini) + multiMini;
+      statementArr.push("x");
+      answer = results / num;
+      console.log(num);
+      while (results % num != 0) {
+        // console.log("Down the rabbit hole");
+        num -= 1;
+        // console.log(`Changing divisor: ${num}`);
+        answer = results / num;
+        if (num < multiMini) {
+          console.log("Updating");
+          return "Error";
+        }
+      }
+    }
+    if (symbol == "/") {
+      symbol = "÷";
+      num = genNumbers(multiMax - multiMini) + multiMini;
+      statementArr.push("÷");
+      answer = results * num;
+    }
+    statementArr.push(num);
   }
+  if (blank == "B") {
+    //"Number" +-x/ _____
+    if (symbol == "+") {
+      num = genNumbers(results);
+      // statementArr.push("+");
+      answer = results - num;
+    }
+    if (symbol == "-") {
+      num = genNumbers(plusLimit - results) + results;
+      // statementArr.push("-");
+      answer = num - results;
+      if (answer < 0) return "Error";
+    }
+
+    if (symbol == "x") {
+      num = genNumbers(multiMax - multiMini) + multiMini;
+      // statementArr.push("x");
+      answer = results / num;
+      console.log(num);
+      while (results % num != 0) {
+        // console.log("Down the rabbit hole");
+        num -= 1;
+        // console.log(`Changing divisor: ${num}`);
+        answer = results / num;
+        if (num < multiMini) {
+          console.log("Updating");
+          return "Error";
+        }
+      }
+    }
+    if (symbol == "/") {
+      // console.log("No division");
+      // return "Error";
+      num = genNumbers(multiMax - multiMini) + multiMini;
+      statementArr.push("÷");
+      answer = results * num;
+    }
+    statementArr.push(num, symbol, "_____");
+  }
+  if (answer > plusLimit) {
+    console.log("Exceeded limit");
+    return "Error";
+  }
+  return {
+    statementArr: statementArr.join(" "),
+    answer,
+  };
 };
 
 const permutationAnswer = (inputAnswer, actualAnswer) => {

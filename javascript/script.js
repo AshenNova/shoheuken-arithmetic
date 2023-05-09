@@ -7869,21 +7869,34 @@ function updateProblems() {
       }
     }
 
-    //LEFT SIDE RIGHT SIDE
-    // if (setting == 18) {
-    //   let leftSide = resultSide(p.limit, p.multiMin, p.multiMax).join(" ");
+    // LEFT SIDE RIGHT SIDE
+    if (setting == 18) {
+      let leftSide = resultSide(p.limit, p.multiMin, p.multiMax);
 
-    //   console.log(typeof leftSide);
-    //   let rightSide = blankSide(
-    //     eval(leftSide),
-    //     p.limit,
-    //     p.multiMin,
-    //     p.multiMax
-    //   ).join(" ");
-    //   let tempStatementArr = `${leftSide} = ${rightSide}`;
+      console.log(leftSide);
+      // let leftSide = blankSide(
+      //   eval(leftSide),
+      //   p.limit,
+      //   p.multiMin,
+      //   p.multiMax
+      // ).join(" ");
 
-    //   displayProblem.innerHTML = tempStatementArr;
-    // }
+      let rightSide = blankSide(
+        leftSide.result,
+        p.limit,
+        p.multiMin,
+        p.multiMax
+      );
+      console.log(rightSide);
+      if (rightSide == "Error" || leftSide == "Error") {
+        console.log("Error");
+        return updateCalc();
+      }
+      let tempStatementArr = `${leftSide.statementArr} = ${rightSide.statementArr}`;
+
+      p.answer = rightSide.answer;
+      displayProblem.innerHTML = tempStatementArr;
+    }
   }
 
   if (level == "calFour") {
@@ -14353,6 +14366,7 @@ function handleSubmit(e) {
       }
       // LEFT SIDE RIGHT SIDE
       if (setting == 18) {
+        correctAnswer = p.answer;
       }
       skipGlobalUpdateProblem = 0;
     }
@@ -18437,7 +18451,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(17, calArr, setting, 99, level);
+    setting = calArrAll(18, calArr, setting, 99, level);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let thousands = genNumbers(9) + 1;
@@ -21833,7 +21847,7 @@ function buttonLevelSetting() {
       scoreNeeded = 10;
       setting = prompt(
         "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Working: Long Division ( No remainder )\n11. Working: Long Division ( Remainder )\n12. Working: Multiplication ( Single Blank )\n13. Multiplication in sets\n14. Long Division: Simple Statement\n15. Time: Timeline ( hours and mins )\n16. Fractions: Addition and Subtraction\n17. Fractions: Expansion and simplification\n\n99. All",
-        99
+        18
       );
       if (
         ![
@@ -21855,6 +21869,7 @@ function buttonLevelSetting() {
           15,
           16,
           17,
+          18,
           99,
         ].includes(setting * 1) &&
         !setting.split("").includes("-")
