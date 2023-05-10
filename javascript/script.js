@@ -14845,8 +14845,10 @@ function handleSubmit(e) {
         correctAnswer = `${end_A}:${end_B}`;
       }
       // PERCENTAGE: REPEATED IDENTITY
-      if (setting == 16) p.answer = simplestForm(p.answer);
-      correctAnswer = `${p.answer[0]}:${p.answer[1]}:${p.answer[2]}`;
+      if (setting == 16) {
+        p.answer = simplestForm(p.answer);
+        correctAnswer = p.answer.join(":");
+      }
 
       if (setting == 17) {
         console.log(p.answer);
