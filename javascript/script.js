@@ -6888,6 +6888,7 @@ function updateProblems() {
 
   // WORKING CALCULATION DISPLAY
   if (level == "calOne") {
+    //WORKING DISPLAY
     if (
       setting == 1 ||
       setting == 2 ||
@@ -6899,7 +6900,8 @@ function updateProblems() {
       wholeNumberContainer.classList.add("hidden");
       workingContainer.classList.remove("hidden");
     }
-    if (setting == 7 || setting == 8) {
+    // NORMAL DISPLAY7
+    if (setting == 7 || setting == 8 || setting == 9) {
       displayProblem.style.fontSize = "24px";
       wholeNumberContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
@@ -7079,6 +7081,28 @@ function updateProblems() {
       arr[p.position] = "____";
       let displayStr = arr.join(", "); //Change arr to string
       displayProblem.innerHTML = displayStr;
+    }
+    if (setting == 9) {
+      let leftSide = resultSide(p.limit, p.multiMin, p.multiMax);
+      let rightSide = blankSide(
+        leftSide.result,
+        p.limit,
+        p.multiMin,
+        p.multiMax
+      );
+      // console.log(rightSide);
+      if (rightSide == "Error" || leftSide == "Error") {
+        console.log("Error");
+        return updateCalc();
+      }
+
+      let tempStatementArr =
+        genNumbers(2) == 0
+          ? `${leftSide.statementArr} = ${rightSide.statementArr}`
+          : `${rightSide.statementArr} = ${leftSide.statementArr}`;
+
+      p.answer = rightSide.answer;
+      displayProblem.innerHTML = tempStatementArr;
     }
   }
 
@@ -7945,20 +7969,20 @@ function updateProblems() {
 
     // NORMAL DISPLAY
 
-    if ([1, 2, 3, 7, 8, 9, 10, 11, 12, 13, 14].includes(setting * 1)) {
+    if ([1, 2, 3, 5, 8, 9, 10, 11, 12, 13, 14, 15].includes(setting * 1)) {
       displayProblem.style.fontSize = "20px";
       wholeNumberContainer.classList.remove("hidden");
       fractionsContainerTwo.classList.add("hidden");
       workingContainer.classList.add("hidden");
     }
     //MIXED FRACTIONS DISPLAY
-    if (setting == 5 || setting == 6) {
+    if (setting == 6 || setting == 7) {
       wholeNumberContainer.classList.add("hidden");
       workingContainer.classList.add("hidden");
       fractionsContainerTwo.classList.remove("hidden");
       equalSymbolTwo.classList.remove("hidden");
     }
-    if (setting != 5 && setting != 6) {
+    if (setting != 6 && setting != 7) {
       equalSymbolTwo.classList.add("hidden");
       equalSymbol.textContent = "=";
     }
@@ -8074,7 +8098,32 @@ function updateProblems() {
       operator.textContent = "x";
       workingAnswer.textContent = "?";
     }
+
+    // LEFT SIDE RIGHT SIDE
     if (setting == 5) {
+      let leftSide = resultSide(p.limit, p.multiMin, p.multiMax);
+      let rightSide = blankSide(
+        leftSide.result,
+        p.limit,
+        p.multiMin,
+        p.multiMax
+      );
+      // console.log(rightSide);
+      if (rightSide == "Error" || leftSide == "Error") {
+        console.log("Error");
+        return updateCalc();
+      }
+
+      let tempStatementArr =
+        genNumbers(2) == 0
+          ? `${leftSide.statementArr} = ${rightSide.statementArr}`
+          : `${rightSide.statementArr} = ${leftSide.statementArr}`;
+
+      p.answer = rightSide.answer;
+      displayProblem.innerHTML = tempStatementArr;
+    }
+
+    if (setting == 6) {
       if (p.numOne > p.denoOne) [p.numOne, p.denoOne] = [p.denoOne, p.numOne];
       if (p.numOne == p.denoOne) p.denoOne += 1;
       if (p.numTwo > p.denoTwo) [p.numTwo, p.denoTwo] = [p.denoTwo, p.numTwo];
@@ -8091,7 +8140,7 @@ function updateProblems() {
       threeDenominator.textContent = p.denoTwo;
       equalSymbol.textContent = "+";
     }
-    if (setting == 6) {
+    if (setting == 7) {
       if (p.wholeTwo > p.wholeOne)
         [p.wholeOne, p.wholeTwo] = [p.wholeTwo, p.wholeOne];
       if (p.wholeOne == p.wholeTwo) p.wholeOne += 1;
@@ -8113,7 +8162,7 @@ function updateProblems() {
       equalSymbol.textContent = "-";
     }
     //DECIMALS
-    if (setting == 7) {
+    if (setting == 8) {
       console.log("The current setting is: " + setting);
       const oneDisplay = p.numOne / p.convenientNumOne;
       const twoDisplay = p.numTwo / p.convenientNumTwo;
@@ -8123,7 +8172,7 @@ function updateProblems() {
       decimalCheck(twoDisplay);
     }
 
-    if (setting == 8) {
+    if (setting == 9) {
       console.log("The current setting is: " + setting);
       p.numOne = p.numOne / p.convenientNumOne;
       p.numTwo = p.numTwo / p.convenientNumTwo;
@@ -8134,20 +8183,20 @@ function updateProblems() {
       decimalCheck(p.numTwo);
     }
 
-    if (setting == 9) {
+    if (setting == 10) {
       p.numOne = p.numOne / p.convenientNumOne;
       decimalCheck(p.numOne);
       displayProblem.innerHTML = `
       ${p.numOne} x ${p.numTwo} = ?`;
       decimalCheck(p.numOne * p.numTwo);
     }
-    if (setting == 10) {
+    if (setting == 11) {
       p.numOne = p.numOne / p.convenientNumOne;
       decimalCheck(p.numOne);
       displayProblem.innerHTML = `
       ${p.numOne} x ${p.numTwo} = ?`;
     }
-    if (setting == 11) {
+    if (setting == 12) {
       p.numTwo = p.numOne;
       p.numOne = (p.numOne * p.multiplier) / p.divisor;
       decimalCheck(p.numOne);
@@ -8155,7 +8204,7 @@ function updateProblems() {
       ${p.numOne} ÷ ${p.numTwo} = ?`;
       decimalCheck(p.numOne / p.numTwo);
     }
-    if (setting == 12) {
+    if (setting == 13) {
       // START CHANGE DISPLAY
       if (p.numOne == p.numTwo) {
         return updateCalc();
@@ -8175,7 +8224,7 @@ function updateProblems() {
             `;
       }
     }
-    if (setting == 13) {
+    if (setting == 14) {
       p.numOne = p.numTwo * (genNumbers(99) + 2);
       if (p.operator == "x") {
         p.comparison = p.numOne * p.multiOne;
@@ -8191,7 +8240,7 @@ function updateProblems() {
       ${p.comparison} ${p.operator} ${p.divisor} = ?
       `;
     }
-    if (setting == 14) {
+    if (setting == 15) {
       let arrOne = [p.sets, "x", p.sums];
       let arrTwo = [p.sets, "x", p.numOne];
       let arrThree = [p.sets, "x", "?"];
@@ -14195,6 +14244,9 @@ function handleSubmit(e) {
       if (setting == 7 || setting == 8) {
         correctAnswer = p.answer;
       }
+      if (setting == 9) {
+        correctAnswer = p.answer;
+      }
       skipGlobalUpdateProblem = 0;
     }
     if (level == "calTwo") {
@@ -14427,7 +14479,11 @@ function handleSubmit(e) {
       if (setting == 4) {
         correctAnswer = p.numOne * p.numTwo;
       }
+      // LEFT SIDE RIGHT SIDE
       if (setting == 5) {
+        correctAnswer = p.answer;
+      }
+      if (setting == 6) {
         let max = p.denoOne;
         let min = p.denoTwo;
         if (p.denoTwo > p.denoOne) [max, min] = [p.denoTwo, p.denoOne];
@@ -14452,7 +14508,7 @@ function handleSubmit(e) {
 
         correctAnswer = `${lastWhole} ${remainder}/${totalDeno}`;
       }
-      if (setting == 6) {
+      if (setting == 7) {
         let common = commonDeno(p.denoOne, p.denoTwo);
         console.log(common);
         const multiOne = common / p.denoOne;
@@ -14468,7 +14524,7 @@ function handleSubmit(e) {
           correctAnswer = `${remainder}/${common}`;
         }
       }
-      if (setting == 7) {
+      if (setting == 8) {
         // correctAnswer =
         //   p.numOne / p.convenientNumOne + p.numTwo / p.convenientNumTwo;
         // decimalCheck(correctAnswer);
@@ -14477,12 +14533,8 @@ function handleSubmit(e) {
         ];
         correctAnswer = accDecimal(answer[0]);
       }
-      if (setting == 8) {
-        correctAnswer = p.numOne - p.numTwo;
-        correctAnswer = accDecimal(correctAnswer);
-      }
       if (setting == 9) {
-        correctAnswer = p.numOne * p.numTwo;
+        correctAnswer = p.numOne - p.numTwo;
         correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 10) {
@@ -14490,13 +14542,17 @@ function handleSubmit(e) {
         correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 11) {
-        correctAnswer = p.numOne / p.numTwo;
+        correctAnswer = p.numOne * p.numTwo;
         correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 12) {
-        correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
+        correctAnswer = p.numOne / p.numTwo;
+        correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 13) {
+        correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
+      }
+      if (setting == 14) {
         if (p.operator == "x") {
           correctAnswer = p.comparison * p.divisor;
           correctAnswer = accDecimal(correctAnswer);
@@ -14507,7 +14563,7 @@ function handleSubmit(e) {
         }
         decimalCheck(correctAnswer);
       }
-      if (setting == 14) {
+      if (setting == 15) {
         console.log(p.sums, p.numOne, p.version);
 
         if (p.version == 4 || p.version == 8) {
@@ -18372,6 +18428,14 @@ function genProblems() {
         answer: undefined,
       };
     }
+    // LEFT SIDE RIGHT SIDE
+    if (setting == 9) {
+      return {
+        limit: 20,
+        multiMin: 2,
+        multiMax: 5,
+      };
+    }
   }
 
   if (level == "calTwo") {
@@ -18692,7 +18756,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(14, calArr, setting, 99);
+    setting = calArrAll(15, calArr, setting, 99);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let number = genNumbers(8) + 2;
@@ -18722,14 +18786,12 @@ function genProblems() {
         numTwo: genNumbers(89) + 10,
       };
     }
+    // LEFT SIDE RIGHT SIDE
     if (setting == 5) {
       return {
-        wholeOne: genNumbers(9) + 1,
-        numOne: genNumbers(9) + 1,
-        denoOne: genNumbers(9) + 1,
-        wholeTwo: genNumbers(9) + 1,
-        numTwo: genNumbers(9) + 1,
-        denoTwo: genNumbers(9) + 1,
+        limit: 100000,
+        multiMin: 6,
+        multiMax: 10,
       };
     }
     if (setting == 6) {
@@ -18742,8 +18804,18 @@ function genProblems() {
         denoTwo: genNumbers(9) + 1,
       };
     }
+    if (setting == 7) {
+      return {
+        wholeOne: genNumbers(9) + 1,
+        numOne: genNumbers(9) + 1,
+        denoOne: genNumbers(9) + 1,
+        wholeTwo: genNumbers(9) + 1,
+        numTwo: genNumbers(9) + 1,
+        denoTwo: genNumbers(9) + 1,
+      };
+    }
     //DECIMALS
-    if (setting == 7 || setting == 8) {
+    if (setting == 8 || setting == 9) {
       return {
         numOne: genNumbers(999) + 1,
         convenientNumOne: [1, 10, 100][genNumbers(3)],
@@ -18751,35 +18823,35 @@ function genProblems() {
         convenientNumTwo: [10, 100][genNumbers(2)],
       };
     }
-    if (setting == 9) {
+    if (setting == 10) {
       return {
         numOne: genNumbers(999) + 1,
         convenientNumOne: [10, 100, 1000][genNumbers(3)],
         numTwo: genNumbers(8) + 2,
       };
     }
-    if (setting == 10) {
+    if (setting == 11) {
       return {
         numOne: genNumbers(999) + 1,
         convenientNumOne: [10, 100, 1000][genNumbers(3)],
         numTwo: genNumbers(89) + 11,
       };
     }
-    if (setting == 11) {
+    if (setting == 12) {
       return {
         numOne: genNumbers(7) + 2,
         multiplier: genNumbers(989) + 11,
         divisor: [10, 100, 1000][genNumbers(3)],
       };
     }
-    if (setting == 12) {
+    if (setting == 13) {
       return {
         numOne: genNumbers(10) + 1,
         numTwo: [3, 7, 9, 11][genNumbers(4)],
         roundOff: genNumbers(3) + 1,
       };
     }
-    if (setting == 13) {
+    if (setting == 14) {
       return {
         operator: ["x", "÷"][genNumbers(2)],
         numOne: undefined,
@@ -18791,7 +18863,7 @@ function genProblems() {
       };
     }
     // Multiplication in sets
-    if (setting == 14) {
+    if (setting == 15) {
       const sum = genNumbers(89) + 10;
       const genNumOne = genNumbers(50) + 10;
       return {
@@ -21877,14 +21949,14 @@ function buttonLevelSetting() {
       level = "calOne";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (1-100) (No carrying)\n2. Subtraction (1-100) (No Borrowing)\n3. Addition (1-100) (Carrying)\n4. Subtraction (1-100) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n\n9. Everything"
+        "What level?\n1. Addition (1-100) (No carrying)\n2. Subtraction (1-100) (No Borrowing)\n3. Addition (1-100) (Carrying)\n4. Subtraction (1-100) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Left Side Right Side + - x /\n\n99. Everything"
       );
       break;
     case "Cal.2":
       level = "calTwo";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing\n3. Addition (to-1000) (Carrying)\n4. Subtraction (to 1000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n\n9. Left Side Right Side + - x /\n10. Time: Timeline\n11. Fractions: Addition and Subtraction",
+        "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing\n3. Addition (to-1000) (Carrying)\n4. Subtraction (to 1000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Left Side Right Side + - x /\n10. Time: Timeline\n11. Fractions: Addition and Subtraction",
         99
       );
       if (
@@ -21934,7 +22006,8 @@ function buttonLevelSetting() {
       level = "calFour";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Fractions: Addition: Mixed Fractions\n6. Fractions: Subtraction: Mixed Fractions\n7. Decimals: Addition\n8. Decimals: Subtraction\n9. Decimals: Multiplication (Single)\n10. Decimals: Multiplication (Double)\n11. Decimals: Division \n12. Fractions to Decimal (Limit)\n13. Decimals: Division and Multiplication with splitting\n14. Multiplication in Sets"
+        "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Left Side Right Side + - x /\n6. Fractions: Addition: Mixed Fractions\n7. Fractions: Subtraction: Mixed Fractions\n8. Decimals: Addition\n9. Decimals: Subtraction\n10. Decimals: Multiplication (Single)\n11. Decimals: Multiplication (Double)\n12. Decimals: Division \n13. Fractions to Decimal (Limit)\n14. Decimals: Division and Multiplication with splitting\n15. Multiplication in Sets\n\n99. Everything",
+        99
       );
       if (
         ![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 99].includes(

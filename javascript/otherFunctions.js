@@ -12,7 +12,7 @@ const resultSide = (plusLimit, multiMini, multiMax) => {
   }
   if (symbol == "-") {
     // plusLimit /= 2;
-    numOne = genNumbers(plusLimit) + plusLimit / 5;
+    numOne = genNumbers(plusLimit * 0.8) + plusLimit / 5;
     numTwo = genNumbers(numOne);
     console.log(numOne, numTwo);
   }
