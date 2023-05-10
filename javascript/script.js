@@ -8411,7 +8411,15 @@ function updateProblems() {
       // }
       if (indexSymbolTwo < indexSymbol) return updateCalc();
       p.arrConstructor.splice(indexSymbolTwo + 2, 0, ")");
-      if (eval(p.arrConstructor.toString()) <= 0) {
+      // console.log(p.arrConstructor.join(""));
+      // console.log(eval(p.arrConstructor.join("")));
+      // console.log(eval(p.arrConstructor.toString()));
+      // if (eval(p.arrConstructor.toString()) <= 0) {
+      //   console.log("IT TURNED NEGATIVE?!");
+      //   return updateCalc();
+      // }
+
+      if (eval(p.arrConstructor.join(" ")) <= 0) {
         console.log("IT TURNED NEGATIVE?!");
         return updateCalc();
       }
@@ -8423,7 +8431,9 @@ function updateProblems() {
         p.arrConstructor.shift();
       }
       //Evaluting number statement
+      // console.log(p.arrConstructor.join(""));
       p.answer = eval(p.arrConstructor.join(""));
+      console.log(p.answer);
       if (p.answer <= 0 || p.answer % 1 != 0) return updateCalc();
       // console.log(p.answer);
       const replaceTimes = p.arrConstructor.join(" ").replace("*", "x");
@@ -16241,18 +16251,13 @@ function handleSubmit(e) {
       userInput.value = userInput.value.toLowerCase();
     }
 
-    // if (typeof level == "String") {
-    //   console.log("Heuristics Answer!");
-    //   permutationAnswer(userInput2.value, correctAnswer);
-    // }
-
     // if (
     //   userInput.value.trim() == correctAnswer ||
     //   userInput2.value.trim() == correctAnswer ||
     //   userInput.value.trim() == correctAnswerTwo ||
     //   userInput2.value.trim() == correctAnswerTwo
     // ) {
-
+    //MARK HERE
     if (
       userInput.value.trim() == correctAnswer ||
       userInput2.value.trim() == correctAnswer ||
@@ -18885,6 +18890,7 @@ function genProblems() {
     if (setting == 0) {
       return {
         arrSymbol: ["+", "-", "*", "/"],
+        // arrSymbol: ["+", "-"],
         arrBrackets: ["(", ")"],
         arrConstructor: [],
         answer: undefined,
