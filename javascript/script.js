@@ -417,7 +417,7 @@ let state = {
   mistake: 0,
   scoreNeeded: 0,
   correctAnswer: 0,
-  skip: 0,
+  global: 0,
 };
 
 // function adjustScore(arr){
@@ -638,11 +638,16 @@ const updateCalc = function () {
 function checkRange(setting, arr) {
   console.log(`SkipGlobal: ${skipGlobalUpdateProblem}`);
   // skipGlobalUpdateProblem = updateCalc();
-  if (skipGlobalUpdateProblem != 1) {
+  // if (skipGlobalUpdateProblem != 1 || state.global == 1) {
+  if (skipGlobalUpdateProblem == 0) {
     calRange.push(setting);
     console.log(calRange);
 
-    if (calRange[0].includes("-")) {
+    const isNotNumber = (calRange[0] * 1) % 1;
+    console.log(isNotNumber);
+    // const check = calRange[0].includes("-") ? "True" : "False";
+    const check = isNaN(isNotNumber);
+    if (check) {
       console.log("Range Detected!");
       state.min = calRange[0].split("-")[0] * 1;
       state.max = calRange[0].split("-")[1] * 1;
