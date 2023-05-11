@@ -10,7 +10,7 @@ import {
   commonDeno,
   simplify,
   commonFactors,
-  updateCalc,
+  // updateCalc,
   genUniqNum,
   reverseCalculation,
   simplifyThree,
@@ -177,6 +177,7 @@ let hardcore = 0;
 let easy = 0;
 let global = 0;
 let skipGlobalUpdateProblem = 0;
+console.log(`!?!?!?!?!?!?!?!`);
 const commonMultipleArr = [];
 const commonMultipleArrTwo = [];
 let cutoff = 600;
@@ -416,6 +417,7 @@ let state = {
   mistake: 0,
   scoreNeeded: 0,
   correctAnswer: 0,
+  skip: 0,
 };
 
 // function adjustScore(arr){
@@ -571,7 +573,7 @@ function resetStuff() {
   global = 0;
   calArr.length = 0;
   calArrQns.length = 0;
-  calRange.length = [];
+  calRange.length = 0;
   setting = null;
   console.log(calArr, calRange, setting);
 
@@ -600,7 +602,7 @@ function resetStuff() {
 }
 
 function calArrAll(max, arr, setting, maxSetting, level) {
-  console.log(maxSetting);
+  // console.log(maxSetting);
   if (setting == maxSetting || state.global == 1) {
     state.global = 1;
 
@@ -624,8 +626,19 @@ function calArrAll(max, arr, setting, maxSetting, level) {
   return setting;
 }
 
+const updateCalc = function () {
+  skipGlobalUpdateProblem = 1;
+  console.log(
+    `Updating! skipGlobalUpdateProblem set to ${skipGlobalUpdateProblem}`
+  );
+  updateProblems();
+  // return skipGlobalUpdateProblem;
+};
+
 function checkRange(setting, arr) {
-  if (state.global != 1) {
+  console.log(`SkipGlobal: ${skipGlobalUpdateProblem}`);
+  // skipGlobalUpdateProblem = updateCalc();
+  if (skipGlobalUpdateProblem != 1) {
     calRange.push(setting);
     console.log(calRange);
 
@@ -635,9 +648,11 @@ function checkRange(setting, arr) {
       state.max = calRange[0].split("-")[1] * 1;
       console.log(state.min, state.max);
       if (!arr.length) {
-        console.log("push push push!");
-        for (let i = state.min; i < state.max + 1; i++) {
+        console.log("Arr is empty!");
+        console.log("Updating / renewing set of questions");
+        for (let i = state.min; i <= state.max; i++) {
           arr.push(i);
+          console.log(`Loading: ${arr}`);
         }
         scoreNeeded = arr.length;
         if (arr.length < 10) {
@@ -647,9 +662,10 @@ function checkRange(setting, arr) {
       }
       setting = arr[genNumbers(arr.length)];
       const chosen = arr.splice(arr.indexOf(setting), 1);
-      console.log(chosen, arr);
+      console.log(`Removed: ${chosen}, Remaining Questions: ${arr}`);
     }
   }
+  console.log("Current question is " + setting);
   return setting;
 }
 
@@ -12848,7 +12864,6 @@ function handleSubmit(e) {
         console.log(remainder);
         correctAnswer = arr[remainder];
       }
-      skipGlobalUpdateProblem = 0;
     }
 
     if (level == 3.17) {
@@ -13239,7 +13254,6 @@ function handleSubmit(e) {
             p.numOne + " " + (p.numTwo % p.numThree) + "/" + p.numThree;
         }
       }
-      skipGlobalUpdateProblem = 0;
     }
     if (level == 4.12) {
       if (setting == 1 || (setting == 9 && p.rollChoice == 1)) {
@@ -14257,7 +14271,6 @@ function handleSubmit(e) {
       if (setting == 9) {
         correctAnswer = p.answer;
       }
-      skipGlobalUpdateProblem = 0;
     }
     if (level == "calTwo") {
       if (setting == 1 || setting == 3) {
@@ -14340,9 +14353,8 @@ function handleSubmit(e) {
           correctAnswer = `${p.numeOne - p.numeTwo}/${p.deno}`;
         }
       }
-
-      skipGlobalUpdateProblem = 0;
     }
+
     if (level == "calThree") {
       if (setting == 1 || setting == 3) {
         correctAnswer = p.numOne + p.numTwo;
@@ -14473,7 +14485,6 @@ function handleSubmit(e) {
       if (setting == 18) {
         correctAnswer = p.answer;
       }
-      skipGlobalUpdateProblem = 0;
     }
 
     if (level == "calFour") {
@@ -14598,7 +14609,6 @@ function handleSubmit(e) {
           correctAnswer = correctAnswer * p.sets;
         }
       }
-      skipGlobalUpdateProblem = 0;
     }
     if (level == "calFive") {
       if (setting == 0) {
@@ -14969,7 +14979,6 @@ function handleSubmit(e) {
           correctAnswer = p.oldQuantity + p.changeQuantity;
         }
       }
-      skipGlobalUpdateProblem = 0;
     }
 
     if (level == "calSix") {
@@ -15083,7 +15092,6 @@ function handleSubmit(e) {
           correctAnswer = p.speedA;
         }
       }
-      skipGlobalUpdateProblem = 0;
     }
     // heuristics Answer
     if (level == "heuOne") {
@@ -16027,7 +16035,6 @@ function handleSubmit(e) {
             correctAnswer = oneUnit * p.unitB + p.transfer;
         }
       }
-      skipGlobalUpdateProblem = 0;
     }
     // Answers
     if (level == "heuFive") {
@@ -16267,6 +16274,7 @@ function handleSubmit(e) {
         "From permutation: Correct"
     ) {
       console.log("correct");
+      skipGlobalUpdateProblem = 0;
       state.score++;
       accumulatedScore++;
       console.log(accumulatedScore);
@@ -18907,7 +18915,7 @@ function genProblems() {
     }
     if (setting == 2) {
       return {
-        type: ["mixed-simple", "mixed-whole", "mixed-simple"][genNumbers(1)],
+        type: ["mixed-simple", "mixed-whole"][genNumbers(2)],
         wholeOne: genNumbers(4) + 2,
         numeratorOne: genNumbers(10) + 1,
         denominatorOne: genNumbers(10 - 1) + 2,

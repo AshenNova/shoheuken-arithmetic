@@ -350,9 +350,12 @@ function genUniqNum(max) {
 
 // End of updateProblems()
 const updateCalc = function (skipGlobalUpdateProblem) {
-  skipGlobalUpdateProblem = 1; // Skip global
-  console.log("UPDATING!");
+  // skipGlobalUpdateProblem = 1; // Skip global
+  console.log(
+    `Updating! skipGlobalUpdateProblem set to ${skipGlobalUpdateProblem}`
+  );
   updateProblems();
+  // return skipGlobalUpdateProblem;
 };
 
 export {
@@ -363,7 +366,7 @@ export {
   commonDeno,
   commonFactors,
   genUniqNum,
-  updateCalc,
+  // updateCalc,
   reverseCalculation,
   simplifyThree,
   zoneOfDay,
