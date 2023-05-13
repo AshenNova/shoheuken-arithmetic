@@ -575,6 +575,7 @@ function resetStuff() {
   calArrQns.length = 0;
   calRange.length = 0;
   setting = null;
+  skipGlobalUpdateProblem = 0;
   console.log(calArr, calRange, setting);
 
   gold = 0;
