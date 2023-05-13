@@ -9231,11 +9231,15 @@ function updateProblems() {
         lineThree = `
               The ratio of A : B in the end is ${unitAE} : ${unitBE}.`;
       }
+
+      if (unitAF < 1 || unitAE < 1 || unitBF < 1 || unitBE < 1) {
+        console.log("Negative units");
+        return updateCalc();
+      }
       if (lineThree == 1) {
         lineThree = `
               A is ${unitAE}/${unitBE} of B in the end.`;
       }
-
       // LINE FOUR
       let lineFour = "";
       if (p.question == "AF")
@@ -22162,7 +22166,7 @@ function buttonLevelSetting() {
       );
       level = "heuTwob";
       range = 0;
-      scoreNeeded = 2;
+      scoreNeeded = 10;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
       document.querySelector("#user-input").setAttribute("type", "text");
