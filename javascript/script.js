@@ -576,7 +576,7 @@ function resetStuff() {
   calRange.length = 0;
   setting = null;
   skipGlobalUpdateProblem = 0;
-  console.log(calArr, calRange, setting);
+  console.log(arr, calArr, calRange, setting);
 
   gold = 0;
   silver = 0;
@@ -7496,19 +7496,21 @@ function updateProblems() {
       setting == 13 ||
       setting == 14 ||
       setting == 15 ||
-      setting == 18
+      setting == 16 ||
+      setting == 19
     ) {
       fractionsContainer.classList.add("hidden");
       displayProblem.style.fontSize = "24px";
       wholeNumberContainer.classList.remove("hidden");
       workingContainer.classList.add("hidden");
+
       if (setting == 15) {
         displayProblem.style.fontSize = "20px";
         displayProblem.style.textAlign = "left";
       }
     }
     // FRACTIONS DISPLAY
-    if (setting == 16 || setting == 17) {
+    if (setting == 17 || setting == 18) {
       wholeNumberContainer.classList.add("hidden");
       workingContainer.classList.add("hidden");
       fractionsContainer.classList.remove("hidden");
@@ -7885,8 +7887,28 @@ function updateProblems() {
       p.answer = rightSide.answer;
       displayProblem.innerHTML = tempStatementArr;
     }
-
+    // MULTIPLICATION AND DIVISION WHILE BREAKING UP CONVENIENT NUMBERS
     if (setting == 16) {
+      p.numOne = p.numOne * p.convenientOne;
+      p.numTwo = p.numTwo * p.convenientTwo;
+      if (p.numOne * p.numTwo > 10000) return updateCalc();
+      if (p.operator == "x") {
+        displayProblem.innerHTML = `
+        ${p.numOne} x ${p.numTwo} = ?
+        `;
+      }
+      if (p.operator == "÷") {
+        if (p.numOne < 10) {
+          p.numOne *= 10;
+        }
+        const answer = p.numOne * p.numTwo;
+        if (p.numOne * p.numTwo > 10000) return updateCalc();
+        displayProblem.innerHTML = `
+        ${answer} ÷ ${p.numOne} = ?`;
+      }
+    }
+
+    if (setting == 17) {
       let zone = "a.m";
       let totalTime = p.hours * 60;
       zone = zoneOfDay(totalTime);
@@ -7921,7 +7943,7 @@ function updateProblems() {
     }
 
     // FRACTIONS: ADDITION AND SUBTRACTION
-    if (setting == 17) {
+    if (setting == 18) {
       [p.numeOne, p.denoOne] = simplify(p.numeOne, p.denoOne);
       [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
       if (p.denoOne == p.denoTwo) return updateCalc();
@@ -7948,7 +7970,7 @@ function updateProblems() {
     }
 
     //FRACTIONS: EXPANSION AND SIMPLIFICATION
-    if (setting == 18) {
+    if (setting == 19) {
       [p.oriNume, p.oriDeno] = simplify(p.oriNume, p.oriDeno);
       if (p.mulOne == p.mulTwo) p.mulTwo += 1;
       const firstNume = p.oriNume * p.mulOne;
@@ -14421,7 +14443,17 @@ function handleSubmit(e) {
       if (setting == 15) {
         correctAnswer = p.answer;
       }
+
+      // MULTIPLICATION AND DIVISION WHILE BREAKING UP CONVENIENT NUMBERS
       if (setting == 16) {
+        if (p.operator == "x") {
+          correctAnswer = p.numOne * p.numTwo;
+        }
+        if (p.operator == "÷") {
+          correctAnswer = p.numTwo;
+        }
+      }
+      if (setting == 17) {
         if (p.beforeAfter == "before") {
           let totalTime = undefined;
           totalTime =
@@ -14473,7 +14505,7 @@ function handleSubmit(e) {
       }
 
       // FRACTIONS: ADDITION AND SUBTRACTION
-      if (setting == 17) {
+      if (setting == 18) {
         const commonDenoFind = commonDeno(p.denoOne, p.denoTwo);
         const newNumeOne = (commonDenoFind / p.denoOne) * p.numeOne;
         const newNumeTwo = (commonDenoFind / p.denoTwo) * p.numeTwo;
@@ -14492,7 +14524,7 @@ function handleSubmit(e) {
       }
 
       //FRACTIONS: EXPANSION AND SIMPLIFICATION
-      if (setting == 18) {
+      if (setting == 19) {
         correctAnswer = p.answer;
       }
     }
@@ -18591,7 +18623,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(18, calArr, setting, 99, level);
+    setting = calArrAll(19, calArr, setting, 99, level);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let thousands = genNumbers(9) + 1;
@@ -18739,8 +18771,18 @@ function genProblems() {
         multiMax: 9,
       };
     }
-
+    // MULTIPLICATION AND DIVISION WHILE BREAKING UP CONVENIENT NUMBERS
     if (setting == 16) {
+      return {
+        operator: ["x", "÷"][genNumbers(2)],
+        numOne: genNumbers(7) + 2,
+        numTwo: genNumbers(7) + 2,
+        convenientOne: [1, 10, 100][genNumbers(3)],
+        convenientTwo: [10, 100][genNumbers(2)],
+      };
+    }
+
+    if (setting == 17) {
       return {
         hours: genNumbers(24),
         mins: genNumbers(60),
@@ -18750,7 +18792,7 @@ function genProblems() {
       };
     }
     // FRACTIONS: ADDITION AND SUBTRACTION
-    if (setting == 17) {
+    if (setting == 18) {
       const gen_denoOne = genNumbers(9) + 2;
       const gen_denoTwo = genNumbers(8) + 3;
       return {
@@ -18762,7 +18804,7 @@ function genProblems() {
       };
     }
     // FRACTIONS: EXPAND AND SIMPLIFICATION
-    if (setting == 18) {
+    if (setting == 19) {
       const gen_deno = genNumbers(9) + 3;
       const gen_nume = genNumbers(gen_deno - 2) + 2;
       return {
@@ -21996,31 +22038,12 @@ function buttonLevelSetting() {
       level = "calThree";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Working: Long Division ( No remainder )\n11. Working: Long Division ( Remainder )\n12. Working: Multiplication ( Single Blank )\n13. Multiplication in sets\n14. Long Division: Simple Statement\n15. Left Side Right Side + - x ÷\n16. Time: Timeline ( hours and mins )\n17. Fractions: Addition and Subtraction\n18. Fractions: Expansion and simplification\n\n99. All",
+        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Working: Long Division ( No remainder )\n11. Working: Long Division ( Remainder )\n12. Working: Multiplication ( Single Blank )\n13. Multiplication in sets\n14. Long Division: Simple Statement\n15. Left Side Right Side + - x ÷\n16. Multiplication and Division of Convenient Numbers\n17. Time: Timeline ( hours and mins )\n18. Fractions: Addition and Subtraction\n19. Fractions: Expansion and simplification\n\n99. All",
         99
       );
       if (
         ![
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9,
-          ,
-          10,
-          11,
-          12,
-          13,
-          14,
-          15,
-          16,
-          17,
-          18,
-          99,
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 99,
         ].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
