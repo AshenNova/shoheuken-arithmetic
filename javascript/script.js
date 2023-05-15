@@ -11034,6 +11034,7 @@ function updateProblems() {
         }
 
         if (p.situationOne > p.situationTwo) {
+          console.log("Swapped value!");
           [p.situationOne, p.situationTwo] = [p.situationTwo, p.situationOne];
         }
       }
@@ -11050,9 +11051,23 @@ function updateProblems() {
           p.unitSentence = genNumbers(4) + 2;
         }
         if (p.situationOne > p.situationTwo) {
+          console.log("Swapped value!");
           [p.situationOne, p.situationTwo] = [p.situationTwo, p.situationOne];
         }
+        const diff = (p.situationOne - p.situationTwo) * -1;
+        const oneUnit = diff / (p.unitSentence - 1);
+        console.log(diff, oneUnit);
+        if (oneUnit < Math.abs(p.situationTwo)) {
+          console.log("Impossible, value of 1 unit is too small");
+          return updateCalc();
+        }
       } else {
+        const diff = -p.situationOne + p.situationTwo;
+        const oneUnit = diff / (p.unitSentence - 1);
+        if (oneUnit * p.unitSentence < -p.situationOne) {
+          console.log("Impossible, value of 1 unit is too small");
+          return updateCalc();
+        }
         while (
           (p.situationOne - p.situationTwo) % (p.unitSentence - 1) != 0 ||
           Math.abs(p.situationOne) == Math.abs(p.situationTwo)
@@ -11081,7 +11096,7 @@ function updateProblems() {
           : ["decreased by", "sold", "gave away"][choice]
       } ${Math.abs(p.situationTwo)}.</br>
       ${
-        genNumbers == 0
+        genNumbers(2) == 0
           ? `${p.objectOne} and ${p.objectTwo} has an equal number in the end.`
           : `${p.objectOne} and ${p.objectTwo} has the same amount in the end.`
       }</br>
@@ -15729,7 +15744,12 @@ function handleSubmit(e) {
           difference = p.situationTwo - p.situationOne;
           oneUnit = difference / (p.unitSentence - 1);
           if (p.firstOrEnd == "in the end") {
-            correctAnswer = oneUnit + p.situationTwo;
+            if (p.oneOrTwo == "One") {
+              correctAnswer = oneUnit * p.unitSentence + p.situationOne;
+            }
+            if (p.oneOrTwo == "Two") {
+              correctAnswer = oneUnit + p.situationTwo;
+            }
           }
           if (p.firstOrEnd == "at first") {
             if (p.oneOrTwo == "One") {
@@ -15743,7 +15763,12 @@ function handleSubmit(e) {
           difference = -1 * p.situationOne - p.situationTwo * -1;
           oneUnit = difference / (p.unitSentence - 1);
           if (p.firstOrEnd == "in the end") {
-            correctAnswer = oneUnit * p.unitSentence + p.situationTwo * -1;
+            if (p.oneOrTwo == "One") {
+              correctAnswer = oneUnit * p.unitSentence + p.situationOne;
+            }
+            if (p.oneOrTwo == "Two") {
+              correctAnswer = oneUnit + p.situationTwo;
+            }
           }
           if (p.firstOrEnd == "at first") {
             if (p.oneOrTwo == "One") {
@@ -15765,7 +15790,12 @@ function handleSubmit(e) {
             }
           }
           if (p.firstOrEnd == "in the end") {
-            correctAnswer = oneUnit + p.situationTwo;
+            if (p.oneOrTwo == "One") {
+              correctAnswer = oneUnit * p.unitSentence + p.situationOne;
+            }
+            if (p.oneOrTwo == "Two") {
+              correctAnswer = oneUnit + p.situationTwo;
+            }
           }
         }
         while (correctAnswer <= 0) {
@@ -19970,10 +20000,14 @@ function genProblems() {
         objectOne: ["A", "B", "C"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
         unitSentence: genNumbers(4) + 2,
-        situationOne: genNumbers(200) - 100,
-        situationTwo: genNumbers(200) - 100,
+        // situationOne: genNumbers(200) - 100,
+        // situationTwo: genNumbers(200) - 100,
+        situationOne: genNumbers(100) - 200,
+        situationTwo: genNumbers(100) + 100,
+        // situationOne: genNumbers(100) + 100,
+        // situationTwo: genNumbers(100) + 100,
         oneOrTwo: ["One", "Two"][genNumbers(2)],
-        firstOrEnd: ["at first", "at first", "in the end"][genNumbers(1)],
+        firstOrEnd: ["at first", "in the end"][genNumbers(2)],
         rollz: 3,
       };
     }
