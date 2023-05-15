@@ -20,6 +20,7 @@ import {
   simplestForm,
   resultSide,
   blankSide,
+  drawIntervals,
 } from "./otherFunctions.js";
 // import { resetStuff } from "./reset.js";
 let buttonLevel = 0;
@@ -423,6 +424,30 @@ let state = {
 // function adjustScore(arr){
 //   if (arr.length) < 10
 // }
+function normalDisplay() {
+  wholeNumberContainer.classList.remove("hidden");
+  firstCanvas.classList.add("hidden");
+  fractionsContainer.classList.add("hidden");
+  workingContainer.classList.add("hidden");
+}
+function drawingDisplay() {
+  firstCanvas.classList.remove("hidden");
+  wholeNumberContainer.classList.add("hidden");
+  fractionsContainer.classList.add("hidden");
+  workingContainer.classList.add("hidden");
+}
+function simpleFractionDisplay() {
+  fractionsContainer.classList.remove("hidden");
+  wholeNumberContainer.classList.add("hidden");
+  firstCanvas.classList.add("hidden");
+  workingContainer.classList.add("hidden");
+}
+function workingDisplay() {
+  fractionsContainer.classList.add("hidden");
+  wholeNumberContainer.classList.add("hidden");
+  firstCanvas.classList.add("hidden");
+  workingContainer.classList.remove("hidden");
+}
 
 function clickStart() {
   buttonLevel = this.innerHTML;
@@ -7129,6 +7154,10 @@ function updateProblems() {
   }
 
   if (level == "calTwo") {
+    //DRAWING DISPLAY
+    if (setting == 10) {
+      drawingDisplay();
+    }
     //WORKING DISPLAY
     if (
       setting == 1 ||
@@ -7138,26 +7167,20 @@ function updateProblems() {
       setting == 5 ||
       setting == 6
     ) {
-      wholeNumberContainer.classList.add("hidden");
-      fractionsContainer.classList.add("hidden");
-      workingContainer.classList.remove("hidden");
+      workingDisplay();
     }
     // NORMAL DISPLAY
-    if (setting == 7 || setting == 8 || setting == 9 || setting == 10) {
+    if (setting == 7 || setting == 8 || setting == 9 || setting == 11) {
       displayProblem.style.fontSize = "24px";
-      wholeNumberContainer.classList.remove("hidden");
-      workingContainer.classList.add("hidden");
-      fractionsContainer.classList.add("hidden");
+      normalDisplay();
       if (setting == 9) {
         displayProblem.style.fontSize = "20px";
         displayProblem.style.textAlign = "left";
       }
     }
     // FRACTIONS DISPLAY
-    if (setting == 11) {
-      wholeNumberContainer.classList.add("hidden");
-      workingContainer.classList.add("hidden");
-      fractionsContainer.classList.remove("hidden");
+    if (setting == 12) {
+      simpleFractionDisplay();
     }
     if (setting == 1) {
       const numOneStr = p.numOne.toString();
@@ -7384,8 +7407,53 @@ function updateProblems() {
       p.answer = rightSide.answer;
       displayProblem.innerHTML = tempStatementArr;
     }
-    //TIME: TIMELINE
     if (setting == 10) {
+      drawIntervals(p.start, p.intervals, p.eachInterval, p.arrow);
+      // const largeIntervals = 20;
+      // const adjustment = 10;
+      // ctx.save();
+      // ctx.font = "1em serif";
+      // ctx.translate(50, 100);
+      // //BEGIN
+      // ctx.beginPath();
+      // ctx.moveTo(0, -largeIntervals);
+      // ctx.fillText(`${p.start}`, -adjustment, -largeIntervals - adjustment);
+      // ctx.lineTo(0, largeIntervals);
+      // ctx.stroke();
+
+      // //END
+      // p.end = p.start + p.eachInterval * p.intervals;
+      // ctx.beginPath();
+      // ctx.moveTo(300, -largeIntervals);
+      // ctx.fillText(`${p.end}`, 300 - adjustment, -largeIntervals - adjustment);
+      // ctx.lineTo(300, largeIntervals);
+      // ctx.stroke();
+
+      // //START ARROW
+      // ctx.beginPath();
+      // ctx.moveTo(-10, 0);
+      // ctx.lineTo(325, 0);
+      // ctx.stroke();
+
+      // //SMALLER INTERVALS
+      // for (let i = 1; i < p.intervals; i++) {
+      //   const intervalAway = 300 / p.intervals;
+      //   // const largeIntervals = 20;
+      //   ctx.beginPath();
+      //   ctx.moveTo(0 + intervalAway * i, -largeIntervals / 2);
+      //   ctx.lineTo(0 + intervalAway * i, largeIntervals / 2);
+      //   ctx.stroke();
+
+      //   //DOWNARROW
+      //   if (i == p.arrow) {
+      //     console.log(p.arrow);
+      //     ctx.fillText(`?`, 0 + intervalAway * i - 3, -15);
+      //   }
+      // }
+    }
+
+    //TIME: TIMELINE
+    if (setting == 11) {
       console.log(`Hours at first: ${p.hours}, Minutes at first: ${p.mins}`);
       let zone = "am";
       let timeHours = p.hours;
@@ -7429,7 +7497,7 @@ function updateProblems() {
       }
     }
     // FRACTIONS: ADDITION AND SUBTRACTION
-    if (setting == 11) {
+    if (setting == 12) {
       denominatorOne.classList.remove("hidden");
       fractionsLine.classList.remove("hidden");
       fractionsWholeNum.textContent = "";
@@ -14325,6 +14393,9 @@ function handleSubmit(e) {
         correctAnswer = p.answer;
       }
       if (setting == 10) {
+        correctAnswer = p.start + p.eachInterval * p.arrow;
+      }
+      if (setting == 11) {
         if (p.beforeAfter == "before") {
           let totalTime = undefined;
           if (p.hoursMins == "hours") {
@@ -14376,7 +14447,7 @@ function handleSubmit(e) {
           }
         }
       }
-      if (setting == 11) {
+      if (setting == 12) {
         if (p.operator == "+") {
           correctAnswer = `${p.numeOne + p.numeTwo}/${p.deno}`;
           if (p.numeOne + p.numeTwo == p.deno) correctAnswer = 1;
@@ -18500,8 +18571,9 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(8, calArr);
     // }
-    setting = calArrAll(11, calArr, setting, 99, level);
+    setting = calArrAll(12, calArr, setting, 99, level);
     setting = checkRange(setting, calArr);
+
     if (setting == 1) {
       let hundreds = genNumbers(9) + 1;
       let tens = genNumbers(9) + 1;
@@ -18592,8 +18664,20 @@ function genProblems() {
         multiMax: 5,
       };
     }
-    // TIME: TIMELINE
+    // PARTS AND INTERVALS
     if (setting == 10) {
+      const gen_intervals = [2, 4, 5][genNumbers(3)];
+      return {
+        start: genNumbers(599) + 100,
+        intervals: gen_intervals,
+        eachInterval: genNumbers(9) + 2,
+        end: undefined,
+        arrow: genNumbers(gen_intervals - 1) + 1,
+      };
+    }
+
+    // TIME: TIMELINE
+    if (setting == 11) {
       return {
         hours: genNumbers(24),
         mins: genNumbers(60),
@@ -18605,7 +18689,7 @@ function genProblems() {
     }
 
     //FRACTIONS: ADDITION AND SUBTRACTION
-    if (setting == 11) {
+    if (setting == 12) {
       const gen_deno = genNumbers(9) + 3;
       const gen_diff = genNumbers(gen_deno - 1) + 1;
       return {
@@ -22024,11 +22108,11 @@ function buttonLevelSetting() {
       level = "calTwo";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing\n3. Addition (to-1000) (Carrying)\n4. Subtraction (to 1000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Left Side Right Side + - x /\n10. Time: Timeline\n11. Fractions: Addition and Subtraction",
+        "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing\n3. Addition (to-1000) (Carrying)\n4. Subtraction (to 1000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Left Side Right Side + - x /\n10. Parts and Intervals\n11. Time: Timeline\n12. Fractions: Addition and Subtraction\n\n99. Everything",
         99
       );
       if (
-        ![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 99].includes(setting * 1) &&
+        ![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 99].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 99;

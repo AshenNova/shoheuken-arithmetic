@@ -358,7 +358,55 @@ const updateCalc = function (skipGlobalUpdateProblem) {
   // return skipGlobalUpdateProblem;
 };
 
+const canvas = document.getElementById("canvas1");
+const ctx = canvas.getContext("2d");
+function drawIntervals(start, intervals, eachInterval, question) {
+  const largeIntervals = 20;
+  const adjustment = 10;
+  ctx.save();
+  ctx.font = "1em serif";
+  ctx.translate(50, 100);
+  //BEGIN
+  ctx.beginPath();
+  ctx.moveTo(0, -largeIntervals);
+  ctx.fillText(`${start}`, -adjustment, -largeIntervals - adjustment);
+  ctx.lineTo(0, largeIntervals);
+  ctx.stroke();
+
+  //END
+  const end = start + eachInterval * intervals;
+  ctx.beginPath();
+  ctx.moveTo(300, -largeIntervals);
+  ctx.fillText(`${end}`, 300 - adjustment, -largeIntervals - adjustment);
+  ctx.lineTo(300, largeIntervals);
+  ctx.stroke();
+
+  //START ARROW
+  ctx.beginPath();
+  ctx.moveTo(-10, 0);
+  ctx.lineTo(325, 0);
+  ctx.stroke();
+
+  //SMALLER INTERVALS
+  for (let i = 1; i < intervals; i++) {
+    const intervalAway = 300 / intervals;
+    // const largeIntervals = 20;
+    ctx.beginPath();
+    ctx.moveTo(0 + intervalAway * i, -largeIntervals / 2);
+    ctx.lineTo(0 + intervalAway * i, largeIntervals / 2);
+    ctx.stroke();
+
+    //DOWNARROW
+    if (i == question) {
+      console.log(question);
+      ctx.fillText(`?`, 0 + intervalAway * i - 4, -15);
+    }
+  }
+  ctx.restore();
+}
+
 export {
+  drawIntervals,
   swap,
   decimalCheck,
   accDecimal,
