@@ -359,6 +359,7 @@ const updateCalc = function (skipGlobalUpdateProblem) {
 };
 
 const canvas = document.getElementById("canvas1");
+console.log(canvas);
 const ctx = canvas.getContext("2d");
 function drawIntervals(start, intervals, eachInterval, question) {
   const largeIntervals = 20;
