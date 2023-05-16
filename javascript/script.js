@@ -7551,9 +7551,7 @@ function updateProblems() {
       setting == 9 ||
       setting == 12
     ) {
-      wholeNumberContainer.classList.add("hidden");
-      fractionsContainer.classList.add("hidden");
-      workingContainer.classList.remove("hidden");
+      workingDisplay();
     }
     // NORMAL DISPLAY
     if (
@@ -7565,12 +7563,9 @@ function updateProblems() {
       setting == 14 ||
       setting == 15 ||
       setting == 16 ||
-      setting == 19
+      setting == 20
     ) {
-      fractionsContainer.classList.add("hidden");
-      displayProblem.style.fontSize = "24px";
-      wholeNumberContainer.classList.remove("hidden");
-      workingContainer.classList.add("hidden");
+      normalDisplay();
 
       if (setting == 15) {
         displayProblem.style.fontSize = "20px";
@@ -7578,10 +7573,12 @@ function updateProblems() {
       }
     }
     // FRACTIONS DISPLAY
-    if (setting == 17 || setting == 18) {
-      wholeNumberContainer.classList.add("hidden");
-      workingContainer.classList.add("hidden");
-      fractionsContainer.classList.remove("hidden");
+    if (setting == 18 || setting == 19) {
+      simpleFractionDisplay();
+    }
+
+    if (setting == 17) {
+      drawingDisplay();
     }
     if (setting == 1) {
       const numOneStr = p.numOne.toString();
@@ -7977,6 +7974,10 @@ function updateProblems() {
     }
 
     if (setting == 17) {
+      drawIntervals(p.start, p.intervals, p.eachInterval, p.arrow);
+    }
+
+    if (setting == 18) {
       let zone = "a.m";
       let totalTime = p.hours * 60;
       zone = zoneOfDay(totalTime);
@@ -8011,7 +8012,7 @@ function updateProblems() {
     }
 
     // FRACTIONS: ADDITION AND SUBTRACTION
-    if (setting == 18) {
+    if (setting == 19) {
       [p.numeOne, p.denoOne] = simplify(p.numeOne, p.denoOne);
       [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
       if (p.denoOne == p.denoTwo) return updateCalc();
@@ -8038,7 +8039,7 @@ function updateProblems() {
     }
 
     //FRACTIONS: EXPANSION AND SIMPLIFICATION
-    if (setting == 19) {
+    if (setting == 20) {
       [p.oriNume, p.oriDeno] = simplify(p.oriNume, p.oriDeno);
       if (p.mulOne == p.mulTwo) p.mulTwo += 1;
       const firstNume = p.oriNume * p.mulOne;
@@ -9973,6 +9974,63 @@ function updateProblems() {
   // }
   // Heuristics display
   if (level == "calSix") {
+    if (setting == 1) {
+      const person = ["John", "Emma", "Javen", "Vamika", "Matthias", "Isaac"][
+        genNumbers(6)
+      ];
+      [p.numerator, p.denominator] = simplify(p.numerator, p.denominator);
+      [p.numeratorTwo, p.denominatorTwo] = simplify(
+        p.numeratorTwo,
+        p.denominatorTwo
+      );
+      if (p.numeratorTwo == p.denominatorTwo) p.denominatorTwo += 1;
+      if (p.type == "whole") {
+        p.numerator = 0;
+        p.denominator = 0;
+        if ((p.whole * p.denominatorTwo) % p.numeratorTwo == 0) {
+          console.log("No remainders");
+          return updateCalc();
+        }
+
+        displayProblem.innerHTML = `
+        ${person} has ${p.whole} m of cloth at first.</p>
+        ${p.numeratorTwo}/${p.denominatorTwo} m was used to make a shirt.</p>
+        `;
+      }
+
+      if (p.type == "simple fractions") {
+        p.whole = 0;
+        const setOne = p.numerator / p.denominator;
+        const setTwo = p.numeratorTwo / p.denominatorTwo;
+        if (setTwo >= setOne) {
+          console.log("Numbers are too small");
+          return updateCalc();
+        }
+        displayProblem.innerHTML = `
+        ${person} has ${p.numerator}/${p.denominator} m of cloth at first.</p>
+        ${p.numeratorTwo}/${p.denominatorTwo} m was used to make a shirt.</p>
+        `;
+      }
+      if (p.type == "mixed fractions") {
+        displayProblem.innerHTML = `
+        ${person} has ${p.whole} ${p.numerator}/${p.denominator} m of cloth at first.</p>
+        ${p.numeratorTwo}/${p.denominatorTwo} m was used to make a shirt.</p>
+        `;
+      }
+
+      if (p.question == "quotient") {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          "How many shirts were made?"
+        );
+      }
+      if (p.question == "remainder") {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          "How much cloth was left?"
+        );
+      }
+    }
     if (setting == 2) {
       if (p.roll == "A") {
         displayProblem.innerHTML = `
@@ -14473,6 +14531,7 @@ function handleSubmit(e) {
       }
     }
 
+    // ANSWERS
     if (level == "calThree") {
       if (setting == 1 || setting == 3) {
         correctAnswer = p.numOne + p.numTwo;
@@ -14540,6 +14599,9 @@ function handleSubmit(e) {
         }
       }
       if (setting == 17) {
+        correctAnswer = p.start + p.eachInterval * p.arrow;
+      }
+      if (setting == 18) {
         if (p.beforeAfter == "before") {
           let totalTime = undefined;
           totalTime =
@@ -14591,7 +14653,7 @@ function handleSubmit(e) {
       }
 
       // FRACTIONS: ADDITION AND SUBTRACTION
-      if (setting == 18) {
+      if (setting == 19) {
         const commonDenoFind = commonDeno(p.denoOne, p.denoTwo);
         const newNumeOne = (commonDenoFind / p.denoOne) * p.numeOne;
         const newNumeTwo = (commonDenoFind / p.denoTwo) * p.numeTwo;
@@ -14610,7 +14672,7 @@ function handleSubmit(e) {
       }
 
       //FRACTIONS: EXPANSION AND SIMPLIFICATION
-      if (setting == 19) {
+      if (setting == 20) {
         correctAnswer = p.answer;
       }
     }
@@ -15110,6 +15172,32 @@ function handleSubmit(e) {
     }
 
     if (level == "calSix") {
+      if (setting == 1) {
+        console.log(p.numerator, p.denominator);
+        console.log(p.numerator / p.denominator);
+        let start = p.whole + p.numerator / p.denominator;
+        if (p.type == "whole") start = p.whole;
+        const object = p.numeratorTwo / p.denominatorTwo;
+        const quotient = Math.floor(start / object);
+        let remainder = start * p.denominatorTwo - p.numeratorTwo * quotient;
+        console.log(start, object, quotient, remainder);
+        if (p.question == "quotient") correctAnswer = quotient;
+        if (p.question == "remainder") {
+          [remainder, p.denominatorTwo] = simplify(remainder, p.denominatorTwo);
+          correctAnswer = `${remainder}/${p.denominatorTwo}`;
+          if (p.type == "simple fractions" || p.type == "mixed fractions") {
+            const totalNume = p.whole * p.denominator + p.numerator;
+            const comDeno = commonDeno(p.denominator, p.denominatorTwo);
+            let newNumeOne = (totalNume * comDeno) / p.denominator;
+            let newNumeTwo = (p.numeratorTwo * comDeno) / p.denominatorTwo;
+            let leftNume = newNumeOne - newNumeTwo * quotient;
+            let leftDeno = comDeno;
+            [leftNume, leftDeno] = simplify(leftNume, leftDeno);
+            correctAnswer = `${leftNume}/${leftDeno}`;
+          }
+        }
+      }
+
       // SPEED: AVERAGE SPEED OF WHOLE JOURNEY
       if (setting == 2) {
         // average speed whole journey
@@ -16486,8 +16574,7 @@ function handleSubmit(e) {
         "heuFiveb",
       ];
 
-      // CALCULATIONS
-
+      //CALCULATIONS
       if (level == "calThree") {
         // if (setting == 14) {
         displayProblem.style.fontSize = "revert";
@@ -18596,6 +18683,7 @@ function genProblems() {
     }
   }
 
+  //SETTINGS
   if (level == "calTwo") {
     // if (setting == 99 || (global == 1 && skipGlobalUpdateProblem == 0)) {
     //   global = 1;
@@ -18737,7 +18825,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(19, calArr, setting, 99, level);
+    setting = calArrAll(20, calArr, setting, 99, level);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let thousands = genNumbers(9) + 1;
@@ -18895,8 +18983,18 @@ function genProblems() {
         convenientTwo: [10, 100][genNumbers(2)],
       };
     }
-
+    // PARTS AND INTERVALS
     if (setting == 17) {
+      const gen_intervals = [5, 8, 10][genNumbers(3)];
+      return {
+        start: genNumbers(5999) + 1000,
+        intervals: gen_intervals,
+        eachInterval: genNumbers(99) + 10,
+        end: undefined,
+        arrow: genNumbers(gen_intervals - 1) + 1,
+      };
+    }
+    if (setting == 18) {
       return {
         hours: genNumbers(24),
         mins: genNumbers(60),
@@ -18906,7 +19004,7 @@ function genProblems() {
       };
     }
     // FRACTIONS: ADDITION AND SUBTRACTION
-    if (setting == 18) {
+    if (setting == 19) {
       const gen_denoOne = genNumbers(9) + 2;
       const gen_denoTwo = genNumbers(8) + 3;
       return {
@@ -18918,7 +19016,7 @@ function genProblems() {
       };
     }
     // FRACTIONS: EXPAND AND SIMPLIFICATION
-    if (setting == 19) {
+    if (setting == 20) {
       const gen_deno = genNumbers(9) + 3;
       const gen_nume = genNumbers(gen_deno - 2) + 2;
       return {
@@ -19426,8 +19524,22 @@ function genProblems() {
   }
 
   if (level == "calSix") {
+    setting = calArrAll(5, calArr, setting, 99);
+    setting = checkRange(setting, calArr);
+
     if (setting == 1) {
       console.log("Finding Remainder");
+      const genDeno = genNumbers(9) + 2;
+      const genDenoTwo = genNumbers(9) + 2;
+      return {
+        type: ["whole", "simple fractions", "mixed fractions"][genNumbers(3)],
+        whole: genNumbers(10) + 1,
+        numerator: genNumbers(genDeno - 1) + 1,
+        denominator: genDeno,
+        numeratorTwo: genNumbers(genDenoTwo - 2) + 2,
+        denominatorTwo: genDenoTwo,
+        question: ["quotient", "remainder"][genNumbers(2)],
+      };
     }
 
     //AVERAGE SPEED OF WHOLE JOURNEY
@@ -22156,7 +22268,7 @@ function buttonLevelSetting() {
       level = "calThree";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Working: Long Division ( No remainder )\n11. Working: Long Division ( Remainder )\n12. Working: Multiplication ( Single Blank )\n13. Multiplication in sets\n14. Long Division: Simple Statement\n15. Left Side Right Side + - x ÷\n16. Multiplication and Division of Convenient Numbers\n17. Time: Timeline ( hours and mins )\n18. Fractions: Addition and Subtraction\n19. Fractions: Expansion and simplification\n\n99. All",
+        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Working: Long Division ( No remainder )\n11. Working: Long Division ( Remainder )\n12. Working: Multiplication ( Single Blank )\n13. Multiplication in sets\n14. Long Division: Simple Statement\n15. Left Side Right Side + - x ÷\n16. Multiplication and Division of Convenient Numbers\n17. Parts and Intervals\n18. Time: Timeline ( hours and mins )\n19. Fractions: Addition and Subtraction\n20. Fractions: Expansion and simplification\n\n99. All",
         99
       );
       if (
