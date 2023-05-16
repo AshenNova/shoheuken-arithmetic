@@ -2570,7 +2570,7 @@ function updateProblems() {
     p.decTwo = p.decTwo * activateTwo;
     p.decThree = p.decThree * activateThree;
     //bug?
-    // if (p.decTwo == 5) p.decTwo += 1;
+    if (p.decTwo == 5) p.decTwo += 1;
     if (p.decThree == 5) p.decThree += 1;
 
     // p.num = p.wholeNum + p.decOne + p.decTwo + p.decThree;
@@ -2579,7 +2579,9 @@ function updateProblems() {
     // console.log(`Display: ${displayDec}`);
     p.num = `${p.wholeNum}.${p.decOne}${p.decTwo}${p.decThree}`;
     console.log(typeof p.num);
-    p.num *= 1;
+    p.num = p.num * 1;
+    console.log(typeof p.num);
+    if (p.num < 1) p.num += 1;
     displayProblem.textContent = `${p.num} ≈ ?`;
   }
   if (level == 4.04) {
