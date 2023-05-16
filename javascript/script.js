@@ -11733,46 +11733,120 @@ function updateProblems() {
     //UNCHANGED DIFFERENCE
     if (setting == 3) {
       //UNIT SENTENCE
-      [p.unitA, p.unitB] = simplify(p.unitA, p.unitB);
-      if (p.unitB > p.unitA) [p.unitA, p.unitB] = [p.unitB, p.unitA];
-      let unitSentence = `A has ${p.unitA} times of B in the end.`;
-      if (p.unitB > 1) {
-        unitSentence = `A is ${p.unitA}/${p.unitB} of B in the end.`;
-      }
+      if (p.type == "norm") {
+        [p.unitA, p.unitB] = simplify(p.unitA, p.unitB);
+        if (p.unitB > p.unitA) [p.unitA, p.unitB] = [p.unitB, p.unitA];
+        let unitSentence = `A has ${p.unitA} times of B in the end.`;
+        if (p.unitB > 1) {
+          unitSentence = `A is ${p.unitA}/${p.unitB} of B in the end.`;
+        }
 
-      let situationText = undefined;
-      if (p.situation == 1) {
-        situationText = "increased";
-        p.numA = p.valueOneUnit * p.unitA - p.situationValue;
-        p.numB = p.valueOneUnit * p.unitB - p.situationValue;
-      }
-      if (p.situation == -1) {
-        situationText = "decreased";
-        p.numA = p.valueOneUnit * p.unitA + p.situationValue;
-        p.numB = p.valueOneUnit * p.unitB + p.situationValue;
-      }
-      if (p.numA <= 0 || p.numB <= 0) return updateCalc();
+        let situationText = undefined;
+        if (p.situation == 1) {
+          situationText = "increased";
+          p.numA = p.valueOneUnit * p.unitA - p.situationValue;
+          p.numB = p.valueOneUnit * p.unitB - p.situationValue;
+        }
+        if (p.situation == -1) {
+          situationText = "decreased";
+          p.numA = p.valueOneUnit * p.unitA + p.situationValue;
+          p.numB = p.valueOneUnit * p.unitB + p.situationValue;
+        }
+        if (p.numA <= 0 || p.numB <= 0) return updateCalc();
 
-      const difference = p.numA - p.numB;
-      const diffUnit = p.unitA - p.unitB;
-      if (difference % diffUnit != 0) return updateCalc();
-      displayProblem.innerHTML = `
-      A has ${p.numA} while B has ${p.numB} at first.</p>
-      Both ${situationText} by an equal amount.</p>
-      ${unitSentence}</p>
-      `;
-      // FINAL QUESTION
-      if (p.question == "AE") {
-        displayProblem.insertAdjacentHTML("beforeend", "What is A in the end?");
+        const difference = p.numA - p.numB;
+        const diffUnit = p.unitA - p.unitB;
+        if (difference % diffUnit != 0) return updateCalc();
+        displayProblem.innerHTML = `
+        A has ${p.numA} while B has ${p.numB} at first.</p>
+        Both ${situationText} by an equal amount.</p>
+        ${unitSentence}</p>
+        `;
+        // FINAL QUESTION
+        if (p.question == "AE") {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            "What is A in the end?"
+          );
+        }
+        if (p.question == "BE") {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            "What is B in the end?"
+          );
+        }
+        if (p.question == "change") {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            `What is each ${situationText} by?`
+          );
+        }
       }
-      if (p.question == "BE") {
-        displayProblem.insertAdjacentHTML("beforeend", "What is B in the end?");
-      }
-      if (p.question == "change") {
-        displayProblem.insertAdjacentHTML(
-          "beforeend",
-          `What is each ${situationText} by?`
-        );
+      if (p.type == "age") {
+        p.numA = genNumbers(10) + 20;
+        p.numB = genNumbers(11) + 1;
+        let unitSentence = undefined;
+        const person = ["John", "Mary"][genNumbers(2)];
+
+        if (p.unitB > p.unitA) {
+          [p.unitA, p.unitB] = [p.unitB, p.unitA];
+        }
+        const ageDiff = p.numA - p.numB;
+        const unitDiff = p.unitA - p.unitB;
+        const oneUnit = ageDiff / unitDiff;
+
+        let ageSentence = `
+        ${person}'s father is ${p.numA} years old.</p>
+        ${person} is ${p.numB} years old.</p>`;
+        if (p.ageType == "diff") {
+          ageSentence = `The age difference between ${person}'s father and ${person} is ${ageDiff} years old.</p>`;
+        }
+
+        if (ageDiff == p.numB) {
+          console.log("Age difference is 0");
+          return updateCalc();
+        }
+        if (oneUnit % 1 != 0) {
+          console.log("1 unit isnt whole number");
+          return updateCalc();
+        }
+
+        console.log(oneUnit);
+        const childAfter = oneUnit * p.unitB;
+        let changeText = `In how many years is`;
+        if (childAfter < p.numB) {
+          changeText = `How many years ago was`;
+        }
+        [p.unitA, p.unitB] = simplify(p.unitA, p.unitB);
+        if (p.ageType == "norm") {
+          unitSentence = `${changeText} the father ${p.unitA} times of ${person}'s age?`;
+          if (p.unitB != 1) {
+            unitSentence = `${changeText} the father ${p.unitA}/${p.unitB} of ${person}'s age?`;
+          }
+        }
+        if (p.ageType == "diff") {
+          let change = childAfter - p.numB;
+          let changeText = `${change} years later,`;
+          // if (ageDiff > 0) return updateCalc();
+          if (ageDiff < 0) {
+            changeText = `${change} years ago,`;
+          }
+          unitSentence = `${changeText} the father ${p.unitA} times of ${person}'s age.</p>`;
+          if (p.unitB != 1) {
+            unitSentence = `${changeText} the father ${p.unitA}/${p.unitB} of ${person}'s age.</p>`;
+          }
+        }
+
+        displayProblem.innerHTML = `
+        ${ageSentence}
+        ${unitSentence}
+        `;
+        if (p.type == "age" && p.ageType == "diff") {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            `How old is ${person} at first?`
+          );
+        }
       }
     }
     //UNCHANGED TOTAL
@@ -16235,14 +16309,29 @@ function handleSubmit(e) {
 
       //UNCHANGED DIFFERENCE
       if (setting == 3) {
-        if (p.question == "AE") {
-          correctAnswer = p.valueOneUnit * p.unitA;
+        if (p.type == "norm") {
+          if (p.question == "AE") {
+            correctAnswer = p.valueOneUnit * p.unitA;
+          }
+          if (p.question == "BE") {
+            correctAnswer = p.valueOneUnit * p.unitB;
+          }
+          if (p.question == "change") {
+            correctAnswer = p.situationValue;
+          }
         }
-        if (p.question == "BE") {
-          correctAnswer = p.valueOneUnit * p.unitB;
-        }
-        if (p.question == "change") {
-          correctAnswer = p.situationValue;
+        if (p.type == "age") {
+          const ageDiff = p.numA - p.numB;
+          const unitDiff = p.unitA - p.unitB;
+          const oneUnit = ageDiff / unitDiff;
+          const fatherEnd = oneUnit * p.unitA;
+          const childEnd = oneUnit * p.unitB;
+          const change = childEnd - p.numB;
+          correctAnswer = Math.abs(childEnd - p.numB);
+          if (p.ageType == "diff") {
+            console.log(p.numA, p.numB, fatherEnd, childEnd, change);
+            correctAnswer = childEnd - change;
+          }
         }
       }
       // UNCHANGED TOTAL
@@ -20365,6 +20454,8 @@ function genProblems() {
       const genValueOneUnit = genNumbers(900) + 100;
       // const genB = genNumbers(1000 - 100) + 100;
       return {
+        type: ["age", "norm"][genNumbers(2)],
+        ageType: ["diff", "norm"][genNumbers(2)],
         numA: undefined,
         numB: undefined,
         valueOneUnit: genNumbers(900) + 100,
