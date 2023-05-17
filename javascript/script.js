@@ -11880,6 +11880,8 @@ function updateProblems() {
         //   total = p.valueA + p.valueB;
         // }
 
+        // const someone = ["Tom", "Jerry"][genNumbers(2)];
+        // const another = ["Jane", "Christina"][genNumbers(2)];
         let firstLine =
           lineOneOptions == 0
             ? `A and B had a total of ${total} at first.</p>`
@@ -11893,7 +11895,11 @@ function updateProblems() {
         }
         displayProblem.innerHTML = `
       ${firstLine}
-        A ${transferText} ${transferValueText} to B.</p>
+        ${
+          p.type == "A"
+            ? `A ${transferText} ${transferValueText} to B.</p>`
+            : `A gave away ${p.transfer} to someone,</p> while B received ${p.transfer} from somewhere.</p>`
+        }
         ${unitSentence}</p>
       `;
         if (lineOneOptions == 1) {
@@ -20474,6 +20480,7 @@ function genProblems() {
       const genTransfer = genNumbers(800) + 200;
       const genOneUnit = genNumbers(500) + 100;
       return {
+        type: ["A", "B"][genNumbers(2)],
         version: ["valueEnd", "valueFirst"][genNumbers(2)],
         question: ["AF", "AE", "BF", "BE"][genNumbers(4)],
         unitA: genNumbers(5) + 2,
