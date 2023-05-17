@@ -359,8 +359,204 @@ const updateCalc = function (skipGlobalUpdateProblem) {
 };
 
 const canvas = document.getElementById("canvas1");
-console.log(canvas);
 const ctx = canvas.getContext("2d");
+
+// function drawQuadrant(x, y, radius) {
+//   ctx.save();
+//   ctx.font = "1em serif";
+//   // ctx.translate(x, y);
+//   // ctx.beginPath();
+//   // ctx.arc(0, 0);
+//   let pi = 3.14;
+//   let diameter = radius * 2;
+//   if (radius % 7 == 0) pi = `22/7`;
+//   ctx.fillText(`Find the area of the semicircle.`, 15, 20);
+//   if (genNumbers(2) == 0) {
+//     ctx.fillText(`Radius = ${radius / 10} cm, π = 3.14`, 15, 40);
+//   } else {
+//     ctx.fillText(`Diameter = ${diameter / 10} cm, π = 3.14`, 15, 40);
+//   }
+
+//   ctx.beginPath();
+//   ctx.translate(x, y);
+//   ctx.moveTo(0, 0);
+//   // ctx.lineTo(x + radius, y + radius);
+//   ctx.arc(0, 0, radius, 0, Math.PI / 2, false);
+//   ctx.closePath();
+//   ctx.lineWidth = 3;
+//   ctx.fillStyle = "red";
+//   ctx.fill();
+//   ctx.strokeStyle = "#550000";
+//   ctx.stroke();
+//   ctx.restore();
+// }
+
+const drawThis = {
+  quadrant: (x, y, radius, type, rotate) => {
+    ctx.save();
+    ctx.font = "1em serif";
+    let pi = 3.14;
+    let diameter = radius * 2;
+    if (radius % 7 == 0) pi = `22/7`;
+    ctx.fillText(`Find the ${type} of the quadrant.`, 15, 20);
+    if (genNumbers(2) == 0) {
+      ctx.fillText(`Radius = ${radius / 10} cm, π = ${pi}.`, 15, 40);
+    } else {
+      ctx.fillText(`Diameter = ${diameter / 10} cm, π = ${pi}.`, 15, 40);
+    }
+
+    ctx.beginPath();
+    ctx.translate(x, y);
+    ctx.rotate(rotate);
+    ctx.moveTo(0, 0);
+    // ctx.lineTo(x + radius, y + radius);
+    ctx.arc(0, 0, radius, 0, Math.PI / 2, false);
+    ctx.closePath();
+    ctx.lineWidth = 3;
+    ctx.fillStyle = "red";
+    ctx.fill();
+    ctx.strokeStyle = "#550000";
+    ctx.stroke();
+
+    ctx.restore();
+  },
+  semicircle: (x, y, radius, type, rotate) => {
+    ctx.save();
+    ctx.font = "1em serif";
+    let pi = 3.14;
+    let diameter = radius * 2;
+    if (radius % 7 == 0) pi = `22/7`;
+    ctx.fillText(`Find the ${type} of the semicircle.`, 15, 20);
+    if (genNumbers(2) == 0) {
+      ctx.fillText(`Radius = ${radius / 10} cm, π = ${pi}.`, 15, 40);
+    } else {
+      ctx.fillText(`Diameter = ${diameter / 10} cm, π = ${pi}.`, 15, 40);
+    }
+    ctx.beginPath();
+    ctx.translate(x, y);
+    ctx.rotate(rotate);
+    ctx.moveTo(0, 0);
+    // ctx.lineTo(x + radius, y + radius);
+    ctx.arc(0, 0, radius, 0, Math.PI, false);
+    ctx.closePath();
+    ctx.lineWidth = 3;
+    ctx.fillStyle = "red";
+    ctx.fill();
+    ctx.strokeStyle = "#550000";
+    ctx.stroke();
+    ctx.restore();
+  },
+  threeQuarterCircle: (x, y, radius, type, rotate) => {
+    ctx.save();
+    ctx.font = "1em serif";
+    let pi = 3.14;
+    let diameter = radius * 2;
+    if (radius % 7 == 0) pi = `22/7`;
+    ctx.fillText(`Find the ${type} of the 3 Quarter-Circle.`, 15, 20);
+    if (genNumbers(2) == 0) {
+      ctx.fillText(`Radius = ${radius / 10} cm, π = ${pi}.`, 15, 40);
+    } else {
+      ctx.fillText(`Diameter = ${diameter / 10} cm, π = ${pi}.`, 15, 40);
+    }
+    ctx.beginPath();
+    ctx.translate(x, y);
+    ctx.rotate(rotate);
+    ctx.moveTo(0, 0);
+    // ctx.lineTo(x + radius, y + radius);
+    ctx.arc(0, 0, radius, 0, (Math.PI / 2) * 3, false);
+    ctx.closePath();
+    ctx.lineWidth = 3;
+    ctx.fillStyle = "red";
+    ctx.fill();
+    ctx.strokeStyle = "#550000";
+    ctx.stroke();
+    ctx.restore();
+  },
+  segment: (x, y, radius, type, rotate) => {
+    ctx.save();
+    ctx.font = "1em serif";
+    let pi = 3.14;
+    let diameter = radius * 2;
+    if (radius % 7 == 0) pi = `22/7`;
+    ctx.fillText(`Find the ${type} of the segment.`, 15, 20);
+    if (genNumbers(2) == 0) {
+      ctx.fillText(`Radius = ${radius / 10} cm, π = ${pi}.`, 15, 40);
+    } else {
+      ctx.fillText(`Diameter = ${diameter / 10} cm, π = ${pi}.`, 15, 40);
+    }
+    ctx.translate(x, y);
+    ctx.rotate(rotate);
+    ctx.beginPath();
+    ctx.arc(0, 0, radius, 0, Math.PI / 2, false);
+    ctx.closePath();
+    ctx.lineWidth = 3;
+    ctx.fillStyle = "red";
+    ctx.fill();
+    ctx.strokeStyle = "#550000";
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.setLineDash([10, 10]);
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, radius);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(radius, 0);
+    ctx.stroke();
+    ctx.restore();
+  },
+  sharkfin: (x, y, radius, type, rotate) => {
+    // draw square
+    ctx.save();
+    ctx.font = "1em serif";
+    let pi = 3.14;
+    let diameter = radius * 2;
+    if (radius % 7 == 0) pi = `22/7`;
+    ctx.fillText(`Find the ${type} of the sharkfin.`, 15, 20);
+    if (genNumbers(2) == 0) {
+      ctx.fillText(`Radius = ${radius / 10} cm, π = ${pi}.`, 15, 40);
+    } else {
+      ctx.fillText(`Diameter = ${diameter / 10} cm, π = ${pi}.`, 15, 40);
+    }
+    ctx.translate(x, y);
+    ctx.rotate(rotate);
+    ctx.beginPath();
+    ctx.rect(0, 0, radius, radius);
+    ctx.fillStyle = "red";
+    ctx.fill();
+    ctx.lineWidth = 3;
+    // ctx.strokeStyle = "#550000";
+    ctx.stroke();
+
+    // draw quadrant
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    // ctx.lineTo(x + radius, y + radius);
+    ctx.arc(0, 0, radius, 0, Math.PI / 2, false);
+    ctx.closePath();
+
+    ctx.fillStyle = "yellow";
+    ctx.fill();
+    // ctx.strokeStyle = "#000000";
+    ctx.stroke();
+    ctx.restore();
+  },
+};
+
+function drawDiffArea(x, y, radius) {
+  ctx.save();
+  ctx.font = "1em serif";
+  // ctx.translate(x, y);
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.lineTo(x + radius, y + radius);
+  ctx.arc(x, y, radius, 0, Math.PI / 2, false);
+  ctx.closePath();
+  ctx.stroke();
+  ctx.restore();
+}
+
 function drawIntervals(start, intervals, eachInterval, question) {
   const largeIntervals = 20;
   const adjustment = 10;
@@ -407,6 +603,8 @@ function drawIntervals(start, intervals, eachInterval, question) {
 }
 
 export {
+  // drawQuadrant,
+  drawThis,
   drawIntervals,
   swap,
   decimalCheck,

@@ -21,6 +21,8 @@ import {
   resultSide,
   blankSide,
   drawIntervals,
+  // drawQuadrant,
+  drawThis,
 } from "./otherFunctions.js";
 // import { resetStuff } from "./reset.js";
 let buttonLevel = 0;
@@ -9974,8 +9976,14 @@ function updateProblems() {
   //     displayProblem.textContent = str;
   //   }
   // }
-  // Heuristics display
+  // DISPLAY
   if (level == "calSix") {
+    if (setting != 2) {
+      normalDisplay();
+    }
+    if (setting == 2) {
+      drawingDisplay();
+    }
     if (setting == 1) {
       const person = ["John", "Emma", "Javen", "Vamika", "Matthias", "Isaac"][
         genNumbers(6)
@@ -9996,7 +10004,8 @@ function updateProblems() {
 
         displayProblem.innerHTML = `
         ${person} has ${p.whole} m of cloth at first.</p>
-        ${p.numeratorTwo}/${p.denominatorTwo} m was used to make a shirt.</p>
+        ${p.numeratorTwo}/${p.denominatorTwo} m is needed to make a shirt.</p>
+        The greatest number of shirts were made.</p>
         `;
       }
 
@@ -10010,13 +10019,21 @@ function updateProblems() {
         }
         displayProblem.innerHTML = `
         ${person} has ${p.numerator}/${p.denominator} m of cloth at first.</p>
-        ${p.numeratorTwo}/${p.denominatorTwo} m was used to make a shirt.</p>
+        ${p.numeratorTwo}/${p.denominatorTwo} m is needed to make a shirt.</p>
+        The greatest number of shirts were made.</p>
         `;
       }
       if (p.type == "mixed fractions") {
+        const numeTotal = p.whole * p.denominator + p.numerator;
+        if (
+          (numeTotal / p.denominator) % (p.numeratorTwo / p.denominatorTwo) ==
+          0
+        )
+          return updateCalc();
         displayProblem.innerHTML = `
         ${person} has ${p.whole} ${p.numerator}/${p.denominator} m of cloth at first.</p>
-        ${p.numeratorTwo}/${p.denominatorTwo} m was used to make a shirt.</p>
+        ${p.numeratorTwo}/${p.denominatorTwo} m is needed to make a shirt.</p>
+        The greatest number of shirts were made.</p>
         `;
       }
 
@@ -10033,7 +10050,86 @@ function updateProblems() {
         );
       }
     }
+    // CIRCLES
     if (setting == 2) {
+      //length: 400px breadth: 275px
+      const canvasHeight = p.radius * 3 + 80;
+      canvas.setAttribute("height", canvasHeight);
+      // canvas.setAttribute("width", "300px");
+      const centerLength = 400 / 2;
+      const centerBreadth = p.radius + 50;
+      if (p.type == "area") {
+        if (p.shapeArea == "quadrant") {
+          drawThis.quadrant(
+            centerLength,
+            centerBreadth,
+            p.radius,
+            p.type,
+            p.rotate
+          );
+        }
+        if (p.shapeArea == "semicircle") {
+          drawThis.semicircle(
+            centerLength,
+            centerBreadth,
+            p.radius,
+            p.type,
+            p.rotate
+          );
+        }
+        if (p.shapeArea == "segment") {
+          drawThis.segment(
+            centerLength,
+            centerBreadth,
+            p.radius,
+            p.type,
+            p.rotate
+          );
+        }
+        if (p.shapeArea == "sharkfin") {
+          drawThis.sharkfin(
+            centerLength,
+            centerBreadth,
+            p.radius,
+            p.type,
+            p.rotate
+          );
+        }
+      }
+      if (p.type == "perimeter") {
+        if (p.shapePerimeter == "quadrant") {
+          drawThis.quadrant(
+            centerLength,
+            centerBreadth,
+            p.radius,
+            p.type,
+            p.rotate
+          );
+        }
+        if (p.shapePerimeter == "semicircle") {
+          drawThis.semicircle(
+            centerLength,
+            centerBreadth,
+            p.radius,
+            p.type,
+            p.rotate
+          );
+        }
+        if (p.shapePerimeter == "threeQuarterCircle") {
+          p.radius = (genNumbers(3) + 5) * 10;
+          p.radius = 70;
+          drawThis.threeQuarterCircle(
+            centerLength,
+            centerBreadth,
+            p.radius,
+            p.type,
+            p.rotate
+          );
+        }
+      }
+    }
+
+    if (setting == 3) {
       if (p.roll == "A") {
         displayProblem.innerHTML = `
         Someone moved from</br>
@@ -10073,7 +10169,7 @@ function updateProblems() {
       }
     }
     // SPEED: MOVING APART
-    if (setting == 3) {
+    if (setting == 4) {
       const position = genNumbers(3);
       p.distance = p.speedA * p.time + p.speedB * p.time;
       const unitTime = ["sec", "min", "h"][position];
@@ -10135,7 +10231,7 @@ function updateProblems() {
         displayProblem.insertAdjacentHTML("beforeend", "What is B's speed?");
     }
     //SPEED: MEET UP
-    if (setting == 4) {
+    if (setting == 5) {
       p.distance = p.speedA * p.timeA + p.speedB * p.timeB;
       // normal
       if (p.roll == "A") {
@@ -10196,7 +10292,7 @@ function updateProblems() {
       }
     }
     //SPEED: CATCH UP
-    if (setting == 5) {
+    if (setting == 6) {
       if (p.speedA == p.speedB) p.speedB += 1;
       p.gap = genNumbers(20) + 10;
       p.diffSpeed = p.speedB - p.speedA;
@@ -15253,6 +15349,7 @@ function handleSubmit(e) {
       }
     }
 
+    //ANSWERS
     if (level == "calSix") {
       if (setting == 1) {
         console.log(p.numerator, p.denominator);
@@ -15276,12 +15373,60 @@ function handleSubmit(e) {
             let leftDeno = comDeno;
             [leftNume, leftDeno] = simplify(leftNume, leftDeno);
             correctAnswer = `${leftNume}/${leftDeno}`;
+            // if ((p.type = "mixed fractions")) {
+            //   if (leftNume / leftDeno > 0) {
+            //     correctAnswer = `${Math.floor(
+            //       leftNume / leftDeno
+            //     )} ${leftNume}/${leftDeno}`;
+            //   }
+            // }
           }
         }
       }
 
-      // SPEED: AVERAGE SPEED OF WHOLE JOURNEY
+      // CIRCLES
       if (setting == 2) {
+        if (p.type == "area") {
+          let pi = 3.14;
+          if (p.radius % 7 == 0) pi = 22 / 7;
+          if (p.shapeArea == "quadrant") {
+            correctAnswer = (0.25 * pi * p.radius * p.radius) / 100;
+          }
+          if (p.shapeArea == "semicircle") {
+            correctAnswer = (0.5 * pi * p.radius * p.radius) / 100;
+          }
+          if (p.shapeArea == "segment") {
+            correctAnswer =
+              (0.25 * pi * p.radius * p.radius -
+                (1 / 2) * p.radius * p.radius) /
+              100;
+          }
+          if (p.shapeArea == "sharkfin") {
+            correctAnswer =
+              (p.radius * p.radius - 0.25 * pi * p.radius * p.radius) / 100;
+          }
+        }
+        if (p.type == "perimeter") {
+          let pi = 3.14;
+          if (p.radius % 7 == 0) pi = 22 / 7;
+          const circumference = 2 * pi * p.radius;
+          console.log(pi, p.radius, circumference);
+          if (p.shapePerimeter == "quadrant") {
+            correctAnswer = 0.25 * circumference + p.radius * 2;
+          }
+          if (p.shapePerimeter == "semicircle") {
+            correctAnswer = 0.5 * circumference + p.radius * 2;
+          }
+          if (p.shapePerimeter == "threeQuarterCircle") {
+            correctAnswer = 0.75 * circumference + p.radius * 2;
+          }
+          correctAnswer /= 10;
+        }
+        correctAnswer = accDecimal(correctAnswer);
+      }
+
+      // SPEED: AVERAGE SPEED OF WHOLE JOURNEY
+      if (setting == 3) {
         // average speed whole journey
         if (p.roll == "A") {
           correctAnswer =
@@ -15328,7 +15473,7 @@ function handleSubmit(e) {
         }
       }
       // SPEED: MOVING APART
-      if (setting == 3) {
+      if (setting == 4) {
         if (p.version == "A") {
           correctAnswer = p.distance;
         }
@@ -15347,7 +15492,7 @@ function handleSubmit(e) {
         }
       }
       //SPEED: MEET UP
-      if (setting == 4) {
+      if (setting == 5) {
         if (p.roll == "A") {
           correctAnswer = p.distance / (p.speedA + p.speedB);
         }
@@ -15375,7 +15520,7 @@ function handleSubmit(e) {
         }
         //SPEED: CATCH UP
       }
-      if (setting == 5) {
+      if (setting == 6) {
         if (p.roll == "A" || p.roll == "B") {
           // console.log(p.diffSpeed);
           correctAnswer = p.gap / p.diffSpeed;
@@ -19620,8 +19765,9 @@ function genProblems() {
     }
   }
 
+  //SETTINGS
   if (level == "calSix") {
-    setting = calArrAll(5, calArr, setting, 99);
+    setting = calArrAll(6, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 1) {
@@ -19639,8 +19785,32 @@ function genProblems() {
       };
     }
 
-    //AVERAGE SPEED OF WHOLE JOURNEY
+    // CIRCLES: AREA AND PERIMETER
     if (setting == 2) {
+      return {
+        radius: (genNumbers(7) + 5) * 10,
+        // radius: 70,
+        type: ["perimeter", "area"][genNumbers(2)],
+        shapeArea: [
+          "quadrant",
+          "sharkfin",
+          "segment",
+          "semicircle",
+          "quadrant",
+        ][genNumbers(5)],
+        shapePerimeter: [
+          "quadrant",
+          "threeQuarterCircle",
+          "semicircle",
+          "quadrant",
+        ][genNumbers(4)],
+        rotate: (genNumbers(360) * Math.PI) / 180,
+        // rotate: (135 * Math.PI) / 180,
+      };
+    }
+
+    //AVERAGE SPEED OF WHOLE JOURNEY
+    if (setting == 3) {
       return {
         roll: ["A", "B", "C"][genNumbers(3)],
         speedA: genNumbers(5) + 2,
@@ -19658,7 +19828,7 @@ function genProblems() {
     }
     // SPEED: MOVING APART
 
-    if (setting == 3) {
+    if (setting == 4) {
       return {
         version: ["E", "D", "C", "B", "A"][genNumbers(5)],
         which: ["A", "B"][genNumbers(2)],
@@ -19670,7 +19840,7 @@ function genProblems() {
     }
 
     //MEET UP
-    if (setting == 4) {
+    if (setting == 5) {
       return {
         roll: ["D", "A", "B", "C"][genNumbers(4)],
         distance: undefined,
@@ -19681,7 +19851,7 @@ function genProblems() {
       };
     }
     // CATCH UP
-    if (setting == 5) {
+    if (setting == 6) {
       const genSpeedB = genNumbers(10) + 5;
       return {
         roll: ["E", "D", "C", "B", "A"][genNumbers(5)],
@@ -22465,11 +22635,11 @@ function buttonLevelSetting() {
       level = "calSix";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Fractions: Finding remainder( In-progress)\n2. Speed: Average Speed\n3. Speed: Moving Apart\n4. Speed: Meet up\n5. Speed: Catch up\n\n99",
+        "What level?\n1. Fractions: Finding remainder\n2. Circles: Area and Perimeter\n3. Speed: Average Speed\n4. Speed: Moving Apart\n5. Speed: Meet up\n6. Speed: Catch up\n\n99",
         99
       );
       if (
-        ![1, 2, 3, 4, 5, 99].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 6, 99].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 99;
