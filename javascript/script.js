@@ -15333,7 +15333,10 @@ function handleSubmit(e) {
             correctAnswer = accDecimal(p.value);
           }
         }
-        correctAnswer = accDecimal(p.value);
+        if (correctAnswer % 1 != 0) {
+          console.log(p.value);
+          correctAnswer = correctAnswer.toFixed(2);
+        }
       }
 
       if (setting == 21) {
