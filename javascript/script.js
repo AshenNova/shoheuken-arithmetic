@@ -15333,6 +15333,7 @@ function handleSubmit(e) {
             correctAnswer = accDecimal(p.value);
           }
         }
+        correctAnswer = accDecimal(p.value);
       }
 
       if (setting == 21) {
