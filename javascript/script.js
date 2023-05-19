@@ -4,6 +4,7 @@ const today = new Date(timeElapsed);
 console.log(today);
 // import { updateProblems } from "./updateProblems.js";
 import {
+  parallelOverlapping,
   swap,
   decimalCheck,
   accDecimal,
@@ -4007,27 +4008,46 @@ function updateProblems() {
     }
   }
 
+  // DISPLAY
+  //PARALLEL OVERLAPPING
   if (level == 4.23) {
-    if (p.option == "no") {
-      while (arrayConvenient.includes(p.numTwo) == true) {
-        p.numTwo = genNumbers(20) + 3;
+    if (p.type == "statement") {
+      const length = p.breadth * p.unitSentence;
+      p.area = p.breadth * length;
+      p.perimeter = (p.breadth + length) * 2;
+      normalDisplay();
+      displayProblem.innerHTML = `The length of a rectangle is ${p.unitSentence} times the breadth.</p>
+      `;
+      if (p.question == "area") {
+        const html = `
+        The perimeter of the rectangle is ${p.perimeter} cm.</p>
+        What is the area?
+        `;
+        displayProblem.insertAdjacentHTML("beforeend", html);
+      } else {
+        const html = `
+        The area of the rectangle is ${p.perimeter} cm<sup>2</sup>.</p>
+        What is the perimeter?
+        `;
+        displayProblem.insertAdjacentHTML("beforeend", html);
       }
-      p.numOne = p.numTwo;
     }
-    p.divisor = 2;
-    let a = 0;
-    displayProblem.textContent = p.numOne;
+    if (p.type == "figure") {
+      drawingDisplay();
+      p.breadth = genNumbers(2) + 3;
+      const height = 90 + p.breadth + p.breadth * 10 * p.unitSentence + 80;
+      if (height > 275) {
+        canvas.setAttribute("height", height);
+      } else {
+        canvas.setAttribute("height", "275px");
+      }
 
-    if (10 % p.numOne == 0) {
-      p.convenient = 10;
-    } else if (100 % p.numOne == 0) {
-      p.convenient = 100;
-    } else {
-      p.convenient = 1000;
+      // const length = p.breadth * p.unitSentence;
+      // p.area = p.breadth * length;
+      // p.perimeter = (p.breadth + length) * 2;
+
+      parallelOverlapping(p.breadth, p.unitSentence, p.question);
     }
-
-    p.divisor = p.convenient / p.numOne;
-    console.log(p.numOne, p.divisor);
   }
 
   if (level == 4.24) {
@@ -13817,11 +13837,14 @@ function handleSubmit(e) {
     }
 
     if (level == 4.23) {
-      if (p.option == "no") {
-        correctAnswer = "x";
+      if (p.type == "statement") {
+        if (p.question == "area") correctAnswer = p.area;
+        if (p.question == "perimeter") correctAnswer = p.perimeter;
       }
-      if (p.option == "yes") {
-        correctAnswer = `${p.numOne}x${p.divisor}=${p.convenient}`;
+      if (p.type == "figure") {
+        if (p.question == "area") correctAnswer = p.area * (p.unitSentence + 1);
+        if (p.question == "perimeter")
+          correctAnswer = p.breadth * 2 + p.breadth * p.unitSentence * 4;
       }
     }
 
@@ -18281,11 +18304,13 @@ function genProblems() {
 
   if (level == 4.23) {
     return {
-      option: ["yes", "no"][genNumbers(2)],
-      numOne: arrayConvenient[genNumbers(9)],
-      numTwo: genNumbers(20) + 3,
-      divisor: undefined,
-      convenient: undefined,
+      type: ["statement", "figure"][genNumbers(2)],
+      breadth: genNumbers(5) + 1,
+      unitSentence: genNumbers(3) + 2,
+      question: ["area", "perimeter"][genNumbers(2)],
+      quantity: genNumbers(3) + 2,
+      area: undefined,
+      perimeter: undefined,
     };
   }
 
@@ -22055,17 +22080,9 @@ function buttonLevelSetting() {
     case "Level 4.23":
       level = 4.23;
       scoreNeeded = 20;
-      arrayConvenient = [2, 4, 5, 8, 10, 20, 25, 50, 125];
-      gold = highScore4DotZero23.time;
-      silver =
-        highScore4DotZero23.time + (cutoff - highScore4DotZero23.time) / 3;
-      bronze =
-        highScore4DotZero23.time +
-        ((cutoff - highScore4DotZero23.time) / 3) * 2;
-      highScoreName.innerHTML = highScore4DotZero23.name;
-      highScoreTime.innerHTML = highScore4DotZero23.time;
-      highScoreMistakes.innerHTML = highScore4DotZero23.mistake;
-      document.querySelector("#user-input").setAttribute("type", "text");
+      displayProblem.style.fontSize = "18px";
+      displayProblem.style.textAlign = "left";
+
       break;
 
     case "Level 4.24":

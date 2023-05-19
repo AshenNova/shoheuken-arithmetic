@@ -361,35 +361,44 @@ const updateCalc = function (skipGlobalUpdateProblem) {
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
 
-// function drawQuadrant(x, y, radius) {
-//   ctx.save();
-//   ctx.font = "1em serif";
-//   // ctx.translate(x, y);
-//   // ctx.beginPath();
-//   // ctx.arc(0, 0);
-//   let pi = 3.14;
-//   let diameter = radius * 2;
-//   if (radius % 7 == 0) pi = `22/7`;
-//   ctx.fillText(`Find the area of the semicircle.`, 15, 20);
-//   if (genNumbers(2) == 0) {
-//     ctx.fillText(`Radius = ${radius / 10} cm, π = 3.14`, 15, 40);
-//   } else {
-//     ctx.fillText(`Diameter = ${diameter / 10} cm, π = 3.14`, 15, 40);
-//   }
+const parallelOverlapping = (breadth, unitSentence, type) => {
+  const perimeter = (breadth * unitSentence + breadth) * 2;
+  const area = breadth * unitSentence * breadth;
+  ctx.save();
+  ctx.font = "1em serif";
+  ctx.fillText(`The figure is made up of identical rectangles.`, 15, 20);
+  if (type == "area") {
+    ctx.fillText(`The perimeter of 1 rectangle is ${perimeter} cm.`, 15, 40);
+    ctx.fillText(`What is the area of the entire figure?`, 15, 60);
+  }
 
-//   ctx.beginPath();
-//   ctx.translate(x, y);
-//   ctx.moveTo(0, 0);
-//   // ctx.lineTo(x + radius, y + radius);
-//   ctx.arc(0, 0, radius, 0, Math.PI / 2, false);
-//   ctx.closePath();
-//   ctx.lineWidth = 3;
-//   ctx.fillStyle = "red";
-//   ctx.fill();
-//   ctx.strokeStyle = "#550000";
-//   ctx.stroke();
-//   ctx.restore();
-// }
+  // const areaText = 2;
+  // const supText = areaText.toString().sup();
+  if (type == "perimeter") {
+    ctx.fillText(`The area of 1 rectangle is ${area} cm2.`, 15, 40);
+    ctx.fillText(`What is the perimeter of the entire figure?.`, 15, 60);
+  }
+
+  // 400 / 2 - length / 2;
+  const x = 400 / 2 - (unitSentence / 2) * breadth * 10;
+  const y = 70 + breadth + breadth * unitSentence + 80;
+  ctx.translate(x, 90);
+  ctx.beginPath();
+  breadth = breadth * 10;
+  const length = breadth * unitSentence;
+  ctx.rect(0, 0, length, breadth);
+  ctx.closePath();
+  ctx.stroke();
+
+  for (let i = 0; i < unitSentence; i++) {
+    ctx.beginPath();
+    ctx.rect(i * breadth, breadth, breadth, length);
+    ctx.closePath();
+    ctx.stroke();
+  }
+
+  ctx.restore();
+};
 
 const drawThis = {
   quadrant: (x, y, radius, type, rotate) => {
@@ -604,6 +613,7 @@ function drawIntervals(start, intervals, eachInterval, question) {
 
 export {
   // drawQuadrant,
+  parallelOverlapping,
   drawThis,
   drawIntervals,
   swap,
