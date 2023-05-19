@@ -4042,9 +4042,9 @@ function updateProblems() {
         canvas.setAttribute("height", "275px");
       }
 
-      // const length = p.breadth * p.unitSentence;
-      // p.area = p.breadth * length;
-      // p.perimeter = (p.breadth + length) * 2;
+      const length = p.breadth * p.unitSentence;
+      p.area = p.breadth * length;
+      p.perimeter = (p.breadth + length) * 2;
 
       parallelOverlapping(p.breadth, p.unitSentence, p.question);
     }
