@@ -10003,6 +10003,29 @@ function updateProblems() {
       How many students were there ${p.question}?
       `;
     }
+
+    //AVERAGE: CONSECUTIVE DAYS
+    if (setting == 25) {
+      normalDisplay();
+      displayProblem.style.fontSize = "18px";
+      displayProblem.style.textAlign = "left";
+      // if 5 days.. Then find the total of 1 -- 4 which is 5 x 4 /2.
+      console.log(p.dayOne);
+      if (p.days % 2 == 0) p.days += 1;
+      p.chosen = genNumbers(p.days - 1) + 1;
+      const triangleNum = (p.days * (p.days - 1)) / 2;
+      p.total = p.dayOne * p.days + triangleNum * p.increase;
+      console.log(triangleNum);
+      if (p.chosen == Math.ceil(p.days / 2)) {
+        p.chosen += 1;
+      }
+      displayProblem.innerHTML = `
+      Someone made paper aeroplane for ${p.days} days.</p>
+      Everyday he would make ${p.increase} more than the previous day.</p>
+      A total of ${p.total} aeroplanes were made.</p>
+      How many aeroplanes were made on day ${p.chosen}?
+      `;
+    }
   }
   //   if (setting == 1) {
   //     // START CHANGE DISPLAY
@@ -15513,6 +15536,10 @@ function handleSubmit(e) {
           correctAnswer = p.oldQuantity + p.changeQuantity;
         }
       }
+      //AVERAGE: CONSECUTIVE DAYS
+      if (setting == 25) {
+        correctAnswer = p.dayOne + p.increase * (p.chosen - 1);
+      }
     }
 
     //ANSWERS
@@ -19575,7 +19602,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(24, calArr, setting, 99);
+    setting = calArrAll(25, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -19949,6 +19976,16 @@ function genProblems() {
         changeQuantity: genNumbers(6) - 3,
         situation: undefined,
         question: ["at first", "in the end"][genNumbers(2)],
+      };
+    }
+    //AVERAGE: CONSECUTIVE DAYS
+    if (setting == 25) {
+      return {
+        dayOne: genNumbers(20) + 5,
+        days: genNumbers(5) + 5,
+        total: undefined,
+        chosen: undefined,
+        increase: genNumbers(5) + 3,
       };
     }
   }
@@ -22808,7 +22845,7 @@ function buttonLevelSetting() {
       if (
         ![
           0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-          20, 21, 22, 23, 24, 99,
+          20, 21, 22, 23, 24, 25, 99,
         ].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
