@@ -399,6 +399,58 @@ const parallelOverlapping = (breadth, unitSentence, type) => {
 
   ctx.restore();
 };
+const drawTriangle = (base, height, first, second) => {
+  ctx.save();
+  ctx.font = "1em serif";
+  ctx.fillText(`Length AD = ${height / 4} cm.`, 20, 20);
+  ctx.fillText(
+    `Length BF = ${(base * 2) / 4} cm and can be split into 4 equal parts.`,
+    20,
+    40
+  );
+  ctx.fillText(`Find triangle A${first}${second}.`, 20, 60);
+  ctx.translate(400 / 2, 70);
+
+  const adjustX = -5;
+  const adjustY = 15;
+  //BIG TRIANGLE
+  ctx.beginPath();
+  ctx.fillText("A", -5, -2);
+  ctx.arc(0, 0, 2, 0, Math.PI * 2);
+  ctx.moveTo(0, 0);
+  ctx.lineTo(-base, height);
+  ctx.fillText("B", -base + adjustX, height + adjustY);
+  ctx.arc(-base, height, 2, 0, Math.PI * 2);
+  ctx.lineTo(base, height);
+  ctx.fillText("F", base + adjustX, height + adjustY);
+  ctx.arc(base, height, 2, 0, Math.PI * 2);
+  ctx.closePath();
+  ctx.stroke();
+
+  // INNER TRIANGLE
+  ctx.beginPath();
+  // ctx.arc(0, 0, 2, 0, Math.PI * 2);
+  ctx.moveTo(0, 0);
+  ctx.lineTo(-base / 2, height);
+  ctx.fillText("C", -base / 2 + adjustX, height + adjustY);
+  ctx.arc(-base / 2, height, 2, 0, Math.PI * 2);
+  ctx.lineTo(base / 2, height);
+  ctx.fillText("E", base / 2 + adjustX, height + adjustY);
+  ctx.arc(base / 2, height, 2, 0, Math.PI * 2);
+  ctx.closePath();
+  ctx.stroke();
+
+  // STRAIGHT LINE
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.lineTo(0, height);
+  ctx.fillText("D", 0 + adjustX, height + adjustY);
+  ctx.arc(0, height, 2, 0, Math.PI * 2);
+  ctx.rect(0, height, 10, -10);
+  ctx.stroke();
+
+  ctx.restore();
+};
 
 const drawThis = {
   quadrant: (x, y, radius, type, rotate) => {
@@ -613,6 +665,7 @@ function drawIntervals(start, intervals, eachInterval, question) {
 
 export {
   // drawQuadrant,
+  drawTriangle,
   parallelOverlapping,
   drawThis,
   drawIntervals,
