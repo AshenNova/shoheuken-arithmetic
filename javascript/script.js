@@ -3988,36 +3988,123 @@ function updateProblems() {
     }
   }
 
+  // if (level == 4.22) {
+  //   for (let i = p.numThree; i > 1; i--) {
+  //     if (p.numTwo % i == 0 && p.numThree % i == 0) {
+  //       p.numTwo /= i;
+  //       p.numThree /= i;
+  //     }
+  //   }
+  //   console.log(p.options);
+  //   if (p.options == 1) {
+  //     twoNumerator.classList.add("line");
+  //     twoWholeNumber.textContent = p.numOne;
+  //     twoNumerator.textContent = p.numTwo;
+  //     twoDenominator.textContent = p.numThree;
+  //     equalSymbol.textContent = "x";
+  //     threeWholeNumber.textContent = p.numFour;
+  //     threeNumerator.textContent = "";
+  //     threeDenominator.textContent = "";
+  //     threeNumerator.classList.remove("line");
+  //   }
+  //   if (p.options == 2) {
+  //     threeNumerator.classList.add("line");
+  //     threeWholeNumber.textContent = p.numOne;
+  //     threeNumerator.textContent = p.numTwo;
+  //     threeDenominator.textContent = p.numThree;
+  //     equalSymbol.textContent = "x";
+  //     twoWholeNumber.textContent = p.numFour;
+  //     twoNumerator.textContent = "";
+  //     twoDenominator.textContent = "";
+  //     twoNumerator.classList.remove("line");
+  //   }
+  // }
   if (level == 4.22) {
-    for (let i = p.numThree; i > 1; i--) {
-      if (p.numTwo % i == 0 && p.numThree % i == 0) {
-        p.numTwo /= i;
-        p.numThree /= i;
-      }
+    ctx.save();
+    ctx.font = "1em serif";
+    // ctx.stroke();
+    let side = 40;
+    ctx.fillText("What is the perimeter of the figure?", 20, 20);
+    ctx.translate((400 - p.layerOne * side) / 2, 50);
+    // layer 1
+    ctx.save();
+    let firstTranslate = genNumbers(side);
+    ctx.translate(firstTranslate, 0);
+    if (p.layerOne >= 1) {
+      ctx.strokeRect(0, 0, side, side);
     }
-    console.log(p.options);
-    if (p.options == 1) {
-      twoNumerator.classList.add("line");
-      twoWholeNumber.textContent = p.numOne;
-      twoNumerator.textContent = p.numTwo;
-      twoDenominator.textContent = p.numThree;
-      equalSymbol.textContent = "x";
-      threeWholeNumber.textContent = p.numFour;
-      threeNumerator.textContent = "";
-      threeDenominator.textContent = "";
-      threeNumerator.classList.remove("line");
+    if (p.layerOne >= 2) {
+      ctx.strokeRect(side, 0, side, side);
     }
-    if (p.options == 2) {
-      threeNumerator.classList.add("line");
-      threeWholeNumber.textContent = p.numOne;
-      threeNumerator.textContent = p.numTwo;
-      threeDenominator.textContent = p.numThree;
-      equalSymbol.textContent = "x";
-      twoWholeNumber.textContent = p.numFour;
-      twoNumerator.textContent = "";
-      twoDenominator.textContent = "";
-      twoNumerator.classList.remove("line");
+    if (p.layerOne >= 3) {
+      ctx.strokeRect(side * 2, 0, side, side);
     }
+    if (p.layerOne >= 4) {
+      ctx.strokeRect(side * 3, 0, side, side);
+    }
+    if (p.layerOne == 5) {
+      ctx.strokeRect(side * 4, 0, side, side);
+    }
+
+    ctx.restore();
+    // layer 2
+    ctx.save();
+    let secondTranslate = firstTranslate + genNumbers(side);
+    p.layerTwo = genNumbers(p.layerOne);
+    while (p.layerTwo == 0) {
+      p.layerTwo = genNumbers(p.layerOne);
+    }
+    ctx.translate(secondTranslate, 0);
+    if (p.layerTwo >= 1) {
+      ctx.strokeRect(0, side, side, side);
+    }
+    if (p.layerTwo >= 2) {
+      ctx.strokeRect(side, side, side, side);
+    }
+    if (p.layerTwo >= 3) {
+      ctx.strokeRect(side * 2, side, side, side);
+    }
+    if (p.layerTwo >= 4) {
+      ctx.strokeRect(side * 3, side, side, side);
+    }
+    ctx.restore();
+    // layer 3
+    ctx.save();
+    let thirdTranslate = secondTranslate + genNumbers(side);
+    p.layerThree = genNumbers(p.layerTwo);
+    ctx.translate(thirdTranslate, 0);
+    if (p.layerThree >= 1) {
+      ctx.strokeRect(0, side * 2, side, side);
+    }
+    if (p.layerThree >= 2) {
+      ctx.strokeRect(side, side * 2, side, side);
+    }
+    if (p.layerThree >= 3) {
+      ctx.strokeRect(side * 2, side * 2, side, side);
+    }
+    if (p.layerThree >= 4) {
+      ctx.strokeRect(side * 3, side * 2, side, side);
+    }
+    ctx.restore();
+    // layer 4
+    let fourthTranslate = thirdTranslate + genNumbers(side);
+    p.layerFour = genNumbers(p.layerThree);
+    ctx.save();
+    ctx.translate(fourthTranslate, 0);
+    if (p.layerFour >= 1) {
+      ctx.strokeRect(0, side * 3, side, side);
+    }
+    if (p.layerFour >= 2) {
+      ctx.strokeRect(side, side * 3, side, side);
+    }
+    if (p.layerFour >= 3) {
+      ctx.strokeRect(side * 2, side * 3, side, side);
+    }
+    if (p.layerFour >= 4) {
+      ctx.strokeRect(side * 3, side * 3, side, side);
+    }
+    ctx.restore();
+    ctx.restore();
   }
 
   // DISPLAY
@@ -6241,93 +6328,92 @@ function updateProblems() {
     }
   }
 
-  if (level == 5.17) {
-    ctx.save();
-    ctx.font = "1em serif";
-    ctx.stroke();
-    let side = 40;
-    ctx.fillText("What is the perimeter of the figure?", 20, 20);
-    ctx.translate((400 - p.layerOne * side) / 2, 50);
-    // layer 1
-    ctx.save();
-    let firstTranslate = genNumbers(side);
-    ctx.translate(firstTranslate, 0);
-    if (p.layerOne >= 1) {
-      ctx.strokeRect(0, 0, side, side);
-    }
-    if (p.layerOne >= 2) {
-      ctx.strokeRect(side, 0, side, side);
-    }
-    if (p.layerOne >= 3) {
-      ctx.strokeRect(side * 2, 0, side, side);
-    }
-    if (p.layerOne >= 4) {
-      ctx.strokeRect(side * 3, 0, side, side);
-    }
-    if (p.layerOne == 5) {
-      ctx.strokeRect(side * 4, 0, side, side);
-    }
+  // if (level == 5.17) {
+  //   ctx.save();
+  //   ctx.font = "1em serif";
+  //   ctx.stroke();
+  //   let side = 40;
+  //   ctx.fillText("What is the perimeter of the figure?", 20, 20);
+  //   ctx.translate((400 - p.layerOne * side) / 2, 50);
+  //   // layer 1
+  //   ctx.save();
+  //   let firstTranslate = genNumbers(side);
+  //   ctx.translate(firstTranslate, 0);
+  //   if (p.layerOne >= 1) {
+  //     ctx.strokeRect(0, 0, side, side);
+  //   }
+  //   if (p.layerOne >= 2) {
+  //     ctx.strokeRect(side, 0, side, side);
+  //   }
+  //   if (p.layerOne >= 3) {
+  //     ctx.strokeRect(side * 2, 0, side, side);
+  //   }
+  //   if (p.layerOne >= 4) {
+  //     ctx.strokeRect(side * 3, 0, side, side);
+  //   }
+  //   if (p.layerOne == 5) {
+  //     ctx.strokeRect(side * 4, 0, side, side);
+  //   }
 
-    ctx.restore();
-    // layer 2
-    ctx.save();
-    let secondTranslate = firstTranslate + genNumbers(side);
-    p.layerTwo = genNumbers(p.layerOne);
-    while (p.layerTwo == 0) {
-      p.layerTwo = genNumbers(p.layerOne);
-    }
-    ctx.translate(secondTranslate, 0);
-    if (p.layerTwo >= 1) {
-      ctx.strokeRect(0, side, side, side);
-    }
-    if (p.layerTwo >= 2) {
-      ctx.strokeRect(side, side, side, side);
-    }
-    if (p.layerTwo >= 3) {
-      ctx.strokeRect(side * 2, side, side, side);
-    }
-    if (p.layerTwo >= 4) {
-      ctx.strokeRect(side * 3, side, side, side);
-    }
-    ctx.restore();
-    // layer 3
-    ctx.save();
-    let thirdTranslate = secondTranslate + genNumbers(side);
-    p.layerThree = genNumbers(p.layerTwo);
-    ctx.translate(thirdTranslate, 0);
-    if (p.layerThree >= 1) {
-      ctx.strokeRect(0, side * 2, side, side);
-    }
-    if (p.layerThree >= 2) {
-      ctx.strokeRect(side, side * 2, side, side);
-    }
-    if (p.layerThree >= 3) {
-      ctx.strokeRect(side * 2, side * 2, side, side);
-    }
-    if (p.layerThree >= 4) {
-      ctx.strokeRect(side * 3, side * 2, side, side);
-    }
-    ctx.restore();
-    // layer 4
-    let fourthTranslate = thirdTranslate + genNumbers(side);
-    p.layerFour = genNumbers(p.layerThree);
-    ctx.save();
-    ctx.translate(fourthTranslate, 0);
-    if (p.layerFour >= 1) {
-      ctx.strokeRect(0, side * 3, side, side);
-    }
-    if (p.layerFour >= 2) {
-      ctx.strokeRect(side, side * 3, side, side);
-    }
-    if (p.layerFour >= 3) {
-      ctx.strokeRect(side * 2, side * 3, side, side);
-    }
-    if (p.layerFour >= 4) {
-      ctx.strokeRect(side * 3, side * 3, side, side);
-    }
-    ctx.restore();
-    ctx.restore();
-  }
+  //   ctx.restore();
+  //   // layer 2
+  //   ctx.save();
+  //   let secondTranslate = firstTranslate + genNumbers(side);
+  //   p.layerTwo = genNumbers(p.layerOne);
+  //   while (p.layerTwo == 0) {
+  //     p.layerTwo = genNumbers(p.layerOne);
+  //   }
+  //   ctx.translate(secondTranslate, 0);
+  //   if (p.layerTwo >= 1) {
+  //     ctx.strokeRect(0, side, side, side);
+  //   }
+  //   if (p.layerTwo >= 2) {
+  //     ctx.strokeRect(side, side, side, side);
+  //   }
+  //   if (p.layerTwo >= 3) {
+  //     ctx.strokeRect(side * 2, side, side, side);
+  //   }
+  //   if (p.layerTwo >= 4) {
+  //     ctx.strokeRect(side * 3, side, side, side);
+  //   }
+  //   ctx.restore();
+  //   // layer 3
+  //   ctx.save();
+  //   let thirdTranslate = secondTranslate + genNumbers(side);
+  //   p.layerThree = genNumbers(p.layerTwo);
+  //   ctx.translate(thirdTranslate, 0);
+  //   if (p.layerThree >= 1) {
+  //     ctx.strokeRect(0, side * 2, side, side);
+  //   }
+  //   if (p.layerThree >= 2) {
+  //     ctx.strokeRect(side, side * 2, side, side);
+  //   }
+  //   if (p.layerThree >= 3) {
+  //     ctx.strokeRect(side * 2, side * 2, side, side);
+  //   }
+  //   if (p.layerThree >= 4) {
+  //     ctx.strokeRect(side * 3, side * 2, side, side);
+  //   }
+  //   ctx.restore();
+  //   // layer 4
+  //   let fourthTranslate = thirdTranslate + genNumbers(side);
+  //   p.layerFour = genNumbers(p.layerThree);
+  //   ctx.save();
+  //   ctx.translate(fourthTranslate, 0);
+  //   if (p.layerFour >= 1) {
+  //     ctx.strokeRect(0, side * 3, side, side);
+  //   }
+  //   if (p.layerFour >= 2) {
+  //     ctx.strokeRect(side, side * 3, side, side);
+  //   }
+  //   if (p.layerFour >= 3) {
+  //     ctx.strokeRect(side * 2, side * 3, side, side);
+  //   }
+  //   if (p.layerFour >= 4) {
+  //     ctx.strokeRect(side * 3, side * 3, side, side);
+  //   }
+  //   ctx.restore();
+  // }
 
   if (level == 6.0) {
     if (
@@ -13860,8 +13946,24 @@ function handleSubmit(e) {
       }
     }
 
+    // if (level == 4.22) {
+    //   correctAnswer = `${p.numFour}x${p.numOne}+${p.numFour}x${p.numTwo}/${p.numThree}`;
+    // }
+
     if (level == 4.22) {
-      correctAnswer = `${p.numFour}x${p.numOne}+${p.numFour}x${p.numTwo}/${p.numThree}`;
+      let countLayers = 1;
+      if (p.layerTwo > 0) {
+        countLayers += 1;
+      }
+      if (p.layerThree > 0) {
+        countLayers += 1;
+      }
+      if (p.layerFour > 0) {
+        countLayers += 1;
+      }
+      console.log("Layers " + countLayers);
+      console.log(p.layerOne, p.layerTwo, p.layerThree, p.layerFour);
+      correctAnswer = (p.layerOne + countLayers) * 2;
     }
 
     if (level == 4.23) {
@@ -14404,21 +14506,21 @@ function handleSubmit(e) {
       }
     }
 
-    if (level == 5.17) {
-      let countLayers = 1;
-      if (p.layerTwo > 0) {
-        countLayers += 1;
-      }
-      if (p.layerThree > 0) {
-        countLayers += 1;
-      }
-      if (p.layerFour > 0) {
-        countLayers += 1;
-      }
-      console.log("Layers " + countLayers);
-      console.log(p.layerOne, p.layerTwo, p.layerThree, p.layerFour);
-      correctAnswer = (p.layerOne + countLayers) * 2;
-    }
+    // if (level == 5.17) {
+    //   let countLayers = 1;
+    //   if (p.layerTwo > 0) {
+    //     countLayers += 1;
+    //   }
+    //   if (p.layerThree > 0) {
+    //     countLayers += 1;
+    //   }
+    //   if (p.layerFour > 0) {
+    //     countLayers += 1;
+    //   }
+    //   console.log("Layers " + countLayers);
+    //   console.log(p.layerOne, p.layerTwo, p.layerThree, p.layerFour);
+    //   correctAnswer = (p.layerOne + countLayers) * 2;
+    // }
 
     if (level == 6.01) {
       if (difficulty == 0) {
@@ -18329,13 +18431,22 @@ function genProblems() {
     };
   }
 
+  // if (level == 4.22) {
+  //   return {
+  //     options: [1, 2][genNumbers(2)],
+  //     numOne: genNumbers(10) + 1,
+  //     numTwo: genNumbers(5) + 1,
+  //     numThree: genNumbers(5) + 6,
+  //     numFour: genNumbers(20) + 1,
+  //   };
+  // }
+
   if (level == 4.22) {
     return {
-      options: [1, 2][genNumbers(2)],
-      numOne: genNumbers(10) + 1,
-      numTwo: genNumbers(5) + 1,
-      numThree: genNumbers(5) + 6,
-      numFour: genNumbers(20) + 1,
+      layerOne: genNumbers(4) + 2,
+      layerTwo: undefined,
+      layerThree: undefined,
+      layerFour: undefined,
     };
   }
 
@@ -22107,22 +22218,29 @@ function buttonLevelSetting() {
       document.querySelector("#user-input").setAttribute("type", "text");
       break;
 
+    // case "Level 4.22":
+    //   level = 4.22;
+    //   scoreNeeded = 10;
+    //   gold = highScore4DotZero22.time;
+    //   silver =
+    //     highScore4DotZero22.time + (cutoff - highScore4DotZero22.time) / 3;
+    //   bronze =
+    //     highScore4DotZero22.time +
+    //     ((cutoff - highScore4DotZero22.time) / 3) * 2;
+    //   highScoreName.innerHTML = highScore4DotZero22.name;
+    //   highScoreTime.innerHTML = highScore4DotZero22.time;
+    //   highScoreMistakes.innerHTML = highScore4DotZero22.mistake;
+    //   wholeNumberContainer.classList.add("hidden");
+    //   fractionsContainerTwo.classList.remove("hidden");
+    //   document.querySelector("#user-input").setAttribute("type", "text");
+    //   instructions.textContent = "";
+    //   break;
+
     case "Level 4.22":
       level = 4.22;
       scoreNeeded = 10;
-      gold = highScore4DotZero22.time;
-      silver =
-        highScore4DotZero22.time + (cutoff - highScore4DotZero22.time) / 3;
-      bronze =
-        highScore4DotZero22.time +
-        ((cutoff - highScore4DotZero22.time) / 3) * 2;
-      highScoreName.innerHTML = highScore4DotZero22.name;
-      highScoreTime.innerHTML = highScore4DotZero22.time;
-      highScoreMistakes.innerHTML = highScore4DotZero22.mistake;
       wholeNumberContainer.classList.add("hidden");
-      fractionsContainerTwo.classList.remove("hidden");
-      document.querySelector("#user-input").setAttribute("type", "text");
-      instructions.textContent = "";
+      firstCanvas.classList.remove("hidden");
       break;
 
     case "Level 4.23":
@@ -22440,12 +22558,12 @@ function buttonLevelSetting() {
         `;
       break;
 
-    case "Level 5.17":
-      level = 5.17;
-      scoreNeeded = 10;
-      wholeNumberContainer.classList.add("hidden");
-      firstCanvas.classList.remove("hidden");
-      break;
+    // case "Level 5.17":
+    //   level = 5.17;
+    //   scoreNeeded = 10;
+    //   wholeNumberContainer.classList.add("hidden");
+    //   firstCanvas.classList.remove("hidden");
+    //   break;
 
     case "Level 6.0":
       level = 6.0;
