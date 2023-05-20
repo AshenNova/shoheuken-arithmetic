@@ -10021,120 +10021,18 @@ function updateProblems() {
       if (p.chosen == Math.ceil(p.days / 2)) {
         p.chosen += 1;
       }
+      const gender = ["he", "she"][genNumbers(2)];
+      let obj = "aeroplane";
+      if (gender == "she") obj = "heart";
       displayProblem.innerHTML = `
-      Someone made paper aeroplane for ${p.days} days.</p>
-      Everyday he would make ${p.increase} more than the previous day.</p>
-      A total of ${p.total} aeroplanes were made.</p>
-      How many aeroplanes were made on day ${p.chosen}?
+      Someone made paper ${obj} for ${p.days} days.</p>
+      Everyday ${gender} would make ${p.increase} more than the previous day.</p>
+      A total of ${p.total} paper ${obj}s were made.</p>
+      How many ${obj}s were made on day ${p.chosen}?
       `;
     }
   }
-  //   if (setting == 1) {
-  //     // START CHANGE DISPLAY
-  //     wholeNumberContainer.classList.remove("hidden");
-  //     workingContainer.classList.add("hidden");
-  //     // END CHANGE DISPLAY
-  //     let str = "";
-  //     let numOne = genNumbers(10) + 1;
-  //     let operators = ["+", "-", "x", "/"];
-  //     let firstNum = p.answer;
-  //     // 1. FIRST NUMBER
-  //     opsOne = operators[p.operatorOne];
-  //     if (opsOne == "+") {
-  //       str = `+${numOne}`;
-  //       firstNum = firstNum - numOne;
-  //     }
-  //     if (opsOne == "-") {
-  //       str = `-${numOne}`;
-  //       firstNum = firstNum + numOne;
-  //     }
-  //     firstNum = firstNum - numOne;
-  //     operators.splice(p.operatorOne, 1);
-  //     console.log(operators);
-  //     if (firstNum % 1 != 0 || firstNum < 0) {
-  //       return updateProblems();
-  //     }
-  //     // 2. SECOND NUMBER
-  //     opsTwo = operators[p.operatorTwo];
-  //     console.log(opsTwo);
-  //     let numTwo = genNumbers(10) + 1;
-  //     if (opsTwo == "+") {
-  //       if (genNumbers(2) == 1) {
-  //         str = `${str}${opsTwo}${numTwo}`;
-  //         firstNum = firstNum - numTwo;
-  //       } else {
-  //         str = `${opsTwo}${numTwo}${str}`;
-  //         firstNum = numTwo - firstNum;
-  //       }
-  //     }
-  //     if (opsTwo == "-") {
-  //       if (genNumbers(2) == 1) {
-  //         str = `${str}${opsTwo}${numTwo}`;
-  //         firstNum = firstNum + numTwo;
-  //       } else {
-  //         str = `${opsTwo}${numTwo}${str}`;
-  //         firstNum = numTwo + firstNum;
-  //       }
-  //     }
-  //     if (firstNum % 1 != 0 || firstNum < 0) {
-  //       return updateProblems();
-  //     }
-  //     operators.splice(p.operatorTwo, 1);
-  //     // // 3. NUMBER THREE
-  //     // opsThree = operators[p.operatorThree];
-  //     // console.log(opsThree);
-  //     // let numThree = genNumbers(10) + 1;
-  //     // if (opsThree == "x") {
-  //     //   if (genNumbers(2) == 1) {
-  //     //     str = `${str}${opsThree}${numThree}`;
-  //     //     firstNum = firstNum / numThree;
-  //     //   } else {
-  //     //     str = `${opsThree}${numThree}${str}`;
-  //     //     firstNum = numThree / firstNum;
-  //     //   }
-  //     // }
-  //     // if (opsThree == "/") {
-  //     //   if (genNumbers(2) == 1) {
-  //     //     str = `${str}${opsThree}${numThree}`;
-  //     //     firstNum = firstNum * numThree;
-  //     //   } else {
-  //     //     str = `${opsThree}${numThree}${str}`;
-  //     //     firstNum = numThree * firstNum;
-  //     //   }
-  //     // }
-  //     // operators.splice(p.operatorThree, 1);
-  //     // if (firstNum % 1 != 0 || firstNum < 0) {
-  //     //   return updateProblems();
-  //     // }
-  //     // // 4. NUMBER FOUR
-  //     // opsFour = operators[p.operatorFour];
-  //     // let numFour = genNumbers(10) + 1;
-  //     // if (opsFour == "x") {
-  //     //   if (genNumbers(2) == 1) {
-  //     //     str = `${str}${opsFour}${numFour}`;
-  //     //     firstNum = firstNum / numFour;
-  //     //   } else {
-  //     //     str = `${opsFour}${numFour}${str}`;
-  //     //     firstNum = numFour / firstNum;
-  //     //   }
-  //     // }
-  //     // if (opsFour == "/") {
-  //     //   if (genNumbers(2) == 1) {
-  //     //     str = `${str}${opsFour}${numFour}`;
-  //     //     firstNum = firstNum * numFour;
-  //     //   } else {
-  //     //     str = `${opsFour}${numFour}${str}`;
-  //     //     firstNum = numFour * firstNum;
-  //     //   }
-  //     // }
-  //     // if (firstNum % 1 != 0 || firstNum < 0) {
-  //     //   return updateProblems();
-  //     // }
-  //     // str = `${firstNum}${str}=`;
-  //     // LAST. DISPLAY
-  //     displayProblem.textContent = str;
-  //   }
-  // }
+
   // DISPLAY
   if (level == "calSix") {
     if (setting != 2) {
