@@ -8921,7 +8921,8 @@ function updateProblems() {
       }
     }
     if (setting == 6) {
-      normalDisplay()[(p.numA, p.denoA)] = simplify(p.numA, p.denoA);
+      normalDisplay();
+      [p.numA, p.denoA] = simplify(p.numA, p.denoA);
       [p.numB, p.denoB] = simplify(p.numB, p.denoB);
       displayProblem.innerHTML = `
       A and B are the same.</p>
@@ -8934,7 +8935,8 @@ function updateProblems() {
     }
 
     if (setting == 7) {
-      normalDisplay()[(p.nume, p.deno)] = simplify(p.nume, p.deno);
+      normalDisplay();
+      [p.nume, p.deno] = simplify(p.nume, p.deno);
       [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
       const commonNumber = commonDeno(p.deno - p.nume, p.numeTwo);
       const multiOne = commonNumber / (p.deno - p.nume);
