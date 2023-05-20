@@ -22831,6 +22831,7 @@ function buttonLevelSetting() {
       22. Average: Simple</p>
       23. Average: Internal change</p>
       24. Average: External Change</p>
+      25. Average: Odd consecutive days</p>
       <hr></hr>
       </p>99. All
       
