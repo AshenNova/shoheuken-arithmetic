@@ -4125,7 +4125,7 @@ function updateProblems() {
         displayProblem.insertAdjacentHTML("beforeend", html);
       } else {
         const html = `
-        The area of the rectangle is ${p.perimeter} cm<sup>2</sup>.</p>
+        The area of the rectangle is ${p.area} cm<sup>2</sup>.</p>
         What is the perimeter?
         `;
         displayProblem.insertAdjacentHTML("beforeend", html);
@@ -22182,7 +22182,7 @@ function buttonLevelSetting() {
 
     case "Level 4.23":
       level = 4.23;
-      scoreNeeded = 20;
+      scoreNeeded = 10;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
 
