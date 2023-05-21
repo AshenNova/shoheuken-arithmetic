@@ -10282,11 +10282,15 @@ function updateProblems() {
           p.time
         } ${unitTimeLong}.</p>
     `;
+        if (p.which == "A")
+          displayProblem.insertAdjacentHTML("beforeend", "What is A's speed?");
+        if (p.which == "B")
+          displayProblem.insertAdjacentHTML("beforeend", "What is B's speed?");
       }
-      if (p.which == "A")
-        displayProblem.insertAdjacentHTML("beforeend", "What is A's speed?");
-      if (p.which == "B")
-        displayProblem.insertAdjacentHTML("beforeend", "What is B's speed?");
+    //   if (p.which == "A")
+    //   displayProblem.insertAdjacentHTML("beforeend", "What is A's speed?");
+    // if (p.which == "B")
+    //   displayProblem.insertAdjacentHTML("beforeend", "What is B's speed?");
     }
     //SPEED: MEET UP
     if (setting == 5) {
