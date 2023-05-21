@@ -7822,6 +7822,16 @@ function updateProblems() {
       console.log(arrOneStr, arrTwoStr);
       p.rowOne = arrOneStr.replace(p.value, "?");
       p.rowTwo = arrTwoStr.replace(p.value, "?");
+      const checkOneArr = p.rowOne.split("");
+      const checkTwoArr = p.rowTwo.split("");
+      for (let i = 0; i < checkOneArr.length; i++) {
+        if (checkOneArr[i] == "?") {
+          if (checkOneArr[i] == checkTwoArr[i]) {
+            console.log("Final check, still in same position");
+            return updateCalc();
+          }
+        }
+      }
       firstNum.textContent = p.rowOne;
       secondNum.textContent = p.rowTwo;
       operator.textContent = p.operator;
