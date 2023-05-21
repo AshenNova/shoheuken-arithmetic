@@ -7378,8 +7378,8 @@ function updateProblems() {
       workingAnswer.textContent = "?";
     }
     if (setting == 5) {
-      let arrOne = []
-      let arrTwo = []
+      let arrOne = [];
+      let arrTwo = [];
       arrOne = p.numOne.toString().split("");
       arrTwo = p.numTwo.toString().split("");
       let join = [...arrOne, ...arrTwo];
@@ -7400,10 +7400,10 @@ function updateProblems() {
       let replaceOne = genNumbers(arrOne.length);
       let replaceTwo = genNumbers(arrTwo.length);
       console.log(replaceOne, replaceTwo);
-      if (replaceOne == replaceTwo) {
-        console.log("Same position");
-        return updateCalc();
-      }
+      // if (replaceOne == replaceTwo) {
+      //   console.log("Same position");
+      //   return updateCalc();
+      // }
       arrOneStr = arrOneStr.replace(arrOne[replaceOne], p.value);
       arrTwoStr = arrTwoStr.replace(arrTwo[replaceTwo], p.value);
       p.numOne = arrOneStr * 1;
@@ -7412,6 +7412,17 @@ function updateProblems() {
       console.log(arrOneStr, arrTwoStr);
       p.rowOne = arrOneStr.replace(p.value, "?");
       p.rowTwo = arrTwoStr.replace(p.value, "?");
+      const checkOneArr = p.rowOne.split("");
+      const checkTwoArr = p.rowTwo.split("");
+      for (let i = 0; i < checkOneArr.length; i++) {
+        if (checkOneArr[i] == "?") {
+          if (checkOneArr[i] == checkTwoArr[i]) {
+            console.log("Final check, still in same position");
+            return updateCalc();
+          }
+        }
+      }
+      console.log(checkOneArr, checkTwoArr);
       firstNum.textContent = p.rowOne;
       secondNum.textContent = p.rowTwo;
       operator.textContent = p.operator;
