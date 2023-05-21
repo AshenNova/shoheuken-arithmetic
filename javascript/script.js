@@ -8887,10 +8887,10 @@ function updateProblems() {
     }
     //FRACTIONS: IDENTICAL NUMERATOR
     if (setting == 5) {
-      normalDisplay()[
-        // return console.log("test");
-        (p.numA, p.denoA)
-      ] = simplify(p.numA, p.denoA);
+      normalDisplay();
+
+      // return console.log("test");
+      [p.numA, p.denoA] = simplify(p.numA, p.denoA);
       [p.numB, p.denoB] = simplify(p.numB, p.denoB);
       if (p.numA == p.numB && p.denoA == p.denoB) p.denoB += 1;
       if (p.version == 1) {
@@ -9568,7 +9568,8 @@ function updateProblems() {
     }
     // RATIO: MANIPULATION IN UNITS
     if (setting == 16) {
-      normalDisplay()[(p.ratioA, p.ratioB)] = simplify(p.ratioA, p.ratioB);
+      normalDisplay();
+      [p.ratioA, p.ratioB] = simplify(p.ratioA, p.ratioB);
       [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
       if (p.numeA > p.denoA) [p.numeA, p.denoA] = [p.denoA, p.numeA];
       [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
