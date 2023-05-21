@@ -2603,7 +2603,7 @@ function updateProblems() {
     if (p.numOne % 10 == 0) {
       p.numOne += p.numOne + 1;
     }
-    displayProblem.textContent = `${p.numOne / p.numTwo} =`;
+    displayProblem.textContent = `${accDecimal(p.numOne) / p.numTwo} =`;
   }
 
   if (level == 4.05) {
