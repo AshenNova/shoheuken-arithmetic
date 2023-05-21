@@ -7378,8 +7378,10 @@ function updateProblems() {
       workingAnswer.textContent = "?";
     }
     if (setting == 5) {
-      let arrOne = p.numOne.toString().split("");
-      let arrTwo = p.numTwo.toString().split("");
+      let arrOne = []
+      let arrTwo = []
+      arrOne = p.numOne.toString().split("");
+      arrTwo = p.numTwo.toString().split("");
       let join = [...arrOne, ...arrTwo];
       let unique = [...new Set(join)];
       let list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -7397,7 +7399,11 @@ function updateProblems() {
       console.log("Old: " + p.numOne, p.numTwo);
       let replaceOne = genNumbers(arrOne.length);
       let replaceTwo = genNumbers(arrTwo.length);
-      if (replaceOne == replaceTwo) return updateCalc();
+      console.log(replaceOne, replaceTwo);
+      if (replaceOne == replaceTwo) {
+        console.log("Same position");
+        return updateCalc();
+      }
       arrOneStr = arrOneStr.replace(arrOne[replaceOne], p.value);
       arrTwoStr = arrTwoStr.replace(arrTwo[replaceTwo], p.value);
       p.numOne = arrOneStr * 1;
