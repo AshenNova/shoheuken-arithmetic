@@ -9251,7 +9251,10 @@ function updateProblems() {
         if (p.valueAEnd - p.valueAFirst == 0) {
           return updateCalc();
         }
-
+        if (unitAF == unitAE || unitBF == unitBE) {
+          console.log("Units are already the same");
+          return updateCalc();
+        }
         if (p.valueAEnd - p.valueAFirst > 0) {
           lineTwo = `A ${positive} another ${
             Math.abs(p.valueAEnd - p.valueAFirst) * p.multiplier
@@ -9279,6 +9282,11 @@ function updateProblems() {
           } ${p.object}.`;
           value = Math.abs(p.valueBEnd - p.valueBFirst) * p.multiplier;
         }
+      }
+
+      if (unitAF >= 15 || unitAE > 15 || unitAE > 15 || unitBE > 15) {
+        console.log("Units are too big");
+        return updateCalc();
       }
 
       // LINE THREE
@@ -9431,6 +9439,14 @@ function updateProblems() {
         return updateCalc();
       }
 
+      if (unitAF + unitBF == unitAE + unitBE) {
+        console.log("Total units is already the same.");
+        return updateCalc();
+      }
+      if (unitAF >= 15 || unitAE > 15 || unitAE > 15 || unitBE > 15) {
+        console.log("Units are too big");
+        return updateCalc();
+      }
       // LINE ONE
       let lineOne = genNumbers(4);
       if (lineOne == 0) {
@@ -9529,6 +9545,11 @@ function updateProblems() {
       // LINE THREE
 
       [unitAE, unitBE] = simplify(p.valueAEnd, p.valueBEnd);
+
+      if (Math.abs(unitAF - unitBF) == Math.abs(unitAE - unitBE)) {
+        console.log("Difference is already the same.");
+        return updateCalc();
+      }
       let lineThree = genNumbers(4);
       if (lineThree == 0) {
         lineThree = `The ratio of A:B in the end is ${unitAE}:${unitBE}.`;
@@ -10287,10 +10308,10 @@ function updateProblems() {
         if (p.which == "B")
           displayProblem.insertAdjacentHTML("beforeend", "What is B's speed?");
       }
-    //   if (p.which == "A")
-    //   displayProblem.insertAdjacentHTML("beforeend", "What is A's speed?");
-    // if (p.which == "B")
-    //   displayProblem.insertAdjacentHTML("beforeend", "What is B's speed?");
+      //   if (p.which == "A")
+      //   displayProblem.insertAdjacentHTML("beforeend", "What is A's speed?");
+      // if (p.which == "B")
+      //   displayProblem.insertAdjacentHTML("beforeend", "What is B's speed?");
     }
     //SPEED: MEET UP
     if (setting == 5) {
@@ -19732,8 +19753,8 @@ function genProblems() {
 
     if (setting == 14) {
       console.log("Unchanged Total");
-      const valueA = genNumbers(40) + 10;
-      const valueB = genNumbers(40) + 10;
+      const valueA = genNumbers(140) + 10;
+      const valueB = genNumbers(140) + 10;
       return {
         object: ["sweets", "toys", "books"][genNumbers(3)],
         valueAFirst: valueA,
@@ -19751,8 +19772,8 @@ function genProblems() {
     //RATIO: UNCHANGED DIFFERENCE
     if (setting == 15) {
       console.log("Unchanged Difference");
-      const valueA = genNumbers(40) + 10;
-      const valueB = genNumbers(40) + 10;
+      const valueA = genNumbers(400) + 100;
+      const valueB = genNumbers(400) + 100;
       let minValue = 0;
       valueA > valueB ? (minValue = valueA) : (minValue = valueB);
       return {
