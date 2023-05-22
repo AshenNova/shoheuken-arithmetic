@@ -4,6 +4,7 @@ const today = new Date(timeElapsed);
 console.log(today);
 // import { updateProblems } from "./updateProblems.js";
 import {
+  draw3d,
   drawTriangle,
   parallelOverlapping,
   swap,
@@ -5953,77 +5954,96 @@ function updateProblems() {
   }
 
   if (level == 5.12) {
-    ctx.save();
-    let finalDifficulty = difficulty;
-    if (difficulty >= 2) {
-      finalDifficulty = 3;
-    }
-    if (difficulty >= 3) {
-      finalDifficulty = 4;
-    }
-    difficulty = Number(difficulty);
-    p.roll = ["v", "h", "l", "b", "ba"][genNumbers(finalDifficulty + 1)];
-    console.log(p.roll);
-    ctx.font = "1em serif";
-    p.volume = p.pointA * (p.pointA + p.pointC) * p.pointB;
-    p.volumeDisplay = (
-      p.pointA *
-      (p.pointA + p.pointC) *
-      p.pointB
-    ).toLocaleString("en-US");
-    if (p.roll == "v") {
-      ctx.fillText(`Find the volume of the Cuboid`, 20, 20);
-    }
-    if (p.roll == "h") {
-      ctx.fillText(`Volume = ${p.volumeDisplay} ml. Find Height`, 20, 20);
-    }
-    if (p.roll == "b") {
-      ctx.fillText(`Volume = ${p.volumeDisplay} ml. Find Breadth`, 20, 20);
-    }
-    if (p.roll == "l") {
-      ctx.fillText(`Volume = ${p.volumeDisplay} ml. Find Length`, 20, 20);
-    }
-    if (p.roll == "ba") {
-      ctx.fillText(
-        `Volume = ${p.volumeDisplay} ml. Find the Base Area`,
-        20,
-        20
-      );
-    }
+    drawingDisplay();
+    // ctx.save();
 
-    ctx.translate(125, 230);
-    let a = p.pointA;
-    let b = -p.pointB;
-    let c = p.pointC;
-    let d = -p.pointD;
+    if (p.shape == "cube") {
+      p.length = (genNumbers(2) + 1) * 5;
+      p.breadth = p.height = p.length;
+    }
+    if (p.length == p.breadth && p.breadth == p.height) {
+      p.shape == "cube";
+    }
+    p.question = `What is the volume of the ${p.shape}?`;
+    draw3d.cuboid(
+      400,
+      275,
+      p.length * 5,
+      p.breadth * 5,
+      p.height * 5,
+      p.question
+    );
+    // ctx.save();
+    // let finalDifficulty = difficulty;
+    // if (difficulty >= 2) {
+    //   finalDifficulty = 3;
+    // }
+    // if (difficulty >= 3) {
+    //   finalDifficulty = 4;
+    // }
+    // difficulty = Number(difficulty);
+    // p.roll = ["v", "h", "l", "b", "ba"][genNumbers(finalDifficulty + 1)];
+    // console.log(p.roll);
+    // ctx.font = "1em serif";
+    // p.volume = p.pointA * (p.pointA + p.pointC) * p.pointB;
+    // p.volumeDisplay = (
+    //   p.pointA *
+    //   (p.pointA + p.pointC) *
+    //   p.pointB
+    // ).toLocaleString("en-US");
+    // if (p.roll == "v") {
+    //   ctx.fillText(`Find the volume of the Cuboid`, 20, 20);
+    // }
+    // if (p.roll == "h") {
+    //   ctx.fillText(`Volume = ${p.volumeDisplay} ml. Find Height`, 20, 20);
+    // }
+    // if (p.roll == "b") {
+    //   ctx.fillText(`Volume = ${p.volumeDisplay} ml. Find Breadth`, 20, 20);
+    // }
+    // if (p.roll == "l") {
+    //   ctx.fillText(`Volume = ${p.volumeDisplay} ml. Find Length`, 20, 20);
+    // }
+    // if (p.roll == "ba") {
+    //   ctx.fillText(
+    //     `Volume = ${p.volumeDisplay} ml. Find the Base Area`,
+    //     20,
+    //     20
+    //   );
+    // }
 
-    drawCuboid(a, b, c, d);
+    // ctx.translate(125, 230);
+    // let a = p.pointA;
+    // let b = -p.pointB;
+    // let c = p.pointC;
+    // let d = -p.pointD;
 
-    if (p.roll == "v") {
-      ctx.fillText(a, a / 2 - 10, +15);
-      ctx.fillText(a + c, a + c / 2 + 10, 0 + d / 2);
-      ctx.fillText(-b, a + c + 5, b + d - b / 2 + 5);
-    }
-    if (p.roll == "h") {
-      ctx.fillText(a, a / 2 - 10, +15);
-      ctx.fillText(a + c, a + c / 2 + 10, 0 + d / 2);
-      ctx.fillText("?", a + c + 5, b + d - b / 2 + 5);
-    }
-    if (p.roll == "b") {
-      ctx.fillText(a, a / 2 - 10, +15);
-      ctx.fillText("?", a + c / 2 + 10, 0 + d / 2);
-      ctx.fillText(-b, a + c + 5, b + d - b / 2 + 5);
-    }
-    if (p.roll == "l") {
-      ctx.fillText("?", a / 2 - 10, +15);
-      ctx.fillText(a + c, a + c / 2 + 10, 0 + d / 2);
-      ctx.fillText(-b, a + c + 5, b + d - b / 2 + 5);
-    }
-    if (p.roll == "ba") {
-      ctx.fillText(-b, a + c + 5, b + d - b / 2 + 5);
-    }
+    // drawCuboid(a, b, c, d);
 
-    ctx.restore();
+    // if (p.roll == "v") {
+    //   ctx.fillText(a, a / 2 - 10, +15);
+    //   ctx.fillText(a + c, a + c / 2 + 10, 0 + d / 2);
+    //   ctx.fillText(-b, a + c + 5, b + d - b / 2 + 5);
+    // }
+    // if (p.roll == "h") {
+    //   ctx.fillText(a, a / 2 - 10, +15);
+    //   ctx.fillText(a + c, a + c / 2 + 10, 0 + d / 2);
+    //   ctx.fillText("?", a + c + 5, b + d - b / 2 + 5);
+    // }
+    // if (p.roll == "b") {
+    //   ctx.fillText(a, a / 2 - 10, +15);
+    //   ctx.fillText("?", a + c / 2 + 10, 0 + d / 2);
+    //   ctx.fillText(-b, a + c + 5, b + d - b / 2 + 5);
+    // }
+    // if (p.roll == "l") {
+    //   ctx.fillText("?", a / 2 - 10, +15);
+    //   ctx.fillText(a + c, a + c / 2 + 10, 0 + d / 2);
+    //   ctx.fillText(-b, a + c + 5, b + d - b / 2 + 5);
+    // }
+    // if (p.roll == "ba") {
+    //   ctx.fillText(-b, a + c + 5, b + d - b / 2 + 5);
+    // }
+
+    // ctx.restore();
   }
 
   if (level == 5.13) {
@@ -9065,9 +9085,23 @@ function updateProblems() {
       }
       drawTriangle(p.base * 4, p.height * 4, p.pointOne, p.pointTwo);
     }
-
-    // RATIO: REPEATED IDENTITY
+    //VOLUME AND SURFACE AREA
     if (setting == 10) {
+      drawingDisplay();
+      // ctx.save();
+
+      p.question = draw3d.cuboidSurfaceArea(
+        400,
+        275,
+        p.length * 5,
+        p.breadth * 5,
+        p.height * 5,
+        p.type
+      );
+      // ctx.restore();
+    }
+    // RATIO: REPEATED IDENTITY
+    if (setting == 11) {
       normalDisplay();
       let lineOne = "";
       if (p.firstSentence == "unit") {
@@ -9130,7 +9164,7 @@ function updateProblems() {
       `;
     }
     //  REPEATED GROUP RATIO
-    if (setting == 11) {
+    if (setting == 12) {
       normalDisplay();
       let total = p.varA + p.varB + p.varC;
       let firstTotal = undefined;
@@ -9186,7 +9220,7 @@ function updateProblems() {
       }
     }
     // RATIO: IDENTICAL TOTAL
-    if (setting == 12) {
+    if (setting == 13) {
       normalDisplay();
       console.log(p.objects);
       const objectA = p.objects[0];
@@ -9232,7 +9266,7 @@ function updateProblems() {
         );
       }
     }
-    if (setting == 13) {
+    if (setting == 14) {
       normalDisplay();
       let unitAF = "";
       let unitBF = "";
@@ -9406,7 +9440,7 @@ function updateProblems() {
       `;
     }
 
-    if (setting == 14) {
+    if (setting == 15) {
       normalDisplay();
       let unitAF = "";
       let unitBF = "";
@@ -9524,7 +9558,7 @@ function updateProblems() {
       ${lineFour}`;
     }
     //RATIO: UNCHANGED DIFFERENCE
-    if (setting == 15) {
+    if (setting == 16) {
       normalDisplay();
       let unitAF = "";
       let unitBF = "";
@@ -9615,7 +9649,7 @@ function updateProblems() {
       `;
     }
     // RATIO: MANIPULATION IN UNITS
-    if (setting == 16) {
+    if (setting == 17) {
       normalDisplay();
       [p.ratioA, p.ratioB] = simplify(p.ratioA, p.ratioB);
       [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
@@ -9632,7 +9666,7 @@ function updateProblems() {
       `;
     }
     // REPEATED IDENTITY PERCENTAGE
-    if (setting == 17) {
+    if (setting == 18) {
       normalDisplay();
       let lineOne = undefined;
       let tempArr = [];
@@ -9664,7 +9698,7 @@ function updateProblems() {
       What is the ratio of A:B:C?`;
     }
     // RATIO: REPEATED GROUP
-    if (setting == 18) {
+    if (setting == 19) {
       normalDisplay();
       const displayA = p.percA;
       const displayB = p.percB;
@@ -9739,7 +9773,7 @@ function updateProblems() {
       `;
     }
     // PERCENTAGE: REMAINDER CONCEPT
-    if (setting == 19) {
+    if (setting == 20) {
       normalDisplay();
       displayProblem.innerHTML = `
       Person A spent ${p.percA}% of his money on ${p.itemOne}.</p>
@@ -9802,7 +9836,7 @@ function updateProblems() {
       }
     }
     // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-    if (setting == 20) {
+    if (setting == 21) {
       normalDisplay();
       if (p.frontBack == "front") {
         if (p.moreDiscount == 0) {
@@ -9872,7 +9906,7 @@ function updateProblems() {
       );
     }
     // PERCENTAGE: GST AND SERVICE CHARGE
-    if (setting == 21) {
+    if (setting == 22) {
       normalDisplay();
       if (p.optionOne == "simple gst") {
         displayProblem.innerHTML = `
@@ -9943,7 +9977,7 @@ function updateProblems() {
       }
     }
     //AVERAGE: SIMPLE
-    if (setting == 22) {
+    if (setting == 23) {
       normalDisplay();
       const averageList = [];
       for (let i = 0; i < p.variables; i++) {
@@ -9985,7 +10019,7 @@ function updateProblems() {
     }
 
     //AVERAGE: INTERNAL CHANGE
-    if (setting == 23) {
+    if (setting == 24) {
       normalDisplay();
       const oldAverage = (p.numOne + p.numTwo + p.numThree) / 3;
       if (oldAverage % 1 != 0) {
@@ -10031,7 +10065,7 @@ function updateProblems() {
       }
     }
     //AVERAGE: EXTERNAL CHANGE
-    if (setting == 24) {
+    if (setting == 25) {
       normalDisplay();
       if (p.changeQuantity == 0) return updateCalc();
       p.changeQuantity > 0 ? (p.situation = "joined") : (p.situation = "left");
@@ -10056,7 +10090,7 @@ function updateProblems() {
     }
 
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 25) {
+    if (setting == 26) {
       normalDisplay();
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
@@ -14416,21 +14450,7 @@ function handleSubmit(e) {
     }
 
     if (level == 5.12) {
-      if (p.roll == "v") {
-        correctAnswer = `${p.pointA}x${p.pointA + p.pointC}x${p.pointB}`;
-      }
-      if (p.roll == "h") {
-        correctAnswer = `${p.volume}/(${p.pointA}x${p.pointA + p.pointC})`;
-      }
-      if (p.roll == "b") {
-        correctAnswer = `${p.volume}/(${p.pointA}x${p.pointB})`;
-      }
-      if (p.roll == "l") {
-        correctAnswer = `${p.volume}/(${p.pointA + p.pointC}x${p.pointB})`;
-      }
-      if (p.roll == "ba") {
-        correctAnswer = `${p.volume}/${p.pointB}`;
-      }
+      correctAnswer = p.length * p.breadth * p.height;
     }
 
     if (level == 5.13) {
@@ -15275,13 +15295,28 @@ function handleSubmit(e) {
         correctAnswer = (1 / 2) * base * p.height;
       }
 
-      // RATIO: REPEATED IDENTITY
+      //VOLUME AND SURFACE AREA
       if (setting == 10) {
+        if (p.type == 1) {
+          if (p.question == "base area") correctAnswer = p.length * p.breadth;
+          if (p.question == "top") correctAnswer = p.length * p.breadth;
+          if (p.question == "front") correctAnswer = p.length * p.height;
+          if (p.question == "side") correctAnswer = p.height * p.breadth;
+        }
+        if (p.type == 2) {
+          if (p.question == "length") correctAnswer = p.length;
+          if (p.question == "breadth") correctAnswer = p.breadth;
+          if (p.question == "height") correctAnswer = p.height;
+        }
+      }
+
+      // RATIO: REPEATED IDENTITY
+      if (setting == 11) {
         calArrQns = simplestForm(calArrQns);
         correctAnswer = `${calArrQns[5]}:${calArrQns[6]}:${calArrQns[8]}`;
       }
       // RATIO: REPEATED GROUP
-      if (setting == 11) {
+      if (setting == 12) {
         // console.log(p.answer);
         // let sorting = [...p.answer];
         // sorting.sort(function (a, b) {
@@ -15313,7 +15348,7 @@ function handleSubmit(e) {
       // }
 
       // RATIO: IDENTICAL TOTAL
-      if (setting == 12) {
+      if (setting == 13) {
         let totalA = p.ratioA + p.ratioB;
         let totalB = p.ratioC + p.ratioD;
         const commonTotal = commonDeno(totalA, totalB);
@@ -15340,7 +15375,7 @@ function handleSubmit(e) {
         }
       }
       // RATIO: UNCHANGED OBJ
-      if (setting == 13) {
+      if (setting == 14) {
         console.log(p.valueAFirst, p.valueBFirst, p.valueAEnd, p.valueBEnd);
         // if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
         // if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
@@ -15349,21 +15384,21 @@ function handleSubmit(e) {
         correctAnswer = p.answer;
       }
       // RATIO: UNCHANGED TOTAL
-      if (setting == 14) {
-        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
-        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
-        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
-        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
-      }
-      // RATIO: UNCHANGED DIFFERENCE
       if (setting == 15) {
         if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
         if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
         if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
         if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
       }
-      // RATIO: MANIPULATION IN UNITS
+      // RATIO: UNCHANGED DIFFERENCE
       if (setting == 16) {
+        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
+        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
+        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
+        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
+      }
+      // RATIO: MANIPULATION IN UNITS
+      if (setting == 17) {
         const commonNumber = commonDeno(p.denoA, p.denoB);
         let end_A = ((p.ratioA * (p.denoA - p.numeA)) / p.denoA) * commonNumber;
         let end_B = ((p.ratioB * (p.denoB - p.numeB)) / p.denoB) * commonNumber;
@@ -15371,12 +15406,12 @@ function handleSubmit(e) {
         correctAnswer = `${end_A}:${end_B}`;
       }
       // PERCENTAGE: REPEATED IDENTITY
-      if (setting == 17) {
+      if (setting == 18) {
         p.answer = simplestForm(p.answer);
         correctAnswer = p.answer.join(":");
       }
 
-      if (setting == 18) {
+      if (setting == 19) {
         console.log(p.answer);
         // got to change to an array
         p.answer = p.answer.split(":");
@@ -15386,7 +15421,7 @@ function handleSubmit(e) {
       }
 
       // PERCENTAGE: REMAINDER CONCEPT
-      if (setting == 19) {
+      if (setting == 20) {
         if (p.question == "percentage") {
           const remaining = 100 - p.percA;
           const itemTwoP = (remaining / 100) * p.percR;
@@ -15400,7 +15435,7 @@ function handleSubmit(e) {
         }
       }
       // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-      if (setting == 20) {
+      if (setting == 21) {
         if (p.frontBack == "front") {
           if (p.moreDiscount == 0) {
             if (p.discountOrPrice == "price") {
@@ -15449,7 +15484,7 @@ function handleSubmit(e) {
       }
 
       // PERCENTAGE: GST, DISCOUNT AND SERVICE CHARGE
-      if (setting == 21) {
+      if (setting == 22) {
         if (p.optionOne == "simple gst") {
           if (p.optionTwo == "gst") {
             correctAnswer = (p.value / 100) * p.gst;
@@ -15477,11 +15512,11 @@ function handleSubmit(e) {
         }
       }
 
-      if (setting == 22) {
+      if (setting == 23) {
         correctAnswer = p.answer;
       }
-      if (setting == 23) correctAnswer = p.answer;
-      if (setting == 24) {
+      if (setting == 24) correctAnswer = p.answer;
+      if (setting == 25) {
         if (p.question == "at first") {
           correctAnswer = p.oldQuantity;
         }
@@ -15490,7 +15525,7 @@ function handleSubmit(e) {
         }
       }
       //AVERAGE: CONSECUTIVE DAYS
-      if (setting == 25) {
+      if (setting == 26) {
         correctAnswer = p.dayOne + p.increase * (p.chosen - 1);
       }
     }
@@ -18744,12 +18779,17 @@ function genProblems() {
 
   if (level == 5.12) {
     return {
-      roll: undefined,
-      volume: undefined,
-      pointA: (genNumbers(5) + 1) * 20,
-      pointB: (genNumbers(5) + 1) * 20,
-      pointC: (genNumbers(6) + 5) * 10,
-      pointD: (genNumbers(6) + 5) * 10,
+      // roll: undefined,
+      // volume: undefined,
+      // pointA: (genNumbers(5) + 1) * 20,
+      // pointB: (genNumbers(5) + 1) * 20,
+      // pointC: (genNumbers(6) + 5) * 10,
+      // pointD: (genNumbers(6) + 5) * 10,
+      length: (genNumbers(6) + 2) * 5,
+      breadth: (genNumbers(4) + 2) * 5,
+      height: (genNumbers(6) + 2) * 5,
+      question: undefined,
+      shape: ["cube", "cuboid"][genNumbers(2)],
     };
   }
 
@@ -19555,7 +19595,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(25, calArr, setting, 99);
+    setting = calArrAll(26, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -19713,8 +19753,21 @@ function genProblems() {
         pointTwo: ["B", "C", "D", "E", "F"][posTwo],
       };
     }
-    //repeated identity [Ratio]
+    //VOLUME AND SURFACE AREA
     if (setting == 10) {
+      return {
+        // length: genNumbers(10) + 10,
+        // breadth: genNumbers(10) + 10,
+        // height: genNumbers(10) + 10,
+        length: (genNumbers(6) + 2) * 5,
+        breadth: (genNumbers(4) + 2) * 5,
+        height: (genNumbers(5) + 2) * 5,
+        type: [1, 2][genNumbers(2)],
+      };
+    }
+
+    //repeated identity [Ratio]
+    if (setting == 11) {
       const arrSomething = ["books", "homeworks", "pencils", "pens"];
       return {
         something: arrSomething[genNumbers(arrSomething.length)],
@@ -19735,7 +19788,7 @@ function genProblems() {
       };
     }
     // REPEATED GROUP RATIO
-    if (setting == 11) {
+    if (setting == 12) {
       let A = genNumbers(10) + 1;
       return {
         varA: A,
@@ -19747,7 +19800,7 @@ function genProblems() {
       };
     }
     // RATIO: IDENTICAL TOTAL
-    if (setting == 12) {
+    if (setting == 13) {
       const genObjects = genNumbers(3);
       return {
         position: genObjects,
@@ -19763,7 +19816,7 @@ function genProblems() {
         question: [1, 2, 3][genNumbers(3)],
       };
     }
-    if (setting == 13) {
+    if (setting == 14) {
       console.log("Unchanged Object");
       return {
         object: ["sweets", "toys", "books"][genNumbers(3)],
@@ -19778,7 +19831,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 14) {
+    if (setting == 15) {
       console.log("Unchanged Total");
       const valueA = genNumbers(140) + 10;
       const valueB = genNumbers(140) + 10;
@@ -19797,7 +19850,7 @@ function genProblems() {
     }
 
     //RATIO: UNCHANGED DIFFERENCE
-    if (setting == 15) {
+    if (setting == 16) {
       console.log("Unchanged Difference");
       const valueA = genNumbers(400) + 100;
       const valueB = genNumbers(400) + 100;
@@ -19816,7 +19869,7 @@ function genProblems() {
       };
     }
     // RATIO: MANIPULATION IN UNITS
-    if (setting == 16) {
+    if (setting == 17) {
       const gen_A = genNumbers(5) + 2;
       const gen_B = genNumbers(5) + 2;
       const genDeno_A = [genNumbers(gen_A - 2) + 2, gen_A * 2][genNumbers(2)];
@@ -19831,7 +19884,7 @@ function genProblems() {
       };
     }
     // REPEATED IDENTITY PERCENTAGE
-    if (setting == 17) {
+    if (setting == 18) {
       let A = (genNumbers(18) + 1) * 5;
       return {
         varA: A,
@@ -19844,7 +19897,7 @@ function genProblems() {
     }
 
     //PERCETAGE: REPEATED GROUP
-    if (setting == 18) {
+    if (setting == 19) {
       return {
         percA: (genNumbers(20) + 1) * 5,
         firstSentence: ["B and C", "the total"][genNumbers(2)],
@@ -19854,7 +19907,7 @@ function genProblems() {
       };
     }
     //PERCENTAGE: REMAINDER CONCEPT
-    if (setting == 19) {
+    if (setting == 20) {
       return {
         percA: (genNumbers(20 - 1) + 1) * 5,
         itemOne: ["toys", "chocolates", "food"][genNumbers(3)],
@@ -19871,7 +19924,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-    if (setting == 20) {
+    if (setting == 21) {
       return {
         person: ["A", "B", "C"][genNumbers(3)],
         cost: genNumbers(899) + 100,
@@ -19883,7 +19936,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: GST AND SERVICE CHARGE
-    if (setting == 21) {
+    if (setting == 22) {
       return {
         person: ["A", "B", "C"][genNumbers(3)],
         optionOne: ["discount gst", "service", "simple gst"][genNumbers(3)],
@@ -19896,7 +19949,7 @@ function genProblems() {
     }
 
     // AVERAGE: SIMPLE
-    if (setting == 22) {
+    if (setting == 23) {
       return {
         version: genNumbers(2),
         // version: 0,
@@ -19906,7 +19959,7 @@ function genProblems() {
     }
 
     //AVERAGE:INTERNAL CHANGE
-    if (setting == 23) {
+    if (setting == 24) {
       return {
         version: genNumbers(3),
         // version: 2,
@@ -19919,7 +19972,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 24) {
+    if (setting == 25) {
       return {
         oldQuantity: genNumbers(6) + 2,
         oldAverage: genNumbers(40) + 10,
@@ -19932,7 +19985,7 @@ function genProblems() {
       };
     }
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 25) {
+    if (setting == 26) {
       return {
         dayOne: genNumbers(20) + 5,
         days: genNumbers(5) + 5,
@@ -22466,7 +22519,7 @@ function buttonLevelSetting() {
       break;
 
     case "Level 5.12":
-      difficulty = prompt("Difficulty: Enter 0, 1, 2 or 3");
+      // difficulty = prompt("Difficulty: Enter 0, 1, 2 or 3");
       console.log(difficulty);
       level = 5.12;
       scoreNeeded = 10;
@@ -22480,8 +22533,7 @@ function buttonLevelSetting() {
       highScoreTime.innerHTML = highScore5DotZero12.time;
       highScoreMistakes.innerHTML = highScore5DotZero12.mistake;
       document.querySelector("#user-input").setAttribute("type", "text");
-      wholeNumberContainer.classList.add("hidden");
-      firstCanvas.classList.remove("hidden");
+
       instructions.innerHTML = `
         Length x Breadth x Height = Volume
         L x B x H = V
@@ -22767,24 +22819,26 @@ function buttonLevelSetting() {
       <hr></hr>
       9. Geometry: Area of Triangle</p>
       <hr></hr>
-      10. Ratio: Repeated Identity</p>
-      11. Ratio: Repeated Group</p>
-      12. Ratio: Identical Total</p>
-      13. Ratio: Unchanged Object</p>
-      14. Ratio: Unchanged Total</p>
-      15. Ratio: Unchanged Difference</p>
-      16. Ratio: Manipulation in units</p>
+      10. Volume</p>
       <hr></hr>
-      17. Percentage: Repeated Identity</p>
-      18. Percentage: Repeated Group</p>
-      19. Percentage: Remainder Concept</p>
-      20. Percentage: Simple and Further discount</p>
-      21. Percentage: GST, discount and Service Charge</p>
+      11. Ratio: Repeated Identity</p>
+      12. Ratio: Repeated Group</p>
+      13. Ratio: Identical Total</p>
+      14. Ratio: Unchanged Object</p>
+      15. Ratio: Unchanged Total</p>
+      16. Ratio: Unchanged Difference</p>
+      17. Ratio: Manipulation in units</p>
       <hr></hr>
-      22. Average: Simple</p>
-      23. Average: Internal change</p>
-      24. Average: External Change</p>
-      25. Average: Odd consecutive days</p>
+      18. Percentage: Repeated Identity</p>
+      19. Percentage: Repeated Group</p>
+      20. Percentage: Remainder Concept</p>
+      21. Percentage: Simple and Further discount</p>
+      22. Percentage: GST, discount and Service Charge</p>
+      <hr></hr>
+      23. Average: Simple</p>
+      24. Average: Internal change</p>
+      25. Average: External Change</p>
+      26. Average: Odd consecutive days</p>
       <hr></hr>
       </p>99. All
       
@@ -22799,7 +22853,7 @@ function buttonLevelSetting() {
       if (
         ![
           0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-          20, 21, 22, 23, 24, 25, 99,
+          20, 21, 22, 23, 24, 25, 26, 99,
         ].includes(setting * 1) &&
         !setting.split("").includes("-")
       )

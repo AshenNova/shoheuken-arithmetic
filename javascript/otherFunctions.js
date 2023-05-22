@@ -452,6 +452,161 @@ const drawTriangle = (base, height, first, second) => {
   ctx.restore();
 };
 
+const draw3d = {
+  cuboid: (canvasWidth, canvasHeight, a, b, c, question) => {
+    ctx.save();
+    ctx.font = "1em serif";
+    // question = "volume";
+    // let shape = "cube";
+    // if (a != b || a != b || b != c) {
+    //   shape = "cuboid";
+    // }
+    // if (question == "volume") {
+    //   ctx.fillText(`${p.question}`, 20, 20);
+    // }
+    ctx.fillText(`${question}`, 20, 20);
+    ctx.translate(canvasWidth / 2 - a / 2, 50 + c / 3);
+
+    // FRONT
+    ctx.beginPath();
+    ctx.rect(0, 0, a, c);
+    ctx.stroke();
+    ctx.fillText(`${a / 5}`, a / 2 - 5, c + 13);
+    // RIGHT
+    ctx.translate(a, 0);
+    ctx.beginPath();
+    ctx.arc(0, 0, 3, Math.PI * 2, false);
+    ctx.moveTo(0, 0);
+    ctx.lineTo(b / 2, -(c / 3) * 1);
+    ctx.lineTo(b / 2, (c / 3) * 2);
+    ctx.lineTo(0, c);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fillText(`${b / 5}`, b / 2 - 13, c - 2);
+
+    // TOP
+    ctx.translate(-a, 0);
+    ctx.beginPath();
+    ctx.arc(0, 0, 3, Math.PI * 2, false);
+    ctx.moveTo(0, 0);
+    ctx.lineTo(b / 2, -(c / 3) * 1);
+    ctx.lineTo(a + b / 2, -(c / 3) * 1);
+    ctx.lineTo(a, 0);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fillText(`${c / 5}`, a + b / 2 + 2, 10);
+    ctx.restore();
+  },
+  cuboidSurfaceArea: (canvasWidth, canvasHeight, a, b, c, type) => {
+    let question = undefined;
+
+    ctx.save();
+    ctx.font = "1em serif";
+    // question = "volume";
+    // let shape = "cube";
+    // if (a != b || a != b || b != c) {
+    //   shape = "cuboid";
+    // }
+    // if (question == "volume") {
+    //   ctx.fillText(`${p.question}`, 20, 20);
+    // }
+    if (type == 1) {
+      question = ["base area", "top", "front", "side"][genNumbers(4)];
+      ctx.fillText(`Find the area of the ${question}.`, 20, 20);
+    }
+
+    if (type == 2) {
+      const volume = ((((a / 5) * b) / 5) * c) / 5;
+      question = ["length", "breadth", "height"][genNumbers(3)];
+      ctx.fillText(`The volume of the figure is ${volume} cm3.`, 20, 20);
+      ctx.fillText(`What is its ${question}?`, 20, 40);
+    }
+    ctx.translate(canvasWidth / 2 - a / 2, 50 + c / 3);
+
+    // BASE AREA
+    ctx.setLineDash([1, 1]);
+    ctx.translate(0, c);
+    ctx.beginPath();
+    ctx.arc(0, 0, 3, Math.PI * 2, false);
+    ctx.moveTo(0, 0);
+    ctx.lineTo(b / 2, -(c / 3) * 1);
+    ctx.lineTo(a + b / 2, -(c / 3) * 1);
+    ctx.lineTo(a, 0);
+    ctx.closePath();
+    ctx.stroke();
+    if (question == "base area") {
+      ctx.save();
+      ctx.fillStyle = "red";
+      ctx.fill();
+      ctx.restore();
+    }
+    ctx.beginPath();
+    ctx.moveTo(b / 2, -(c / 3) * 1);
+    ctx.lineTo(b / 2, -(c / 3) * 1 - c);
+    ctx.stroke();
+    // ctx.fillText(`${c / 5}`, a + b / 2 + 2, 10);
+    ctx.translate(0, -c);
+
+    // FRONT
+    ctx.setLineDash([]);
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.rect(0, 0, a, c);
+    ctx.stroke();
+    if (question != "length") {
+      ctx.fillText(`${a / 5}`, a / 2 - 5, c + 13);
+    }
+    if (question == "front") {
+      ctx.save();
+      ctx.fillStyle = "red";
+      ctx.fill();
+      ctx.restore();
+    }
+    // SIDE
+    ctx.translate(a, 0);
+    ctx.beginPath();
+    ctx.arc(0, 0, 3, Math.PI * 2, false);
+    ctx.moveTo(0, 0);
+    ctx.lineTo(b / 2, -(c / 3) * 1);
+    ctx.lineTo(b / 2, (c / 3) * 2);
+    ctx.lineTo(0, c);
+    ctx.closePath();
+    ctx.stroke();
+    if (question != "breadth") {
+      ctx.fillText(`${b / 5}`, b / 2 - 13, c - 2);
+    }
+    if (question == "side") {
+      ctx.save();
+      ctx.fillStyle = "red";
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // TOP
+    ctx.translate(-a, 0);
+    ctx.beginPath();
+    ctx.arc(0, 0, 3, Math.PI * 2, false);
+    ctx.moveTo(0, 0);
+    ctx.lineTo(b / 2, -(c / 3) * 1);
+    ctx.lineTo(a + b / 2, -(c / 3) * 1);
+    ctx.lineTo(a, 0);
+    ctx.closePath();
+    ctx.stroke();
+    if (question != "height") {
+      ctx.fillText(`${c / 5}`, a + b / 2 + 2, 10);
+    }
+    if (question == "top") {
+      ctx.save();
+      ctx.fillStyle = "red";
+      ctx.fill();
+      ctx.restore();
+    }
+
+    ctx.restore();
+    return question;
+  },
+};
+
 const drawThis = {
   quadrant: (x, y, radius, type, rotate) => {
     ctx.save();
@@ -668,6 +823,7 @@ export {
   drawTriangle,
   parallelOverlapping,
   drawThis,
+  draw3d,
   drawIntervals,
   swap,
   decimalCheck,
