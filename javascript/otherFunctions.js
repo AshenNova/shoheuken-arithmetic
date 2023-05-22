@@ -502,13 +502,11 @@ const draw3d = {
 
     ctx.save();
     ctx.font = "1em serif";
-    // question = "volume";
-    // let shape = "cube";
-    // if (a != b || a != b || b != c) {
-    //   shape = "cuboid";
-    // }
-    // if (question == "volume") {
-    //   ctx.fillText(`${p.question}`, 20, 20);
+    // const height = 60 + c + c / 3 + 1 + 50;
+    // if (height > canvasHeight) {
+    //   ctx.setAttributes("height", height);
+    // } else {
+    //   ctx.setAttributes("height", 275);
     // }
     if (type == 1) {
       question = ["base area", "top", "front", "side"][genNumbers(4)];

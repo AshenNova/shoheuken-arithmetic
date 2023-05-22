@@ -9089,6 +9089,12 @@ function updateProblems() {
     if (setting == 10) {
       drawingDisplay();
       // ctx.save();
+      const height = 60 + p.height + p.height / 3 + 1 + 50;
+      if (height > 275) {
+        canvas.setAttribute("height", height);
+      } else {
+        canvas.setAttribute("height", 275);
+      }
 
       p.question = draw3d.cuboidSurfaceArea(
         400,
