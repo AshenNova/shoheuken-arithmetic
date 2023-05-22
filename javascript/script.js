@@ -9575,6 +9575,14 @@ function updateProblems() {
       p.valueBEnd = p.valueBFirst + p.situation;
       [unitAF, unitBF] = simplify(p.valueAFirst, p.valueBFirst);
       [unitAE, unitBE] = simplify(p.valueAEnd, p.valueBEnd);
+      if (unitAF > 20 || unitBF > 20 || unitAE > 20 || unitBE > 20) {
+        console.log("Units are too big");
+        return updateCalc();
+      }
+      if (unitAF <= 0 || unitBF <= 0 || unitAE <= 0 || unitBE <= 0) {
+        console.log("Units are too Small");
+        return updateCalc();
+      }
       if (((unitAF == unitBF) == unitAE) == unitBE) return updateCalc();
       if (p.valueAFirst == unitAF || p.valueAEnd == unitAE) {
         return updateCalc();
@@ -9583,7 +9591,7 @@ function updateProblems() {
       // LINE ONE
       let lineOne = genNumbers(4);
       if (lineOne == 0) {
-        lineOne = `The ratio of A:B is ${unitAF}:${unitBF}.`;
+        lineOne = `The ratio of A : B is ${unitAF}:${unitBF}.`;
       }
       if (lineOne == 1) {
         lineOne = `A is ${unitAF}/${unitBF} of B .`;
@@ -19858,8 +19866,8 @@ function genProblems() {
     //RATIO: UNCHANGED DIFFERENCE
     if (setting == 16) {
       console.log("Unchanged Difference");
-      const valueA = genNumbers(400) + 100;
-      const valueB = genNumbers(400) + 100;
+      const valueA = genNumbers(50) + 5;
+      const valueB = genNumbers(50) + 5;
       let minValue = 0;
       valueA > valueB ? (minValue = valueA) : (minValue = valueB);
       return {
