@@ -603,6 +603,156 @@ const draw3d = {
     ctx.restore();
     return question;
   },
+
+  cuboidWaterLevel: (canvasWidth, canvasHeight, a, b, c, waterLevel, type) => {
+    let question = undefined;
+
+    ctx.save();
+    ctx.font = "1em serif";
+    if (type == 1) {
+      // question = ["base area", "top", "front", "side"][genNumbers(4)];
+      let nume = waterLevel;
+      let deno = c;
+      [nume, deno] = simplify(nume, deno);
+      console.log(deno, c);
+      if (deno == c / 5) return "Error";
+      ctx.fillText(`The tank is ${nume}/${deno} filled.`, 20, 20);
+      ctx.fillText(`What is the volume of water in the tank?`, 20, 40);
+    }
+    if (type == 2) {
+      // question = ["base area", "top", "front", "side"][genNumbers(4)];
+      let nume = waterLevel;
+      let deno = c;
+      [nume, deno] = simplify(nume, deno);
+      console.log(deno, c);
+      if (deno == c / 5) return "Error";
+      ctx.fillText(`The tank is ${nume}/${deno} filled.`, 20, 20);
+      ctx.fillText(
+        `What is the volume of water needed to fill up the tank?`,
+        20,
+        40
+      );
+    }
+    if (type == 3) {
+      // question = ["base area", "top", "front", "side"][genNumbers(4)];
+      let nume = waterLevel;
+      let deno = c;
+      const volume = ((((a / 5) * b) / 5) * c) / 5;
+      [nume, deno] = simplify(nume, deno);
+      const water = (volume * nume) / deno;
+      if (deno == c / 5) return "Error";
+      ctx.fillText(
+        `There is ${water} cm3 of water in the tank. while ${nume}/${deno} filled.`,
+        20,
+        20
+      );
+      ctx.fillText(`What is the capacity of the tank?`, 20, 40);
+    }
+    if (type == 4) {
+      // question = ["base area", "top", "front", "side"][genNumbers(4)];
+      let nume = waterLevel;
+      let deno = c;
+      const volume = ((((a / 5) * b) / 5) * c) / 5;
+      [nume, deno] = simplify(nume, deno);
+      const water = (volume * nume) / deno;
+      if (deno == c / 5) return "Error";
+      ctx.fillText(
+        `There is ${water} cm3 of water in the tank. while ${nume}/${deno} filled.`,
+        20,
+        20
+      );
+      ctx.fillText(`What is the height of the tank?`, 20, 40);
+    }
+    ctx.translate(canvasWidth / 2 - a / 2, 50 + c / 3);
+
+    // FRONT WATER
+    ctx.save();
+    ctx.fillStyle = "blue";
+    console.log(`${waterLevel}/${c}`);
+    ctx.beginPath();
+    ctx.rect(0, c - waterLevel, a, waterLevel);
+    ctx.fill();
+    ctx.restore();
+
+    //SIDE WATER
+    ctx.save();
+    ctx.translate(a, c - waterLevel);
+    ctx.fillStyle = "blue";
+    // console.log(`${waterLevel}/${c}`);
+    ctx.beginPath();
+    // ctx.rect(0, c - waterLevel, a, waterLevel);
+    ctx.arc(0, 0, 3, Math.PI * 2, false);
+    ctx.moveTo(0, 0);
+    ctx.lineTo(b / 2, -(c / 3) * 1);
+    ctx.translate(-a, -(c - waterLevel));
+    ctx.translate(a, 0);
+    ctx.lineTo(b / 2, (c / 3) * 2);
+    ctx.lineTo(0, c);
+    // ctx.lineTo(b / 2, (waterLevel / 3) * 2);
+    // ctx.lineTo(0, waterLevel);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.fill();
+    ctx.restore();
+
+    // FRONT
+    ctx.setLineDash([]);
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.rect(0, 0, a, c);
+    ctx.stroke();
+    if (question != "length") {
+      ctx.fillText(`${a / 5}`, a / 2 - 5, c + 13);
+    }
+    if (question == "front") {
+      ctx.save();
+      ctx.fillStyle = "red";
+      ctx.fill();
+      ctx.restore();
+    }
+    // SIDE
+    ctx.translate(a, 0);
+    ctx.beginPath();
+    ctx.arc(0, 0, 3, Math.PI * 2, false);
+    ctx.moveTo(0, 0);
+    ctx.lineTo(b / 2, -(c / 3) * 1);
+    ctx.lineTo(b / 2, (c / 3) * 2);
+    ctx.lineTo(0, c);
+    ctx.closePath();
+    ctx.stroke();
+    // if (type != 3 || type != 4) {
+    ctx.fillText(`${b / 5}`, b / 2 - 13, c - 2);
+    // }
+    // if (question == "side") {
+    //   ctx.save();
+    //   ctx.fillStyle = "red";
+    //   ctx.fill();
+    //   ctx.restore();
+    // }
+
+    // TOP
+    ctx.translate(-a, 0);
+    ctx.beginPath();
+    ctx.arc(0, 0, 3, Math.PI * 2, false);
+    ctx.moveTo(0, 0);
+    ctx.lineTo(b / 2, -(c / 3) * 1);
+    ctx.lineTo(a + b / 2, -(c / 3) * 1);
+    ctx.lineTo(a, 0);
+    ctx.closePath();
+    ctx.stroke();
+    if (type != 3 && type != 4) {
+      ctx.fillText(`${c / 5}`, a + b / 2 + 2, 10);
+    }
+    if (question == "top") {
+      ctx.save();
+      ctx.fillStyle = "red";
+      ctx.fill();
+      ctx.restore();
+    }
+
+    ctx.restore();
+    return question;
+  },
 };
 
 const drawThis = {

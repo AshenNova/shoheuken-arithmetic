@@ -9089,7 +9089,7 @@ function updateProblems() {
     if (setting == 10) {
       drawingDisplay();
       // ctx.save();
-      const height = 60 + p.height + p.height / 3 + 1 + 50;
+      const height = 60 + p.height * 5 + ((p.height * 5) / 3) * 2 + 10;
       if (height > 275) {
         canvas.setAttribute("height", height);
       } else {
@@ -9106,8 +9106,35 @@ function updateProblems() {
       );
       // ctx.restore();
     }
-    // RATIO: REPEATED IDENTITY
+
+    // VOLUME: NUMERATOR WITH A VALUE
     if (setting == 11) {
+      drawingDisplay();
+
+      const height = 60 + p.height * 5 + ((p.height * 5) / 3) * 2 + 10;
+      if (height > 275) {
+        canvas.setAttribute("height", height);
+      } else {
+        canvas.setAttribute("height", 275);
+        // ctx.save();
+        // ctx.translate(50, 0);
+        // ctx.restore();
+      }
+
+      const check = draw3d.cuboidWaterLevel(
+        400,
+        275,
+        p.length * 5,
+        p.breadth * 5,
+        p.height * 5,
+        p.numerator * 5,
+        p.type
+      );
+      if (check == "Error") return updateCalc();
+    }
+
+    // RATIO: REPEATED IDENTITY
+    if (setting == 12) {
       normalDisplay();
       let lineOne = "";
       if (p.firstSentence == "unit") {
@@ -9170,7 +9197,7 @@ function updateProblems() {
       `;
     }
     //  REPEATED GROUP RATIO
-    if (setting == 12) {
+    if (setting == 13) {
       normalDisplay();
       let total = p.varA + p.varB + p.varC;
       let firstTotal = undefined;
@@ -9226,7 +9253,7 @@ function updateProblems() {
       }
     }
     // RATIO: IDENTICAL TOTAL
-    if (setting == 13) {
+    if (setting == 14) {
       normalDisplay();
       console.log(p.objects);
       const objectA = p.objects[0];
@@ -9272,7 +9299,7 @@ function updateProblems() {
         );
       }
     }
-    if (setting == 14) {
+    if (setting == 15) {
       normalDisplay();
       let unitAF = "";
       let unitBF = "";
@@ -9446,7 +9473,7 @@ function updateProblems() {
       `;
     }
 
-    if (setting == 15) {
+    if (setting == 16) {
       normalDisplay();
       let unitAF = "";
       let unitBF = "";
@@ -9564,7 +9591,7 @@ function updateProblems() {
       ${lineFour}`;
     }
     //RATIO: UNCHANGED DIFFERENCE
-    if (setting == 16) {
+    if (setting == 17) {
       normalDisplay();
       let unitAF = "";
       let unitBF = "";
@@ -9663,7 +9690,7 @@ function updateProblems() {
       `;
     }
     // RATIO: MANIPULATION IN UNITS
-    if (setting == 17) {
+    if (setting == 18) {
       normalDisplay();
       [p.ratioA, p.ratioB] = simplify(p.ratioA, p.ratioB);
       [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
@@ -9680,7 +9707,7 @@ function updateProblems() {
       `;
     }
     // REPEATED IDENTITY PERCENTAGE
-    if (setting == 18) {
+    if (setting == 19) {
       normalDisplay();
       let lineOne = undefined;
       let tempArr = [];
@@ -9712,7 +9739,7 @@ function updateProblems() {
       What is the ratio of A:B:C?`;
     }
     // RATIO: REPEATED GROUP
-    if (setting == 19) {
+    if (setting == 20) {
       normalDisplay();
       const displayA = p.percA;
       const displayB = p.percB;
@@ -9787,7 +9814,7 @@ function updateProblems() {
       `;
     }
     // PERCENTAGE: REMAINDER CONCEPT
-    if (setting == 20) {
+    if (setting == 21) {
       normalDisplay();
       displayProblem.innerHTML = `
       Person A spent ${p.percA}% of his money on ${p.itemOne}.</p>
@@ -9850,7 +9877,7 @@ function updateProblems() {
       }
     }
     // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-    if (setting == 21) {
+    if (setting == 22) {
       normalDisplay();
       if (p.frontBack == "front") {
         if (p.moreDiscount == 0) {
@@ -9920,7 +9947,7 @@ function updateProblems() {
       );
     }
     // PERCENTAGE: GST AND SERVICE CHARGE
-    if (setting == 22) {
+    if (setting == 23) {
       normalDisplay();
       if (p.optionOne == "simple gst") {
         displayProblem.innerHTML = `
@@ -9991,7 +10018,7 @@ function updateProblems() {
       }
     }
     //AVERAGE: SIMPLE
-    if (setting == 23) {
+    if (setting == 24) {
       normalDisplay();
       const averageList = [];
       for (let i = 0; i < p.variables; i++) {
@@ -10033,7 +10060,7 @@ function updateProblems() {
     }
 
     //AVERAGE: INTERNAL CHANGE
-    if (setting == 24) {
+    if (setting == 25) {
       normalDisplay();
       const oldAverage = (p.numOne + p.numTwo + p.numThree) / 3;
       if (oldAverage % 1 != 0) {
@@ -10079,7 +10106,7 @@ function updateProblems() {
       }
     }
     //AVERAGE: EXTERNAL CHANGE
-    if (setting == 25) {
+    if (setting == 26) {
       normalDisplay();
       if (p.changeQuantity == 0) return updateCalc();
       p.changeQuantity > 0 ? (p.situation = "joined") : (p.situation = "left");
@@ -10104,7 +10131,7 @@ function updateProblems() {
     }
 
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 26) {
+    if (setting == 27) {
       normalDisplay();
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
@@ -15324,13 +15351,31 @@ function handleSubmit(e) {
         }
       }
 
-      // RATIO: REPEATED IDENTITY
+      // VOLUME: NUMERATOR WITH A VALUE
       if (setting == 11) {
+        if (p.type == 1)
+          correctAnswer =
+            (p.length * p.breadth * p.height * p.numerator) / p.height;
+        if (p.type == 2) {
+          correctAnswer =
+            (p.length * p.breadth * p.height * (p.height - p.numerator)) /
+            p.height;
+        }
+        if (p.type == 3) {
+          correctAnswer = p.length * p.breadth * p.height;
+        }
+        if (p.type == 4) {
+          correctAnswer = p.height;
+        }
+      }
+
+      // RATIO: REPEATED IDENTITY
+      if (setting == 12) {
         calArrQns = simplestForm(calArrQns);
         correctAnswer = `${calArrQns[5]}:${calArrQns[6]}:${calArrQns[8]}`;
       }
       // RATIO: REPEATED GROUP
-      if (setting == 12) {
+      if (setting == 13) {
         // console.log(p.answer);
         // let sorting = [...p.answer];
         // sorting.sort(function (a, b) {
@@ -15362,7 +15407,7 @@ function handleSubmit(e) {
       // }
 
       // RATIO: IDENTICAL TOTAL
-      if (setting == 13) {
+      if (setting == 14) {
         let totalA = p.ratioA + p.ratioB;
         let totalB = p.ratioC + p.ratioD;
         const commonTotal = commonDeno(totalA, totalB);
@@ -15389,7 +15434,7 @@ function handleSubmit(e) {
         }
       }
       // RATIO: UNCHANGED OBJ
-      if (setting == 14) {
+      if (setting == 15) {
         console.log(p.valueAFirst, p.valueBFirst, p.valueAEnd, p.valueBEnd);
         // if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
         // if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
@@ -15398,21 +15443,21 @@ function handleSubmit(e) {
         correctAnswer = p.answer;
       }
       // RATIO: UNCHANGED TOTAL
-      if (setting == 15) {
-        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
-        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
-        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
-        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
-      }
-      // RATIO: UNCHANGED DIFFERENCE
       if (setting == 16) {
         if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
         if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
         if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
         if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
       }
-      // RATIO: MANIPULATION IN UNITS
+      // RATIO: UNCHANGED DIFFERENCE
       if (setting == 17) {
+        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
+        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
+        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
+        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
+      }
+      // RATIO: MANIPULATION IN UNITS
+      if (setting == 18) {
         const commonNumber = commonDeno(p.denoA, p.denoB);
         let end_A = ((p.ratioA * (p.denoA - p.numeA)) / p.denoA) * commonNumber;
         let end_B = ((p.ratioB * (p.denoB - p.numeB)) / p.denoB) * commonNumber;
@@ -15420,12 +15465,12 @@ function handleSubmit(e) {
         correctAnswer = `${end_A}:${end_B}`;
       }
       // PERCENTAGE: REPEATED IDENTITY
-      if (setting == 18) {
+      if (setting == 19) {
         p.answer = simplestForm(p.answer);
         correctAnswer = p.answer.join(":");
       }
 
-      if (setting == 19) {
+      if (setting == 20) {
         console.log(p.answer);
         // got to change to an array
         p.answer = p.answer.split(":");
@@ -15435,7 +15480,7 @@ function handleSubmit(e) {
       }
 
       // PERCENTAGE: REMAINDER CONCEPT
-      if (setting == 20) {
+      if (setting == 21) {
         if (p.question == "percentage") {
           const remaining = 100 - p.percA;
           const itemTwoP = (remaining / 100) * p.percR;
@@ -15449,7 +15494,7 @@ function handleSubmit(e) {
         }
       }
       // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-      if (setting == 21) {
+      if (setting == 22) {
         if (p.frontBack == "front") {
           if (p.moreDiscount == 0) {
             if (p.discountOrPrice == "price") {
@@ -15498,7 +15543,7 @@ function handleSubmit(e) {
       }
 
       // PERCENTAGE: GST, DISCOUNT AND SERVICE CHARGE
-      if (setting == 22) {
+      if (setting == 23) {
         if (p.optionOne == "simple gst") {
           if (p.optionTwo == "gst") {
             correctAnswer = (p.value / 100) * p.gst;
@@ -15526,11 +15571,11 @@ function handleSubmit(e) {
         }
       }
 
-      if (setting == 23) {
+      if (setting == 24) {
         correctAnswer = p.answer;
       }
-      if (setting == 24) correctAnswer = p.answer;
-      if (setting == 25) {
+      if (setting == 25) correctAnswer = p.answer;
+      if (setting == 26) {
         if (p.question == "at first") {
           correctAnswer = p.oldQuantity;
         }
@@ -15539,7 +15584,7 @@ function handleSubmit(e) {
         }
       }
       //AVERAGE: CONSECUTIVE DAYS
-      if (setting == 26) {
+      if (setting == 27) {
         correctAnswer = p.dayOne + p.increase * (p.chosen - 1);
       }
     }
@@ -19779,9 +19824,20 @@ function genProblems() {
         type: [1, 2][genNumbers(2)],
       };
     }
+    // VOLUME: NUMERATOR WITH A VALUE
+    if (setting == 11) {
+      const gen_height = (genNumbers(10) + 2) * 5;
+      return {
+        length: (genNumbers(6) + 2) * 5,
+        breadth: (genNumbers(4) + 2) * 5,
+        height: gen_height,
+        numerator: genNumbers(gen_height - 1) + 1,
+        type: [4, 3, 2, 1][genNumbers(4)],
+      };
+    }
 
     //repeated identity [Ratio]
-    if (setting == 11) {
+    if (setting == 12) {
       const arrSomething = ["books", "homeworks", "pencils", "pens"];
       return {
         something: arrSomething[genNumbers(arrSomething.length)],
@@ -19802,7 +19858,7 @@ function genProblems() {
       };
     }
     // REPEATED GROUP RATIO
-    if (setting == 12) {
+    if (setting == 13) {
       let A = genNumbers(10) + 1;
       return {
         varA: A,
@@ -19814,7 +19870,7 @@ function genProblems() {
       };
     }
     // RATIO: IDENTICAL TOTAL
-    if (setting == 13) {
+    if (setting == 14) {
       const genObjects = genNumbers(3);
       return {
         position: genObjects,
@@ -19830,7 +19886,7 @@ function genProblems() {
         question: [1, 2, 3][genNumbers(3)],
       };
     }
-    if (setting == 14) {
+    if (setting == 15) {
       console.log("Unchanged Object");
       return {
         object: ["sweets", "toys", "books"][genNumbers(3)],
@@ -19845,7 +19901,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 15) {
+    if (setting == 16) {
       console.log("Unchanged Total");
       const valueA = genNumbers(140) + 10;
       const valueB = genNumbers(140) + 10;
@@ -19864,7 +19920,7 @@ function genProblems() {
     }
 
     //RATIO: UNCHANGED DIFFERENCE
-    if (setting == 16) {
+    if (setting == 17) {
       console.log("Unchanged Difference");
       const valueA = genNumbers(50) + 5;
       const valueB = genNumbers(50) + 5;
@@ -19883,7 +19939,7 @@ function genProblems() {
       };
     }
     // RATIO: MANIPULATION IN UNITS
-    if (setting == 17) {
+    if (setting == 18) {
       const gen_A = genNumbers(5) + 2;
       const gen_B = genNumbers(5) + 2;
       const genDeno_A = [genNumbers(gen_A - 2) + 2, gen_A * 2][genNumbers(2)];
@@ -19898,7 +19954,7 @@ function genProblems() {
       };
     }
     // REPEATED IDENTITY PERCENTAGE
-    if (setting == 18) {
+    if (setting == 19) {
       let A = (genNumbers(18) + 1) * 5;
       return {
         varA: A,
@@ -19911,7 +19967,7 @@ function genProblems() {
     }
 
     //PERCETAGE: REPEATED GROUP
-    if (setting == 19) {
+    if (setting == 20) {
       return {
         percA: (genNumbers(20) + 1) * 5,
         firstSentence: ["B and C", "the total"][genNumbers(2)],
@@ -19921,7 +19977,7 @@ function genProblems() {
       };
     }
     //PERCENTAGE: REMAINDER CONCEPT
-    if (setting == 20) {
+    if (setting == 21) {
       return {
         percA: (genNumbers(20 - 1) + 1) * 5,
         itemOne: ["toys", "chocolates", "food"][genNumbers(3)],
@@ -19938,7 +19994,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-    if (setting == 21) {
+    if (setting == 22) {
       return {
         person: ["A", "B", "C"][genNumbers(3)],
         cost: genNumbers(899) + 100,
@@ -19950,7 +20006,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: GST AND SERVICE CHARGE
-    if (setting == 22) {
+    if (setting == 23) {
       return {
         person: ["A", "B", "C"][genNumbers(3)],
         optionOne: ["discount gst", "service", "simple gst"][genNumbers(3)],
@@ -19963,7 +20019,7 @@ function genProblems() {
     }
 
     // AVERAGE: SIMPLE
-    if (setting == 23) {
+    if (setting == 24) {
       return {
         version: genNumbers(2),
         // version: 0,
@@ -19973,7 +20029,7 @@ function genProblems() {
     }
 
     //AVERAGE:INTERNAL CHANGE
-    if (setting == 24) {
+    if (setting == 25) {
       return {
         version: genNumbers(3),
         // version: 2,
@@ -19986,7 +20042,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 25) {
+    if (setting == 26) {
       return {
         oldQuantity: genNumbers(6) + 2,
         oldAverage: genNumbers(40) + 10,
@@ -19999,7 +20055,7 @@ function genProblems() {
       };
     }
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 26) {
+    if (setting == 27) {
       return {
         dayOne: genNumbers(20) + 5,
         days: genNumbers(5) + 5,
@@ -22833,7 +22889,8 @@ function buttonLevelSetting() {
       <hr></hr>
       9. Geometry: Area of Triangle</p>
       <hr></hr>
-      10. Volume</p>
+      10. Volume: Dimensions and Surface Area</p>
+      11. Volume: Numerator with a Value</p>
       <hr></hr>
       11. Ratio: Repeated Identity</p>
       12. Ratio: Repeated Group</p>
@@ -22860,14 +22917,17 @@ function buttonLevelSetting() {
       optionsBox.insertAdjacentHTML("beforeend", html);
       // console.log(userInputOptions);
       // calBtn[4].addEventListener("click", function () {
-      setting = prompt("What level?", 99);
+      setting = prompt(
+        "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
+        99
+      );
       // });
 
       // optionsBox.classList.add("hidden");
       if (
         ![
           0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-          20, 21, 22, 23, 24, 25, 26, 99,
+          20, 21, 22, 23, 24, 25, 26, 27, 99,
         ].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
