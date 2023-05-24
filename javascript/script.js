@@ -10547,6 +10547,119 @@ function updateProblems() {
       }
     }
   }
+  // DISPLAY
+  if (level == "calSixb") {
+    if (setting == 1) {
+      if (p.type == "normalSpeedToTime") {
+        if (p.speedA == p.speedB) {
+          p.speedB += 10;
+        }
+        [p.timeA, p.timeB] = simplify(p.speedB, p.speedA);
+        p.differenceTime =
+          Math.abs(p.timeA - p.timeB) * ((genNumbers(12 - 1) + 1) * 5);
+        console.log(`A: ${p.speedA}, ${p.timeA}`);
+        console.log(`B: ${p.speedB}, ${p.timeB}`);
+        displayProblem.innerHTML = `
+        Car A and Car B started at the same Town travelling to Town Z.</p>
+        Car A travels at ${p.speedA} km/h.</p>
+        Car B travels at ${p.speedB} km/h.</p>
+        `;
+        if (p.speedA > p.speedB) {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            `Car A reached town Z ${p.differenceTime} mins earlier than Car B.</p>`
+          );
+        } else {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            `Car B reached town Z ${p.differenceTime} mins earlier than Car A.</p>`
+          );
+        }
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          "What is the distance between the 2 towns?"
+        );
+      }
+      if (p.type == "normalTimeToSpeed") {
+        // console.log(p.speedA, p.speedB);
+        if (p.timeA == p.timeB) {
+          p.timeB += 10;
+        }
+        [p.speedA, p.speedB] = simplify(p.timeB, p.timeA);
+        p.differenceSpeed =
+          Math.abs(p.speedA - p.speedB) * ((genNumbers(5) + 1) * 5);
+        console.log(`A: ${p.speedA}, ${p.timeA}`);
+        console.log(`B: ${p.speedB}, ${p.timeB}`);
+        displayProblem.innerHTML = `
+        Car A and Car B started at the same Town travelling to Town Z.</p>
+        Car A took ${p.timeA} mins.</p>
+        Car B took ${p.timeB} mins.</p>
+        `;
+        if (p.speedA > p.speedB) {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            `Car A drove at ${p.differenceSpeed} km/h faster than Car B.</p>`
+          );
+        } else {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            `Car B drove at ${p.differenceSpeed} km/h faster than Car A.</p>`
+          );
+        }
+        let html = undefined;
+        if (p.question == 1) {
+          html = "What is the distance between the 2 towns?";
+        }
+        if (p.question == 2) {
+          html = "What is Car A's speed?";
+        }
+        if (p.question == 3) {
+          html = "What is Car B's speed?";
+        }
+        displayProblem.insertAdjacentHTML("beforeend", html);
+      }
+      if (p.type == "meet up") {
+        // console.log(p.speedA, p.speedB);
+        if (p.timeA == p.timeB) {
+          p.timeB += 10;
+        }
+        [p.speedA, p.speedB] = simplify(p.timeB, p.timeA);
+        p.differenceSpeed =
+          Math.abs(p.speedA - p.speedB) * ((genNumbers(5) + 1) * 5);
+        console.log(`A: ${p.speedA}, ${p.timeA}`);
+        console.log(`B: ${p.speedB}, ${p.timeB}`);
+        displayProblem.innerHTML = `
+        Car A and Car B started at different Towns and moved towards each other.</p>
+        Car A would take ${p.timeA} mins to reach the other Town.</p>
+        Car B would take ${p.timeB} mins to reach the other Town.</p>
+        How long did it take both Cars to meet?
+        `;
+        // if (p.speedA > p.speedB) {
+        //   displayProblem.insertAdjacentHTML(
+        //     "beforeend",
+        //     `Car A drove at ${p.differenceSpeed} km/h faster than Car B.</p>`
+        //   );
+        // } else {
+        //   displayProblem.insertAdjacentHTML(
+        //     "beforeend",
+        //     `Car B drove at ${p.differenceSpeed} km/h faster than Car A.</p>`
+        //   );
+        // }
+        // let html = undefined;
+        // if (p.question == 1) {
+        //   html = "What is the distance between the 2 towns?";
+        // }
+        // if (p.question == 2) {
+        //   html = "What is Car A's speed?";
+        // }
+        // if (p.question == 3) {
+        //   html = "What is Car B's speed?";
+        // }
+        // displayProblem.insertAdjacentHTML("beforeend", html);
+      }
+    }
+  }
+
   if (level == "heuOne") {
     while (p.numOne == p.numTwo) {
       p.numOne = genNumbers(9) + 1;
@@ -12603,6 +12716,100 @@ function updateProblems() {
       C then gave ${p.numeThree}/${p.denoThree} to A.</p>
       All 3 people ended with the same amount.</p>
       How much did A have at first?
+      `;
+    }
+
+    // WORKING BACKWARDS TYPE 3 (INDEPENDENT)
+    if (setting == 3) {
+      // let sitOne = undefined;
+      // let sitTwo = undefined;
+      // let sitThree = undefined;
+      // let sitFour = undefined;
+
+      const workingBackwardsT3 = (
+        operator,
+        variable,
+        increase,
+        decrease,
+        times,
+        divide
+      ) => {
+        if (operator == "-") {
+          return `${variable} decreased by ${decrease}.`;
+        }
+        if (operator == "+") {
+          return `${variable} increased by ${increase}.`;
+        }
+        if (operator == "x") {
+          return `${variable} became ${times} times its previous value.`;
+        }
+        if (operator == "/") {
+          return `${variable} decreased by ${divide} times.`;
+        }
+      };
+      let operations = ["+", "-", "x", "/"];
+      p.first = operations[genNumbers(4)];
+      const indexFirst = operations.indexOf(p.first);
+      operations.splice(indexFirst, 1);
+      const sitOne = workingBackwardsT3(
+        p.first,
+        "A",
+        p.increase,
+        p.decrease,
+        p.times,
+        p.divide
+      );
+
+      p.second = operations[genNumbers(3)];
+      const indexSecond = operations.indexOf(p.second);
+      operations.splice(indexSecond, 1);
+      const sitTwo = workingBackwardsT3(
+        p.second,
+        "B",
+        p.increase,
+        p.decrease,
+        p.times,
+        p.divide
+      );
+
+      p.third = operations[genNumbers(2)];
+      const indexThird = operations.indexOf(p.third);
+      operations.splice(indexThird, 1);
+      const sitThree = workingBackwardsT3(
+        p.third,
+        "C",
+        p.increase,
+        p.decrease,
+        p.times,
+        p.divide
+      );
+
+      p.fourth = operations[genNumbers(1)];
+      const indexFourth = operations.indexOf(p.fourth);
+      operations.splice(indexFourth, 1);
+      const sitFour = workingBackwardsT3(
+        p.fourth,
+        "D",
+        p.increase,
+        p.decrease,
+        p.times,
+        p.divide
+      );
+
+      const totalUnit = 1 + p.times * p.divide + p.times * 2;
+      console.log(totalUnit);
+      p.total = totalUnit * (genNumbers(50) + 40) - p.increase + p.decrease;
+      p.unit = (p.total + p.increase - p.decrease) / totalUnit;
+      console.log(p.first, p.second, p.third, p.fourth);
+      displayProblem.innerHTML = `
+      The total of 4 variables is ${p.total}.</p>
+      ${sitOne}</p>
+      ${sitTwo}</p>
+      ${sitThree}</p>
+      ${sitFour}</p>
+      All 4 variables became the same in the end.</p>
+      What is ${p.choose} at first?</p>
+
       `;
     }
   }
@@ -15776,6 +15983,48 @@ function handleSubmit(e) {
         }
       }
     }
+    // ANSWERS
+    if (level == "calSixb") {
+      if (setting == 1) {
+        if (p.type == "normalSpeedToTime") {
+          const oneUnit = p.differenceTime / Math.abs(p.timeA - p.timeB);
+          const actualTimeA = oneUnit * p.timeA;
+          correctAnswer = (actualTimeA / 60) * p.speedA;
+        }
+        if (p.type == "normalTimeToSpeed") {
+          const oneUnit = p.differenceSpeed / Math.abs(p.speedA - p.speedB);
+          console.log(`one unit is ${oneUnit}`);
+          if (p.question == 1) {
+            correctAnswer = (oneUnit * p.speedA * p.timeA) / 60;
+          }
+          if (p.question == 2) {
+            correctAnswer = oneUnit * p.speedA;
+          }
+          if (p.question == 3) {
+            correctAnswer = oneUnit * p.speedB;
+          }
+        }
+        if (p.type == "meet up") {
+          let speedAUnits;
+          let speedBUnits;
+          [speedBUnits, speedAUnits] = simplify(p.timeA, p.timeB);
+          console.log(speedBUnits);
+          const distance = speedAUnits * p.timeA;
+          const meetUp = distance / (p.speedA + p.speedB);
+          console.log(distance, meetUp);
+          if (meetUp % 1 == 0) {
+            correctAnswer = meetUp;
+          } else {
+            const quotient = Math.floor(meetUp);
+            let remainder = distance % (p.speedA + p.speedB);
+            let deno = p.speedA + p.speedB;
+            [remainder, deno] = simplify(remainder, deno);
+            correctAnswer = `${quotient} ${remainder}/${deno}`;
+          }
+        }
+      }
+    }
+
     // heuristics Answer
     if (level == "heuOne") {
       if (p.rollAB == "A" && p.rollVar == 0) {
@@ -16947,10 +17196,66 @@ function handleSubmit(e) {
         }
       }
     }
-
+    // ANSWERS
     if (level == "heuFiveb") {
       if (setting == 1 || setting == 2) {
         correctAnswer = p.answer;
+      }
+      //WORKING BACKWARDS TYPE 3 (INDEPENDENT)
+      if (setting == 3) {
+        let position = undefined;
+        if (p.choose == "A") position = p.first;
+        if (p.choose == "B") position = p.second;
+        if (p.choose == "C") position = p.third;
+        if (p.choose == "D") position = p.fourth;
+        const workingBackwardsT3Answer = (
+          position,
+          oneUnit,
+          increase,
+          decrease,
+          times,
+          divide
+        ) => {
+          console.log("here i am!");
+          console.log(position, oneUnit, increase, decrease, times, divide);
+
+          if (position == "-") {
+            return oneUnit * divide + decrease;
+          }
+          if (position == "+") {
+            return oneUnit * divide - increase;
+          }
+          if (position == "x") {
+            return oneUnit;
+          }
+          if (position == "/") {
+            return oneUnit * divide * times;
+          }
+        };
+
+        correctAnswer = workingBackwardsT3Answer(
+          position,
+          p.unit,
+          p.increase,
+          p.decrease,
+          p.times,
+          p.divide
+        );
+
+        // if (p.choose == "A") {
+        //   if (p.first == "-") {
+        //     correctAnswer = p.unit * p.divide + p.decrease;
+        //   }
+        //   if (p.first == "+") {
+        //     correctAnswer = p.unit * p.divide - p.increase;
+        //   }
+        //   if (p.first == "x") {
+        //     correctAnswer = p.unit;
+        //   }
+        //   if (p.first == "/") {
+        //     correctAnswer = p.unit * p.divide * p.times;
+        //   }
+        // }
       }
     }
     if (mulLevel == "multiples") {
@@ -17127,6 +17432,7 @@ function handleSubmit(e) {
         "calFour",
         "calFive",
         "calSix",
+        "calSixb",
       ];
       const levelDoNotClearNum = [
         2.05,
@@ -20165,6 +20471,29 @@ function genProblems() {
       };
     }
   }
+
+  // SETTINGS
+  if (level == "calSixb") {
+    normalDisplay();
+    setting = calArrAll(1, calArr, setting, 99);
+    setting = checkRange(setting, calArr);
+
+    if (setting == 1) {
+      return {
+        type: ["meet up", "normalTimeToSpeed", "normalSpeedToTime"][
+          genNumbers(3)
+        ],
+        question: [1, 2, 3][genNumbers(3)],
+        // type: ["normalSpeedToTime", "meet up", "catch up"][genNumbers(1)],
+        speedA: (genNumbers(9) + 2) * 10,
+        speedB: (genNumbers(9) + 2) * 10,
+        timeA: (genNumbers(12 - 1) + 1) * 5,
+        timeB: (genNumbers(12 - 1) + 1) * 5,
+        differenceTime: undefined,
+        differenceSpeed: undefined,
+      };
+    }
+  }
   // heuristics value
   // setting
   if (level == "heuOne") {
@@ -21155,8 +21484,11 @@ function genProblems() {
       };
     }
   }
-
+  // SETTINGS
   if (level == "heuFiveb") {
+    setting = calArrAll(3, calArr, setting, 9);
+    setting = checkRange(setting, calArr);
+
     if (setting == 1) {
       const gen_denoOne = genNumbers(4) + 2;
       const gen_denoTwo = genNumbers(4) + 2;
@@ -21192,6 +21524,22 @@ function genProblems() {
         numeThree: genNumbers(gen_denoThree - 1) + 1,
         total: (genNumbers(1000) + 99) * 3,
         answer: undefined,
+      };
+    }
+
+    if (setting == 3) {
+      return {
+        total: undefined,
+        increase: genNumbers(30) + 1,
+        decrease: genNumbers(30) + 1,
+        times: genNumbers(5 - 2) + 2,
+        divide: genNumbers(5 - 2) + 2,
+        choose: ["A", "B", "C", "D"][genNumbers(1)],
+        unit: undefined,
+        first: undefined,
+        second: undefined,
+        third: undefined,
+        fourth: undefined,
       };
     }
   }
@@ -22956,6 +23304,20 @@ function buttonLevelSetting() {
       displayProblem.style.textAlign = "left";
       break;
 
+    case "Cal.6b":
+      level = "calSixb";
+      scoreNeeded = 10;
+      setting = prompt("What level?\n1. Speed: Double Triangle\n\n99", 99);
+      if (
+        ![1, 2, 3, 4, 5, 6, 99].includes(setting * 1) &&
+        !setting.split("").includes("-")
+      )
+        setting = 99;
+      document.querySelector("#user-input").setAttribute("type", "text");
+      displayProblem.style.fontSize = "18px";
+      displayProblem.style.textAlign = "left";
+      break;
+
     case "Heu.1":
       level = "heuOne";
       setting = prompt("What level?\n1.More than / less than");
@@ -23090,8 +23452,14 @@ function buttonLevelSetting() {
     case "Heu.5b":
       level = "heuFiveb";
       setting = prompt(
-        "What level?\n1. Fractions: Working Backwards (Type 1)\n2. Fractions: Working Backwards (Type 2)\n\n9. All"
+        "What level?\n1. Working Backwards (Type 1)\n2. Working Backwards (Type 2)\n3. Working Backwards (Type 3) Independent\n\n9. All"
       );
+
+      if (
+        ![1, 2, 3, 9].includes(setting * 1) &&
+        !setting.split("").includes("-")
+      )
+        setting = 9;
       scoreNeeded = 10;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
