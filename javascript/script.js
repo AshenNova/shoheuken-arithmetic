@@ -22570,7 +22570,7 @@ function buttonLevelSetting() {
 
     case "Level 4.15":
       level = 4.15;
-      scoreNeeded = 20;
+      scoreNeeded = 10;
       highScoreName.innerHTML = highScore4DotZero15.name;
       highScoreTime.innerHTML = highScore4DotZero15.time;
       highScoreMistakes.innerHTML = highScore4DotZero15.mistake;
