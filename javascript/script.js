@@ -647,24 +647,26 @@ function calArrAll(max, arr, setting, maxSetting, level) {
   // console.log(maxSetting);
   if (setting == maxSetting || state.global == 1) {
     state.global = 1;
-
-    if (!arr.length) {
-      let min = 1;
-      console.log(level);
-      if (level == "calOne" || level == "calTwo" || level == "calThree") {
-        min = 3;
+    if (skipGlobalUpdateProblem != 1) {
+      if (!arr.length) {
+        let min = 1;
+        console.log(level);
+        if (level == "calOne" || level == "calTwo" || level == "calThree") {
+          min = 3;
+        }
+        if (level == "calFive") min = 0;
+        for (let i = min; i < max + 1; i++) {
+          arr.push(i);
+        }
       }
-      if (level == "calFive") min = 0;
-      for (let i = min; i < max + 1; i++) {
-        arr.push(i);
-      }
+      setting = arr[genNumbers(arr.length)];
+      arr.splice(arr.indexOf(setting), 1);
+      console.log(
+        `Setting: ${setting} chosen. The remaining settings in calculation arr is ${arr}`
+      );
     }
-    setting = arr[genNumbers(arr.length)];
-    arr.splice(arr.indexOf(setting), 1);
-    console.log(
-      `Setting: ${setting} chosen. The remaining settings in calculation arr is ${arr}`
-    );
   }
+
   return setting;
 }
 
