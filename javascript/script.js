@@ -2598,7 +2598,7 @@ function updateProblems() {
     p.num = p.num * 1;
     console.log(typeof p.num);
     if (p.num < 1) p.num += 1;
-    displayProblem.textContent = `${p.num} ≈ ?`;
+    displayProblem.textContent = `${accDecimal(p.num)} ≈ ?`;
   }
   if (level == 4.04) {
     if (p.numOne % 10 == 0) {
