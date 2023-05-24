@@ -17220,10 +17220,10 @@ function handleSubmit(e) {
           console.log(position, oneUnit, increase, decrease, times, divide);
 
           if (position == "-") {
-            return oneUnit * divide + decrease;
+            return oneUnit * times + decrease;
           }
           if (position == "+") {
-            return oneUnit * divide - increase;
+            return oneUnit * times - increase;
           }
           if (position == "x") {
             return oneUnit;
@@ -21534,7 +21534,7 @@ function genProblems() {
         decrease: genNumbers(30) + 1,
         times: genNumbers(5 - 2) + 2,
         divide: genNumbers(5 - 2) + 2,
-        choose: ["A", "B", "C", "D"][genNumbers(1)],
+        choose: ["A", "B", "C", "D"][genNumbers(4)],
         unit: undefined,
         first: undefined,
         second: undefined,
