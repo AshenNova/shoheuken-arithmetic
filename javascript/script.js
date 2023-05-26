@@ -7731,17 +7731,18 @@ function updateProblems() {
       setting == 14 ||
       setting == 15 ||
       setting == 16 ||
+      setting == 18 ||
       setting == 20
     ) {
       normalDisplay();
 
-      if (setting == 15) {
+      if (setting == 15 || setting == 18) {
         displayProblem.style.fontSize = "20px";
         displayProblem.style.textAlign = "left";
       }
     }
     // FRACTIONS DISPLAY
-    if (setting == 18 || setting == 19) {
+    if (setting == 19 || setting == 20) {
       simpleFractionDisplay();
     }
 
@@ -8156,6 +8157,7 @@ function updateProblems() {
     }
 
     if (setting == 18) {
+      normalDisplay();
       let zone = "a.m";
       let totalTime = p.hours * 60;
       zone = zoneOfDay(totalTime);
