@@ -18264,7 +18264,7 @@ function genProblems() {
   if (level == 3.12) {
     return {
       length: genNumbers(4) + 4,
-      breadth: genNumbers(3) + 3,
+      breadth: genNumbers(3) + 4,
       side: genNumbers(2) + 1,
       count: undefined,
     };

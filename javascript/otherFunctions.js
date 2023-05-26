@@ -425,9 +425,12 @@ const drawSquares = (x, y, width, side) => {
     // if (shadedArr.includes(i - x)) {
     //   shade = 1;
     // }
+
+    //IF TOP IS SHADED, SHADE
     if (shadedArr[i - x] == 1) {
       shade = 1;
     }
+    // SHADE LAST ROW
     if (i > x * y - 1 - x) {
       shade = 1;
     }
@@ -439,6 +442,23 @@ const drawSquares = (x, y, width, side) => {
       if (sum == x) {
         console.log("Entire figure will be filled");
         return "Error";
+      }
+    }
+
+    if (i > x * (y - 2)) {
+      let sum = 0;
+      for (let n = 0; n < shadedArr.length; n++) {
+        if (shadedArr[n * (i % x)] == 1) {
+          sum += 1;
+        }
+        if (sum > Math.ceil(y / 2)) {
+          shade = 0;
+        } else {
+          shade = 1;
+        }
+      }
+      if (sum == 0) {
+        shade = 1;
       }
     }
     if (shade == 1) {
@@ -458,6 +478,17 @@ const drawSquares = (x, y, width, side) => {
     // row += 1;
     column += 1;
   }
+  // for (let m = 0; m < x * y; m++) {
+  //   let check = 0;
+  //   if (shadedArr[m * x] == 0) {
+  //     check += 1;
+  //   }
+  //   if (check == y) {
+  //     console.log("Entire row empty");
+  //     return "Error";
+  //   }
+  // }
+
   console.log(shadedArr);
   // console.log(count);
   ctx.restore();
