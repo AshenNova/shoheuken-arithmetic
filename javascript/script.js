@@ -2007,6 +2007,7 @@ function updateProblems() {
 
     p.count = drawSquares(p.length, p.breadth, 30, p.side);
     drawGrid(p.length, p.breadth, 30);
+    if (p.count == "Error") return updateCalc();
   }
 
   if (level == 3.13) {
@@ -18262,7 +18263,7 @@ function genProblems() {
 
   if (level == 3.12) {
     return {
-      length: genNumbers(5) + 4,
+      length: genNumbers(4) + 4,
       breadth: genNumbers(3) + 3,
       side: genNumbers(2) + 1,
       count: undefined,

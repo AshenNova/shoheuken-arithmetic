@@ -412,6 +412,7 @@ const drawSquares = (x, y, width, side) => {
   let count = 0;
   let row = 0;
   let column = 0;
+  let shadedArr = [];
   for (let i = 0; i < x * y; i++) {
     // console.log(i, column, row);
 
@@ -420,7 +421,26 @@ const drawSquares = (x, y, width, side) => {
       row += 1;
       column = 0;
     }
-    const shade = genNumbers(2);
+    let shade = genNumbers(2);
+    // if (shadedArr.includes(i - x)) {
+    //   shade = 1;
+    // }
+    if (shadedArr[i - x] == 1) {
+      shade = 1;
+    }
+    if (i > x * y - 1 - x) {
+      shade = 1;
+    }
+    for (let i = 0; i < x; i++) {
+      let sum = 0;
+      if (shadedArr[i] == 1) {
+        sum += 1;
+      }
+      if (sum == x) {
+        console.log("Entire figure will be filled");
+        return "Error";
+      }
+    }
     if (shade == 1) {
       const starting = column * width;
       const stopping = row * width;
@@ -429,12 +449,16 @@ const drawSquares = (x, y, width, side) => {
       ctx.beginPath();
       ctx.rect(starting, stopping, width, width);
       ctx.fill();
+      shadedArr.push(1);
       count += 1;
       // console.log("Shading " + count, starting, stopping);
+    } else {
+      shadedArr.push(0);
     }
     // row += 1;
     column += 1;
   }
+  console.log(shadedArr);
   // console.log(count);
   ctx.restore();
   return count;
