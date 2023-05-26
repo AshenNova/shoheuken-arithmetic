@@ -4,6 +4,8 @@ const today = new Date(timeElapsed);
 console.log(today);
 // import { updateProblems } from "./updateProblems.js";
 import {
+  drawSquares,
+  drawGrid,
   draw3d,
   drawTriangle,
   parallelOverlapping,
@@ -1993,14 +1995,18 @@ function updateProblems() {
   }
 
   if (level == 3.12) {
-    displayProblem.innerHTML = `
-    Pattern 1: 1</br>
-    Pattern 2: 3</br>
-    Pattern 3: 6</br>
-    Pattern 4: 10</br>
-    ...</br>
-    Pattern ${p.numOne}: ?
-    `;
+    drawingDisplay();
+    // displayProblem.innerHTML = `
+    // Pattern 1: 1</br>
+    // Pattern 2: 3</br>
+    // Pattern 3: 6</br>
+    // Pattern 4: 10</br>
+    // ...</br>
+    // Pattern ${p.numOne}: ?
+    // `;
+
+    p.count = drawSquares(p.length, p.breadth, 30, p.side);
+    drawGrid(p.length, p.breadth, 30);
   }
 
   if (level == 3.13) {
@@ -13489,7 +13495,7 @@ function handleSubmit(e) {
     }
 
     if (level == 3.12) {
-      correctAnswer = p.numOne + 1 + "x" + p.numOne + "/2";
+      correctAnswer = p.count * p.side * p.side;
     }
 
     if (level == 3.13) {
@@ -18256,7 +18262,10 @@ function genProblems() {
 
   if (level == 3.12) {
     return {
-      numOne: genNumbers(94) + 5,
+      length: genNumbers(5) + 4,
+      breadth: genNumbers(3) + 3,
+      side: genNumbers(2) + 1,
+      count: undefined,
     };
   }
 
@@ -22205,18 +22214,15 @@ function buttonLevelSetting() {
       instructions.textContent = "";
       break;
 
-    // case "Level 3.12":
-    //   level = 3.12;
-    //   scoreNeeded = 20;
-    //   gold = 72;
-    //   highScoreName.innerHTML = highScore3DotZero12.name;
-    //   highScoreTime.innerHTML = highScore3DotZero12.time;
-    //   highScoreMistakes.innerHTML = highScore3DotZero12.mistake;
-    //   document.querySelector("#user-input").setAttribute("type", "text");
-    //   displayProblem.style.fontSize = "25px";
-    //   displayProblem.style.marginTop = "0";
-    //   instructions.textContent = "Form an Equation from the pattern";
-    //   break;
+    case "Level 3.12":
+      level = 3.12;
+      scoreNeeded = 20;
+      gold = 72;
+      document.querySelector("#user-input").setAttribute("type", "text");
+      displayProblem.style.fontSize = "25px";
+      displayProblem.style.marginTop = "0";
+      // instructions.textContent = "Form an Equation from the pattern";
+      break;
 
     // case "Level 3.13":
     //   level = 3.13;

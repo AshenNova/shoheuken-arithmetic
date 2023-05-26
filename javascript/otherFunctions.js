@@ -361,6 +361,85 @@ const updateCalc = function (skipGlobalUpdateProblem) {
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
 
+const drawGrid = (xSquares, ySquares, width) => {
+  ctx.save();
+  ctx.translate(0, 50);
+  ctx.setLineDash([1, 1]);
+
+  //CENTERING
+  const start = (400 - xSquares * width) / 2;
+  ctx.translate(start, 0);
+
+  // DRAWING HORIZONTAL LINES
+  for (let i = 0; i <= ySquares; i++) {
+    ctx.beginPath();
+    ctx.moveTo(0, i * width);
+    ctx.lineTo(width * xSquares, width * i);
+    // ctx.closePath();
+    ctx.stroke();
+  }
+  //DRAWING VERTICAL LINES
+  for (let i = 0; i <= xSquares; i++) {
+    ctx.beginPath();
+    ctx.moveTo(i * width, 0);
+    ctx.lineTo(width * i, ySquares * width);
+    // ctx.closePath();
+    ctx.stroke();
+  }
+
+  ctx.restore();
+};
+
+const drawSquares = (x, y, width, side) => {
+  ctx.save();
+  ctx.font = "1em serif";
+  ctx.fillText(`The length of each square is ${side}cm.`, 20, 20);
+  ctx.fillText(`What is the area below?`, 20, 40);
+  ctx.translate(0, 50);
+  // ctx.setLineDash([1, 1]);
+  ctx.fillStyle = "red";
+
+  //CENTERING
+  const start = (400 - x * width) / 2;
+
+  ctx.translate(start, 0);
+  // ctx.save();
+  // ctx.fillStyle = "black";
+  // ctx.beginPath();
+  // ctx.rect(0, 0, width, width);
+  // ctx.fill();
+  // ctx.restore();
+  let count = 0;
+  let row = 0;
+  let column = 0;
+  for (let i = 0; i < x * y; i++) {
+    // console.log(i, column, row);
+
+    if (i % x == 0 && i != 0) {
+      // console.log("Next Row :" + i, x);
+      row += 1;
+      column = 0;
+    }
+    const shade = genNumbers(2);
+    if (shade == 1) {
+      const starting = column * width;
+      const stopping = row * width;
+      // console.log(shade, starting, stopping);
+
+      ctx.beginPath();
+      ctx.rect(starting, stopping, width, width);
+      ctx.fill();
+      count += 1;
+      // console.log("Shading " + count, starting, stopping);
+    }
+    // row += 1;
+    column += 1;
+  }
+  // console.log(count);
+  ctx.restore();
+  return count;
+};
+
 const parallelOverlapping = (breadth, unitSentence, type) => {
   const perimeter = (breadth * unitSentence + breadth) * 2;
   const area = breadth * unitSentence * breadth;
@@ -968,6 +1047,8 @@ function drawIntervals(start, intervals, eachInterval, question) {
 
 export {
   // drawQuadrant,
+  drawSquares,
+  drawGrid,
   drawTriangle,
   parallelOverlapping,
   drawThis,
