@@ -4,6 +4,7 @@ const today = new Date(timeElapsed);
 console.log(today);
 // import { updateProblems } from "./updateProblems.js";
 import {
+  pieChart,
   drawSquares,
   drawGrid,
   draw3d,
@@ -10557,6 +10558,26 @@ function updateProblems() {
         `;
       }
     }
+    // PIECHART
+    if (setting == 7) {
+      drawingDisplay();
+      let types = ["fraction", "decimal", "ratio", "percentage", "angle"];
+      const index = types.indexOf(p.choice);
+      types.splice(index, 1);
+      const clue = types[genNumbers(4)];
+      const check = pieChart(
+        p.fractions,
+        p.decimals,
+        p.ratio,
+        p.percentage,
+        p.angles,
+        p.choice,
+        clue
+      );
+      if (check == "Error") {
+        return updateCalc();
+      }
+    }
   }
   // DISPLAY
   if (level == "calSixb") {
@@ -15993,6 +16014,14 @@ function handleSubmit(e) {
           correctAnswer = p.speedA;
         }
       }
+
+      if (setting == 7) {
+        if (p.choice == "fraction") correctAnswer = p.fractions;
+        if (p.choice == "decimal") correctAnswer = p.decimals;
+        if (p.choice == "ratio") correctAnswer = p.ratio;
+        if (p.choice == "percentage") correctAnswer = p.percentage;
+        if (p.choice == "angle") correctAnswer = p.angles;
+      }
     }
     // ANSWERS
     if (level == "calSixb") {
@@ -20388,7 +20417,7 @@ function genProblems() {
 
   //SETTINGS
   if (level == "calSix") {
-    setting = calArrAll(6, calArr, setting, 99);
+    setting = calArrAll(7, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 1) {
@@ -20482,6 +20511,19 @@ function genProblems() {
         speedB: genSpeedB,
         timeB: genNumbers(8) + 2,
         diffSpeed: undefined,
+      };
+    }
+    // PIECHART
+    if (setting == 7) {
+      return {
+        fractions: (genNumbers(5) + 1) * 5,
+        decimals: (genNumbers(5) + 1) * 5,
+        ratio: (genNumbers(5) + 1) * 5,
+        percentage: (genNumbers(5) + 1) * 5,
+        angles: (genNumbers(5) + 1) * 5,
+        choice: ["fraction", "decimal", "ratio", "percentage", "angle"][
+          genNumbers(5)
+        ],
       };
     }
   }
@@ -23302,11 +23344,11 @@ function buttonLevelSetting() {
       level = "calSix";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Fractions: Finding remainder\n2. Circles: Area and Perimeter\n3. Speed: Average Speed\n4. Speed: Moving Apart\n5. Speed: Meet up\n6. Speed: Catch up\n\n99",
-        99
+        "What level?\n1. Fractions: Finding remainder\n2. Circles: Area and Perimeter\n3. Speed: Average Speed\n4. Speed: Moving Apart\n5. Speed: Meet up\n6. Speed: Catch up\n7. Pie Chart\n\n99",
+        7
       );
       if (
-        ![1, 2, 3, 4, 5, 6, 99].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 6, 7, 99].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 99;

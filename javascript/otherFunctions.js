@@ -361,6 +361,196 @@ const updateCalc = function (skipGlobalUpdateProblem) {
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
 
+const pieChart = (f, d, r, p, a, choice, clue) => {
+  ctx.save();
+
+  // CONVERT TO ANGLES
+  const total = f + d + r + p + a;
+  console.log(total);
+
+  // DISPLAY
+  let fractionNumerator = f;
+  let fractionDenominator = total;
+  [fractionNumerator, fractionDenominator] = simplify(
+    fractionNumerator,
+    fractionDenominator
+  );
+  if (fractionNumerator == f) return "Error";
+
+  let decimalDisplay = d / total;
+  if (decimalDisplay.toString().split(".")[1] > 2) return "Error";
+
+  let ratioDisplay = r;
+  let ratioTotal = total;
+  [ratioDisplay, ratioTotal] = simplify(ratioDisplay, ratioTotal);
+  if (ratioDisplay == r) return "Error";
+
+  const percentageDisplay = (p / total) * 100;
+  if (percentageDisplay % 1 != 0) return "Error";
+
+  const angleDisplay = (a / total) * 360;
+  if (angleDisplay % 1 != 0) return "Error";
+
+  const fraction = (f / total) * 360;
+  const decimal = (d / total) * 360;
+  const ratio = (r / total) * 360;
+  const percentage = (p / total) * 360;
+  const angle = (a / total) * 360;
+  console.log(fraction, decimal, ratio, percentage, angle);
+  console.log(fraction + decimal + ratio + percentage + angle);
+
+  // draw arcs
+  ctx.font = "1em serif";
+  if (choice != "fraction") {
+    ctx.fillStyle = "#ef476f";
+    ctx.fillText(
+      `Fractions: ${fractionNumerator}/${fractionDenominator}`,
+      20,
+      20
+    );
+  }
+
+  if (choice != "decimal") {
+    ctx.fillStyle = "#ffd166";
+    // ctx.strokeStyle = "orange";
+    ctx.fillText(`Decimals: ${d / total}`, 20, 40);
+    // ctx.strokeText(`Decimals: ${d / total}`, 20, 40);
+  }
+
+  if (choice != "ratio") {
+    ctx.fillStyle = "#06d6a0";
+    ctx.strokeStyle = "green";
+    ctx.fillText(`Ratio: ${ratioDisplay}:${ratioTotal}`, 20, 60);
+    ctx.strokeText(`Ratio: ${ratioDisplay}:${ratioTotal}`, 20, 60);
+  }
+  if (choice != "percentage") {
+    ctx.fillStyle = "#118ab2";
+    ctx.fillText(`Percentage: ${percentageDisplay}%`, 20, 80);
+  }
+
+  if (choice != "angle") {
+    ctx.fillStyle = "#073b4c";
+    ctx.fillText(`Angles: ${angleDisplay}°`, 20, 100);
+  }
+
+  //CLUE
+  if (clue == "fraction") {
+    ctx.fillStyle = "#ef476f";
+    ctx.fillText(
+      `Fractions: ${fractionNumerator}/${fractionDenominator} => ${f}`,
+      20,
+      200
+    );
+  }
+
+  if (clue == "decimal") {
+    ctx.fillStyle = "#ffd166";
+    ctx.fillText(`Decimals: ${d / total} = ${d}`, 20, 200);
+  }
+
+  if (clue == "ratio") {
+    ctx.fillStyle = "#06d6a0";
+    ctx.strokeStyle = "green";
+    ctx.fillText(`Ratio: ${ratioDisplay}:${ratioTotal}`, 20, 200);
+    ctx.strokeText(`Ratio: ${ratioDisplay}:${ratioTotal}`, 20, 200);
+    ctx.fillText(`1 unit =  ${r}`, 20, 220);
+    ctx.strokeText(`1 unit =  ${r}`, 20, 220);
+  }
+  if (clue == "percentage") {
+    ctx.fillStyle = "#118ab2";
+    ctx.fillText(`${percentageDisplay}% = ${p}`, 20, 200);
+  }
+
+  if (clue == "angle") {
+    ctx.fillStyle = "#073b4c";
+    ctx.fillText(`${angleDisplay}° = ${a}`, 20, 200);
+  }
+
+  if (choice == "fraction") {
+    ctx.fillStyle = "#ef476f";
+  }
+  if (choice == "decimal") {
+    ctx.fillStyle = "#ffd166";
+  }
+  if (choice == "ratio") {
+    ctx.fillStyle = "#06d6a0";
+  }
+  if (choice == "percentage") {
+    ctx.fillStyle = "#118ab2";
+  }
+  if (choice == "angle") {
+    ctx.fillStyle = "#073b4c";
+  }
+
+  ctx.rect(20, 205, 110, 20);
+  ctx.fill();
+  ctx.fillStyle = "black";
+  if (choice == "angle") {
+    ctx.fillStyle = "white";
+  }
+  ctx.fillText(`Find ${choice}.`, 20, 220);
+  // ctx.stroke();
+  // ctx.strokeText();
+
+  ctx.strokeStyle = "black";
+  // FRACTIONS
+  ctx.translate(400 / 2 + 75, 275 / 2);
+  ctx.fillStyle = "#ef476f";
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.arc(0, 0, 90, 0, (fraction * Math.PI) / 180);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  // DECIMALS
+  let accStart = fraction;
+  let accEnd = fraction + decimal;
+  ctx.fillStyle = "#ffd166";
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.arc(0, 0, 90, (accStart * Math.PI) / 180, (accEnd * Math.PI) / 180);
+  // ctx.fillText(`${d}`, -20, 20);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  // RATIO;
+  accStart += decimal;
+  accEnd += ratio;
+  ctx.fillStyle = "#06d6a0";
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.arc(0, 0, 90, (accStart * Math.PI) / 180, (accEnd * Math.PI) / 180);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  // PERCENTAGE
+  accStart += ratio;
+  accEnd += percentage;
+  ctx.fillStyle = "#118ab2";
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.arc(0, 0, 90, (accStart * Math.PI) / 180, (accEnd * Math.PI) / 180);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  // ANGLES
+  accStart += percentage;
+  accEnd += angle;
+  ctx.fillStyle = "#073b4c";
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.arc(0, 0, 90, (accStart * Math.PI) / 180, (accEnd * Math.PI) / 180);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.restore();
+};
+
 const drawGrid = (xSquares, ySquares, width) => {
   ctx.save();
   ctx.translate(0, 50);
@@ -1102,6 +1292,7 @@ function drawIntervals(start, intervals, eachInterval, question) {
 
 export {
   // drawQuadrant,
+  pieChart,
   drawSquares,
   drawGrid,
   drawTriangle,
