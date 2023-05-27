@@ -400,6 +400,7 @@ const pieChart = (f, d, r, p, a, choice, clue) => {
   console.log(fraction + decimal + ratio + percentage + angle);
 
   // draw arcs
+
   ctx.font = "1em serif";
   if (choice != "fraction") {
     ctx.fillStyle = "#ef476f";
