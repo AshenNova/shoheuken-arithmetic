@@ -9469,7 +9469,7 @@ function updateProblems() {
         console.log(sceneOne, sceneTwo);
         oneUnit = value / Math.abs(newAF - newAE);
         if (p.question == "BF" || p.question == "BE") {
-          p.answer = newAE * oneUnit;
+          p.answer = newBE * oneUnit;
         }
         if (p.question == "AF") p.answer = newAF * oneUnit;
         if (p.question == "AE") p.answer = newAE * oneUnit;
@@ -23251,24 +23251,24 @@ function buttonLevelSetting() {
       10. Volume: Dimensions and Surface Area</p>
       11. Volume: Numerator with a Value</p>
       <hr></hr>
-      11. Ratio: Repeated Identity</p>
-      12. Ratio: Repeated Group</p>
-      13. Ratio: Identical Total</p>
-      14. Ratio: Unchanged Object</p>
-      15. Ratio: Unchanged Total</p>
-      16. Ratio: Unchanged Difference</p>
-      17. Ratio: Manipulation in units</p>
+      12. Ratio: Repeated Identity</p>
+      13. Ratio: Repeated Group</p>
+      14. Ratio: Identical Total</p>
+      15. Ratio: Unchanged Object</p>
+      16. Ratio: Unchanged Total</p>
+      17. Ratio: Unchanged Difference</p>
+      18. Ratio: Manipulation in units</p>
       <hr></hr>
-      18. Percentage: Repeated Identity</p>
-      19. Percentage: Repeated Group</p>
-      20. Percentage: Remainder Concept</p>
-      21. Percentage: Simple and Further discount</p>
-      22. Percentage: GST, discount and Service Charge</p>
+      19. Percentage: Repeated Identity</p>
+      29. Percentage: Repeated Group</p>
+      21. Percentage: Remainder Concept</p>
+      22. Percentage: Simple and Further discount</p>
+      23. Percentage: GST, discount and Service Charge</p>
       <hr></hr>
-      23. Average: Simple</p>
-      24. Average: Internal change</p>
-      25. Average: External Change</p>
-      26. Average: Odd consecutive days</p>
+      24. Average: Simple</p>
+      25. Average: Internal change</p>
+      26. Average: External Change</p>
+      27. Average: Odd consecutive days</p>
       <hr></hr>
       </p>99. All
       
