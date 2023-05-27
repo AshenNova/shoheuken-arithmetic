@@ -20516,11 +20516,11 @@ function genProblems() {
     // PIECHART
     if (setting == 7) {
       return {
-        fractions: (genNumbers(5) + 1) * 5,
-        decimals: (genNumbers(5) + 1) * 5,
-        ratio: (genNumbers(5) + 1) * 5,
-        percentage: (genNumbers(5) + 1) * 5,
-        angles: (genNumbers(5) + 1) * 5,
+        fractions: (genNumbers(10) + 1) * 4,
+        decimals: (genNumbers(10) + 1) * 4,
+        ratio: (genNumbers(10) + 1) * 4,
+        percentage: (genNumbers(10) + 1) * 4,
+        angles: (genNumbers(10) + 1) * 4,
         choice: ["fraction", "decimal", "ratio", "percentage", "angle"][
           genNumbers(5)
         ],
