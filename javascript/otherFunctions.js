@@ -425,7 +425,7 @@ const pieChart = (f, d, r, p, a, choice, clue) => {
     ctx.strokeText(`Ratio: ${ratioDisplay}:${ratioTotal}`, 20, 60);
   }
   if (choice != "percentage") {
-    ctx.fillStyle = "#118ab2";
+    ctx.fillStyle = "blue";
     ctx.fillText(`Percentage: ${percentageDisplay}%`, 20, 80);
   }
 
@@ -458,7 +458,7 @@ const pieChart = (f, d, r, p, a, choice, clue) => {
     ctx.strokeText(`1 unit =  ${r}`, 20, 200);
   }
   if (clue == "percentage") {
-    ctx.fillStyle = "#118ab2";
+    ctx.fillStyle = "blue";
     ctx.fillText(`${percentageDisplay}% = ${p}`, 20, 200);
   }
 
@@ -477,16 +477,16 @@ const pieChart = (f, d, r, p, a, choice, clue) => {
     ctx.fillStyle = "#06d6a0";
   }
   if (choice == "percentage") {
-    ctx.fillStyle = "#118ab2";
+    ctx.fillStyle = "blue";
   }
   if (choice == "angle") {
     ctx.fillStyle = "#073b4c";
   }
 
-  ctx.rect(20, 205, 110, 20);
+  ctx.rect(10, 205, 110, 20);
   ctx.fill();
   ctx.fillStyle = "black";
-  if (choice == "angle") {
+  if (choice == "angle" || choice == "percentage") {
     ctx.fillStyle = "white";
   }
   ctx.fillText(`Find ${choice}.`, 20, 220);
@@ -530,7 +530,7 @@ const pieChart = (f, d, r, p, a, choice, clue) => {
   // PERCENTAGE
   accStart += ratio;
   accEnd += percentage;
-  ctx.fillStyle = "#118ab2";
+  ctx.fillStyle = "blue";
   ctx.beginPath();
   ctx.moveTo(0, 0);
   ctx.arc(0, 0, 90, (accStart * Math.PI) / 180, (accEnd * Math.PI) / 180);
