@@ -451,10 +451,10 @@ const pieChart = (f, d, r, p, a, choice, clue) => {
   if (clue == "ratio") {
     ctx.fillStyle = "#06d6a0";
     ctx.strokeStyle = "green";
-    ctx.fillText(`Ratio: ${ratioDisplay}:${ratioTotal}`, 20, 200);
-    ctx.strokeText(`Ratio: ${ratioDisplay}:${ratioTotal}`, 20, 200);
-    ctx.fillText(`1 unit =  ${r}`, 20, 220);
-    ctx.strokeText(`1 unit =  ${r}`, 20, 220);
+    ctx.fillText(`Ratio: ${ratioDisplay}:${ratioTotal}`, 20, 180);
+    ctx.strokeText(`Ratio: ${ratioDisplay}:${ratioTotal}`, 20, 180);
+    ctx.fillText(`1 unit =  ${r}`, 20, 200);
+    ctx.strokeText(`1 unit =  ${r}`, 20, 200);
   }
   if (clue == "percentage") {
     ctx.fillStyle = "#118ab2";
