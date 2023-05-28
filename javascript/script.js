@@ -12739,6 +12739,7 @@ function updateProblems() {
       if (four_A % 1 != 0 || four_B % 1 != 0 || four_C % 1 != 0)
         return updateCalc();
       p.answer = four_A;
+      if (p.answer < 0) return updateCalc();
       displayProblem.innerHTML = `
       People A, B and C have a total of $${p.total.toLocaleString(
         "en-US"
