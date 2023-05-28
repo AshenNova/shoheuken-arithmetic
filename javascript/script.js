@@ -8632,10 +8632,19 @@ function updateProblems() {
       displayProblem.style.textAlign = "left";
       displayProblem.style.fontSize = "18px";
     }
+
     if (setting != 3) {
       threeNumerator.classList.remove("hidden");
       threeDenominator.classList.remove("hidden");
     }
+    if (setting == 3) {
+      threeWholeNumber.classList.remove("hidden");
+    }
+
+    // if (setting == 3) {
+    //   threeNumerator.classList.remove("hidden");
+    //   threeDenominator.classList.remove("hidden");
+    // }
 
     if (setting == 0) {
       normalDisplay();
