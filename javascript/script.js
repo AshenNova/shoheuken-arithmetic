@@ -12525,7 +12525,7 @@ function updateProblems() {
       (range == 1 && p.rollz == 4)
     ) {
       while (p.objectOneV == p.objectTwoV) {
-        objectOneV = genNumbers(10) + 2;
+        p.objectOneV = genNumbers(10) + 2;
       }
       if (p.objectOneV > p.objectTwoV) {
         p.sDifference = p.objectOneV - p.objectTwoV;
@@ -17191,13 +17191,13 @@ function handleSubmit(e) {
           let objectOneT = groups * p.objectOneV;
           thirdSentence = `${groups}x${p.objectOneV}=${objectOneT}`;
           correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}`;
-          correctAnswerTwo = quantityT;
+          correctAnswerTwo = objectOneT;
         }
         if (p.choice == 4) {
           let objectTwoT = groups * p.objectTwoV;
           thirdSentence = `${groups}x${p.objectTwoV}=${objectTwoT}`;
           correctAnswer = `${firstSentence}\n${secondSentence}\n${thirdSentence}`;
-          correctAnswerTwo = quantityT;
+          correctAnswerTwo = objectTwoT;
         }
         if (p.choice == 5) {
           let groupValue = p.objectOneV + p.objectTwoV;
