@@ -5975,6 +5975,17 @@ function updateProblems() {
       p.shape == "cube";
     }
     p.question = `What is the volume of the ${p.shape}?`;
+
+    const height = 60 + p.height * 5 + ((p.height * 5) / 3) * 2 + 10;
+    if (height > 275) {
+      canvas.setAttribute("height", height);
+    } else {
+      canvas.setAttribute("height", 275);
+      // ctx.save();
+      // ctx.translate(50, 0);
+      // ctx.restore();
+    }
+
     draw3d.cuboid(
       400,
       275,
