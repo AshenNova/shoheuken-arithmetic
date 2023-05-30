@@ -8488,20 +8488,44 @@ function updateProblems() {
       decimalCheck(p.numTwo);
     }
 
+    // DECIMALS: OVERLAPPING PLACE VALUE
     if (setting == 10) {
+      normalDisplay();
+      let overlappingArr = [
+        `${p.whole} ones`,
+        `${p.tenth} tenth`,
+        `${p.hundredth} hundredth`,
+      ];
+      for (let i = 0; i < 3; i++) {
+        const include = genNumbers(2);
+        if (include == 1) {
+          p.sentenceArr.push(overlappingArr[i]);
+        }
+      }
+      if (p.sentenceArr.length < 2) {
+        console.log("Empty 🥲");
+        return updateCalc();
+      }
+      console.log(p.sentenceArr);
+      displayProblem.innerHTML = `
+      Find the value of:</p>
+      ${p.sentenceArr.join(", ")}.`;
+    }
+
+    if (setting == 11) {
       p.numOne = p.numOne / p.convenientNumOne;
       decimalCheck(p.numOne);
       displayProblem.innerHTML = `
       ${p.numOne} x ${p.numTwo} = ?`;
       decimalCheck(p.numOne * p.numTwo);
     }
-    if (setting == 11) {
+    if (setting == 12) {
       p.numOne = p.numOne / p.convenientNumOne;
       decimalCheck(p.numOne);
       displayProblem.innerHTML = `
       ${p.numOne} x ${p.numTwo} = ?`;
     }
-    if (setting == 12) {
+    if (setting == 13) {
       p.numTwo = p.numOne;
       p.numOne = (p.numOne * p.multiplier) / p.divisor;
       decimalCheck(p.numOne);
@@ -8509,7 +8533,7 @@ function updateProblems() {
       ${p.numOne} ÷ ${p.numTwo} = ?`;
       decimalCheck(p.numOne / p.numTwo);
     }
-    if (setting == 13) {
+    if (setting == 14) {
       // START CHANGE DISPLAY
       if (p.numOne == p.numTwo) {
         return updateCalc();
@@ -8529,7 +8553,7 @@ function updateProblems() {
             `;
       }
     }
-    if (setting == 14) {
+    if (setting == 15) {
       p.numOne = p.numTwo * (genNumbers(99) + 2);
       if (p.operator == "x") {
         p.comparison = p.numOne * p.multiOne;
@@ -8545,7 +8569,7 @@ function updateProblems() {
       ${p.comparison} ${p.operator} ${p.divisor} = ?
       `;
     }
-    if (setting == 15) {
+    if (setting == 16) {
       let arrOne = [p.sets, "x", p.sums];
       let arrTwo = [p.sets, "x", p.numOne];
       let arrThree = [p.sets, "x", "?"];
@@ -15427,6 +15451,7 @@ function handleSubmit(e) {
       }
     }
 
+    //ANSWER
     if (level == "calFour") {
       if (setting == 1) {
         correctAnswer = `${p.numOne}, ${p.numOne * p.multiple}`;
@@ -15498,22 +15523,55 @@ function handleSubmit(e) {
         correctAnswer = p.numOne - p.numTwo;
         correctAnswer = accDecimal(correctAnswer);
       }
+
+      // DECIMALS: OVERLAPPING PLACE VALUE
       if (setting == 10) {
-        correctAnswer = p.numOne * p.numTwo;
-        correctAnswer = accDecimal(correctAnswer);
+        let sumArr = [];
+        for (let i = 0; i < p.sentenceArr.length; i++) {
+          console.log(p.sentenceArr[i]);
+          let num;
+
+          if (p.sentenceArr[i].includes("ones")) {
+            console.log("1");
+            num = p.whole * 1;
+            console.log(p.whole * 1);
+          }
+          if (p.sentenceArr[i].includes("tenth")) {
+            console.log("2");
+            num = p.tenth / 10;
+            console.log(p.tenth / 10);
+            // correctAnswer += num;
+          }
+          if (p.sentenceArr[i].includes("hundredth")) {
+            console.log("3");
+            console.log(p.hundredth / 100);
+            num = p.hundredth / 100;
+          }
+          sumArr.push(num);
+        }
+        let sum = 0;
+        console.log(sumArr);
+        sumArr.map((item) => (sum += item * 1));
+        correctAnswer = accDecimal(sum);
+        // }
       }
+
       if (setting == 11) {
         correctAnswer = p.numOne * p.numTwo;
         correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 12) {
-        correctAnswer = p.numOne / p.numTwo;
+        correctAnswer = p.numOne * p.numTwo;
         correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 13) {
-        correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
+        correctAnswer = p.numOne / p.numTwo;
+        correctAnswer = accDecimal(correctAnswer);
       }
       if (setting == 14) {
+        correctAnswer = (p.numOne / p.numTwo).toFixed(p.roundOff);
+      }
+      if (setting == 15) {
         if (p.operator == "x") {
           correctAnswer = p.comparison * p.divisor;
           correctAnswer = accDecimal(correctAnswer);
@@ -15524,7 +15582,7 @@ function handleSubmit(e) {
         }
         decimalCheck(correctAnswer);
       }
-      if (setting == 15) {
+      if (setting == 16) {
         console.log(p.sums, p.numOne, p.version);
 
         if (p.version == 4 || p.version == 8) {
@@ -20118,35 +20176,46 @@ function genProblems() {
         convenientNumTwo: [10, 100][genNumbers(2)],
       };
     }
+
+    // DECIMALS: OVERLAPPING PLACE VALUE
     if (setting == 10) {
+      return {
+        whole: genNumbers(99) + 1,
+        tenth: genNumbers(99) + 1,
+        hundredth: genNumbers(99) + 1,
+        sentenceArr: [],
+      };
+    }
+
+    if (setting == 11) {
       return {
         numOne: genNumbers(999) + 1,
         convenientNumOne: [10, 100, 1000][genNumbers(3)],
         numTwo: genNumbers(8) + 2,
       };
     }
-    if (setting == 11) {
+    if (setting == 12) {
       return {
         numOne: genNumbers(999) + 1,
         convenientNumOne: [10, 100, 1000][genNumbers(3)],
         numTwo: genNumbers(89) + 11,
       };
     }
-    if (setting == 12) {
+    if (setting == 13) {
       return {
         numOne: genNumbers(7) + 2,
         multiplier: genNumbers(989) + 11,
         divisor: [10, 100, 1000][genNumbers(3)],
       };
     }
-    if (setting == 13) {
+    if (setting == 14) {
       return {
         numOne: genNumbers(10) + 1,
         numTwo: [3, 7, 9, 11][genNumbers(4)],
         roundOff: genNumbers(3) + 1,
       };
     }
-    if (setting == 14) {
+    if (setting == 15) {
       return {
         operator: ["x", "÷"][genNumbers(2)],
         numOne: undefined,
@@ -20158,7 +20227,7 @@ function genProblems() {
       };
     }
     // Multiplication in sets
-    if (setting == 15) {
+    if (setting == 16) {
       const sum = genNumbers(89) + 10;
       const genNumOne = genNumbers(50) + 10;
       return {
@@ -23441,7 +23510,7 @@ function buttonLevelSetting() {
         99
       );
       if (
-        ![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 99].includes(
+        ![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 99].includes(
           setting * 1
         ) &&
         !setting.split("").includes("-")
@@ -23503,7 +23572,7 @@ function buttonLevelSetting() {
       // calBtn[4].addEventListener("click", function () {
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
-        28
+        99
       );
       // });
 
