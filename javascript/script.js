@@ -7729,7 +7729,7 @@ function updateProblems() {
       setting == 5 ||
       setting == 6 ||
       setting == 9 ||
-      setting == 12
+      setting == 13
     ) {
       workingDisplay();
     }
@@ -7737,28 +7737,28 @@ function updateProblems() {
     if (
       setting == 7 ||
       setting == 8 ||
-      setting == 10 ||
       setting == 11 ||
-      setting == 13 ||
+      setting == 12 ||
       setting == 14 ||
       setting == 15 ||
       setting == 16 ||
-      setting == 18 ||
-      setting == 20
+      setting == 17 ||
+      setting == 19 ||
+      setting == 21
     ) {
       normalDisplay();
 
-      if (setting == 15 || setting == 18) {
+      if (setting == 16 || setting == 19) {
         displayProblem.style.fontSize = "20px";
         displayProblem.style.textAlign = "left";
       }
     }
     // FRACTIONS DISPLAY
-    if (setting == 19 || setting == 20) {
+    if (setting == 20 || setting == 21) {
       simpleFractionDisplay();
     }
 
-    if (setting == 17) {
+    if (setting == 18) {
       drawingDisplay();
     }
     if (setting == 1) {
@@ -7981,17 +7981,42 @@ function updateProblems() {
       workingAnswer.textContent = "?";
     }
 
+    // OVERLAPPING PLACE VALUE
     if (setting == 10) {
+      normalDisplay();
+      displayProblem.style.fontSize = "1em";
+      let overlappingArr = [
+        `${p.whole} ones`,
+        `${p.tens} tens`,
+        `${p.hundreds} hundreds`,
+      ];
+      for (let i = 2; i > 0; i--) {
+        const include = genNumbers(2);
+        if (include == 1) {
+          p.sentenceArr.push(overlappingArr[i]);
+        }
+      }
+      if (p.sentenceArr.length < 2) {
+        console.log("Empty 🥲");
+        return updateCalc();
+      }
+      console.log(p.sentenceArr);
+      displayProblem.innerHTML = `
+      Find the value of:</p>
+      ${p.sentenceArr.join(", ")}.`;
+    }
+
+    if (setting == 11) {
       let num = p.multiplier * p.divisor;
       displayProblem.innerHTML = `${num} ÷ ${p.divisor} = ?`;
     }
 
-    if (setting == 11) {
+    if (setting == 12) {
       let num = p.multiplier * p.divisor + p.remainder;
       if (p.remainder == 0) return updateCalc();
       displayProblem.innerHTML = `${num} ÷ ${p.divisor} = ?`;
     }
-    if (setting == 12) {
+    if (setting == 13) {
       let num = genUniqNum(3);
       let str = num.toString();
       console.log(str);
@@ -8005,7 +8030,7 @@ function updateProblems() {
       workingAnswer.textContent = num * p.multiplier;
     }
 
-    if (setting == 13) {
+    if (setting == 14) {
       let arrOne = [p.sets, "x", p.sums];
       let arrTwo = [p.sets, "x", p.numOne];
       let arrThree = [p.sets, "x", "?"];
@@ -8091,7 +8116,7 @@ function updateProblems() {
       displayProblem.textContent = `${arrDisplay}`;
     }
 
-    if (setting == 14) {
+    if (setting == 15) {
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
       p.num = p.quotient * p.divisor + p.remainder;
@@ -8112,7 +8137,7 @@ function updateProblems() {
     }
 
     // LEFT SIDE RIGHT SIDE
-    if (setting == 15) {
+    if (setting == 16) {
       let leftSide = resultSide(p.limit, p.multiMin, p.multiMax);
 
       // console.log(leftSide);
@@ -8144,7 +8169,7 @@ function updateProblems() {
       displayProblem.innerHTML = tempStatementArr;
     }
     // MULTIPLICATION AND DIVISION WHILE BREAKING UP CONVENIENT NUMBERS
-    if (setting == 16) {
+    if (setting == 17) {
       p.numOne = p.numOne * p.convenientOne;
       p.numTwo = p.numTwo * p.convenientTwo;
       if (p.numOne * p.numTwo > 10000) return updateCalc();
@@ -8164,11 +8189,11 @@ function updateProblems() {
       }
     }
 
-    if (setting == 17) {
+    if (setting == 18) {
       drawIntervals(p.start, p.intervals, p.eachInterval, p.arrow);
     }
 
-    if (setting == 18) {
+    if (setting == 19) {
       normalDisplay();
       let zone = "a.m";
       let totalTime = p.hours * 60;
@@ -8204,7 +8229,7 @@ function updateProblems() {
     }
 
     // FRACTIONS: ADDITION AND SUBTRACTION
-    if (setting == 19) {
+    if (setting == 20) {
       [p.numeOne, p.denoOne] = simplify(p.numeOne, p.denoOne);
       [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
       if (p.denoOne == p.denoTwo) return updateCalc();
@@ -8231,7 +8256,7 @@ function updateProblems() {
     }
 
     //FRACTIONS: EXPANSION AND SIMPLIFICATION
-    if (setting == 20) {
+    if (setting == 21) {
       [p.oriNume, p.oriDeno] = simplify(p.oriNume, p.oriDeno);
       if (p.mulOne == p.mulTwo) p.mulTwo += 1;
       const firstNume = p.oriNume * p.mulOne;
@@ -15326,10 +15351,33 @@ function handleSubmit(e) {
       if (setting == 9) {
         correctAnswer = p.numOne * p.multiple;
       }
-      if (setting == 10) correctAnswer = p.multiplier;
-      if (setting == 11) correctAnswer = `${p.multiplier}r${p.remainder}`;
-      if (setting == 12) correctAnswer = p.replaced;
-      if (setting == 13) {
+      // OVERLAPPING PLACE VALUE
+      if (setting == 10) {
+        let sumArr = [];
+        for (let i = 0; i < p.sentenceArr.length; i++) {
+          console.log(p.sentenceArr[i]);
+          let num;
+
+          if (p.sentenceArr[i].includes("ones")) {
+            num = p.whole * 1;
+          }
+          if (p.sentenceArr[i].includes("tens")) {
+            num = p.tens * 10;
+          }
+          if (p.sentenceArr[i].includes("hundreds")) {
+            num = p.hundreds * 100;
+          }
+          sumArr.push(num);
+        }
+        let sum = 0;
+        sumArr.map((item) => (sum += item * 1));
+        correctAnswer = accDecimal(sum);
+      }
+
+      if (setting == 11) correctAnswer = p.multiplier;
+      if (setting == 12) correctAnswer = `${p.multiplier}r${p.remainder}`;
+      if (setting == 13) correctAnswer = p.replaced;
+      if (setting == 14) {
         console.log(p.sums, p.numOne, p.version);
 
         if (p.version == 4 || p.version == 8) {
@@ -15354,17 +15402,17 @@ function handleSubmit(e) {
           correctAnswer = correctAnswer * p.sets;
         }
       }
-      if (setting == 14) {
+      if (setting == 15) {
         correctAnswer = p.num;
       }
 
       // LEFT SIDE RIGHT SIDE
-      if (setting == 15) {
+      if (setting == 16) {
         correctAnswer = p.answer;
       }
 
       // MULTIPLICATION AND DIVISION WHILE BREAKING UP CONVENIENT NUMBERS
-      if (setting == 16) {
+      if (setting == 17) {
         if (p.operator == "x") {
           correctAnswer = p.numOne * p.numTwo;
         }
@@ -15372,10 +15420,10 @@ function handleSubmit(e) {
           correctAnswer = p.numTwo;
         }
       }
-      if (setting == 17) {
+      if (setting == 18) {
         correctAnswer = p.start + p.eachInterval * p.arrow;
       }
-      if (setting == 18) {
+      if (setting == 19) {
         if (p.beforeAfter == "before") {
           let totalTime = undefined;
           totalTime =
@@ -15427,7 +15475,7 @@ function handleSubmit(e) {
       }
 
       // FRACTIONS: ADDITION AND SUBTRACTION
-      if (setting == 19) {
+      if (setting == 20) {
         const commonDenoFind = commonDeno(p.denoOne, p.denoTwo);
         const newNumeOne = (commonDenoFind / p.denoOne) * p.numeOne;
         const newNumeTwo = (commonDenoFind / p.denoTwo) * p.numeTwo;
@@ -15446,7 +15494,7 @@ function handleSubmit(e) {
       }
 
       //FRACTIONS: EXPANSION AND SIMPLIFICATION
-      if (setting == 20) {
+      if (setting == 21) {
         correctAnswer = p.answer;
       }
     }
@@ -19899,7 +19947,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(20, calArr, setting, 99, level);
+    setting = calArrAll(21, calArr, setting, 99, level);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let thousands = genNumbers(9) + 1;
@@ -19993,7 +20041,17 @@ function genProblems() {
         multiple: genNumbers(8) + 2,
       };
     }
-    if (setting == 10 || setting == 11) {
+
+    if (setting == 10) {
+      return {
+        whole: genNumbers(99) + 1,
+        tens: genNumbers(99) + 1,
+        hundreds: genNumbers(99) + 1,
+        sentenceArr: [],
+      };
+    }
+
+    if (setting == 11 || setting == 12) {
       let num = genNumbers(7) + 3;
       return {
         divisor: num,
@@ -20001,7 +20059,7 @@ function genProblems() {
         remainder: genNumbers(num),
       };
     }
-    if (setting == 12) {
+    if (setting == 13) {
       return {
         num: undefined,
         multiplier: genNumbers(8) + 2,
@@ -20009,7 +20067,7 @@ function genProblems() {
       };
     }
     // Multiplication in sets
-    if (setting == 13) {
+    if (setting == 14) {
       const sum = genNumbers(5) + 1;
       const genNumOne = genNumbers(5) + 1;
       return {
@@ -20022,7 +20080,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 14) {
+    if (setting == 15) {
       const gen_divisor = genNumbers(8) + 2;
       return {
         divisor: gen_divisor,
@@ -20033,7 +20091,7 @@ function genProblems() {
     }
 
     // LEFT SIDE RIGHT SIDE
-    if (setting == 15) {
+    if (setting == 16) {
       return {
         // symbolOne: ["+", "-", "x", "/"][genNumbers(1)],
         // symbolTwo: ["+", "-", "x", "/"][genNumbers(1)],
@@ -20048,7 +20106,7 @@ function genProblems() {
       };
     }
     // MULTIPLICATION AND DIVISION WHILE BREAKING UP CONVENIENT NUMBERS
-    if (setting == 16) {
+    if (setting == 17) {
       return {
         operator: ["x", "÷"][genNumbers(2)],
         numOne: genNumbers(7) + 2,
@@ -20058,7 +20116,7 @@ function genProblems() {
       };
     }
     // PARTS AND INTERVALS
-    if (setting == 17) {
+    if (setting == 18) {
       const gen_intervals = [5, 8, 10][genNumbers(3)];
       return {
         start: genNumbers(5999) + 1000,
@@ -20068,7 +20126,7 @@ function genProblems() {
         arrow: genNumbers(gen_intervals - 1) + 1,
       };
     }
-    if (setting == 18) {
+    if (setting == 19) {
       return {
         hours: genNumbers(24),
         mins: genNumbers(60),
@@ -20078,7 +20136,7 @@ function genProblems() {
       };
     }
     // FRACTIONS: ADDITION AND SUBTRACTION
-    if (setting == 19) {
+    if (setting == 20) {
       const gen_denoOne = genNumbers(9) + 2;
       const gen_denoTwo = genNumbers(8) + 3;
       return {
@@ -20090,7 +20148,7 @@ function genProblems() {
       };
     }
     // FRACTIONS: EXPAND AND SIMPLIFICATION
-    if (setting == 20) {
+    if (setting == 21) {
       const gen_deno = genNumbers(9) + 3;
       const gen_nume = genNumbers(gen_deno - 2) + 2;
       return {
@@ -23489,12 +23547,13 @@ function buttonLevelSetting() {
       level = "calThree";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Working: Long Division ( No remainder )\n11. Working: Long Division ( Remainder )\n12. Working: Multiplication ( Single Blank )\n13. Multiplication in sets\n14. Long Division: Simple Statement\n15. Left Side Right Side + - x ÷\n16. Multiplication and Division of Convenient Numbers\n17. Parts and Intervals\n18. Time: Timeline ( hours and mins )\n19. Fractions: Addition and Subtraction\n20. Fractions: Expansion and simplification\n\n99. All",
+        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Overlapping Place Value\n11. Working: Long Division ( No remainder )\n12. Working: Long Division ( Remainder )\n13. Working: Multiplication ( Single Blank )\n14. Multiplication in sets\n15. Long Division: Simple Statement\n16. Left Side Right Side + - x ÷\n17. Multiplication and Division of Convenient Numbers\n18. Parts and Intervals\n19. Time: Timeline ( hours and mins )\n20. Fractions: Addition and Subtraction\n21. Fractions: Expansion and simplification\n\n99. All",
         99
       );
       if (
         ![
-          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 99,
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+          21, 99,
         ].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
