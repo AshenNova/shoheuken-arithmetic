@@ -1,3 +1,5 @@
+let setTime = 3;
+
 const timeElapsed = Date.now();
 const today = new Date(timeElapsed);
 // console.log(today.toDateString());
@@ -481,7 +483,7 @@ function clickStart() {
   }
 
   // Timer1 countdown
-  let time = 3;
+  let time = setTime;
   const countDownOne = setInterval(function () {
     timerD.innerHTML = time;
     time--;
@@ -13037,7 +13039,52 @@ function updateProblems() {
       `;
     }
   }
-
+  // DISPLAY
+  if (level == "heuSix") {
+    normalDisplay();
+    // LOWEST COMMON TIME
+    if (setting == 1) {
+      const timeUnits = ["h", "mins"];
+      if (p.type == "merge") {
+        if (p.version == "paint") {
+          displayProblem.innerHTML = `
+          Person A takes ${p.timeA} ${timeUnits[0]} to paint a house.</p>
+          Person B takes ${p.timeB} ${timeUnits[0]} to paint the same house.</p>
+          How long would it take for them to paint the house together?</p>
+          `;
+        }
+        if (p.version == "tap") {
+          displayProblem.innerHTML = `
+          Tap A takes ${p.timeA} ${timeUnits[1]} to fill a beaker.</p>
+          Tap B takes ${p.timeB} ${timeUnits[1]} to fill the same beaker.</p>
+          How long would it take for both taps to fill the same beaker together?</p>
+          `;
+        }
+      }
+      if (p.type == "split") {
+        p.total = genNumbers(5) + 5;
+        p.timeA = p.total + genNumbers(5) + 1;
+        if (p.version == "paint") {
+          displayProblem.innerHTML = `
+          Person A and B took ${p.total} ${timeUnits[0]} to paint a house together.</p>
+          Person A takes ${p.timeA} ${timeUnits[0]} to paint the same house alone.</p>
+          How long would it take for Person B to paint the house by himself?</p>
+          `;
+        }
+        if (p.version == "tap") {
+          displayProblem.innerHTML = `
+          Tap A and B took ${p.total} ${timeUnits[1]} to fill a beaker together.</p>
+          Tap A takes ${p.timeA} ${timeUnits[1]} to fill the same beaker itself.</p>
+          How long would it take for Tap B to fill the beaker by itself?</p>
+          `;
+        }
+      }
+      displayProblem.insertAdjacentHTML(
+        "beforeend",
+        "<i>Leave your answer in mixed fraction if needed.</i>"
+      );
+    }
+  }
   // MULTIPLES
   if (mulLevel == "multiples") {
     displayProblem.innerHTML = `${p.numFive} ${p.operator} ${
@@ -17573,6 +17620,50 @@ function handleSubmit(e) {
         // }
       }
     }
+    //ANSWERS
+    if (level == "heuSix") {
+      // LOWEST COMMON TIME
+      if (setting == 1) {
+        if (p.type == "merge") {
+          let theCommonDeno = commonDeno(p.timeA, p.timeB);
+          const multiA = theCommonDeno / p.timeA;
+          const multiB = theCommonDeno / p.timeB;
+          const total = multiA + multiB;
+          correctAnswer = total / theCommonDeno;
+          if (total % theCommonDeno != 0) {
+            const quotient = Math.floor(total / theCommonDeno);
+            let remainder = total % theCommonDeno;
+            [remainder, theCommonDeno] = simplify(remainder, theCommonDeno);
+            if (quotient == 0) {
+              correctAnswer = `${remainder}/${theCommonDeno}`;
+            }
+            if (quotient > 0) {
+              correctAnswer = `${quotient} ${remainder}/${theCommonDeno}`;
+            }
+          }
+        }
+
+        if (p.type == "split") {
+          let theCommonMultiple = commonDeno(p.total, p.timeA);
+          const multiTotal = theCommonMultiple / p.total;
+          const multiB = theCommonMultiple / p.timeA;
+          let quantityB = multiTotal - multiB;
+          if (quantityB == 1) {
+            correctAnswer = theCommonMultiple;
+          }
+          if (quantityB > 1) {
+            const quotient = Math.floor(theCommonMultiple / quantityB);
+            let remainder = theCommonMultiple % quantityB;
+            [remainder, theCommonMultiple] = simplify(
+              remainder,
+              theCommonMultiple
+            );
+
+            correctAnswer = `${quotient} ${remainder}/${quantityB}`;
+          }
+        }
+      }
+    }
     if (mulLevel == "multiples") {
       correctAnswer = p.numFive * (multiplesArr.length - 1);
     }
@@ -17674,6 +17765,7 @@ function handleSubmit(e) {
         "heuFour",
         "heuFive",
         "heuFiveb",
+        "heuSix",
       ];
 
       //CALCULATIONS
@@ -17740,6 +17832,7 @@ function handleSubmit(e) {
         "heuFour",
         "heuFive",
         "heuSix",
+        "heuSixb",
         "heuTwob",
         "calOne",
         "calTwo",
@@ -17953,6 +18046,7 @@ function handleSubmit(e) {
         "heuFour",
         "heuFive",
         "heuFiveb",
+        "heuSix",
       ];
 
       // HEURISTICS
@@ -21909,6 +22003,22 @@ function genProblems() {
     }
   }
 
+  //SETTINGS
+  if (level == "heuSix") {
+    setting = calArrAll(1, calArr, setting, 9);
+    setting = checkRange(setting, calArr);
+    // LOWEST COMMON TIME
+    if (setting == 1) {
+      return {
+        type: ["merge", "split"][genNumbers(2)],
+        version: ["paint", "tap"][genNumbers(2)],
+        timeA: genNumbers(10) + 1,
+        timeB: genNumbers(10) + 1,
+        total: undefined,
+      };
+    }
+  }
+
   if (level == "1 times table") {
     return {
       numFive: 1,
@@ -22054,15 +22164,17 @@ for (let i = 0; i < settingButton.length; i++) {
   });
 }
 
+// INPUT TYPE 2
 for (let i = 0; i < heuristics.length; i++) {
   heuristics[i].addEventListener("dblclick", function () {
     buttonLevel = this.innerHTML;
     mulLevel = "nil";
-
     buttonLevelSetting();
     levelBox();
+    // if (this.textContent != "Heu.6") {
     document.querySelector(".input-box").classList.add("hidden");
     ourForm2.classList.remove("hidden");
+    // }
   });
 }
 
@@ -23804,6 +23916,11 @@ function buttonLevelSetting() {
       setting = prompt(
         "What level?\n1. Grouping with Difference\n2. Supposition (Negative)\n3. Supposition negative ( Difference)\n4. Identical Quantity with Difference\n5. Substitution\n6. Shaking Hands\n7. Bonus\n\n9. All"
       );
+      if (
+        ![1, 2, 3, 4, 5, 6, 7, 9].includes(setting * 1) &&
+        !setting.split("").includes("-")
+      )
+        setting = 9;
       range = 0;
       scoreNeeded = 10;
       displayProblem.style.fontSize = "18px";
@@ -23824,6 +23941,20 @@ function buttonLevelSetting() {
         !setting.split("").includes("-")
       )
         setting = 9;
+      scoreNeeded = 10;
+      displayProblem.style.fontSize = "18px";
+      displayProblem.style.textAlign = "left";
+      document.querySelector("#user-input").setAttribute("type", "text");
+      helpMe.style.fontSize = "18px";
+      helpMe.style.textAlign = "left";
+      break;
+
+    case "Heu.6":
+      level = "heuSix";
+      setting = prompt("What level?\n1. Lowest Common Time\n\n9. All", 9);
+      if (![1, 9].includes(setting * 1) && !setting.split("").includes("-")) {
+        setting = 9;
+      }
       scoreNeeded = 10;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
