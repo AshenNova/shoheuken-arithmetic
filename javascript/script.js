@@ -8519,17 +8519,19 @@ function updateProblems() {
     if (setting == 10) {
       normalDisplay();
       let overlappingArr = [
-        `${p.whole} ones`,
+        `${p.hundreds} hundreds`,
+        `${p.tens} tens`,
+        `${p.ones} ones`,
         `${p.tenth} tenth`,
         `${p.hundredth} hundredth`,
       ];
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < 5; i++) {
         const include = genNumbers(2);
         if (include == 1) {
           p.sentenceArr.push(overlappingArr[i]);
         }
       }
-      if (p.sentenceArr.length < 2) {
+      if (p.sentenceArr.length < 3) {
         console.log("Empty 🥲");
         return updateCalc();
       }
@@ -15626,15 +15628,25 @@ function handleSubmit(e) {
           console.log(p.sentenceArr[i]);
           let num;
 
+          if (p.sentenceArr[i].includes("tens")) {
+            console.log("1");
+            num = p.tens * 10;
+            // console.log(p.whole * 1);
+          }
+          if (p.sentenceArr[i].includes("hundreds")) {
+            console.log("1");
+            num = p.hundreds * 100;
+            // console.log(p.whole * 1);
+          }
           if (p.sentenceArr[i].includes("ones")) {
             console.log("1");
-            num = p.whole * 1;
-            console.log(p.whole * 1);
+            num = p.ones * 1;
+            // console.log(p.whole * 1);
           }
           if (p.sentenceArr[i].includes("tenth")) {
             console.log("2");
             num = p.tenth / 10;
-            console.log(p.tenth / 10);
+            // console.log(p.tenth / 10);
             // correctAnswer += num;
           }
           if (p.sentenceArr[i].includes("hundredth")) {
@@ -20332,7 +20344,9 @@ function genProblems() {
     // DECIMALS: OVERLAPPING PLACE VALUE
     if (setting == 10) {
       return {
-        whole: genNumbers(99) + 1,
+        ones: genNumbers(99) + 1,
+        tens: genNumbers(99) + 1,
+        hundreds: genNumbers(99) + 1,
         tenth: genNumbers(99) + 1,
         hundredth: genNumbers(99) + 1,
         sentenceArr: [],
