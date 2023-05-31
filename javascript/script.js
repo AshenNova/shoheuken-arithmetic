@@ -11825,28 +11825,64 @@ function updateProblems() {
       }
 
       let lineThree = ["A", "B"][genNumbers(2)];
-      if (lineThree == "A") {
+      p.othersLast = lineThree;
+      if (p.oneOrTwo == "One" && lineThree == "A") {
         lineThree = `${p.objectOne} has ${p.endOne} in the end.`;
       }
-      if (lineThree == "B") {
+      if (p.oneOrTwo == "One" && lineThree == "B") {
+        lineThree = `${p.objectTwo} has ${p.endTwo}.`;
+      }
+      if (p.oneOrTwo == "Two" && lineThree == "A") {
+        lineThree = `${p.objectOne} has ${p.endOne}.`;
+      }
+      if (p.oneOrTwo == "Two" && lineThree == "B") {
         lineThree = `${p.objectTwo} has ${p.endTwo} in the end.`;
       }
 
       let lineFour = undefined;
-      if (p.answer == "A") {
-        lineFour = `What is ${p.objectOne} at first?`;
+      // if (p.oneOrTwo == "One") {
+      //   p.answer = ["total", "other"][genNumbers(2)];
+      // }
+      // if (p.oneOrTwo == "Two") {
+      //   p.answer = ["total", "other"][genNumbers(2)];
+      // }
+
+      // if (p.answer == "A") {
+      //   lineFour = `What is ${p.objectOne} at first?`;
+      // }
+      // if (p.answer == "B") {
+      //   lineFour = `What is ${p.objectTwo} at first?`;
+      // }
+
+      if (
+        (p.oneOrTwo == "One" && p.othersLast == "A") ||
+        (p.oneOrTwo == "Two" && p.othersLast == "B")
+      ) {
+        p.answer = ["total", "other"][genNumbers(2)];
       }
-      if (p.answer == "B") {
-        lineFour = `What is ${p.objectTwo} at first?`;
-      }
+
       if (p.answer == "total") {
         lineFour = `What is the total at first?`;
       }
+
+      if (
+        (p.oneOrTwo == "One" && p.othersLast == "B") ||
+        (p.oneOrTwo == "Two" && p.othersLast == "A")
+      ) {
+        p.answer = "other";
+      }
+
       if (p.answer == "other") {
-        if (p.oneOrTwo == "One") {
+        // if (p.oneOrTwo == "One") {
+        //   lineFour = `What is ${p.objectTwo} at in the end?`;
+        // }
+        // if (p.oneOrTwo == "Two") {
+        //   lineFour = `What is ${p.objectOne} at in the end?`;
+        // }
+        if (p.othersLast == "A") {
           lineFour = `What is ${p.objectTwo} at in the end?`;
         }
-        if (p.oneOrTwo == "Two") {
+        if (p.othersLast == "B") {
           lineFour = `What is ${p.objectOne} at in the end?`;
         }
       }
@@ -17058,10 +17094,10 @@ function handleSubmit(e) {
           correctAnswer = p.startOne + p.startTwo;
         }
         if (p.answer == "other") {
-          if (p.oneOrTwo == "One") {
+          if (p.othersLast == "A") {
             correctAnswer = p.endTwo;
           }
-          if (p.oneOrTwo == "Two") {
+          if (p.othersLast == "B") {
             correctAnswer = p.endOne;
           }
         }
@@ -21473,30 +21509,6 @@ function genProblems() {
   }
   // setting
   if (level == "heuThreeb") {
-    // let roll = undefined;
-    // let settingText = setting.toString();
-
-    // if (settingText.includes("-")) {
-    //   console.log("range detected");
-    //   range = 1;
-    //   settingText.split("-");
-    //   if (!heuArr.length) {
-    //     for (let i = 1; i <= settingText[settingText.length - 1]; i++) {
-    //       heuArr.push(i);
-    //     }
-    //     console.log(heuArr);
-    //   }
-    //   roll = heuArr[genNumbers(heuArr.length)];
-    //   let index = heuArr.indexOf(roll);
-    //   heuArr.splice(index, 1);
-    // } else {
-    //   console.log("Not range detected");
-    //   setting = parseInt(setting);
-    //   if (isNaN(setting)) {
-    //     setting = 9;
-    //   }
-    // }
-
     setting = calArrAll(5, calArr, setting, 9);
     setting = checkRange(setting, calArr);
 
@@ -21576,8 +21588,9 @@ function genProblems() {
         endOne: undefined,
         endTwo: undefined,
         oneOrTwo: ["One", "Two"][genNumbers(2)],
-        answer: ["A", "B", "total", "other"][genNumbers(4)],
+        answer: undefined,
         rollz: 4,
+        othersLast: undefined,
       };
     }
     // WORKING BACKWARDS: STRAIGHTLINE
