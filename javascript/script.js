@@ -12602,6 +12602,67 @@ function updateProblems() {
         }
       }
     }
+    //SIMULTANEOUS EQUATION
+    if (setting == 7) {
+      let totalAOne = p.varA;
+      let totalATwo = p.varA;
+      let totalBOne = p.varB;
+      let totalBTwo = p.varB;
+      [p.sceneAOne, totalAOne] = simplify(p.sceneAOne, totalAOne);
+      [p.sceneATwo, totalATwo] = simplify(p.sceneATwo, totalATwo);
+      [p.sceneBOne, totalBOne] = simplify(p.sceneBOne, totalBOne);
+      [p.sceneBTwo, totalBTwo] = simplify(p.sceneBTwo, totalBTwo);
+
+      if (totalAOne != totalATwo || totalBOne != totalBTwo) {
+        console.log("Different denominators");
+        return updateCalc();
+      }
+      // const commonDenoA = commonDeno(totalAOne, totalATwo)
+      // const multiplierA = commonDenoA/totalAOne
+      // const commonDenoB = commonDeno(totalBOne, totalBTwo)
+      // const multiplierA = commonDenoB/totalBOne
+      let firstScene = p.sceneAOne * p.unitA + p.sceneBOne * p.unitB;
+      let secondScene = p.sceneATwo * p.unitA + p.sceneBTwo * p.unitB;
+      if (p.type == "A") {
+        if (firstScene == secondScene) {
+          console.log("Clashing total");
+          return updateCalc();
+        }
+        displayProblem.innerHTML = `
+        ${p.sceneAOne}/${totalAOne} girls and ${p.sceneBOne}/${totalBOne} boys is ${firstScene}.</p>
+        ${p.sceneATwo}/${totalATwo} girls and ${p.sceneBTwo}/${totalBTwo} boys is ${secondScene}.</p>
+        `;
+        p.varA = totalAOne;
+        p.varB = totalBOne;
+      }
+      if (p.type == "B") {
+        firstScene = totalATwo * p.unitA + totalBTwo * p.unitB;
+        const sceneATwoRemaining = totalATwo - p.sceneATwo;
+        const sceneBTwoRemaining = totalBTwo - p.sceneBTwo;
+        secondScene =
+          sceneATwoRemaining * p.unitA + sceneBTwoRemaining * p.unitB;
+        displayProblem.innerHTML = `
+        There is a a total of ${firstScene} students.</p>
+        If ${p.sceneATwo}/${totalATwo} girls and ${p.sceneBTwo}/${totalBTwo} boys left the school.</p>
+        There would be ${secondScene} students remaining.</p>
+        `;
+        p.varA = totalATwo;
+        p.varB = totalBTwo;
+      }
+
+      //QUESTION
+      if (p.choose == "boys") {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          "How many boys are there?"
+        );
+      } else {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          "How many girls are there?"
+        );
+      }
+    }
   }
   // Display
   if (level == "heuFive") {
@@ -17371,6 +17432,11 @@ function handleSubmit(e) {
             correctAnswer = oneUnit * p.unitB + p.transfer;
         }
       }
+      //SIMULTANEOUS EQUATION
+      if (setting == 7) {
+        if (p.choose == "boys") correctAnswer = p.varB * p.unitB;
+        if (p.choose == "girls") correctAnswer = p.varA * p.unitA;
+      }
     }
     // Answers
     if (level == "heuFive") {
@@ -21766,6 +21832,24 @@ function genProblems() {
         valueOneUnit: genOneUnit,
       };
     }
+
+    // SIMULTANEOUS EQUATION
+    if (setting == 7) {
+      const genVarA = genNumbers(5) + 2;
+      const genVarB = genNumbers(5) + 2;
+      return {
+        varA: genVarA,
+        sceneAOne: genNumbers(genVarA - 1) + 1,
+        sceneATwo: genNumbers(genVarA - 1) + 1,
+        varB: genVarB,
+        sceneBOne: genNumbers(genVarB - 1) + 1,
+        sceneBTwo: genNumbers(genVarB - 1) + 1,
+        unitA: genNumbers(50) + 10,
+        unitB: genNumbers(50) + 10,
+        type: ["A", "B"][genNumbers(2)],
+        choose: ["boys", "girls"][genNumbers(2)],
+      };
+    }
   }
   // Stats
   if (level == "heuFive") {
@@ -23907,13 +23991,13 @@ function buttonLevelSetting() {
 
     case "Heu.4b":
       setting = prompt(
-        "What level?\n1. Lowest Common Multiples ( Indirect )\n2. Highest Common Factor ( Indirect )\n3. Unchanged Difference\n4. Unchanged Total\n\n9. All",
+        "What level?\n1. Lowest Common Multiples ( Indirect )\n2. Highest Common Factor ( Indirect )\n3. Unchanged Difference\n4. Unchanged Total\n5.Unequal Beginning\n6.Unequal End\n7. Simultaneous Equation\n\n9. All",
         9
       );
       level = "heuFourb";
 
       if (
-        ![1, 2, 3, 4, 9].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 6, 7, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 9;
