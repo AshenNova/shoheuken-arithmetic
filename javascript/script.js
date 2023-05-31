@@ -9215,7 +9215,7 @@ function updateProblems() {
         ctx.fillText(`Point BE is ${pointBE} : ${pointCE} to CE.`, 20, 40);
       } else {
         ctx.fillText(
-          `Point BE is ${pointBE} : ${pointCE + pointDF} to BC.`,
+          `Point BE is ${pointBE} : ${pointCE + pointBE} to BC.`,
           20,
           40
         );
