@@ -23782,6 +23782,8 @@ function buttonLevelSetting() {
       )
         setting = 99;
       document.querySelector("#user-input").setAttribute("type", "text");
+      displayProblem.style.fontSize = "1em";
+      displayProblem.style.textAlign = "left";
       break;
 
     case "Cal.4":
