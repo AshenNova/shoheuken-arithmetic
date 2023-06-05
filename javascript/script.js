@@ -2899,33 +2899,6 @@ function updateProblems() {
       }
     }
   }
-  // if (level == 4.09) {
-  //   threeWholeNumber.textContent = "";
-  //   threeNumerator.textContent = "?";
-  //   threeDenominator.textContent = "?";
-  //   if (p.numTwo >= p.numThree) {
-  //     p.numTwo = p.numTwo - 1 - (p.numTwo - p.numThree);
-  //   }
-  //   twoWholeNumber.textContent = p.numOne;
-  //   twoNumerator.textContent = p.numTwo;
-  //   twoDenominator.textContent = p.numThree;
-  //   arr.push(p.numThree);
-  // }
-
-  // if (level == 4.1) {
-  //   threeWholeNumber.textContent = "?";
-  //   threeNumerator.textContent = "?";
-  //   threeDenominator.textContent = "?";
-  //   if (p.numTwo >= p.numThree) {
-  //     p.numTwo = p.numTwo - 1 - (p.numTwo - p.numThree);
-  //   }
-  //   twoWholeNumber.textContent = "";
-  //   arr.push(p.numTwo);
-  //   p.numTwo = p.numOne * p.numThree + p.numTwo;
-  //   twoNumerator.textContent = p.numTwo;
-  //   twoDenominator.textContent = p.numThree;
-  //   arr.push(p.numThree);
-  // }
   if (level == 4.1) {
     if (setting == 1) {
       const halfOne = Math.floor(p.denoOne / 2);
@@ -19057,7 +19030,7 @@ function genProblems() {
     setting = calArrAll(2, calArr, setting, 9);
     if (setting == 1) {
       return {
-        wholeNum: [0, 1][genNumbers(2)] * (genNumbers(99) + 1),
+        wholeNum: [0, 1][genNumbers(2)] * (genNumbers(99 - 1) + 1),
         deciOne: ([0, 1][genNumbers(2)] * (genNumbers(10) + 1)) / 10,
         deciTwo: ([0, 1][genNumbers(2)] * (genNumbers(10) + 1)) / 100,
         deciThree: ([0, 1][genNumbers(2)] * (genNumbers(10) + 1)) / 1000,
@@ -19076,7 +19049,7 @@ function genProblems() {
     //Smaller unit to bigger unit
     if (setting == 2) {
       return {
-        wholeNum: [0, 1][genNumbers(2)] * (genNumbers(99) + 1),
+        wholeNum: [0, 1][genNumbers(2)] * (genNumbers(99 - 1) + 1),
         deciOne: ([0, 1][genNumbers(2)] * (genNumbers(10) + 1)) / 10,
         deciTwo: ([0, 1][genNumbers(2)] * (genNumbers(10) + 1)) / 100,
         deciThree: ([0, 1][genNumbers(2)] * (genNumbers(10) + 1)) / 1000,
@@ -23048,20 +23021,6 @@ function buttonLevelSetting() {
       highScoreMistakes.innerHTML = highScore4DotZero8.mistake;
       document.querySelector("#user-input").setAttribute("step", "0.000001");
       break;
-
-    // case "Level 4.09":
-    //   level = 4.09;
-    //   scoreNeeded = 30;
-    //   highScoreName.innerHTML = highScore4DotZero9.name;
-    //   highScoreTime.innerHTML = highScore4DotZero9.time;
-    //   highScoreMistakes.innerHTML = highScore4DotZero9.mistake;
-    //   wholeNumberContainer.classList.add("hidden");
-    //   fractionsContainerTwo.classList.remove("hidden");
-    //   document.querySelector("#user-input").setAttribute("type", "text");
-    //   instructions.innerHTML = `
-    //     Mixed to Improper Fraction</br>
-    //     Format: 9/2`;
-    //   break;
 
     case "Level 4.10":
       level = 4.1;
