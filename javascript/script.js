@@ -72,7 +72,11 @@ const easyMode = document.querySelector(".easy-mode");
 const reviewAnswer = document.querySelector(".fa-hire-a-helper");
 const inputBoxCl = document.querySelector(".input-box");
 const optionsBox = document.querySelector(".optionsBox");
-
+const calculator = document.createElement("div");
+// calculator.innerHTML = `id="calculator"`;
+// calculator.innerHTML = `<i class="fa-solid fa-calculator hidden"></i>`;
+// ourForm.prepend(calculator);
+const calculatorSymbol = document.querySelector(".fa-calculator");
 const imageG = document.createElement("img");
 const imageS = document.createElement("img");
 const imageB = document.createElement("img");
@@ -586,6 +590,7 @@ function resetStuff() {
   wholeNumberContainer.classList.remove("hidden");
   multiplesSettingCl.classList.add("hidden");
   firstCanvas.classList.add("hidden");
+  calculatorSymbol.classList.add("hidden");
 
   // calTwo setting 10
   denominatorOne.classList.remove("hidden");
@@ -8659,7 +8664,16 @@ function updateProblems() {
   }
 
   if (level == "calFive") {
-    // NORMAL DISPLAY
+    //ALLOW CALCULATOR
+
+    const calculatorNotAllowed = [0, 1, 2, 3];
+    if (calculatorNotAllowed.includes(setting * 1)) {
+      calculatorSymbol.classList.add("hidden");
+      // calculatorSymbol.
+    } else {
+      calculatorSymbol.classList.remove("hidden");
+    }
+
     if (
       [
         0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
@@ -10339,6 +10353,7 @@ function updateProblems() {
 
   // DISPLAY
   if (level == "calSix") {
+    calculatorSymbol.classList.remove("hidden");
     if (setting != 2) {
       normalDisplay();
     }
@@ -10749,6 +10764,7 @@ function updateProblems() {
   }
   // DISPLAY
   if (level == "calSixb") {
+    calculatorSymbol.classList.remove("hidden");
     if (setting == 1) {
       if (p.type == "normalSpeedToTime") {
         if (p.speedA == p.speedB) {
@@ -12675,6 +12691,7 @@ function updateProblems() {
   }
   // Display
   if (level == "heuFive") {
+    calculatorSymbol.classList.remove("hidden");
     if (
       setting == 1 ||
       (setting == 9 && p.rollz == 1) ||
@@ -12916,6 +12933,7 @@ function updateProblems() {
   }
 
   if (level == "heuFiveb") {
+    calculatorSymbol.classList.remove("hidden");
     if (setting == 1) {
       [p.numeOne, p.denoOne] = simplify(p.numeOne, p.denoOne);
       [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
@@ -13113,6 +13131,7 @@ function updateProblems() {
   }
   // DISPLAY
   if (level == "heuSix") {
+    calculatorSymbol.classList.remove("hidden");
     normalDisplay();
     // LOWEST COMMON TIME
     if (setting == 1) {

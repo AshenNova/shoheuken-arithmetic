@@ -20,6 +20,15 @@ body {
 .hidden {
   display: none;
 }
+
+#calculator {
+  /* margin-left: auto;
+  margin-right: auto; */
+  text-align: center;
+  color: greenyellow;
+  font-size: 1.5em;
+}
+
 .instructions {
   font-size: 2em;
   color: red;
