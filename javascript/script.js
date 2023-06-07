@@ -13175,6 +13175,54 @@ function updateProblems() {
         "<i>Leave your answer in mixed fraction if needed.</i>"
       );
     }
+    //CYCLE
+    if (setting == 2) {
+      //CHECK
+      if ((p.duration / p.people) % 1 != 0) {
+        console.log("Not whole");
+        return updateCalc();
+      }
+      const timeZone = genNumbers(2) == 0 ? "a.m" : "p.m";
+      const hoursDuration = Math.floor(p.duration / 60);
+      const minsDuration = p.duration % 60;
+      const endHours = p.startHour + hoursDuration;
+      const endMins = p.startMins + minsDuration;
+
+      if (minsDuration >= 60) {
+        endMins -= 60;
+        endHours += 1;
+      }
+      if (p.people >= p.active * p.courts) {
+        p.version == 2;
+      } else {
+        p.version = genNumbers(2);
+      }
+
+      if (p.version == 0) {
+        displayProblem.innerHTML = `
+      There are ${p.people} people playing a game from ${p.startHour}.${p.startMins}${timeZone} to ${endHours}.${endMins}${timeZone}.</p>
+      Only ${p.active} of them can be playing each time.</p>
+      How much time did each of them get to play?</p>
+      `;
+      }
+      if (p.version == 1) {
+        displayProblem.innerHTML = `
+      There are ${p.people} people playing a game for ${p.duration} minutes.</p>
+      Only ${p.active} of them can be playing each time.</p>
+      How much time did each of them get to play?</p>
+      `;
+      }
+
+      if (p.version == 2) {
+        if (p.people % (p.active * p.courts) == 0) p.active -= 1;
+        displayProblem.innerHTML = `
+      There are ${p.people} people playing a game for ${p.duration} minutes.</p>
+      Each court only  allows ${p.active} of them can be playing each time.</p>
+      There are ${p.courts} courts.</p>
+      How much time did each of them get to play?</p>
+      `;
+      }
+    }
   }
   // MULTIPLES
   if (mulLevel == "multiples") {
@@ -17769,6 +17817,15 @@ function handleSubmit(e) {
           }
         }
       }
+      // CYCLES
+      if (setting == 2) {
+        if (p.version == 0 || p.version == 1) {
+          correctAnswer = (p.duration / p.people) * p.active;
+        }
+        if (p.version == 2) {
+          correctAnswer = (p.duration / p.people) * p.active * p.courts;
+        }
+      }
     }
     if (mulLevel == "multiples") {
       correctAnswer = p.numFive * (multiplesArr.length - 1);
@@ -22108,7 +22165,7 @@ function genProblems() {
 
   //SETTINGS
   if (level == "heuSix") {
-    setting = calArrAll(1, calArr, setting, 9);
+    setting = calArrAll(2, calArr, setting, 9);
     setting = checkRange(setting, calArr);
     // LOWEST COMMON TIME
     if (setting == 1) {
@@ -22118,6 +22175,22 @@ function genProblems() {
         timeA: genNumbers(10) + 1,
         timeB: genNumbers(10) + 1,
         total: undefined,
+      };
+    }
+
+    // CYCLE
+
+    if (setting == 2) {
+      const genPeople = genNumbers(10) + 5;
+      return {
+        startHour: genNumbers(11) + 1,
+        startMins: genNumbers(60 - 1) + 1,
+        duration: genNumbers(120) + 30,
+        people: genPeople,
+        courts: genNumbers(1) + 2,
+        active: genNumbers(3) + 2,
+        // version: genNumbers(3),
+        version: 2,
       };
     }
   }
@@ -24042,8 +24115,14 @@ function buttonLevelSetting() {
 
     case "Heu.6":
       level = "heuSix";
-      setting = prompt("What level?\n1. Lowest Common Time\n\n9. All", 9);
-      if (![1, 9].includes(setting * 1) && !setting.split("").includes("-")) {
+      setting = prompt(
+        "What level?\n1. Lowest Common Time\n 2. Cycle\n\n9. All",
+        9
+      );
+      if (
+        ![1, 2, 9].includes(setting * 1) &&
+        !setting.split("").includes("-")
+      ) {
         setting = 9;
       }
       scoreNeeded = 10;
