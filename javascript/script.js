@@ -17782,17 +17782,17 @@ function handleSubmit(e) {
           let theCommonDeno = commonDeno(p.timeA, p.timeB);
           const multiA = theCommonDeno / p.timeA;
           const multiB = theCommonDeno / p.timeB;
-          const total = multiA + multiB;
-          correctAnswer = total / theCommonDeno;
-          if (total % theCommonDeno != 0) {
-            const quotient = Math.floor(total / theCommonDeno);
-            let remainder = total % theCommonDeno;
-            [remainder, theCommonDeno] = simplify(remainder, theCommonDeno);
+          let total = multiA + multiB;
+          correctAnswer = theCommonDeno / total;
+          if (theCommonDeno % total != 0) {
+            const quotient = Math.floor(theCommonDeno / total);
+            let remainder = theCommonDeno % total;
+            [remainder, total] = simplify(remainder, total);
             if (quotient == 0) {
-              correctAnswer = `${remainder}/${theCommonDeno}`;
+              correctAnswer = `${remainder}/${total}`;
             }
             if (quotient > 0) {
-              correctAnswer = `${quotient} ${remainder}/${theCommonDeno}`;
+              correctAnswer = `${quotient} ${remainder}/${total}`;
             }
           }
         }
