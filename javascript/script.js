@@ -20325,6 +20325,7 @@ function genProblems() {
     }
     // Multiplication in sets
     if (setting == 14) {
+      displayProblem.style.fontSize = "1.5em";
       const sum = genNumbers(5) + 1;
       const genNumOne = genNumbers(5) + 1;
       return {
