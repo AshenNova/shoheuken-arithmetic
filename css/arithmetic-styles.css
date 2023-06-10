@@ -318,6 +318,10 @@ button {
   width: 100px;
 }
 
+.btn-average {
+  background-color: #7d0ff1;
+}
+
 .btn-percentage {
   background-color: orange;
 }

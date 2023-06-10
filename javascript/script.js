@@ -6435,7 +6435,48 @@ function updateProblems() {
   //   }
   //   ctx.restore();
   // }
+  //AVERAGE: SIMPLE
+  if (level == 5.17) {
+    normalDisplay();
 
+    const averageList = [];
+    for (let i = 0; i < p.variables; i++) {
+      const zero = genNumbers(5);
+      if (zero == 0 && !averageList.includes(0)) {
+        averageList.push(0);
+      } else {
+        averageList.push(genNumbers(50) + 1);
+      }
+    }
+    const sum = averageList.reduce(function (a, b) {
+      return a + b;
+    });
+    const average = sum / averageList.length;
+    // console.log(p.answer.toString().split(".")[1].length > 3);
+    if (average % 1 != 0) {
+      if (average.toString().split(".")[1].length > 3) return updateCalc();
+    }
+    // if (p.answer.toString().split(".")[1].length > 3) return updateCalc();
+    if (p.version == 0) {
+      p.answer = average;
+      displayProblem.innerHTML = `
+  Find the average of: </p>${averageList.join(", ")}
+  `;
+    }
+    if (p.version == 1) {
+      const unknownNum = averageList[genNumbers(averageList.length)];
+      console.log(unknownNum, averageList);
+      p.answer = unknownNum;
+      let str = averageList.join(", ");
+      console.log(str);
+      str = str.replace(unknownNum, "? ");
+      displayProblem.innerHTML = `
+    Find the missing number.</p>
+    The average of the following numbers is ${sum / averageList.length}.</p>
+    ${str}
+    `;
+    }
+  }
   if (level == 6.0) {
     if (
       p.numOne == p.denoOne ||
@@ -15176,6 +15217,10 @@ function handleSubmit(e) {
     //   correctAnswer = (p.layerOne + countLayers) * 2;
     // }
 
+    if (level == 5.17) {
+      correctAnswer = p.answer;
+    }
+
     if (level == 6.01) {
       if (difficulty == 0) {
         if (p.rollType == "area") {
@@ -19788,12 +19833,22 @@ function genProblems() {
     };
   }
 
+  // if (level == 5.17) {
+  //   return {
+  //     layerOne: genNumbers(4) + 2,
+  //     layerTwo: undefined,
+  //     layerThree: undefined,
+  //     layerFour: undefined,
+  //   };
+  // }
+
+  // AVERAGE: SIMPLE
   if (level == 5.17) {
     return {
-      layerOne: genNumbers(4) + 2,
-      layerTwo: undefined,
-      layerThree: undefined,
-      layerFour: undefined,
+      version: genNumbers(2),
+      // version: 0,
+      variables: genNumbers(5) + 2,
+      answer: undefined,
     };
   }
 
@@ -23655,12 +23710,13 @@ function buttonLevelSetting() {
         `;
       break;
 
-    // case "Level 5.17":
-    //   level = 5.17;
-    //   scoreNeeded = 10;
-    //   wholeNumberContainer.classList.add("hidden");
-    //   firstCanvas.classList.remove("hidden");
-    //   break;
+    case "Level 5.17":
+      level = 5.17;
+      scoreNeeded = 10;
+      displayProblem.style.fontSize = "1.5em";
+      // wholeNumberContainer.classList.add("hidden");
+      // firstCanvas.classList.remove("hidden");
+      break;
 
     case "Level 6.0":
       level = 6.0;
