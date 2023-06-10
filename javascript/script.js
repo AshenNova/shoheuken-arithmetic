@@ -57,6 +57,7 @@ const starto = document.querySelector(".starto");
 const startBox = document.querySelector(".start-box");
 const countDownTimer = document.querySelector(".countDownTimer");
 const timerD = document.getElementById("timerD");
+const questionTimerD = document.getElementById("questionTimer");
 const finalBox = document.querySelector(".finalBox");
 const finalText = document.getElementById("finalText");
 const scoreNeededCl = document.querySelector(".score-needed");
@@ -503,9 +504,22 @@ function clickStart() {
         userInput.focus();
       }
       timer2();
+      questionTimer();
+
       optionsBox.classList.add("hidden");
       updateProblems();
     }
+  }, 1000);
+}
+
+let questionTime = undefined;
+function questionTimer() {
+  let questionSecs = 0;
+  questionTimerD.innerHTML = questionSecs;
+  // clearInterval(countDownOne);
+  questionTime = setInterval(function () {
+    questionSecs++;
+    questionTimerD.innerHTML = questionSecs;
   }, 1000);
 }
 
@@ -573,6 +587,7 @@ function timer2() {
     }
   }, 1000);
 }
+
 function resetStuff() {
   player = 1;
   levelSetting.classList.remove("hidden");
@@ -3937,7 +3952,7 @@ function updateProblems() {
       p.rollType = genNumbers(4);
     }
 
-    if ((p.rollType > 2 && difficulty == 4)) {
+    if (p.rollType > 2 && difficulty == 4) {
       calculatorSymbol.classList.remove("hidden");
     } else {
       calculatorSymbol.classList.add("hidden");
@@ -17913,6 +17928,8 @@ function handleSubmit(e) {
         "From permutation: Correct"
     ) {
       console.log("correct");
+      clearInterval(questionTime);
+      questionTimer();
       skipGlobalUpdateProblem = 0;
       state.score++;
       accumulatedScore++;

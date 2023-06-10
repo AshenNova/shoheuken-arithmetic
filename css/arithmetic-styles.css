@@ -202,7 +202,8 @@ table {
 
 #current-score,
 #current-mistake,
-#timer {
+#timer,
+#questionTimer {
   font-size: 25px;
   font-weight: 600;
 }
