@@ -590,6 +590,7 @@ function timer2() {
 
 function resetStuff() {
   player = 1;
+  clearInterval(questionTime);
   levelSetting.classList.remove("hidden");
   finalBox.classList.add("hidden");
   state.score = 0;
@@ -637,21 +638,23 @@ function resetStuff() {
   accumulatedScore = 0;
   heuArr.length = 0;
   global = 0;
-  calArr.length = 0;
-  calArrQns.length = 0;
-  calRange.length = 0;
+  calArr = [];
+  // arr = null;
+  calArrQns = [];
+  calRange = [];
   setting = null;
+  state.global = 0;
   skipGlobalUpdateProblem = 0;
-  console.log(arr, calArr, calRange, setting);
+  // console.log(`Setting: ${setting}`);
+  // console.log(`Arr: ${arr}`);
+  // console.log(`calArr: ${calArr}`);
+  // console.log(`calRange: ${calRange}`);
+  // console.log(arr, calArr, calRange, setting);
 
   gold = 0;
   silver = 0;
   bronze = 0;
   if (document.querySelector(".trophy").childNodes.length > 0) {
-    // document.querySelector('.trophy').removeChild(imageG)
-    // document.querySelector('.trophy').removeChild(imageS)
-    // document.querySelector('.trophy').removeChild(imageB)
-    // document.querySelector('.trophy').removeChild(imageNMP)
     imageG.remove();
     imageS.remove();
     imageB.remove();
@@ -671,6 +674,7 @@ function resetStuff() {
 function calArrAll(max, arr, setting, maxSetting, level) {
   // console.log(maxSetting);
   if (setting == maxSetting || state.global == 1) {
+    console.log("Everything!");
     state.global = 1;
     if (skipGlobalUpdateProblem != 1) {
       if (!arr.length) {
@@ -23900,7 +23904,7 @@ function buttonLevelSetting() {
       break;
     case "Cal.3":
       level = "calThree";
-      scoreNeeded = 10;
+      scoreNeeded = 1;
       setting = prompt(
         "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Overlapping Place Value\n11. Working: Long Division ( No remainder )\n12. Working: Long Division ( Remainder )\n13. Working: Multiplication ( Single Blank )\n14. Multiplication in sets\n15. Long Division: Simple Statement\n16. Left Side Right Side + - x ÷\n17. Multiplication and Division of Convenient Numbers\n18. Parts and Intervals\n19. Time: Timeline ( hours and mins )\n20. Fractions: Addition and Subtraction\n21. Fractions: Expansion and simplification\n\n99. All",
         99
