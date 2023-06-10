@@ -3936,6 +3936,13 @@ function updateProblems() {
     if (difficulty == 4) {
       p.rollType = genNumbers(4);
     }
+
+    if ((p.rollType > 2 && difficulty == 4)) {
+      calculatorSymbol.classList.remove("hidden");
+    } else {
+      calculatorSymbol.classList.add("hidden");
+    }
+
     p.length =
       (genNumbers(10) + 1) * p.dimension + (genNumbers(p.dimension) + 1);
     p.breadth = (genNumbers(10) + 1) * p.dimension + genNumbers(p.dimension);
