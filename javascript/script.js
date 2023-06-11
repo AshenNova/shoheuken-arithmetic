@@ -23904,7 +23904,7 @@ function buttonLevelSetting() {
       break;
     case "Cal.3":
       level = "calThree";
-      scoreNeeded = 1;
+      scoreNeeded = 10;
       setting = prompt(
         "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Overlapping Place Value\n11. Working: Long Division ( No remainder )\n12. Working: Long Division ( Remainder )\n13. Working: Multiplication ( Single Blank )\n14. Multiplication in sets\n15. Long Division: Simple Statement\n16. Left Side Right Side + - x ÷\n17. Multiplication and Division of Convenient Numbers\n18. Parts and Intervals\n19. Time: Timeline ( hours and mins )\n20. Fractions: Addition and Subtraction\n21. Fractions: Expansion and simplification\n\n99. All",
         99
