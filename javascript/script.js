@@ -10279,49 +10279,49 @@ function updateProblems() {
       }
     }
     //AVERAGE: SIMPLE
-    if (setting == 25) {
-      normalDisplay();
-      const averageList = [];
-      for (let i = 0; i < p.variables; i++) {
-        const zero = genNumbers(5);
-        if (zero == 0 && !averageList.includes(0)) {
-          averageList.push(0);
-        } else {
-          averageList.push(genNumbers(50) + 1);
-        }
-      }
-      const sum = averageList.reduce(function (a, b) {
-        return a + b;
-      });
-      const average = sum / averageList.length;
-      // console.log(p.answer.toString().split(".")[1].length > 3);
-      if (average % 1 != 0) {
-        if (average.toString().split(".")[1].length > 3) return updateCalc();
-      }
-      // if (p.answer.toString().split(".")[1].length > 3) return updateCalc();
-      if (p.version == 0) {
-        p.answer = average;
-        displayProblem.innerHTML = `
-      Find the average of: </p>${averageList.join(", ")}
-      `;
-      }
-      if (p.version == 1) {
-        const unknownNum = averageList[genNumbers(averageList.length)];
-        console.log(unknownNum, averageList);
-        p.answer = unknownNum;
-        let str = averageList.join(", ");
-        console.log(str);
-        str = str.replace(unknownNum, "? ");
-        displayProblem.innerHTML = `
-        Find the missing number.</p>
-        The average of the following numbers is ${sum / averageList.length}.</p>
-        ${str}
-        `;
-      }
-    }
+    // if (setting == 25) {
+    //   normalDisplay();
+    //   const averageList = [];
+    //   for (let i = 0; i < p.variables; i++) {
+    //     const zero = genNumbers(5);
+    //     if (zero == 0 && !averageList.includes(0)) {
+    //       averageList.push(0);
+    //     } else {
+    //       averageList.push(genNumbers(50) + 1);
+    //     }
+    //   }
+    //   const sum = averageList.reduce(function (a, b) {
+    //     return a + b;
+    //   });
+    //   const average = sum / averageList.length;
+    //   // console.log(p.answer.toString().split(".")[1].length > 3);
+    //   if (average % 1 != 0) {
+    //     if (average.toString().split(".")[1].length > 3) return updateCalc();
+    //   }
+    //   // if (p.answer.toString().split(".")[1].length > 3) return updateCalc();
+    //   if (p.version == 0) {
+    //     p.answer = average;
+    //     displayProblem.innerHTML = `
+    //   Find the average of: </p>${averageList.join(", ")}
+    //   `;
+    //   }
+    //   if (p.version == 1) {
+    //     const unknownNum = averageList[genNumbers(averageList.length)];
+    //     console.log(unknownNum, averageList);
+    //     p.answer = unknownNum;
+    //     let str = averageList.join(", ");
+    //     console.log(str);
+    //     str = str.replace(unknownNum, "? ");
+    //     displayProblem.innerHTML = `
+    //     Find the missing number.</p>
+    //     The average of the following numbers is ${sum / averageList.length}.</p>
+    //     ${str}
+    //     `;
+    //   }
+    // }
 
     //AVERAGE: INTERNAL CHANGE
-    if (setting == 26) {
+    if (setting == 25) {
       normalDisplay();
       const oldAverage = (p.numOne + p.numTwo + p.numThree) / 3;
       if (oldAverage % 1 != 0) {
@@ -10367,7 +10367,7 @@ function updateProblems() {
       }
     }
     //AVERAGE: EXTERNAL CHANGE
-    if (setting == 27) {
+    if (setting == 26) {
       normalDisplay();
       if (p.changeQuantity == 0) return updateCalc();
       p.changeQuantity > 0 ? (p.situation = "joined") : (p.situation = "left");
@@ -10392,7 +10392,7 @@ function updateProblems() {
     }
 
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 28) {
+    if (setting == 27) {
       normalDisplay();
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
@@ -16352,11 +16352,11 @@ function handleSubmit(e) {
         }
       }
 
-      if (setting == 25) {
-        correctAnswer = p.answer;
-      }
-      if (setting == 26) correctAnswer = p.answer;
-      if (setting == 27) {
+      // if (setting == 25) {
+      //   correctAnswer = p.answer;
+      // }
+      if (setting == 25) correctAnswer = p.answer;
+      if (setting == 26) {
         if (p.question == "at first") {
           correctAnswer = p.oldQuantity;
         }
@@ -16365,7 +16365,7 @@ function handleSubmit(e) {
         }
       }
       //AVERAGE: CONSECUTIVE DAYS
-      if (setting == 28) {
+      if (setting == 27) {
         correctAnswer = p.dayOne + p.increase * (p.chosen - 1);
       }
     }
@@ -20642,7 +20642,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(28, calArr, setting, 99);
+    setting = calArrAll(27, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -21020,17 +21020,17 @@ function genProblems() {
     }
 
     // AVERAGE: SIMPLE
-    if (setting == 25) {
-      return {
-        version: genNumbers(2),
-        // version: 0,
-        variables: genNumbers(5) + 2,
-        answer: undefined,
-      };
-    }
+    // if (setting == 25) {
+    //   return {
+    //     version: genNumbers(2),
+    //     // version: 0,
+    //     variables: genNumbers(5) + 2,
+    //     answer: undefined,
+    //   };
+    // }
 
     //AVERAGE:INTERNAL CHANGE
-    if (setting == 26) {
+    if (setting == 25) {
       return {
         version: genNumbers(3),
         // version: 2,
@@ -21043,7 +21043,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 27) {
+    if (setting == 26) {
       return {
         oldQuantity: genNumbers(6) + 2,
         oldAverage: genNumbers(40) + 10,
@@ -21056,7 +21056,7 @@ function genProblems() {
       };
     }
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 28) {
+    if (setting == 27) {
       return {
         dayOne: genNumbers(20) + 5,
         days: genNumbers(5) + 5,
@@ -23979,10 +23979,9 @@ function buttonLevelSetting() {
       23. Percentage: Simple and Further discount</p>
       24. Percentage: GST, discount and Service Charge</p>
       <hr></hr>
-      25. Average: Simple</p>
-      26. Average: Internal change</p>
-      27. Average: External Change</p>
-      28. Average: Odd consecutive days</p>
+      25. Average: Internal change</p>
+      26. Average: External Change</p>
+      27. Average: Odd consecutive days</p>
       <hr></hr>
       </p>99. All
       
