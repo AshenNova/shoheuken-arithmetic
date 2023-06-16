@@ -2241,7 +2241,7 @@ function updateProblems() {
   if (level == 3.17) {
     ctx.save();
     ctx.font = "1em serif";
-    arcAngleRad = (p.arcAngle * Math.PI) / 180;
+    let arcAngleRad = (p.arcAngle * Math.PI) / 180;
     ctx.fillText(`Which angle is ${p.acuteOrObtuse}?`, 30, 20);
     ctx.translate(200, 187.5);
 
