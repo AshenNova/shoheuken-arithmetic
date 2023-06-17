@@ -344,8 +344,9 @@ button {
   width: 100px;
 }
 .btn-close {
-  position: absolute;
+  position: sticky;
   /* left: 50%; */
+  opacity: 50%;
   bottom: 1%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);

@@ -22660,7 +22660,7 @@ function buttonLevelSetting() {
 
     case "Level 1.01":
       level = 1.01;
-      scoreNeeded = 50;
+      scoreNeeded = 30;
       gold = highScore1DotZero1.time;
       silver = highScore1DotZero1.time + (cutoff - highScore1DotZero1.time) / 3;
       bronze =
@@ -23993,7 +23993,7 @@ function buttonLevelSetting() {
       break;
     case "Cal.2":
       level = "calTwo";
-      scoreNeeded = 2;
+      scoreNeeded = 10;
       setting = prompt(
         "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing\n3. Addition (to-1000) (Carrying)\n4. Subtraction (to 1000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Left Side Right Side + - x /\n10. Parts and Intervals\n11. Time: Timeline\n12. Fractions: Addition and Subtraction\n\n99. Everything",
         99
