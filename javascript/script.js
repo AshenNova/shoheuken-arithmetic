@@ -181,10 +181,24 @@ let calArrQns = [];
 let calRange = [];
 let questionTimeForSummary = undefined;
 let summary = [];
-function SummaryCreate(setting, time) {
+function SummaryCreate(symbol, setting, time) {
+  this.symbol = symbol;
   this.setting = setting;
   this.time = time;
 }
+function summaryPush(level, symbol) {
+  if (
+    level.toString().startsWith("cal") ||
+    level.toString().startsWith("heu")
+  ) {
+    const question = new SummaryCreate(symbol, setting, questionTimeForSummary);
+    summary.push(question);
+  } else {
+    const question = new SummaryCreate(symbol, level, questionTimeForSummary);
+    summary.push(question);
+  }
+}
+
 let primeNumbers = [
   2, 3, 5, 7, 9, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53,
 ];
@@ -602,7 +616,7 @@ function timer2() {
       summaryTextCl.textContent = "";
       summary.forEach((item) => {
         console.log("Setting: " + item.setting, "Time: " + item.time) + "s";
-        const html = `<p>Setting: ${item.setting}, Time: ${item.time}s</p>`;
+        const html = `<p>${item.symbol} Setting: ${item.setting}, Time: ${item.time}s</p>`;
         summaryTextCl.insertAdjacentHTML("beforeend", html);
       });
     }
@@ -17997,17 +18011,21 @@ function handleSubmit(e) {
       accumulatedScore++;
       console.log(accumulatedScore);
       // const levelStr = level.toString();
-      if (
-        level.toString().startsWith("cal") ||
-        level.toString().startsWith("heu")
-      ) {
-        const question = new SummaryCreate(setting, questionTimeForSummary);
-        summary.push(question);
-      } else {
-        const question = new SummaryCreate(level, questionTimeForSummary);
-        summary.push(question);
-      }
-
+      // if (
+      //   level.toString().startsWith("cal") ||
+      //   level.toString().startsWith("heu")
+      // ) {
+      //   const question = new SummaryCreate(
+      //     "✅",
+      //     setting,
+      //     questionTimeForSummary
+      //   );
+      //   summary.push(question);
+      // } else {
+      //   const question = new SummaryCreate("✅", level, questionTimeForSummary);
+      //   summary.push(question);
+      // }
+      summaryPush(level, "✅");
       if (mulLevel == "multiples") {
         multiplesArr.push(userInput.value);
         state.score = multiplesArr.length - 1;
@@ -18093,6 +18111,7 @@ function handleSubmit(e) {
 
       state.mistake++;
 
+      summaryPush(level, "❌");
       reviewCount = 1;
       reviewAnswer.classList.remove("hidden");
       state.correctAnswer = correctAnswer;
@@ -23974,7 +23993,7 @@ function buttonLevelSetting() {
       break;
     case "Cal.2":
       level = "calTwo";
-      scoreNeeded = 10;
+      scoreNeeded = 2;
       setting = prompt(
         "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing\n3. Addition (to-1000) (Carrying)\n4. Subtraction (to 1000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Left Side Right Side + - x /\n10. Parts and Intervals\n11. Time: Timeline\n12. Fractions: Addition and Subtraction\n\n99. Everything",
         99
