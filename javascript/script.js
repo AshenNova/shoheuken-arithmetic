@@ -186,7 +186,7 @@ function SummaryCreate(symbol, setting, time) {
   this.setting = setting;
   this.time = time;
 }
-function summaryPush(level, symbol) {
+function summaryPush(symbol) {
   if (
     level.toString().startsWith("cal") ||
     level.toString().startsWith("heu")
@@ -18025,7 +18025,7 @@ function handleSubmit(e) {
       //   const question = new SummaryCreate("✅", level, questionTimeForSummary);
       //   summary.push(question);
       // }
-      summaryPush(level, "✅");
+      summaryPush("✅");
       if (mulLevel == "multiples") {
         multiplesArr.push(userInput.value);
         state.score = multiplesArr.length - 1;
@@ -18111,7 +18111,7 @@ function handleSubmit(e) {
 
       state.mistake++;
 
-      summaryPush(level, "❌");
+      summaryPush("❌");
       reviewCount = 1;
       reviewAnswer.classList.remove("hidden");
       state.correctAnswer = correctAnswer;
