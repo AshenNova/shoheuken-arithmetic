@@ -77,6 +77,31 @@ body {
   margin: 5px 0;
 }
 
+.btn-summary {
+  background-color: black;
+  color: greenyellow;
+  padding: 5px;
+  margin-left: 5px;
+}
+
+.summary-container {
+  z-index: 999;
+  position: absolute;
+  margin: auto;
+  top: 2%;
+  /* max-height: 100%; */
+  max-width: 95%;
+  height: 95%;
+  width: 400px;
+  border-radius: 10px;
+  background-color: white;
+  z-index: 999;
+  text-align: left;
+  border-style: solid;
+  overflow: auto;
+  padding-left: 10px;
+}
+
 table {
   margin-top: 2%;
 }
@@ -317,6 +342,14 @@ button {
 
 .settingButton {
   width: 100px;
+}
+.btn-close {
+  position: absolute;
+  /* left: 50%; */
+  bottom: 1%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .btn-average {

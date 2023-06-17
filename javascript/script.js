@@ -91,6 +91,13 @@ imageNMP.src = "images/endgame/needmorepractice.jpeg";
 imageFailed.src = "images/endgame/failed.jpeg";
 imageCompleted.src = "images/endgame/complete.jpeg";
 
+//SUMMARY STUFF
+const summaryTextCl = document.querySelector(".summary-text");
+const summaryBtn = document.querySelector(".btn-summary");
+const summaryContainer = document.querySelector(".summary-container");
+const closeBtn = document.querySelector(".btn-close");
+
+//END SUMMARY STUFF
 const levelSetting = document.querySelector(".level-setting");
 const levelLabel = document.querySelector(".level-label");
 const mainBox = document.querySelector(".main-box");
@@ -172,6 +179,12 @@ let heuArr = [];
 let calArr = [];
 let calArrQns = [];
 let calRange = [];
+let questionTimeForSummary = undefined;
+let summary = [];
+function SummaryCreate(setting, time) {
+  this.setting = setting;
+  this.time = time;
+}
 let primeNumbers = [
   2, 3, 5, 7, 9, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53,
 ];
@@ -520,6 +533,7 @@ function questionTimer() {
   questionTime = setInterval(function () {
     questionSecs++;
     questionTimerD.innerHTML = questionSecs;
+    questionTimeForSummary = questionSecs;
   }, 1000);
 }
 
@@ -584,6 +598,13 @@ function timer2() {
 
       mistakesCountCl.innerHTML = state.mistake;
       player = 0;
+
+      summaryTextCl.textContent = "";
+      summary.forEach((item) => {
+        console.log("Setting: " + item.setting, "Time: " + item.time) + "s";
+        const html = `<p>Setting: ${item.setting}, Time: ${item.time}s</p>`;
+        summaryTextCl.insertAdjacentHTML("beforeend", html);
+      });
     }
   }, 1000);
 }
@@ -645,6 +666,9 @@ function resetStuff() {
   setting = null;
   state.global = 0;
   skipGlobalUpdateProblem = 0;
+  summary = [];
+  console.log(summary);
+  summaryTextCl.innerHTML = "Go go some stuff!";
   // console.log(`Setting: ${setting}`);
   // console.log(`Arr: ${arr}`);
   // console.log(`calArr: ${calArr}`);
@@ -17972,6 +17996,18 @@ function handleSubmit(e) {
       state.score++;
       accumulatedScore++;
       console.log(accumulatedScore);
+      // const levelStr = level.toString();
+      if (
+        level.toString().startsWith("cal") ||
+        level.toString().startsWith("heu")
+      ) {
+        const question = new SummaryCreate(setting, questionTimeForSummary);
+        summary.push(question);
+      } else {
+        const question = new SummaryCreate(level, questionTimeForSummary);
+        summary.push(question);
+      }
+
       if (mulLevel == "multiples") {
         multiplesArr.push(userInput.value);
         state.score = multiplesArr.length - 1;
@@ -24362,6 +24398,16 @@ reviewAnswer.addEventListener("click", function () {
     reviewAnswer.classList.add("hidden");
     reviewCount = 0;
   }
+});
+
+summaryBtn.addEventListener("click", function () {
+  console.log("Summary button pressed");
+  summaryContainer.classList.remove("hidden");
+});
+
+closeBtn.addEventListener("click", function () {
+  console.log("Close button pressed");
+  summaryContainer.classList.add("hidden");
 });
 
 export { updateProblems, genNumbers };
