@@ -11232,6 +11232,32 @@ function updateProblems() {
 
       `;
     }
+
+    // PARTS OF A WHOLE ( UNITARY )
+    if (
+      setting == 6 ||
+      (setting == 9 && p.rollz == 6) ||
+      (range == 1 && p.rollz == 6)
+    ) {
+      let names = ["Evelyn", "Mrs Lin", "Tim", "Sarimah", "Ken"][genNumbers(5)];
+      const objectNum = genNumbers(4);
+      let objects = ["apples", "erasers", "pencils", "eggs"][objectNum];
+      let unit = ["bag", "box", "bundle", "cake"][objectNum];
+      displayProblem.innerHTML = `
+      ${names} puts ${p.each} ${objects} into each ${unit}.</p>
+      There are ${p.packets} ${unit}${unit == "box" ? "es" : "s"} but with ${
+        p.left
+      } ${objects} left.</p>
+      How many ${objects} were there at first?</p>
+      `;
+      if (unit == "cake") {
+        displayProblem.innerHTML = `
+        ${names} used ${p.each} ${objects} for each ${unit}.</p>
+        ${p.packets} ${unit}s were made with ${p.left} ${objects} left.</p>
+        How many ${objects} were there at first?</p>
+        `;
+      }
+    }
   }
   // display
   if (level == "heuThree") {
@@ -16759,6 +16785,14 @@ function handleSubmit(e) {
           correctAnswer = p.total;
         }
       }
+
+      if (
+        setting == 6 ||
+        (setting == 9 && p.rollz == 6) ||
+        (range == 1 && p.rollz == 6)
+      ) {
+        correctAnswer = p.each * p.packets + p.left;
+      }
     }
 
     //  answer
@@ -21455,6 +21489,20 @@ function genProblems() {
         rollLineThree: ["A", "B", "total"][genNumbers(3)],
       };
     }
+    //  PARTS OF A WHOLE ( UNITARY )
+    if (
+      setting == 6 ||
+      (setting == 6 && roll == 6) ||
+      (range == 1 && roll == 6)
+    ) {
+      const perPacket = genNumbers(3) + 2;
+      return {
+        rollz: 6,
+        each: perPacket,
+        packets: genNumbers(5) + 2,
+        left: genNumbers(perPacket - 1) + 1,
+      };
+    }
   }
   // setting
   if (level == "heuThree") {
@@ -24080,7 +24128,7 @@ function buttonLevelSetting() {
 
     case "Heu.2b":
       setting = prompt(
-        "What level?\n1. Comparison Model\n2. Parts of a Whole\n3. Whole and Parts\n4. Looking for Difference\n\n9.All"
+        "What level?\n1. Comparison Model\n2. Parts of a Whole\n3. Whole and Parts\n4. Looking for Difference\n5. Unit Sentence\n6. Parts of a whole ( Unitary )\n\n9.All"
       );
       level = "heuTwob";
       range = 0;
