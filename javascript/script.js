@@ -13045,7 +13045,7 @@ function updateProblems() {
         p.quotient = Math.floor(p.totalItems / p.oneGroup);
         p.remainder = p.totalItems % p.oneGroup;
 
-        if (p.remainder == 0) {
+        if (p.remainder == 0 || p.remainder * p.cost >= p.oneGroupCost) {
           return updateProblems();
         }
         p.totalCost = p.oneGroupCost * p.quotient + p.remainder * p.cost;
