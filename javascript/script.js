@@ -8766,6 +8766,111 @@ function updateProblems() {
       arrDisplay = arrDisplay.join(" ");
       displayProblem.textContent = `${arrDisplay}`;
     }
+    // FRACTIONS: UNIT SENTENCE
+    if (setting == 17) {
+      normalDisplay();
+      // content
+
+      while (p.numerator == p.denominator) {
+        p.numerator = genNumbers(9) + 1;
+        p.denominator = genNumbers(9) + 1;
+      }
+
+      if (p.numerator > p.denominator) {
+        [p.numerator, p.denominator] = swap(p.numerator, p.denominator);
+      }
+
+      [p.numerator, p.denominator] = simplify(p.numerator, p.denominator);
+      console.log(p.numerator, p.denominator);
+
+      p.firstUnit = p.numerator;
+      p.secondUnit = p.denominator - p.numerator;
+      p.totalUnit = p.denominator;
+      p.differenceUnit = Math.abs(p.numerator - p.secondUnit);
+
+      if (p.firstUnit == p.secondUnit) {
+        console.log("Updated");
+        return updateProblems();
+      }
+      if (p.secondSelection == 3) {
+        p.identity = genNumbers(2);
+      }
+      // let second = type[identity][p.secondSelection]
+      while (p.lastSelection == p.secondSelection)
+        p.lastSelection = [genNumbers(3)];
+
+      let last = p.type[p.identity][p.lastSelection];
+      if (p.lastSelection == 0) p.lastUnits = p.firstUnit;
+      if (p.lastSelection == 1) p.lastUnits = p.secondUnit;
+      if (p.lastSelection == 2) p.lastUnits = p.totalUnit;
+
+      if (p.secondSelection == 0) {
+        p.value = p.firstUnit * (genNumbers(5) + 5);
+      } else if (p.secondSelection == 1) {
+        p.value = p.secondUnit * (genNumbers(5) + 5);
+      } else if (p.secondSelection == 2) {
+        p.value = p.totalUnit * (genNumbers(5) + 5);
+      } else {
+        p.value = p.differenceUnit * (genNumbers(5) + 5);
+      }
+      if (p.secondSelection != 3) {
+        p.secondSelection = p.type[p.identity][p.secondSelection];
+      }
+      console.log(`First Selection: ${p.firstSelection}, ${p.numerator} units`);
+      console.log(`Second Selection: ${p.secondSelection}, ${p.value}`);
+      console.log(`Last Selection: ${p.lastSelection}, ${p.denominator}`);
+
+      if ((p.identity == 0 || p.identity == 1) && p.secondSelection != 3) {
+        displayProblem.innerHTML = `
+     ${p.firstSelection == 0 ? p.firstUnit : p.secondUnit}/${
+          p.denominator
+        } of the ${p.type[p.identity][2]} are ${
+          p.type[p.identity][p.firstSelection]
+        }.</br>
+     There are ${p.value} ${p.secondSelection}.</br>
+     How many ${last} are there?
+    `;
+      } else if (
+        (p.identity == 2 || p.identity == 3) &&
+        p.secondSelection != 3
+      ) {
+        displayProblem.innerHTML = `
+     ${p.firstSelection == 0 ? p.firstUnit : p.secondUnit}/${
+          p.denominator
+        } of the ${p.type[p.identity][2]} was ${
+          p.type[p.identity][p.firstSelection]
+        }.</br>
+     ${
+       p.secondSelection == "total money"
+         ? `There were $${p.value} at first.`
+         : `$${p.value} was ${p.secondSelection}.`
+     }</br>
+     ${
+       p.lastSelection == 2
+         ? `How much were there at first?`
+         : `How much was ${last}?`
+     }
+    `;
+      } else if (
+        (p.identity == 0 || p.identity == 1) &&
+        p.secondSelection == 3
+      ) {
+        console.log("here");
+        displayProblem.innerHTML = `
+       ${p.firstSelection == 0 ? p.firstUnit : p.secondUnit}/${
+          p.denominator
+        } of the ${p.type[p.identity][2]} are ${
+          p.type[p.identity][p.firstSelection]
+        }.</br>
+       There are ${p.value} ${p.firstUnit > p.secondUnit ? "more" : "less"} ${
+          p.type[p.identity][0]
+        } than ${p.type[p.identity][1]} </br>
+       How many ${last} are there?
+      `;
+      } else {
+        return updateProblems();
+      }
+    }
   }
 
   if (level == "calFive") {
@@ -14606,24 +14711,24 @@ function handleSubmit(e) {
       }
     }
 
-    if (level == 4.15) {
-      let index = p.type[p.identity].indexOf(p.secondSelection);
-      let oneUnit = undefined;
-      if (index == 0) {
-        oneUnit = p.value / p.numerator;
-      }
-      if (index == 1) {
-        oneUnit = p.value / (p.denominator - p.numerator);
-      }
-      if (index == 2) {
-        oneUnit = p.value / p.denominator;
-      }
-      if (p.secondSelection == 3) {
-        oneUnit = p.value / p.differenceUnit;
-      }
-      console.log(oneUnit);
-      correctAnswer = oneUnit * p.lastUnits;
-    }
+    // if (level == 4.15) {
+    //   let index = p.type[p.identity].indexOf(p.secondSelection);
+    //   let oneUnit = undefined;
+    //   if (index == 0) {
+    //     oneUnit = p.value / p.numerator;
+    //   }
+    //   if (index == 1) {
+    //     oneUnit = p.value / (p.denominator - p.numerator);
+    //   }
+    //   if (index == 2) {
+    //     oneUnit = p.value / p.denominator;
+    //   }
+    //   if (p.secondSelection == 3) {
+    //     oneUnit = p.value / p.differenceUnit;
+    //   }
+    //   console.log(oneUnit);
+    //   correctAnswer = oneUnit * p.lastUnits;
+    // }
 
     if (level == 4.16) {
       correctAnswer = p.numOne;
@@ -15985,6 +16090,25 @@ function handleSubmit(e) {
         if (p.blank == 1 || p.blank == 2) {
           correctAnswer = correctAnswer * p.sets;
         }
+      }
+      // FRACTIONS: UNIT SENTENCE
+      if (setting == 17) {
+        let index = p.type[p.identity].indexOf(p.secondSelection);
+        let oneUnit = undefined;
+        if (index == 0) {
+          oneUnit = p.value / p.numerator;
+        }
+        if (index == 1) {
+          oneUnit = p.value / (p.denominator - p.numerator);
+        }
+        if (index == 2) {
+          oneUnit = p.value / p.denominator;
+        }
+        if (p.secondSelection == 3) {
+          oneUnit = p.value / p.differenceUnit;
+        }
+        console.log(oneUnit);
+        correctAnswer = oneUnit * p.lastUnits;
       }
     }
     if (level == "calFive") {
@@ -19437,32 +19561,32 @@ function genProblems() {
     };
   }
 
-  if (level == 4.15) {
-    return {
-      // numerator: genNumbers(9)+1,
-      // denominator: genNumbers(9)+1,
-      numerator: genNumbers(9) + 1,
-      denominator: genNumbers(9) + 1,
-      firstSelection: genNumbers(2),
-      secondSelection: genNumbers(4),
-      // secondSelection: 3,
-      lastSelection: genNumbers(3),
-      firstUnit: undefined,
-      secondUnit: undefined,
-      totalUnit: undefined,
-      differenceUnit: undefined,
-      lastUnits: undefined,
-      identity: genNumbers(4),
-      // identity: 1,
-      value: undefined,
-      type: [
-        ["boys", "girls", "pupils"],
-        ["green marbles", "blue marbles", "total marbles"],
-        ["saved", "spent", "total money"],
-        ["spent", "left", "total money"],
-      ],
-    };
-  }
+  // if (level == 4.15) {
+  //   return {
+  //     // numerator: genNumbers(9)+1,
+  //     // denominator: genNumbers(9)+1,
+  //     numerator: genNumbers(9) + 1,
+  //     denominator: genNumbers(9) + 1,
+  //     firstSelection: genNumbers(2),
+  //     secondSelection: genNumbers(4),
+  //     // secondSelection: 3,
+  //     lastSelection: genNumbers(3),
+  //     firstUnit: undefined,
+  //     secondUnit: undefined,
+  //     totalUnit: undefined,
+  //     differenceUnit: undefined,
+  //     lastUnits: undefined,
+  //     identity: genNumbers(4),
+  //     // identity: 1,
+  //     value: undefined,
+  //     type: [
+  //       ["boys", "girls", "pupils"],
+  //       ["green marbles", "blue marbles", "total marbles"],
+  //       ["saved", "spent", "total money"],
+  //       ["spent", "left", "total money"],
+  //     ],
+  //   };
+  // }
 
   if (level == 4.16) {
     return {
@@ -20597,7 +20721,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(15, calArr, setting, 99);
+    setting = calArrAll(17, calArr, setting, 99);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let number = genNumbers(8) + 2;
@@ -20727,6 +20851,34 @@ function genProblems() {
         numTwo: sum - genNumOne,
         version: undefined,
         blank: genNumbers(3),
+      };
+    }
+
+    // FRACTIONS: UNIT SENTENCE
+    if (setting == 17) {
+      return {
+        // numerator: genNumbers(9)+1,
+        // denominator: genNumbers(9)+1,
+        numerator: genNumbers(9) + 1,
+        denominator: genNumbers(9) + 1,
+        firstSelection: genNumbers(2),
+        secondSelection: genNumbers(4),
+        // secondSelection: 3,
+        lastSelection: genNumbers(3),
+        firstUnit: undefined,
+        secondUnit: undefined,
+        totalUnit: undefined,
+        differenceUnit: undefined,
+        lastUnits: undefined,
+        identity: genNumbers(4),
+        // identity: 1,
+        value: undefined,
+        type: [
+          ["boys", "girls", "pupils"],
+          ["green marbles", "blue marbles", "total marbles"],
+          ["saved", "spent", "total money"],
+          ["spent", "left", "total money"],
+        ],
       };
     }
   }
@@ -23391,19 +23543,19 @@ function buttonLevelSetting() {
       threeNumerator.classList.remove("line");
       break;
 
-    case "Level 4.15":
-      level = 4.15;
-      scoreNeeded = 10;
-      highScoreName.innerHTML = highScore4DotZero15.name;
-      highScoreTime.innerHTML = highScore4DotZero15.time;
-      highScoreMistakes.innerHTML = highScore4DotZero15.mistake;
-      document.querySelector("#user-input").setAttribute("type", "text");
-      document.querySelector("#user-input").style.width = "250px";
-      displayProblem.style.textAlign = "left";
-      displayProblem.style.fontSize = "20px";
-      instructions.innerHTML = `Give your final answer.
-        `;
-      break;
+    // case "Level 4.15":
+    //   level = 4.15;
+    //   scoreNeeded = 10;
+    //   highScoreName.innerHTML = highScore4DotZero15.name;
+    //   highScoreTime.innerHTML = highScore4DotZero15.time;
+    //   highScoreMistakes.innerHTML = highScore4DotZero15.mistake;
+    //   document.querySelector("#user-input").setAttribute("type", "text");
+    //   document.querySelector("#user-input").style.width = "250px";
+    //   displayProblem.style.textAlign = "left";
+    //   displayProblem.style.fontSize = "20px";
+    //   instructions.innerHTML = `Give your final answer.
+    //     `;
+    //   break;
 
     case "Level 4.16":
       level = 4.16;
@@ -24029,13 +24181,13 @@ function buttonLevelSetting() {
       level = "calFour";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Left Side Right Side + - x /\n6. Fractions: Addition: Mixed Fractions\n7. Fractions: Subtraction: Mixed Fractions\n8. Decimals: Addition\n9. Decimals: Subtraction\n10. Decimals: Overlapping Place Value\n11. Decimals: Multiplication (Single)\n12. Decimals: Multiplication (Double)\n13. Decimals: Division \n14. Fractions to Decimal (Limit)\n15. Decimals: Division and Multiplication with splitting\n16. Multiplication in Sets\n\n99. Everything",
+        "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Left Side Right Side + - x /\n6. Fractions: Addition: Mixed Fractions\n7. Fractions: Subtraction: Mixed Fractions\n8. Decimals: Addition\n9. Decimals: Subtraction\n10. Decimals: Overlapping Place Value\n11. Decimals: Multiplication (Single)\n12. Decimals: Multiplication (Double)\n13. Decimals: Division \n14. Fractions to Decimal (Limit)\n15. Decimals: Division and Multiplication with splitting\n16. Multiplication in Sets\n17. Fractions: Unit with a Value\n\n99. Everything",
         99
       );
       if (
-        ![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 99].includes(
-          setting * 1
-        ) &&
+        ![
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 99,
+        ].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 99;
