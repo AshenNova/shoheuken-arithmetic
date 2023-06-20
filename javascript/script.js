@@ -10968,7 +10968,15 @@ function updateProblems() {
         clue
       );
       if (check == "Error") {
-        return updateCalc();
+        p.error++
+        if (p.error < 10){
+          return updateCalc();
+        } else {
+          skipGlobalUpdateProblem = 0;
+          console.log("TOO MANY RESETS!")
+          updateProblems()
+        }
+        
       }
     }
   }
