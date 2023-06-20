@@ -515,14 +515,14 @@ function clickStart() {
   }
 
   // Timer1 countdown
-  let time = setTime;
+  let countDTimer = setTime;
   const countDownOne = setInterval(function () {
-    timerD.innerHTML = time;
-    time--;
+    timerD.innerHTML = countDTimer;
+    countDTimer--;
 
-    if (time < 0) {
+    if (countDTimer < 0) {
       clearInterval(countDownOne);
-      timerD.innerHTML = time;
+      timerD.innerHTML = countDTimer;
       starto.classList.add("hidden");
       countDownTimer.classList.add("hidden");
       if (document.querySelector(".input-box").classList.contains("hidden")) {
@@ -18150,6 +18150,7 @@ function handleSubmit(e) {
       //   summary.push(question);
       // }
       summaryPush("✅");
+      ctx.clearRect(0, 0, 1000, 1000);
       if (mulLevel == "multiples") {
         multiplesArr.push(userInput.value);
         state.score = multiplesArr.length - 1;
