@@ -10968,15 +10968,14 @@ function updateProblems() {
         clue
       );
       if (check == "Error") {
-        p.error++
-        if (p.error < 10){
+        p.error++;
+        if (p.error < 10) {
           return updateCalc();
         } else {
           skipGlobalUpdateProblem = 0;
-          console.log("TOO MANY RESETS!")
-          updateProblems()
+          console.log("TOO MANY RESETS!");
+          updateProblems();
         }
-        
       }
     }
   }
@@ -13173,6 +13172,83 @@ function updateProblems() {
       }
       if (p.version == 2) {
       }
+    }
+    // DIFFERENT QUANTITY WITH DIFFERENCE
+    if (setting == 8) {
+      while (p.varAQuan == p.varBQuan) {
+        p.varAQuan = genNumbers(4) + 2;
+        p.varBQuan = genNumbers(4) + 1;
+      }
+      while (p.varAValue == p.varBValue) {
+        p.varAValue = genNumbers(10) + 5;
+        p.varBValue = genNumbers(10) + 5;
+      }
+      // FIRSTLINE (UNIT SENTENCE)
+      let firstLine = undefined;
+      let typeOne = ["normal", "ratio", "fractions", "percentage"][
+        genNumbers(4)
+      ];
+      if (p.varBQuan == 1) {
+        typeOne = "normal";
+      }
+      [p.varAQuan, p.varBQuan] = simplify(p.varAQuan, p.varBQuan);
+      if (typeOne == "normal") {
+        p.varBQuan = 1;
+        firstLine = `The number of A is ${p.varAQuan} times of B.</p>`;
+      }
+      if (typeOne == "ratio") {
+        // p.varBQuan = 1;
+        firstLine = `The number of A is ${p.varAQuan}:${p.varBQuan} of B.</p>`;
+      }
+      if (typeOne == "fractions") {
+        // p.varBQuan = 1;
+        firstLine = `The number of A is ${p.varAQuan}/${p.varBQuan} of B.</p>`;
+      }
+      if (typeOne == "percentage") {
+        let percentage = (p.varAQuan / p.varBQuan) * 100;
+        while (percentage % 1 != 0) {
+          p.varAQuan = genNumbers(4) + 2;
+          p.varBQuan = genNumbers(4) + 1;
+          percentage = (p.varAQuan / p.varBQuan) * 100;
+        }
+        firstLine = `The number of A is ${percentage}% of B.</p>`;
+      }
+
+      // THIRD LINE (DIFFERENE)
+      const totalA = p.varAQuan * p.varAValue * p.groups;
+      const totalB = p.varBQuan * p.varBValue * p.groups;
+      const comparison = totalA > totalB ? "more" : "less";
+      const difference = Math.abs(totalA - totalB);
+      if (difference == 0) {
+        return updateCalc();
+      }
+      // LASTLINE
+      let questionLine = undefined;
+      if (p.question == "quantityA") {
+        questionLine = `How many As are there?`;
+      }
+      if (p.question == "quantityB") {
+        questionLine = `How many Bs are there?`;
+      }
+      if (p.question == "valueA") {
+        questionLine = `What is the total value of As?`;
+      }
+      if (p.question == "valueB") {
+        questionLine = `What is the total value of Bs?`;
+      }
+      if (p.question == "totalQuantity") {
+        questionLine = `How many As and Bs are there in total?`;
+      }
+      if (p.question == "totalValue") {
+        questionLine = `What is the total?`;
+      }
+
+      displayProblem.innerHTML = `
+      ${firstLine}
+      Each A is ${p.varAValue} and each B is ${p.varBValue}.</p>
+      The total value of A is ${difference} ${comparison} than the total value of B.</p>
+      ${questionLine}
+      `;
     }
   }
 
@@ -17986,6 +18062,36 @@ function handleSubmit(e) {
           correctAnswerTwo = p.totalItems;
         }
       }
+      if (setting == 8) {
+        const totalAQuantity = p.varAQuan * p.groups;
+        const totalBQuantity = p.varBQuan * p.groups;
+        if (p.question == "quantityA") {
+          correctAnswerTwo = totalAQuantity;
+          correctAnswer = totalAQuantity;
+        }
+        if (p.question == "quantityB") {
+          correctAnswerTwo = totalBQuantity;
+          correctAnswer = totalBQuantity;
+        }
+        if (p.question == "valueA") {
+          correctAnswerTwo = totalAQuantity * p.varAValue;
+          correctAnswer = totalAQuantity * p.varAValue;
+        }
+        if (p.question == "valueB") {
+          correctAnswerTwo = totalBQuantity * p.varBValue;
+          correctAnswer = totalBQuantity * p.varBValue;
+        }
+        if (p.question == "totalQuantity") {
+          correctAnswerTwo = totalAQuantity + totalBQuantity;
+          correctAnswer = totalAQuantity + totalBQuantity;
+        }
+        if (p.question == "totalValue") {
+          correctAnswerTwo =
+            totalAQuantity * p.varAValue + totalBQuantity * p.varBValue;
+          correctAnswer =
+            totalAQuantity * p.varAValue + totalBQuantity * p.varBValue;
+        }
+      }
     }
     // ANSWERS
     if (level == "heuFiveb") {
@@ -18724,7 +18830,7 @@ function handleSubmit(e) {
         }
 
         if (level == "heuFive") {
-          if (p.rollz == 1) {
+          if (setting == 1) {
             let gender = "";
             p.difference > 0 ? (gender = "boys") : (gender = "girls");
             helpMe.innerHTML = `
@@ -18739,7 +18845,7 @@ function handleSubmit(e) {
             Maybe 5) Find the quantity of the other variable by adding it back.</p>
             `;
           }
-          if (p.rollz == 2) {
+          if (setting == 2) {
             helpMe.innerHTML = `
             Observation:</p>
             Note that there is an option in the question which will cause the value to down.</p>
@@ -18751,7 +18857,7 @@ function handleSubmit(e) {
             Maybe 5) Total questions - wrong questions = right questions</p>
             `;
           }
-          if (p.rollz == 3) {
+          if (setting == 3) {
             let lessVariable =
               p.chosenOne.charAt(0).toUpperCase() + p.chosenOne.slice(1);
             let moreVariable =
@@ -22263,46 +22369,43 @@ function genProblems() {
   }
   // Stats
   if (level == "heuFive") {
-    let roll = undefined;
-    let settingText = setting.toString();
-    console.log(setting, settingText);
+    // let roll = undefined;
+    // let settingText = setting.toString();
+    // console.log(setting, settingText);
 
-    if (settingText.includes("-")) {
-      console.log("range detected");
-      range = 1;
-      settingText.split("-");
-      if (!heuArr.length) {
-        for (let i = 1; i <= settingText[settingText.length - 1]; i++) {
-          heuArr.push(i);
-        }
-      }
-      console.log(heuArr);
-      roll = heuArr[genNumbers(heuArr.length)];
-      let index = heuArr.indexOf(roll);
-      heuArr.splice(index, 1);
-    } else {
-      console.log("Not range detected");
-      setting = parseInt(setting);
-      if (isNaN(setting)) {
-        setting = 9;
-      }
-    }
+    // if (settingText.includes("-")) {
+    //   console.log("range detected");
+    //   range = 1;
+    //   settingText.split("-");
+    //   if (!heuArr.length) {
+    //     for (let i = 1; i <= settingText[settingText.length - 1]; i++) {
+    //       heuArr.push(i);
+    //     }
+    //   }
+    //   console.log(heuArr);
+    //   roll = heuArr[genNumbers(heuArr.length)];
+    //   let index = heuArr.indexOf(roll);
+    //   heuArr.splice(index, 1);
+    // } else {
+    //   console.log("Not range detected");
+    //   setting = parseInt(setting);
+    //   if (isNaN(setting)) {
+    //     setting = 9;
+    //   }
+    // }
+    setting = calArrAll(8, calArr, setting, 9);
+    setting = checkRange(setting, calArr);
+    // if (setting == 9) {
+    //   if (!heuArr.length) {
+    //     heuArr = [1, 2, 3, 4, 5, 6, 7, 8];
+    //     console.log("Array renewed");
+    //   }
+    //   roll = heuArr[genNumbers(heuArr.length)];
+    //   let index = heuArr.indexOf(roll);
+    //   heuArr.splice(index, 1);
+    // }
 
-    if (setting == 9) {
-      if (!heuArr.length) {
-        heuArr = [1, 2, 3, 4, 5, 6, 7];
-        console.log("Array renewed");
-      }
-      roll = heuArr[genNumbers(heuArr.length)];
-      let index = heuArr.indexOf(roll);
-      heuArr.splice(index, 1);
-    }
-
-    if (
-      setting == 1 ||
-      (setting == 9 && roll == 1) ||
-      (range == 1 && roll == 1)
-    ) {
+    if (setting == 1) {
       return {
         rollz: 1,
         quantityOne: genNumbers(10) + 1,
@@ -22316,11 +22419,7 @@ function genProblems() {
       };
     }
 
-    if (
-      setting == 2 ||
-      (setting == 9 && roll == 2) ||
-      (range == 1 && roll == 2)
-    ) {
+    if (setting == 2) {
       return {
         rollz: 2,
         marks: genNumbers(5) + 2,
@@ -22337,11 +22436,7 @@ function genProblems() {
       };
     }
 
-    if (
-      setting == 3 ||
-      (setting == 9 && roll == 3) ||
-      (range == 1 && roll == 3)
-    ) {
+    if (setting == 3) {
       return {
         rollz: 3,
         objects: [
@@ -22366,11 +22461,7 @@ function genProblems() {
       };
     }
 
-    if (
-      setting == 4 ||
-      (setting == 9 && roll == 4) ||
-      (range == 1 && roll == 4)
-    ) {
+    if (setting == 4) {
       return {
         rollz: 4,
         objectOne: ["A", "B", "C"][genNumbers(3)],
@@ -22383,11 +22474,7 @@ function genProblems() {
       };
     }
 
-    if (
-      setting == 5 ||
-      (setting == 9 && roll == 5) ||
-      (range == 1 && roll == 5)
-    ) {
+    if (setting == 5) {
       return {
         rollz: 5,
         objects: [
@@ -22415,11 +22502,7 @@ function genProblems() {
       };
     }
 
-    if (
-      setting == 6 ||
-      (setting == 9 && roll == 6) ||
-      (range == 1 && roll == 6)
-    ) {
+    if (setting == 6) {
       return {
         rollz: 6,
         people: genNumbers(10) + 5,
@@ -22428,11 +22511,7 @@ function genProblems() {
       };
     }
 
-    if (
-      setting == 7 ||
-      (setting == 9 && roll == 7) ||
-      (range == 1 && roll == 7)
-    ) {
+    if (setting == 7) {
       return {
         rollz: 7,
         version: genNumbers(0) + 1,
@@ -22448,6 +22527,24 @@ function genProblems() {
         oneGroup: undefined,
         totalCost: undefined,
         oneGroupCost: undefined,
+      };
+    }
+    // DIFFERENT QUANTITY WITH DIFFERENCE
+    if (setting == 8) {
+      return {
+        varAQuan: genNumbers(4) + 2,
+        varBQuan: genNumbers(4) + 1,
+        varAValue: genNumbers(10) + 5,
+        varBValue: genNumbers(10) + 5,
+        groups: genNumbers(20) + 5,
+        question: [
+          "quantityA",
+          "valueA",
+          "quantityB",
+          "valueB",
+          "totalQuantity",
+          "totalValue",
+        ][genNumbers(6)],
       };
     }
   }
@@ -24426,10 +24523,10 @@ function buttonLevelSetting() {
     case "Heu.5":
       level = "heuFive";
       setting = prompt(
-        "What level?\n1. Grouping with Difference\n2. Supposition (Negative)\n3. Supposition negative ( Difference)\n4. Identical Quantity with Difference\n5. Substitution\n6. Shaking Hands\n7. Bonus\n\n9. All"
+        "What level?\n1. Grouping with Difference\n2. Supposition (Negative)\n3. Supposition negative ( Difference)\n4. Identical Quantity with Difference\n5. Substitution\n6. Shaking Hands\n7. Bonus\n8. Different Quantity with Difference\n\n9. All"
       );
       if (
-        ![1, 2, 3, 4, 5, 6, 7, 9].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 6, 7, 8, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 9;
