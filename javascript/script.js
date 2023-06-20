@@ -8682,6 +8682,7 @@ function updateProblems() {
       `;
     }
     if (setting == 16) {
+      normalDisplay();
       let arrOne = [p.sets, "x", p.sums];
       let arrTwo = [p.sets, "x", p.numOne];
       let arrThree = [p.sets, "x", "?"];
@@ -13198,7 +13199,7 @@ function updateProblems() {
       }
       if (typeOne == "ratio") {
         // p.varBQuan = 1;
-        firstLine = `The number of A is ${p.varAQuan}:${p.varBQuan} of B.</p>`;
+        firstLine = `The number of A is ${p.varAQuan} : ${p.varBQuan} of B.</p>`;
       }
       if (typeOne == "fractions") {
         // p.varBQuan = 1;
