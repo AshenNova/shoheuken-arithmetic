@@ -11412,6 +11412,7 @@ function updateProblems() {
   }
   // display
   if (level == "heuThree") {
+    normalDisplay()
     console.log(setting);
     if (
       setting == 1 ||
@@ -13291,7 +13292,10 @@ function updateProblems() {
         if (first % (p.denoOne - p.numeOne) != 0 || third <= 0)
           return updateCalc();
         p.answer = (first / (p.denoOne - p.numeOne)) * p.denoOne;
-        // console.log(third, second, first, p.answer);
+        if (p.answer < 0) {
+          console.log("Negative numbers")
+          return updateCalc()
+        }
       }
       displayProblem.innerHTML = `
       Person A took ${p.numeOne}/${p.denoOne} ${
