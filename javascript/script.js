@@ -9343,7 +9343,7 @@ function updateProblems() {
       How much is the item?
       `;
       }
-      if (p.direction == "-") {
+      if (p.direction == "-" && p.version == 0 ) {
         if (p.numeTwo / p.denoTwo >= p.numeOne / p.denoOne) return updateCalc();
         const valueUnit = new_numeOne - new_numeTwo;
         while (p.situation % valueUnit != 0) p.situation -= 1;
@@ -9352,6 +9352,21 @@ function updateProblems() {
       Person ${p.person} gave away some of ${
           gender == "she" ? "her" : "his"
         } money and had ${p.numeOne}/${p.denoOne} of it left.</p>
+      ${gender} then spent another $${p.situation}, and now has ${p.numeTwo}/${
+          p.denoTwo
+        } of it left.</p>
+      How much did ${gender} have at first?
+      `;
+      }
+      if (p.direction == "-" && p.version == 1 ) {
+        if (p.numeTwo / p.denoTwo >= p.numeOne / p.denoOne) return updateCalc();
+        const valueUnit = new_numeOne - new_numeTwo;
+        while (p.situation % valueUnit != 0) p.situation -= 1;
+        p.oneUnit = p.situation / valueUnit;
+        displayProblem.innerHTML = `
+      Person ${p.person} gave away ${p.denoOne-p.numeOne}/${p.denoOne} of ${
+          gender == "she" ? "her" : "his"
+        } of his money.</p>
       ${gender} then spent another $${p.situation}, and now has ${p.numeTwo}/${
           p.denoTwo
         } of it left.</p>
@@ -11412,7 +11427,7 @@ function updateProblems() {
   }
   // display
   if (level == "heuThree") {
-    normalDisplay()
+    normalDisplay();
     console.log(setting);
     if (
       setting == 1 ||
@@ -13293,8 +13308,8 @@ function updateProblems() {
           return updateCalc();
         p.answer = (first / (p.denoOne - p.numeOne)) * p.denoOne;
         if (p.answer < 0) {
-          console.log("Negative numbers")
-          return updateCalc()
+          console.log("Negative numbers");
+          return updateCalc();
         }
       }
       displayProblem.innerHTML = `
@@ -21141,8 +21156,8 @@ function genProblems() {
         denoTwo: gen_denoTwo,
         numeTwo: genNumbers(gen_denoTwo - 1) + 1,
         situation: genNumbers(899) + 10,
-        // direction: ["+", "-"][genNumbers(2)],
-        direction: "-",
+        direction: ["+", "-"][genNumbers(2)],
+        // direction: "-",
         oneUnit: undefined,
         last_deno: undefined,
         version: genNumbers(2),
