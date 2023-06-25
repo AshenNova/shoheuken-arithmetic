@@ -12892,7 +12892,7 @@ function updateProblems() {
       }
     }
     //SIMULTANEOUS EQUATION
-    if (setting == 7) {
+    if (setting == 5) {
       let totalAOne = p.varA;
       let totalATwo = p.varA;
       let totalBOne = p.varB;
@@ -17884,7 +17884,7 @@ function handleSubmit(e) {
         }
       }
       //SIMULTANEOUS EQUATION
-      if (setting == 7) {
+      if (setting == 5) {
         if (p.choose == "boys") correctAnswer = p.varB * p.unitB;
         if (p.choose == "girls") correctAnswer = p.varA * p.unitA;
       }
@@ -22305,7 +22305,7 @@ function genProblems() {
   }
   //SETTINGS
   if (level == "heuFourb") {
-    setting = calArrAll(4, calArr, setting, 9);
+    setting = calArrAll(5, calArr, setting, 9);
     setting = checkRange(setting, calArr);
 
     if (setting == 1) {
@@ -22374,7 +22374,7 @@ function genProblems() {
     }
 
     // SIMULTANEOUS EQUATION
-    if (setting == 7) {
+    if (setting == 5) {
       const genVarA = genNumbers(5) + 2;
       const genVarB = genNumbers(5) + 2;
       return {
@@ -24526,13 +24526,13 @@ function buttonLevelSetting() {
 
     case "Heu.4b":
       setting = prompt(
-        "What level?\n1. Lowest Common Multiples ( Indirect )\n2. Highest Common Factor ( Indirect )\n3. Unchanged Difference\n4. Unchanged Total\n5.Unequal Beginning\n6.Unequal End\n7. Simultaneous Equation\n\n9. All",
+        "What level?\n1. Lowest Common Multiples ( Indirect )\n2. Highest Common Factor ( Indirect )\n3. Unchanged Difference\n4. Unchanged Total\n5. Simultaneous Equation\n\n9. All",
         9
       );
       level = "heuFourb";
 
       if (
-        ![1, 2, 3, 4, 5, 6, 7, 9].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 9;
