@@ -21097,7 +21097,7 @@ function genProblems() {
         likeDenominator: undefined,
         value: undefined,
         spent: undefined,
-        versionOne: [0, 1][genNumbers(2)],
+        versionOne: [0, 1, 1][genNumbers(3)],
       };
     }
     // FRACTIONS: Identical Numerator
