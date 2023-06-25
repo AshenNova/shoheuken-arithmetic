@@ -9343,7 +9343,7 @@ function updateProblems() {
       How much is the item?
       `;
       }
-      if (p.direction == "-" && p.version == 0 ) {
+      if (p.direction == "-" && p.version == 0) {
         if (p.numeTwo / p.denoTwo >= p.numeOne / p.denoOne) return updateCalc();
         const valueUnit = new_numeOne - new_numeTwo;
         while (p.situation % valueUnit != 0) p.situation -= 1;
@@ -9358,13 +9358,13 @@ function updateProblems() {
       How much did ${gender} have at first?
       `;
       }
-      if (p.direction == "-" && p.version == 1 ) {
+      if (p.direction == "-" && p.version == 1) {
         if (p.numeTwo / p.denoTwo >= p.numeOne / p.denoOne) return updateCalc();
         const valueUnit = new_numeOne - new_numeTwo;
         while (p.situation % valueUnit != 0) p.situation -= 1;
         p.oneUnit = p.situation / valueUnit;
         displayProblem.innerHTML = `
-      Person ${p.person} gave away ${p.denoOne-p.numeOne}/${p.denoOne} of ${
+      Person ${p.person} gave away ${p.denoOne - p.numeOne}/${p.denoOne} of ${
           gender == "she" ? "her" : "his"
         } of his money.</p>
       ${gender} then spent another $${p.situation}, and now has ${p.numeTwo}/${
@@ -10371,7 +10371,9 @@ function updateProblems() {
       normalDisplay();
       if (p.optionOne == "simple gst") {
         displayProblem.innerHTML = `
-      Person ${p.person} bought something which cost $${p.value.toLocaleString(
+      Person ${
+        p.person
+      } wanted to buy something which cost $${p.value.toLocaleString(
           "en-US"
         )}.</p>
       He has to also pay a GST of ${p.gst}%.</p>
@@ -10380,7 +10382,7 @@ function updateProblems() {
       if (p.optionTwo == "gst") {
         displayProblem.insertAdjacentHTML(
           "beforeend",
-          "How much was the cost of GST?"
+          "How much is the cost of GST?"
         );
       }
       if (p.optionTwo == "cost") {
@@ -10415,7 +10417,9 @@ function updateProblems() {
           displayProblem.innerHTML = `
         Person ${
           p.person
-        } bought something which cost $${p.value.toLocaleString("en-US")}.</p>
+        } wanted to buy something which cost $${p.value.toLocaleString(
+            "en-US"
+          )}.</p>
         He was given a ${p.discount}% discount,</p>
         and has to pay ${p.gst}% GST.</p>
         What was the final cost?</p>
