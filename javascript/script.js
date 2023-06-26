@@ -33,6 +33,8 @@ import {
   drawThis,
 } from "./otherFunctions.js";
 // import { resetStuff } from "./reset.js";
+import { cutOffCheck } from "./cut_off.js";
+cutOffCheck();
 let buttonLevel = 0;
 let mulLevel = 0;
 let scoreNeeded = 0;
@@ -185,6 +187,7 @@ let calArrQns = [];
 let calRange = [];
 let questionTimeForSummary = undefined;
 let summary = [];
+let extraPractice = [];
 function SummaryCreate(symbol, setting, time) {
   this.symbol = symbol;
   this.setting = setting;
@@ -544,8 +547,9 @@ function clickStart() {
 }
 
 let questionTime = undefined;
+let questionSecs = 0;
 function questionTimer() {
-  let questionSecs = 0;
+  questionSecs = 0;
   questionTimerD.innerHTML = questionSecs;
   // clearInterval(countDownOne);
   questionTime = setInterval(function () {
@@ -553,6 +557,7 @@ function questionTimer() {
     questionTimerD.innerHTML = questionSecs;
     questionTimeForSummary = questionSecs;
   }, 1000);
+  return questionSecs;
 }
 
 // Timer2
@@ -18279,27 +18284,20 @@ function handleSubmit(e) {
         "From permutation: Correct"
     ) {
       console.log("correct");
+      // EXTRA PRACTICE CHECK
+      const extra = cutOffCheck(level, setting, questionSecs);
+      if (extra) {
+        extraPractice.push(extra);
+      }
+      console.log(`Extra Practice Needed: ${extraPractice}`);
+
       clearInterval(questionTime);
       questionTimer();
       skipGlobalUpdateProblem = 0;
       state.score++;
       accumulatedScore++;
       console.log(accumulatedScore);
-      // const levelStr = level.toString();
-      // if (
-      //   level.toString().startsWith("cal") ||
-      //   level.toString().startsWith("heu")
-      // ) {
-      //   const question = new SummaryCreate(
-      //     "✅",
-      //     setting,
-      //     questionTimeForSummary
-      //   );
-      //   summary.push(question);
-      // } else {
-      //   const question = new SummaryCreate("✅", level, questionTimeForSummary);
-      //   summary.push(question);
-      // }
+
       summaryPush("✅");
       ctx.clearRect(0, 0, 1000, 1000);
       if (mulLevel == "multiples") {
