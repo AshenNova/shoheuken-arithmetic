@@ -76,6 +76,9 @@ body {
 .multiples-setting .btn {
   margin: 5px 0;
 }
+.summary-status {
+  -webkit-text-stroke: 1px grey;
+}
 
 .btn-summary {
   background-color: black;

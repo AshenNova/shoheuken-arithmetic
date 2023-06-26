@@ -96,6 +96,10 @@ const summaryTextCl = document.querySelector(".summary-text");
 const summaryBtn = document.querySelector(".btn-summary");
 const summaryContainer = document.querySelector(".summary-container");
 const closeBtn = document.querySelector(".btn-close");
+const summaryScore = document.querySelector(".summary-label-score");
+const summaryMistakes = document.querySelector(".summary-mistakes-count");
+const summaryTime = document.querySelector(".summary-time-clock");
+const summaryStatus = document.querySelector("summary-status");
 
 //END SUMMARY STUFF
 const levelSetting = document.querySelector(".level-setting");
@@ -615,7 +619,16 @@ function timer2() {
 
       summaryTextCl.textContent = "";
       summary.forEach((item) => {
-        console.log("Setting: " + item.setting, "Time: " + item.time) + "s";
+        if (time == cutoff) {
+          summaryStatus.innerHTML = `<h3 class="summary-status" style="color:red">Failed...</h3>`;
+        }
+        summaryScore.textContent = state.score;
+        if (hardcore == 1) {
+          summaryScore.textContent = accumulatedScore;
+        }
+        summaryTime.textContent = time;
+        summaryMistakes.textContent = state.mistake;
+
         const html = `<p>${item.symbol} Setting: ${item.setting}, Time: ${item.time}s</p>`;
         summaryTextCl.insertAdjacentHTML("beforeend", html);
       });
@@ -22930,7 +22943,7 @@ function buttonLevelSetting() {
   switch (buttonLevel) {
     case "Level 1.0":
       level = 1.0;
-      scoreNeeded = 50;
+      scoreNeeded = 2;
       gold = highScore1DotZero.time;
       silver = highScore1DotZero.time + (cutoff - highScore1DotZero.time) / 3;
       bronze =
