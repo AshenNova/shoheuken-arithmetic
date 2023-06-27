@@ -24740,11 +24740,13 @@ extraPracticeBtn.addEventListener("click", function () {
   currentMistake.textContent = 0;
   // const cloneArr = extraPracticeArr;
   calArr = [];
-  for (let i = 0; i < 3; i++) {
-    extraPracticeArr.forEach((item) => {
-      calArr.push(item);
-    });
-  }
+  // for (let i = 0; i < 3; i++) {
+  //   extraPracticeArr.forEach((item) => {
+  //     calArr.push(item);
+  //   });
+  // }
+  const cloneArr = extraPracticeArr;
+  calArr.push(...cloneArr, ...cloneArr, ...cloneArr);
   console.log(calArr);
   extraPracticeArr = [];
   player = 1;

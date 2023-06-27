@@ -18,12 +18,12 @@ export function cutOffCheck(level, setting, time) {
 
   // HEURISTICS
   if (level == "heuThree") {
-    if (time > 180) {
+    if (time > 240) {
       push = "Yes";
     }
   }
   if (level == "heuFour") {
-    if (time > 180) {
+    if (time > 240) {
       push = "Yes";
     }
   }
