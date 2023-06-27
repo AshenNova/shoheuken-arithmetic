@@ -832,6 +832,7 @@ function calArrAll(max, arr, setting, maxSetting, level) {
           arr.push(i);
         }
       }
+      console.log(`Current available questions is/are ${arr}`);
       setting = arr[genNumbers(arr.length)];
       arr.splice(arr.indexOf(setting), 1);
       console.log(
@@ -18356,12 +18357,6 @@ function handleSubmit(e) {
       userInput.value = userInput.value.toLowerCase();
     }
 
-    // if (
-    //   userInput.value.trim() == correctAnswer ||
-    //   userInput2.value.trim() == correctAnswer ||
-    //   userInput.value.trim() == correctAnswerTwo ||
-    //   userInput2.value.trim() == correctAnswerTwo
-    // ) {
     //MARK HERE
     if (
       userInput.value.trim() == correctAnswer ||
@@ -19028,10 +19023,17 @@ function handleSubmit(e) {
         }
       }
       // adds cal back into array if wrong
-      if (!calArr.includes(setting)) {
-        calArr.push(setting);
-        console.log(`Incorrect, try setting ${setting} again!`);
+      if (attempt == 1){
+        if (!calArr.includes(setting)) {
+          calArr.push(setting);
+          console.log(`Incorrect, try setting ${setting} again!`);
+          console.log(calArr);
+        }
+      } else {
+        calArr.push(setting)
+        console.log(calArr);
       }
+      
     }
   }
 }
