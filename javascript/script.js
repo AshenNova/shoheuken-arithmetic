@@ -45,6 +45,7 @@ let difficulty = 0;
 let digit = 0;
 let choice = 0;
 let manipulation = 0;
+let attempt = 1;
 const displayProblem = document.querySelector(".display-problems");
 const helpMe = document.querySelector(".help-me-text");
 const ourForm = document.querySelector(".our-form");
@@ -103,7 +104,10 @@ const summaryMistakes = document.querySelector(".summary-mistakes-count");
 const summaryTime = document.querySelector(".summary-time-clock");
 const summaryStatus = document.querySelector("summary-status");
 
-//END SUMMARY STUFF
+//EXTRA PRACTICE
+const extraPracticeBtn = document.querySelector(".extra-practice");
+
+//
 const levelSetting = document.querySelector(".level-setting");
 const levelLabel = document.querySelector(".level-label");
 const mainBox = document.querySelector(".main-box");
@@ -187,8 +191,9 @@ let calArrQns = [];
 let calRange = [];
 let questionTimeForSummary = undefined;
 let summary = [];
-let extraPractice = [];
-function SummaryCreate(symbol, setting, time) {
+let extraPracticeArr = [];
+function SummaryCreate(attempt, symbol, setting, time) {
+  this.attempt = attempt;
   this.symbol = symbol;
   this.setting = setting;
   this.time = time;
@@ -198,10 +203,20 @@ function summaryPush(symbol) {
     level.toString().startsWith("cal") ||
     level.toString().startsWith("heu")
   ) {
-    const question = new SummaryCreate(symbol, setting, questionTimeForSummary);
+    const question = new SummaryCreate(
+      attempt,
+      symbol,
+      setting,
+      questionTimeForSummary
+    );
     summary.push(question);
   } else {
-    const question = new SummaryCreate(symbol, level, questionTimeForSummary);
+    const question = new SummaryCreate(
+      attempt,
+      symbol,
+      level,
+      questionTimeForSummary
+    );
     summary.push(question);
   }
 }
@@ -508,10 +523,7 @@ function workingDisplay() {
   firstCanvas.classList.add("hidden");
   workingContainer.classList.remove("hidden");
 }
-
-function clickStart() {
-  buttonLevel = this.innerHTML;
-  console.log("start button clicked");
+function withinStart() {
   startBox.classList.add("hidden");
   multiplesSettingCl.classList.add("hidden");
   countDownTimer.classList.remove("hidden");
@@ -545,6 +557,43 @@ function clickStart() {
     }
   }, 1000);
 }
+function clickStart() {
+  buttonLevel = this.innerHTML;
+  console.log("start button clicked");
+  // startBox.classList.add("hidden");
+  // multiplesSettingCl.classList.add("hidden");
+  // countDownTimer.classList.remove("hidden");
+  // if (levelArr.length != 0) {
+  //   buttonLevelSetting();
+  //   levelLabel.innerHTML = `You are attempting Level ${level}`;
+  //   console.log(buttonLevel);
+  // }
+
+  // // Timer1 countdown
+  // let countDTimer = setTime;
+  // const countDownOne = setInterval(function () {
+  //   timerD.innerHTML = countDTimer;
+  //   countDTimer--;
+
+  //   if (countDTimer < 0) {
+  //     clearInterval(countDownOne);
+  //     timerD.innerHTML = countDTimer;
+  //     starto.classList.add("hidden");
+  //     countDownTimer.classList.add("hidden");
+  //     if (document.querySelector(".input-box").classList.contains("hidden")) {
+  //       userInput2.focus();
+  //     } else {
+  //       userInput.focus();
+  //     }
+  //     timer2();
+  //     questionTimer();
+
+  //     optionsBox.classList.add("hidden");
+  //     updateProblems();
+  //   }
+  // }, 1000);
+  withinStart();
+}
 
 let questionTime = undefined;
 let questionSecs = 0;
@@ -575,6 +624,7 @@ function timer2() {
     }
 
     if (state.score >= scoreNeeded || time == cutoff) {
+      clearInterval(questionTime);
       clearInterval(countDownTwo);
       document.getElementById("timer").innerHTML = time;
       starto.classList.remove("hidden");
@@ -621,8 +671,19 @@ function timer2() {
 
       mistakesCountCl.innerHTML = state.mistake;
       player = 0;
+      if (extraPracticeArr.length != 0) {
+        extraPracticeBtn.classList.remove("hidden");
+      } else {
+        extraPracticeBtn.classList.add("hidden");
+      }
+      if ((extraPracticeArr.length = 0)) {
+        summaryTextCl.innerHTML = `*Extra practice needed for ${extraPracticeArr.join(
+          ", "
+        )}.</p>`;
+      } else {
+        summaryTextCl.innerHTML = `Well Done!</p>`;
+      }
 
-      summaryTextCl.textContent = "";
       summary.forEach((item) => {
         if (time == cutoff) {
           summaryStatus.innerHTML = `<h3 class="summary-status" style="color:red">Failed...</h3>`;
@@ -634,15 +695,27 @@ function timer2() {
         summaryTime.textContent = time;
         summaryMistakes.textContent = state.mistake;
 
-        const html = `<p>${item.symbol} Setting: ${item.setting}, Time: ${item.time}s</p>`;
+        const html = `<p>Attempt: ${item.attempt}, ${item.symbol} Setting: ${item.setting}, Time: ${item.time}s</p>`;
         summaryTextCl.insertAdjacentHTML("beforeend", html);
       });
     }
   }, 1000);
 }
 
+function extraPracticeSet() {
+  const extra = cutOffCheck(level, setting, questionSecs);
+  if (extra) {
+    if (!extraPracticeArr.includes(extra)) {
+      extraPracticeArr.push(extra);
+    } else {
+      console.log("Already Exist");
+    }
+  }
+  console.log(`Extra Practice Needed: ${extraPracticeArr}`);
+}
 function resetStuff() {
   player = 1;
+  attempt = 1;
   clearInterval(questionTime);
   levelSetting.classList.remove("hidden");
   finalBox.classList.add("hidden");
@@ -692,6 +765,7 @@ function resetStuff() {
   heuArr.length = 0;
   global = 0;
   calArr = [];
+  extraPracticeArr = [];
   // arr = null;
   calArrQns = [];
   calRange = [];
@@ -18287,12 +18361,17 @@ function handleSubmit(e) {
       // EXTRA PRACTICE CHECK
       const extra = cutOffCheck(level, setting, questionSecs);
       if (extra) {
-        extraPractice.push(extra);
+        if (!extraPracticeArr.includes(extra)) {
+          extraPracticeArr.push(extra);
+        } else {
+          console.log("Already Exist");
+        }
       }
-      console.log(`Extra Practice Needed: ${extraPractice}`);
 
+      //RESTART QUESTION TIME
       clearInterval(questionTime);
       questionTimer();
+
       skipGlobalUpdateProblem = 0;
       state.score++;
       accumulatedScore++;
@@ -18384,8 +18463,17 @@ function handleSubmit(e) {
       console.log("incorrect");
 
       state.mistake++;
-
       summaryPush("❌");
+
+      //EXTRA PRACTICE
+      if (
+        level.toString().startsWith("cal") ||
+        level.toString().startsWith("heu")
+      ) {
+        if (!extraPracticeArr.includes(setting)) extraPracticeArr.push(setting);
+        console.log(`Extra Practice Needed: ${extraPracticeArr}`);
+      }
+
       reviewCount = 1;
       reviewAnswer.classList.remove("hidden");
       state.correctAnswer = correctAnswer;
@@ -21864,46 +21952,44 @@ function genProblems() {
   // setting
   if (level == "heuThree") {
     // let roll = genNumbers(7)+1
-    let roll = undefined;
-    let settingText = setting.toString();
+    // let roll = undefined;
+    // let settingText = setting.toString();
 
-    if (settingText.includes("-")) {
-      console.log("range detected");
-      range = 1;
-      settingText.split("-");
-      if (!heuArr.length) {
-        for (let i = 1; i <= settingText[settingText.length - 1]; i++) {
-          heuArr.push(i);
-        }
-        console.log(heuArr);
-      }
-      roll = heuArr[genNumbers(heuArr.length)];
-      let index = heuArr.indexOf(roll);
-      heuArr.splice(index, 1);
-    } else {
-      console.log("Not range detected");
-      setting = parseInt(setting);
-      if (isNaN(setting)) {
-        setting = 9;
-      }
-    }
+    // if (settingText.includes("-")) {
+    //   console.log("range detected");
+    //   range = 1;
+    //   settingText.split("-");
+    //   if (!heuArr.length) {
+    //     for (let i = 1; i <= settingText[settingText.length - 1]; i++) {
+    //       heuArr.push(i);
+    //     }
+    //     console.log(heuArr);
+    //   }
+    //   roll = heuArr[genNumbers(heuArr.length)];
+    //   let index = heuArr.indexOf(roll);
+    //   heuArr.splice(index, 1);
+    // } else {
+    //   console.log("Not range detected");
+    //   setting = parseInt(setting);
+    //   if (isNaN(setting)) {
+    //     setting = 9;
+    //   }
+    // }
 
-    if (setting == 9) {
-      if (!heuArr.length) {
-        heuArr = [1, 2, 3, 4, 5, 6, 7, 8];
-        console.log("array renewed! " + heuArr);
-      }
-      roll = heuArr[genNumbers(heuArr.length)];
-      let index = heuArr.indexOf(roll);
-      heuArr.splice(index, 1);
-      console.log("Current remaining arr is " + heuArr);
-    }
+    // if (setting == 9) {
+    //   if (!heuArr.length) {
+    //     heuArr = [1, 2, 3, 4, 5, 6, 7, 8];
+    //     console.log("array renewed! " + heuArr);
+    //   }
+    //   roll = heuArr[genNumbers(heuArr.length)];
+    //   let index = heuArr.indexOf(roll);
+    //   heuArr.splice(index, 1);
+    //   console.log("Current remaining arr is " + heuArr);
+    // }
+    setting = calArrAll(8, calArr, setting, 9);
+    setting = checkRange(setting, calArr);
 
-    if (
-      setting == 1 ||
-      (setting == 9 && roll == 1) ||
-      (range == 1 && roll == 1)
-    ) {
+    if (setting == 1) {
       return {
         objectOne: ["A", "B", "C"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
@@ -21913,11 +21999,7 @@ function genProblems() {
         rollz: 1,
       };
     }
-    if (
-      setting == 2 ||
-      (setting == 9 && roll == 2) ||
-      (range == 1 && roll == 2)
-    ) {
+    if (setting == 2) {
       return {
         objects: [
           ["chickens", "dogs", "2", "4"],
@@ -21940,11 +22022,7 @@ function genProblems() {
         rollQn: ["A", "B"][genNumbers(2)],
       };
     }
-    if (
-      setting == 3 ||
-      (setting == 9 && roll == 3) ||
-      (range == 1 && roll == 3)
-    ) {
+    if (setting == 3) {
       return {
         objectOne: ["A", "B", "C"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
@@ -21957,11 +22035,7 @@ function genProblems() {
         rollz: 3,
       };
     }
-    if (
-      setting == 4 ||
-      (setting == 9 && roll == 4) ||
-      (range == 1 && roll == 4)
-    ) {
+    if (setting == 4) {
       return {
         objectOne: ["A", "B", "C"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
@@ -21976,11 +22050,7 @@ function genProblems() {
       };
     }
 
-    if (
-      setting == 5 ||
-      (setting == 9 && roll == 5) ||
-      (range == 1 && roll == 5)
-    ) {
+    if (setting == 5) {
       return {
         unitMeasurement: ["kg", "g", "ml", "ℓ"][genNumbers(4)],
         objectOne: ["A", "B", "C"][genNumbers(3)],
@@ -21994,11 +22064,7 @@ function genProblems() {
       };
     }
 
-    if (
-      setting == 6 ||
-      (setting == 9 && roll == 6) ||
-      (range == 1 && roll == 6)
-    ) {
+    if (setting == 6) {
       return {
         rollz: 6,
         rollObject: genNumbers(4),
@@ -22015,11 +22081,7 @@ function genProblems() {
       };
     }
 
-    if (
-      setting == 7 ||
-      (setting == 9 && roll == 7) ||
-      (range == 1 && roll == 7)
-    ) {
+    if (setting == 7) {
       return {
         rollz: 7,
         objectOne: ["A", "B", "C"][genNumbers(3)],
@@ -22030,11 +22092,7 @@ function genProblems() {
       };
     }
 
-    if (
-      setting == 8 ||
-      (setting == 9 && roll == 8) ||
-      (range == 1 && roll == 8)
-    ) {
+    if (setting == 8) {
       return {
         rollz: 8,
         options: ["B", "A"][genNumbers(2)],
@@ -22150,47 +22208,10 @@ function genProblems() {
   // setting
 
   if (level == "heuFour") {
-    let roll = undefined;
-    let settingText = setting.toString();
-    console.log(setting, settingText);
+    setting = calArrAll(7, calArr, setting, 9);
+    setting = checkRange(setting, calArr);
 
-    if (settingText.includes("-")) {
-      console.log("range detected");
-      range = 1;
-      settingText.split("-");
-      if (!heuArr.length) {
-        for (let i = 1; i <= settingText[settingText.length - 1]; i++) {
-          heuArr.push(i);
-        }
-        console.log(heuArr);
-      }
-      roll = heuArr[genNumbers(heuArr.length)];
-      let index = heuArr.indexOf(roll);
-      heuArr.splice(index, 1);
-    } else {
-      console.log("Not range detected");
-      setting = parseInt(setting);
-      if (isNaN(setting)) {
-        setting = 9;
-      }
-    }
-
-    if (setting == 9) {
-      if (!heuArr.length) {
-        heuArr = [1, 2, 3, 4, 5, 6, 7];
-        console.log("Array renewed " + heuArr);
-      }
-      roll = heuArr[genNumbers(heuArr.length)];
-      let index = heuArr.indexOf(roll);
-      heuArr.splice(index, 1);
-      console.log("Current remaining array " + heuArr);
-    }
-
-    if (
-      setting == 1 ||
-      (setting == 9 && roll == 1) ||
-      (range == 1 && roll == 1)
-    ) {
+    if (setting == 1) {
       return {
         rollz: 1,
         objects: ["stationeries", "cards", "toys", "games"][genNumbers(4)],
@@ -22209,11 +22230,7 @@ function genProblems() {
       };
     }
 
-    if (
-      setting == 2 ||
-      (setting == 9 && roll == 2) ||
-      (range == 1 && roll == 2)
-    ) {
+    if (setting == 2) {
       return {
         numberOfStudents: genNumbers(8) + 2,
         numberOfStuff: genNumbers(20) + 10,
@@ -22228,11 +22245,7 @@ function genProblems() {
       };
     }
 
-    if (
-      setting == 3 ||
-      (setting == 9 && roll == 3) ||
-      (range == 1 && roll == 3)
-    ) {
+    if (setting == 3) {
       return {
         peopleAtFirst: genNumbers(8) + 3,
         absentPeople: undefined,
@@ -22243,11 +22256,7 @@ function genProblems() {
       };
     }
 
-    if (
-      setting == 4 ||
-      (setting == 9 && roll == 4) ||
-      (range == 1 && roll == 4)
-    ) {
+    if (setting == 4) {
       return {
         objectOne: ["A", "B", "C"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
@@ -22259,11 +22268,7 @@ function genProblems() {
       };
     }
 
-    if (
-      setting == 5 ||
-      (setting == 9 && roll == 5) ||
-      (range == 1 && roll == 5)
-    ) {
+    if (setting == 5) {
       return {
         unitMeasurement: ["kg", "g", "ml", "ℓ"][genNumbers(4)],
         objectOne: ["A", "B", "C"][genNumbers(3)],
@@ -22279,11 +22284,7 @@ function genProblems() {
       };
     }
 
-    if (
-      setting == 6 ||
-      (setting == 9 && roll == 6) ||
-      (range == 1 && roll == 6)
-    ) {
+    if (setting == 6) {
       return {
         rollz: 6,
         objectOne: ["A", "B", "C"][genNumbers(3)],
@@ -22294,11 +22295,7 @@ function genProblems() {
       };
     }
 
-    if (
-      setting == 7 ||
-      (setting == 9 && roll == 7) ||
-      (range == 1 && roll == 7)
-    ) {
+    if (setting == 7) {
       return {
         rollz: 7,
         objects: ["sweets", "chocolates", "candies"][genNumbers(3)],
@@ -22941,7 +22938,7 @@ function buttonLevelSetting() {
   switch (buttonLevel) {
     case "Level 1.0":
       level = 1.0;
-      scoreNeeded = 2;
+      scoreNeeded = 50;
       gold = highScore1DotZero.time;
       silver = highScore1DotZero.time + (cutoff - highScore1DotZero.time) / 3;
       bronze =
@@ -24320,7 +24317,7 @@ function buttonLevelSetting() {
 
     case "Cal.4":
       level = "calFour";
-      scoreNeeded = 10;
+      scoreNeeded = 2;
       setting = prompt(
         "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Left Side Right Side + - x /\n6. Fractions: Addition: Mixed Fractions\n7. Fractions: Subtraction: Mixed Fractions\n8. Decimals: Addition\n9. Decimals: Subtraction\n10. Decimals: Overlapping Place Value\n11. Decimals: Multiplication (Single)\n12. Decimals: Multiplication (Double)\n13. Decimals: Division \n14. Fractions to Decimal (Limit)\n15. Decimals: Division and Multiplication with splitting\n16. Multiplication in Sets\n17. Fractions: Unit with a Value\n\n99. Everything",
         99
@@ -24715,6 +24712,21 @@ reviewAnswer.addEventListener("click", function () {
 summaryBtn.addEventListener("click", function () {
   console.log("Summary button pressed");
   summaryContainer.classList.remove("hidden");
+});
+
+extraPracticeBtn.addEventListener("click", function () {
+  attempt += 1;
+  withinStart();
+  scoreNeeded = extraPracticeArr.length * 3;
+  finalBox.classList.add("hidden");
+  state.score = 0;
+  state.mistake = 0;
+  currentScore.textContent = 0;
+  currentMistake.textContent = 0;
+  calArr = extraPracticeArr;
+  extraPracticeArr = [];
+  player = 1;
+  console.log(scoreNeeded);
 });
 
 closeBtn.addEventListener("click", function () {

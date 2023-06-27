@@ -79,6 +79,9 @@ body {
 .summary-status {
   -webkit-text-stroke: 1px grey;
 }
+.extra-practice {
+  margin-right: 10px;
+}
 
 .btn-summary {
   background-color: black;
