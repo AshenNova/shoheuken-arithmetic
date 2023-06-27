@@ -1,9 +1,18 @@
 let setTime = 3;
 
-const timeElapsed = Date.now();
-const today = new Date(timeElapsed);
+// const timeElapsed = Date.now();
+// const today = new Date(
+//   getFullYear(),
+//   getMonth(),
+//   getDay(),
+//   getHours(),
+//   getMinutes()
+// );
+// console.log(getFullYear(timeElapsed));
 // console.log(today.toDateString());
-console.log(today);
+// console.log(timeElapsed);
+let now = `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`;
+console.log(now);
 // import { updateProblems } from "./updateProblems.js";
 import {
   pieChart,
@@ -103,6 +112,7 @@ const summaryScore = document.querySelector(".summary-label-score");
 const summaryMistakes = document.querySelector(".summary-mistakes-count");
 const summaryTime = document.querySelector(".summary-time-clock");
 const summaryStatus = document.querySelector("summary-status");
+const timeDoneCl = document.querySelector(".timeDone");
 
 //EXTRA PRACTICE
 const extraPracticeBtn = document.querySelector(".extra-practice");
@@ -669,6 +679,10 @@ function timer2() {
         console.log("Completed image");
       }
 
+      const now = new Date();
+      timeDoneCl.innerHTML = `${now.getDate()}/${
+        now.getMonth() + 1
+      }/${now.getFullYear()}  ${now.getHours()}:${now.getMinutes()}`;
       mistakesCountCl.innerHTML = state.mistake;
       player = 0;
       if (extraPracticeArr.length != 0) {
@@ -676,7 +690,7 @@ function timer2() {
       } else {
         extraPracticeBtn.classList.add("hidden");
       }
-      if ((extraPracticeArr.length = 0)) {
+      if (extraPracticeArr.length != 0) {
         summaryTextCl.innerHTML = `*Extra practice needed for ${extraPracticeArr.join(
           ", "
         )}.</p>`;
@@ -702,17 +716,17 @@ function timer2() {
   }, 1000);
 }
 
-function extraPracticeSet() {
-  const extra = cutOffCheck(level, setting, questionSecs);
-  if (extra) {
-    if (!extraPracticeArr.includes(extra)) {
-      extraPracticeArr.push(extra);
-    } else {
-      console.log("Already Exist");
-    }
-  }
-  console.log(`Extra Practice Needed: ${extraPracticeArr}`);
-}
+// function extraPracticeSet() {
+//   const extra = cutOffCheck(level, setting, questionSecs);
+//   if (extra) {
+//     if (!extraPracticeArr.includes(extra)) {
+//       extraPracticeArr.push(extra);
+//     } else {
+//       console.log("Already Exist");
+//     }
+//   }
+//   console.log(`Extra Practice Needed: ${extraPracticeArr}`);
+// }
 function resetStuff() {
   player = 1;
   attempt = 1;
@@ -18367,6 +18381,7 @@ function handleSubmit(e) {
           console.log("Already Exist");
         }
       }
+      console.log(`Extra Practice Needed: ${extraPracticeArr}`);
 
       //RESTART QUESTION TIME
       clearInterval(questionTime);
