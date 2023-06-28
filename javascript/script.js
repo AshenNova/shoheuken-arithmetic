@@ -111,7 +111,7 @@ const closeBtn = document.querySelector(".btn-close");
 const summaryScore = document.querySelector(".summary-label-score");
 const summaryMistakes = document.querySelector(".summary-mistakes-count");
 const summaryTime = document.querySelector(".summary-time-clock");
-const summaryStatus = document.querySelector("summary-status");
+const summaryStatus = document.querySelector(".summary-status");
 const timeDoneCl = document.querySelector(".timeDone");
 
 //EXTRA PRACTICE
@@ -252,7 +252,6 @@ let hardcore = 0;
 let easy = 0;
 let global = 0;
 let skipGlobalUpdateProblem = 0;
-console.log(`!?!?!?!?!?!?!?!`);
 const commonMultipleArr = [];
 const commonMultipleArrTwo = [];
 let cutoff = 600;
@@ -631,9 +630,13 @@ function timer2() {
       cutoff = 99999;
     } else {
       cutoff = 600;
+      console.log("You have " + cutoff);
     }
 
     if (state.score >= scoreNeeded || time == cutoff) {
+      if (time == cutoff) {
+        summaryStatus.innerHTML = `<h3 class="summary-status" style="color:red">Failed...</h3>`;
+      }
       clearInterval(questionTime);
       clearInterval(countDownTwo);
       document.getElementById("timer").innerHTML = time;
@@ -695,13 +698,13 @@ function timer2() {
           ", "
         )}.</p>`;
       } else {
-        summaryTextCl.innerHTML = `Well Done!</p>`;
+        summaryTextCl.innerHTML = `Well Done! 👏🏽</p>`;
       }
 
+      if (time == cutoff) {
+        summaryTextCl.innerHTML = `More practice required... 😞</p>`;
+      }
       summary.forEach((item) => {
-        if (time == cutoff) {
-          summaryStatus.innerHTML = `<h3 class="summary-status" style="color:red">Failed...</h3>`;
-        }
         summaryScore.textContent = state.score;
         if (hardcore == 1) {
           summaryScore.textContent = accumulatedScore;
@@ -716,17 +719,6 @@ function timer2() {
   }, 1000);
 }
 
-// function extraPracticeSet() {
-//   const extra = cutOffCheck(level, setting, questionSecs);
-//   if (extra) {
-//     if (!extraPracticeArr.includes(extra)) {
-//       extraPracticeArr.push(extra);
-//     } else {
-//       console.log("Already Exist");
-//     }
-//   }
-//   console.log(`Extra Practice Needed: ${extraPracticeArr}`);
-// }
 function resetStuff() {
   player = 1;
   attempt = 1;
@@ -13064,7 +13056,9 @@ function updateProblems() {
           sceneATwoRemaining * p.unitA + sceneBTwoRemaining * p.unitB;
         displayProblem.innerHTML = `
         There is a a total of ${firstScene} students.</p>
-        If ${totalATwo-p.sceneATwo}/${totalATwo} girls and ${totalBTwo-p.sceneBTwo}/${totalBTwo} boys left the school.</p>
+        If ${totalATwo - p.sceneATwo}/${totalATwo} girls and ${
+          totalBTwo - p.sceneBTwo
+        }/${totalBTwo} boys left the school.</p>
         There would be ${secondScene} students remaining.</p>
         `;
         p.varA = totalATwo;
@@ -23075,7 +23069,6 @@ hardcoreMode.addEventListener("click", function () {
     easy = 0;
     mainBox.style.borderColor = "red";
     levelSetting.style.borderColor = "red";
-    // cutoff = 10;
   } else {
     hardcore = 0;
     mainBox.style.borderColor = "black";
@@ -23090,59 +23083,13 @@ easyMode.addEventListener("click", function () {
     hardcore = 0;
     mainBox.style.borderColor = "#39FF14";
     levelSetting.style.borderColor = "#39FF14";
-    // cutoff = 99999;
   } else {
     easy = 0;
     mainBox.style.borderColor = "black";
     levelSetting.style.borderColor = "black";
-    // cutoff = 600;
   }
   console.log(hardcore);
 });
-
-// function easyMode(easy) {}
-
-// function hardcoreMode(hardcore) {}
-// SINGLE CLICK
-// for (let i = 0; i <  settingButton.length; i++){
-//   settingButton[i].addEventListener("click", function(){
-//     buttonLevel = this.innerHTML
-
-//     switch(buttonLevel){
-//       case "Level 1.0":
-//         level = 1.0
-//         levelBtn1Zero.classList.toggle("btn-select")
-//         if (levelBtn1ZeroCount == 0){
-//           levelBtn1ZeroCount = 1
-//         } else {
-//           levelBtn1ZeroCount = 0
-//         }
-//       break
-
-//       case "Level 1.01":
-//         level = 1.01;
-
-//       break;
-
-//       case "Level 1.02":
-//         level = 1.02;
-
-//       break;
-//     }
-
-//     let indexLevel = levelArr.indexOf(level)
-//     console.log(indexLevel)
-
-//     if (indexLevel >= 0){
-//       levelArr.splice(indexLevel, 1);
-//     } else {
-//       levelArr.push(level);
-//     }
-
-//     console.log(levelArr);
-//     console.log("single click detected")
-//   })
-// }
 
 // LEVEL SETTINGS
 function buttonLevelSetting() {
@@ -24902,9 +24849,6 @@ function buttonLevelSetting() {
   if (hardcore == 1) {
     scoreNeeded /= 2;
   }
-  // if (levelArr.length != 0){
-  //   buttonStart.innerHTML =`Level ${levelArr[0]}`
-  // }
 }
 
 reviewAnswer.addEventListener("click", function () {
