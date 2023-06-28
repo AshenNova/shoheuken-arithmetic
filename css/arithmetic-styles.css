@@ -71,7 +71,14 @@ body {
   text-align: center;
   border-style: solid;
 }
-
+.attempt-number {
+  position: absolute;
+  font-size: 6em;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+}
 .level-setting .btn,
 .multiples-setting .btn {
   margin: 5px 0;
