@@ -13604,6 +13604,43 @@ function updateProblems() {
 
       `;
     }
+    // EITHER OR
+    if (setting == 4) {
+      if (p.quanB < p.quanA) [p.quanA, p.quanB] = [p.quanB, p.quanA];
+      if (p.quanB == p.quanA) p.quanA += 1;
+      const first = p.quanA * p.multiplierA;
+      p.second = p.quanB * p.multiplierA;
+      p.third = p.quanA * p.multiplierB;
+      // const fourth = p.quanB * p.multiplierB;
+      if (p.version == 0) {
+        displayProblem.innerHTML = `
+        A school bus can carry either ${first} ${p.varA} or ${p.second} ${p.varB}.</p>
+        </p>
+        There are already ${p.third} ${p.varA} and ${p.fourth} ${p.varB} on the bus.</p>
+        How many more ${p.varB} can board the bus?`;
+      }
+      if (p.version == 1) {
+        displayProblem.innerHTML = `
+        A shelf can hold either ${first} ${p.varA} or ${p.second} ${p.varB}.</p>
+        </p>
+        There are already ${p.third} ${p.varA} and ${p.fourth} ${p.varB} on the shelf.</p>
+        How many more ${p.varB} can be placed on it?`;
+      }
+      if (p.version == 2) {
+        displayProblem.innerHTML = `
+        A pencil case can hold either ${first} ${p.varA} or ${p.second} ${p.varB}.</p>
+        </p>
+        There are already ${p.third} ${p.varA} and ${p.fourth} ${p.varB} in the pencil case.</p>
+        How many more ${p.varB} can be placed in it?`;
+      }
+      if (p.version == 3) {
+        displayProblem.innerHTML = `
+        A bag can hold either ${first} ${p.varA} or ${p.second} ${p.varB}.</p>
+        </p>
+        There are already ${p.third} ${p.varA} and ${p.fourth} ${p.varB} in the bag.</p>
+        How many more ${p.varB} can be placed in it?`;
+      }
+    }
   }
   // DISPLAY
   if (level == "heuSix") {
@@ -18314,20 +18351,11 @@ function handleSubmit(e) {
           p.times,
           p.divide
         );
-
-        // if (p.choose == "A") {
-        //   if (p.first == "-") {
-        //     correctAnswer = p.unit * p.divide + p.decrease;
-        //   }
-        //   if (p.first == "+") {
-        //     correctAnswer = p.unit * p.divide - p.increase;
-        //   }
-        //   if (p.first == "x") {
-        //     correctAnswer = p.unit;
-        //   }
-        //   if (p.first == "/") {
-        //     correctAnswer = p.unit * p.divide * p.times;
-        //   }
+      }
+      // EITHER OR
+      if (setting == 4) {
+        // if (p.version == 0) {
+        correctAnswer = p.second - ((p.third / p.quanA) * p.quanB + p.fourth);
         // }
       }
     }
@@ -22474,41 +22502,8 @@ function genProblems() {
   }
   // Stats
   if (level == "heuFive") {
-    // let roll = undefined;
-    // let settingText = setting.toString();
-    // console.log(setting, settingText);
-
-    // if (settingText.includes("-")) {
-    //   console.log("range detected");
-    //   range = 1;
-    //   settingText.split("-");
-    //   if (!heuArr.length) {
-    //     for (let i = 1; i <= settingText[settingText.length - 1]; i++) {
-    //       heuArr.push(i);
-    //     }
-    //   }
-    //   console.log(heuArr);
-    //   roll = heuArr[genNumbers(heuArr.length)];
-    //   let index = heuArr.indexOf(roll);
-    //   heuArr.splice(index, 1);
-    // } else {
-    //   console.log("Not range detected");
-    //   setting = parseInt(setting);
-    //   if (isNaN(setting)) {
-    //     setting = 9;
-    //   }
-    // }
     setting = calArrAll(8, calArr, setting, 9);
     setting = checkRange(setting, calArr);
-    // if (setting == 9) {
-    //   if (!heuArr.length) {
-    //     heuArr = [1, 2, 3, 4, 5, 6, 7, 8];
-    //     console.log("Array renewed");
-    //   }
-    //   roll = heuArr[genNumbers(heuArr.length)];
-    //   let index = heuArr.indexOf(roll);
-    //   heuArr.splice(index, 1);
-    // }
 
     if (setting == 1) {
       return {
@@ -22655,7 +22650,7 @@ function genProblems() {
   }
   // SETTINGS
   if (level == "heuFiveb") {
-    setting = calArrAll(3, calArr, setting, 9);
+    setting = calArrAll(4, calArr, setting, 9);
     setting = checkRange(setting, calArr);
 
     if (setting == 1) {
@@ -22709,6 +22704,23 @@ function genProblems() {
         second: undefined,
         third: undefined,
         fourth: undefined,
+      };
+    }
+    // EITHER OR
+    if (setting == 4) {
+      const position = genNumbers(4);
+      const multiplier = genNumbers(5) + 4;
+      return {
+        version: position,
+        varA: ["adult", "big books", "erasers", "pears"][position],
+        varB: ["children", "small books", "pens", "apples"][position],
+        quanA: genNumbers(5) + 2,
+        quanB: genNumbers(5) + 1,
+        multiplierA: multiplier,
+        multiplierB: genNumbers(multiplier - 2) + 2,
+        second: undefined,
+        third: undefined,
+        fourth: genNumbers(5) + 2,
       };
     }
   }
@@ -24647,11 +24659,11 @@ function buttonLevelSetting() {
     case "Heu.5b":
       level = "heuFiveb";
       setting = prompt(
-        "What level?\n1. Working Backwards (Type 1)\n2. Working Backwards (Type 2)\n3. Working Backwards (Type 3) Independent\n\n9. All"
+        "What level?\n1. Working Backwards (Type 1)\n2. Working Backwards (Type 2)\n3. Working Backwards (Type 3) Independent\n4. Either or\n\n9. All"
       );
 
       if (
-        ![1, 2, 3, 9].includes(setting * 1) &&
+        ![1, 2, 3, 4, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 9;
