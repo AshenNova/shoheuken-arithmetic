@@ -13064,7 +13064,7 @@ function updateProblems() {
           sceneATwoRemaining * p.unitA + sceneBTwoRemaining * p.unitB;
         displayProblem.innerHTML = `
         There is a a total of ${firstScene} students.</p>
-        If ${p.sceneATwo}/${totalATwo} girls and ${p.sceneBTwo}/${totalBTwo} boys left the school.</p>
+        If ${totalATwo-p.sceneATwo}/${totalATwo} girls and ${totalBTwo-p.sceneBTwo}/${totalBTwo} boys left the school.</p>
         There would be ${secondScene} students remaining.</p>
         `;
         p.varA = totalATwo;
