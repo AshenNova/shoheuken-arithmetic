@@ -13,6 +13,7 @@ let setTime = 3;
 // console.log(timeElapsed);
 let now = `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`;
 console.log(now);
+
 // import { updateProblems } from "./updateProblems.js";
 import {
   pieChart,
@@ -55,6 +56,7 @@ let digit = 0;
 let choice = 0;
 let manipulation = 0;
 let attempt = 1;
+let startTime = undefined;
 const displayProblem = document.querySelector(".display-problems");
 const helpMe = document.querySelector(".help-me-text");
 const ourForm = document.querySelector(".our-form");
@@ -568,6 +570,7 @@ function withinStart() {
   }, 1000);
 }
 function clickStart() {
+  startTime = new Date();
   buttonLevel = this.innerHTML;
   console.log("start button clicked");
   // startBox.classList.add("hidden");
@@ -684,9 +687,17 @@ function timer2() {
       }
 
       const now = new Date();
-      timeDoneCl.innerHTML = `${now.getDate()}/${
+      const duration = now - startTime;
+      console.log(duration);
+      const durationMilli = duration;
+      const durationSecs = (durationMilli / 1000).toFixed(1);
+      const durationHours = Math.floor(durationSecs / 60 / 60);
+      const durationMins = Math.floor(durationSecs / 60);
+      const durationRemainingSecs = Math.floor(durationSecs % 60);
+      timeDoneCl.innerHTML = `End Time: ${now.getDate()}/${
         now.getMonth() + 1
-      }/${now.getFullYear()}  ${now.getHours()}:${now.getMinutes()}`;
+      }/${now.getFullYear()}  ${now.getHours()}:${now.getMinutes()}</p> Elapsed Time: ${durationHours} hrs ${durationMins} mins ${durationRemainingSecs} secs`;
+
       mistakesCountCl.innerHTML = state.mistake;
       player = 0;
       if (extraPracticeArr.length != 0) {
