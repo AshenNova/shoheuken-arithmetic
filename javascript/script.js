@@ -24931,6 +24931,7 @@ summaryBtn.addEventListener("click", function () {
 extraPracticeBtn.addEventListener("click", function () {
   attempt += 1;
   withinStart();
+  ctx.clearRect(0, 0, 1000, 1000);
   scoreNeeded = extraPracticeArr.length * 3;
   finalBox.classList.add("hidden");
   state.score = 0;
