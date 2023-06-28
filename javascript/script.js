@@ -8979,6 +8979,31 @@ function updateProblems() {
         return updateProblems();
       }
     }
+
+    //FORM FRACTIONS
+    if (setting == 18) {
+      normalDisplay();
+      if (p.version == 0) {
+        displayProblem.innerHTML = `
+        What fraction is ${p.smallerValue} ${p.smallUnit} of ${p.biggerValue} ${p.bigUnit}?
+        `;
+      }
+      if (p.version == 1) {
+        displayProblem.innerHTML = `
+        What fraction is ${p.biggerValue} ${p.bigUnit} of ${p.smallerValue} ${p.smallUnit}?
+        `;
+      }
+      if (p.version == 2) {
+        displayProblem.innerHTML = `
+        What fraction of ${p.smallerValue} ${p.smallUnit} is ${p.biggerValue} ${p.bigUnit}?
+        `;
+      }
+      if (p.version == 3) {
+        displayProblem.innerHTML = `
+        What fraction of ${p.biggerValue} ${p.bigUnit} is ${p.smallerValue} ${p.smallUnit}?
+        `;
+      }
+    }
   }
 
   if (level == "calFive") {
@@ -16325,6 +16350,26 @@ function handleSubmit(e) {
         console.log(oneUnit);
         correctAnswer = oneUnit * p.lastUnits;
       }
+
+      // FORM FRACTION
+
+      if (setting == 18) {
+        let big = p.biggerValue;
+        if (p.bigUnit == "km" || p.bigUnit == "kg" || p.bigUnit == "ℓ") {
+          big = p.biggerValue * 1000;
+        }
+        if (p.bigUnit == "m") {
+          big = p.biggerValue * 100;
+        }
+        if (p.bigUnit == "hrs" || p.bigUnit == "mins") {
+          big = p.biggerValue * 60;
+        }
+        let small = p.smallerValue;
+        [small, big] = simplify(p.smallerValue, big);
+        console.log(small, big);
+        if (p.version == 0 || p.version == 3) correctAnswer = `${small}/${big}`;
+        if (p.version == 1 || p.version == 2) correctAnswer = `${big}/${small}`;
+      }
     }
     if (level == "calFive") {
       if (setting == 0) {
@@ -19023,17 +19068,16 @@ function handleSubmit(e) {
         }
       }
       // adds cal back into array if wrong
-      if (attempt == 1){
+      if (attempt == 1) {
         if (!calArr.includes(setting)) {
           calArr.push(setting);
           console.log(`Incorrect, try setting ${setting} again!`);
           console.log(calArr);
         }
       } else {
-        calArr.push(setting)
+        calArr.push(setting);
         console.log(calArr);
       }
-      
     }
   }
 }
@@ -20976,7 +21020,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(17, calArr, setting, 99);
+    setting = calArrAll(18, calArr, setting, 99);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let number = genNumbers(8) + 2;
@@ -21134,6 +21178,18 @@ function genProblems() {
           ["saved", "spent", "total money"],
           ["spent", "left", "total money"],
         ],
+      };
+    }
+
+    // FORM FRACTIONS
+    if (setting == 18) {
+      const position = genNumbers(6);
+      return {
+        smallUnit: ["cm", "m", "ml", "g", "mins", "secs"][position],
+        bigUnit: ["m", "km", "ℓ", "kg", "hrs", "mins"][position],
+        smallerValue: genNumbers(10) + 1,
+        biggerValue: genNumbers(10) + 10,
+        version: [0, 3][genNumbers(2)],
       };
     }
   }
@@ -24341,7 +24397,7 @@ function buttonLevelSetting() {
       );
       if (
         ![
-          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 99,
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 99,
         ].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
