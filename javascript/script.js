@@ -13736,9 +13736,39 @@ function updateProblems() {
       `;
       }
     }
-
-    // MORE THAN / LESS THAN
+    // REPEATED IDENTITY TYPE 3
     if (setting == 3) {
+      [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
+      [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
+      if (p.numeA == p.numeB && p.denoA == p.denoB) {
+        console.log("Same numerator and denominator");
+        return updateCalc();
+      }
+      const onlyB = p.denoA - p.numeA;
+      displayProblem.innerHTML = `
+  Students have 2 activities to choose from.</p>
+  ${p.actA.charAt(0).toUpperCase() + p.actA.slice(1)} and ${p.actB}.</p>
+  ${p.numeA}/${p.denoA} chose ${p.actA}.</p>
+  ${p.numeB}/${p.denoB} chose ${p.actB}.</p>
+  `;
+      // if (p.question == "A")
+      //   displayProblem.insertAdjacentHTML(
+      //     "beforeend",
+      //     `What fraction of students choose ${p.actA} only?`
+      //   );
+      // if (p.question == "B")
+      //   displayProblem.insertAdjacentHTML(
+      //     "beforeend",
+      //     `What fraction of students choose ${p.actB} only?`
+      //   );
+      if (p.question == "Both")
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `What fraction of students choose both activities?`
+        );
+    }
+    // MORE THAN / LESS THAN
+    if (setting == 4) {
       [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
       [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
       const commonDenominator = commonDeno(p.denoA, p.denoB);
@@ -18464,9 +18494,18 @@ function handleSubmit(e) {
           correctAnswer = (p.duration / p.people) * p.active * p.courts;
         }
       }
-
-      // MORE THAN / LESS THAN
+      // REPEATED IDENTITY TYPE 3
       if (setting == 3) {
+        let commonDenominator = commonDeno(p.denoA, p.denoB);
+        const multiplierA = commonDenominator / p.denoA;
+        const multiplierB = commonDenominator / p.denoB;
+        let bOnly = (p.denoA - p.numeA) * multiplierA;
+        let both = p.numeB * multiplierB - bOnly;
+        [both, commonDenominator] = simplify(both, commonDenominator);
+        correctAnswer = `${both}/${commonDenominator}`;
+      }
+      // MORE THAN / LESS THAN
+      if (setting == 4) {
         if (p.question == "A") correctAnswer = p.varA;
         if (p.question == "B") correctAnswer = p.varB;
       }
@@ -22786,7 +22825,7 @@ function genProblems() {
 
   //SETTINGS
   if (level == "heuSix") {
-    setting = calArrAll(2, calArr, setting, 9);
+    setting = calArrAll(4, calArr, setting, 9);
     setting = checkRange(setting, calArr);
     // LOWEST COMMON TIME
     if (setting == 1) {
@@ -22814,9 +22853,22 @@ function genProblems() {
         version: 2,
       };
     }
-
-    //MORE THAN / LESS THAN
+    // REPEATED IDENTITY TYPE 3
     if (setting == 3) {
+      const gen_denoA = genNumbers(5) + 3;
+      const gen_denoB = genNumbers(5) + 3;
+      return {
+        actA: ["basketball", "soccer", "skating"][genNumbers(3)],
+        actB: ["drawing", "dancing", "acting"][genNumbers(3)],
+        numeA: Math.ceil(gen_denoA / 2),
+        denoA: gen_denoA,
+        numeB: Math.ceil(gen_denoB / 2),
+        denoB: gen_denoB,
+        question: ["Both"][genNumbers(1)],
+      };
+    }
+    //MORE THAN / LESS THAN
+    if (setting == 4) {
       const gen_denoA = genNumbers(5) + 2;
       const gen_denoB = genNumbers(5) + 2;
       return {
@@ -24755,11 +24807,11 @@ function buttonLevelSetting() {
     case "Heu.6":
       level = "heuSix";
       setting = prompt(
-        "What level?\n1. Lowest Common Time\n 2. Cycle\n3. More Than / Less Than\n\n9. All",
+        "What level?\n1. Lowest Common Time\n 2. Cycle\n3. Repeated Identity\n4. More Than / Less Than\n\n9. All",
         9
       );
       if (
-        ![1, 2, 3, 9].includes(setting * 1) &&
+        ![1, 2, 3, 4, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
       ) {
         setting = 9;
