@@ -13736,6 +13736,59 @@ function updateProblems() {
       `;
       }
     }
+
+    // MORE THAN / LESS THAN
+    if (setting == 3) {
+      [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
+      [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
+      const commonDenominator = commonDeno(p.denoA, p.denoB);
+      p.varA = commonDenominator * p.unitOne * p.varAMul;
+      p.varB = commonDenominator * p.unitOne * p.varBMul;
+      if (p.varA == p.varB) {
+        console.log("Same value");
+        return updateCalc();
+      }
+      const difference = Math.abs(p.varA - p.varB);
+      const comparison = p.varA > p.varB ? "more than" : "less than";
+      if (p.varA > p.varB) {
+        console.log("Ugly!");
+        if (difference % p.denoA != 0) return updateCalc();
+      } else {
+        console.log("Ugly!");
+        if (difference % p.denoB != 0) return updateCalc();
+      }
+      const fractionA = `${p.numeA}/${p.denoA}`;
+      const fractionB = `${p.numeB}/${p.denoB}`;
+      const percentageA = (p.numeA / p.denoA) * 100;
+      const percentageB = (p.numeB / p.denoB) * 100;
+      let unitA = fractionA;
+      let unitB = fractionB;
+
+      if (percentageA % 5 == 0) {
+        console.log("Yes!");
+        unitA = genNumbers(2) == 1 ? fractionA : `${percentageA}%`;
+      } else {
+        unitA = fractionA;
+      }
+      if (percentageB % 5 == 0) {
+        console.log("Yes!");
+        unitB = genNumbers(2) == 1 ? fractionB : `${percentageB}%`;
+      } else {
+        unitB = fractionB;
+      }
+      const endA = (p.varA / p.denoA) * (p.denoA - p.numeA);
+      const endB = (p.varB / p.denoB) * (p.denoB - p.numeB);
+      const comparisonEnd = endA > endB ? "more than" : "less than";
+      const differenceEnd = Math.abs(endA - endB);
+      displayProblem.innerHTML = `
+      A is ${difference} ${comparison} B.</p>
+      A gave away ${unitA}.</p>
+      B gave away ${unitB}.</p>
+      A is ${differenceEnd} ${comparisonEnd} B in the end.</p>
+      What is ${p.question} at first?
+
+      `;
+    }
   }
   // MULTIPLES
   if (mulLevel == "multiples") {
@@ -18411,6 +18464,12 @@ function handleSubmit(e) {
           correctAnswer = (p.duration / p.people) * p.active * p.courts;
         }
       }
+
+      // MORE THAN / LESS THAN
+      if (setting == 3) {
+        if (p.question == "A") correctAnswer = p.varA;
+        if (p.question == "B") correctAnswer = p.varB;
+      }
     }
     if (mulLevel == "multiples") {
       correctAnswer = p.numFive * (multiplesArr.length - 1);
@@ -22755,6 +22814,24 @@ function genProblems() {
         version: 2,
       };
     }
+
+    //MORE THAN / LESS THAN
+    if (setting == 3) {
+      const gen_denoA = genNumbers(5) + 2;
+      const gen_denoB = genNumbers(5) + 2;
+      return {
+        numeA: genNumbers(gen_denoA - 1) + 1,
+        denoA: gen_denoA,
+        numeB: genNumbers(gen_denoB - 1) + 1,
+        denoB: gen_denoB,
+        unitOne: genNumbers(90) + 10,
+        varAMul: genNumbers(10) + 10,
+        varBMul: genNumbers(10) + 10,
+        varA: undefined,
+        varB: undefined,
+        question: ["A", "B"][genNumbers(2)],
+      };
+    }
   }
 
   if (level == "1 times table") {
@@ -24667,7 +24744,7 @@ function buttonLevelSetting() {
         !setting.split("").includes("-")
       )
         setting = 9;
-      scoreNeeded = 10;
+      scoreNeeded = 5;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
       document.querySelector("#user-input").setAttribute("type", "text");
@@ -24678,16 +24755,16 @@ function buttonLevelSetting() {
     case "Heu.6":
       level = "heuSix";
       setting = prompt(
-        "What level?\n1. Lowest Common Time\n 2. Cycle\n\n9. All",
+        "What level?\n1. Lowest Common Time\n 2. Cycle\n3. More Than / Less Than\n\n9. All",
         9
       );
       if (
-        ![1, 2, 9].includes(setting * 1) &&
+        ![1, 2, 3, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
       ) {
         setting = 9;
       }
-      scoreNeeded = 10;
+      scoreNeeded = 5;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
       document.querySelector("#user-input").setAttribute("type", "text");
