@@ -116,6 +116,8 @@ const summaryTime = document.querySelector(".summary-time-clock");
 const summaryStatus = document.querySelector(".summary-status");
 const timeDoneCl = document.querySelector(".timeDone");
 const summaryAttemptCl = document.querySelector(".attempt-number");
+const summarySettingCl = document.querySelector(".summary-setting");
+let summarySettingDisplay = undefined;
 
 //EXTRA PRACTICE
 const extraPracticeBtn = document.querySelector(".extra-practice");
@@ -571,6 +573,8 @@ function withinStart() {
 }
 function clickStart() {
   startTime = new Date();
+  summarySettingDisplay = `${level} ${setting}`;
+  summarySettingCl.textContent = summarySettingDisplay;
   buttonLevel = this.innerHTML;
   console.log("start button clicked");
   // startBox.classList.add("hidden");
@@ -639,7 +643,7 @@ function timer2() {
 
     if (state.score >= scoreNeeded || time == cutoff) {
       if (time == cutoff) {
-        summaryStatus.innerHTML = `<h3 class="summary-status" style="color:red">Failed...</h3>`;
+        summaryStatus.innerHTML = `<h3 class="summary-status" style="color:red">Failed... ${summarySettingDisplay}</h3>`;
       }
       clearInterval(questionTime);
       clearInterval(countDownTwo);
@@ -696,7 +700,13 @@ function timer2() {
       const durationRemainingSecs = Math.floor(durationSecs % 60);
       timeDoneCl.innerHTML = `End Time: ${now.getDate()}/${
         now.getMonth() + 1
-      }/${now.getFullYear()}  ${now.getHours()}:${now.getMinutes()}</p> Elapsed Time: ${durationHours} hrs ${durationMins} mins ${durationRemainingSecs} secs`;
+      }/${now.getFullYear()}  ${now.getHours()}:${now
+        .getMinutes()
+        .toString()
+        .padStart(
+          2,
+          "0"
+        )}</p> Elapsed Time: ${durationHours} hrs ${durationMins} mins ${durationRemainingSecs} secs`;
 
       mistakesCountCl.innerHTML = state.mistake;
       player = 0;
@@ -716,15 +726,21 @@ function timer2() {
       if (time == cutoff) {
         summaryTextCl.innerHTML = `More practice required... 😞</p>`;
       }
-      summary.forEach((item) => {
+      summary.forEach((item, index) => {
+        console.log(`Index: ${index}`);
         summaryScore.textContent = state.score;
         if (hardcore == 1) {
           summaryScore.textContent = accumulatedScore;
         }
         summaryTime.textContent = time;
         summaryMistakes.textContent = state.mistake;
+        let html = undefined;
+        if (index % 2 != 0) {
+          html = `<div class="summary-item-right">${item.attempt}) ${item.symbol} Setting: ${item.setting}, Time: ${item.time}s</p></div>`;
+        } else {
+          html = `<div class="summary-item-left">${item.attempt}) ${item.symbol} Setting: ${item.setting}, Time: ${item.time}s</div>`;
+        }
 
-        const html = `<p>Attempt: ${item.attempt}, ${item.symbol} Setting: ${item.setting}, Time: ${item.time}s</p>`;
         summaryTextCl.insertAdjacentHTML("beforeend", html);
       });
     }
@@ -24490,7 +24506,7 @@ function buttonLevelSetting() {
 
     case "Cal.4":
       level = "calFour";
-      scoreNeeded = 10;
+      scoreNeeded = 2;
       setting = prompt(
         "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Left Side Right Side + - x /\n6. Fractions: Addition: Mixed Fractions\n7. Fractions: Subtraction: Mixed Fractions\n8. Decimals: Addition\n9. Decimals: Subtraction\n10. Decimals: Overlapping Place Value\n11. Decimals: Multiplication (Single)\n12. Decimals: Multiplication (Double)\n13. Decimals: Division \n14. Fractions to Decimal (Limit)\n15. Decimals: Division and Multiplication with splitting\n16. Multiplication in Sets\n17. Fractions: Unit with a Value\n\n99. Everything",
         99
