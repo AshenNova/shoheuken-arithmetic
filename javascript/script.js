@@ -695,10 +695,10 @@ function timer2() {
       console.log(duration);
       const durationMilli = duration;
       const durationSecs = durationMilli / 1000;
-      const durationHours = Math.floor(durationSecs / 60 / 60);
-      while (durationHours <= 24) durationMins -= 24;
-      const durationMins = Math.floor(durationSecs / 60);
-      while (durationMins <= 60) durationMins -= 60;
+      let durationHours = Math.floor(durationSecs / 60 / 60);
+      while (durationHours >= 24) durationHours -= 24;
+      let durationMins = Math.floor(durationSecs / 60);
+      while (durationMins >= 60) durationMins -= 60;
       const durationRemainingSecs = Math.floor(durationSecs % 60);
       timeDoneCl.innerHTML = `End Time: ${now.getDate()}/${
         now.getMonth() + 1
@@ -24508,7 +24508,7 @@ function buttonLevelSetting() {
 
     case "Cal.4":
       level = "calFour";
-      scoreNeeded = 10;
+      scoreNeeded = 2;
       setting = prompt(
         "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Left Side Right Side + - x /\n6. Fractions: Addition: Mixed Fractions\n7. Fractions: Subtraction: Mixed Fractions\n8. Decimals: Addition\n9. Decimals: Subtraction\n10. Decimals: Overlapping Place Value\n11. Decimals: Multiplication (Single)\n12. Decimals: Multiplication (Double)\n13. Decimals: Division \n14. Fractions to Decimal (Limit)\n15. Decimals: Division and Multiplication with splitting\n16. Multiplication in Sets\n17. Fractions: Unit with a Value\n\n99. Everything",
         99
