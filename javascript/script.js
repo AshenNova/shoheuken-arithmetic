@@ -10736,7 +10736,6 @@ function updateProblems() {
     }
 
     //PART THEREOF & PART THEREAFTER
-    //AVERAGE: CONSECUTIVE DAYS
     if (setting == 28) {
       normalDisplay();
       const durationHours = Math.floor(p.duration / 60);
@@ -10757,6 +10756,57 @@ function updateProblems() {
         .toString()
         .padStart(2, "0")}p.m.
       `;
+    }
+
+    // RATES: TAPS
+    if (setting == 29) {
+      normalDisplay();
+
+      let lineOne = `The dimensions of a container is ${p.length} cm, ${p.breadth} cm, ${p.height} cm.`;
+      if ((p.length == p.breadth) == p.height) {
+        lineOne = `The container is a cube with side ${p.length} cm.`;
+      }
+      if (p.length == p.breadth) {
+        lineOne = `The container has a square base of side ${p.length} cm and height of ${p.height} cm.`;
+      }
+      const tapARate = genNumbers(10) - 5;
+      const tapBRate = genNumbers(10) - 5;
+      let rateASentence = "";
+      if (tapARate > 0)
+        rateASentence = `Tap A fills at a rate of ${tapARate}ℓ per min.</p>`;
+      if (tapARate < 0)
+        rateASentence = `Tap A drains at a rate of ${Math.abs(
+          tapARate
+        )}ℓ per min.</p>`;
+      let rateBSentence = "";
+      if (tapBRate > 0)
+        rateBSentence = `Tap B fills at a rate of ${tapBRate}ℓ per min.</p>`;
+      if (tapBRate < 0)
+        rateBSentence = `Tap B drains at a rate of ${Math.abs(
+          tapBRate
+        )}ℓ per min.</p>`;
+      p.netRate = tapARate + tapBRate;
+      if (tapARate > 0 && tapBRate > 0) p.netRate = tapARate + tapBRate;
+      if (tapARate < 0 && tapBRate < 0) p.netRate = tapARate + tapBRate;
+      if ((tapARate < 0 && tapBRate > 0) || (tapARate > 0 && tapBRate < 0))
+        p.netRate = tapARate + tapBRate;
+      console.log(p.netRate);
+      let questionSent = "";
+      if (p.netRate == 0) {
+        console.log("Net rate is zero");
+        return updateCalc();
+      }
+      if (p.netRate > 0) {
+        questionSent = "How many mins does it take to fill up the container?";
+      }
+      if (p.netRate < 0) {
+        questionSent = "How many mins does it take to drain the container?";
+      }
+      displayProblem.innerHTML = `${lineOne}</p>
+      It is ${p.nume}/${p.deno} filled.</p>
+      ${rateASentence}
+      ${rateBSentence}
+      ${questionSent}`;
     }
   }
 
@@ -17037,8 +17087,37 @@ function handleSubmit(e) {
           correctAnswer = Math.floor(p.duration / p.group) * p.rates;
         }
       }
+      if (setting == 29) {
+        const capacity = p.length * p.breadth * p.height;
+        const fill = (capacity / p.deno) * (p.deno - p.nume);
+        const drain = (capacity / p.deno) * p.nume;
+        if (p.netRate > 0) {
+          correctAnswer = fill / (p.netRate * 1000);
+        }
+        if (p.netRate < 0) {
+          correctAnswer = drain / Math.abs(p.netRate * 1000);
+        }
+        if (correctAnswer.toString().split(".")[1].length > 5) {
+          if (p.netRate > 0) {
+            const quotient = Math.floor(fill / (p.netRate * 1000));
+            let remainder = fill % (p.netRate * 1000);
+            let denominator = p.netRate * 1000;
+            [remainder, denominator] = simplify(remainder, denominator);
+            correctAnswer = `${quotient} ${remainder}/${denominator}`;
+            if (quotient == 0) correctAnswer = `${remainder}/${denominator}`;
+          }
+          if (p.netRate < 0) {
+            p.netRate = Math.abs(p.netRate);
+            const quotient = Math.floor(drain / (p.netRate * 1000));
+            let remainder = drain % (p.netRate * 1000);
+            let denominator = p.netRate * 1000;
+            [remainder, denominator] = simplify(remainder, denominator);
+            correctAnswer = `${quotient} ${remainder}/${denominator}`;
+            if (quotient == 0) correctAnswer = `${remainder}/${denominator}`;
+          }
+        }
+      }
     }
-
     //ANSWERS
     if (level == "calSix") {
       if (setting == 1) {
@@ -21427,7 +21506,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(28, calArr, setting, 99);
+    setting = calArrAll(29, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -21852,7 +21931,6 @@ function genProblems() {
     }
 
     // RATES: PARTTHEREOF & PARTTHEREAFTER
-
     if (setting == 28) {
       return {
         startHour: genNumbers(5) + 1,
@@ -21861,6 +21939,19 @@ function genProblems() {
         rates: genNumbers(5) + 1,
         group: [5, 10, 30][genNumbers(3)],
         type: ["part thereof", "part thereafter"][genNumbers(2)],
+      };
+    }
+
+    // RATES: TAPS
+    if (setting == 29) {
+      const gen_height = genNumbers(4) + 2;
+      return {
+        length: genNumbers(20) + 10,
+        breadth: genNumbers(20) + 10,
+        height: gen_height * (genNumbers(5) + 2),
+        deno: gen_height,
+        nume: genNumbers(gen_height - 1) + 1,
+        netRate: undefined,
       };
     }
   }
@@ -24690,7 +24781,7 @@ function buttonLevelSetting() {
       if (
         ![
           0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-          20, 21, 22, 23, 24, 25, 26, 27, 28, 99,
+          20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 99,
         ].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
