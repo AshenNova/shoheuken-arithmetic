@@ -9481,6 +9481,8 @@ function updateProblems() {
         const valueUnit = p.last_deno - new_numeOne - new_numeTwo;
         while (p.situation % valueUnit != 0) p.situation -= 1;
         p.oneUnit = p.situation / valueUnit;
+        if (p.numeTwo / p.denoTwo + p.numeOne / p.denoOne >= 1)
+          return updateCalc();
         displayProblem.innerHTML = `
       Person ${p.person} wanted to buy something, but only had ${p.numeOne}/${p.denoOne} of the amount.</p>
       After receiving another $${p.situation}, ${gender} is still short of ${p.numeTwo}/${p.denoTwo}.</p>
