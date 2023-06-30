@@ -29,6 +29,29 @@ export function cutOffCheck(level, setting, time) {
       }
     }
   }
+  if (level == "calThree") {
+    if ([1, 2, 3, 4, 5, 6, 9, 14].includes(setting)) {
+      if (time > 60) {
+        push = "Yes";
+      }
+    }
+    if ([10, 11, 12, 13, 15, 16, 17, 19].includes(setting)) {
+      if (time > 120) {
+        push = "Yes";
+      }
+    }
+    if ([20, 21].includes(setting)) {
+      if (time > 180) {
+        push = "Yes";
+      }
+    }
+    if (setting == 7 || setting == 8 || setting == 18) {
+      if (time > 300) {
+        push = "Yes";
+      }
+    }
+  }
+
   if (level == "calFour") {
     if (setting == 1 || setting == 2 || setting == 3) {
       if (time > 60) {
