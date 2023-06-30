@@ -508,6 +508,8 @@ function normalDisplay() {
   fractionsContainer.classList.add("hidden");
   workingContainer.classList.add("hidden");
   fractionsContainerTwo.classList.add("hidden");
+  displayProblem.style.fontSize = "18px";
+  displayProblem.style.textAlign = "left";
 }
 function drawingDisplay() {
   firstCanvas.classList.remove("hidden");
@@ -638,7 +640,6 @@ function timer2() {
       cutoff = 99999;
     } else {
       cutoff = 600;
-      console.log("You have " + cutoff);
     }
 
     if (state.score >= scoreNeeded || time == cutoff) {
@@ -9042,7 +9043,7 @@ function updateProblems() {
     if (
       [
         0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
-        23, 25, 26, 27, 28,
+        23, 25, 26, 27, 28, 29, 30,
       ].includes(setting * 1)
     ) {
       displayProblem.style.textAlign = "left";
@@ -10731,6 +10732,30 @@ function updateProblems() {
       Everyday ${gender} would make ${p.increase} more than the previous day.</p>
       A total of ${p.total} paper ${obj}s were made.</p>
       How many ${obj}s were made on day ${p.chosen}?
+      `;
+    }
+
+    //PART THEREOF & PART THEREAFTER
+    //AVERAGE: CONSECUTIVE DAYS
+    if (setting == 28) {
+      normalDisplay();
+      const durationHours = Math.floor(p.duration / 60);
+      const durationMins = p.duration % 60;
+      let endHours = p.startHour + durationHours;
+      let endMins = p.startMins + durationMins;
+      while (endMins >= 60) {
+        endMins -= 60;
+        endHours += 1;
+      }
+      displayProblem.innerHTML = `
+      <ul>The rates are as follows:
+        <li>$${p.rates} every ${p.group} minutes or ${p.type}</li>
+      </ul>
+      How much does it cost from ${p.startHour}.${p.startMins
+        .toString()
+        .padStart(2, "0")}pm until ${endHours}:${endMins
+        .toString()
+        .padStart(2, "0")}p.m.
       `;
     }
   }
@@ -13429,6 +13454,7 @@ function updateProblems() {
     }
   }
 
+  // DISPLAY
   if (level == "heuFiveb") {
     calculatorSymbol.classList.remove("hidden");
     if (setting == 1) {
@@ -13664,6 +13690,48 @@ function updateProblems() {
         There are already ${p.third} ${p.varA} and ${p.fourth} ${p.varB} in the bag.</p>
         How many more ${p.varB} can be placed in it?`;
       }
+    }
+
+    // UNCHANGED TOTAL (IF)
+    if (setting == 5) {
+      const object = ["marbles", "pencils", "erasers"][genNumbers(3)];
+      // const firstA = p.unitAFirst * p.multiplier;
+      // const firstB = p.unitBFirst * p.multiplier;
+      const transA = genNumbers(p.valueA - 10) + 10;
+      let [unitAFirst, unitBFirst] = simplify(
+        p.valueA - transA,
+        p.valueB + transA
+      );
+      if (unitAFirst > 20 || unitBFirst > 20) {
+        console.log("Units too big!");
+        return updateCalc();
+      }
+      const transB = genNumbers(p.valueB - 10) + 10;
+      let [unitAEnd, unitBEnd] = simplify(p.valueA + transB, p.valueB - transB);
+      // [unitAEnd, unitBEnd] = simplify(unitAEnd, unitBEnd);
+      if (unitAEnd > 20 || unitBEnd > 20) {
+        console.log("Units too big!");
+        return updateCalc();
+      }
+      if (transA == transB) {
+        console.log("Same transfer value");
+        return updateCalc();
+      }
+      let commonNumbers = commonDeno(
+        unitAFirst + unitBFirst,
+        unitAEnd,
+        unitBEnd
+      );
+      if (commonNumbers > 100) {
+        console.log("2) Units too big!");
+        return updateCalc();
+      }
+      displayProblem.innerHTML = `
+        A and B have some ${object}.</p>
+      If A gave ${transA} ${object} to B, the ratio of A to B is ${unitAFirst} : ${unitBFirst}.</p>
+      If B gave ${transB} ${object} to A, the ratio of A to B is ${unitAEnd} : ${unitBEnd}.</p>
+      What is the value of ${p.question == "A" ? "A" : "B"}?</p>
+      `;
     }
   }
   // DISPLAY
@@ -16960,6 +17028,15 @@ function handleSubmit(e) {
       if (setting == 27) {
         correctAnswer = p.dayOne + p.increase * (p.chosen - 1);
       }
+
+      if (setting == 28) {
+        if (p.type == "part thereof") {
+          correctAnswer = Math.ceil(p.duration / p.group) * p.rates;
+        }
+        if (p.type == "part thereafter") {
+          correctAnswer = Math.floor(p.duration / p.group) * p.rates;
+        }
+      }
     }
 
     //ANSWERS
@@ -18464,6 +18541,12 @@ function handleSubmit(e) {
         // if (p.version == 0) {
         correctAnswer = p.second - ((p.third / p.quanA) * p.quanB + p.fourth);
         // }
+      }
+
+      // UNCHANGED TOTAL (IF)
+      if (setting == 5) {
+        if (p.question == "A") correctAnswer = p.valueA;
+        if (p.question == "B") correctAnswer = p.valueB;
       }
     }
     //ANSWERS
@@ -21344,7 +21427,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(27, calArr, setting, 99);
+    setting = calArrAll(28, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -21765,6 +21848,19 @@ function genProblems() {
         total: undefined,
         chosen: undefined,
         increase: genNumbers(5) + 3,
+      };
+    }
+
+    // RATES: PARTTHEREOF & PARTTHEREAFTER
+
+    if (setting == 28) {
+      return {
+        startHour: genNumbers(5) + 1,
+        startMins: genNumbers(60 - 1) + 1,
+        duration: genNumbers(60) + 61,
+        rates: genNumbers(5) + 1,
+        group: [5, 10, 30][genNumbers(3)],
+        type: ["part thereof", "part thereafter"][genNumbers(2)],
       };
     }
   }
@@ -22772,7 +22868,7 @@ function genProblems() {
   }
   // SETTINGS
   if (level == "heuFiveb") {
-    setting = calArrAll(4, calArr, setting, 9);
+    setting = calArrAll(5, calArr, setting, 9);
     setting = checkRange(setting, calArr);
 
     if (setting == 1) {
@@ -22843,6 +22939,15 @@ function genProblems() {
         second: undefined,
         third: undefined,
         fourth: genNumbers(5) + 2,
+      };
+    }
+
+    // UNCHANGED TOTAL (IF)
+    if (setting == 5) {
+      return {
+        valueA: (genNumbers(90) + 10) * 2,
+        valueB: (genNumbers(90) + 10) * 2,
+        question: ["A", "B"][genNumbers(2)],
       };
     }
   }
@@ -24567,6 +24672,8 @@ function buttonLevelSetting() {
       26. Average: External Change</p>
       27. Average: Odd consecutive days</p>
       <hr></hr>
+      28. Rates: Part thereof part thereafter
+      <hr></hr>
       </p>99. All
       
       `;
@@ -24765,11 +24872,11 @@ function buttonLevelSetting() {
     case "Heu.5b":
       level = "heuFiveb";
       setting = prompt(
-        "What level?\n1. Working Backwards (Type 1)\n2. Working Backwards (Type 2)\n3. Working Backwards (Type 3) Independent\n4. Either or\n\n9. All"
+        "What level?\n1. Working Backwards (Type 1)\n2. Working Backwards (Type 2)\n3. Working Backwards (Type 3) Independent\n4. Either or\n5. Unchanged Total (if)\n\n9. All"
       );
 
       if (
-        ![1, 2, 3, 4, 9].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 9;
