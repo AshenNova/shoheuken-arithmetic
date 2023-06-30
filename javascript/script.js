@@ -24764,6 +24764,7 @@ function buttonLevelSetting() {
       27. Average: Odd consecutive days</p>
       <hr></hr>
       28. Rates: Part thereof part thereafter
+      29. Rates: Taps
       <hr></hr>
       </p>99. All
       
