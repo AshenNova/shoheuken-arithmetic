@@ -65,7 +65,11 @@ export function cutOffCheck(level, setting, time) {
   }
 
   if (level == "calFive") {
-    if (setting == 0 || setting == 1 || setting == 2 || setting == 3) {
+    if (setting == 0) {
+      if (time > 180) {
+        push = "Yes";
+      }
+    } else if (setting == 1 || setting == 2 || setting == 3) {
       if (time > 120) {
         push = "Yes";
       }
@@ -73,7 +77,7 @@ export function cutOffCheck(level, setting, time) {
       if (time > 300) {
         push = "Yes";
       }
-    }
+
   }
 
   // HEURISTICS
