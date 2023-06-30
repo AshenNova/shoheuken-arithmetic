@@ -9058,11 +9058,6 @@ function updateProblems() {
       threeWholeNumber.classList.remove("hidden");
     }
 
-    // if (setting == 3) {
-    //   threeNumerator.classList.remove("hidden");
-    //   threeDenominator.classList.remove("hidden");
-    // }
-
     if (setting == 0) {
       normalDisplay();
       for (let i = 0; i < 5; i++) {
@@ -9612,7 +9607,7 @@ function updateProblems() {
       ctx.fillText(`D`, -10, p.breadth * multipler + 10);
 
       // FIRST TRIANGLE
-      ctx.fillStyle = "red";
+      ctx.fillStyle = "white";
       // const firstTriangleBase = genNumbers((p.length - 5) * multipler);
       ctx.beginPath();
       ctx.moveTo(0, 0);
@@ -9625,7 +9620,7 @@ function updateProblems() {
       // ctx.fillText(`A`, 5, p.breadth * multipler - 3);
 
       // SECOND TRIANGLE
-      ctx.fillStyle = "red";
+      ctx.fillStyle = "white";
       // const thirdTriangleHeight = (genNumbers(p.breadth - 5) + 5) * multipler;
       ctx.beginPath();
       ctx.moveTo(p.firstTriangleBase * multipler, p.breadth * multipler);
@@ -9639,7 +9634,7 @@ function updateProblems() {
 
       // THIRD TRIANGLE
       // const thirdTriangleHeight = (genNumbers(p.breadth - 5) + 5) * multipler;
-      ctx.fillStyle = "red";
+      ctx.fillStyle = "white";
       ctx.beginPath();
       ctx.moveTo(0, 0);
       ctx.lineTo(p.length * multipler, 0);
