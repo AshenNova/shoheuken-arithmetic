@@ -35,12 +35,12 @@ export function cutOffCheck(level, setting, time) {
         push = "Yes";
       }
     }
-    if ([10, 11, 12, 13, 15, 16, 17, 19].includes(setting)) {
+    if ([10, 11, 12, 13, 15, 17, 19].includes(setting)) {
       if (time > 120) {
         push = "Yes";
       }
     }
-    if ([20, 21].includes(setting)) {
+    if ([16, 20, 21].includes(setting)) {
       if (time > 180) {
         push = "Yes";
       }
