@@ -24763,7 +24763,7 @@ function buttonLevelSetting() {
       26. Average: External Change</p>
       27. Average: Odd consecutive days</p>
       <hr></hr>
-      28. Rates: Part thereof part thereafter
+      28. Rates: Part thereof part thereafter</p>
       29. Rates: Taps
       <hr></hr>
       </p>99. All
