@@ -10761,7 +10761,7 @@ function updateProblems() {
     // RATES: TAPS
     if (setting == 29) {
       normalDisplay();
-
+      [p.nume, p.deno] = simplify(p.nume, p.deno);
       let lineOne = `The dimensions of a container is ${p.length} cm, ${p.breadth} cm, ${p.height} cm.`;
       if ((p.length == p.breadth) == p.height) {
         lineOne = `The container is a cube with side ${p.length} cm.`;
