@@ -9231,6 +9231,7 @@ function updateProblems() {
       if (p.type == "mixed-whole") {
         threeNumerator.classList.add("hidden");
         threeDenominator.classList.add("hidden");
+        threeWholeNumber.classList.remove("hidden");
 
         twoWholeNumber.textContent = p.wholeOne;
         twoNumerator.textContent = p.numeratorOne;
@@ -9238,6 +9239,9 @@ function updateProblems() {
         threeWholeNumber.textContent = p.wholeTwo;
       }
       if (p.type == "mixed-simple") {
+        threeNumerator.classList.remove("hidden");
+        threeDenominator.classList.remove("hidden");
+        threeWholeNumber.classList.add("hidden");
         if (p.numeratorTwo == p.denominatorTwo) p.numeratorTwo -= 1;
         [p.numeratorTwo, p.denominatorTwo] = simplify(
           p.numeratorTwo,
@@ -9249,9 +9253,7 @@ function updateProblems() {
             p.numeratorTwo,
           ];
         }
-        threeNumerator.classList.remove("hidden");
-        threeDenominator.classList.remove("hidden");
-        threeWholeNumber.classList.add("hidden");
+
         threeNumerator.textContent = p.numeratorTwo;
         threeDenominator.textContent = p.denominatorTwo;
       }
