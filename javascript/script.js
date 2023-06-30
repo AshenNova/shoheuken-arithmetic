@@ -579,38 +579,6 @@ function clickStart() {
   summarySettingCl.textContent = summarySettingDisplay;
   buttonLevel = this.innerHTML;
   console.log("start button clicked");
-  // startBox.classList.add("hidden");
-  // multiplesSettingCl.classList.add("hidden");
-  // countDownTimer.classList.remove("hidden");
-  // if (levelArr.length != 0) {
-  //   buttonLevelSetting();
-  //   levelLabel.innerHTML = `You are attempting Level ${level}`;
-  //   console.log(buttonLevel);
-  // }
-
-  // // Timer1 countdown
-  // let countDTimer = setTime;
-  // const countDownOne = setInterval(function () {
-  //   timerD.innerHTML = countDTimer;
-  //   countDTimer--;
-
-  //   if (countDTimer < 0) {
-  //     clearInterval(countDownOne);
-  //     timerD.innerHTML = countDTimer;
-  //     starto.classList.add("hidden");
-  //     countDownTimer.classList.add("hidden");
-  //     if (document.querySelector(".input-box").classList.contains("hidden")) {
-  //       userInput2.focus();
-  //     } else {
-  //       userInput.focus();
-  //     }
-  //     timer2();
-  //     questionTimer();
-
-  //     optionsBox.classList.add("hidden");
-  //     updateProblems();
-  //   }
-  // }, 1000);
   withinStart();
 }
 
