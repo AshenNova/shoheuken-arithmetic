@@ -443,7 +443,6 @@ button {
 .submit2 {
   display: flex;
   align-items: center;
-  margin-left: 10px;
 }
 
 .fa-reveal {

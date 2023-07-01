@@ -709,9 +709,9 @@ function timer2() {
         summaryMistakes.textContent = state.mistake;
         let html = undefined;
         if (index % 2 != 0) {
-          html = `<div class="summary-item-right">${item.attempt}) ${item.symbol} Setting: ${item.setting}, Time: ${item.time}s</p></div>`;
+          html = `<div class="summary-item-right">▪️${item.attempt}) ${item.symbol} Setting: ${item.setting}, Time: ${item.time}s</p></div>`;
         } else {
-          html = `<div class="summary-item-left">${item.attempt}) ${item.symbol} Setting: ${item.setting}, Time: ${item.time}s</div>`;
+          html = `<div class="summary-item-left">▪️${item.attempt}) ${item.symbol} Setting: ${item.setting}, Time: ${item.time}s</div>`;
         }
 
         summaryTextCl.insertAdjacentHTML("beforeend", html);
