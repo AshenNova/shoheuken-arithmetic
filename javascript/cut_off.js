@@ -30,8 +30,13 @@ export function cutOffCheck(level, setting, time) {
     }
   }
   if (level == "calThree") {
-    if ([1, 2, 3, 4, 5, 6, 9, 14].includes(setting)) {
+    if ([1, 2, 3, 4, 5, 9, 14].includes(setting)) {
       if (time > 60) {
+        push = "Yes";
+      }
+    }
+    if ([6].includes(setting)) {
+      if (time > 90) {
         push = "Yes";
       }
     }
