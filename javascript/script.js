@@ -18242,18 +18242,33 @@ function handleSubmit(e) {
             correctAnswer = `${correctAnswer}nd`;
           } else if (str.length == 1 && str.startsWith("3")) {
             correctAnswer = `${correctAnswer}rd`;
+          } else if (
+            str.length == 2 &&
+            !str.startsWith("2") &&
+            str.endsWith("1")
+          ) {
+            correctAnswer = `${correctAnswer}st`;
+          } else if (
+            str.length == 2 &&
+            !str.startsWith("1") &&
+            str.endsWith("2")
+          ) {
+            correctAnswer = `${correctAnswer}nd`;
+          } else if (
+            str.length == 2 &&
+            !str.startsWith("1") &&
+            str.endsWith("3")
+          ) {
+            correctAnswer = `${correctAnswer}rd`;
+          } else if (str.length == 3 && str[1] != 1 && str.endsWith("1")) {
+            correctAnswer = `${correctAnswer}st`;
+          } else if (str.length == 3 && str[1] != 1 && str.endsWith("2")) {
+            correctAnswer = `${correctAnswer}nd`;
+          } else if (str.length == 3 && str[1] != 1 && str.endsWith("3")) {
+            correctAnswer = `${correctAnswer}rd`;
           } else {
             correctAnswer = `${correctAnswer}th`;
           }
-          // if (str[str.length - 1 - 1] == "1") {
-          //   correctAnswer = `${correctAnswer}st`;
-          // } else if (str[str.length - 1] == "2") {
-          //   correctAnswer = `${correctAnswer}nd`;
-          // } else if (str[str.length - 1] == "3") {
-          //   correctAnswer = `${correctAnswer}rd`;
-          // } else {
-          //   correctAnswer = `${correctAnswer}th`;
-          // }
         }
         if (p.version == 2) {
           correctAnswer = common;
