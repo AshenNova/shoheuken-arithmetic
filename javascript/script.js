@@ -18236,15 +18236,24 @@ function handleSubmit(e) {
         correctAnswer = common * (p.timesNum + 1);
         if (p.version == 1) {
           let str = correctAnswer.toString();
-          if (str[str.length - 1 - 1] == "1") {
+          if (str.length == 1 && str.startsWith("1")) {
             correctAnswer = `${correctAnswer}st`;
-          } else if (str[str.length - 1] == "2") {
+          } else if (str.length == 1 && str.startsWith("2")) {
             correctAnswer = `${correctAnswer}nd`;
-          } else if (str[str.length - 1] == "3") {
+          } else if (str.length == 1 && str.startsWith("3")) {
             correctAnswer = `${correctAnswer}rd`;
           } else {
             correctAnswer = `${correctAnswer}th`;
           }
+          // if (str[str.length - 1 - 1] == "1") {
+          //   correctAnswer = `${correctAnswer}st`;
+          // } else if (str[str.length - 1] == "2") {
+          //   correctAnswer = `${correctAnswer}nd`;
+          // } else if (str[str.length - 1] == "3") {
+          //   correctAnswer = `${correctAnswer}rd`;
+          // } else {
+          //   correctAnswer = `${correctAnswer}th`;
+          // }
         }
         if (p.version == 2) {
           correctAnswer = common;
