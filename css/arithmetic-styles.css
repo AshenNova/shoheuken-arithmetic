@@ -86,16 +86,18 @@ body {
 .summary-setting {
   display: inline-block;
 }
-.summary-item-right {
+
+.summary-grid-box {
+  display: inline-flexbox;
+  flex-direction: row;
+}
+
+/* .summary-item-right {
   text-align: right;
-  display: inline-block;
-  padding-left: 10px;
 }
 .summary-item-left {
-  margin-left: -5px;
   text-align: left;
-  display: inline-block;
-}
+} */
 
 .summary-status {
   -webkit-text-stroke: 1px grey;

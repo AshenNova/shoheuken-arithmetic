@@ -78,6 +78,10 @@ export function cutOffCheck(level, setting, time) {
       if (time > 120) {
         push = "Yes";
       }
+    } else if (setting == 10) {
+      if (time > 360) {
+        push = "Yes";
+      }
     } else {
       if (time > 300) {
         push = "Yes";
