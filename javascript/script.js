@@ -18793,7 +18793,8 @@ function handleSubmit(e) {
 
       console.log("new questions generated");
       reviewAnswer.classList.add("hidden");
-      updateProblems();
+      if (state.score != scoreNeeded) updateProblems();
+      
     } else {
       // WHEN INCORRECT
       console.log("incorrect");
