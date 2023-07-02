@@ -13130,10 +13130,8 @@ function updateProblems() {
           sceneATwoRemaining * p.unitA + sceneBTwoRemaining * p.unitB;
         displayProblem.innerHTML = `
         There is a a total of ${firstScene} students.</p>
-        If ${totalATwo - p.sceneATwo}/${totalATwo} girls and ${
-          totalBTwo - p.sceneBTwo
-        }/${totalBTwo} boys left the school.</p>
-        There would be ${secondScene} students left.</p>
+        If ${p.sceneATwo}/${totalATwo} girls and ${p.sceneBTwo}/${totalBTwo} boys left the school.</p>
+        There would be ${secondScene} students remaining.</p>
         `;
         p.varA = totalATwo;
         p.varB = totalBTwo;
@@ -18791,13 +18789,11 @@ function handleSubmit(e) {
 
       if (removeHelpMe.includes(level)) helpMe.textContent = "";
 
-      
       reviewAnswer.classList.add("hidden");
       if (state.score != scoreNeeded) {
         console.log("new questions generated");
-        updateProblems()
-      };
-      
+        updateProblems();
+      }
     } else {
       // WHEN INCORRECT
       console.log("incorrect");
