@@ -13133,7 +13133,7 @@ function updateProblems() {
         If ${totalATwo - p.sceneATwo}/${totalATwo} girls and ${
           totalBTwo - p.sceneBTwo
         }/${totalBTwo} boys left the school.</p>
-        There would be ${secondScene} students remaining.</p>
+        There would be ${secondScene} students left.</p>
         `;
         p.varA = totalATwo;
         p.varB = totalBTwo;
@@ -18791,9 +18791,12 @@ function handleSubmit(e) {
 
       if (removeHelpMe.includes(level)) helpMe.textContent = "";
 
-      console.log("new questions generated");
+      
       reviewAnswer.classList.add("hidden");
-      if (state.score != scoreNeeded) updateProblems();
+      if (state.score != scoreNeeded) {
+        console.log("new questions generated");
+        updateProblems()
+      };
       
     } else {
       // WHEN INCORRECT
