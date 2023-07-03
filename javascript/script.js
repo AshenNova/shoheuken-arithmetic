@@ -13690,37 +13690,56 @@ function updateProblems() {
       p.third = p.quanA * p.multiplierB;
       // const fourth = p.quanB * p.multiplierB;
       let answer = p.second - ((p.third / p.quanA) * p.quanB + p.fourth);
-      if (answer <= 0) {
-        console.log("negative num");
-        return updateCalc();
-      }
+
       if (p.version == 0) {
         displayProblem.innerHTML = `
-        A school bus can carry either ${first} ${p.varA} or ${p.second} ${p.varB}.</p>
+        A school bus can carry either ${first} ${p.varA} or ${p.second} ${
+          p.varB
+        }.</p>
         </p>
-        There are already ${p.third} ${p.varA} and ${p.fourth} ${p.varB} on the bus.</p>
-        How many more ${p.varB} can board the bus?`;
+        There are already ${p.third} ${p.varA} and ${p.fourth} ${
+          p.varB
+        } on the bus.</p>
+        ${
+          answer >= 0
+            ? `How many more ${p.varB} can board the bus?`
+            : `How many ${p.varB} have to alight from the bus?`
+        }`;
       }
       if (p.version == 1) {
         displayProblem.innerHTML = `
         A shelf can hold either ${first} ${p.varA} or ${p.second} ${p.varB}.</p>
         </p>
-        There are already ${p.third} ${p.varA} and ${p.fourth} ${p.varB} on the shelf.</p>
-        How many more ${p.varB} can be placed on it?`;
+        There are already ${p.third} ${p.varA} and ${p.fourth} ${
+          p.varB
+        } on the shelf.</p>
+        ${
+          answer >= 0
+            ? `How many more ${p.varB} can be placed on it?`
+            : `How many ${p.varB} have to be removed?`
+        }`;
       }
       if (p.version == 2) {
         displayProblem.innerHTML = `
         A pencil case can hold either ${first} ${p.varA} or ${p.second} ${p.varB}.</p>
         </p>
         There are already ${p.third} ${p.varA} and ${p.fourth} ${p.varB} in the pencil case.</p>
-        How many more ${p.varB} can be placed in it?`;
+        ${
+          answer >= 0
+            ? `How many more ${p.varB} can be placed on it?`
+            : `How many ${p.varB} have to be removed?`
+        }`;
       }
       if (p.version == 3) {
         displayProblem.innerHTML = `
         A bag can hold either ${first} ${p.varA} or ${p.second} ${p.varB}.</p>
         </p>
         There are already ${p.third} ${p.varA} and ${p.fourth} ${p.varB} in the bag.</p>
-        How many more ${p.varB} can be placed in it?`;
+        ${
+          answer >= 0
+            ? `How many more ${p.varB} can be placed on it?`
+            : `How many ${p.varB} have to be removed?`
+        }`;
       }
     }
 
@@ -18624,7 +18643,7 @@ function handleSubmit(e) {
       // EITHER OR
       if (setting == 4) {
         // if (p.version == 0) {
-        correctAnswer = p.second - ((p.third / p.quanA) * p.quanB + p.fourth);
+        correctAnswer = Math.abs(p.second - ((p.third / p.quanA) * p.quanB + p.fourth));
         // }
       }
 
