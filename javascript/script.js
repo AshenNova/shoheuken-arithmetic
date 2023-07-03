@@ -13721,9 +13721,13 @@ function updateProblems() {
       }
       if (p.version == 2) {
         displayProblem.innerHTML = `
-        A pencil case can hold either ${first} ${p.varA} or ${p.second} ${p.varB}.</p>
+        A pencil case can hold either ${first} ${p.varA} or ${p.second} ${
+          p.varB
+        }.</p>
         </p>
-        There are already ${p.third} ${p.varA} and ${p.fourth} ${p.varB} in the pencil case.</p>
+        There are already ${p.third} ${p.varA} and ${p.fourth} ${
+          p.varB
+        } in the pencil case.</p>
         ${
           answer >= 0
             ? `How many more ${p.varB} can be placed on it?`
@@ -13734,7 +13738,9 @@ function updateProblems() {
         displayProblem.innerHTML = `
         A bag can hold either ${first} ${p.varA} or ${p.second} ${p.varB}.</p>
         </p>
-        There are already ${p.third} ${p.varA} and ${p.fourth} ${p.varB} in the bag.</p>
+        There are already ${p.third} ${p.varA} and ${p.fourth} ${
+          p.varB
+        } in the bag.</p>
         ${
           answer >= 0
             ? `How many more ${p.varB} can be placed on it?`
@@ -17045,7 +17051,7 @@ function handleSubmit(e) {
           }
         }
         if (p.optionOne == "service") {
-          correctAnswer = p.value;
+          correctAnswer = p.value * 100;
         }
         if (p.optionOne == "discount gst") {
           if (p.optionThree == "final cost") {
@@ -18643,7 +18649,9 @@ function handleSubmit(e) {
       // EITHER OR
       if (setting == 4) {
         // if (p.version == 0) {
-        correctAnswer = Math.abs(p.second - ((p.third / p.quanA) * p.quanB + p.fourth));
+        correctAnswer = Math.abs(
+          p.second - ((p.third / p.quanA) * p.quanB + p.fourth)
+        );
         // }
       }
 
