@@ -13689,6 +13689,11 @@ function updateProblems() {
       p.second = p.quanB * p.multiplierA;
       p.third = p.quanA * p.multiplierB;
       // const fourth = p.quanB * p.multiplierB;
+      let answer = p.second - ((p.third / p.quanA) * p.quanB + p.fourth);
+      if (answer <= 0) {
+        console.log("negative num");
+        return updateCalc();
+      }
       if (p.version == 0) {
         displayProblem.innerHTML = `
         A school bus can carry either ${first} ${p.varA} or ${p.second} ${p.varB}.</p>
