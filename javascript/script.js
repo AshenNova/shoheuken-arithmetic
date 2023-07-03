@@ -12790,6 +12790,7 @@ function updateProblems() {
           things[genNumbers(2) + 2]
         }.</p>
         Which is the ${p.times} participant to receive both?
+        <i>Leave your answer in ordinal numbers.</i>
         `;
       }
       if (p.version == 2) {
