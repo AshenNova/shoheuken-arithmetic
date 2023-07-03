@@ -63,9 +63,8 @@ export function cutOffCheck(level, setting, time) {
     //     push = "Yes";
     //   }
     // } else {
-      if (time > 120) {
-        push = "Yes";
-      }
+    if (time > 120) {
+      push = "Yes";
     }
   }
 
