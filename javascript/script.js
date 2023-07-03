@@ -13143,7 +13143,10 @@ function updateProblems() {
         p.varA = totalATwo;
         p.varB = totalBTwo;
       }
-
+      if (totalATwo == 2 && totalBTwo == 2){
+        console.log("Half half")
+        return updateCalc()
+      }
       //QUESTION
       if (p.choose == "boys") {
         displayProblem.insertAdjacentHTML(
