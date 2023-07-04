@@ -105,7 +105,17 @@ export function cutOffCheck(level, setting, time) {
       push = "Yes";
     }
   }
+  if (level == "heuThreeb") {
+    if (time > 240) {
+      push = "Yes";
+    }
+  }
   if (level == "heuFour") {
+    if (time > 240) {
+      push = "Yes";
+    }
+  }
+  if (level == "heuFourb") {
     if (time > 240) {
       push = "Yes";
     }
