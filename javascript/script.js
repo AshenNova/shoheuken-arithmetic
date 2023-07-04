@@ -782,12 +782,9 @@ function resetStuff() {
   skipGlobalUpdateProblem = 0;
   summary = [];
   console.log(summary);
-  summaryTextCl.innerHTML = "Go go some stuff!";
-  // console.log(`Setting: ${setting}`);
-  // console.log(`Arr: ${arr}`);
-  // console.log(`calArr: ${calArr}`);
-  // console.log(`calRange: ${calRange}`);
-  // console.log(arr, calArr, calRange, setting);
+  summaryItemLeft.innerHTML = ""
+  summaryItemRight.innerHTML = "";
+
 
   gold = 0;
   silver = 0;
