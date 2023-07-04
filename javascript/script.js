@@ -1,7 +1,9 @@
 let setTime = 3;
 
-const screenHeight = window.screen.availHeight;
-const screenWidth = window.screen.availWidth;
+// const screenHeight = window.screen.availHeight;
+// const screenWidth = window.screen.availWidth;
+const screenHeight = window.innerHeight;
+const screenWidth = window.innerWidth;
 console.log("Height: " + screenHeight + ", Width: " + screenWidth);
 let now = `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`;
 console.log(now);
@@ -25238,6 +25240,13 @@ summaryBtn.addEventListener("click", function () {
   console.log("Summary button pressed");
   summaryContainer.classList.remove("hidden");
   summaryAttemptCl.textContent = attempt;
+  if (screenWidth > 1439) {
+    if (["calThree", "calFour", "calFive"].includes(level)) {
+      optionsBox.classList.remove("hidden");
+      optionsBox.textContent = `Available settings:`;
+      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
+    }
+  }
 });
 
 extraPracticeBtn.addEventListener("click", function () {
@@ -25267,6 +25276,7 @@ extraPracticeBtn.addEventListener("click", function () {
 closeBtn.addEventListener("click", function () {
   console.log("Close button pressed");
   summaryContainer.classList.add("hidden");
+  optionsBox.classList.add("hidden");
 });
 
 export { updateProblems, genNumbers };

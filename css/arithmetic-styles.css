@@ -87,10 +87,10 @@ body {
   display: inline-block;
 }
 
-.summary-grid-box {
+/* .summary-grid-box {
   display: inline-flexbox;
   flex-direction: row;
-}
+} */
 
 /* .summary-item-right {
   text-align: right;
@@ -121,7 +121,7 @@ body {
   /* max-height: 100%; */
   max-width: 95%;
   height: 95%;
-  width: 500px;
+  width: 450px;
   border-radius: 10px;
   background-color: white;
   z-index: 999;
