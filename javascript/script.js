@@ -24856,8 +24856,15 @@ function buttonLevelSetting() {
     case "Cal.3":
       level = "calThree";
       scoreNeeded = 10;
+      // setting = prompt(
+      //   "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Overlapping Place Value\n11. Working: Long Division ( No remainder )\n12. Working: Long Division ( Remainder )\n13. Working: Multiplication ( Single Blank )\n14. Multiplication in sets\n15. Long Division: Simple Statement\n16. Left Side Right Side + - x ÷\n17. Multiplication and Division of Convenient Numbers\n18. Parts and Intervals\n19. Time: Timeline ( hours and mins )\n20. Fractions: Addition and Subtraction\n21. Fractions: Expansion and simplification\n\n99. All",
+      //   99
+      // );
+      optionsBox.classList.remove("hidden");
+      optionsBox.textContent = `Available settings:`;
+      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
       setting = prompt(
-        "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Overlapping Place Value\n11. Working: Long Division ( No remainder )\n12. Working: Long Division ( Remainder )\n13. Working: Multiplication ( Single Blank )\n14. Multiplication in sets\n15. Long Division: Simple Statement\n16. Left Side Right Side + - x ÷\n17. Multiplication and Division of Convenient Numbers\n18. Parts and Intervals\n19. Time: Timeline ( hours and mins )\n20. Fractions: Addition and Subtraction\n21. Fractions: Expansion and simplification\n\n99. All",
+        "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
       if (
@@ -24879,10 +24886,6 @@ function buttonLevelSetting() {
       optionsBox.classList.remove("hidden");
       optionsBox.textContent = `Available settings:`;
       optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
-      // setting = prompt(
-      //   "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Left Side Right Side + - x /\n6. Fractions: Addition: Mixed Fractions\n7. Fractions: Subtraction: Mixed Fractions\n8. Decimals: Addition\n9. Decimals: Subtraction\n10. Decimals: Overlapping Place Value\n11. Decimals: Multiplication (Single)\n12. Decimals: Multiplication (Double)\n13. Decimals: Division \n14. Fractions to Decimal (Limit)\n15. Decimals: Division and Multiplication with splitting\n16. Multiplication in Sets\n17. Fractions: Unit with a Value\n\n99. Everything",
-      //   99
-      // );
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99

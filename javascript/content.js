@@ -1,7 +1,35 @@
 export const displayContent = (level) => {
-  let html = "undefined";
+  //   let html = undefined;
+
+  if (level == "calThree") {
+    return `
+    </p>
+    1. Addition (to - 10 000) No carry</p>
+    2. Subtraction (to - 10 000) No borrowing</p>
+    3. Addition (to - 10 000) (Carrying)</p>
+    4. Subtraction (to - 10 000) (Borrowing)</p>
+    5. Single blank</p>
+    6. Working (Other sequence)</p>
+    7. Arithmetic Constant</p>
+    8. Arithmetic Stagger</p>
+    9. Working: Multiplication</p>
+    10. Overlapping Place Value</p>
+    11. Working: Long Division ( No remainder )</p>
+    12. Working: Long Division ( Remainder )</p>
+    13. Working: Multiplication ( Single Blank )</p>
+    14. Multiplication in sets</p>
+    15. Long Division: Simple Statement</p>
+    16. Left Side Right Side + - x ÷</p>
+    17. Multiplication and Division of Convenient Numbers</p>
+    18. Parts and Intervals</p>
+    19. Time: Timeline ( hours and mins )</p>
+    20. Fractions: Addition and Subtraction</p>
+    21. Fractions: Expansion and simplification</p>
+    <hr></hr>
+    99. All`;
+  }
   if (level == "calFour") {
-    return (html = `
+    return `
       </p>
       1. Common Multiples</p>
       2. Listing Factors</p>
@@ -22,10 +50,10 @@ export const displayContent = (level) => {
       17. Fractions: Unit with a Value
       <hr></hr>
       99. All
-      `);
+      `;
   }
   if (level == "calFive")
-    return (html = `
+    return `
       </p>
       0. Order of Operation</p>
       <hr></hr>
@@ -70,5 +98,5 @@ export const displayContent = (level) => {
 
       </p>99. All
       
-      `);
+      `;
 };
