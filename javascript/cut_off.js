@@ -73,7 +73,13 @@ export function cutOffCheck(level, setting, time) {
       if (time > 180) {
         push = "Yes";
       }
-    } else if (setting == 1 || setting == 2 || setting == 3) {
+    } else if (
+      setting == 1 ||
+      setting == 2 ||
+      setting == 3 ||
+      setting == 22 ||
+      setting == 23
+    ) {
       if (time > 120) {
         push = "Yes";
       }

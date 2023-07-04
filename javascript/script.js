@@ -1,16 +1,8 @@
 let setTime = 3;
 
-// const timeElapsed = Date.now();
-// const today = new Date(
-//   getFullYear(),
-//   getMonth(),
-//   getDay(),
-//   getHours(),
-//   getMinutes()
-// );
-// console.log(getFullYear(timeElapsed));
-// console.log(today.toDateString());
-// console.log(timeElapsed);
+const screenHeight = window.screen.availHeight;
+const screenWidth = window.screen.availWidth;
+console.log("Height: " + screenHeight + ", Width: " + screenWidth);
 let now = `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`;
 console.log(now);
 
@@ -9008,7 +9000,7 @@ function updateProblems() {
   if (level == "calFive") {
     //ALLOW CALCULATOR
 
-    const calculatorNotAllowed = [0, 1, 2, 3];
+    const calculatorNotAllowed = [0, 1, 2, 3, 22];
     if (calculatorNotAllowed.includes(setting * 1)) {
       calculatorSymbol.classList.add("hidden");
       // calculatorSymbol.
@@ -10279,7 +10271,6 @@ function updateProblems() {
         .padStart(2, "0")}p.m.
       `;
     }
-
     // RATES: TAPS
     if (setting == 21) {
       normalDisplay();
@@ -10331,8 +10322,89 @@ function updateProblems() {
       ${questionSent}`;
     }
 
-    // REPEATED IDENTITY PERCENTAGE
+    // PERCENTAGE: PERCENTAGE OF
     if (setting == 22) {
+      normalDisplay();
+      const statement = genNumbers(2);
+      if (p.start == "fractions") {
+        if (statement == 0) {
+          displayProblem.innerHTML = `What is the percentage of ${p.nume}/${p.deno}?`;
+        } else {
+          displayProblem.innerHTML = `What is ${p.nume}/${p.deno} in percentage?`;
+        }
+      }
+
+      if (p.start == "decimals") {
+        displayProblem.innerHTML = `What is ${accDecimal(
+          p.nume / p.deno
+        )} in percentage?`;
+      }
+
+      if (p.start == "percentage") {
+        if (p.end == "fractions") {
+          displayProblem.innerHTML = `What is ${accDecimal(
+            (p.nume / p.deno) * 100
+          )}% in fractions?`;
+        }
+        if (p.end == "decimals") {
+          displayProblem.innerHTML = `What is ${accDecimal(
+            (p.nume / p.deno) * 100
+          )}% in decimals?`;
+        }
+      }
+      displayProblem.insertAdjacentHTML(
+        "beforeend",
+        "<p><i>Include percentage symbol in the answer.</i></p>"
+      );
+    }
+    // PERCENTAGE: PERCENTAGE CHANGE
+    if (setting == 23) {
+      normalDisplay();
+
+      if (p.version == "change") {
+        if (p.previous == p.next) p.next += 5;
+        const diff = p.previous > p.next ? "decrease" : "increase";
+        const change = Math.abs(p.next - p.previous);
+        if (
+          accDecimal((change / p.previous) * 100)
+            .toString()
+            .split(".")[1]
+        ) {
+          console.log("not whole");
+          return updateCalc();
+        }
+        displayProblem.innerHTML = `What is the percentage ${diff} from ${p.previous} to ${p.next}?</p>
+        <p><i>Include percentage symbol in the answer.</i></p>
+        `;
+      }
+      if (p.change == 0) p.change = 10;
+      if (p.version == "percentage forward") {
+        let answer = accDecimal((p.previous / 100) * (100 + p.change));
+        if (answer.toString().split(".")[1]) {
+          console.log("not whole");
+          return updateCalc();
+        }
+        const diff = p.change > 0 ? "increased by" : "decreased by";
+        displayProblem.innerHTML = `
+        What is the value if ${p.previous} ${diff} ${Math.abs(p.change)}%?
+        `;
+      }
+      if (p.version == "percentage back") {
+        let answer = accDecimal((p.next / (100 + p.change)) * 100);
+        if (answer.toString().split(".")[1]) {
+          console.log("not whole");
+          return updateCalc();
+        }
+        const diff = p.change > 0 ? "increased by" : "decreased by";
+        displayProblem.innerHTML = `
+        What is value of a number at first after it ${diff} ${Math.abs(
+          p.change
+        )}% and became ${p.next}?
+        `;
+      }
+    }
+    // REPEATED IDENTITY PERCENTAGE
+    if (setting == 24) {
       normalDisplay();
       let lineOne = undefined;
       let tempArr = [];
@@ -10364,7 +10436,7 @@ function updateProblems() {
       What is the ratio of A:B:C?`;
     }
     // RATIO: REPEATED GROUP
-    if (setting == 23) {
+    if (setting == 25) {
       normalDisplay();
       const displayA = p.percA;
       const displayB = p.percB;
@@ -10439,7 +10511,7 @@ function updateProblems() {
       `;
     }
     // PERCENTAGE: REMAINDER CONCEPT
-    if (setting == 24) {
+    if (setting == 26) {
       normalDisplay();
       displayProblem.innerHTML = `
       Person A spent ${p.percA}% of his money on ${p.itemOne}.</p>
@@ -10502,7 +10574,7 @@ function updateProblems() {
       }
     }
     // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-    if (setting == 25) {
+    if (setting == 27) {
       normalDisplay();
       if (p.frontBack == "front") {
         if (p.moreDiscount == 0) {
@@ -10572,7 +10644,7 @@ function updateProblems() {
       );
     }
     // PERCENTAGE: GST AND SERVICE CHARGE
-    if (setting == 26) {
+    if (setting == 28) {
       normalDisplay();
       if (p.optionOne == "simple gst") {
         displayProblem.innerHTML = `
@@ -10689,7 +10761,7 @@ function updateProblems() {
     // }
 
     //AVERAGE: INTERNAL CHANGE
-    if (setting == 27) {
+    if (setting == 29) {
       normalDisplay();
       const oldAverage = (p.numOne + p.numTwo + p.numThree) / 3;
       if (oldAverage % 1 != 0) {
@@ -10735,7 +10807,7 @@ function updateProblems() {
       }
     }
     //AVERAGE: EXTERNAL CHANGE
-    if (setting == 28) {
+    if (setting == 30) {
       normalDisplay();
       if (p.changeQuantity == 0) return updateCalc();
       p.changeQuantity > 0 ? (p.situation = "joined") : (p.situation = "left");
@@ -10760,7 +10832,7 @@ function updateProblems() {
     }
 
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 29) {
+    if (setting == 31) {
       normalDisplay();
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
@@ -16898,12 +16970,6 @@ function handleSubmit(e) {
         correctAnswer = `${p.answer[0]}:${p.answer[1]}:${p.answer[2]}`;
         // }
       }
-      // if (setting == 10) {
-      //   if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
-      //   if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
-      //   if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
-      //   if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
-      // }
 
       // RATIO: IDENTICAL TOTAL
       if (setting == 15) {
@@ -17003,13 +17069,64 @@ function handleSubmit(e) {
         }
       }
 
-      // PERCENTAGE: REPEATED IDENTITY
+      //PERCENTAGE: PERCENTAGE OF
       if (setting == 22) {
+        if (p.start == "fractions" || p.start == "decimals") {
+          correctAnswer = `${accDecimal((p.nume / p.deno) * 100)}%`;
+        }
+        if (p.start == "percentage") {
+          if (p.end == "fractions") {
+            [p.nume, p.deno] = simplify(p.nume, p.deno);
+            correctAnswer = `${p.nume}/${p.deno}`;
+          }
+          if (p.end == "decimals") {
+            correctAnswer = `${accDecimal(p.nume / p.deno)}`;
+          }
+        }
+        // if (p.version == "units") {
+        //   let conversion = 1000;
+        //   if (p.smallUnit == "cm") conversion = 100;
+        //   if (p.smallUnit == "mins" || p.smallUnit == "secs") conversion = 60;
+        //   let tempAnswer = (p.nume / (p.deno * conversion)) * 100;
+        //   console.log(tempAnswer);
+        //   correctAnswer = `${accDecimal(tempAnswer)}%`;
+        //   let str = tempAnswer;
+        //   str = str.toString().split(".")[1];
+        //   console.log(typeof str, str);
+        //   if (str) {
+        //     if (
+        //       (str.toString().length > 6 && !str.toString().includes("0000")) ||
+        //       (str.toString().length > 6 && !str.toString().includes("9999"))
+        //     ) {
+        //       let numerator = p.nume * 100;
+        //       let denominator = p.deno * conversion;
+        //       let wholeNum = Math.floor(numerator / denominator);
+        //       let remainder = numerator % denominator;
+        //       [remainder, denominator] = simplify(remainder, denominator);
+        //       if (wholeNum == 0) correctAnswer = `${remainder}/${denominator}%`;
+        //       if (wholeNum != 0)
+        //         correctAnswer = `${wholeNum} ${remainder}/${denominator}%`;
+        //     }
+        //   }
+        // }
+      }
+      //PERCENRAGE: PERCENTAGE CHANGE
+      if (setting == 23) {
+        const change = Math.abs(p.next - p.previous);
+        if (p.version == "change")
+          correctAnswer = `${accDecimal((change / p.previous) * 100)}%`;
+        if (p.version == "percentage forward")
+          correctAnswer = accDecimal((p.previous / 100) * (100 + p.change));
+        if (p.version == "percentage back")
+          correctAnswer = accDecimal((p.next / (100 + p.change)) * 100);
+      }
+      // PERCENTAGE: REPEATED IDENTITY
+      if (setting == 24) {
         p.answer = simplestForm(p.answer);
         correctAnswer = p.answer.join(":");
       }
 
-      if (setting == 23) {
+      if (setting == 25) {
         console.log(p.answer);
         // got to change to an array
         p.answer = p.answer.split(":");
@@ -17019,7 +17136,7 @@ function handleSubmit(e) {
       }
 
       // PERCENTAGE: REMAINDER CONCEPT
-      if (setting == 24) {
+      if (setting == 26) {
         if (p.question == "percentage") {
           const remaining = 100 - p.percA;
           const itemTwoP = (remaining / 100) * p.percR;
@@ -17033,7 +17150,7 @@ function handleSubmit(e) {
         }
       }
       // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-      if (setting == 25) {
+      if (setting == 27) {
         if (p.frontBack == "front") {
           if (p.moreDiscount == 0) {
             if (p.discountOrPrice == "price") {
@@ -17082,7 +17199,7 @@ function handleSubmit(e) {
       }
 
       // PERCENTAGE: GST, DISCOUNT AND SERVICE CHARGE
-      if (setting == 26) {
+      if (setting == 28) {
         if (p.optionOne == "simple gst") {
           if (p.optionTwo == "gst") {
             correctAnswer = (p.value / 100) * p.gst;
@@ -17113,8 +17230,8 @@ function handleSubmit(e) {
       // if (setting == 25) {
       //   correctAnswer = p.answer;
       // }
-      if (setting == 27) correctAnswer = p.answer;
-      if (setting == 28) {
+      if (setting == 29) correctAnswer = p.answer;
+      if (setting == 30) {
         if (p.question == "at first") {
           correctAnswer = p.oldQuantity;
         }
@@ -17123,7 +17240,7 @@ function handleSubmit(e) {
         }
       }
       //AVERAGE: CONSECUTIVE DAYS
-      if (setting == 29) {
+      if (setting == 31) {
         correctAnswer = p.dayOne + p.increase * (p.chosen - 1);
       }
     }
@@ -21543,7 +21660,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(29, calArr, setting, 99);
+    setting = calArrAll(31, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -21881,8 +21998,33 @@ function genProblems() {
       };
     }
 
-    // REPEATED IDENTITY PERCENTAGE
+    // PERCENTAGE: PERCENTAGE OF
     if (setting == 22) {
+      const gen_deno = [2, 4, 5, 8, 10, 20, 50, 100, 1000][genNumbers(9)];
+      // const position = genNumbers(6);
+      return {
+        start: ["fractions", "decimals", "percentage"][genNumbers(3)],
+        end: ["fractions", "decimals"][genNumbers(2)],
+        deno: gen_deno,
+        nume: genNumbers(gen_deno - 1) + 1,
+        // smallUnit: ["cm", "m", "ml", "g", "mins", "secs"][position],
+        // bigUnit: ["m", "km", "ℓ", "kg", "hrs", "mins"][position],
+        // unitsVersion: genNumbers(4),
+      };
+    }
+    // PERCENTAGE: PERCENTAGE CHANGE
+    if (setting == 23) {
+      return {
+        previous: (genNumbers(20) + 1) * 5,
+        next: (genNumbers(20) + 1) * 5,
+        version: ["percentage back", "percentage forward", "change"][
+          genNumbers(3)
+        ],
+        change: genNumbers(200) - 100,
+      };
+    }
+    // REPEATED IDENTITY PERCENTAGE
+    if (setting == 24) {
       let A = (genNumbers(18) + 1) * 5;
       return {
         varA: A,
@@ -21895,7 +22037,7 @@ function genProblems() {
     }
 
     //PERCETAGE: REPEATED GROUP
-    if (setting == 23) {
+    if (setting == 25) {
       return {
         percA: (genNumbers(20) + 1) * 5,
         firstSentence: ["B and C", "the total"][genNumbers(2)],
@@ -21905,7 +22047,7 @@ function genProblems() {
       };
     }
     //PERCENTAGE: REMAINDER CONCEPT
-    if (setting == 24) {
+    if (setting == 26) {
       return {
         percA: (genNumbers(20 - 1) + 1) * 5,
         itemOne: ["toys", "chocolates", "food"][genNumbers(3)],
@@ -21922,7 +22064,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-    if (setting == 25) {
+    if (setting == 27) {
       return {
         person: ["A", "B", "C"][genNumbers(3)],
         cost: genNumbers(899) + 100,
@@ -21934,7 +22076,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: GST AND SERVICE CHARGE
-    if (setting == 26) {
+    if (setting == 28) {
       return {
         person: ["A", "B", "C"][genNumbers(3)],
         optionOne: ["discount gst", "service", "simple gst"][genNumbers(3)],
@@ -21947,7 +22089,7 @@ function genProblems() {
     }
 
     //AVERAGE:INTERNAL CHANGE
-    if (setting == 27) {
+    if (setting == 29) {
       return {
         version: genNumbers(3),
         // version: 2,
@@ -21960,7 +22102,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 28) {
+    if (setting == 30) {
       return {
         oldQuantity: genNumbers(6) + 2,
         oldAverage: genNumbers(40) + 10,
@@ -21973,7 +22115,7 @@ function genProblems() {
       };
     }
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 29) {
+    if (setting == 31) {
       return {
         dayOne: genNumbers(20) + 5,
         days: genNumbers(5) + 5,
@@ -24781,18 +24923,20 @@ function buttonLevelSetting() {
       18. Ratio: Unchanged Difference</p>
       19. Ratio: Manipulation in units</p>
       <hr></hr>
-      28. Rates: Part thereof part thereafter</p>
-      29. Rates: Taps
+      20. Rates: Part thereof part thereafter</p>
+      21. Rates: Taps
       <hr></hr>
-      20. Percentage: Repeated Identity</p>
-      21. Percentage: Repeated Group</p>
-      22. Percentage: Remainder Concept</p>
-      23. Percentage: Simple and Further discount</p>
-      24. Percentage: GST, discount and Service Charge</p>
+      22. Percentage: Percentage of</p>
+      23. Percentage: Perchange change</p>
+      24. Percentage: Repeated Identity</p>
+      25. Percentage: Repeated Group</p>
+      26. Percentage: Remainder Concept</p>
+      27. Percentage: Simple and Further discount</p>
+      28. Percentage: GST, discount and Service Charge</p>
       <hr></hr>
-      25. Average: Internal change</p>
-      26. Average: External Change</p>
-      27. Average: Odd consecutive days</p>
+      29. Average: Internal change</p>
+      30. Average: External Change</p>
+      31. Average: Odd consecutive days</p>
       <hr></hr>
 
       </p>99. All
@@ -24811,7 +24955,7 @@ function buttonLevelSetting() {
       if (
         ![
           0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-          20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 99,
+          20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 99,
         ].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
