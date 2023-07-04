@@ -36,6 +36,7 @@ import {
 } from "./otherFunctions.js";
 // import { resetStuff } from "./reset.js";
 import { cutOffCheck } from "./cut_off.js";
+import { displayContent } from "./content.js";
 cutOffCheck();
 let buttonLevel = 0;
 let mulLevel = 0;
@@ -24875,8 +24876,15 @@ function buttonLevelSetting() {
     case "Cal.4":
       level = "calFour";
       scoreNeeded = 10;
+      optionsBox.classList.remove("hidden");
+      optionsBox.textContent = `Available settings:`;
+      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
+      // setting = prompt(
+      //   "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Left Side Right Side + - x /\n6. Fractions: Addition: Mixed Fractions\n7. Fractions: Subtraction: Mixed Fractions\n8. Decimals: Addition\n9. Decimals: Subtraction\n10. Decimals: Overlapping Place Value\n11. Decimals: Multiplication (Single)\n12. Decimals: Multiplication (Double)\n13. Decimals: Division \n14. Fractions to Decimal (Limit)\n15. Decimals: Division and Multiplication with splitting\n16. Multiplication in Sets\n17. Fractions: Unit with a Value\n\n99. Everything",
+      //   99
+      // );
       setting = prompt(
-        "What level?\n1. Common Multiples\n2. Listing Factors\n3. Common Factors\n4. Double Digit Multiplication\n5. Left Side Right Side + - x /\n6. Fractions: Addition: Mixed Fractions\n7. Fractions: Subtraction: Mixed Fractions\n8. Decimals: Addition\n9. Decimals: Subtraction\n10. Decimals: Overlapping Place Value\n11. Decimals: Multiplication (Single)\n12. Decimals: Multiplication (Double)\n13. Decimals: Division \n14. Fractions to Decimal (Limit)\n15. Decimals: Division and Multiplication with splitting\n16. Multiplication in Sets\n17. Fractions: Unit with a Value\n\n99. Everything",
+        "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
       if (
@@ -24896,53 +24904,7 @@ function buttonLevelSetting() {
       scoreNeeded = 10;
       optionsBox.classList.remove("hidden");
       optionsBox.textContent = `Available settings:`;
-      const html = `
-      </p>
-      0. Order of Operation</p>
-      <hr></hr>
-      1. Fractions: Multiplication of Fractions</p>
-      2. Fractions: Mixed Fraction Multiplication</p>
-      3. Fractions: Conversion</p>
-      4. Fractions: Remainder Concept</p>
-      5. Fractions: Identical Numerator</p>
-      6. Fractions: Unlike Fraction with Permission</p>
-      7. Fractions: Identical Numerator (Type 2)</p>
-      8. Fractions: Before and after like fractions</p>
-      <hr></hr>
-      9. Geometry: Area of Triangle</p>
-      10. Geometry: Area of Figure: Using 2 different Units</p>
-      <hr></hr>
-      11. Volume: Dimensions and Surface Area</p>
-      12. Volume: Numerator with a Value</p>
-      <hr></hr>
-      13. Ratio: Repeated Identity</p>
-      14. Ratio: Repeated Group</p>
-      15. Ratio: Identical Total</p>
-      16. Ratio: Unchanged Object</p>
-      17. Ratio: Unchanged Total</p>
-      18. Ratio: Unchanged Difference</p>
-      19. Ratio: Manipulation in units</p>
-      <hr></hr>
-      20. Rates: Part thereof part thereafter</p>
-      21. Rates: Taps
-      <hr></hr>
-      22. Percentage: Percentage of</p>
-      23. Percentage: Perchange change</p>
-      24. Percentage: Repeated Identity</p>
-      25. Percentage: Repeated Group</p>
-      26. Percentage: Remainder Concept</p>
-      27. Percentage: Simple and Further discount</p>
-      28. Percentage: GST, discount and Service Charge</p>
-      <hr></hr>
-      29. Average: Internal change</p>
-      30. Average: External Change</p>
-      31. Average: Odd consecutive days</p>
-      <hr></hr>
-
-      </p>99. All
-      
-      `;
-      optionsBox.insertAdjacentHTML("beforeend", html);
+      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
       // console.log(userInputOptions);
       // calBtn[4].addEventListener("click", function () {
       setting = prompt(
