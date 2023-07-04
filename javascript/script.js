@@ -10256,8 +10256,83 @@ function updateProblems() {
 
       `;
     }
-    // REPEATED IDENTITY PERCENTAGE
+
+    //PART THEREOF & PART THEREAFTER
     if (setting == 20) {
+      normalDisplay();
+      const durationHours = Math.floor(p.duration / 60);
+      const durationMins = p.duration % 60;
+      let endHours = p.startHour + durationHours;
+      let endMins = p.startMins + durationMins;
+      while (endMins >= 60) {
+        endMins -= 60;
+        endHours += 1;
+      }
+      displayProblem.innerHTML = `
+      <ul>The rates are as follows:
+        <li>$${p.rates} every ${p.group} minutes or ${p.type}</li>
+      </ul>
+      How much does it cost from ${p.startHour}.${p.startMins
+        .toString()
+        .padStart(2, "0")}pm until ${endHours}:${endMins
+        .toString()
+        .padStart(2, "0")}p.m.
+      `;
+    }
+
+    // RATES: TAPS
+    if (setting == 21) {
+      normalDisplay();
+      [p.nume, p.deno] = simplify(p.nume, p.deno);
+      let lineOne = `The dimensions of a container is ${p.length} cm, ${p.breadth} cm, ${p.height} cm.`;
+      if ((p.length == p.breadth) == p.height) {
+        lineOne = `The container is a cube with side ${p.length} cm.`;
+      }
+      if (p.length == p.breadth) {
+        lineOne = `The container has a square base of side ${p.length} cm and height of ${p.height} cm.`;
+      }
+      const tapARate = genNumbers(10) - 5;
+      const tapBRate = genNumbers(10) - 5;
+      let rateASentence = "";
+      if (tapARate > 0)
+        rateASentence = `Tap A fills at a rate of ${tapARate}ℓ per min.</p>`;
+      if (tapARate < 0)
+        rateASentence = `Tap A drains at a rate of ${Math.abs(
+          tapARate
+        )}ℓ per min.</p>`;
+      let rateBSentence = "";
+      if (tapBRate > 0)
+        rateBSentence = `Tap B fills at a rate of ${tapBRate}ℓ per min.</p>`;
+      if (tapBRate < 0)
+        rateBSentence = `Tap B drains at a rate of ${Math.abs(
+          tapBRate
+        )}ℓ per min.</p>`;
+      p.netRate = tapARate + tapBRate;
+      if (tapARate > 0 && tapBRate > 0) p.netRate = tapARate + tapBRate;
+      if (tapARate < 0 && tapBRate < 0) p.netRate = tapARate + tapBRate;
+      if ((tapARate < 0 && tapBRate > 0) || (tapARate > 0 && tapBRate < 0))
+        p.netRate = tapARate + tapBRate;
+      console.log(p.netRate);
+      let questionSent = "";
+      if (p.netRate == 0) {
+        console.log("Net rate is zero");
+        return updateCalc();
+      }
+      if (p.netRate > 0) {
+        questionSent = "How many mins does it take to fill up the container?";
+      }
+      if (p.netRate < 0) {
+        questionSent = "How many mins does it take to drain the container?";
+      }
+      displayProblem.innerHTML = `${lineOne}</p>
+      It is ${p.nume}/${p.deno} filled.</p>
+      ${rateASentence}
+      ${rateBSentence}
+      ${questionSent}`;
+    }
+
+    // REPEATED IDENTITY PERCENTAGE
+    if (setting == 22) {
       normalDisplay();
       let lineOne = undefined;
       let tempArr = [];
@@ -10289,7 +10364,7 @@ function updateProblems() {
       What is the ratio of A:B:C?`;
     }
     // RATIO: REPEATED GROUP
-    if (setting == 21) {
+    if (setting == 23) {
       normalDisplay();
       const displayA = p.percA;
       const displayB = p.percB;
@@ -10364,7 +10439,7 @@ function updateProblems() {
       `;
     }
     // PERCENTAGE: REMAINDER CONCEPT
-    if (setting == 22) {
+    if (setting == 24) {
       normalDisplay();
       displayProblem.innerHTML = `
       Person A spent ${p.percA}% of his money on ${p.itemOne}.</p>
@@ -10427,7 +10502,7 @@ function updateProblems() {
       }
     }
     // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-    if (setting == 23) {
+    if (setting == 25) {
       normalDisplay();
       if (p.frontBack == "front") {
         if (p.moreDiscount == 0) {
@@ -10497,7 +10572,7 @@ function updateProblems() {
       );
     }
     // PERCENTAGE: GST AND SERVICE CHARGE
-    if (setting == 24) {
+    if (setting == 26) {
       normalDisplay();
       if (p.optionOne == "simple gst") {
         displayProblem.innerHTML = `
@@ -10614,7 +10689,7 @@ function updateProblems() {
     // }
 
     //AVERAGE: INTERNAL CHANGE
-    if (setting == 25) {
+    if (setting == 27) {
       normalDisplay();
       const oldAverage = (p.numOne + p.numTwo + p.numThree) / 3;
       if (oldAverage % 1 != 0) {
@@ -10660,7 +10735,7 @@ function updateProblems() {
       }
     }
     //AVERAGE: EXTERNAL CHANGE
-    if (setting == 26) {
+    if (setting == 28) {
       normalDisplay();
       if (p.changeQuantity == 0) return updateCalc();
       p.changeQuantity > 0 ? (p.situation = "joined") : (p.situation = "left");
@@ -10685,7 +10760,7 @@ function updateProblems() {
     }
 
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 27) {
+    if (setting == 29) {
       normalDisplay();
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
@@ -10708,80 +10783,6 @@ function updateProblems() {
       A total of ${p.total} paper ${obj}s were made.</p>
       How many ${obj}s were made on day ${p.chosen}?
       `;
-    }
-
-    //PART THEREOF & PART THEREAFTER
-    if (setting == 28) {
-      normalDisplay();
-      const durationHours = Math.floor(p.duration / 60);
-      const durationMins = p.duration % 60;
-      let endHours = p.startHour + durationHours;
-      let endMins = p.startMins + durationMins;
-      while (endMins >= 60) {
-        endMins -= 60;
-        endHours += 1;
-      }
-      displayProblem.innerHTML = `
-      <ul>The rates are as follows:
-        <li>$${p.rates} every ${p.group} minutes or ${p.type}</li>
-      </ul>
-      How much does it cost from ${p.startHour}.${p.startMins
-        .toString()
-        .padStart(2, "0")}pm until ${endHours}:${endMins
-        .toString()
-        .padStart(2, "0")}p.m.
-      `;
-    }
-
-    // RATES: TAPS
-    if (setting == 29) {
-      normalDisplay();
-      [p.nume, p.deno] = simplify(p.nume, p.deno);
-      let lineOne = `The dimensions of a container is ${p.length} cm, ${p.breadth} cm, ${p.height} cm.`;
-      if ((p.length == p.breadth) == p.height) {
-        lineOne = `The container is a cube with side ${p.length} cm.`;
-      }
-      if (p.length == p.breadth) {
-        lineOne = `The container has a square base of side ${p.length} cm and height of ${p.height} cm.`;
-      }
-      const tapARate = genNumbers(10) - 5;
-      const tapBRate = genNumbers(10) - 5;
-      let rateASentence = "";
-      if (tapARate > 0)
-        rateASentence = `Tap A fills at a rate of ${tapARate}ℓ per min.</p>`;
-      if (tapARate < 0)
-        rateASentence = `Tap A drains at a rate of ${Math.abs(
-          tapARate
-        )}ℓ per min.</p>`;
-      let rateBSentence = "";
-      if (tapBRate > 0)
-        rateBSentence = `Tap B fills at a rate of ${tapBRate}ℓ per min.</p>`;
-      if (tapBRate < 0)
-        rateBSentence = `Tap B drains at a rate of ${Math.abs(
-          tapBRate
-        )}ℓ per min.</p>`;
-      p.netRate = tapARate + tapBRate;
-      if (tapARate > 0 && tapBRate > 0) p.netRate = tapARate + tapBRate;
-      if (tapARate < 0 && tapBRate < 0) p.netRate = tapARate + tapBRate;
-      if ((tapARate < 0 && tapBRate > 0) || (tapARate > 0 && tapBRate < 0))
-        p.netRate = tapARate + tapBRate;
-      console.log(p.netRate);
-      let questionSent = "";
-      if (p.netRate == 0) {
-        console.log("Net rate is zero");
-        return updateCalc();
-      }
-      if (p.netRate > 0) {
-        questionSent = "How many mins does it take to fill up the container?";
-      }
-      if (p.netRate < 0) {
-        questionSent = "How many mins does it take to drain the container?";
-      }
-      displayProblem.innerHTML = `${lineOne}</p>
-      It is ${p.nume}/${p.deno} filled.</p>
-      ${rateASentence}
-      ${rateBSentence}
-      ${questionSent}`;
     }
   }
 
@@ -16962,13 +16963,53 @@ function handleSubmit(e) {
         [end_A, end_B] = simplify(end_A, end_B);
         correctAnswer = `${end_A}:${end_B}`;
       }
-      // PERCENTAGE: REPEATED IDENTITY
+
       if (setting == 20) {
+        if (p.type == "part thereof") {
+          correctAnswer = Math.ceil(p.duration / p.group) * p.rates;
+        }
+        if (p.type == "part thereafter") {
+          correctAnswer = Math.floor(p.duration / p.group) * p.rates;
+        }
+      }
+      if (setting == 21) {
+        const capacity = p.length * p.breadth * p.height;
+        const fill = (capacity / p.deno) * (p.deno - p.nume);
+        const drain = (capacity / p.deno) * p.nume;
+        if (p.netRate > 0) {
+          correctAnswer = fill / (p.netRate * 1000);
+        }
+        if (p.netRate < 0) {
+          correctAnswer = drain / Math.abs(p.netRate * 1000);
+        }
+        if (correctAnswer.toString().split(".")[1].length > 5) {
+          if (p.netRate > 0) {
+            const quotient = Math.floor(fill / (p.netRate * 1000));
+            let remainder = fill % (p.netRate * 1000);
+            let denominator = p.netRate * 1000;
+            [remainder, denominator] = simplify(remainder, denominator);
+            correctAnswer = `${quotient} ${remainder}/${denominator}`;
+            if (quotient == 0) correctAnswer = `${remainder}/${denominator}`;
+          }
+          if (p.netRate < 0) {
+            p.netRate = Math.abs(p.netRate);
+            const quotient = Math.floor(drain / (p.netRate * 1000));
+            let remainder = drain % (p.netRate * 1000);
+            let denominator = p.netRate * 1000;
+            [remainder, denominator] = simplify(remainder, denominator);
+            correctAnswer = `${quotient} ${remainder}/${denominator}`;
+            if (quotient == 0) correctAnswer = `${remainder}/${denominator}`;
+          }
+        }
+      }
+
+      // PERCENTAGE: REPEATED IDENTITY
+      if (setting == 22) {
         p.answer = simplestForm(p.answer);
         correctAnswer = p.answer.join(":");
       }
 
-      if (setting == 21) {
+      if (setting == 23) {
         console.log(p.answer);
         // got to change to an array
         p.answer = p.answer.split(":");
@@ -16978,7 +17019,7 @@ function handleSubmit(e) {
       }
 
       // PERCENTAGE: REMAINDER CONCEPT
-      if (setting == 22) {
+      if (setting == 24) {
         if (p.question == "percentage") {
           const remaining = 100 - p.percA;
           const itemTwoP = (remaining / 100) * p.percR;
@@ -16992,7 +17033,7 @@ function handleSubmit(e) {
         }
       }
       // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-      if (setting == 23) {
+      if (setting == 25) {
         if (p.frontBack == "front") {
           if (p.moreDiscount == 0) {
             if (p.discountOrPrice == "price") {
@@ -17041,7 +17082,7 @@ function handleSubmit(e) {
       }
 
       // PERCENTAGE: GST, DISCOUNT AND SERVICE CHARGE
-      if (setting == 24) {
+      if (setting == 26) {
         if (p.optionOne == "simple gst") {
           if (p.optionTwo == "gst") {
             correctAnswer = (p.value / 100) * p.gst;
@@ -17072,8 +17113,8 @@ function handleSubmit(e) {
       // if (setting == 25) {
       //   correctAnswer = p.answer;
       // }
-      if (setting == 25) correctAnswer = p.answer;
-      if (setting == 26) {
+      if (setting == 27) correctAnswer = p.answer;
+      if (setting == 28) {
         if (p.question == "at first") {
           correctAnswer = p.oldQuantity;
         }
@@ -17082,47 +17123,8 @@ function handleSubmit(e) {
         }
       }
       //AVERAGE: CONSECUTIVE DAYS
-      if (setting == 27) {
-        correctAnswer = p.dayOne + p.increase * (p.chosen - 1);
-      }
-
-      if (setting == 28) {
-        if (p.type == "part thereof") {
-          correctAnswer = Math.ceil(p.duration / p.group) * p.rates;
-        }
-        if (p.type == "part thereafter") {
-          correctAnswer = Math.floor(p.duration / p.group) * p.rates;
-        }
-      }
       if (setting == 29) {
-        const capacity = p.length * p.breadth * p.height;
-        const fill = (capacity / p.deno) * (p.deno - p.nume);
-        const drain = (capacity / p.deno) * p.nume;
-        if (p.netRate > 0) {
-          correctAnswer = fill / (p.netRate * 1000);
-        }
-        if (p.netRate < 0) {
-          correctAnswer = drain / Math.abs(p.netRate * 1000);
-        }
-        if (correctAnswer.toString().split(".")[1].length > 5) {
-          if (p.netRate > 0) {
-            const quotient = Math.floor(fill / (p.netRate * 1000));
-            let remainder = fill % (p.netRate * 1000);
-            let denominator = p.netRate * 1000;
-            [remainder, denominator] = simplify(remainder, denominator);
-            correctAnswer = `${quotient} ${remainder}/${denominator}`;
-            if (quotient == 0) correctAnswer = `${remainder}/${denominator}`;
-          }
-          if (p.netRate < 0) {
-            p.netRate = Math.abs(p.netRate);
-            const quotient = Math.floor(drain / (p.netRate * 1000));
-            let remainder = drain % (p.netRate * 1000);
-            let denominator = p.netRate * 1000;
-            [remainder, denominator] = simplify(remainder, denominator);
-            correctAnswer = `${quotient} ${remainder}/${denominator}`;
-            if (quotient == 0) correctAnswer = `${remainder}/${denominator}`;
-          }
-        }
+        correctAnswer = p.dayOne + p.increase * (p.chosen - 1);
       }
     }
     //ANSWERS
@@ -21853,8 +21855,34 @@ function genProblems() {
         denoB: genDeno_B,
       };
     }
-    // REPEATED IDENTITY PERCENTAGE
+
+    // RATES: PARTTHEREOF & PARTTHEREAFTER
     if (setting == 20) {
+      return {
+        startHour: genNumbers(5) + 1,
+        startMins: genNumbers(60 - 1) + 1,
+        duration: genNumbers(60) + 61,
+        rates: genNumbers(5) + 1,
+        group: [5, 10, 30][genNumbers(3)],
+        type: ["part thereof", "part thereafter"][genNumbers(2)],
+      };
+    }
+
+    // RATES: TAPS
+    if (setting == 21) {
+      const gen_height = genNumbers(4) + 2;
+      return {
+        length: genNumbers(20) + 10,
+        breadth: genNumbers(20) + 10,
+        height: gen_height * (genNumbers(5) + 2),
+        deno: gen_height,
+        nume: genNumbers(gen_height - 1) + 1,
+        netRate: undefined,
+      };
+    }
+
+    // REPEATED IDENTITY PERCENTAGE
+    if (setting == 22) {
       let A = (genNumbers(18) + 1) * 5;
       return {
         varA: A,
@@ -21867,7 +21895,7 @@ function genProblems() {
     }
 
     //PERCETAGE: REPEATED GROUP
-    if (setting == 21) {
+    if (setting == 23) {
       return {
         percA: (genNumbers(20) + 1) * 5,
         firstSentence: ["B and C", "the total"][genNumbers(2)],
@@ -21877,7 +21905,7 @@ function genProblems() {
       };
     }
     //PERCENTAGE: REMAINDER CONCEPT
-    if (setting == 22) {
+    if (setting == 24) {
       return {
         percA: (genNumbers(20 - 1) + 1) * 5,
         itemOne: ["toys", "chocolates", "food"][genNumbers(3)],
@@ -21894,7 +21922,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-    if (setting == 23) {
+    if (setting == 25) {
       return {
         person: ["A", "B", "C"][genNumbers(3)],
         cost: genNumbers(899) + 100,
@@ -21906,7 +21934,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: GST AND SERVICE CHARGE
-    if (setting == 24) {
+    if (setting == 26) {
       return {
         person: ["A", "B", "C"][genNumbers(3)],
         optionOne: ["discount gst", "service", "simple gst"][genNumbers(3)],
@@ -21918,18 +21946,8 @@ function genProblems() {
       };
     }
 
-    // AVERAGE: SIMPLE
-    // if (setting == 25) {
-    //   return {
-    //     version: genNumbers(2),
-    //     // version: 0,
-    //     variables: genNumbers(5) + 2,
-    //     answer: undefined,
-    //   };
-    // }
-
     //AVERAGE:INTERNAL CHANGE
-    if (setting == 25) {
+    if (setting == 27) {
       return {
         version: genNumbers(3),
         // version: 2,
@@ -21942,7 +21960,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 26) {
+    if (setting == 28) {
       return {
         oldQuantity: genNumbers(6) + 2,
         oldAverage: genNumbers(40) + 10,
@@ -21955,38 +21973,13 @@ function genProblems() {
       };
     }
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 27) {
+    if (setting == 29) {
       return {
         dayOne: genNumbers(20) + 5,
         days: genNumbers(5) + 5,
         total: undefined,
         chosen: undefined,
         increase: genNumbers(5) + 3,
-      };
-    }
-
-    // RATES: PARTTHEREOF & PARTTHEREAFTER
-    if (setting == 28) {
-      return {
-        startHour: genNumbers(5) + 1,
-        startMins: genNumbers(60 - 1) + 1,
-        duration: genNumbers(60) + 61,
-        rates: genNumbers(5) + 1,
-        group: [5, 10, 30][genNumbers(3)],
-        type: ["part thereof", "part thereafter"][genNumbers(2)],
-      };
-    }
-
-    // RATES: TAPS
-    if (setting == 29) {
-      const gen_height = genNumbers(4) + 2;
-      return {
-        length: genNumbers(20) + 10,
-        breadth: genNumbers(20) + 10,
-        height: gen_height * (genNumbers(5) + 2),
-        deno: gen_height,
-        nume: genNumbers(gen_height - 1) + 1,
-        netRate: undefined,
       };
     }
   }
