@@ -24781,6 +24781,9 @@ function buttonLevelSetting() {
       18. Ratio: Unchanged Difference</p>
       19. Ratio: Manipulation in units</p>
       <hr></hr>
+      28. Rates: Part thereof part thereafter</p>
+      29. Rates: Taps
+      <hr></hr>
       20. Percentage: Repeated Identity</p>
       21. Percentage: Repeated Group</p>
       22. Percentage: Remainder Concept</p>
@@ -24791,9 +24794,7 @@ function buttonLevelSetting() {
       26. Average: External Change</p>
       27. Average: Odd consecutive days</p>
       <hr></hr>
-      28. Rates: Part thereof part thereafter</p>
-      29. Rates: Taps
-      <hr></hr>
+
       </p>99. All
       
       `;
