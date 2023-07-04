@@ -782,9 +782,8 @@ function resetStuff() {
   skipGlobalUpdateProblem = 0;
   summary = [];
   console.log(summary);
-  summaryItemLeft.innerHTML = ""
+  summaryItemLeft.innerHTML = "";
   summaryItemRight.innerHTML = "";
-
 
   gold = 0;
   silver = 0;
@@ -13062,14 +13061,6 @@ function updateProblems() {
             transferValueText = ["some", p.transfer][genNumbers(1)];
           }
         }
-
-        // while (total % totalUnit != 0) {
-        //   p.valueB -= 1;
-        //   total = p.valueA + p.valueB;
-        // }
-
-        // const someone = ["Tom", "Jerry"][genNumbers(2)];
-        // const another = ["Jane", "Christina"][genNumbers(2)];
         let firstLine =
           lineOneOptions == 0
             ? `A and B had a total of ${total} at first.</p>`
@@ -13137,7 +13128,9 @@ function updateProblems() {
         let thirdLine =
           lineThreeOptions == 0
             ? `A and B has a total of ${total} in the end.</p>`
-            : `A has ${p.valueAEnd} while B has ${p.valueBEnd} in the end.</p>`;
+            : `A has ${p.valueAEnd - p.transfer} while B has ${
+                p.valueBEnd + p.transfer
+              } in the end.</p>`;
 
         //DISPLAYPROBLEM!
         displayProblem.innerHTML = `
