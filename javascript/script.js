@@ -18595,7 +18595,7 @@ function handleSubmit(e) {
         }
         //LAZINESS
         if (p.version == "valueEnd") {
-          const total = p.valueAFirst + p.v141alueBFirst;
+          const total = p.valueAFirst + p.valueBFirst;
           const oneUnit = total / (p.unitA + p.unitB);
 
           if (p.question == "AF") correctAnswer = oneUnit * p.unitA;
