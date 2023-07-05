@@ -14116,6 +14116,48 @@ function updateProblems() {
         `;
       }
     }
+
+    //IDENTICAL QUANTITY WITH DIFFERENCE TYPE 3
+    if (setting == 6) {
+      if (p.personASmallSheets == p.personBSmallSheets) {
+        console.log("Same number of sheets");
+        return updateCalc();
+      }
+      const personA = boyNames[genNumbers(boyNames.length)];
+      const personB = girlNames[genNumbers(girlNames.length)];
+      p.personALargeSheets = p.packets - p.personASmallSheets;
+      p.personBLargeSheets = p.packets - p.personBSmallSheets;
+
+      p.personATotal =
+        p.personASmallSheets * p.small + p.personALargeSheets * p.large;
+      p.personBTotal =
+        p.personBSmallSheets * p.small + p.personBLargeSheets * p.large;
+      console.log(p.personATotal, p.personBTotal);
+      let lastDifference = undefined;
+      let lastPart = undefined;
+      // if A has more large sheets, B should be giving away)
+      const diffAtFirst = Math.abs(p.personATotal - p.personBTotal);
+      if (p.personALargeSheets > p.personBLargeSheets) {
+        console.log("1");
+        lastDifference = diffAtFirst + p.personBLargeSheets * p.large;
+        lastPart = `If ${personB} gave away all her large stickers their difference would become ${lastDifference}.`;
+      }
+      if (p.personALargeSheets < p.personBLargeSheets) {
+        console.log("2");
+        lastDifference = diffAtFirst + p.personALargeSheets * p.large;
+        lastPart = `If ${personA} gave away all his large stickers their difference would become ${lastDifference}.`;
+      }
+      displayProblem.innerHTML = `
+      Stickers were sold only in big sheets of ${p.large} and small sheets of ${p.small}.</p>
+      ${personA} and ${personB} bought the same number sheets.</p>
+      ${personA} bought ${p.personASmallSheets} small sheets.</p>
+      ${personB} bought ${p.personBSmallSheets} small sheets.</p>
+      a) Whats the difference in the number of stickers between them.</p>
+      b) ${lastPart}</p> 
+      How many sheets of stickers did each of them buy?</p>
+      
+      `;
+    }
   }
   // MULTIPLES
   if (mulLevel == "multiples") {
@@ -18935,6 +18977,12 @@ function handleSubmit(e) {
           correctAnswer = p.sets * (p.pTime + p.nTime) + p.pTime;
         }
       }
+      //IDENTICAL QUANTITY WITH DIFFERENCE TYPE 3
+      if (setting == 6) {
+        correctAnswer = `${Math.abs(p.personATotal - p.personBTotal)}, ${
+          p.packets
+        }`;
+      }
     }
     if (mulLevel == "multiples") {
       correctAnswer = p.numFive * (multiplesArr.length - 1);
@@ -23315,7 +23363,7 @@ function genProblems() {
 
   //SETTINGS
   if (level == "heuSix") {
-    setting = calArrAll(5, calArr, setting, 9);
+    setting = calArrAll(6, calArr, setting, 9);
     setting = checkRange(setting, calArr);
     // LOWEST COMMON TIME
     if (setting == 1) {
@@ -23385,6 +23433,23 @@ function genProblems() {
         nTime: genNumbers(5) + 2,
         sets: genNumbers(10) + 5,
         version: ["snail", "human"][genNumbers(2)],
+      };
+    }
+
+    //IDENTICAL QUANTITY WITH DIFFERENCE TYPE 3
+    if (setting == 6) {
+      const gen_large = genNumbers(20) + 30;
+      const gen_packets = genNumbers(40) + 10;
+      return {
+        large: gen_large,
+        small: genNumbers(gen_large - 15) + 15,
+        packets: gen_packets,
+        personASmallSheets: genNumbers(gen_packets - 5) + 5,
+        personBSmallSheets: genNumbers(gen_packets - 5) + 5,
+        personALargeSheets: undefined,
+        personBLargeSheets: undefined,
+        personATotal: undefined,
+        personBTotal: undefined,
       };
     }
   }
@@ -25252,7 +25317,7 @@ function buttonLevelSetting() {
       //   9
       // );
       if (
-        ![1, 2, 3, 4, 5, 9].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 6, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
       ) {
         setting = 9;
