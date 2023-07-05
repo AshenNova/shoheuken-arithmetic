@@ -13238,6 +13238,10 @@ function updateProblems() {
         console.log("Half half");
         return updateCalc();
       }
+      if (((totalAOne == totalATwo) == totalBOne) == totalBTwo) {
+        console.log("Same numbers");
+        return updateCalc();
+      }
       //QUESTION
       if (p.choose == "boys") {
         displayProblem.insertAdjacentHTML(
