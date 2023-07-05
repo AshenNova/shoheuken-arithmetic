@@ -25312,10 +25312,7 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
-      // setting = prompt(
-      //   "What level?\n1. Lowest Common Time\n 2. Cycle\n3. Repeated Identity\n4. More Than / Less Than\n\n9. All",
-      //   9
-      // );
+
       if (
         ![1, 2, 3, 4, 5, 6, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
@@ -25431,7 +25428,7 @@ summaryBtn.addEventListener("click", function () {
   summaryContainer.classList.remove("hidden");
   summaryAttemptCl.textContent = attempt;
   if (screenWidth > 1439) {
-    if (["calThree", "calFour", "calFive"].includes(level)) {
+    if (level.startsWith("cal") || level.startsWith("heu")) {
       optionsBox.classList.remove("hidden");
       optionsBox.textContent = `Available settings:`;
       optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
