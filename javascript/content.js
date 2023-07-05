@@ -1,6 +1,31 @@
 export const displayContent = (level) => {
   //   let html = undefined;
 
+  if (level == "heuFourb") {
+    return `
+    </p>
+    1. Lowest Common Multiples ( Indirect )</p>
+    2. Highest Common Factor ( Indirect )</p>
+    3. Unchanged Difference</p>
+    4. Unchanged Total</p>
+    5. Simultaneous Equation</p>
+    6. Internal Transfer: Double Effect</p>
+    <hr>
+    9. All`;
+  }
+
+  if (level == "heuSix") {
+    return `
+    </p>
+    1. Lowest Common Time</p>
+    2. Cycle</p>
+    3. Repeated Identity</p>
+    4. More Than / Less Than</p>
+    5. Snake and Ladder</p>
+    <hr>
+    9. All
+    `;
+  }
   if (level == "calThree") {
     return `
     </p>

@@ -204,6 +204,31 @@ let calRange = [];
 let questionTimeForSummary = undefined;
 let summary = [];
 let extraPracticeArr = [];
+let boyNames = [
+  "Liam",
+  "Noah",
+  "Oliver",
+  "James",
+  "Elijah",
+  "William",
+  "Henry",
+  "Lucas",
+  "Benjamin",
+  "Theodore",
+];
+let girlNames = [
+  "Olivia",
+  "Emma",
+  "Charlotte",
+  "Amelia",
+  "Sophia",
+  "Isabella",
+  "Ava",
+  "Mia",
+  "Evelyn",
+  "Luna",
+];
+
 function SummaryCreate(attempt, symbol, setting, time) {
   this.attempt = attempt;
   this.symbol = symbol;
@@ -13226,6 +13251,38 @@ function updateProblems() {
         );
       }
     }
+    //INTERNAL TRANSFER: DOUBLE EFFECT
+    if (setting == 6) {
+      const diffValue = p.varA - p.varB;
+      const diffState = diffValue > 0 ? "more than" : "less than";
+      const objOne = diffValue > 0 ? "A" : "B";
+      const objTwo = diffValue > 0 ? "B" : "A";
+      if (p.version == "more than half") {
+        p.transfer =
+          Math.abs(diffValue) / 2 + genNumbers(Math.abs(diffValue) - 1) + 1;
+      }
+      if (p.version == "more than diff") {
+        const add = p.varA > p.varB ? p.varB : p.varA;
+        p.transfer = Math.abs(diffValue) + genNumbers(add);
+      }
+      let objOneEnd = undefined;
+      let objTwoEnd = undefined;
+      if (objOne == "A") {
+        objOneEnd = p.varA - p.transfer;
+        objTwoEnd = p.varB + p.transfer;
+      }
+      if (objOne == "B") {
+        objOneEnd = p.varA + p.transfer;
+        objTwoEnd = p.varB - p.transfer;
+      }
+      const diffEnd = objTwoEnd - objOneEnd;
+      displayProblem.innerHTML = `
+      A is ${Math.abs(diffValue)} ${diffState} B.</p>
+      ${objOne} transferred some to ${objTwo}.</p>
+      ${objTwo} is ${Math.abs(diffEnd)} more than ${objOne} in the end.</p>
+      How much was transferred?
+      `;
+    }
   }
   // Display
   if (level == "heuFive") {
@@ -14033,6 +14090,31 @@ function updateProblems() {
       What is ${p.question} at first?
 
       `;
+    }
+
+    //SNAKE AND LADDER
+    if (setting == 5) {
+      const distance = (p.positive - p.negative) * p.sets + p.positive;
+      if (p.version == "human") {
+        const person = [...boyNames, ...girlNames][genNumbers(20)];
+
+        let gender = "he";
+        if (girlNames.includes(person)) gender = "she";
+        displayProblem.innerHTML = `
+        ${person} is trying to reach a point ${distance} m away.</p>
+        Every ${p.pTime} seconds ${gender} swims ${p.positive} m,</p>
+        ${gender} is pushed back ${p.negative} m.</p>
+        How long will it take for ${person} to reach?
+        `;
+      }
+      if (p.version == "snail") {
+        displayProblem.innerHTML = `
+        An snail is trying to a climb a wall of ${distance} cm.</p>
+        Every ${p.pTime} mins it climbs up ${p.positive} cm.</p>
+        It then takes a break for ${p.nTime} mins, causing it to slides down ${p.negative} cm.</p>
+        How long will it take for snail to reach?
+        `;
+      }
     }
   }
   // MULTIPLES
@@ -18467,7 +18549,7 @@ function handleSubmit(e) {
         }
         //LAZINESS
         if (p.version == "valueEnd") {
-          const total = p.valueAFirst + p.valueBFirst;
+          const total = p.valueAFirst + p.v141alueBFirst;
           const oneUnit = total / (p.unitA + p.unitB);
 
           if (p.question == "AF") correctAnswer = oneUnit * p.unitA;
@@ -18482,6 +18564,10 @@ function handleSubmit(e) {
       if (setting == 5) {
         if (p.choose == "boys") correctAnswer = p.varB * p.unitB;
         if (p.choose == "girls") correctAnswer = p.varA * p.unitA;
+      }
+      //INTERNAL TRANSFER: DOUBLE EFFECT
+      if (setting == 6) {
+        correctAnswer = Math.abs(p.transfer);
       }
     }
     // Answers
@@ -18839,6 +18925,15 @@ function handleSubmit(e) {
       if (setting == 4) {
         if (p.question == "A") correctAnswer = p.varA;
         if (p.question == "B") correctAnswer = p.varB;
+      }
+      //SNAKE AND LADDER
+      if (setting == 5) {
+        if (p.version == "human") {
+          correctAnswer = (p.sets + 1) * p.pTime;
+        }
+        if (p.version == "snail") {
+          correctAnswer = p.sets * (p.pTime + p.nTime) + p.pTime;
+        }
       }
     }
     if (mulLevel == "multiples") {
@@ -22886,7 +22981,7 @@ function genProblems() {
   }
   //SETTINGS
   if (level == "heuFourb") {
-    setting = calArrAll(5, calArr, setting, 9);
+    setting = calArrAll(6, calArr, setting, 9);
     setting = checkRange(setting, calArr);
 
     if (setting == 1) {
@@ -22969,6 +23064,18 @@ function genProblems() {
         unitB: genNumbers(50) + 10,
         type: ["A", "B"][genNumbers(2)],
         choose: ["boys", "girls"][genNumbers(2)],
+      };
+    }
+
+    //INTERNAL TRANSFER: DOUBLE EFFECT
+    if (setting == 6) {
+      return {
+        varA: (genNumbers(1000) + 100) * 2,
+        varB: (genNumbers(1000) + 100) * 2,
+        transfer: undefined,
+        unitA: genNumbers(5) + 1,
+        unitB: genNumbers(5) + 1,
+        version: ["more than half", "more than diff"][genNumbers(2)],
       };
     }
   }
@@ -23208,7 +23315,7 @@ function genProblems() {
 
   //SETTINGS
   if (level == "heuSix") {
-    setting = calArrAll(4, calArr, setting, 9);
+    setting = calArrAll(5, calArr, setting, 9);
     setting = checkRange(setting, calArr);
     // LOWEST COMMON TIME
     if (setting == 1) {
@@ -23265,6 +23372,19 @@ function genProblems() {
         varA: undefined,
         varB: undefined,
         question: ["A", "B"][genNumbers(2)],
+      };
+    }
+
+    //SNAKE AND LADDER
+    if (setting == 5) {
+      const gen_positive = genNumbers(9) + 2;
+      return {
+        positive: gen_positive,
+        pTime: genNumbers(5) + 2,
+        negative: genNumbers(gen_positive - 1) + 1,
+        nTime: genNumbers(5) + 2,
+        sets: genNumbers(10) + 5,
+        version: ["snail", "human"][genNumbers(2)],
       };
     }
   }
@@ -25053,14 +25173,22 @@ function buttonLevelSetting() {
       break;
 
     case "Heu.4b":
-      setting = prompt(
-        "What level?\n1. Lowest Common Multiples ( Indirect )\n2. Highest Common Factor ( Indirect )\n3. Unchanged Difference\n4. Unchanged Total\n5. Simultaneous Equation\n\n9. All",
-        9
-      );
+      // setting = prompt(
+      //   "What level?\n1. Lowest Common Multiples ( Indirect )\n2. Highest Common Factor ( Indirect )\n3. Unchanged Difference\n4. Unchanged Total\n5. Simultaneous Equation\n\n9. All",
+      //   9
+      // );
       level = "heuFourb";
 
+      optionsBox.classList.remove("hidden");
+      optionsBox.textContent = `Available settings:`;
+      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
+      setting = prompt(
+        "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
+        9
+      );
+
       if (
-        ![1, 2, 3, 4, 5, 9].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 6, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 9;
@@ -25112,12 +25240,19 @@ function buttonLevelSetting() {
 
     case "Heu.6":
       level = "heuSix";
+      optionsBox.classList.remove("hidden");
+      optionsBox.textContent = `Available settings:`;
+      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
       setting = prompt(
-        "What level?\n1. Lowest Common Time\n 2. Cycle\n3. Repeated Identity\n4. More Than / Less Than\n\n9. All",
+        "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         9
       );
+      // setting = prompt(
+      //   "What level?\n1. Lowest Common Time\n 2. Cycle\n3. Repeated Identity\n4. More Than / Less Than\n\n9. All",
+      //   9
+      // );
       if (
-        ![1, 2, 3, 4, 9].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
       ) {
         setting = 9;
