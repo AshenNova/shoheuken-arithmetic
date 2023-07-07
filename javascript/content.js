@@ -126,12 +126,25 @@ export const displayContent = (level) => {
       
       `;
 
+  if (level == "calSix") {
+    return `
+    </p>
+    1. Fractions: Finding remainder</p>
+    2. Circles: Area and Perimeter</p>
+    3. Speed: Average Speed</p>
+    4. Speed: Moving Apart</p>
+    5. Pie Chart<hr>
+    99. All
+    `;
+  }
   if (level == "calSixb") {
     return `
     </p>
-    1. Speed: Double Triangle</p>
-    2. Volume: Grouping</p>
-    3. Volume: Meet Up</p>
+    1. Speed: Meet up</p>
+    2. Speed: Catch up</p>
+    3. Speed: Double Triangle</p>
+    4. Volume: Grouping</p>
+    5. Volume: Meet Up</p>
     <hr>
     99. All`;
   }

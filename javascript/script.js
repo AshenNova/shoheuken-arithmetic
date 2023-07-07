@@ -11141,8 +11141,41 @@ function updateProblems() {
       // if (p.which == "B")
       //   displayProblem.insertAdjacentHTML("beforeend", "What is B's speed?");
     }
-    //SPEED: MEET UP
+
+    // PIECHART
     if (setting == 5) {
+      drawingDisplay();
+      let types = ["fraction", "decimal", "ratio", "percentage", "angle"];
+      const index = types.indexOf(p.choice);
+      types.splice(index, 1);
+      const clue = types[genNumbers(4)];
+      const check = pieChart(
+        p.fractions,
+        p.decimals,
+        p.ratio,
+        p.percentage,
+        p.angles,
+        p.choice,
+        clue
+      );
+      if (check == "Error") {
+        p.error++;
+        if (p.error < 10) {
+          return updateCalc();
+        } else {
+          skipGlobalUpdateProblem = 0;
+          console.log("TOO MANY RESETS!");
+          updateProblems();
+        }
+      }
+    }
+  }
+  // DISPLAY
+  if (level == "calSixb") {
+    calculatorSymbol.classList.remove("hidden");
+
+    //SPEED: MEET UP
+    if (setting == 1) {
       p.distance = p.speedA * p.timeA + p.speedB * p.timeB;
       // normal
       if (p.roll == "A") {
@@ -11203,7 +11236,7 @@ function updateProblems() {
       }
     }
     //SPEED: CATCH UP
-    if (setting == 6) {
+    if (setting == 2) {
       if (p.speedA == p.speedB) p.speedB += 1;
       p.gap = genNumbers(20) + 10;
       p.diffSpeed = p.speedB - p.speedA;
@@ -11272,38 +11305,9 @@ function updateProblems() {
         `;
       }
     }
-    // PIECHART
-    if (setting == 7) {
-      drawingDisplay();
-      let types = ["fraction", "decimal", "ratio", "percentage", "angle"];
-      const index = types.indexOf(p.choice);
-      types.splice(index, 1);
-      const clue = types[genNumbers(4)];
-      const check = pieChart(
-        p.fractions,
-        p.decimals,
-        p.ratio,
-        p.percentage,
-        p.angles,
-        p.choice,
-        clue
-      );
-      if (check == "Error") {
-        p.error++;
-        if (p.error < 10) {
-          return updateCalc();
-        } else {
-          skipGlobalUpdateProblem = 0;
-          console.log("TOO MANY RESETS!");
-          updateProblems();
-        }
-      }
-    }
-  }
-  // DISPLAY
-  if (level == "calSixb") {
-    calculatorSymbol.classList.remove("hidden");
-    if (setting == 1) {
+
+    // DOUBLE TRIANGLE
+    if (setting == 3) {
       if (p.type == "normalSpeedToTime") {
         if (p.speedA == p.speedB) {
           p.speedB += 10;
@@ -11450,6 +11454,52 @@ function updateProblems() {
       and contains ${volumeBFirst} ml of water.</p>
       ${questionSentence}
       `;
+    }
+    // VOLUME: CATCH UP
+    if (setting == 3) {
+      const volumeAFirst = p.lengthA * p.breadthA * p.waterLevelA;
+      const volumeBFirst = p.lengthB * p.breadthB * p.waterLevelB;
+      const heightAPerMin = (p.tapA * 1000) / (p.lengthA * p.breadthA);
+      const heightBPerMin = (p.tapB * 1000) / (p.lengthB * p.breadthB);
+      if (heightAPerMin == heightBPerMin) {
+        console.log("Same rate, nothing happens");
+        return updateCalc();
+      }
+      if (
+        (heightAPerMin < heightBPerMin && p.waterLevelA < p.waterLevelB) ||
+        (heightBPerMin < heightAPerMin && p.waterLevelB < p.waterLevelA)
+      ) {
+        console.log("Impossible question");
+        return updateCalc();
+      }
+      displayProblem.innerHTML = `
+      Container A has a length and breadth of ${p.lengthA} cm and ${
+        p.breadthA
+      } cm, while containing ${volumeAFirst / 1000} ℓ of water.</p>
+      Container B has a length and breadth of ${p.lengthB} cm and ${
+        p.breadthB
+      } cm, while containing ${volumeBFirst / 1000} ℓ of water.</p>
+      Tap A fills container A at ${p.tapA} ℓ per min.</p>
+      Tap B fills container B at ${p.tapB} ℓ per min.</p>
+      
+      `;
+
+      if (p.question == "final height") {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          "How long is require for both containers to be of the same height?"
+        );
+      }
+      if (p.question == "finalWaterLevel") {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          "What is the water level when both containers have the same water level?"
+        );
+      }
+      displayProblem.insertAdjacentHTML(
+        "beforeend",
+        "<p><i>Round your answer to 2 decimal place if needed.</i></p>"
+      );
     }
   }
 
@@ -17546,8 +17596,19 @@ function handleSubmit(e) {
           if (p.which == "B") correctAnswer = p.speedB;
         }
       }
-      //SPEED: MEET UP
+      //PIE CHART
       if (setting == 5) {
+        if (p.choice == "fraction") correctAnswer = p.fractions;
+        if (p.choice == "decimal") correctAnswer = p.decimals;
+        if (p.choice == "ratio") correctAnswer = p.ratio;
+        if (p.choice == "percentage") correctAnswer = p.percentage;
+        if (p.choice == "angle") correctAnswer = p.angles;
+      }
+    }
+    // ANSWERS
+    if (level == "calSixb") {
+      //SPEED: MEET UP
+      if (setting == 1) {
         if (p.roll == "A") {
           correctAnswer = p.distance / (p.speedA + p.speedB);
         }
@@ -17573,9 +17634,9 @@ function handleSubmit(e) {
           // correctAnswer = `(${p.speedA}+${p.speedB})x${p.timeA + p.timeB}`;
           correctAnswer = (p.speedA + p.speedB) * (p.timeA + p.timeB);
         }
-        //SPEED: CATCH UP
       }
-      if (setting == 6) {
+      //SPEED: CATCH UP
+      if (setting == 2) {
         if (p.roll == "A" || p.roll == "B") {
           // console.log(p.diffSpeed);
           correctAnswer = p.gap / p.diffSpeed;
@@ -17591,17 +17652,7 @@ function handleSubmit(e) {
         }
       }
 
-      if (setting == 7) {
-        if (p.choice == "fraction") correctAnswer = p.fractions;
-        if (p.choice == "decimal") correctAnswer = p.decimals;
-        if (p.choice == "ratio") correctAnswer = p.ratio;
-        if (p.choice == "percentage") correctAnswer = p.percentage;
-        if (p.choice == "angle") correctAnswer = p.angles;
-      }
-    }
-    // ANSWERS
-    if (level == "calSixb") {
-      if (setting == 1) {
+      if (setting == 3) {
         if (p.type == "normalSpeedToTime") {
           const oneUnit = p.differenceTime / Math.abs(p.timeA - p.timeB);
           const actualTimeA = oneUnit * p.timeA;
@@ -17640,12 +17691,34 @@ function handleSubmit(e) {
         }
       }
       // VOLUME: GROUPING
-      if (setting == 2) {
+      if (setting == 4) {
         if (p.question == "transfer") correctAnswer = p.answer;
         if (p.question == "finalA")
           correctAnswer = p.groups * p.finalHeightUnitA;
         if (p.question == "finalB")
           correctAnswer = p.groups * p.finalHeightUnitB;
+      }
+
+      // VOLUME: CATCH UP
+      if (setting == 5) {
+        const heightAPerMin = (p.tapA * 1000) / (p.lengthA * p.breadthA);
+        const heightBPerMin = (p.tapB * 1000) / (p.lengthB * p.breadthB);
+        const differenceHeight = Math.abs(p.waterLevelA - p.waterLevelB);
+        const differenceHeightTap = Math.abs(heightAPerMin - heightBPerMin);
+        const catchUpTime = differenceHeight / differenceHeightTap;
+
+        if (p.question == "final height") {
+          correctAnswer = catchUpTime;
+        }
+        if (p.question == "finalWaterLevel") {
+          correctAnswer = p.waterLevelA + catchUpTime * heightAPerMin;
+        }
+        const str = correctAnswer.toString().split(".")[1];
+        if (str) {
+          if (str.length > 3) {
+            correctAnswer = correctAnswer.toFixed(2);
+          }
+        }
       }
     }
 
@@ -22315,7 +22388,7 @@ function genProblems() {
 
   //SETTINGS
   if (level == "calSix") {
-    setting = calArrAll(7, calArr, setting, 99);
+    setting = calArrAll(5, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 1) {
@@ -22387,32 +22460,8 @@ function genProblems() {
       };
     }
 
-    //MEET UP
-    if (setting == 5) {
-      return {
-        roll: ["D", "A", "B", "C"][genNumbers(4)],
-        distance: undefined,
-        speedA: genNumbers(5) + 5,
-        timeA: genNumbers(8) + 2,
-        speedB: genNumbers(5) + 5,
-        timeB: genNumbers(8) + 2,
-      };
-    }
-    // CATCH UP
-    if (setting == 6) {
-      const genSpeedB = genNumbers(10) + 5;
-      return {
-        roll: ["E", "D", "C", "B", "A"][genNumbers(5)],
-        gap: undefined,
-        speedA: genNumbers(genSpeedB) + 1,
-        timeA: genNumbers(8) + 2,
-        speedB: genSpeedB,
-        timeB: genNumbers(8) + 2,
-        diffSpeed: undefined,
-      };
-    }
     // PIECHART
-    if (setting == 7) {
+    if (setting == 5) {
       return {
         fractions: (genNumbers(10) + 1) * 4,
         decimals: (genNumbers(10) + 1) * 4,
@@ -22429,10 +22478,34 @@ function genProblems() {
   // SETTINGS
   if (level == "calSixb") {
     normalDisplay();
-    setting = calArrAll(3, calArr, setting, 99);
+    setting = calArrAll(5, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
+    //MEET UP
     if (setting == 1) {
+      return {
+        roll: ["D", "A", "B", "C"][genNumbers(4)],
+        distance: undefined,
+        speedA: genNumbers(5) + 5,
+        timeA: genNumbers(8) + 2,
+        speedB: genNumbers(5) + 5,
+        timeB: genNumbers(8) + 2,
+      };
+    }
+    // CATCH UP
+    if (setting == 2) {
+      const genSpeedB = genNumbers(10) + 5;
+      return {
+        roll: ["E", "D", "C", "B", "A"][genNumbers(5)],
+        gap: undefined,
+        speedA: genNumbers(genSpeedB) + 1,
+        timeA: genNumbers(8) + 2,
+        speedB: genSpeedB,
+        timeB: genNumbers(8) + 2,
+        diffSpeed: undefined,
+      };
+    }
+    if (setting == 3) {
       return {
         type: ["meet up", "normalTimeToSpeed", "normalSpeedToTime"][
           genNumbers(3)
@@ -22448,7 +22521,7 @@ function genProblems() {
       };
     }
     // VOLUME: GROUPING
-    if (setting == 2) {
+    if (setting == 4) {
       const gen_heightA = genNumbers(30) + 10;
       const gen_heightB = genNumbers(30) + 10;
       return {
@@ -22465,6 +22538,30 @@ function genProblems() {
         groups: genNumbers(5) + 3,
         answer: undefined,
         question: ["finalA", "finalB", "transfer"][genNumbers(3)],
+      };
+    }
+
+    //VOLUME: CATCH UP
+    if (setting == 5) {
+      const gen_lengthA = (genNumbers(10) + 1) * 10;
+      const gen_breadthA = (genNumbers(10) + 1) * 10;
+      const gen_heightA = (genNumbers(10) + 1) * 10;
+
+      const gen_lengthB = (genNumbers(10) + 1) * 10;
+      const gen_breadthB = (genNumbers(10) + 1) * 10;
+      const gen_heightB = (genNumbers(10) + 1) * 10;
+      return {
+        lengthA: gen_lengthA,
+        breadthA: gen_breadthA,
+        heightA: gen_heightA,
+        waterLevelA: genNumbers(gen_heightA - 1) + 1,
+        lengthB: gen_lengthB,
+        breadthB: gen_breadthB,
+        heightB: gen_heightB,
+        waterLevelB: genNumbers(gen_heightB - 1) + 1,
+        tapA: (gen_lengthA * gen_breadthA * (genNumbers(5) + 1)) / 1000,
+        tapB: (gen_lengthB * gen_breadthB * (genNumbers(5) + 1)) / 1000,
+        question: ["finalWaterLevel", "final height"][genNumbers(1)],
       };
     }
   }
@@ -25183,12 +25280,19 @@ function buttonLevelSetting() {
     case "Cal.6":
       level = "calSix";
       scoreNeeded = 10;
+      // setting = prompt(
+      //   "What level?\n1. Fractions: Finding remainder\n2. Circles: Area and Perimeter\n3. Speed: Average Speed\n4. Speed: Moving Apart\n7. Pie Chart\n\n99",
+      //   7
+      // );
+      optionsBox.classList.remove("hidden");
+      optionsBox.textContent = `Available settings:`;
+      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
       setting = prompt(
-        "What level?\n1. Fractions: Finding remainder\n2. Circles: Area and Perimeter\n3. Speed: Average Speed\n4. Speed: Moving Apart\n5. Speed: Meet up\n6. Speed: Catch up\n7. Pie Chart\n\n99",
-        7
+        "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
+        99
       );
       if (
-        ![1, 2, 3, 4, 5, 6, 7, 99].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 99].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 99;
