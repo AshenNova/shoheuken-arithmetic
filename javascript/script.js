@@ -11406,19 +11406,43 @@ function updateProblems() {
       const transfer = genNumbers(volumeB - 1000) + 1000;
       const volumeAFirst = volumeA + transfer;
       const volumeBFirst = volumeB - transfer;
-      if (volumeAFirst < 0 || volumeBFirst < 0){
-        console.log("Volume went below zero")
-        updateCalc()
+      if (volumeAFirst < 0 || volumeBFirst < 0) {
+        console.log("Volume went below zero");
+        updateCalc();
       }
       p.answer = transfer;
       let questionSentence = undefined;
       const transferText = volumeA > volumeB ? `A to B` : `B to A`;
-
-      if (p.finalHeightUnitA == p.finalHeightUnitB) {
-        questionSentence = `How much water must be poured from container ${transferText} for the height to be the same?</p>`;
-      } else {
-        questionSentence = `How much water must be poured so that the height of A to B is ${p.finalHeightUnitA}/${p.finalHeightUnitB}?`;
+      if (p.question == "transfer") {
+        if (p.finalHeightUnitA == p.finalHeightUnitB) {
+          questionSentence = `How much water must be poured from container ${transferText} for the height to be the same?</p>`;
+        } else {
+          questionSentence = `How much water must be poured so that the height of A to B is ${p.finalHeightUnitA}/${p.finalHeightUnitB}?`;
+        }
       }
+      if (p.question == "finalA") {
+        if (p.finalHeightUnitA == p.finalHeightUnitB) {
+          questionSentence = `
+          Some water was transferred from ${transferText} for the height to be the same.</p>
+          What is the water level of A in the end?`;
+        } else {
+          questionSentence = `
+          Some water was transferred for the ratio of the height of A to B to become ${p.finalHeightUnitA} : ${p.finalHeightUnitB}.</p>
+          What is the water level of A in the end?`;
+        }
+      }
+      if (p.question == "finalB") {
+        if (p.finalHeightUnitA == p.finalHeightUnitB) {
+          questionSentence = `
+          Some water was transferred from ${transferText} for the height to be the same.</p>
+          What is the water level of B in the end?`;
+        } else {
+          questionSentence = `
+          Some water was transferred for the ratio of the height of A to B to become ${p.finalHeightUnitA} : ${p.finalHeightUnitB}.</p>
+          What is the water level of B in the end?`;
+        }
+      }
+
       displayProblem.innerHTML = `
       Container A has a dimension of ${p.lengthA} cm, ${p.breadthA} cm and ${heightA} cm,</p>
       and contains ${volumeAFirst} ml of water.</p>
@@ -17617,7 +17641,11 @@ function handleSubmit(e) {
       }
       // VOLUME: GROUPING
       if (setting == 2) {
-        correctAnswer = p.answer;
+        if (p.question == "transfer") correctAnswer = p.answer;
+        if (p.question == "finalA")
+          correctAnswer = p.groups * p.finalHeightUnitA;
+        if (p.question == "finalB")
+          correctAnswer = p.groups * p.finalHeightUnitB;
       }
     }
 
@@ -22436,6 +22464,7 @@ function genProblems() {
         finalHeightUnitB: 1,
         groups: genNumbers(5) + 3,
         answer: undefined,
+        question: ["finalA", "finalB", "transfer"][genNumbers(3)],
       };
     }
   }
