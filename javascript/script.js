@@ -11388,29 +11388,44 @@ function updateProblems() {
         Car B would take ${p.timeB} mins to reach the other Town.</p>
         How long did it take both Cars to meet?
         `;
-        // if (p.speedA > p.speedB) {
-        //   displayProblem.insertAdjacentHTML(
-        //     "beforeend",
-        //     `Car A drove at ${p.differenceSpeed} km/h faster than Car B.</p>`
-        //   );
-        // } else {
-        //   displayProblem.insertAdjacentHTML(
-        //     "beforeend",
-        //     `Car B drove at ${p.differenceSpeed} km/h faster than Car A.</p>`
-        //   );
-        // }
-        // let html = undefined;
-        // if (p.question == 1) {
-        //   html = "What is the distance between the 2 towns?";
-        // }
-        // if (p.question == 2) {
-        //   html = "What is Car A's speed?";
-        // }
-        // if (p.question == 3) {
-        //   html = "What is Car B's speed?";
-        // }
-        // displayProblem.insertAdjacentHTML("beforeend", html);
       }
+    }
+    // VOLUME: GROUPING
+    if (setting == 2) {
+      [p.finalHeightUnitA, p.finalHeightUnitB] = simplify(
+        p.finalHeightUnitA,
+        p.finalHeightUnitB
+      );
+      const volumeA = p.lengthA * p.breadthA * p.groups * p.finalHeightUnitA;
+      const volumeB = p.lengthB * p.breadthB * p.groups * p.finalHeightUnitB;
+      const totalWater = volumeA + volumeB;
+      const baseA = p.lengthA * p.breadthA;
+      const baseB = p.lengthB * p.breadthB;
+      const heightA = p.groups * p.finalHeightUnitA + p.addHeightA;
+      const heightB = p.groups * p.finalHeightUnitB + p.addHeightB;
+      const transfer = genNumbers(volumeB - 1000) + 1000;
+      const volumeAFirst = volumeA + transfer;
+      const volumeBFirst = volumeB - transfer;
+      if (volumeAFirst < 0 || volumeBFirst < 0){
+        console.log("Volume went below zero")
+        updateCalc()
+      }
+      p.answer = transfer;
+      let questionSentence = undefined;
+      const transferText = volumeA > volumeB ? `A to B` : `B to A`;
+
+      if (p.finalHeightUnitA == p.finalHeightUnitB) {
+        questionSentence = `How much water must be poured from container ${transferText} for the height to be the same?</p>`;
+      } else {
+        questionSentence = `How much water must be poured so that the height of A to B is ${p.finalHeightUnitA}/${p.finalHeightUnitB}?`;
+      }
+      displayProblem.innerHTML = `
+      Container A has a dimension of ${p.lengthA} cm, ${p.breadthA} cm and ${heightA} cm,</p>
+      and contains ${volumeAFirst} ml of water.</p>
+      Container B has a dimension of ${p.lengthB} cm, ${p.breadthB} cm and ${heightB} cm,</p>
+      and contains ${volumeBFirst} ml of water.</p>
+      ${questionSentence}
+      `;
     }
   }
 
@@ -17600,6 +17615,10 @@ function handleSubmit(e) {
           }
         }
       }
+      // VOLUME: GROUPING
+      if (setting == 2) {
+        correctAnswer = p.answer;
+      }
     }
 
     // heuristics Answer
@@ -22382,7 +22401,7 @@ function genProblems() {
   // SETTINGS
   if (level == "calSixb") {
     normalDisplay();
-    setting = calArrAll(1, calArr, setting, 99);
+    setting = calArrAll(3, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 1) {
@@ -22398,6 +22417,25 @@ function genProblems() {
         timeB: (genNumbers(12 - 1) + 1) * 5,
         differenceTime: undefined,
         differenceSpeed: undefined,
+      };
+    }
+    // VOLUME: GROUPING
+    if (setting == 2) {
+      const gen_heightA = genNumbers(30) + 10;
+      const gen_heightB = genNumbers(30) + 10;
+      return {
+        lengthA: genNumbers(30) + 10,
+        breadthA: genNumbers(30) + 10,
+        addHeightA: genNumbers(20) + 1,
+        waterLevelA: genNumbers(gen_heightA - 5) + 5,
+        lengthB: genNumbers(30) + 10,
+        breadthB: genNumbers(30) + 10,
+        addHeightB: genNumbers(20) + 1,
+        waterLevelB: genNumbers(gen_heightB - 5) + 5,
+        finalHeightUnitA: genNumbers(4) + 1,
+        finalHeightUnitB: 1,
+        groups: genNumbers(5) + 3,
+        answer: undefined,
       };
     }
   }
@@ -25133,12 +25171,18 @@ function buttonLevelSetting() {
     case "Cal.6b":
       level = "calSixb";
       scoreNeeded = 10;
-      setting = prompt("What level?\n1. Speed: Double Triangle\n\n99", 99);
+      setting = prompt(
+        "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
+        99
+      );
       if (
-        ![1, 2, 3, 4, 5, 6, 99].includes(setting * 1) &&
+        ![1, 2, 3, 99].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 99;
+      optionsBox.classList.remove("hidden");
+      optionsBox.textContent = `Available settings:`;
+      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";

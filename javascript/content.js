@@ -125,4 +125,14 @@ export const displayContent = (level) => {
       </p>99. All
       
       `;
+
+  if (level == "calSixb") {
+    return `
+    </p>
+    1. Speed: Double Triangle</p>
+    2. Volume: Grouping</p>
+    3. Volume: Meet Up</p>
+    <hr>
+    99. All`;
+  }
 };
