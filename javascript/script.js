@@ -14252,6 +14252,142 @@ function updateProblems() {
 
       `;
     }
+
+    // USING IT ALL
+    if (setting == 7) {
+      if (p.unitAF == p.unitBF || p.unitAS == p.unitBS) {
+        console.log("Units identical");
+        return updateCalc();
+      }
+      const answer = undefined;
+      const personA = boyNames[genNumbers(boyNames.length)];
+      const personB = girlNames[genNumbers(boyNames.length)];
+      let chosen = ["A", "B"][genNumbers(2)];
+      let theBroke = undefined;
+      let gender = undefined;
+      let commonNumber = undefined;
+      let newAF = undefined;
+      let newBF = undefined;
+      let newAS = undefined;
+      let newBS = undefined;
+      if (chosen == "A") {
+        chosen = personA;
+        theBroke = personB;
+        gender = "she";
+        if (p.unitBF == p.unitBS) {
+          console.log("Unit already same");
+          return updateCalc();
+        }
+        commonNumber = commonDeno(p.unitBF, p.unitBS);
+        const firstMulti = commonNumber / p.unitBF;
+        const secondMulti = commonNumber / p.unitBS;
+        newAF = firstMulti * p.unitAF;
+        newAS = secondMulti * p.unitAS;
+        newBF = commonNumber;
+        newBS = commonNumber;
+        // console.log(newAF, newBF, newAS, newBS);
+        if (
+          (newAF > newAS && p.amountLeftFirst > p.amountLeftSecond) ||
+          (newAF < newAS && p.amountLeftFirst < p.amountLeftSecond)
+        ) {
+          [p.amountLeftFirst, p.amountLeftSecond] = [
+            p.amountLeftSecond,
+            p.amountLeftFirst,
+          ];
+        }
+
+        const differenceUnit = Math.abs(newAF - newAS);
+        const differenceValue = Math.abs(
+          p.amountLeftFirst - p.amountLeftSecond
+        );
+        const oneUnit = differenceValue / differenceUnit;
+        // console.log(oneUnit);
+        if (oneUnit % 1 != 0) {
+          console.log("Not whole");
+          return updateCalc();
+        }
+        if (p.question == "A") {
+          p.answer = oneUnit * newAF + p.amountLeftFirst;
+        }
+        if (p.question == "B") {
+          p.answer = oneUnit * newBF;
+        }
+      }
+      if (chosen == "B") {
+        chosen = personB;
+        theBroke = personA;
+        gender = "his";
+        if (p.unitAF == p.unitAS) {
+          console.log("Unit already same");
+          return updateCalc();
+        }
+        commonNumber = commonDeno(p.unitAF, p.unitAS);
+        const firstMulti = commonNumber / p.unitAF;
+        const secondMulti = commonNumber / p.unitAS;
+        newBF = firstMulti * p.unitBF;
+        newBS = secondMulti * p.unitBS;
+        newAF = commonNumber;
+        newAS = commonNumber;
+        // console.log(newAF, newBF, newAS, newBS);
+        if (
+          (newBF > newBS && p.amountLeftFirst > p.amountLeftSecond) ||
+          (newBF < newBS && p.amountLeftFirst < p.amountLeftSecond)
+        ) {
+          [p.amountLeftFirst, p.amountLeftSecond] = [
+            p.amountLeftSecond,
+            p.amountLeftFirst,
+          ];
+        }
+        const differenceUnit = Math.abs(newBF - newBS);
+        const differenceValue = Math.abs(
+          p.amountLeftFirst - p.amountLeftSecond
+        );
+        const oneUnit = differenceValue / differenceUnit;
+        // console.log(oneUnit);
+        if (oneUnit % 1 != 0) {
+          console.log("Not whole");
+          return updateCalc();
+        }
+        // console.log(oneUnit);
+        if (p.question == "A") {
+          p.answer = oneUnit * newAF;
+        }
+        if (p.question == "B") {
+          p.answer = oneUnit * newBF + p.amountLeftFirst;
+        }
+      }
+
+      let firstScene = undefined;
+      let secondScene = undefined;
+      const statement = genNumbers(2) == 0 ? "ratio" : "sentence";
+      if (statement == "ratio") {
+        firstScene = `If ${personA} and ${personB} spents their money in the ratio of ${p.unitAF} : ${p.unitBF},`;
+        secondScene = `If ${personA} and ${personB} spents their money in the ratio of ${p.unitAS} : ${p.unitBS},`;
+      }
+      if (statement == "sentence") {
+        firstScene = `For every $${p.unitAF} ${personA} spents, ${personB} also spents $${p.unitBF},`;
+        secondScene = `For every $${p.unitAS} ${personA} spents, ${personB} also spents $${p.unitBS},`;
+      }
+
+      displayProblem.innerHTML = `
+      ${firstScene}
+      ${chosen} would still have $${p.amountLeftFirst} left when ${theBroke} spents all ${gender} money.</p>
+      ${secondScene}
+      ${chosen} would still have $${p.amountLeftSecond} left when ${theBroke} spents all ${gender} money.</p>
+      `;
+      if (p.question == "A") {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `How much does ${personA} have at first?`
+        );
+      }
+      if (p.question == "B") {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `How much does ${personB} have at first?`
+        );
+      }
+    }
   }
   // MULTIPLES
   if (mulLevel == "multiples") {
@@ -19110,6 +19246,11 @@ function handleSubmit(e) {
         if (p.question == "A") correctAnswer = p.varA;
         if (p.question == "B") correctAnswer = p.varB;
       }
+
+      //USING IT ALL
+      if (setting == 7) {
+        correctAnswer = p.answer;
+      }
     }
     if (mulLevel == "multiples") {
       correctAnswer = p.numFive * (multiplesArr.length - 1);
@@ -23534,7 +23675,7 @@ function genProblems() {
 
   //SETTINGS
   if (level == "heuSix") {
-    setting = calArrAll(6, calArr, setting, 9);
+    setting = calArrAll(7, calArr, setting, 9);
     setting = checkRange(setting, calArr);
     // LOWEST COMMON TIME
     if (setting == 1) {
@@ -23621,6 +23762,23 @@ function genProblems() {
         varA: undefined,
         varB: undefined,
         question: ["A", "B"][genNumbers(2)],
+      };
+    }
+    // USING IT ALL
+    if (setting == 7) {
+      return {
+        unitAF: genNumbers(5) + 1,
+        unitBF: genNumbers(5) + 1,
+        unitAS: genNumbers(5) + 1,
+        unitBS: genNumbers(5) + 1,
+        // unitAFirst: genNumbers(5)+1,
+        // unitBFirst: genNumbers((5)+1,
+        // unitASecond: genNumbers(5)+1,
+        // unitBSecond: genNumbers(5)+1,
+        amountLeftFirst: genNumbers(500) + 100,
+        amountLeftSecond: genNumbers(500) + 100,
+        question: ["A", "B"][genNumbers(2)],
+        answer: undefined,
       };
     }
   }
@@ -25498,7 +25656,7 @@ function buttonLevelSetting() {
       );
 
       if (
-        ![1, 2, 3, 4, 5, 6, 9].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 6, 7, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
       ) {
         setting = 9;

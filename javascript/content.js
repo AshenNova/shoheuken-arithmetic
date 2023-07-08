@@ -23,6 +23,7 @@ export const displayContent = (level) => {
     4. Snake and Ladder</p>
     5. Identical Quantity with difference (Type 3)</p>
     6. More Than / Less Than</p>
+    7. Using it all</p>
     <hr>
     9. All
     `;
