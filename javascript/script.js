@@ -14365,8 +14365,18 @@ function updateProblems() {
         secondScene = `If ${personA} and ${personB} spents their money in the ratio of ${p.unitAS} : ${p.unitBS},`;
       }
       if (statement == "sentence") {
-        firstScene = `For every $${p.unitAF} ${personA} spents, ${personB} also spents $${p.unitBF},`;
-        secondScene = `For every $${p.unitAS} ${personA} spents, ${personB} also spents $${p.unitBS},`;
+        const multiplierA = genNumbers(4) + 2;
+        const multiplierB = genNumbers(4) + 2;
+        firstScene = `For every $${
+          p.unitAF * multiplierA
+        } ${personA} spents, ${personB} also spents $${
+          p.unitBF * multiplierA
+        },`;
+        secondScene = `For every $${
+          p.unitAS * multiplierB
+        } ${personA} spents, ${personB} also spents $${
+          p.unitBS * multiplierB
+        },`;
       }
 
       displayProblem.innerHTML = `
