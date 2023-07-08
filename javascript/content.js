@@ -19,10 +19,10 @@ export const displayContent = (level) => {
     </p>
     1. Lowest Common Time</p>
     2. Cycle</p>
-    3. Repeated Identity</p>
-    4. More Than / Less Than</p>
-    5. Snake and Ladder</p>
-    6. Identical Quantity with difference (Type 3)</p>
+    3. Repeated Identity Type 3</p>
+    4. Snake and Ladder</p>
+    5. Identical Quantity with difference (Type 3)</p>
+    6. More Than / Less Than</p>
     <hr>
     9. All
     `;

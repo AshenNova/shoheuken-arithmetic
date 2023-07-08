@@ -14132,8 +14132,76 @@ function updateProblems() {
           `What fraction of students choose both activities?`
         );
     }
-    // MORE THAN / LESS THAN
+
+    //SNAKE AND LADDER
     if (setting == 4) {
+      const distance = (p.positive - p.negative) * p.sets + p.positive;
+      if (p.version == "human") {
+        const person = [...boyNames, ...girlNames][genNumbers(20)];
+
+        let gender = "he";
+        if (girlNames.includes(person)) gender = "she";
+        displayProblem.innerHTML = `
+        ${person} is trying to reach a point ${distance} m away.</p>
+        Every ${p.pTime} seconds ${gender} swims ${p.positive} m,</p>
+        ${gender} is pushed back ${p.negative} m.</p>
+        How long will it take for ${person} to reach?
+        `;
+      }
+      if (p.version == "snail") {
+        displayProblem.innerHTML = `
+        An snail is trying to a climb a wall of ${distance} cm.</p>
+        Every ${p.pTime} mins it climbs up ${p.positive} cm.</p>
+        It then takes a break for ${p.nTime} mins, causing it to slides down ${p.negative} cm.</p>
+        How long will it take for snail to reach?
+        `;
+      }
+    }
+
+    //IDENTICAL QUANTITY WITH DIFFERENCE TYPE 3
+    if (setting == 5) {
+      if (p.personASmallSheets == p.personBSmallSheets) {
+        console.log("Same number of sheets");
+        return updateCalc();
+      }
+      const personA = boyNames[genNumbers(boyNames.length)];
+      const personB = girlNames[genNumbers(girlNames.length)];
+      p.personALargeSheets = p.packets - p.personASmallSheets;
+      p.personBLargeSheets = p.packets - p.personBSmallSheets;
+
+      p.personATotal =
+        p.personASmallSheets * p.small + p.personALargeSheets * p.large;
+      p.personBTotal =
+        p.personBSmallSheets * p.small + p.personBLargeSheets * p.large;
+      console.log(p.personATotal, p.personBTotal);
+      let lastDifference = undefined;
+      let lastPart = undefined;
+      // if A has more large sheets, B should be giving away)
+      const diffAtFirst = Math.abs(p.personATotal - p.personBTotal);
+      if (p.personALargeSheets > p.personBLargeSheets) {
+        console.log("1");
+        lastDifference = diffAtFirst + p.personBLargeSheets * p.large;
+        lastPart = `If ${personB} gave away all her large stickers their difference would become ${lastDifference}.`;
+      }
+      if (p.personALargeSheets < p.personBLargeSheets) {
+        console.log("2");
+        lastDifference = diffAtFirst + p.personALargeSheets * p.large;
+        lastPart = `If ${personA} gave away all his large stickers their difference would become ${lastDifference}.`;
+      }
+      displayProblem.innerHTML = `
+      Stickers were sold only in big sheets of ${p.large} and small sheets of ${p.small}.</p>
+      ${personA} and ${personB} bought the same number sheets.</p>
+      ${personA} bought ${p.personASmallSheets} small sheets.</p>
+      ${personB} bought ${p.personBSmallSheets} small sheets.</p>
+      a) Whats the difference in the number of stickers between them.</p>
+      b) ${lastPart}</p> 
+      How many sheets of stickers did each of them buy?</p>
+      
+      `;
+    }
+
+    // MORE THAN / LESS THAN
+    if (setting == 6) {
       [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
       [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
       const commonDenominator = commonDeno(p.denoA, p.denoB);
@@ -14182,73 +14250,6 @@ function updateProblems() {
       A is ${differenceEnd} ${comparisonEnd} B in the end.</p>
       What is ${p.question} at first?
 
-      `;
-    }
-
-    //SNAKE AND LADDER
-    if (setting == 5) {
-      const distance = (p.positive - p.negative) * p.sets + p.positive;
-      if (p.version == "human") {
-        const person = [...boyNames, ...girlNames][genNumbers(20)];
-
-        let gender = "he";
-        if (girlNames.includes(person)) gender = "she";
-        displayProblem.innerHTML = `
-        ${person} is trying to reach a point ${distance} m away.</p>
-        Every ${p.pTime} seconds ${gender} swims ${p.positive} m,</p>
-        ${gender} is pushed back ${p.negative} m.</p>
-        How long will it take for ${person} to reach?
-        `;
-      }
-      if (p.version == "snail") {
-        displayProblem.innerHTML = `
-        An snail is trying to a climb a wall of ${distance} cm.</p>
-        Every ${p.pTime} mins it climbs up ${p.positive} cm.</p>
-        It then takes a break for ${p.nTime} mins, causing it to slides down ${p.negative} cm.</p>
-        How long will it take for snail to reach?
-        `;
-      }
-    }
-
-    //IDENTICAL QUANTITY WITH DIFFERENCE TYPE 3
-    if (setting == 6) {
-      if (p.personASmallSheets == p.personBSmallSheets) {
-        console.log("Same number of sheets");
-        return updateCalc();
-      }
-      const personA = boyNames[genNumbers(boyNames.length)];
-      const personB = girlNames[genNumbers(girlNames.length)];
-      p.personALargeSheets = p.packets - p.personASmallSheets;
-      p.personBLargeSheets = p.packets - p.personBSmallSheets;
-
-      p.personATotal =
-        p.personASmallSheets * p.small + p.personALargeSheets * p.large;
-      p.personBTotal =
-        p.personBSmallSheets * p.small + p.personBLargeSheets * p.large;
-      console.log(p.personATotal, p.personBTotal);
-      let lastDifference = undefined;
-      let lastPart = undefined;
-      // if A has more large sheets, B should be giving away)
-      const diffAtFirst = Math.abs(p.personATotal - p.personBTotal);
-      if (p.personALargeSheets > p.personBLargeSheets) {
-        console.log("1");
-        lastDifference = diffAtFirst + p.personBLargeSheets * p.large;
-        lastPart = `If ${personB} gave away all her large stickers their difference would become ${lastDifference}.`;
-      }
-      if (p.personALargeSheets < p.personBLargeSheets) {
-        console.log("2");
-        lastDifference = diffAtFirst + p.personALargeSheets * p.large;
-        lastPart = `If ${personA} gave away all his large stickers their difference would become ${lastDifference}.`;
-      }
-      displayProblem.innerHTML = `
-      Stickers were sold only in big sheets of ${p.large} and small sheets of ${p.small}.</p>
-      ${personA} and ${personB} bought the same number sheets.</p>
-      ${personA} bought ${p.personASmallSheets} small sheets.</p>
-      ${personB} bought ${p.personBSmallSheets} small sheets.</p>
-      a) Whats the difference in the number of stickers between them.</p>
-      b) ${lastPart}</p> 
-      How many sheets of stickers did each of them buy?</p>
-      
       `;
     }
   }
@@ -19087,13 +19088,9 @@ function handleSubmit(e) {
         [both, commonDenominator] = simplify(both, commonDenominator);
         correctAnswer = `${both}/${commonDenominator}`;
       }
-      // MORE THAN / LESS THAN
-      if (setting == 4) {
-        if (p.question == "A") correctAnswer = p.varA;
-        if (p.question == "B") correctAnswer = p.varB;
-      }
+
       //SNAKE AND LADDER
-      if (setting == 5) {
+      if (setting == 4) {
         if (p.version == "human") {
           correctAnswer = (p.sets + 1) * p.pTime;
         }
@@ -19102,10 +19099,16 @@ function handleSubmit(e) {
         }
       }
       //IDENTICAL QUANTITY WITH DIFFERENCE TYPE 3
-      if (setting == 6) {
+      if (setting == 5) {
         correctAnswer = `${Math.abs(p.personATotal - p.personBTotal)}, ${
           p.packets
         }`;
+      }
+
+      // MORE THAN / LESS THAN
+      if (setting == 6) {
+        if (p.question == "A") correctAnswer = p.varA;
+        if (p.question == "B") correctAnswer = p.varB;
       }
     }
     if (mulLevel == "multiples") {
@@ -23573,8 +23576,38 @@ function genProblems() {
         question: ["Both"][genNumbers(1)],
       };
     }
-    //MORE THAN / LESS THAN
+    //SNAKE AND LADDER
     if (setting == 4) {
+      const gen_positive = genNumbers(9) + 2;
+      return {
+        positive: gen_positive,
+        pTime: genNumbers(5) + 2,
+        negative: genNumbers(gen_positive - 1) + 1,
+        nTime: genNumbers(5) + 2,
+        sets: genNumbers(10) + 5,
+        version: ["snail", "human"][genNumbers(2)],
+      };
+    }
+
+    //IDENTICAL QUANTITY WITH DIFFERENCE TYPE 3
+    if (setting == 5) {
+      const gen_large = genNumbers(20) + 30;
+      const gen_packets = genNumbers(40) + 10;
+      return {
+        large: gen_large,
+        small: genNumbers(gen_large - 15) + 15,
+        packets: gen_packets,
+        personASmallSheets: genNumbers(gen_packets - 5) + 5,
+        personBSmallSheets: genNumbers(gen_packets - 5) + 5,
+        personALargeSheets: undefined,
+        personBLargeSheets: undefined,
+        personATotal: undefined,
+        personBTotal: undefined,
+      };
+    }
+
+    //MORE THAN / LESS THAN
+    if (setting == 6) {
       const gen_denoA = genNumbers(5) + 2;
       const gen_denoB = genNumbers(5) + 2;
       return {
@@ -23588,36 +23621,6 @@ function genProblems() {
         varA: undefined,
         varB: undefined,
         question: ["A", "B"][genNumbers(2)],
-      };
-    }
-
-    //SNAKE AND LADDER
-    if (setting == 5) {
-      const gen_positive = genNumbers(9) + 2;
-      return {
-        positive: gen_positive,
-        pTime: genNumbers(5) + 2,
-        negative: genNumbers(gen_positive - 1) + 1,
-        nTime: genNumbers(5) + 2,
-        sets: genNumbers(10) + 5,
-        version: ["snail", "human"][genNumbers(2)],
-      };
-    }
-
-    //IDENTICAL QUANTITY WITH DIFFERENCE TYPE 3
-    if (setting == 6) {
-      const gen_large = genNumbers(20) + 30;
-      const gen_packets = genNumbers(40) + 10;
-      return {
-        large: gen_large,
-        small: genNumbers(gen_large - 15) + 15,
-        packets: gen_packets,
-        personASmallSheets: genNumbers(gen_packets - 5) + 5,
-        personBSmallSheets: genNumbers(gen_packets - 5) + 5,
-        personALargeSheets: undefined,
-        personBLargeSheets: undefined,
-        personATotal: undefined,
-        personBTotal: undefined,
       };
     }
   }
