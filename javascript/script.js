@@ -11397,7 +11397,7 @@ function updateProblems() {
       }
     }
     // VOLUME: GROUPING
-    if (setting == 2) {
+    if (setting == 4) {
       [p.finalHeightUnitA, p.finalHeightUnitB] = simplify(
         p.finalHeightUnitA,
         p.finalHeightUnitB
@@ -11458,7 +11458,7 @@ function updateProblems() {
       `;
     }
     // VOLUME: CATCH UP
-    if (setting == 3) {
+    if (setting == 5) {
       const volumeAFirst = p.lengthA * p.breadthA * p.waterLevelA;
       const volumeBFirst = p.lengthB * p.breadthB * p.waterLevelB;
       const heightAPerMin = (p.tapA * 1000) / (p.lengthA * p.breadthA);
@@ -25482,7 +25482,7 @@ function buttonLevelSetting() {
         99
       );
       if (
-        ![1, 2, 3, 99].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 99].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 99;
