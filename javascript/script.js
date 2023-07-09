@@ -10376,10 +10376,12 @@ function updateProblems() {
           )}% in decimals?`;
         }
       }
-      displayProblem.insertAdjacentHTML(
-        "beforeend",
-        "<p><i>Include percentage symbol in the answer.</i></p>"
-      );
+      if (p.start == "fractions" || p.start == "decimals") {
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          "<p><i>Include percentage symbol in the answer.</i></p>"
+        );
+      }
     }
     // PERCENTAGE: PERCENTAGE CHANGE
     if (setting == 23) {
