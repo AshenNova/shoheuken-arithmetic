@@ -10345,7 +10345,9 @@ function updateProblems() {
       It is ${p.nume}/${p.deno} filled.</p>
       ${rateASentence}
       ${rateBSentence}
-      ${questionSent}`;
+      ${questionSent}</p>
+      <i>Round your answer to 2 decimal places if needed.</i>
+      `;
     }
 
     // PERCENTAGE: PERCENTAGE OF
@@ -11883,7 +11885,7 @@ function updateProblems() {
       (setting == 9 && p.rollz == 5) ||
       (range == 1 && p.rollz == 5)
     ) {
-      let oneUnit = genNumbers(10) + 10;
+      let oneUnit = genNumbers(5) + 5;
       p.total = (p.unitSentence + 1) * oneUnit;
       p.varB = oneUnit;
       p.varA = oneUnit * p.unitSentence;
@@ -17543,23 +17545,25 @@ function handleSubmit(e) {
         if (p.netRate < 0) {
           correctAnswer = drain / Math.abs(p.netRate * 1000);
         }
-        if (correctAnswer.toString().split(".")[1].length > 5) {
+        if (correctAnswer.toString().split(".")[1].length > 2) {
           if (p.netRate > 0) {
-            const quotient = Math.floor(fill / (p.netRate * 1000));
-            let remainder = fill % (p.netRate * 1000);
-            let denominator = p.netRate * 1000;
-            [remainder, denominator] = simplify(remainder, denominator);
-            correctAnswer = `${quotient} ${remainder}/${denominator}`;
-            if (quotient == 0) correctAnswer = `${remainder}/${denominator}`;
+            // const quotient = Math.floor(fill / (p.netRate * 1000));
+            // let remainder = fill % (p.netRate * 1000);
+            // let denominator = p.netRate * 1000;
+            // [remainder, denominator] = simplify(remainder, denominator);
+            // correctAnswer = `${quotient} ${remainder}/${denominator}`;
+            // if (quotient == 0) correctAnswer = `${remainder}/${denominator}`;
+            correctAnswer = ((fill / p.netRate) * 1000).toFixed(2);
           }
           if (p.netRate < 0) {
             p.netRate = Math.abs(p.netRate);
-            const quotient = Math.floor(drain / (p.netRate * 1000));
-            let remainder = drain % (p.netRate * 1000);
-            let denominator = p.netRate * 1000;
-            [remainder, denominator] = simplify(remainder, denominator);
-            correctAnswer = `${quotient} ${remainder}/${denominator}`;
-            if (quotient == 0) correctAnswer = `${remainder}/${denominator}`;
+            // const quotient = Math.floor(drain / (p.netRate * 1000));
+            // let remainder = drain % (p.netRate * 1000);
+            // let denominator = p.netRate * 1000;
+            // [remainder, denominator] = simplify(remainder, denominator);
+            // correctAnswer = `${quotient} ${remainder}/${denominator}`;
+            // if (quotient == 0) correctAnswer = `${remainder}/${denominator}`;
+            correctAnswer = ((drain / p.netRate) * 1000).toFixed(2);
           }
         }
       }
