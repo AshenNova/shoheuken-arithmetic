@@ -22482,8 +22482,8 @@ function genProblems() {
 
     if (setting == 17) {
       console.log("Unchanged Total");
-      const valueA = genNumbers(140) + 10;
-      const valueB = genNumbers(140) + 10;
+      const valueA = (genNumbers(40)+10)*5;
+      const valueB = (genNumbers(40)+10)*5;
       return {
         object: ["sweets", "toys", "books"][genNumbers(3)],
         valueAFirst: valueA,
@@ -24629,25 +24629,6 @@ function buttonLevelSetting() {
         "1. Triangle Pattern\n2. Continuous Pattern\n3. Square Number Pattern\n4. Position Pattern\n\n9. All",
         9
       );
-      // checkRange(setting, calcArr);
-
-      // level = 3.16;
-      // scoreNeeded = 20;
-      // gold = highScore3DotZero16.time;
-      // silver =
-      //   highScore3DotZero16.time + (cutoff - highScore3DotZero16.time) / 3;
-      // bronze =
-      //   highScore3DotZero16.time +
-      //   ((cutoff - highScore3DotZero16.time) / 3) * 2;
-      // highScoreName.innerHTML = highScore3DotZero16.name;
-      // highScoreTime.innerHTML = highScore3DotZero16.time;
-      // highScoreMistakes.innerHTML = highScore3DotZero16.mistake;
-      // document.querySelector("#user-input").setAttribute("type", "text");
-      // displayProblem.style.fontSize = "25px";
-      // displayProblem.style.marginTop = "0";
-      // instructions.textContent =
-      //   "Form an Equation using 'n' from the pattern and provide an answer";
-      // break;
       scoreNeeded = 20;
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "25px";
@@ -24667,6 +24648,10 @@ function buttonLevelSetting() {
       if (setting == 4) {
         instructions.textContent =
           "Form an Equation using 'n' from the pattern and provide an answer";
+      }
+      if (setting == 9) {
+        instructions.innerHTML =
+          "Continuous Pattern:</p>Form an Equation using 'n' from the pattern and provide an answer";
       }
       break;
 
