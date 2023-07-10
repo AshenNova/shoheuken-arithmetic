@@ -864,7 +864,9 @@ const updateCalc = function () {
   console.log(
     `Updating! skipGlobalUpdateProblem set to ${skipGlobalUpdateProblem}`
   );
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
   updateProblems();
+
   // return skipGlobalUpdateProblem;
 };
 
@@ -9020,7 +9022,7 @@ function updateProblems() {
       }
     }
   }
-
+  // DISPLAY
   if (level == "calFive") {
     //ALLOW CALCULATOR
 
@@ -10881,6 +10883,140 @@ function updateProblems() {
       A total of ${p.total} paper ${obj}s were made.</p>
       How many ${obj}s were made on day ${p.chosen}?
       `;
+    }
+    // REPEATED IDENTITY GEOMETRY
+    if (setting == 32) {
+      drawingDisplay();
+      const heightNeeded = 140 + p.rectBreadth * 10 + p.triangleHeight * 10;
+      if (heightNeeded > 275) {
+        canvas.setAttribute("height", heightNeeded + 20);
+      } else {
+        canvas.setAttribute("height", 275);
+      }
+
+      ctx.clearRect(0, 0, 400, 275);
+      ctx.save();
+      const xFirst = p.rectLength * 10;
+      const yFirst = p.rectBreadth * 10;
+      ctx.beginPath();
+      ctx.rect(20, 140, p.rectLength * 10, p.rectBreadth * 10);
+      ctx.stroke();
+      const firstArea = xFirst * yFirst;
+      console.log(firstArea);
+
+      ctx.save();
+      const secondShape = ["triangle", "rect", "square", "triangle"][
+        genNumbers(1)
+      ];
+      let xOverLapStart = undefined;
+      let yOverLapStart = undefined;
+      let overLappingArea = undefined;
+      let secondArea = undefined;
+      let unshadedFirst = undefined;
+      let unshadedSecond = undefined;
+      //NEXT SHAPE
+      ctx.translate(20, 140);
+      if (secondShape == "rect") {
+        // ctx.translate(20, 20);
+        ctx.translate(xFirst / 2 + genNumbers(xFirst / 2), genNumbers(yFirst));
+        ctx.beginPath();
+        ctx.rect(0, 0, p.secRectLength * 10, p.secRectLength * 10);
+        ctx.stroke();
+      }
+      if (secondShape == "triangle") {
+        xOverLapStart = xFirst / 2 + genNumbers(xFirst / 2) - 10;
+        yOverLapStart = yFirst / 2 + genNumbers(yFirst / 2) - 10;
+        ctx.translate(xOverLapStart, yOverLapStart);
+
+        //OVERLAPPING
+        const lengthOverLapping = xFirst - xOverLapStart;
+        const BreadthOverLapping = yFirst - yOverLapStart;
+        overLappingArea = lengthOverLapping * BreadthOverLapping;
+        console.log(overLappingArea);
+
+        ctx.save();
+        ctx.fillStyle = "red";
+        // ctx.translate(xOverLapStart, yOverLapStart)
+        ctx.beginPath();
+        ctx.rect(0, 0, lengthOverLapping, BreadthOverLapping);
+        // ctx.stroke();
+        ctx.fill();
+        ctx.restore();
+
+        //DRAW 2ND SHAPE
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(p.triangleBase * 10, 0);
+        ctx.lineTo(0, p.triangleHeight * 10);
+        ctx.closePath();
+        ctx.stroke();
+        secondArea = 0.5 * p.triangleBase * 10 * p.triangleHeight * 10;
+        console.log(secondArea);
+        if (lengthOverLapping * 2 > p.triangleBase * 10) {
+          console.log("Overlapping figure is too big");
+          return updateCalc();
+        }
+      }
+
+      ctx.restore();
+
+      ctx.restore();
+
+      //QUESTION
+      ctx.save();
+      ctx.translate(10, 20);
+      ctx.font = "1em serif";
+      unshadedFirst = firstArea - overLappingArea;
+      unshadedSecond = secondArea - overLappingArea;
+      let overFirst = overLappingArea;
+      let overSecond = overLappingArea;
+      [unshadedFirst, overFirst] = simplify(unshadedFirst, overFirst);
+      [unshadedSecond, overSecond] = simplify(unshadedSecond, overSecond);
+      const maxUnit = 20;
+      if (
+        unshadedFirst > maxUnit ||
+        unshadedSecond > maxUnit ||
+        overFirst > maxUnit ||
+        overSecond > maxUnit
+      ) {
+        console.log("Units are too big");
+        return updateCalc();
+      }
+      if (overFirst == overSecond) {
+        return updateCalc();
+      }
+      ctx.fillText(
+        `The ratio of the unshaded part to shaded part of the`,
+        10,
+        0
+      );
+      ctx.fillText(`rectangle is ${unshadedFirst} : ${overFirst}.`, 10, 30);
+      ctx.fillText(
+        `The ratio of the unshaded part to shaded part of the`,
+        10,
+        50
+      );
+      ctx.fillText(
+        `${secondShape} is ${unshadedSecond} : ${overSecond}.`,
+        10,
+        70
+      );
+      ctx.fillText(
+        `What is the ratio of the unshaded part in the rectangle`,
+        10,
+        90
+      );
+      ctx.fillText(`to the unshaded part in ${secondShape}?`, 10, 110);
+      ctx.restore();
+
+      const commonArea = commonDeno(overFirst, overSecond);
+      let newUnshadedFirst = (commonArea / overFirst) * unshadedFirst;
+      let newUnshadedSecond = (commonArea / overSecond) * unshadedSecond;
+      [newUnshadedFirst, newUnshadedSecond] = simplify(
+        newUnshadedFirst,
+        newUnshadedSecond
+      );
+      p.answer = `${newUnshadedFirst}:${newUnshadedSecond}`;
     }
   }
 
@@ -17602,6 +17738,10 @@ function handleSubmit(e) {
       if (setting == 31) {
         correctAnswer = p.dayOne + p.increase * (p.chosen - 1);
       }
+
+      if (setting == 32) {
+        correctAnswer = p.answer;
+      }
     }
     //ANSWERS
     if (level == "calSix") {
@@ -22076,7 +22216,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(31, calArr, setting, 99);
+    setting = calArrAll(32, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -22538,6 +22678,18 @@ function genProblems() {
         total: undefined,
         chosen: undefined,
         increase: genNumbers(5) + 3,
+      };
+    }
+    // REPEATED IDENTITY (GEOMETRY)
+    if (setting == 32) {
+      return {
+        rectLength: genNumbers(5) + 5,
+        rectBreadth: genNumbers(5) + 5,
+        secRectLength: genNumbers(5) + 5,
+        secRectBreadth: genNumbers(5) + 5,
+        triangleBase: genNumbers(5) + 5,
+        triangleHeight: genNumbers(5) + 5,
+        answer: undefined,
       };
     }
   }
@@ -25432,13 +25584,10 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
-      // });
-
-      // optionsBox.classList.add("hidden");
       if (
         ![
           0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-          20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 99,
+          20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 99,
         ].includes(setting * 1) &&
         !setting.split("").includes("-")
       )

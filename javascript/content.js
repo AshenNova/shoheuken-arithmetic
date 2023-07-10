@@ -122,6 +122,7 @@ export const displayContent = (level) => {
       30. Average: External Change</p>
       31. Average: Odd consecutive days</p>
       <hr></hr>
+      32. Ratio: Repeated Identity (Geometry)
 
       </p>99. All
       
