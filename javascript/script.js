@@ -23004,41 +23004,42 @@ function genProblems() {
   }
   // settings
   if (level == "heuTwob") {
-    let roll = undefined;
-    let settingText = setting.toString();
+    // let roll = undefined;
+    // let settingText = setting.toString();
 
-    if (settingText.includes("-")) {
-      console.log("range detected");
-      range = 1;
-      settingText.split("-");
-      if (!heuArr.length) {
-        for (let i = 1; i <= settingText[settingText.length - 1]; i++) {
-          heuArr.push(i);
-        }
-        console.log(heuArr);
-      }
-      roll = heuArr[genNumbers(heuArr.length)];
-      let index = heuArr.indexOf(roll);
-      heuArr.splice(index, 1);
-    } else {
-      console.log("Not range detected");
-      setting = parseInt(setting);
-      if (isNaN(setting)) {
-        setting = 9;
-      }
-    }
+    // if (settingText.includes("-")) {
+    //   console.log("range detected");
+    //   range = 1;
+    //   settingText.split("-");
+    //   if (!heuArr.length) {
+    //     for (let i = 1; i <= settingText[settingText.length - 1]; i++) {
+    //       heuArr.push(i);
+    //     }
+    //     console.log(heuArr);
+    //   }
+    //   roll = heuArr[genNumbers(heuArr.length)];
+    //   let index = heuArr.indexOf(roll);
+    //   heuArr.splice(index, 1);
+    // } else {
+    //   console.log("Not range detected");
+    //   setting = parseInt(setting);
+    //   if (isNaN(setting)) {
+    //     setting = 9;
+    //   }
+    // }
 
-    if (setting == 9) {
-      if (!heuArr.length) {
-        heuArr = [1, 2, 3, 4, 5];
-        console.log("array renewed! " + heuArr);
-      }
-      roll = heuArr[genNumbers(heuArr.length)];
-      let index = heuArr.indexOf(roll);
-      heuArr.splice(index, 1);
-      console.log("Current Array is " + heuArr);
-    }
-
+    // if (setting == 9) {
+    //   if (!heuArr.length) {
+    //     heuArr = [1, 2, 3, 4, 5];
+    //     console.log("array renewed! " + heuArr);
+    //   }
+    //   roll = heuArr[genNumbers(heuArr.length)];
+    //   let index = heuArr.indexOf(roll);
+    //   heuArr.splice(index, 1);
+    //   console.log("Current Array is " + heuArr);
+    // }
+    setting = calArrAll(6, calArr, setting, 9);
+    setting = checkRange(setting, calArr);
     if (
       setting == 1 ||
       (setting == 9 && roll == 1) ||
@@ -23118,7 +23119,7 @@ function genProblems() {
         rollz: 5,
         objectOne: ["A", "B", "C"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
-        unitSentence: genNumbers(9) + 1,
+        unitSentence: genNumbers(9) + 2,
         total: undefined,
         varA: undefined,
         varB: undefined,
@@ -25681,7 +25682,8 @@ function buttonLevelSetting() {
 
     case "Heu.2b":
       setting = prompt(
-        "What level?\n1. Comparison Model\n2. Parts of a Whole\n3. Whole and Parts\n4. Looking for Difference\n5. Unit Sentence\n6. Parts of a whole ( Unitary )\n\n9.All"
+        "What level?\n1. Comparison Model\n2. Parts of a Whole\n3. Whole and Parts\n4. Looking for Difference\n5. Unit Sentence\n6. Parts of a whole ( Unitary )\n\n9.All",
+        9
       );
       level = "heuTwob";
       range = 0;
