@@ -25205,7 +25205,7 @@ function buttonLevelSetting() {
 
     case "Level 4.23":
       level = 4.23;
-      scoreNeeded = 10;
+      scoreNeeded = 6;
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
 
