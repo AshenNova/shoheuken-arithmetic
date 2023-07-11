@@ -106,24 +106,24 @@ export const displayContent = (level) => {
       17. Ratio: Unchanged Total</p>
       18. Ratio: Unchanged Difference</p>
       19. Ratio: Manipulation in units</p>
+      20. Ratio: Repeated Identity (Geometry)</p>
+      21. Ratio: Wipe on wipe off</p>
       <hr></hr>
-      20. Rates: Part thereof part thereafter</p>
-      21. Rates: Taps
+      22. Rates: Part thereof part thereafter</p>
+      23. Rates: Taps</p>
       <hr></hr>
-      22. Percentage: Percentage of</p>
-      23. Percentage: Perchange change</p>
-      24. Percentage: Repeated Identity</p>
-      25. Percentage: Repeated Group</p>
-      26. Percentage: Remainder Concept</p>
-      27. Percentage: Simple and Further discount</p>
-      28. Percentage: GST, discount and Service Charge</p>
+      24. Percentage: Percentage of</p>
+      25. Percentage: Perchange change</p>
+      26. Percentage: Repeated Identity</p>
+      27. Percentage: Repeated Group</p>
+      28. Percentage: Remainder Concept</p>
+      29. Percentage: Simple and Further discount</p>
+      30. Percentage: GST, discount and Service Charge</p>
       <hr></hr>
-      29. Average: Internal change</p>
-      30. Average: External Change</p>
-      31. Average: Odd consecutive days</p>
+      31. Average: Internal change</p>
+      32. Average: External Change</p>
+      33. Average: Odd consecutive days</p>
       <hr></hr>
-      32. Ratio: Repeated Identity (Geometry)
-
       </p>99. All
       
       `;

@@ -213,6 +213,7 @@ table {
   top: 2%;
   left: 5%;
   height: auto;
+  max-width: 400px;
   max-height: 95%;
   width: auto;
   border-radius: 10px;
@@ -301,7 +302,9 @@ table {
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: black;
 }
-
+.center {
+  text-align: center;
+}
 .working {
   font-size: 1.5em;
   /* position: relative; */

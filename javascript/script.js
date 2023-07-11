@@ -894,11 +894,11 @@ function checkRange(setting, arr) {
           arr.push(i);
           console.log(`Loading: ${arr}`);
         }
-        scoreNeeded = arr.length;
-        if (arr.length < 10) {
-          scoreNeeded = 10;
-        }
-        console.log(`The score needed is : ${scoreNeeded}`);
+        // scoreNeeded = arr.length;
+        // if (arr.length < 10) {
+        //   scoreNeeded = 10;
+        // }
+        // console.log(`The score needed is : ${scoreNeeded}`);
       }
       setting = arr[genNumbers(arr.length)];
       const chosen = arr.splice(arr.indexOf(setting), 1);
@@ -10274,9 +10274,294 @@ function updateProblems() {
 
       `;
     }
-
-    //PART THEREOF & PART THEREAFTER
+    // REPEATED IDENTITY GEOMETRY
     if (setting == 20) {
+      drawingDisplay();
+      const heightNeeded = 140 + p.rectBreadth * 10 + p.triangleHeight * 10;
+      if (heightNeeded > 275) {
+        canvas.setAttribute("height", heightNeeded + 20);
+      } else {
+        canvas.setAttribute("height", 275);
+      }
+
+      ctx.clearRect(0, 0, 400, 275);
+      ctx.save();
+      const xFirst = p.rectLength * 10;
+      const yFirst = p.rectBreadth * 10;
+      ctx.beginPath();
+      ctx.rect(20, 140, p.rectLength * 10, p.rectBreadth * 10);
+      ctx.stroke();
+      const firstArea = xFirst * yFirst;
+      console.log(firstArea);
+
+      ctx.save();
+
+      const secondShape = ["square", "rectangle", "square", "triangle"][
+        genNumbers(1)
+      ];
+      let xOverLapStart = undefined;
+      let yOverLapStart = undefined;
+      let overLappingArea = undefined;
+      let secondArea = undefined;
+      let unshadedFirst = undefined;
+      let unshadedSecond = undefined;
+      //NEXT SHAPE
+      if (p.secondShape == "square") {
+        p.secRectBreadth = p.secRectLength;
+      }
+      if (p.secRecLength == p.secRectBreadth) secondShape = "square";
+      ctx.translate(20, 140);
+      if (secondShape == "rectangle" || secondShape == "square") {
+        xOverLapStart = xFirst / 2 + genNumbers(xFirst / 2) - 10;
+        yOverLapStart = yFirst / 2 + genNumbers(yFirst / 2) - 10;
+        ctx.translate(xOverLapStart, yOverLapStart);
+
+        //OVERLAPPING
+        const lengthOverLapping = xFirst - xOverLapStart;
+        const BreadthOverLapping = yFirst - yOverLapStart;
+        overLappingArea = lengthOverLapping * BreadthOverLapping;
+        console.log(overLappingArea);
+
+        ctx.save();
+        ctx.fillStyle = "red";
+        ctx.beginPath();
+        ctx.rect(0, 0, lengthOverLapping, BreadthOverLapping);
+        // ctx.stroke();
+        ctx.fill();
+        ctx.restore();
+
+        //DRAW 2ND SHAPE
+        ctx.beginPath();
+        // ctx.moveTo(0, 0);
+        // ctx.lineTo(p.triangleBase * 10, 0);
+        // ctx.lineTo(0, p.triangleHeight * 10);
+        // ctx.closePath();
+        ctx.rect(0, 0, p.secRectLength * 10, p.secRectBreadth * 10);
+        ctx.stroke();
+        secondArea = p.secRectLength * 10 * p.secRectBreadth * 10;
+        console.log(secondArea);
+        // if (lengthOverLapping * 2 > p.triangleBase * 10) {
+        //   console.log("Overlapping figure is too big");
+        //   return updateCalc();
+        // }
+      }
+      if (secondShape == "triangle") {
+        xOverLapStart = xFirst / 2 + genNumbers(xFirst / 2) - 10;
+        yOverLapStart = yFirst / 2 + genNumbers(yFirst / 2) - 10;
+        ctx.translate(xOverLapStart, yOverLapStart);
+
+        //OVERLAPPING
+        const lengthOverLapping = xFirst - xOverLapStart;
+        const BreadthOverLapping = yFirst - yOverLapStart;
+        overLappingArea = lengthOverLapping * BreadthOverLapping;
+        console.log(overLappingArea);
+
+        ctx.save();
+        ctx.fillStyle = "red";
+        ctx.beginPath();
+        ctx.rect(0, 0, lengthOverLapping, BreadthOverLapping);
+        // ctx.stroke();
+        ctx.fill();
+        ctx.restore();
+
+        //DRAW 2ND SHAPE
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(p.triangleBase * 10, 0);
+        ctx.lineTo(0, p.triangleHeight * 10);
+        ctx.closePath();
+        ctx.stroke();
+        secondArea = 0.5 * p.triangleBase * 10 * p.triangleHeight * 10;
+        console.log(secondArea);
+        if (lengthOverLapping * 2 > p.triangleBase * 10) {
+          console.log("Overlapping figure is too big");
+          return updateCalc();
+        }
+      }
+
+      ctx.restore();
+
+      ctx.restore();
+
+      //QUESTION
+      ctx.save();
+      ctx.translate(10, 20);
+      ctx.font = "1em serif";
+      unshadedFirst = firstArea - overLappingArea;
+      unshadedSecond = secondArea - overLappingArea;
+      let overFirst = overLappingArea;
+      let overSecond = overLappingArea;
+      [unshadedFirst, overFirst] = simplify(unshadedFirst, overFirst);
+      [unshadedSecond, overSecond] = simplify(unshadedSecond, overSecond);
+      const maxUnit = 20;
+      if (
+        unshadedFirst > maxUnit ||
+        unshadedSecond > maxUnit ||
+        overFirst > maxUnit ||
+        overSecond > maxUnit
+      ) {
+        console.log("Units are too big");
+        return updateCalc();
+      }
+      if (overFirst == overSecond) {
+        return updateCalc();
+      }
+
+      // FIRST UNIT SENTENCE
+      const unitSentenceOne = genNumbers(3);
+      if (unitSentenceOne == 0) {
+        ctx.fillText(
+          `The ratio of the unshaded part to shaded part of the`,
+          10,
+          0
+        );
+        ctx.fillText(`rectangle is ${unshadedFirst} : ${overFirst}.`, 10, 30);
+      }
+      if (unitSentenceOne == 1) {
+        ctx.fillText(
+          `The ratio of the unshaded part to the rectangle is`,
+          10,
+          0
+        );
+        ctx.fillText(
+          `${unshadedFirst} : ${unshadedFirst + overFirst}.`,
+          10,
+          30
+        );
+      }
+      if (unitSentenceOne == 2) {
+        ctx.fillText(
+          `The ratio of the shaded part to the unshaded part of the`,
+          10,
+          0
+        );
+        ctx.fillText(`rectangle is ${overFirst} : ${unshadedFirst}.`, 10, 30);
+      }
+
+      // SECOND UNIT SENTENCE
+      const unitSentenceTwo = genNumbers(3);
+      if (unitSentenceTwo == 0) {
+        ctx.fillText(
+          `The ratio of the unshaded part to shaded part of the`,
+          10,
+          50
+        );
+        ctx.fillText(
+          `${secondShape} is ${unshadedSecond} : ${overSecond}.`,
+          10,
+          70
+        );
+      }
+      if (unitSentenceTwo == 2) {
+        ctx.fillText(
+          `The ratio of the unshaded part to the area of the ${secondShape}`,
+          10,
+          50
+        );
+        ctx.fillText(
+          `is ${unshadedSecond} : ${unshadedSecond + overSecond}.`,
+          10,
+          70
+        );
+      }
+      if (unitSentenceTwo == 3) {
+        ctx.fillText(
+          `The ratio of the shaded part to unshaded part of the`,
+          10,
+          50
+        );
+        ctx.fillText(
+          `${secondShape} is ${overSecond} : ${unshadedSecond}.`,
+          10,
+          70
+        );
+      }
+
+      //  QUESTION
+      ctx.fillText(
+        `What is the ratio of the unshaded part in the rectangle`,
+        10,
+        90
+      );
+      ctx.fillText(`to the unshaded part in ${secondShape}?`, 10, 110);
+      ctx.restore();
+
+      const commonArea = commonDeno(overFirst, overSecond);
+      let newUnshadedFirst = (commonArea / overFirst) * unshadedFirst;
+      let newUnshadedSecond = (commonArea / overSecond) * unshadedSecond;
+      [newUnshadedFirst, newUnshadedSecond] = simplify(
+        newUnshadedFirst,
+        newUnshadedSecond
+      );
+      p.answer = `${newUnshadedFirst}:${newUnshadedSecond}`;
+    }
+    // RATIO: WIPE ON WIPE OFF
+    if (setting == 21) {
+      normalDisplay();
+      // displayProblem.innerHTML = `
+      // How many more dark squares have to be added for the ratio to be ???`;
+      displayProblem.innerHTML = ``;
+      let lengthArr = [];
+      let shaded = 0;
+      let unshaded = 0;
+      for (let x = 0; x < p.breadth; x++) {
+        for (let i = 0; i < p.length; i++) {
+          let generate = ["shaded", "unshaded"][genNumbers(2)];
+          if (generate == "shaded") {
+            lengthArr.push("◼️");
+            shaded += 1;
+          }
+          if (generate == "unshaded") {
+            lengthArr.push("◻️");
+            unshaded += 1;
+          }
+        }
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `<p class="center">${lengthArr.join(" ")}`
+        );
+        lengthArr = [];
+      }
+      console.log("Shaded: " + shaded, "Unshaded: " + unshaded);
+
+      let difference = "added";
+
+      if (p.version == "total") {
+        p.change = Math.abs(p.change);
+      }
+      while (p.change == 0) {
+        p.change = genNumbers(16) - 8;
+      }
+      if (p.change < 0) {
+        difference = "removed";
+      }
+      let shadedEnd = (shaded += p.change);
+
+      let unshadedEnd = unshaded;
+      if (p.version == "total") {
+        unshadedEnd = unshaded += p.change * -1;
+      }
+
+      [shadedEnd, unshadedEnd] = simplify(shadedEnd, unshadedEnd);
+      if (unshadedEnd == unshaded) {
+        console.log("No change in ratio for unshaded");
+        return updateCalc();
+      }
+      if (p.version == "object") {
+        displayProblem.insertAdjacentHTML(
+          "afterbegin",
+          `How many black squares have to be ${difference} for the ratio of the black to white squares to be ${shadedEnd}:${unshadedEnd}?`
+        );
+      }
+      if (p.version == "total") {
+        displayProblem.insertAdjacentHTML(
+          "afterbegin",
+          `How many white squares have to be shaded for the ratio of the black to white squares to be ${shadedEnd}:${unshadedEnd}?`
+        );
+      }
+    }
+    //PART THEREOF & PART THEREAFTER
+    if (setting == 22) {
       normalDisplay();
       const durationHours = Math.floor(p.duration / 60);
       const durationMins = p.duration % 60;
@@ -10298,7 +10583,7 @@ function updateProblems() {
       `;
     }
     // RATES: TAPS
-    if (setting == 21) {
+    if (setting == 23) {
       normalDisplay();
       [p.nume, p.deno] = simplify(p.nume, p.deno);
       let lineOne = `The dimensions of a container is ${p.length} cm, ${p.breadth} cm, ${p.height} cm.`;
@@ -10351,7 +10636,7 @@ function updateProblems() {
     }
 
     // PERCENTAGE: PERCENTAGE OF
-    if (setting == 22) {
+    if (setting == 24) {
       normalDisplay();
       const statement = genNumbers(2);
       if (p.start == "fractions") {
@@ -10388,7 +10673,7 @@ function updateProblems() {
       }
     }
     // PERCENTAGE: PERCENTAGE CHANGE
-    if (setting == 23) {
+    if (setting == 25) {
       normalDisplay();
 
       if (p.version == "change") {
@@ -10434,7 +10719,7 @@ function updateProblems() {
       }
     }
     // REPEATED IDENTITY PERCENTAGE
-    if (setting == 24) {
+    if (setting == 26) {
       normalDisplay();
       let lineOne = undefined;
       let tempArr = [];
@@ -10466,7 +10751,7 @@ function updateProblems() {
       What is the ratio of A:B:C?`;
     }
     // RATIO: REPEATED GROUP
-    if (setting == 25) {
+    if (setting == 27) {
       normalDisplay();
       const displayA = p.percA;
       const displayB = p.percB;
@@ -10541,7 +10826,7 @@ function updateProblems() {
       `;
     }
     // PERCENTAGE: REMAINDER CONCEPT
-    if (setting == 26) {
+    if (setting == 28) {
       normalDisplay();
       displayProblem.innerHTML = `
       Person A spent ${p.percA}% of his money on ${p.itemOne}.</p>
@@ -10604,7 +10889,7 @@ function updateProblems() {
       }
     }
     // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-    if (setting == 27) {
+    if (setting == 29) {
       normalDisplay();
       if (p.frontBack == "front") {
         if (p.moreDiscount == 0) {
@@ -10674,7 +10959,7 @@ function updateProblems() {
       );
     }
     // PERCENTAGE: GST AND SERVICE CHARGE
-    if (setting == 28) {
+    if (setting == 30) {
       normalDisplay();
       if (p.optionOne == "simple gst") {
         displayProblem.innerHTML = `
@@ -10791,7 +11076,7 @@ function updateProblems() {
     // }
 
     //AVERAGE: INTERNAL CHANGE
-    if (setting == 29) {
+    if (setting == 31) {
       normalDisplay();
       const oldAverage = (p.numOne + p.numTwo + p.numThree) / 3;
       if (oldAverage % 1 != 0) {
@@ -10837,7 +11122,7 @@ function updateProblems() {
       }
     }
     //AVERAGE: EXTERNAL CHANGE
-    if (setting == 30) {
+    if (setting == 32) {
       normalDisplay();
       if (p.changeQuantity == 0) return updateCalc();
       p.changeQuantity > 0 ? (p.situation = "joined") : (p.situation = "left");
@@ -10862,7 +11147,7 @@ function updateProblems() {
     }
 
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 31) {
+    if (setting == 33) {
       normalDisplay();
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
@@ -10885,140 +11170,6 @@ function updateProblems() {
       A total of ${p.total} paper ${obj}s were made.</p>
       How many ${obj}s were made on day ${p.chosen}?
       `;
-    }
-    // REPEATED IDENTITY GEOMETRY
-    if (setting == 32) {
-      drawingDisplay();
-      const heightNeeded = 140 + p.rectBreadth * 10 + p.triangleHeight * 10;
-      if (heightNeeded > 275) {
-        canvas.setAttribute("height", heightNeeded + 20);
-      } else {
-        canvas.setAttribute("height", 275);
-      }
-
-      ctx.clearRect(0, 0, 400, 275);
-      ctx.save();
-      const xFirst = p.rectLength * 10;
-      const yFirst = p.rectBreadth * 10;
-      ctx.beginPath();
-      ctx.rect(20, 140, p.rectLength * 10, p.rectBreadth * 10);
-      ctx.stroke();
-      const firstArea = xFirst * yFirst;
-      console.log(firstArea);
-
-      ctx.save();
-      const secondShape = ["triangle", "rect", "square", "triangle"][
-        genNumbers(1)
-      ];
-      let xOverLapStart = undefined;
-      let yOverLapStart = undefined;
-      let overLappingArea = undefined;
-      let secondArea = undefined;
-      let unshadedFirst = undefined;
-      let unshadedSecond = undefined;
-      //NEXT SHAPE
-      ctx.translate(20, 140);
-      if (secondShape == "rect") {
-        // ctx.translate(20, 20);
-        ctx.translate(xFirst / 2 + genNumbers(xFirst / 2), genNumbers(yFirst));
-        ctx.beginPath();
-        ctx.rect(0, 0, p.secRectLength * 10, p.secRectLength * 10);
-        ctx.stroke();
-      }
-      if (secondShape == "triangle") {
-        xOverLapStart = xFirst / 2 + genNumbers(xFirst / 2) - 10;
-        yOverLapStart = yFirst / 2 + genNumbers(yFirst / 2) - 10;
-        ctx.translate(xOverLapStart, yOverLapStart);
-
-        //OVERLAPPING
-        const lengthOverLapping = xFirst - xOverLapStart;
-        const BreadthOverLapping = yFirst - yOverLapStart;
-        overLappingArea = lengthOverLapping * BreadthOverLapping;
-        console.log(overLappingArea);
-
-        ctx.save();
-        ctx.fillStyle = "red";
-        // ctx.translate(xOverLapStart, yOverLapStart)
-        ctx.beginPath();
-        ctx.rect(0, 0, lengthOverLapping, BreadthOverLapping);
-        // ctx.stroke();
-        ctx.fill();
-        ctx.restore();
-
-        //DRAW 2ND SHAPE
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.lineTo(p.triangleBase * 10, 0);
-        ctx.lineTo(0, p.triangleHeight * 10);
-        ctx.closePath();
-        ctx.stroke();
-        secondArea = 0.5 * p.triangleBase * 10 * p.triangleHeight * 10;
-        console.log(secondArea);
-        if (lengthOverLapping * 2 > p.triangleBase * 10) {
-          console.log("Overlapping figure is too big");
-          return updateCalc();
-        }
-      }
-
-      ctx.restore();
-
-      ctx.restore();
-
-      //QUESTION
-      ctx.save();
-      ctx.translate(10, 20);
-      ctx.font = "1em serif";
-      unshadedFirst = firstArea - overLappingArea;
-      unshadedSecond = secondArea - overLappingArea;
-      let overFirst = overLappingArea;
-      let overSecond = overLappingArea;
-      [unshadedFirst, overFirst] = simplify(unshadedFirst, overFirst);
-      [unshadedSecond, overSecond] = simplify(unshadedSecond, overSecond);
-      const maxUnit = 20;
-      if (
-        unshadedFirst > maxUnit ||
-        unshadedSecond > maxUnit ||
-        overFirst > maxUnit ||
-        overSecond > maxUnit
-      ) {
-        console.log("Units are too big");
-        return updateCalc();
-      }
-      if (overFirst == overSecond) {
-        return updateCalc();
-      }
-      ctx.fillText(
-        `The ratio of the unshaded part to shaded part of the`,
-        10,
-        0
-      );
-      ctx.fillText(`rectangle is ${unshadedFirst} : ${overFirst}.`, 10, 30);
-      ctx.fillText(
-        `The ratio of the unshaded part to shaded part of the`,
-        10,
-        50
-      );
-      ctx.fillText(
-        `${secondShape} is ${unshadedSecond} : ${overSecond}.`,
-        10,
-        70
-      );
-      ctx.fillText(
-        `What is the ratio of the unshaded part in the rectangle`,
-        10,
-        90
-      );
-      ctx.fillText(`to the unshaded part in ${secondShape}?`, 10, 110);
-      ctx.restore();
-
-      const commonArea = commonDeno(overFirst, overSecond);
-      let newUnshadedFirst = (commonArea / overFirst) * unshadedFirst;
-      let newUnshadedSecond = (commonArea / overSecond) * unshadedSecond;
-      [newUnshadedFirst, newUnshadedSecond] = simplify(
-        newUnshadedFirst,
-        newUnshadedSecond
-      );
-      p.answer = `${newUnshadedFirst}:${newUnshadedSecond}`;
     }
   }
 
@@ -17526,8 +17677,17 @@ function handleSubmit(e) {
         [end_A, end_B] = simplify(end_A, end_B);
         correctAnswer = `${end_A}:${end_B}`;
       }
-
+      // RATIO: REPEATED IDENTITY (GEOMETRY)
       if (setting == 20) {
+        correctAnswer = p.answer;
+      }
+
+      //RATIO: WIPE ON WIPE OFF
+      if (setting == 21) {
+        correctAnswer = Math.abs(p.change);
+      }
+
+      if (setting == 22) {
         if (p.type == "part thereof") {
           correctAnswer = Math.ceil(p.duration / p.group) * p.rates;
         }
@@ -17535,7 +17695,8 @@ function handleSubmit(e) {
           correctAnswer = Math.floor(p.duration / p.group) * p.rates;
         }
       }
-      if (setting == 21) {
+
+      if (setting == 23) {
         const capacity = p.length * p.breadth * p.height;
         const fill = (capacity / p.deno) * (p.deno - p.nume);
         const drain = (capacity / p.deno) * p.nume;
@@ -17569,7 +17730,7 @@ function handleSubmit(e) {
       }
 
       //PERCENTAGE: PERCENTAGE OF
-      if (setting == 22) {
+      if (setting == 24) {
         if (p.start == "fractions" || p.start == "decimals") {
           correctAnswer = `${accDecimal((p.nume / p.deno) * 100)}%`;
         }
@@ -17610,7 +17771,7 @@ function handleSubmit(e) {
         // }
       }
       //PERCENRAGE: PERCENTAGE CHANGE
-      if (setting == 23) {
+      if (setting == 25) {
         const change = Math.abs(p.next - p.previous);
         if (p.version == "change")
           correctAnswer = `${accDecimal((change / p.previous) * 100)}%`;
@@ -17620,12 +17781,12 @@ function handleSubmit(e) {
           correctAnswer = accDecimal((p.next / (100 + p.change)) * 100);
       }
       // PERCENTAGE: REPEATED IDENTITY
-      if (setting == 24) {
+      if (setting == 26) {
         p.answer = simplestForm(p.answer);
         correctAnswer = p.answer.join(":");
       }
 
-      if (setting == 25) {
+      if (setting == 27) {
         console.log(p.answer);
         // got to change to an array
         p.answer = p.answer.split(":");
@@ -17635,7 +17796,7 @@ function handleSubmit(e) {
       }
 
       // PERCENTAGE: REMAINDER CONCEPT
-      if (setting == 26) {
+      if (setting == 28) {
         if (p.question == "percentage") {
           const remaining = 100 - p.percA;
           const itemTwoP = (remaining / 100) * p.percR;
@@ -17649,7 +17810,7 @@ function handleSubmit(e) {
         }
       }
       // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-      if (setting == 27) {
+      if (setting == 29) {
         if (p.frontBack == "front") {
           if (p.moreDiscount == 0) {
             if (p.discountOrPrice == "price") {
@@ -17698,7 +17859,7 @@ function handleSubmit(e) {
       }
 
       // PERCENTAGE: GST, DISCOUNT AND SERVICE CHARGE
-      if (setting == 28) {
+      if (setting == 30) {
         if (p.optionOne == "simple gst") {
           if (p.optionTwo == "gst") {
             correctAnswer = (p.value / 100) * p.gst;
@@ -17729,8 +17890,8 @@ function handleSubmit(e) {
       // if (setting == 25) {
       //   correctAnswer = p.answer;
       // }
-      if (setting == 29) correctAnswer = p.answer;
-      if (setting == 30) {
+      if (setting == 31) correctAnswer = p.answer;
+      if (setting == 32) {
         if (p.question == "at first") {
           correctAnswer = p.oldQuantity;
         }
@@ -17739,12 +17900,8 @@ function handleSubmit(e) {
         }
       }
       //AVERAGE: CONSECUTIVE DAYS
-      if (setting == 31) {
+      if (setting == 33) {
         correctAnswer = p.dayOne + p.increase * (p.chosen - 1);
-      }
-
-      if (setting == 32) {
-        correctAnswer = p.answer;
       }
     }
     //ANSWERS
@@ -22220,7 +22377,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(32, calArr, setting, 99);
+    setting = calArrAll(33, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -22482,8 +22639,8 @@ function genProblems() {
 
     if (setting == 17) {
       console.log("Unchanged Total");
-      const valueA = (genNumbers(40)+10)*5;
-      const valueB = (genNumbers(40)+10)*5;
+      const valueA = (genNumbers(40) + 10) * 5;
+      const valueB = (genNumbers(40) + 10) * 5;
       return {
         object: ["sweets", "toys", "books"][genNumbers(3)],
         valueAFirst: valueA,
@@ -22533,8 +22690,31 @@ function genProblems() {
       };
     }
 
-    // RATES: PARTTHEREOF & PARTTHEREAFTER
+    // REPEATED IDENTITY (GEOMETRY)
     if (setting == 20) {
+      return {
+        rectLength: genNumbers(5) + 5,
+        rectBreadth: genNumbers(5) + 5,
+        secRectLength: genNumbers(5) + 5,
+        secRectBreadth: genNumbers(5) + 5,
+        triangleBase: genNumbers(5) + 5,
+        triangleHeight: genNumbers(5) + 5,
+        answer: undefined,
+      };
+    }
+
+    // RATIO: WIPE ON WIPE OFF
+    if (setting == 21) {
+      return {
+        version: ["total", "object"][genNumbers(2)],
+        length: genNumbers(5) + 5,
+        breadth: genNumbers(2) + 3,
+        change: genNumbers(16) - 8,
+      };
+    }
+
+    // RATES: PARTTHEREOF & PARTTHEREAFTER
+    if (setting == 22) {
       return {
         startHour: genNumbers(5) + 1,
         startMins: genNumbers(60 - 1) + 1,
@@ -22546,7 +22726,7 @@ function genProblems() {
     }
 
     // RATES: TAPS
-    if (setting == 21) {
+    if (setting == 23) {
       const gen_height = genNumbers(4) + 2;
       return {
         length: genNumbers(20) + 10,
@@ -22559,7 +22739,7 @@ function genProblems() {
     }
 
     // PERCENTAGE: PERCENTAGE OF
-    if (setting == 22) {
+    if (setting == 24) {
       const gen_deno = [2, 4, 5, 8, 10, 20, 50, 100, 1000][genNumbers(9)];
       // const position = genNumbers(6);
       return {
@@ -22573,7 +22753,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: PERCENTAGE CHANGE
-    if (setting == 23) {
+    if (setting == 25) {
       return {
         previous: (genNumbers(20) + 1) * 5,
         next: (genNumbers(20) + 1) * 5,
@@ -22584,7 +22764,7 @@ function genProblems() {
       };
     }
     // REPEATED IDENTITY PERCENTAGE
-    if (setting == 24) {
+    if (setting == 26) {
       let A = (genNumbers(18) + 1) * 5;
       return {
         varA: A,
@@ -22597,7 +22777,7 @@ function genProblems() {
     }
 
     //PERCETAGE: REPEATED GROUP
-    if (setting == 25) {
+    if (setting == 27) {
       return {
         percA: (genNumbers(20) + 1) * 5,
         firstSentence: ["B and C", "the total"][genNumbers(2)],
@@ -22607,7 +22787,7 @@ function genProblems() {
       };
     }
     //PERCENTAGE: REMAINDER CONCEPT
-    if (setting == 26) {
+    if (setting == 28) {
       return {
         percA: (genNumbers(20 - 1) + 1) * 5,
         itemOne: ["toys", "chocolates", "food"][genNumbers(3)],
@@ -22624,7 +22804,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: SIMPLE AND FURTHER DISCOUNT
-    if (setting == 27) {
+    if (setting == 29) {
       return {
         person: ["A", "B", "C"][genNumbers(3)],
         cost: genNumbers(899) + 100,
@@ -22636,7 +22816,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: GST AND SERVICE CHARGE
-    if (setting == 28) {
+    if (setting == 30) {
       return {
         person: ["A", "B", "C"][genNumbers(3)],
         optionOne: ["discount gst", "service", "simple gst"][genNumbers(3)],
@@ -22649,7 +22829,7 @@ function genProblems() {
     }
 
     //AVERAGE:INTERNAL CHANGE
-    if (setting == 29) {
+    if (setting == 31) {
       return {
         version: genNumbers(3),
         // version: 2,
@@ -22662,7 +22842,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 30) {
+    if (setting == 32) {
       return {
         oldQuantity: genNumbers(6) + 2,
         oldAverage: genNumbers(40) + 10,
@@ -22675,25 +22855,13 @@ function genProblems() {
       };
     }
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 31) {
+    if (setting == 33) {
       return {
         dayOne: genNumbers(20) + 5,
         days: genNumbers(5) + 5,
         total: undefined,
         chosen: undefined,
         increase: genNumbers(5) + 3,
-      };
-    }
-    // REPEATED IDENTITY (GEOMETRY)
-    if (setting == 32) {
-      return {
-        rectLength: genNumbers(5) + 5,
-        rectBreadth: genNumbers(5) + 5,
-        secRectLength: genNumbers(5) + 5,
-        secRectBreadth: genNumbers(5) + 5,
-        triangleBase: genNumbers(5) + 5,
-        triangleHeight: genNumbers(5) + 5,
-        answer: undefined,
       };
     }
   }
@@ -25577,7 +25745,7 @@ function buttonLevelSetting() {
       if (
         ![
           0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-          20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 99,
+          20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 99,
         ].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
