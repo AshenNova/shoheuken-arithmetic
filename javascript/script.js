@@ -11808,7 +11808,7 @@ function updateProblems() {
           canvas.setAttribute("height", 275);
         }
         startYAxis = fillTextSplit(
-          `The length and breadth of the rectangle is ${p.rectLength} cm and ${p.rectBreadth} cm.\nThe base of the triangle is ${p.triangleBase} cm.\nWhat is the difference between area X and Y?`
+          `The length and breadth of the rectangle is ${p.rectLength} cm and ${p.rectBreadth} cm.\nThe base of the triangle is ${p.triangleBase} cm.\nWhat is the difference between area of part X and part Y?`
         );
       }
       if (p.type == 2) {
@@ -11821,7 +11821,7 @@ function updateProblems() {
           canvas.setAttribute("height", 275);
         }
         startYAxis = fillTextSplit(
-          `The sides of the square is ${p.squareSides} cm.\nWhat is the difference between area A and B?`
+          `The sides of the square is ${p.squareSides} cm.\nWhat is the difference between area of part A and part B?`
         );
       }
       if (p.type == 3) {
@@ -11834,7 +11834,7 @@ function updateProblems() {
           canvas.setAttribute("height", 275);
         }
         startYAxis = fillTextSplit(
-          `Both triangles have a height of ${p.squareSides} cm.\nOne has a base of ${p.triangleBase} cm.\n The other has a base of ${p.triangle2ndBase} cm.\nWhat is the difference between area A and B?`
+          `Both triangles have a height of ${p.squareSides} cm.\nOne has a base of ${p.triangleBase} cm.\n The other has a base of ${p.triangle2ndBase} cm.\nWhat is the difference between area of part A and part B?`
         );
       }
       if (p.type == 4) {
@@ -11847,7 +11847,7 @@ function updateProblems() {
           canvas.setAttribute("height", 275);
         }
         startYAxis = fillTextSplit(
-          `Both triangles have a height of ${p.squareSides} cm.\nOne has a base of ${p.triangleBase} cm.\n The other has a base of ${p.triangle2ndBase} cm.\nWhat is the difference between area P and Q?`
+          `Both triangles have a height of ${p.squareSides} cm.\nOne has a base of ${p.triangleBase} cm.\n The other has a base of ${p.triangle2ndBase} cm.\nWhat is the difference between area of part P and part Q?`
         );
       }
       ctx.save(); //FIRST SAVE
@@ -25992,7 +25992,7 @@ function buttonLevelSetting() {
       scoreNeeded = 10;
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
-        6
+        99
       );
       if (
         ![1, 2, 3, 4, 5, 6, 99].includes(setting * 1) &&
