@@ -361,6 +361,24 @@ const updateCalc = function (skipGlobalUpdateProblem) {
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
 
+function fillTextSplit(string) {
+  ctx.save();
+  ctx.font = "1em serif";
+  var txt = string;
+  const x = 15;
+  let y = 30;
+  const lineHeight = 17;
+  const lines = txt.split("\n");
+  console.log(lines);
+  for (let i = 0; i < lines.length; i++) {
+    ctx.fillText(lines[i], x, y);
+    y = 30 + lineHeight * (i + 1);
+  }
+
+  ctx.restore();
+  return y;
+}
+
 const pieChart = (f, d, r, p, a, choice, clue) => {
   ctx.save();
 
@@ -1317,4 +1335,5 @@ export {
   resultSide,
   blankSide,
   simplestForm,
+  fillTextSplit,
 };

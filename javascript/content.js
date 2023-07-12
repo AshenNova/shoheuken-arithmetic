@@ -147,6 +147,7 @@ export const displayContent = (level) => {
     3. Speed: Double Triangle</p>
     4. Volume: Grouping</p>
     5. Volume: Meet Up</p>
+    6. Geometry: Repeated Identity Area
     <hr>
     99. All`;
   }

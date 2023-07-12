@@ -33,13 +33,14 @@ import {
   resultSide,
   blankSide,
   drawIntervals,
-  // drawQuadrant,
   drawThis,
+  fillTextSplit,
 } from "./otherFunctions.js";
 // import { resetStuff } from "./reset.js";
 import { cutOffCheck } from "./cut_off.js";
 import { displayContent } from "./content.js";
-cutOffCheck();
+import { helpMeFunc } from "./helpMe.js";
+// cutOffCheck();
 let buttonLevel = 0;
 let mulLevel = 0;
 let scoreNeeded = 0;
@@ -11792,6 +11793,184 @@ function updateProblems() {
         "<p><i>Round your answer to 2 decimal place if needed.</i></p>"
       );
     }
+    // GEOMETRY: REPEATED IDENTITY
+    if (setting == 6) {
+      drawingDisplay();
+      let startYAxis = 135;
+      const multiplier = 15;
+      if (p.type == 1) {
+        // console.log(startYAxis);
+        const neededHeight = startYAxis + p.rectLength * multiplier + 30;
+        console.log(neededHeight);
+        if (neededHeight > 275) {
+          canvas.setAttribute("height", neededHeight);
+        } else {
+          canvas.setAttribute("height", 275);
+        }
+        startYAxis = fillTextSplit(
+          `The length and breadth of the rectangle is ${p.rectLength} cm and ${p.rectBreadth} cm.\nThe base of the triangle is ${p.triangleBase} cm.\nWhat is the difference between area X and Y?`
+        );
+      }
+      if (p.type == 2) {
+        // console.log(startYAxis);
+        const neededHeight = startYAxis + p.squareSides * multiplier + 30;
+        console.log(neededHeight);
+        if (neededHeight > 275) {
+          canvas.setAttribute("height", neededHeight);
+        } else {
+          canvas.setAttribute("height", 275);
+        }
+        startYAxis = fillTextSplit(
+          `The sides of the square is ${p.squareSides} cm.\nWhat is the difference between area A and B?`
+        );
+      }
+      if (p.type == 3) {
+        // console.log(startYAxis);
+        const neededHeight = startYAxis + p.squareSides * multiplier + 30;
+        console.log(neededHeight);
+        if (neededHeight > 275) {
+          canvas.setAttribute("height", neededHeight);
+        } else {
+          canvas.setAttribute("height", 275);
+        }
+        startYAxis = fillTextSplit(
+          `Both triangles have a height of ${p.squareSides} cm.\nOne has a base of ${p.triangleBase} cm.\n The other has a base of ${p.triangle2ndBase} cm.\nWhat is the difference between area A and B?`
+        );
+      }
+      if (p.type == 4) {
+        // console.log(startYAxis);
+        const neededHeight = startYAxis + p.squareSides * multiplier + 30;
+        console.log(neededHeight);
+        if (neededHeight > 275) {
+          canvas.setAttribute("height", neededHeight);
+        } else {
+          canvas.setAttribute("height", 275);
+        }
+        startYAxis = fillTextSplit(
+          `Both triangles have a height of ${p.squareSides} cm.\nOne has a base of ${p.triangleBase} cm.\n The other has a base of ${p.triangle2ndBase} cm.\nWhat is the difference between area P and Q?`
+        );
+      }
+      ctx.save(); //FIRST SAVE
+
+      ctx.font = "1em serif";
+      ctx.translate(20, startYAxis);
+      if (p.type == 1) {
+        ctx.beginPath();
+        ctx.rect(0, 0, p.rectBreadth * multiplier, p.rectLength * multiplier);
+        ctx.stroke();
+        ctx.fillText("X", (p.rectBreadth * multiplier) / 2, 20);
+
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(p.triangleBase * multiplier, p.rectLength * multiplier);
+        ctx.lineTo(0, p.rectLength * multiplier);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fillText(
+          "Y",
+          ((p.triangleBase + p.rectBreadth) / 2) * multiplier - 15,
+          p.rectLength * multiplier - 15
+        );
+      }
+      if (p.type == 2) {
+        ctx.beginPath();
+        ctx.rect(0, 0, p.squareSides * multiplier, p.squareSides * multiplier);
+        ctx.stroke();
+        ctx.fillText(
+          "A",
+          (p.squareSides * multiplier) / 2,
+          (p.squareSides * multiplier) / 2
+        );
+
+        const triangleAway = p.squareSides + genNumbers(5) + 5;
+        ctx.beginPath();
+        ctx.moveTo(0, p.squareSides * multiplier);
+        ctx.lineTo(p.squareSides * multiplier, p.squareSides * multiplier);
+        ctx.lineTo(triangleAway * multiplier, 0);
+        // ctx.lineTo(0, p.squareSides * multiplier);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fillText(
+          "B",
+          p.squareSides * multiplier + 20,
+          (p.squareSides * multiplier) / 2
+        );
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.setLineDash([1, 2]);
+        ctx.moveTo(p.squareSides * multiplier, 0);
+        ctx.lineTo(triangleAway * multiplier, 0);
+        ctx.stroke();
+        ctx.restore();
+      }
+      if (p.type == 3) {
+        ctx.beginPath();
+        // ctx.rect(0, 0, p.squareSides * multiplier, p.squareSides * multiplier);
+        const triangleHeight = p.squareSides * multiplier;
+        const triangle1stBase = p.triangleBase * multiplier;
+        const triangle2ndBase = p.triangle2ndBase * multiplier;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(triangle1stBase, triangleHeight);
+        ctx.lineTo(0, triangleHeight);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fillText(
+          "A",
+          triangle1stBase / 2 - 30,
+          (p.squareSides * multiplier) / 2
+        );
+
+        const triangleAway = (p.triangleBase + genNumbers(5) + 5) * multiplier;
+        ctx.beginPath();
+        ctx.moveTo(0, triangleHeight);
+        ctx.lineTo(triangle2ndBase, triangleHeight);
+        ctx.lineTo(triangle1stBase + triangleAway, 0);
+        // ctx.lineTo(0, p.squareSides * multiplier);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fillText(
+          "B",
+          (triangle2ndBase + triangle1stBase + triangleAway) / 2 - 20,
+          (p.squareSides * multiplier) / 2
+        );
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.setLineDash([1, 2]);
+        ctx.moveTo(0, 0);
+        ctx.lineTo(triangle1stBase + triangleAway, 0);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      if (p.type == 4) {
+        ctx.beginPath();
+        // ctx.rect(0, 0, p.squareSides * multiplier, p.squareSides * multiplier);
+        const triangleHeight = p.squareSides * multiplier;
+        const triangle1stBase = p.triangleBase * multiplier;
+        const triangle2ndBase = p.triangle2ndBase * multiplier;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(triangle1stBase, triangleHeight);
+        ctx.lineTo(0, triangleHeight);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fillText("P", triangle1stBase / 2 - 10, triangleHeight - 10);
+
+        // const triangleAway = (p.triangleBase + genNumbers(5) + 5) * multiplier;
+        ctx.beginPath();
+        ctx.moveTo(0, triangleHeight);
+        ctx.lineTo(triangle2ndBase, 0);
+        ctx.lineTo(0, 0);
+        // ctx.lineTo(0, p.squareSides * multiplier);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fillText("Q", triangle2ndBase / 2 - 10, 20);
+      }
+      ctx.restore(); // FIRST RESTORE
+    }
   }
 
   if (level == "heuOne") {
@@ -18170,6 +18349,22 @@ function handleSubmit(e) {
           }
         }
       }
+      // GEOMETRY: REPEATED IDENTITY
+      if (setting == 6) {
+        if (p.type == 1) {
+          const rect = p.rectLength * p.rectBreadth;
+          const triangle = (1 / 2) * p.triangleBase * p.rectLength;
+          correctAnswer = Math.abs(rect - triangle);
+        }
+        if (p.type == 2) {
+          correctAnswer = 0.5 * p.squareSides * p.squareSides;
+        }
+        if (p.type == 3 || p.type == 4) {
+          const triangleA = 0.5 * p.triangleBase * p.squareSides;
+          const triangleB = 0.5 * p.triangle2ndBase * p.squareSides;
+          correctAnswer = triangleB - triangleA;
+        }
+      }
     }
 
     // heuristics Answer
@@ -19699,7 +19894,7 @@ function handleSubmit(e) {
     } else {
       // WHEN INCORRECT
       console.log("incorrect");
-
+      helpMeFunc(level, state);
       state.mistake++;
       summaryPush("❌");
 
@@ -23044,6 +23239,17 @@ function genProblems() {
         question: ["finalWaterLevel", "final height"][genNumbers(1)],
       };
     }
+    // GEOMETRY: REPEATED IDENTITY
+    if (setting == 6) {
+      return {
+        type: [4, 3, 2, 1][genNumbers(4)],
+        squareSides: genNumbers(2) + 13,
+        rectLength: genNumbers(2) + 10,
+        rectBreadth: genNumbers(2) + 3,
+        triangleBase: genNumbers(4) + 5,
+        triangle2ndBase: genNumbers(2) + 9,
+      };
+    }
   }
   // heuristics value
   // setting
@@ -25786,10 +25992,10 @@ function buttonLevelSetting() {
       scoreNeeded = 10;
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
-        99
+        6
       );
       if (
-        ![1, 2, 3, 4, 5, 99].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 6, 99].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 99;
