@@ -10453,7 +10453,7 @@ function updateProblems() {
           70
         );
       }
-      if (unitSentenceTwo == 2) {
+      if (unitSentenceTwo == 1) {
         ctx.fillText(
           `The ratio of the unshaded part to the area of the ${secondShape}`,
           10,
@@ -10465,7 +10465,7 @@ function updateProblems() {
           70
         );
       }
-      if (unitSentenceTwo == 3) {
+      if (unitSentenceTwo == 2) {
         ctx.fillText(
           `The ratio of the shaded part to unshaded part of the`,
           10,
