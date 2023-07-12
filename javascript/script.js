@@ -11704,7 +11704,7 @@ function updateProblems() {
       const volumeBFirst = volumeB - transfer;
       if (volumeAFirst < 0 || volumeBFirst < 0) {
         console.log("Volume went below zero");
-        updateCalc();
+        return updateCalc();
       }
       p.answer = transfer;
       let questionSentence = undefined;
