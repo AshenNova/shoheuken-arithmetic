@@ -11179,7 +11179,7 @@ function updateProblems() {
       console.log(p.start, p.end);
       const strArr = [];
       if (p.type == "average") {
-        const begin = p.start
+        const begin = p.start;
         for (let i = 0; i < 3; i++) {
           strArr.push(begin);
           begin += 1;
@@ -14507,6 +14507,15 @@ function updateProblems() {
         unitAEnd,
         unitBEnd
       );
+      if (
+        unitAFirst == 0 ||
+        unitBFirst == 0 ||
+        unitAEnd == 0 ||
+        unitBEnd == 0
+      ) {
+        console.log("Unit is zero");
+        return updateCalc();
+      }
       if (commonNumbers > 100) {
         console.log("2) Units too big!");
         return updateCalc();
@@ -18127,7 +18136,7 @@ function handleSubmit(e) {
       //AVERAGE: TRIANGLE NUMBERS
       if (setting == 34) {
         if (p.type == "average") {
-          console.log(p.start, p.end)
+          console.log(p.start, p.end);
           const average = (p.end + p.start) / 2;
           const variables = p.end - p.start + 1;
           correctAnswer = average * variables;
@@ -24276,8 +24285,8 @@ function genProblems() {
     // UNCHANGED TOTAL (IF)
     if (setting == 5) {
       return {
-        valueA: (genNumbers(90) + 10) * 2,
-        valueB: (genNumbers(90) + 10) * 2,
+        valueA: (genNumbers(9) + 1) * 5,
+        valueB: (genNumbers(9) + 1) * 5,
         question: ["A", "B"][genNumbers(2)],
       };
     }
