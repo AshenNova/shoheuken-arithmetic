@@ -11179,9 +11179,10 @@ function updateProblems() {
       console.log(p.start, p.end);
       const strArr = [];
       if (p.type == "average") {
+        const begin = p.start
         for (let i = 0; i < 3; i++) {
-          strArr.push(p.start);
-          p.start += 1;
+          strArr.push(begin);
+          begin += 1;
         }
         strArr.push("...");
         for (let i = 2; i >= 0; i--) {
@@ -18126,6 +18127,7 @@ function handleSubmit(e) {
       //AVERAGE: TRIANGLE NUMBERS
       if (setting == 34) {
         if (p.type == "average") {
+          console.log(p.start, p.end)
           const average = (p.end + p.start) / 2;
           const variables = p.end - p.start + 1;
           correctAnswer = average * variables;
