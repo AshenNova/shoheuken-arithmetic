@@ -11172,6 +11172,47 @@ function updateProblems() {
       How many ${obj}s were made on day ${p.chosen}?
       `;
     }
+
+    //AVERAGE: TRIANGLE NUMBER
+    if (setting == 34) {
+      normalDisplay();
+      console.log(p.start, p.end);
+      const strArr = [];
+      if (p.type == "average") {
+        for (let i = 0; i < 3; i++) {
+          strArr.push(p.start);
+          p.start += 1;
+        }
+        strArr.push("...");
+        for (let i = 2; i >= 0; i--) {
+          strArr.push(p.end - i);
+        }
+
+        displayProblem.innerHTML = `
+        Find the sum of: </p>
+        ${strArr.join(" + ")}
+        `;
+      }
+      if (p.type == "multiples") {
+        p.start = 1;
+        p.end = genNumbers(10) + 10;
+        let begin = p.start * p.multiple;
+        let end = p.end * p.multiple;
+        for (let i = 0; i < 3; i++) {
+          strArr.push(begin);
+          begin += p.multiple;
+        }
+        strArr.push("...");
+        for (let i = 2; i >= 0; i--) {
+          strArr.push(end - i * p.multiple);
+        }
+
+        displayProblem.innerHTML = `
+        Find the sum of: </p>
+        ${strArr.join(" + ")}
+        `;
+      }
+    }
   }
 
   // DISPLAY
@@ -18082,6 +18123,18 @@ function handleSubmit(e) {
       if (setting == 33) {
         correctAnswer = p.dayOne + p.increase * (p.chosen - 1);
       }
+      //AVERAGE: TRIANGLE NUMBERS
+      if (setting == 34) {
+        if (p.type == "average") {
+          const average = (p.end + p.start) / 2;
+          const variables = p.end - p.start + 1;
+          correctAnswer = average * variables;
+        }
+        if (p.type == "multiples") {
+          correctAnswer =
+            (((p.end + p.start) * (p.end - p.start + 1)) / 2) * p.multiple;
+        }
+      }
     }
     //ANSWERS
     if (level == "calSix") {
@@ -22572,7 +22625,7 @@ function genProblems() {
     }
   }
   if (level == "calFive") {
-    setting = calArrAll(33, calArr, setting, 99);
+    setting = calArrAll(34, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 0) {
@@ -23057,6 +23110,18 @@ function genProblems() {
         total: undefined,
         chosen: undefined,
         increase: genNumbers(5) + 3,
+      };
+    }
+
+    //AVERAGE: TRIANGLE NUMBERS
+    if (setting == 34) {
+      const gen_start = genNumbers(90) + 10;
+      const range = genNumbers(500) + 100;
+      return {
+        type: ["average", "multiples"][genNumbers(2)],
+        start: gen_start,
+        end: gen_start + range,
+        multiple: genNumbers(11) + 2,
       };
     }
   }
@@ -25951,7 +26016,7 @@ function buttonLevelSetting() {
       if (
         ![
           0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-          20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 99,
+          20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 99,
         ].includes(setting * 1) &&
         !setting.split("").includes("-")
       )

@@ -123,6 +123,7 @@ export const displayContent = (level) => {
       31. Average: Internal change</p>
       32. Average: External Change</p>
       33. Average: Odd consecutive days</p>
+      34. Average: Triangle Numbers</p>
       <hr></hr>
       </p>99. All
       
