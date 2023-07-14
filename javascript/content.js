@@ -32,8 +32,9 @@ export const displayContent = (level) => {
     1. Identical Quantity with difference (Type 3)</p>
     2. More Than / Less Than</p>
     3. Using it all</p>
-    4. Identical Quantity with difference (Level 2) Type 1</p>
-    5. Identical Quantity with difference (Level 2) Type 2</p>
+    4. Identical Quantity with difference (Level 2) Type 1 Multiples</p>
+    5. Identical Quantity with difference (Level 2) Type 1 Difference</p>
+    6. Identical Quantity with difference (Level 2) Type 2</p>
     <hr>
     9. All
     `;

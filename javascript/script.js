@@ -14922,7 +14922,7 @@ function updateProblems() {
         );
       }
     }
-    // IDENTICAL QUANTITY WITH DIFFERENCE (SETS)
+    // IDENTICAL QUANTITY WITH DIFFERENCE (LEVEL 2) TYPE 1 MULTIPLES
     if (setting == 4) {
       //IDENTITIES
       const position = genNumbers(3);
@@ -14988,6 +14988,60 @@ function updateProblems() {
           : Math.abs(differenceValueB).toFixed(2)
       } ${diffStatementB} than ${itemB}.</p>
       ${questionStatement}
+      `;
+    }
+    // IDENTICAL QUANTITY WITH DIFFERENCE (LEVEL 2) TYPE 1 DIFFERENCE
+    if (setting == 5) {
+      if (p.priceA == p.priceB) {
+        console.log("same coins");
+        return updateCalc();
+      }
+      const diffStatementA =
+        p.quantityA > p.quantityB ? "more coins than" : "less coins than";
+      const diffValueA = p.quantityA - p.quantityB;
+      const valueA = accDecimal((p.quantityA * p.priceA) / 100);
+      const valueB = accDecimal((p.quantityB * p.priceB) / 100);
+      const diffStatementB = valueA - valueB > 0 ? "more than" : "less than";
+      const diffValueB = valueA - valueB;
+      let finalStatement = undefined;
+      if (p.question == "VA") {
+        finalStatement = `What is value of all the ${
+          p.priceA == 100 ? "$1" : `${p.priceA} cent`
+        } coins?`;
+      }
+      if (p.question == "VB") {
+        finalStatement = `What is the value of all the ${
+          p.priceB == 100 ? "$1" : `${p.priceB} cent`
+        } coins?`;
+      }
+      if (p.question == "QA") {
+        finalStatement = `How many ${
+          p.priceA == 100 ? "$1" : `${p.priceA} cent`
+        } coins are there?`;
+      }
+      if (p.question == "QB") {
+        finalStatement = `How many ${
+          p.priceB == 100 ? "$1" : `${p.priceB} cent`
+        } coins are there?`;
+      }
+      if (p.question == "T") {
+        finalStatement = `What is the total value of both boxes?`;
+      }
+      displayProblem.innerHTML = `
+      Box A contains only ${
+        p.priceA == 100 ? "$1" : `${p.priceA} cent`
+      }  coins.</p>
+      Box B contains only ${
+        p.priceB == 100 ? "$1" : `${p.priceB} cent`
+      } coins.</p>
+      Box A has ${Math.abs(diffValueA)} ${diffStatementA} Box B.</p>
+      Box A is $${
+        diffValueB % 1 == 0
+          ? Math.abs(diffValueB)
+          : Math.abs(diffValueB).toFixed(2)
+      } ${diffStatementB} than Box B.</p>
+      ${finalStatement}
+
       `;
     }
   }
@@ -19898,12 +19952,21 @@ function handleSubmit(e) {
       if (setting == 3) {
         correctAnswer = p.answer;
       }
-      //IDENTICAL QUANTITY WITH DIFFERENCE (LEVEL 2) TYPE 1
+      //IDENTICAL QUANTITY WITH DIFFERENCE (LEVEL 2) TYPE 1 MULTIPLES
       if (setting == 4) {
         if (p.question == "VA") correctAnswer = p.priceA;
         if (p.question == "VB") correctAnswer = p.priceB;
         if (p.question == "QA") correctAnswer = p.quantityA * p.groups;
         if (p.question == "QB") correctAnswer = p.quantityB * p.groups;
+      }
+      if (setting == 5) {
+        const valueA = accDecimal((p.priceA * p.quantityA) / 100);
+        const valueB = accDecimal((p.priceB * p.quantityB) / 100);
+        if (p.question == "VA") correctAnswer = valueA;
+        if (p.question == "VB") correctAnswer = valueB;
+        if (p.question == "QA") correctAnswer = p.quantityA;
+        if (p.question == "QB") correctAnswer = p.quantityB;
+        if (p.question == "T") correctAnswer = valueA + valueB;
       }
     }
     if (mulLevel == "multiples") {
@@ -24485,7 +24548,7 @@ function genProblems() {
       };
     }
 
-    // IDENTICAL QUANTITY WITH DIFFERENCE (SETS)
+    // IDENTICAL QUANTITY WITH DIFFERENCE (LEVEL 2) TYPE 1 MULTIPLES
     if (setting == 4) {
       return {
         quantityA: [1, genNumbers(5) + 2][genNumbers(2)],
@@ -24494,6 +24557,18 @@ function genProblems() {
         priceB: accDecimal((genNumbers(9) + 2) / 10),
         groups: genNumbers(89) + 10,
         question: ["VA", "VB", "QA", "QB"][genNumbers(4)],
+      };
+    }
+
+    // IDENTICAL QUANTITY WITH DIFFERENCE (LEVEL 2) TYPE 1 DIFFERENCE
+    if (setting == 5) {
+      return {
+        quantityA: genNumbers(90) + 10,
+        quantityB: genNumbers(90) + 10,
+        priceA: [10, 20, 50, 100][genNumbers(4)],
+        priceB: [10, 20, 50, 100][genNumbers(4)],
+        // groups: genNumbers(89) + 10,
+        question: ["VA", "VB", "QA", "QB", "T"][genNumbers(5)],
       };
     }
   }
@@ -26378,7 +26453,7 @@ function buttonLevelSetting() {
       );
 
       if (
-        ![1, 2, 3, 4, 9].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
       ) {
         setting = 9;
