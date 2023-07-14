@@ -15044,6 +15044,106 @@ function updateProblems() {
 
       `;
     }
+    // IDENTICAL QUANTITY WITH DIFFERENCE (LEVEL 2) TYPE 2 SETS
+    if (setting == 6) {
+      //IDENTITIES
+      if (p.quantityA == p.quantityB) {
+        p.quantityB -= 1;
+      }
+      const position = genNumbers(3);
+      const itemA = ["pencils", "erasers", "apples"][position];
+      const itemB = ["rulers", "pens", "oranges"][position];
+      const commonQuantity = commonDeno(p.quantityA, p.quantityB);
+      const valueAGroup = (commonQuantity / p.quantityA) * p.priceA * p.groups;
+      const valueBGroup = (commonQuantity / p.quantityB) * p.priceB * p.groups;
+      console.log(commonQuantity, valueAGroup, valueBGroup);
+      const totalValue = valueAGroup + valueBGroup;
+      const diffValue = valueAGroup - valueBGroup;
+      let clue = undefined;
+      if (p.version == "money") {
+        if (p.type == "diff") {
+          if (diffValue > 0)
+            clue = `He spent $${diffValue.toFixed(
+              2
+            )} more on ${itemA} than ${itemB}.`;
+          if (diffValue < 0)
+            clue = `He spent $${Math.abs(diffValue).toFixed(
+              2
+            )} less on ${itemA} than ${itemB}.`;
+        }
+        if (p.type == "total") {
+          clue = `He spent a total of $${totalValue.toFixed(2)}`;
+        }
+        let finalQuestion = undefined;
+        if (p.question == "QA") {
+          finalQuestion = `How many ${itemA} were bought?`;
+        }
+        if (p.question == "QB") {
+          finalQuestion = `How many ${itemB} were bought?`;
+        }
+        if (p.question == "VA") {
+          finalQuestion = `How much was spent on ${itemA}?`;
+        }
+        if (p.question == "VB") {
+          finalQuestion = `How much was spent on ${itemB}?`;
+        }
+        displayProblem.innerHTML = `
+        Items are sold according to the list below:
+        <ul>
+        <tr>
+        <li class="ml-3">${p.quantityA} ${itemA} for $${p.priceA.toFixed(
+          2
+        )}</li>
+        <li class="ml-3">${p.quantityB} ${itemB} for $${p.priceB.toFixed(
+          2
+        )}</li>
+        </tr>
+        </ul>
+        Someone bought an equal number of ${itemA} and ${itemB}.</p>
+        ${clue}</p>
+        ${finalQuestion}
+        `;
+      }
+      if (p.version == "distance") {
+        p.type = "diff";
+        p.priceA = genNumbers(9) + 2;
+        p.priceB = genNumbers(9) + 2;
+        // p.groups = genNumbers(10) + 10;
+        if (p.priceA == p.priceB) {
+          p.priceB -= 1;
+        }
+        let clue = undefined;
+        const commonDistance = commonDeno(p.priceA, p.priceB);
+        const totalFlagA = (commonDistance / p.priceA) * p.quantityA * p.groups;
+        const totalFlagB = (commonDistance / p.priceB) * p.quantityB * p.groups;
+        console.log(commonDistance, totalFlagA, totalFlagB);
+        const diffValue = totalFlagA - totalFlagB;
+        if (diffValue < 0) {
+          clue = `${Math.abs(
+            diffValue
+          )} more small flags than big flags were used.`;
+        } else {
+          clue = `${diffValue} more big flags than small flags were used.`;
+        }
+        let finalQuestion = undefined;
+        if (p.question == "QA") {
+          finalQuestion = "How many small flags were used?";
+        }
+        if (p.question == "QB") {
+          finalQuestion = "How many big flags were used?";
+        }
+        if (p.question == "VA" || p.question == "VB") {
+          finalQuestion = "What is the distance of the entire road?";
+        }
+        displayProblem.innerHTML = `
+        Flags were display along two sides of a road.</p>
+        On one side, ${p.quantityA} small flags were placed every ${p.priceA} m.</p>
+        On the other side, ${p.quantityB} big flags were placed every ${p.priceB} m.</p>
+        ${clue}</p>
+        ${finalQuestion}
+        `;
+      }
+    }
   }
   // MULTIPLES
   if (mulLevel == "multiples") {
@@ -19968,6 +20068,32 @@ function handleSubmit(e) {
         if (p.question == "QB") correctAnswer = p.quantityB;
         if (p.question == "T") correctAnswer = valueA + valueB;
       }
+
+      if (setting == 6) {
+        if (p.version == "money") {
+          const commonQuantity = commonDeno(p.quantityA, p.quantityB);
+          if (p.question == "VA")
+            correctAnswer =
+              (commonQuantity / p.quantityA) * p.priceA * p.groups;
+          if (p.question == "VB")
+            correctAnswer =
+              (commonQuantity / p.quantityB) * p.priceB * p.groups;
+          if (p.question == "QA") correctAnswer = p.quantityA * p.groups;
+          if (p.question == "QB") correctAnswer = p.quantityB * p.groups;
+          // if (p.question == "T") correctAnswer = valueA + valueB;
+        }
+        if (p.version == "distance") {
+          const commonDistance = commonDeno(p.priceA, p.priceB);
+          const totalFlagA =
+            (commonDistance / p.priceA) * p.quantityA * p.groups;
+          const totalFlagB =
+            (commonDistance / p.priceB) * p.quantityB * p.groups;
+          if (p.question == "QA") correctAnswer = totalFlagA;
+          if (p.question == "QB") correctAnswer = totalFlagB;
+          if (p.question == "VA" || p.question == "VB")
+            correctAnswer = (commonDistance / p.priceA) * p.priceA * p.groups;
+        }
+      }
     }
     if (mulLevel == "multiples") {
       correctAnswer = p.numFive * (multiplesArr.length - 1);
@@ -24567,8 +24693,24 @@ function genProblems() {
         quantityB: genNumbers(90) + 10,
         priceA: [10, 20, 50, 100][genNumbers(4)],
         priceB: [10, 20, 50, 100][genNumbers(4)],
+
         // groups: genNumbers(89) + 10,
         question: ["VA", "VB", "QA", "QB", "T"][genNumbers(5)],
+      };
+    }
+    // IDENTICAL QUANTITY WITH DIFFERENCE (LEVEL 2) TYPE 2 SETS
+    if (setting == 6) {
+      return {
+        version: ["money", "distance"][genNumbers(2)],
+        quantityA: genNumbers(5) + 2,
+        quantityB: genNumbers(5) + 2,
+        priceA: accDecimal((genNumbers(9) + 2) / 10),
+        priceB: accDecimal((genNumbers(9) + 2) / 10),
+        groups: genNumbers(89) + 10,
+        // groups: genNumbers(89) + 10,
+        question: ["VA", "VB", "QA", "QB", "T"][genNumbers(5)],
+        type: ["diff", "total"][genNumbers(2)],
+        question: ["QA", "QB", "VA", "VB"][genNumbers(4)],
       };
     }
   }
@@ -26449,11 +26591,11 @@ function buttonLevelSetting() {
       optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
-        9
+        6
       );
 
       if (
-        ![1, 2, 3, 4, 5, 9].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 6, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
       ) {
         setting = 9;
