@@ -21,13 +21,24 @@ export const displayContent = (level) => {
     2. Cycle</p>
     3. Repeated Identity Type 3</p>
     4. Snake and Ladder</p>
-    5. Identical Quantity with difference (Type 3)</p>
-    6. More Than / Less Than</p>
-    7. Using it all</p>
     <hr>
     9. All
     `;
   }
+
+  if (level == "heuSixb") {
+    return `
+    </p>
+    1. Identical Quantity with difference (Type 3)</p>
+    2. More Than / Less Than</p>
+    3. Using it all</p>
+    4. Identical Quantity with difference (Level 2) Type 1</p>
+    5. Identical Quantity with difference (Level 2) Type 2</p>
+    <hr>
+    9. All
+    `;
+  }
+
   if (level == "calThree") {
     return `
     </p>

@@ -14678,9 +14678,12 @@ function updateProblems() {
         `;
       }
     }
+  }
 
+  if (level == "heuSixb") {
+    normalDisplay();
     //IDENTICAL QUANTITY WITH DIFFERENCE TYPE 3
-    if (setting == 5) {
+    if (setting == 1) {
       if (p.personASmallSheets == p.personBSmallSheets) {
         console.log("Same number of sheets");
         return updateCalc();
@@ -14722,7 +14725,7 @@ function updateProblems() {
     }
 
     // MORE THAN / LESS THAN
-    if (setting == 6) {
+    if (setting == 2) {
       [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
       [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
       const commonDenominator = commonDeno(p.denoA, p.denoB);
@@ -14775,7 +14778,7 @@ function updateProblems() {
     }
 
     // USING IT ALL
-    if (setting == 7) {
+    if (setting == 3) {
       if (p.unitAF == p.unitBF || p.unitAS == p.unitBS) {
         console.log("Units identical");
         return updateCalc();
@@ -14918,6 +14921,74 @@ function updateProblems() {
           `How much does ${personB} have at first?`
         );
       }
+    }
+    // IDENTICAL QUANTITY WITH DIFFERENCE (SETS)
+    if (setting == 4) {
+      //IDENTITIES
+      const position = genNumbers(3);
+      const itemA = ["pencils", "erasers", "apples"][position];
+      const itemB = ["rulers", "pens", "oranges"][position];
+
+      //UNITSENTENCE
+      const unitType = ["fractions", "ratio", "percentage"][genNumbers(3)];
+      let unitStatement = `He bought ${p.quantityA}/${p.quantityB} as many ${itemA} as ${itemB}.`;
+      if (unitType == "ratio") {
+        unitStatement = `He bought ${itemA} to ${itemB} in the ratio of ${p.quantityA}:${p.quantityB}.`;
+      }
+      if (unitType == "percentage") {
+        p.quantityB = 5;
+
+        unitStatement = `The number of ${itemA} bought is ${
+          (p.quantityA / p.quantityB) * 100
+        }% of ${itemB}.`;
+      }
+
+      // VALUE CALCULATIONS
+      const totalValueA = p.priceA * p.quantityA * p.groups;
+      const totalValueB = p.priceB * p.quantityB * p.groups;
+      const totalValue = totalValueA + totalValueB;
+      const differenceValue = totalValueA - totalValueB;
+      const diffStatement = differenceValue > 0 ? "more" : "less";
+
+      const differenceValueB = p.priceA - p.priceB;
+      const diffStatementB = differenceValueB > 0 ? "more" : "less";
+
+      let questionStatement = undefined;
+      if (p.question == "VA") {
+        questionStatement = `How much is each ${itemA.substring(
+          0,
+          itemA.length - 1
+        )}.`;
+      }
+      if (p.question == "VB") {
+        questionStatement = `How much is each ${itemB.substring(
+          0,
+          itemB.length - 1
+        )}.`;
+      }
+      if (p.question == "QA") {
+        questionStatement = `How many ${itemA} are there?`;
+      }
+      if (p.question == "QB") {
+        questionStatement = `How many ${itemB} are there?`;
+      }
+      displayProblem.innerHTML = `
+      Someone spent $${
+        totalValue % 1 == 0 ? totalValue : totalValue.toFixed(2)
+      } on some ${itemA} and ${itemB}.</p>
+      He spent $${
+        differenceValue % 1 == 0
+          ? Math.abs(differenceValue)
+          : Math.abs(differenceValue).toFixed(2)
+      } ${diffStatement} on ${itemA} than ${itemB}.</p>
+      ${unitStatement}</p>
+      Each ${itemA} cost $${
+        differenceValueB % 1 == 0
+          ? Math.abs(differenceValueB)
+          : Math.abs(differenceValueB).toFixed(2)
+      } ${diffStatementB} than ${itemB}.</p>
+      ${questionStatement}
+      `;
     }
   }
   // MULTIPLES
@@ -19806,22 +19877,33 @@ function handleSubmit(e) {
           correctAnswer = p.sets * (p.pTime + p.nTime) + p.pTime;
         }
       }
+    }
+
+    // ANSWERS
+    if (level == "heuSixb") {
       //IDENTICAL QUANTITY WITH DIFFERENCE TYPE 3
-      if (setting == 5) {
+      if (setting == 1) {
         correctAnswer = `${Math.abs(p.personATotal - p.personBTotal)}, ${
           p.packets
         }`;
       }
 
       // MORE THAN / LESS THAN
-      if (setting == 6) {
+      if (setting == 2) {
         if (p.question == "A") correctAnswer = p.varA;
         if (p.question == "B") correctAnswer = p.varB;
       }
 
       //USING IT ALL
-      if (setting == 7) {
+      if (setting == 3) {
         correctAnswer = p.answer;
+      }
+      //IDENTICAL QUANTITY WITH DIFFERENCE (LEVEL 2) TYPE 1
+      if (setting == 4) {
+        if (p.question == "VA") correctAnswer = p.priceA;
+        if (p.question == "VB") correctAnswer = p.priceB;
+        if (p.question == "QA") correctAnswer = p.quantityA * p.groups;
+        if (p.question == "QB") correctAnswer = p.quantityB * p.groups;
       }
     }
     if (mulLevel == "multiples") {
@@ -24294,7 +24376,7 @@ function genProblems() {
 
   //SETTINGS
   if (level == "heuSix") {
-    setting = calArrAll(7, calArr, setting, 9);
+    setting = calArrAll(8, calArr, setting, 9);
     setting = checkRange(setting, calArr);
     // LOWEST COMMON TIME
     if (setting == 1) {
@@ -24348,9 +24430,11 @@ function genProblems() {
         version: ["snail", "human"][genNumbers(2)],
       };
     }
+  }
 
+  if (level == "heuSixb") {
     //IDENTICAL QUANTITY WITH DIFFERENCE TYPE 3
-    if (setting == 5) {
+    if (setting == 1) {
       const gen_large = genNumbers(20) + 30;
       const gen_packets = genNumbers(40) + 10;
       return {
@@ -24367,7 +24451,7 @@ function genProblems() {
     }
 
     //MORE THAN / LESS THAN
-    if (setting == 6) {
+    if (setting == 2) {
       const gen_denoA = genNumbers(5) + 2;
       const gen_denoB = genNumbers(5) + 2;
       return {
@@ -24384,7 +24468,7 @@ function genProblems() {
       };
     }
     // USING IT ALL
-    if (setting == 7) {
+    if (setting == 3) {
       return {
         unitAF: genNumbers(5) + 1,
         unitBF: genNumbers(5) + 1,
@@ -24398,6 +24482,18 @@ function genProblems() {
         amountLeftSecond: genNumbers(500) + 100,
         question: ["A", "B"][genNumbers(2)],
         answer: undefined,
+      };
+    }
+
+    // IDENTICAL QUANTITY WITH DIFFERENCE (SETS)
+    if (setting == 4) {
+      return {
+        quantityA: [1, genNumbers(5) + 2][genNumbers(2)],
+        quantityB: genNumbers(5) + 2,
+        priceA: accDecimal((genNumbers(9) + 2) / 10),
+        priceB: accDecimal((genNumbers(9) + 2) / 10),
+        groups: genNumbers(89) + 10,
+        question: ["VA", "VB", "QA", "QB"][genNumbers(4)],
       };
     }
   }
@@ -26258,12 +26354,37 @@ function buttonLevelSetting() {
       );
 
       if (
-        ![1, 2, 3, 4, 5, 6, 7, 9].includes(setting * 1) &&
+        ![1, 2, 3, 4, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
       ) {
         setting = 9;
       }
       scoreNeeded = 5;
+      displayProblem.style.fontSize = "18px";
+      displayProblem.style.textAlign = "left";
+      document.querySelector("#user-input").setAttribute("type", "text");
+      helpMe.style.fontSize = "18px";
+      helpMe.style.textAlign = "left";
+      break;
+
+    case "Heu.6b":
+      level = "heuSixb";
+      optionsBox.classList.remove("hidden");
+      optionsBox.textContent = `Available settings:`;
+      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
+      setting = prompt(
+        "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
+        9
+      );
+
+      if (
+        ![1, 2, 3, 4, 9].includes(setting * 1) &&
+        !setting.split("").includes("-")
+      ) {
+        setting = 9;
+      }
+      scoreNeeded = 5;
+      normalDisplay();
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
       document.querySelector("#user-input").setAttribute("type", "text");
