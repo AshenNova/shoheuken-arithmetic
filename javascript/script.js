@@ -7929,6 +7929,8 @@ function updateProblems() {
       fractionChoice.textContent = "Solve:";
     }
   }
+
+  //DISPLAY
   if (level == "calThree") {
     // WORKING DISPLAY
     if (
@@ -8473,6 +8475,11 @@ function updateProblems() {
       const firstDeno = p.oriDeno * p.mulOne;
       const secondNume = p.oriNume * p.mulTwo;
       const secondDeno = p.oriDeno * p.mulTwo;
+      if (p.mulTwo > p.mulOne) {
+        if (p.mulTwo % p.mulOne == 0) return updateCalc();
+      } else {
+        if (p.mulOne % p.mulTwo == 0) return updateCalc();
+      }
       numeratorOne.textContent = firstNume;
       denominatorOne.textContent = firstDeno;
       numeratorTwo.textContent = secondNume;
@@ -22735,7 +22742,7 @@ function genProblems() {
     }
     // FRACTIONS: EXPAND AND SIMPLIFICATION
     if (setting == 21) {
-      const gen_deno = genNumbers(9) + 3;
+      const gen_deno = genNumbers(5) + 3;
       const gen_nume = genNumbers(gen_deno - 2) + 2;
       return {
         oriNume: gen_nume,
@@ -26253,10 +26260,6 @@ function buttonLevelSetting() {
     case "Cal.3":
       level = "calThree";
       scoreNeeded = 10;
-      // setting = prompt(
-      //   "What level?\n1. Addition (to - 10 000) No carry\n2. Subtraction (to - 10 000) No borrowing\n3. Addition (to - 10 000) (Carrying)\n4. Subtraction (to - 10 000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Working: Multiplication\n10. Overlapping Place Value\n11. Working: Long Division ( No remainder )\n12. Working: Long Division ( Remainder )\n13. Working: Multiplication ( Single Blank )\n14. Multiplication in sets\n15. Long Division: Simple Statement\n16. Left Side Right Side + - x ÷\n17. Multiplication and Division of Convenient Numbers\n18. Parts and Intervals\n19. Time: Timeline ( hours and mins )\n20. Fractions: Addition and Subtraction\n21. Fractions: Expansion and simplification\n\n99. All",
-      //   99
-      // );
       optionsBox.classList.remove("hidden");
       optionsBox.textContent = `Available settings:`;
       optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
