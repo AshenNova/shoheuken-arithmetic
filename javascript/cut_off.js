@@ -111,6 +111,11 @@ export function cutOffCheck(level, setting, time) {
       push = "Yes";
     }
   }
+  if (level == "heuSixb") {
+    if (time > 300) {
+      push = "Yes";
+    }
+  }
 
   //CONCLUSION
   if (push == "Yes") {

@@ -10412,7 +10412,7 @@ function updateProblems() {
       const unitSentenceOne = genNumbers(3);
       if (unitSentenceOne == 0) {
         ctx.fillText(
-          `The ratio of the unshaded part to shaded part of the`,
+          `The ratio of the unshaded part of the rectangle to shaded part of the`,
           10,
           0
         );
@@ -10443,7 +10443,7 @@ function updateProblems() {
       const unitSentenceTwo = genNumbers(3);
       if (unitSentenceTwo == 0) {
         ctx.fillText(
-          `The ratio of the unshaded part to shaded part of the`,
+          `The ratio of the unshaded part of the ${secondShape} to shaded part of the`,
           10,
           50
         );
@@ -10455,7 +10455,7 @@ function updateProblems() {
       }
       if (unitSentenceTwo == 1) {
         ctx.fillText(
-          `The ratio of the unshaded part to the area of the ${secondShape}`,
+          `The ratio of the unshaded part of the ${secondShape} to the area of the ${secondShape}`,
           10,
           50
         );
@@ -10467,7 +10467,7 @@ function updateProblems() {
       }
       if (unitSentenceTwo == 2) {
         ctx.fillText(
-          `The ratio of the shaded part to unshaded part of the`,
+          `The ratio of the shaded part of the ${secondShape} to unshaded part of the`,
           10,
           50
         );
@@ -10557,7 +10557,7 @@ function updateProblems() {
       if (p.version == "total") {
         displayProblem.insertAdjacentHTML(
           "afterbegin",
-          `How many white squares have to be shaded for the ratio of the black to white squares to be ${shadedEnd}:${unshadedEnd}?`
+          `How many white squares have to be replaced with black squares for the ratio of the black to white squares to be ${shadedEnd}:${unshadedEnd}?`
         );
       }
     }
@@ -12191,24 +12191,26 @@ function updateProblems() {
       }
     }
 
-    if (
-      ((setting == 2) | (setting == 9) && p.rollz == 2) ||
-      (range == 1 && p.rollz == 2)
-    ) {
-      displayProblem.innerHTML = `
+    if (setting == 2) {
+      if (p.type == 1) {
+        displayProblem.innerHTML = `
         A has ${p.numOne}.</br>
         B has ${p.numTwo}.</br>
         What is the total of A and B?
       `;
+      }
+      if (p.type == 2) {
+        displayProblem.innerHTML = `
+        Person A spent $${p.numOne} and has $${p.numTwo} left.</p>
+        How much did he have at first?
+        `;
+      }
     }
 
-    if (
-      setting == 3 ||
-      (setting == 9 && p.rollz == 3) ||
-      (range == 1 && p.rollz == 3)
-    ) {
+    if (setting == 3) {
       p.numTotal = p.numOne + p.numTwo;
-      displayProblem.innerHTML = `
+      if (p.type == 1) {
+        displayProblem.innerHTML = `
         ${p.objectOne} and ${p.objectTwo} has a total of ${p.numTotal}.</br>
         ${
           p.rollChoice == 0
@@ -12217,6 +12219,24 @@ function updateProblems() {
         }.</br>
         What is ${p.rollChoice == 0 ? p.objectTwo : p.objectOne}?
       `;
+      }
+      if (p.type == 2) {
+        displayProblem.innerHTML = `
+        Person A had $${p.numTotal} at first.</br>
+        `;
+        if (p.rollChoice == 0) {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            `He spent $${p.numOne}</br>How much does he have left?`
+          );
+        }
+        if (p.rollChoice == 1) {
+          displayProblem.insertAdjacentHTML(
+            "beforeend",
+            `He has $${p.numTwo} left after spending some money.</br>How much does he have spend?`
+          );
+        }
+      }
     }
 
     if (
@@ -23729,47 +23749,9 @@ function genProblems() {
   }
   // settings
   if (level == "heuTwob") {
-    // let roll = undefined;
-    // let settingText = setting.toString();
-
-    // if (settingText.includes("-")) {
-    //   console.log("range detected");
-    //   range = 1;
-    //   settingText.split("-");
-    //   if (!heuArr.length) {
-    //     for (let i = 1; i <= settingText[settingText.length - 1]; i++) {
-    //       heuArr.push(i);
-    //     }
-    //     console.log(heuArr);
-    //   }
-    //   roll = heuArr[genNumbers(heuArr.length)];
-    //   let index = heuArr.indexOf(roll);
-    //   heuArr.splice(index, 1);
-    // } else {
-    //   console.log("Not range detected");
-    //   setting = parseInt(setting);
-    //   if (isNaN(setting)) {
-    //     setting = 9;
-    //   }
-    // }
-
-    // if (setting == 9) {
-    //   if (!heuArr.length) {
-    //     heuArr = [1, 2, 3, 4, 5];
-    //     console.log("array renewed! " + heuArr);
-    //   }
-    //   roll = heuArr[genNumbers(heuArr.length)];
-    //   let index = heuArr.indexOf(roll);
-    //   heuArr.splice(index, 1);
-    //   console.log("Current Array is " + heuArr);
-    // }
     setting = calArrAll(6, calArr, setting, 9);
     setting = checkRange(setting, calArr);
-    if (
-      setting == 1 ||
-      (setting == 9 && roll == 1) ||
-      (range == 1 && roll == 1)
-    ) {
+    if (setting == 1) {
       return {
         rollx: [
           ["more", "less", "ml"],
@@ -23787,13 +23769,9 @@ function genProblems() {
       };
     }
 
-    if (
-      setting == 2 ||
-      (setting == 9 && roll == 2) ||
-      (range == 1 && roll == 2)
-    ) {
+    if (setting == 2) {
       return {
-        rollz: 2,
+        type: [1, 2][genNumbers(2)],
         objectOne: ["A", "B", "C"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
         numOne: genNumbers(400) + 100,
@@ -23801,13 +23779,9 @@ function genProblems() {
       };
     }
 
-    if (
-      setting == 3 ||
-      (setting == 9 && roll == 3) ||
-      (range == 1 && roll == 3)
-    ) {
+    if (setting == 3) {
       return {
-        rollz: 3,
+        type: [1, 2][genNumbers(2)],
         objectOne: ["A", "B", "C"][genNumbers(3)],
         objectTwo: ["X", "Y", "Z"][genNumbers(3)],
         numOne: genNumbers(400) + 100,
