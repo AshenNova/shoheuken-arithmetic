@@ -18201,7 +18201,7 @@ function handleSubmit(e) {
             // [remainder, denominator] = simplify(remainder, denominator);
             // correctAnswer = `${quotient} ${remainder}/${denominator}`;
             // if (quotient == 0) correctAnswer = `${remainder}/${denominator}`;
-            correctAnswer = ((fill / p.netRate) * 1000).toFixed(2);
+            correctAnswer = ((fill / p.netRate*1000)).toFixed(2);
           }
           if (p.netRate < 0) {
             p.netRate = Math.abs(p.netRate);
@@ -18211,7 +18211,7 @@ function handleSubmit(e) {
             // [remainder, denominator] = simplify(remainder, denominator);
             // correctAnswer = `${quotient} ${remainder}/${denominator}`;
             // if (quotient == 0) correctAnswer = `${remainder}/${denominator}`;
-            correctAnswer = ((drain / p.netRate) * 1000).toFixed(2);
+            correctAnswer = ((drain / p.netRate*1000)).toFixed(2);
           }
         }
       }
