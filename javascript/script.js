@@ -11145,9 +11145,9 @@ function updateProblems() {
         if (newAverage.toString().split(".")[1] > 3) return updateCalc();
       }
 
-      if (p.average == p.newAverage){
-        console.log("Same average")
-        return updateCalc()
+      if (p.average == p.newAverage) {
+        console.log("Same average");
+        return updateCalc();
       }
       displayProblem.innerHTML = `
       A group's average at first was ${p.oldAverage}.</p>
@@ -26573,7 +26573,7 @@ function buttonLevelSetting() {
       optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
-        6
+        9
       );
 
       if (
