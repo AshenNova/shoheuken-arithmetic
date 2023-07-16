@@ -23406,7 +23406,7 @@ function genProblems() {
 
     if (setting == 32) {
       return {
-        oldQuantity: genNumbers(6) + 2,
+        oldQuantity: genNumbers(6) + 3,
         oldAverage: genNumbers(40) + 10,
         // newAverage: genNumbers(40) + 10,
         average: genNumbers(40) + 10,
