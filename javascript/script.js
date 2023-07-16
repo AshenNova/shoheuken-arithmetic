@@ -24608,6 +24608,8 @@ function genProblems() {
   }
 
   if (level == "heuSixb") {
+    setting = calArrAll(6, calArr, setting, 9);
+    setting = checkRange(setting, calArr);
     //IDENTICAL QUANTITY WITH DIFFERENCE TYPE 3
     if (setting == 1) {
       const gen_large = genNumbers(20) + 30;
