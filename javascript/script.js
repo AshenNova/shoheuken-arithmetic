@@ -11144,6 +11144,11 @@ function updateProblems() {
       if (newAverage % 1 != 0) {
         if (newAverage.toString().split(".")[1] > 3) return updateCalc();
       }
+
+      if (p.average == p.newAverage){
+        console.log("Same average")
+        return updateCalc()
+      }
       displayProblem.innerHTML = `
       A group's average at first was ${p.oldAverage}.</p>
       After ${Math.abs(p.changeQuantity)} students ${p.situation}, ${
