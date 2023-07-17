@@ -7886,8 +7886,36 @@ function updateProblems() {
         `;
       }
     }
-    // FRACTIONS: ADDITION AND SUBTRACTION
+    // FRACTIONS: IDENTIFICATION
     if (setting == 12) {
+      normalDisplay();
+      displayProblem.innerHTML = `<p class="mb-2">What fraction of the figure is ${p.type}?</br>`;
+      let fractArr = [];
+      let unshaded = 0;
+      let shaded = 0;
+      for (let x = 0; x < p.row; x++) {
+        for (let i = 0; i < p.column; i++) {
+          if (genNumbers(2) == 0) {
+            fractArr.push("⬜️");
+            // fractArr.push("?");
+            unshaded += 1;
+          } else {
+            fractArr.push("⬛️");
+            shaded += 1;
+          }
+        }
+        displayProblem.insertAdjacentHTML(
+          "beforeend",
+          `<p class="center">${fractArr.join(" ")}</p>`
+        );
+        fractArr = [];
+      }
+      p.black = shaded;
+      p.white = unshaded;
+      // console.log(fractArr);
+    }
+    // FRACTIONS: ADDITION AND SUBTRACTION
+    if (setting == 13) {
       denominatorOne.classList.remove("hidden");
       fractionsLine.classList.remove("hidden");
       fractionsWholeNum.textContent = "";
@@ -17462,7 +17490,15 @@ function handleSubmit(e) {
           }
         }
       }
+
+      // FRACTIONS: IDENTIFICATION
       if (setting == 12) {
+        if (p.type == "black")
+          correctAnswer = `${p.black}/${p.black + p.white}`;
+        if (p.type == "white")
+          correctAnswer = `${p.white}/${p.black + p.white}`;
+      }
+      if (setting == 13) {
         if (p.operator == "+") {
           correctAnswer = `${p.numeOne + p.numeTwo}/${p.deno}`;
           if (p.numeOne + p.numeTwo == p.deno) correctAnswer = 1;
@@ -18201,7 +18237,7 @@ function handleSubmit(e) {
             // [remainder, denominator] = simplify(remainder, denominator);
             // correctAnswer = `${quotient} ${remainder}/${denominator}`;
             // if (quotient == 0) correctAnswer = `${remainder}/${denominator}`;
-            correctAnswer = ((fill / p.netRate*1000)).toFixed(2);
+            correctAnswer = ((fill / p.netRate) * 1000).toFixed(2);
           }
           if (p.netRate < 0) {
             p.netRate = Math.abs(p.netRate);
@@ -18211,7 +18247,7 @@ function handleSubmit(e) {
             // [remainder, denominator] = simplify(remainder, denominator);
             // correctAnswer = `${quotient} ${remainder}/${denominator}`;
             // if (quotient == 0) correctAnswer = `${remainder}/${denominator}`;
-            correctAnswer = ((drain / p.netRate*1000)).toFixed(2);
+            correctAnswer = ((drain / p.netRate) * 1000).toFixed(2);
           }
         }
       }
@@ -22408,7 +22444,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(8, calArr);
     // }
-    setting = calArrAll(12, calArr, setting, 99, level);
+    setting = calArrAll(13, calArr, setting, 99, level);
     setting = checkRange(setting, calArr);
 
     if (setting == 1) {
@@ -22524,9 +22560,18 @@ function genProblems() {
         beforeAfter: ["before", "after"][genNumbers(2)],
       };
     }
-
-    //FRACTIONS: ADDITION AND SUBTRACTION
+    // FRACTIONS: IDENTIFICATION
     if (setting == 12) {
+      return {
+        row: genNumbers(3) + 1,
+        column: genNumbers(3) + 3,
+        type: ["black", "white"][genNumbers(2)],
+        black: undefined,
+        white: undefined,
+      };
+    }
+    //FRACTIONS: ADDITION AND SUBTRACTION
+    if (setting == 13) {
       const gen_deno = genNumbers(9) + 3;
       const gen_diff = genNumbers(gen_deno - 1) + 1;
       return {
@@ -26254,11 +26299,13 @@ function buttonLevelSetting() {
       level = "calTwo";
       scoreNeeded = 10;
       setting = prompt(
-        "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing\n3. Addition (to-1000) (Carrying)\n4. Subtraction (to 1000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Left Side Right Side + - x /\n10. Parts and Intervals\n11. Time: Timeline\n12. Fractions: Addition and Subtraction\n\n99. Everything",
+        "What level?\n1. Addition (to 1000) No carry\n2. Subtraction (to 1000) No borrowing\n3. Addition (to-1000) (Carrying)\n4. Subtraction (to 1000) (Borrowing)\n5. Single blank\n6. Working (Other sequence)\n7. Arithmetic Constant\n8. Arithmetic Stagger\n9. Left Side Right Side + - x /\n10. Parts and Intervals\n11. Time: Timeline\n12. Fractions: Identification\n13. Fractions: Addition and Subtraction\n\n99. Everything",
         99
       );
       if (
-        ![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 99].includes(setting * 1) &&
+        ![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 99].includes(
+          setting * 1
+        ) &&
         !setting.split("").includes("-")
       )
         setting = 99;
