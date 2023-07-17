@@ -11171,13 +11171,15 @@ function updateProblems() {
         if (newAverage.toString().split(".")[1] > 3) return updateCalc();
       }
 
-      if (p.average == p.newAverage) {
+      if (p.average == newAverage || p.oldAverage == newAverage) {
         console.log("Same average");
         return updateCalc();
       }
       displayProblem.innerHTML = `
       A group's average at first was ${p.oldAverage}.</p>
-      After ${Math.abs(p.changeQuantity)} students ${p.situation}, ${
+      After ${Math.abs(p.changeQuantity)} ${
+        p.changeQuantity == 1 ? "student" : "students "
+      } ${p.situation}, ${
         p.changeQuantity == 1 ? "whose" : "their"
       } average is ${p.average}.</p>
       The average became ${newAverage}.</p>
@@ -18222,32 +18224,36 @@ function handleSubmit(e) {
         const fill = (capacity / p.deno) * (p.deno - p.nume);
         const drain = (capacity / p.deno) * p.nume;
         if (p.netRate > 0) {
-          correctAnswer = fill / (p.netRate * 1000);
+          console.log("Type 1");
+          correctAnswer = (fill / (p.netRate * 1000)).toFixed(2);
         }
         if (p.netRate < 0) {
-          correctAnswer = drain / Math.abs(p.netRate * 1000);
+          console.log("Type 1");
+          correctAnswer = (drain / Math.abs(p.netRate * 1000)).toFixed(2);
         }
-        if (correctAnswer.toString().split(".")[1].length > 2) {
-          if (p.netRate > 0) {
-            // const quotient = Math.floor(fill / (p.netRate * 1000));
-            // let remainder = fill % (p.netRate * 1000);
-            // let denominator = p.netRate * 1000;
-            // [remainder, denominator] = simplify(remainder, denominator);
-            // correctAnswer = `${quotient} ${remainder}/${denominator}`;
-            // if (quotient == 0) correctAnswer = `${remainder}/${denominator}`;
-            correctAnswer = ((fill / p.netRate) * 1000).toFixed(2);
-          }
-          if (p.netRate < 0) {
-            p.netRate = Math.abs(p.netRate);
-            // const quotient = Math.floor(drain / (p.netRate * 1000));
-            // let remainder = drain % (p.netRate * 1000);
-            // let denominator = p.netRate * 1000;
-            // [remainder, denominator] = simplify(remainder, denominator);
-            // correctAnswer = `${quotient} ${remainder}/${denominator}`;
-            // if (quotient == 0) correctAnswer = `${remainder}/${denominator}`;
-            correctAnswer = ((drain / p.netRate) * 1000).toFixed(2);
-          }
-        }
+        // if (correctAnswer.toString().split(".")[1].length > 2) {
+        //   console.log("Type 3")
+        //   if (p.netRate > 0) {
+        //     // const quotient = Math.floor(fill / (p.netRate * 1000));
+        //     // let remainder = fill % (p.netRate * 1000);
+        //     // let denominator = p.netRate * 1000;
+        //     // [remainder, denominator] = simplify(remainder, denominator);
+        //     // correctAnswer = `${quotient} ${remainder}/${denominator}`;
+        //     // if (quotient == 0) correctAnswer = `${remainder}/${denominator}`;
+        //     correctAnswer = (fill / (p.netRate * 1000)).toFixed(2);
+        //   }
+        //   if (p.netRate < 0) {
+        //     console.log("Type 4")
+        //     p.netRate = Math.abs(p.netRate * 1000);
+        //     // const quotient = Math.floor(drain / (p.netRate * 1000));
+        //     // let remainder = drain % (p.netRate * 1000);
+        //     // let denominator = p.netRate * 1000;
+        //     // [remainder, denominator] = simplify(remainder, denominator);
+        //     // correctAnswer = `${quotient} ${remainder}/${denominator}`;
+        //     // if (quotient == 0) correctAnswer = `${remainder}/${denominator}`;
+        //     correctAnswer = (drain / (p.netRate * 1000)).toFixed(2);
+        //   }
+        // }
       }
 
       //PERCENTAGE: PERCENTAGE OF
