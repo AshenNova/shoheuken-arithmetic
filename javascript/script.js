@@ -7551,10 +7551,7 @@ function updateProblems() {
         displayProblem.style.textAlign = "left";
       }
     }
-    // FRACTIONS DISPLAY
-    if (setting == 12) {
-      simpleFractionDisplay();
-    }
+
     if (setting == 1) {
       const numOneStr = p.numOne.toString();
       let numTwoStr = p.numTwo.toString();
@@ -7916,6 +7913,7 @@ function updateProblems() {
     }
     // FRACTIONS: ADDITION AND SUBTRACTION
     if (setting == 13) {
+      simpleFractionDisplay();
       denominatorOne.classList.remove("hidden");
       fractionsLine.classList.remove("hidden");
       fractionsWholeNum.textContent = "";
