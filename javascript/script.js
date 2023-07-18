@@ -10383,7 +10383,7 @@ function updateProblems() {
       ctx.save();
 
       const secondShape = ["square", "rectangle", "square", "triangle"][
-        genNumbers(1)
+        genNumbers(4)
       ];
       let xOverLapStart = undefined;
       let yOverLapStart = undefined;
@@ -10438,14 +10438,14 @@ function updateProblems() {
 
         //OVERLAPPING
         const lengthOverLapping = xFirst - xOverLapStart;
-        const BreadthOverLapping = yFirst - yOverLapStart;
-        overLappingArea = lengthOverLapping * BreadthOverLapping;
+        const breathOverLapping = yFirst - yOverLapStart;
+        overLappingArea = lengthOverLapping * breathOverLapping;
         console.log(overLappingArea);
 
         ctx.save();
         ctx.fillStyle = "red";
         ctx.beginPath();
-        ctx.rect(0, 0, lengthOverLapping, BreadthOverLapping);
+        ctx.rect(0, 0, lengthOverLapping, breathOverLapping);
         // ctx.stroke();
         ctx.fill();
         ctx.restore();
@@ -10497,11 +10497,15 @@ function updateProblems() {
       const unitSentenceOne = genNumbers(3);
       if (unitSentenceOne == 0) {
         ctx.fillText(
-          `The ratio of the unshaded part of the rectangle to shaded part of the`,
+          `The ratio of the unshaded part of the rectangle to shaded part`,
           10,
           0
         );
-        ctx.fillText(`rectangle is ${unshadedFirst} : ${overFirst}.`, 10, 30);
+        ctx.fillText(
+          ` of the rectangle is ${unshadedFirst} : ${overFirst}.`,
+          10,
+          30
+        );
       }
       if (unitSentenceOne == 1) {
         ctx.fillText(
@@ -10517,47 +10521,53 @@ function updateProblems() {
       }
       if (unitSentenceOne == 2) {
         ctx.fillText(
-          `The ratio of the shaded part to the unshaded part of the`,
+          `The ratio of the shaded part to the unshaded part`,
           10,
           0
         );
-        ctx.fillText(`rectangle is ${overFirst} : ${unshadedFirst}.`, 10, 30);
+        ctx.fillText(
+          ` of the rectangle is ${overFirst} : ${unshadedFirst}.`,
+          10,
+          30
+        );
       }
 
       // SECOND UNIT SENTENCE
       const unitSentenceTwo = genNumbers(3);
       if (unitSentenceTwo == 0) {
         ctx.fillText(
-          `The ratio of the unshaded part of the ${secondShape} to shaded part of the`,
+          `The ratio of the unshaded part of the ${secondShape} to shaded part`,
           10,
           50
         );
         ctx.fillText(
-          `${secondShape} is ${unshadedSecond} : ${overSecond}.`,
+          ` of the ${secondShape} is ${unshadedSecond} : ${overSecond}.`,
           10,
           70
         );
       }
       if (unitSentenceTwo == 1) {
         ctx.fillText(
-          `The ratio of the unshaded part of the ${secondShape} to the area of the ${secondShape}`,
+          `The ratio of the unshaded part of the ${secondShape} to the area`,
           10,
           50
         );
         ctx.fillText(
-          `is ${unshadedSecond} : ${unshadedSecond + overSecond}.`,
+          ` of the ${secondShape} is ${unshadedSecond} : ${
+            unshadedSecond + overSecond
+          }.`,
           10,
           70
         );
       }
       if (unitSentenceTwo == 2) {
         ctx.fillText(
-          `The ratio of the shaded part of the ${secondShape} to unshaded part of the`,
+          `The ratio of the shaded part of the ${secondShape} to unshaded part`,
           10,
           50
         );
         ctx.fillText(
-          `${secondShape} is ${overSecond} : ${unshadedSecond}.`,
+          ` of the ${secondShape} is ${overSecond} : ${unshadedSecond}.`,
           10,
           70
         );

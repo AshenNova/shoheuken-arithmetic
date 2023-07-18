@@ -43,49 +43,51 @@ export const displayContent = (level) => {
   if (level == "calThree") {
     return `
     </p>
-    1. Addition (to - 10 000) No carry</p>
-    2. Subtraction (to - 10 000) No borrowing</p>
-    3. Addition (to - 10 000) (Carrying)</p>
-    4. Subtraction (to - 10 000) (Borrowing)</p>
-    5. Single blank</p>
-    6. Working (Other sequence)</p>
-    7. Arithmetic Constant</p>
-    8. Arithmetic Stagger</p>
-    9. Working: Multiplication</p>
-    10. Overlapping Place Value</p>
-    11. Working: Long Division ( No remainder )</p>
-    12. Working: Long Division ( Remainder )</p>
-    13. Working: Multiplication ( Single Blank )</p>
-    14. Multiplication in sets</p>
-    15. Long Division: Simple Statement</p>
-    16. Left Side Right Side + - x ÷</p>
-    17. Multiplication and Division of Convenient Numbers</p>
-    18. Parts and Intervals</p>
-    19. Time: Timeline ( hours and mins )</p>
-    20. Fractions: Addition and Subtraction</p>
-    21. Fractions: Expansion and simplification</p>
+    1. Addition (to - 10 000) No carry</br>
+    2. Subtraction (to - 10 000) No borrowing</br>
+    3. Addition (to - 10 000) (Carrying)</br>
+    4. Subtraction (to - 10 000) (Borrowing)</br>
+    5. Single blank</br>
+    6. Working (Other sequence)</br>
+    7. Arithmetic Constant</br>
+    8. Arithmetic Stagger</br>
+    9. Working: Multiplication</br>
+    10. Overlapping Place Value</br>
+    11. Working: Long Division ( No remainder )</br>
+    12. Working: Long Division ( Remainder )</br>
+    13. Working: Multiplication ( Single Blank )</br>
+    14. Multiplication in sets</br>
+    15. Long Division: Simple Statement</br>
+    16. Left Side Right Side + - x ÷</br>
+    17. Multiplication and Division of Convenient Numbers</br>
+    18. Parts and Intervals</br>
+    <hr>
+    19. Time: Timeline ( hours and mins )</br>
+    <hr>
+    20. Fractions: Addition and Subtraction</br>
+    21. Fractions: Expansion and simplification</br>
     <hr></hr>
     99. All`;
   }
   if (level == "calFour") {
     return `
       </p>
-      1. Common Multiples</p>
-      2. Listing Factors</p>
-      3. Common Factors</p>
-      4. Double Digit Multiplication</p>
-      5. Left Side Right Side + - x /</p>
-      6. Fractions: Addition: Mixed Fractions</p>
-      7. Fractions: Subtraction: Mixed Fractions</p>
-      8. Decimals: Addition</p>
-      9. Decimals: Subtraction</p>
-      10. Decimals: Overlapping Place Value</p>
-      11. Decimals: Multiplication (Single)</p>
-      12. Decimals: Multiplication (Double)</p>
-      13. Decimals: Division </p>
-      14. Fractions to Decimal (Limit)</p>
-      15. Decimals: Division and Multiplication with splitting</p>
-      16. Multiplication in Sets</p>
+      1. Common Multiples</br>
+      2. Listing Factors</br>
+      3. Common Factors</br>
+      4. Double Digit Multiplication</br>
+      5. Left Side Right Side + - x /</br>
+      6. Fractions: Addition: Mixed Fractions</br>
+      7. Fractions: Subtraction: Mixed Fractions</br>
+      8. Decimals: Addition</br>
+      9. Decimals: Subtraction</br>
+      10. Decimals: Overlapping Place Value</br>
+      11. Decimals: Multiplication (Single)</br>
+      12. Decimals: Multiplication (Double)</br>
+      13. Decimals: Division </br>
+      14. Fractions to Decimal (Limit)</br>
+      15. Decimals: Division and Multiplication with splitting</br>
+      16. Multiplication in Sets</br>
       17. Fractions: Unit with a Value
       <hr></hr>
       99. All
