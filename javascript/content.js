@@ -111,32 +111,33 @@ export const displayContent = (level) => {
       11. Volume: Dimensions and Surface Area</p>
       12. Volume: Numerator with a Value</p>
       <hr></hr>
-      13. Ratio: Repeated Identity</p>
-      14. Ratio: Repeated Group</p>
-      15. Ratio: Identical Total</p>
-      16. Ratio: Unchanged Object</p>
-      17. Ratio: Unchanged Total</p>
-      18. Ratio: Unchanged Difference</p>
-      19. Ratio: Manipulation in units</p>
-      20. Ratio: Repeated Identity (Geometry)</p>
-      21. Ratio: Wipe on wipe off</p>
+      13. Ratio: Simplification and Expansion</br>
+      14. Ratio: Repeated Identity</p>
+      15. Ratio: Repeated Group</p>
+      16. Ratio: Identical Total</p>
+      17. Ratio: Unchanged Object</p>
+      18. Ratio: Unchanged Total</p>
+      19. Ratio: Unchanged Difference</p>
+      20. Ratio: Manipulation in units</p>
+      21. Ratio: Repeated Identity (Geometry)</p>
+      22. Ratio: Wipe on wipe off</p>
       <hr></hr>
-      22. Rates: Part thereof part thereafter</p>
-      23. Rates: Taps</p>
+      23. Rates: Part thereof part thereafter</p>
+      24. Rates: Taps</p>
       <hr></hr>
-      24. Percentage: Percentage of</p>
-      25. Percentage: Perchange change</p>
-      26. Percentage: Repeated Identity</p>
-      27. Percentage: Repeated Group</p>
-      28. Percentage: Remainder Concept</p>
-      29. Percentage: Simple and Further discount</p>
-      30. Percentage: GST, discount and Service Charge</p>
-      31. Percentage: Identical Effect</br>
+      25. Percentage: Percentage of</p>
+      26. Percentage: Perchange change</p>
+      27. Percentage: Repeated Identity</p>
+      28. Percentage: Repeated Group</p>
+      29. Percentage: Remainder Concept</p>
+      30. Percentage: Simple and Further discount</p>
+      31. Percentage: GST, discount and Service Charge</p>
+      32. Percentage: Identical Effect</br>
       <hr></hr>
-      32. Average: Internal change</p>
-      33. Average: External Change</p>
-      34. Average: Odd consecutive days</p>
-      35. Average: Triangle Numbers</p>
+      33. Average: Internal change</p>
+      34. Average: External Change</p>
+      35. Average: Odd consecutive days</p>
+      36. Average: Triangle Numbers</p>
       <hr></hr>
       </p>99. All
       
