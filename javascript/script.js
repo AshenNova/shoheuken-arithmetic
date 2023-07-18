@@ -35,6 +35,7 @@ import {
   drawIntervals,
   drawThis,
   fillTextSplit,
+  adjustCanvasBreadth,
 } from "./otherFunctions.js";
 // import { resetStuff } from "./reset.js";
 import { cutOffCheck } from "./cut_off.js";
@@ -11067,50 +11068,45 @@ function updateProblems() {
         }
       }
     }
-    //AVERAGE: SIMPLE
-    // if (setting == 25) {
-    //   normalDisplay();
-    //   const averageList = [];
-    //   for (let i = 0; i < p.variables; i++) {
-    //     const zero = genNumbers(5);
-    //     if (zero == 0 && !averageList.includes(0)) {
-    //       averageList.push(0);
-    //     } else {
-    //       averageList.push(genNumbers(50) + 1);
-    //     }
-    //   }
-    //   const sum = averageList.reduce(function (a, b) {
-    //     return a + b;
-    //   });
-    //   const average = sum / averageList.length;
-    //   // console.log(p.answer.toString().split(".")[1].length > 3);
-    //   if (average % 1 != 0) {
-    //     if (average.toString().split(".")[1].length > 3) return updateCalc();
-    //   }
-    //   // if (p.answer.toString().split(".")[1].length > 3) return updateCalc();
-    //   if (p.version == 0) {
-    //     p.answer = average;
-    //     displayProblem.innerHTML = `
-    //   Find the average of: </p>${averageList.join(", ")}
-    //   `;
-    //   }
-    //   if (p.version == 1) {
-    //     const unknownNum = averageList[genNumbers(averageList.length)];
-    //     console.log(unknownNum, averageList);
-    //     p.answer = unknownNum;
-    //     let str = averageList.join(", ");
-    //     console.log(str);
-    //     str = str.replace(unknownNum, "? ");
-    //     displayProblem.innerHTML = `
-    //     Find the missing number.</p>
-    //     The average of the following numbers is ${sum / averageList.length}.</p>
-    //     ${str}
-    //     `;
-    //   }
-    // }
 
-    //AVERAGE: INTERNAL CHANGE
+    // PERCENTAGE: IDENTICAL EFFECT
     if (setting == 31) {
+      normalDisplay();
+      const person = [...boyNames, ...girlNames][
+        genNumbers(boyNames.length + girlNames.length)
+      ];
+      let gender = undefined;
+      boyNames.includes(person) ? (gender = "his") : (gender = "her");
+      let genderB = undefined;
+      boyNames.includes(person) ? (genderB = "he") : (genderB = "she");
+      console.log(person);
+      const oldSave = (p.salary / 100) * p.saves;
+      const newSave = accDecimal(
+        (((p.salary / 100) * p.saves) / 100) * (100 + p.change)
+      );
+      if (newSave.toString().split(".")[1]) {
+        if (newSave.toString().split(".")[1].length > 2) return updateCalc();
+      }
+      const changeSaving = newSave - oldSave;
+      displayProblem.innerHTML = `
+      ${person} saves ${p.saves}% of ${gender} salary.</br>
+      If ${gender} salary ${
+        p.change > 0 ? "increase" : "decrease"
+      } by ${Math.abs(p.change)}%</br>
+      ${
+        genNumbers(2) == 0
+          ? `The amount ${genderB} saves would become $${newSave}.`
+          : `Thea amount ${genderB} saves would ${
+              p.change > 0 ? "increase" : "decrease"
+            } by ${Math.abs(changeSaving)}.`
+      }
+      </br>
+      What is ${gender} salary?
+
+      `;
+    }
+    //AVERAGE: INTERNAL CHANGE
+    if (setting == 32) {
       normalDisplay();
       const oldAverage = (p.numOne + p.numTwo + p.numThree) / 3;
       if (oldAverage % 1 != 0) {
@@ -11156,7 +11152,7 @@ function updateProblems() {
       }
     }
     //AVERAGE: EXTERNAL CHANGE
-    if (setting == 32) {
+    if (setting == 33) {
       normalDisplay();
       if (p.changeQuantity == 0) return updateCalc();
       p.changeQuantity > 0 ? (p.situation = "joined") : (p.situation = "left");
@@ -11188,7 +11184,7 @@ function updateProblems() {
     }
 
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 33) {
+    if (setting == 34) {
       normalDisplay();
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
@@ -11214,7 +11210,7 @@ function updateProblems() {
     }
 
     //AVERAGE: TRIANGLE NUMBER
-    if (setting == 34) {
+    if (setting == 35) {
       normalDisplay();
       console.log(p.start, p.end);
       const strArr = [];
@@ -11259,13 +11255,9 @@ function updateProblems() {
   // DISPLAY
   if (level == "calSix") {
     calculatorSymbol.classList.remove("hidden");
-    if (setting != 2) {
-      normalDisplay();
-    }
-    if (setting == 2) {
-      drawingDisplay();
-    }
+
     if (setting == 1) {
+      normalDisplay();
       const person = ["John", "Emma", "Javen", "Vamika", "Matthias", "Isaac"][
         genNumbers(6)
       ];
@@ -11333,6 +11325,7 @@ function updateProblems() {
     }
     // CIRCLES
     if (setting == 2) {
+      drawingDisplay();
       //length: 400px breadth: 275px
       const canvasHeight = p.radius * 3 + 80;
       canvas.setAttribute("height", canvasHeight);
@@ -11409,8 +11402,57 @@ function updateProblems() {
         }
       }
     }
-
+    //CIRCLES: INNER SQUARE
     if (setting == 3) {
+      drawingDisplay();
+      ctx.save();
+      let y = 40;
+      const radius = p.radius * 10;
+      adjustCanvasBreadth(y, y + p.radius * 10 * 2 + 50 + 50);
+      // if (p.radius % 7 == 0) p.pi = "22/7";
+      if (p.given == "radius") {
+        y = fillTextSplit(
+          `Given that the radius of the circle is ${p.radius} cm.\nWhat is the area of the square?`
+        );
+      }
+      if (p.given == "square") {
+        const square = 2 * p.radius * p.radius;
+        y = fillTextSplit(
+          `The area of the square is ${square} cm.\nWhat is the radius of the circle?\n`
+        );
+      }
+
+      ctx.translate(0, y);
+
+      //DRAW CENTER
+      ctx.beginPath();
+      ctx.arc(400 / 2, radius + 20, 2, 0, 2 * Math.PI);
+      ctx.fill();
+
+      //DRAW CIRCLE
+
+      ctx.beginPath();
+      ctx.arc(400 / 2, radius + 20, radius, 0, 2 * Math.PI);
+      ctx.stroke();
+
+      //DRAW SQUARE
+      ctx.save();
+      ctx.beginPath();
+      ctx.translate(400 / 2, radius + 20);
+      ctx.rotate(Math.PI / 4);
+      ctx.beginPath();
+      ctx.moveTo(-radius, 0);
+      ctx.lineTo(0, -radius);
+      ctx.lineTo(radius, 0);
+      ctx.lineTo(0, radius);
+      ctx.closePath();
+      ctx.stroke();
+      ctx.restore();
+      ctx.restore();
+    }
+
+    if (setting == 4) {
+      normalDisplay();
       if (p.roll == "A") {
         displayProblem.innerHTML = `
         Someone moved from</br>
@@ -11450,7 +11492,8 @@ function updateProblems() {
       }
     }
     // SPEED: MOVING APART
-    if (setting == 4) {
+    if (setting == 5) {
+      normalDisplay();
       const position = genNumbers(3);
       p.distance = p.speedA * p.time + p.speedB * p.time;
       const unitTime = ["sec", "min", "h"][position];
@@ -11517,7 +11560,7 @@ function updateProblems() {
     }
 
     // PIECHART
-    if (setting == 5) {
+    if (setting == 6) {
       drawingDisplay();
       let types = ["fraction", "decimal", "ratio", "percentage", "angle"];
       const index = types.indexOf(p.choice);
@@ -17884,6 +17927,8 @@ function handleSubmit(e) {
         if (p.version == 1 || p.version == 2) correctAnswer = `${big}/${small}`;
       }
     }
+
+    //ANSWERS
     if (level == "calFive") {
       if (setting == 0) {
         correctAnswer = p.answer;
@@ -18413,12 +18458,10 @@ function handleSubmit(e) {
           correctAnswer = correctAnswer.toFixed(2);
         }
       }
-
-      // if (setting == 25) {
-      //   correctAnswer = p.answer;
-      // }
-      if (setting == 31) correctAnswer = p.answer;
-      if (setting == 32) {
+      // PERCENTAG: IDENTICAL EFFECT
+      if (setting == 31) correctAnswer = p.salary;
+      if (setting == 32) correctAnswer = p.answer;
+      if (setting == 33) {
         if (p.question == "at first") {
           correctAnswer = p.oldQuantity;
         }
@@ -18427,11 +18470,11 @@ function handleSubmit(e) {
         }
       }
       //AVERAGE: CONSECUTIVE DAYS
-      if (setting == 33) {
+      if (setting == 34) {
         correctAnswer = p.dayOne + p.increase * (p.chosen - 1);
       }
       //AVERAGE: TRIANGLE NUMBERS
-      if (setting == 34) {
+      if (setting == 35) {
         if (p.type == "average") {
           console.log(p.start, p.end);
           const average = (p.end + p.start) / 2;
@@ -18520,8 +18563,17 @@ function handleSubmit(e) {
         correctAnswer = accDecimal(correctAnswer);
       }
 
-      // SPEED: AVERAGE SPEED OF WHOLE JOURNEY
+      // CIRCLES: INNER SQUARE
       if (setting == 3) {
+        if (p.given == "radius") {
+          correctAnswer = 2 * p.radius * p.radius;
+        }
+        if (p.given == "square") {
+          correctAnswer = p.radius;
+        }
+      }
+      // SPEED: AVERAGE SPEED OF WHOLE JOURNEY
+      if (setting == 4) {
         // average speed whole journey
         if (p.roll == "A") {
           correctAnswer =
@@ -18568,7 +18620,7 @@ function handleSubmit(e) {
         }
       }
       // SPEED: MOVING APART
-      if (setting == 4) {
+      if (setting == 5) {
         if (p.version == "A") {
           correctAnswer = p.distance;
         }
@@ -18587,7 +18639,7 @@ function handleSubmit(e) {
         }
       }
       //PIE CHART
-      if (setting == 5) {
+      if (setting == 6) {
         if (p.choice == "fraction") correctAnswer = p.fractions;
         if (p.choice == "decimal") correctAnswer = p.decimals;
         if (p.choice == "ratio") correctAnswer = p.ratio;
@@ -22987,6 +23039,8 @@ function genProblems() {
       };
     }
   }
+
+  //SETTINGS
   if (level == "calFive") {
     setting = calArrAll(34, calArr, setting, 99);
     setting = checkRange(setting, calArr);
@@ -23438,9 +23492,19 @@ function genProblems() {
         optionThree: ["final cost", "initial cost"][genNumbers(2)],
       };
     }
+    // PERCENTAGE: IDENTICAL EFFECT
+    if (setting == 31) {
+      return {
+        saves: (genNumbers(8) + 1) * 5,
+        change: [(genNumbers(4) + 1) * 5, -(genNumbers(4) + 1) * 5][
+          genNumbers(2)
+        ],
+        salary: genNumbers(5000) + 5000,
+      };
+    }
 
     //AVERAGE:INTERNAL CHANGE
-    if (setting == 31) {
+    if (setting == 32) {
       return {
         version: genNumbers(3),
         // version: 2,
@@ -23453,7 +23517,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 32) {
+    if (setting == 33) {
       return {
         oldQuantity: genNumbers(6) + 3,
         oldAverage: genNumbers(40) + 10,
@@ -23466,7 +23530,7 @@ function genProblems() {
       };
     }
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 33) {
+    if (setting == 34) {
       return {
         dayOne: genNumbers(20) + 5,
         days: genNumbers(5) + 5,
@@ -23477,7 +23541,7 @@ function genProblems() {
     }
 
     //AVERAGE: TRIANGLE NUMBERS
-    if (setting == 34) {
+    if (setting == 35) {
       const gen_start = genNumbers(90) + 10;
       const range = genNumbers(500) + 100;
       return {
@@ -23491,7 +23555,7 @@ function genProblems() {
 
   //SETTINGS
   if (level == "calSix") {
-    setting = calArrAll(5, calArr, setting, 99);
+    setting = calArrAll(6, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 1) {
@@ -23533,8 +23597,17 @@ function genProblems() {
       };
     }
 
-    //AVERAGE SPEED OF WHOLE JOURNEY
+    // CIRCLES: INNER SQUARE
+
     if (setting == 3) {
+      return {
+        given: ["square", "radius"][genNumbers(2)],
+        radius: genNumbers(10) + 5,
+        // pi: 3.14,
+      };
+    }
+    //AVERAGE SPEED OF WHOLE JOURNEY
+    if (setting == 4) {
       return {
         roll: ["A", "B", "C"][genNumbers(3)],
         speedA: genNumbers(5) + 2,
@@ -23552,7 +23625,7 @@ function genProblems() {
     }
     // SPEED: MOVING APART
 
-    if (setting == 4) {
+    if (setting == 5) {
       return {
         version: ["E", "D", "C", "B", "A"][genNumbers(5)],
         which: ["A", "B"][genNumbers(2)],
@@ -23564,7 +23637,7 @@ function genProblems() {
     }
 
     // PIECHART
-    if (setting == 5) {
+    if (setting == 6) {
       return {
         fractions: (genNumbers(10) + 1) * 4,
         decimals: (genNumbers(10) + 1) * 4,
@@ -26349,9 +26422,9 @@ function buttonLevelSetting() {
         99
       );
       if (
-        ![
-          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 99,
-        ].includes(setting * 1) &&
+        ![Array.from(Array(18)).map((e, i) => i + 1), 99].includes(
+          setting * 1
+        ) &&
         !setting.split("").includes("-")
       )
         setting = 99;
@@ -26373,10 +26446,7 @@ function buttonLevelSetting() {
         99
       );
       if (
-        ![
-          0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-          20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 99,
-        ].includes(setting * 1) &&
+        ![...Array(36).keys(), 99].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 99;
@@ -26401,11 +26471,17 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
+      //IF THERE ARE 7 TYPES, PUT 6. SINCE THE MAP FUNCTION WILL +1
       if (
-        ![1, 2, 3, 4, 5, 99].includes(setting * 1) &&
+        ![...Array.from(Array(6)).map((e, i) => i + 1), 99].includes(
+          setting * 1
+        ) &&
         !setting.split("").includes("-")
       )
         setting = 99;
+      console.log(...Array.from(Array(6)).map((e, i) => i + 1), 99);
+      // console.log(...[...Array(6).keys()].map((i) => i + 1), 99);
+      // console.log(...Array(6).keys().map((e, i) => i + 1), 99);
       document.querySelector("#user-input").setAttribute("type", "text");
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";

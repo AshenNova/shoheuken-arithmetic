@@ -378,7 +378,16 @@ function fillTextSplit(string) {
   ctx.restore();
   return y;
 }
-
+function adjustCanvasBreadth(textHeight, space) {
+  console.log(textHeight, space);
+  const requirement = space;
+  console.log(requirement + "px");
+  if (requirement > 275) {
+    canvas.setAttribute("height", requirement);
+  } else {
+    canvas.setAttribute("height", 275);
+  }
+}
 const pieChart = (f, d, r, p, a, choice, clue) => {
   ctx.save();
 
@@ -1336,4 +1345,5 @@ export {
   blankSide,
   simplestForm,
   fillTextSplit,
+  adjustCanvasBreadth,
 };

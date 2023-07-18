@@ -74,7 +74,7 @@ export function cutOffCheck(level, setting, time) {
   }
 
   if (level == "calFive") {
-    if ([0, 9, 21].includes(setting)) {
+    if ([0, 9, 21, 34, 35].includes(setting)) {
       if (time > 180) push = "Yes";
     } else if ([1, 2, 3, 11, 24, 25, 29].includes(setting)) {
       if (time > 120) push = "Yes";

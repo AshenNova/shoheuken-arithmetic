@@ -131,11 +131,12 @@ export const displayContent = (level) => {
       28. Percentage: Remainder Concept</p>
       29. Percentage: Simple and Further discount</p>
       30. Percentage: GST, discount and Service Charge</p>
+      31. Percentage: Identical Effect</br>
       <hr></hr>
-      31. Average: Internal change</p>
-      32. Average: External Change</p>
-      33. Average: Odd consecutive days</p>
-      34. Average: Triangle Numbers</p>
+      32. Average: Internal change</p>
+      33. Average: External Change</p>
+      34. Average: Odd consecutive days</p>
+      35. Average: Triangle Numbers</p>
       <hr></hr>
       </p>99. All
       
@@ -146,9 +147,12 @@ export const displayContent = (level) => {
     </p>
     1. Fractions: Finding remainder</p>
     2. Circles: Area and Perimeter</p>
-    3. Speed: Average Speed</p>
-    4. Speed: Moving Apart</p>
-    5. Pie Chart<hr>
+    3. Circles: Inner Square</br>
+    <hr>
+    4. Speed: Average Speed</p>
+    5. Speed: Moving Apart</p>
+    6. Pie Chart</br>
+    <hr>
     99. All
     `;
   }
