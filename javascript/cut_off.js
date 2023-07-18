@@ -63,11 +63,6 @@ export function cutOffCheck(level, setting, time) {
   }
 
   if (level == "calFour") {
-    // if (setting == 1 || setting == 2 || setting == 3) {
-    //   if (time > 60) {
-    //     push = "Yes";
-    //   }
-    // } else {
     if (time > 120) {
       push = "Yes";
     }

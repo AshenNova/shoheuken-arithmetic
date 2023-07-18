@@ -94,50 +94,50 @@ export const displayContent = (level) => {
   if (level == "calFive")
     return `
       </p>
-      0. Order of Operation</p>
+      0. Order of Operation</br>
       <hr></hr>
-      1. Fractions: Multiplication of Fractions</p>
-      2. Fractions: Mixed Fraction Multiplication</p>
-      3. Fractions: Conversion</p>
-      4. Fractions: Remainder Concept</p>
-      5. Fractions: Identical Numerator</p>
-      6. Fractions: Unlike Fraction with Permission</p>
-      7. Fractions: Identical Numerator (Type 2)</p>
-      8. Fractions: Before and after like fractions</p>
+      1. Fractions: Multiplication of Fractions</br>
+      2. Fractions: Mixed Fraction Multiplication</br>
+      3. Fractions: Conversion</br>
+      4. Fractions: Remainder Concept</br>
+      5. Fractions: Identical Numerator</br>
+      6. Fractions: Unlike Fraction with Permission</br>
+      7. Fractions: Identical Numerator (Type 2)</br>
+      8. Fractions: Before and after like fractions</br>
       <hr></hr>
-      9. Geometry: Area of Triangle</p>
-      10. Geometry: Area of Figure: Using 2 different Units</p>
+      9. Geometry: Area of Triangle</br>
+      10. Geometry: Area of Figure: Using 2 different Units</br>
       <hr></hr>
-      11. Volume: Dimensions and Surface Area</p>
-      12. Volume: Numerator with a Value</p>
+      11. Volume: Dimensions and Surface Area</br>
+      12. Volume: Numerator with a Value</br>
       <hr></hr>
       13. Ratio: Simplification and Expansion</br>
-      14. Ratio: Repeated Identity</p>
-      15. Ratio: Repeated Group</p>
-      16. Ratio: Identical Total</p>
-      17. Ratio: Unchanged Object</p>
-      18. Ratio: Unchanged Total</p>
-      19. Ratio: Unchanged Difference</p>
-      20. Ratio: Manipulation in units</p>
-      21. Ratio: Repeated Identity (Geometry)</p>
-      22. Ratio: Wipe on wipe off</p>
+      14. Ratio: Repeated Identity</br>
+      15. Ratio: Repeated Group</br>
+      16. Ratio: Identical Total</br>
+      17. Ratio: Unchanged Object</br>
+      18. Ratio: Unchanged Total</br>
+      19. Ratio: Unchanged Difference</br>
+      20. Ratio: Manipulation in units</br>
+      21. Ratio: Repeated Identity (Geometry)</br>
+      22. Ratio: Wipe on wipe off</br>
       <hr></hr>
-      23. Rates: Part thereof part thereafter</p>
-      24. Rates: Taps</p>
+      23. Rates: Part thereof part thereafter</br>
+      24. Rates: Taps</br>
       <hr></hr>
-      25. Percentage: Percentage of</p>
-      26. Percentage: Perchange change</p>
-      27. Percentage: Repeated Identity</p>
-      28. Percentage: Repeated Group</p>
-      29. Percentage: Remainder Concept</p>
-      30. Percentage: Simple and Further discount</p>
-      31. Percentage: GST, discount and Service Charge</p>
+      25. Percentage: Percentage of</br>
+      26. Percentage: Perchange change</br>
+      27. Percentage: Repeated Identity</br>
+      28. Percentage: Repeated Group</br>
+      29. Percentage: Remainder Concept</br>
+      30. Percentage: Simple and Further discount</br>
+      31. Percentage: GST, discount and Service Charge</br>
       32. Percentage: Identical Effect</br>
       <hr></hr>
-      33. Average: Internal change</p>
-      34. Average: External Change</p>
-      35. Average: Odd consecutive days</p>
-      36. Average: Triangle Numbers</p>
+      33. Average: Internal change</br>
+      34. Average: External Change</br>
+      35. Average: Odd consecutive days</br>
+      36. Average: Triangle Numbers</br>
       <hr></hr>
       </p>99. All
       
