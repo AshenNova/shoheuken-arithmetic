@@ -11452,6 +11452,249 @@ function updateProblems() {
     }
 
     if (setting == 4) {
+      drawingDisplay();
+      ctx.save();
+      let x = 200;
+      let y = 137.5;
+      ctx.font = "1em serif";
+      if (p.rollType == "triangle") {
+        ctx.fillText(`What is the area of the isosceles Triangle?`, 20, 20);
+      }
+      if (p.rollType == "radius") {
+        // ctx.fillText(`What is the area of the Circle?`, 20, 20);
+        fillTextSplit("What is the area of the circle?\nπ = 3.14");
+      }
+      if (p.rollType == "angle") {
+        ctx.fillText(`Find ∠${p.rollAngle}.`, 20, 20);
+      }
+      if (p.rollType == "square") {
+        ctx.fillText(`Find the radius of the circle.`, 20, 20);
+      }
+      if (p.rollType == "square2") {
+        ctx.fillText(`Find the area of the square.`, 20, 20);
+      }
+
+      if (p.rollType == "triangle") {
+        ctx.translate(200, 137.5);
+        ctx.rotate((p.rotation * Math.PI) / 180);
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(0, p.triangleSide);
+        ctx.lineTo(p.triangleSide, 0);
+        ctx.closePath();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(0, p.triangleSide + 5);
+        ctx.lineTo(p.triangleSide + 5, 0);
+        ctx.stroke();
+
+        ctx.fillText(
+          `${p.triangleSide}`,
+          (p.triangleSide + 5) / 2 + 10,
+          (p.triangleSide + 5) / 2 + 10
+        );
+        ctx.beginPath();
+        ctx.moveTo(p.triangleSide, 0);
+        ctx.lineTo(p.triangleSide + 5, 0);
+        ctx.lineTo(p.triangleSide + 5, 5);
+        ctx.stroke();
+
+        ctx.save();
+        ctx.translate(0, p.triangleSide / 2);
+        ctx.beginPath();
+        ctx.moveTo(-5, 0);
+        ctx.lineTo(5, 0);
+        ctx.stroke();
+        ctx.restore();
+
+        ctx.save();
+        ctx.translate(p.triangleSide / 2, 0);
+        ctx.beginPath();
+        ctx.moveTo(0, -5);
+        ctx.lineTo(0, 5);
+        ctx.stroke();
+        ctx.restore();
+
+        ctx.beginPath();
+        ctx.moveTo(0, p.triangleSide);
+        ctx.lineTo(0, p.triangleSide + 5);
+        ctx.lineTo(0 + 5, p.triangleSide + 5);
+        ctx.stroke();
+      }
+
+      if (p.rollType == "radius") {
+        ctx.translate(x, y);
+
+        let squareSide = Math.sqrt((1 / 2) * p.radius * p.radius);
+        p.squareSideD = Math.floor(squareSide);
+        ctx.beginPath();
+        ctx.arc(0, 0, 2, 0, 2 * Math.PI);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(0, 0, p.radius, 0, 2 * Math.PI);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.rect(0, 0, squareSide, -squareSide);
+        ctx.stroke();
+
+        // diagonal line
+        ctx.save();
+        ctx.strokeStyle = "red";
+        ctx.fillStyle = "red";
+        ctx.beginPath();
+        ctx.moveTo(0, -squareSide);
+        ctx.lineTo(squareSide, 0);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(3, -squareSide + 6);
+        ctx.lineTo(0, -squareSide);
+        ctx.lineTo(6, -squareSide + 3);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(squareSide - 3, -6);
+        ctx.lineTo(squareSide, 0);
+        ctx.lineTo(squareSide - 6, -3);
+        ctx.stroke();
+
+        ctx.fillText(
+          `${p.squareSideD}`,
+          squareSide / 2 - 20,
+          -squareSide / 2 + 10
+        );
+        ctx.restore();
+      }
+
+      if (p.rollType == "angle") {
+        // if (p.rotation == p.rotation2){
+        //   p.rotation -= 30
+        // }
+        // if (p.rotation > p.rotation2){
+        //   [p.rotation, p.rotation2] = [p.rotation2, p.rotation]
+        // }
+        // p.netRotation = p.rotation2-p.rotation
+
+        console.log(p.rotation2);
+        p.angleOther = (180 - p.rotation2) / 2;
+        ctx.translate(x, y);
+        ctx.beginPath();
+        ctx.arc(0, 0, p.radius, 0, 2 * Math.PI);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(0, 0, 2, 0, 2 * Math.PI);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(p.radius, 0);
+        ctx.stroke();
+
+        ctx.save();
+        ctx.rotate((p.rotation2 * Math.PI) / 180);
+        ctx.lineTo(p.radius, 0);
+        ctx.restore();
+        ctx.closePath();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(0, 0, 10, 0, (p.rotation2 * Math.PI) / 180);
+        ctx.stroke();
+        if (p.rollAngle == "a") {
+          ctx.fillText(`${p.rotation2}°`, 10, 12);
+        }
+        if (p.rollAngle == "b") {
+          ctx.fillText(`b`, 10, 12);
+        }
+
+        ctx.save();
+        ctx.translate(p.radius, 0);
+        ctx.beginPath();
+        ctx.arc(0, 0, 10, ((180 - p.angleOther) * Math.PI) / 180, 1 * Math.PI);
+        ctx.stroke();
+        if (p.rollAngle == "a") {
+          ctx.fillText(`a`, -20, 10);
+        }
+        if (p.rollAngle == "b") {
+          if (p.angleOther % 1 != 0) {
+            ctx.fillText(`${p.angleOther}°`, 1, 3);
+          } else {
+            ctx.fillText(`${p.angleOther}°`, -35, 11);
+          }
+        }
+        ctx.restore();
+      }
+      if (p.rollType == "square") {
+        let squareSide = Math.sqrt((1 / 2) * p.radius * p.radius);
+        ctx.fillText(
+          `Area of the square is ${
+            (((p.radius / 10) * p.radius) / 10) * 2
+          }cm2.`,
+          20,
+          40
+        );
+        ctx.translate(x, y);
+        ctx.beginPath();
+        ctx.arc(0, 0, p.radius, 0, 2 * Math.PI);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(0, 0, 2, 0, 2 * Math.PI);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(-squareSide, squareSide, squareSide * 2, -squareSide * 2);
+        ctx.stroke();
+
+        ctx.save();
+        ctx.rotate(((genNumbers(6) - 2) * 45 * Math.PI) / 180);
+        drawHorizontalLine(0, 0, p.radius, 0);
+        ctx.fillText(`?`, p.radius / 2, 5);
+        ctx.restore();
+      }
+      if (p.rollType == "square2") {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate((p.rotation * Math.PI) / 180);
+        ctx.beginPath();
+        ctx.arc(0, 0, 1, 0, 2 * Math.PI);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.rect(-p.radius2, -p.radius2, p.radius2 * 2, p.radius2 * 2);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(p.radius2, p.radius2);
+        ctx.stroke();
+
+        // arrow head
+        ctx.beginPath();
+        ctx.moveTo(10, 3);
+        ctx.lineTo(0, 0);
+        ctx.lineTo(3, 10);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(p.radius2 - 11, p.radius2 - 6);
+        ctx.lineTo(p.radius2, p.radius2);
+        ctx.lineTo(p.radius2 - 6, p.radius2 - 11);
+        ctx.stroke();
+
+        ctx.fillText(`${p.radius2 / 20} cm`, p.radius2 / 2, p.radius2 / 2);
+
+        ctx.restore();
+      }
+
+      ctx.restore();
+    }
+
+    if (setting == 5) {
       normalDisplay();
       if (p.roll == "A") {
         displayProblem.innerHTML = `
@@ -11492,7 +11735,7 @@ function updateProblems() {
       }
     }
     // SPEED: MOVING APART
-    if (setting == 5) {
+    if (setting == 6) {
       normalDisplay();
       const position = genNumbers(3);
       p.distance = p.speedA * p.time + p.speedB * p.time;
@@ -11560,7 +11803,7 @@ function updateProblems() {
     }
 
     // PIECHART
-    if (setting == 6) {
+    if (setting == 7) {
       drawingDisplay();
       let types = ["fraction", "decimal", "ratio", "percentage", "angle"];
       const index = types.indexOf(p.choice);
@@ -18572,6 +18815,27 @@ function handleSubmit(e) {
           correctAnswer = p.radius;
         }
       }
+      //CIRCLES: OTHERS
+      if (setting == 4) {
+        if (p.rollType == "triangle") {
+          correctAnswer = ((1 / 2) * p.triangleSide * p.triangleSide) / 2;
+        }
+        if (p.rollType == "radius") {
+          correctAnswer = 3.14 * p.squareSideD * p.squareSideD;
+        }
+        if (p.rollType == "angle" && p.rollAngle == "a") {
+          correctAnswer = (180 - p.rotation2) / 2;
+        }
+        if (p.rollType == "angle" && p.rollAngle == "b") {
+          correctAnswer = 180 - p.angleOther * 2;
+        }
+        if (p.rollType == "square") {
+          correctAnswer = p.radius / 10;
+        }
+        if (p.rollType == "square2") {
+          correctAnswer = 2 * (p.radius2 / 20) * (p.radius2 / 20);
+        }
+      }
       // SPEED: AVERAGE SPEED OF WHOLE JOURNEY
       if (setting == 4) {
         // average speed whole journey
@@ -23555,7 +23819,7 @@ function genProblems() {
 
   //SETTINGS
   if (level == "calSix") {
-    setting = calArrAll(6, calArr, setting, 99);
+    setting = calArrAll(7, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 1) {
@@ -23606,8 +23870,26 @@ function genProblems() {
         // pi: 3.14,
       };
     }
-    //AVERAGE SPEED OF WHOLE JOURNEY
+    //CIRCLES: OTHERS
     if (setting == 4) {
+      return {
+        rotation: genNumbers(7) * 45,
+        rollType: ["square2", "square", "angle", "radius", "triangle"][
+          genNumbers(5)
+        ],
+        triangleSide: (genNumbers(6) + 5) * 10,
+
+        radius: (genNumbers(4) + 6) * 10,
+        squareSideD: undefined,
+        radius2: (genNumbers(4) + 2) * 20,
+
+        rollAngle: ["a", "b"][genNumbers(2)],
+        rotation2: genNumbers(90) + 44,
+        angleOther: undefined,
+      };
+    }
+    //AVERAGE SPEED OF WHOLE JOURNEY
+    if (setting == 5) {
       return {
         roll: ["A", "B", "C"][genNumbers(3)],
         speedA: genNumbers(5) + 2,
@@ -23625,7 +23907,7 @@ function genProblems() {
     }
     // SPEED: MOVING APART
 
-    if (setting == 5) {
+    if (setting == 6) {
       return {
         version: ["E", "D", "C", "B", "A"][genNumbers(5)],
         which: ["A", "B"][genNumbers(2)],
@@ -23637,7 +23919,7 @@ function genProblems() {
     }
 
     // PIECHART
-    if (setting == 6) {
+    if (setting == 7) {
       return {
         fractions: (genNumbers(10) + 1) * 4,
         decimals: (genNumbers(10) + 1) * 4,
@@ -26473,13 +26755,13 @@ function buttonLevelSetting() {
       );
       //IF THERE ARE 7 TYPES, PUT 6. SINCE THE MAP FUNCTION WILL +1
       if (
-        ![...Array.from(Array(6)).map((e, i) => i + 1), 99].includes(
+        ![...Array.from(Array(7)).map((e, i) => i + 1), 99].includes(
           setting * 1
         ) &&
         !setting.split("").includes("-")
       )
         setting = 99;
-      console.log(...Array.from(Array(6)).map((e, i) => i + 1), 99);
+      // console.log(...Array.from(Array(6)).map((e, i) => i + 1), 99);
       // console.log(...[...Array(6).keys()].map((i) => i + 1), 99);
       // console.log(...Array(6).keys().map((e, i) => i + 1), 99);
       document.querySelector("#user-input").setAttribute("type", "text");
