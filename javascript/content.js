@@ -148,10 +148,11 @@ export const displayContent = (level) => {
     1. Fractions: Finding remainder</p>
     2. Circles: Area and Perimeter</p>
     3. Circles: Inner Square</br>
+    4. Circles: Others</br>
     <hr>
-    4. Speed: Average Speed</p>
-    5. Speed: Moving Apart</p>
-    6. Pie Chart</br>
+    5. Speed: Average Speed</p>
+    6. Speed: Moving Apart</p>
+    7. Pie Chart</br>
     <hr>
     99. All
     `;
