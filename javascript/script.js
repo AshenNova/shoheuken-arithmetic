@@ -27230,7 +27230,7 @@ summaryBtn.addEventListener("click", function () {
   console.log("Summary button pressed");
   summaryContainer.classList.remove("hidden");
   summaryAttemptCl.textContent = attempt;
-  if (screenWidth > 1439) {
+  if (screenWidth > 1430) {
     if (level.startsWith("cal") || level.startsWith("heu")) {
       optionsBox.classList.remove("hidden");
       optionsBox.textContent = `Available settings:`;
