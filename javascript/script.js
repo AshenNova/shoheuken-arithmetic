@@ -8466,9 +8466,39 @@ function updateProblems() {
         `;
       }
     }
+    // MONEY: ADDITION AND SUBTRACTION
+    if (setting == 20) {
+      normalDisplay();
+
+      if (p.symbol == "+" || p.symbol == "-") {
+        if (p.symbol == "-") {
+          if (p.varA < p.varB) [p.varA, p.varB] = [p.varB, p.varA];
+        }
+        let displayBType = ["dollars", "cents"][genNumbers(2)];
+
+        if (displayBType == "dollars") {
+          displayProblem.innerHTML = `${p.varA}¢ ${p.symbol} $${(
+            p.varB / 100
+          ).toFixed(2)} = $ ?
+          `;
+        }
+        if (displayBType == "cents") {
+          displayProblem.innerHTML = `${p.varA}¢ ${p.symbol} ${p.varB} ¢ = $ ?
+          `;
+        }
+      }
+
+      if (p.symbol == "x") {
+        p.varB = genNumbers(8) + 2;
+        displayProblem.innerHTML = `
+        $${(p.varA / 100).toFixed(2)} x ${p.varB} = $ ?
+        `;
+      }
+    }
 
     // FRACTIONS: ADDITION AND SUBTRACTION
-    if (setting == 20) {
+    if (setting == 21) {
+      simpleFractionDisplay();
       [p.numeOne, p.denoOne] = simplify(p.numeOne, p.denoOne);
       [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
       if (p.denoOne == p.denoTwo) return updateCalc();
@@ -8495,7 +8525,8 @@ function updateProblems() {
     }
 
     //FRACTIONS: EXPANSION AND SIMPLIFICATION
-    if (setting == 21) {
+    if (setting == 22) {
+      simpleFractionDisplay();
       [p.oriNume, p.oriDeno] = simplify(p.oriNume, p.oriDeno);
       if (p.mulOne == p.mulTwo) p.mulTwo += 1;
       const firstNume = p.oriNume * p.mulOne;
@@ -18000,8 +18031,21 @@ function handleSubmit(e) {
         }
       }
 
-      // FRACTIONS: ADDITION AND SUBTRACTION
+      //MONEY: ADDITION SUBTRACTION AND MULTIPLICATION
       if (setting == 20) {
+        if (p.symbol == "+") {
+          correctAnswer = accDecimal((p.varA + p.varB) / 100);
+        }
+        if (p.symbol == "-") {
+          correctAnswer = accDecimal((p.varA - p.varB) / 100);
+        }
+        if (p.symbol == "x") {
+          correctAnswer = accDecimal((p.varA / 100) * p.varB);
+        }
+      }
+
+      // FRACTIONS: ADDITION AND SUBTRACTION
+      if (setting == 21) {
         const commonDenoFind = commonDeno(p.denoOne, p.denoTwo);
         const newNumeOne = (commonDenoFind / p.denoOne) * p.numeOne;
         const newNumeTwo = (commonDenoFind / p.denoTwo) * p.numeTwo;
@@ -18020,7 +18064,7 @@ function handleSubmit(e) {
       }
 
       //FRACTIONS: EXPANSION AND SIMPLIFICATION
-      if (setting == 21) {
+      if (setting == 22) {
         correctAnswer = p.answer;
       }
     }
@@ -22967,14 +23011,14 @@ function genProblems() {
       };
     }
   }
-  //SETTINGS!
 
+  //----> SETTINGS!
   if (level == "calThree") {
     // if (setting == 99 || (global == 1 && skipGlobalUpdateProblem == 0)) {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(21, calArr, setting, 99, level);
+    setting = calArrAll(22, calArr, setting, 99, level);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let thousands = genNumbers(9) + 1;
@@ -23163,8 +23207,17 @@ function genProblems() {
         beforeAfter: ["before", "after"][genNumbers(2)],
       };
     }
-    // FRACTIONS: ADDITION AND SUBTRACTION
+
+    // MONEY: ADDITION AND SUBTRACTION
     if (setting == 20) {
+      return {
+        varA: genNumbers(10000 - 100) + 100,
+        varB: genNumbers(10000 - 100) + 100,
+        symbol: ["+", "-", "x"][genNumbers(3)],
+      };
+    }
+    // FRACTIONS: ADDITION AND SUBTRACTION
+    if (setting == 21) {
       const gen_denoOne = genNumbers(9) + 2;
       const gen_denoTwo = genNumbers(8) + 3;
       return {
@@ -23176,7 +23229,7 @@ function genProblems() {
       };
     }
     // FRACTIONS: EXPAND AND SIMPLIFICATION
-    if (setting == 21) {
+    if (setting == 22) {
       const gen_deno = genNumbers(5) + 3;
       const gen_nume = genNumbers(gen_deno - 2) + 2;
       return {
@@ -26758,7 +26811,7 @@ function buttonLevelSetting() {
       if (
         ![
           1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-          21, 99,
+          21, 22, 99,
         ].includes(setting * 1) &&
         !setting.split("").includes("-")
       )

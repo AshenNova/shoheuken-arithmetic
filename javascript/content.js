@@ -64,8 +64,10 @@ export const displayContent = (level) => {
     <hr>
     19. Time: Timeline ( hours and mins )</br>
     <hr>
-    20. Fractions: Addition and Subtraction</br>
-    21. Fractions: Expansion and simplification</br>
+    20. Money: Addition Subtraction and Multiplication</br>
+    <hr>
+    21. Fractions: Addition and Subtraction</br>
+    22. Fractions: Expansion and simplification</br>
     <hr></hr>
     99. All`;
   }
