@@ -14,6 +14,16 @@ export const displayContent = (level) => {
     9. All`;
   }
 
+  if (level == "heuFiveb") {
+    return `
+    1. Working Backwards (Type 1)</br>
+    2. Working Backwards (Type 2)</br>
+    3. Working Backwards (Type 3) Independent</br>
+    4. Either or</br>
+    5. Unchanged Total (if)
+    <hr>9. All
+    `;
+  }
   if (level == "heuSix") {
     return `
     </p>

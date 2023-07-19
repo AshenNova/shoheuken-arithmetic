@@ -11785,7 +11785,7 @@ function updateProblems() {
 
       ctx.restore();
     }
-
+    //SPEED: AVERAGE SPEED OF WHOLE JOURNEY
     if (setting == 5) {
       normalDisplay();
       if (p.roll == "A") {
@@ -24019,7 +24019,7 @@ function genProblems() {
     //AVERAGE SPEED OF WHOLE JOURNEY
     if (setting == 5) {
       return {
-        roll: ["A", "B", "C"][genNumbers(3)],
+        roll: ["A", "B", "C"][genNumbers(2)],
         speedA: genNumbers(5) + 2,
         timeA: genNumbers(5) + 2,
         distanceA: genNumbers(5) + 2,
@@ -25083,7 +25083,7 @@ function genProblems() {
 
   //SETTINGS
   if (level == "heuSix") {
-    setting = calArrAll(8, calArr, setting, 9);
+    setting = calArrAll(4, calArr, setting, 9);
     setting = checkRange(setting, calArr);
     // LOWEST COMMON TIME
     if (setting == 1) {
@@ -27048,6 +27048,7 @@ function buttonLevelSetting() {
       setting = prompt(
         "What level?\n1. Grouping with Difference\n2. Supposition (Negative)\n3. Supposition negative ( Difference)\n4. Identical Quantity with Difference\n5. Substitution\n6. Shaking Hands\n7. Bonus\n8. Different Quantity with Difference\n\n9. All"
       );
+
       if (
         ![1, 2, 3, 4, 5, 6, 7, 8, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
@@ -27064,10 +27065,19 @@ function buttonLevelSetting() {
 
     case "Heu.5b":
       level = "heuFiveb";
-      setting = prompt(
-        "What level?\n1. Working Backwards (Type 1)\n2. Working Backwards (Type 2)\n3. Working Backwards (Type 3) Independent\n4. Either or\n5. Unchanged Total (if)\n\n9. All"
-      );
+      // setting = prompt(
+      //   "What level?\n1. Working Backwards (Type 1)\n2. Working Backwards (Type 2)\n3. Working Backwards (Type 3) Independent\n4. Either or\n5. Unchanged Total (if)\n\n9. All"
+      // );
 
+      optionsBox.classList.remove("hidden");
+      optionsBox.textContent = `Available settings:`;
+      optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
+      // console.log(userInputOptions);
+      // calBtn[4].addEventListener("click", function () {
+      setting = prompt(
+        "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
+        9
+      );
       if (
         ![1, 2, 3, 4, 5, 9].includes(setting * 1) &&
         !setting.split("").includes("-")
