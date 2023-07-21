@@ -1335,7 +1335,7 @@ export function drawForFraction(object, type) {
     adjustCanvasBreadth(side, side + 100);
   }
   const startPoint = fillTextSplit(
-    `What is the ${type} of shaded to the ${
+    `What is the ${type} of the shaded part to the ${
       p.secondVar == "unshaded" ? "unshaded part" : "total"
     } of the\n${p.shapes}?`
   );
