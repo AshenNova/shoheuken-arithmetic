@@ -8498,9 +8498,20 @@ function updateProblems() {
         `;
       }
     }
+    //FRACTIONS: SHAPES
+    if (setting == 21) {
+      drawingDisplay();
+      drawForFraction(state, "fraction");
+      // console.log(mediumColumn, smallRow, p.shaded, p.total);
+      if (p.shaded == 0) {
+        ctx.restore();
+        return updateCalc();
+      }
+      ctx.restore(); //1st
+    }
 
     // FRACTIONS: ADDITION AND SUBTRACTION
-    if (setting == 21) {
+    if (setting == 22) {
       simpleFractionDisplay();
       [p.numeOne, p.denoOne] = simplify(p.numeOne, p.denoOne);
       [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
@@ -8528,7 +8539,7 @@ function updateProblems() {
     }
 
     //FRACTIONS: EXPANSION AND SIMPLIFICATION
-    if (setting == 22) {
+    if (setting == 23) {
       simpleFractionDisplay();
       [p.oriNume, p.oriDeno] = simplify(p.oriNume, p.oriDeno);
       if (p.mulOne == p.mulTwo) p.mulTwo += 1;
@@ -9824,333 +9835,7 @@ function updateProblems() {
     //RATIO: SHAPES
     if (setting == 14) {
       drawingDisplay();
-      // ctx.save(); //1st
-      // const side = (genNumbers(50) + 75) * 2;
-      // if (p.shapes == "rectangle") {
-      //   const neededHeight = 100 + p.bigY;
-      //   if (neededHeight > 275) {
-      //     canvas.setAttribute("height", neededHeight);
-      //   } else {
-      //     canvas.setAttribute("height", 275);
-      //   }
-      // }
-      // if (p.shapes == "triangle" || p.shapes == "square") {
-      //   adjustCanvasBreadth(side, side + 100);
-      // }
-      // const startPoint = fillTextSplit(
-      //   `What is the ratio of shaded to the ${
-      //     p.secondVar == "unshaded" ? "unshaded part" : "total"
-      //   } of the\n${p.shapes}?`
-      // );
-
-      // let displayHeight = 275 + 20;
-      // if (p.shapes == "circle") {
-      //   const radius = genNumbers(50) + 50;
-      //   // ctx.translate(20, 20);
-      //   ctx.beginPath();
-      //   ctx.arc(400 / 2, displayHeight / 2, radius, 0, 2 * Math.PI);
-      //   ctx.stroke();
-
-      //   ctx.save(); //2nd
-      //   ctx.translate(400 / 2, displayHeight / 2);
-      //   // const rotationAngleDeg = 45;
-      //   // const rotationAngleRad = (rotationAngleDeg * Math.PI) / 180;
-      //   // ctx.rotate(rotationAngleRad);
-      //   ctx.beginPath();
-      //   ctx.arc(0, 0, 2, 0, 2 * Math.PI);
-      //   ctx.fill();
-
-      //   //VERTICAL LINE
-      //   ctx.beginPath();
-      //   ctx.moveTo(0, -radius);
-      //   ctx.lineTo(0, radius);
-      //   ctx.stroke();
-
-      //   const pieces = genNumbers(5) + 4;
-      //   p.total = pieces * 2;
-      //   const eachPieceAngleDeg = 360 / 2 / pieces;
-      //   const eachPieceAngleRad = (eachPieceAngleDeg * Math.PI) / 180;
-      //   console.log(eachPieceAngleRad);
-
-      //   const start = [0.5, 1.5][genNumbers(2)] * Math.PI;
-      //   p.shaded = 0;
-      //   for (let i = 0; i < pieces; i++) {
-      //     ctx.beginPath();
-      //     ctx.moveTo(0, 0);
-      //     ctx.arc(
-      //       0,
-      //       0,
-      //       radius,
-      //       start + eachPieceAngleRad * i,
-      //       start + eachPieceAngleRad * (i + 1)
-      //     );
-      //     // ctx.closePath();
-      //     if (genNumbers(2) == 1) {
-      //       ctx.save();
-      //       ctx.fillStyle = "grey";
-      //       ctx.fill();
-      //       ctx.stroke();
-      //       p.shaded += 1;
-      //       ctx.restore();
-      //     } else {
-      //       ctx.stroke();
-      //     }
-      //   }
-      //   ctx.restore(); //2nd
-      //   //HORIZONTAL LINE
-      //   // ctx.beginPath();
-      //   // ctx.moveTo(-radius, 0);
-      //   // ctx.lineTo(+radius, 0);
-      //   // ctx.stroke();
-      // }
-
-      // if (p.shapes == "rectangle") {
-      //   p.shaded = 0;
-      //   ctx.beginPath();
-      //   const bigX = (genNumbers(10) + 20) * 10;
-      //   ctx.beginPath();
-      //   const centering = (400 - bigX) / 2;
-      //   ctx.rect(centering, startPoint, bigX, p.bigY);
-      //   ctx.stroke();
-
-      //   const mediumColumn = genNumbers(3) + 2;
-      //   const mediumY = p.bigY / mediumColumn;
-      //   // }
-      //   for (let i = 0; i < mediumColumn; i++) {
-      //     ctx.beginPath();
-      //     ctx.rect(centering, startPoint + mediumY * i, bigX, mediumY);
-      //     ctx.stroke();
-      //   }
-
-      //   const smallRow = [4, 5, 10][genNumbers(3)];
-      //   const smallX = bigX / smallRow;
-      //   // if (smallX % 1 != 0) {
-      //   //   return updateCalc();
-      //   // }
-      //   console.log(smallRow, smallX);
-      //   p.total = smallRow * mediumColumn;
-      //   const chosenRow = genNumbers(mediumColumn);
-      //   for (let i = 0; i < smallRow; i++) {
-      //     ctx.beginPath();
-      //     ctx.rect(
-      //       centering + smallX * i,
-      //       startPoint + mediumY * chosenRow,
-      //       smallX,
-      //       mediumY
-      //     );
-      //     console.log(smallRow * i);
-      //     if (genNumbers(2) == 1) {
-      //       ctx.save();
-      //       ctx.fillStyle = "grey";
-      //       ctx.fill();
-      //       ctx.stroke();
-      //       p.shaded += 1;
-      //       ctx.restore();
-      //     } else {
-      //       // ctx.save();
-
-      //       ctx.stroke();
-      //       // ctx.restore();
-      //     }
-      //   }
-      // }
-      // if (p.shapes == "triangle") {
-      //   p.shaded = 0;
-      //   p.total = 16;
-      //   ctx.translate((400 - side) / 2, startPoint);
-      //   //BIG TRIANGLE
-
-      //   ctx.beginPath();
-      //   ctx.moveTo(0, 0);
-      //   ctx.lineTo(side, 0);
-      //   ctx.lineTo(0, side);
-      //   ctx.closePath();
-      //   ctx.stroke();
-
-      //   //DRAW SQUARE
-      //   ctx.beginPath();
-      //   ctx.rect(0, 0, side / 2, side / 2);
-      //   ctx.stroke();
-
-      //   ctx.beginPath();
-      //   ctx.moveTo(side / 2, 0);
-      //   ctx.lineTo(0, side / 2);
-      //   ctx.stroke();
-
-      //   //FIRST SMALL TRIANGLE
-      //   ctx.beginPath();
-      //   ctx.moveTo(0, 0);
-      //   ctx.lineTo(side / 4, 0);
-      //   ctx.lineTo(0, side / 4);
-      //   ctx.closePath();
-      //   if (genNumbers(2) == 1) {
-      //     ctx.save();
-      //     ctx.fillStyle = "grey";
-      //     ctx.fill();
-      //     ctx.stroke();
-      //     p.shaded += 1;
-      //     ctx.restore();
-      //   } else {
-      //     ctx.stroke();
-      //   }
-
-      //   //SECOND SMALL TRIANGLE
-      //   ctx.beginPath();
-      //   ctx.moveTo(side / 4, 0);
-      //   ctx.lineTo(side / 4, side / 4);
-      //   ctx.lineTo(0, side / 4);
-      //   ctx.closePath();
-      //   if (genNumbers(2) == 1) {
-      //     ctx.save();
-      //     ctx.fillStyle = "grey";
-      //     ctx.fill();
-      //     ctx.stroke();
-      //     p.shaded += 1;
-      //     ctx.restore();
-      //   } else {
-      //     ctx.stroke();
-      //   }
-      //   //THIRD SMALL TRIANGLE
-      //   ctx.beginPath();
-      //   ctx.moveTo(side / 4, 0);
-      //   ctx.lineTo(side / 2, 0);
-      //   ctx.lineTo(side / 4, side / 4);
-      //   ctx.closePath();
-      //   if (genNumbers(2) == 1) {
-      //     ctx.save();
-      //     ctx.fillStyle = "grey";
-      //     ctx.fill();
-      //     ctx.stroke();
-      //     p.shaded += 1;
-      //     ctx.restore();
-      //   } else {
-      //     ctx.stroke();
-      //   }
-      //   //FOURTH SMALL TRIANGLE
-      //   ctx.beginPath();
-      //   ctx.moveTo(0, side / 4);
-      //   ctx.lineTo(side / 4, side / 4);
-      //   ctx.lineTo(0, side / 2);
-      //   ctx.closePath();
-      //   if (genNumbers(2) == 1) {
-      //     ctx.save();
-      //     ctx.fillStyle = "grey";
-      //     ctx.fill();
-      //     ctx.stroke();
-      //     p.shaded += 1;
-      //     ctx.restore();
-      //   } else {
-      //     ctx.stroke();
-      //   }
-      // }
-      // if (p.shapes == "square") {
-      //   p.shaded = 0;
-      //   p.total = 32;
-      //   ctx.translate((400 - side) / 2, startPoint);
-      //   //BIG TRIANGLE
-
-      //   ctx.beginPath();
-      //   // ctx.moveTo(0, 0);
-      //   // ctx.lineTo(side, 0);
-      //   // ctx.lineTo(0, side);
-      //   // ctx.closePath();
-      //   ctx.rect(0, 0, side, side);
-      //   ctx.stroke();
-
-      //   //DRAW SQUARE
-      //   ctx.beginPath();
-      //   ctx.rect(0, 0, side / 2, side / 2);
-      //   ctx.stroke();
-
-      //   ctx.beginPath();
-      //   ctx.moveTo(side, 0);
-      //   ctx.lineTo(0, side);
-      //   ctx.stroke();
-
-      //   //SHADING
-      //   const shift = genNumbers(3);
-      //   ctx.save(); //3rd
-      //   if (shift == 0) {
-      //     ctx.beginPath();
-      //     ctx.moveTo(side / 2, 0);
-      //     ctx.lineTo(0, side / 2);
-      //     ctx.stroke();
-      //   }
-      //   if (shift == 1) {
-      //     ctx.translate(side / 2, 0);
-      //   }
-      //   if (shift == 2) {
-      //     ctx.translate(0, side / 2);
-      //   }
-      //   //FIRST SMALL TRIANGLE
-
-      //   ctx.beginPath();
-      //   ctx.moveTo(0, 0);
-      //   ctx.lineTo(side / 4, 0);
-      //   ctx.lineTo(0, side / 4);
-      //   ctx.closePath();
-      //   if (genNumbers(2) == 1) {
-      //     ctx.save();
-      //     ctx.fillStyle = "grey";
-      //     ctx.fill();
-      //     ctx.stroke();
-      //     p.shaded += 1;
-      //     ctx.restore();
-      //   } else {
-      //     ctx.stroke();
-      //   }
-
-      //   //SECOND SMALL TRIANGLE
-      //   ctx.beginPath();
-      //   ctx.moveTo(side / 4, 0);
-      //   ctx.lineTo(side / 4, side / 4);
-      //   ctx.lineTo(0, side / 4);
-      //   ctx.closePath();
-      //   if (genNumbers(2) == 1) {
-      //     ctx.save();
-      //     ctx.fillStyle = "grey";
-      //     ctx.fill();
-      //     ctx.stroke();
-      //     p.shaded += 1;
-      //     ctx.restore();
-      //   } else {
-      //     ctx.stroke();
-      //   }
-      //   //THIRD SMALL TRIANGLE
-      //   ctx.beginPath();
-      //   ctx.moveTo(side / 4, 0);
-      //   ctx.lineTo(side / 2, 0);
-      //   ctx.lineTo(side / 4, side / 4);
-      //   ctx.closePath();
-      //   if (genNumbers(2) == 1) {
-      //     ctx.save();
-      //     ctx.fillStyle = "grey";
-      //     ctx.fill();
-      //     ctx.stroke();
-      //     p.shaded += 1;
-      //     ctx.restore();
-      //   } else {
-      //     ctx.stroke();
-      //   }
-      //   //FOURTH SMALL TRIANGLE
-      //   ctx.beginPath();
-      //   ctx.moveTo(0, side / 4);
-      //   ctx.lineTo(side / 4, side / 4);
-      //   ctx.lineTo(0, side / 2);
-      //   ctx.closePath();
-      //   if (genNumbers(2) == 1) {
-      //     ctx.save();
-      //     ctx.fillStyle = "grey";
-      //     ctx.fill();
-      //     ctx.stroke();
-      //     p.shaded += 1;
-      //     ctx.restore();
-      //   } else {
-      //     ctx.stroke();
-      //   }
-      //   ctx.restore();
-      // }
-      drawForFraction(state, "fraction");
+      drawForFraction(state, "ratio");
       // console.log(mediumColumn, smallRow, p.shaded, p.total);
       if (p.shaded == 0) {
         ctx.restore();
@@ -18384,8 +18069,20 @@ function handleSubmit(e) {
         }
       }
 
-      // FRACTIONS: ADDITION AND SUBTRACTION
+      //FRACTIONS: SHAPE
       if (setting == 21) {
+        let shaded = p.shaded;
+        let unshaded = p.total - shaded;
+        [shaded, unshaded] = simplify(shaded, unshaded);
+        // if (p.secondVar == "unshaded") correctAnswer = `${shaded}/${unshaded}`;
+        if (p.secondVar == "total")
+          correctAnswer = `${shaded}/${shaded + unshaded}`;
+
+        // }
+      }
+
+      // FRACTIONS: ADDITION AND SUBTRACTION
+      if (setting == 22) {
         const commonDenoFind = commonDeno(p.denoOne, p.denoTwo);
         const newNumeOne = (commonDenoFind / p.denoOne) * p.numeOne;
         const newNumeTwo = (commonDenoFind / p.denoTwo) * p.numeTwo;
@@ -18404,7 +18101,7 @@ function handleSubmit(e) {
       }
 
       //FRACTIONS: EXPANSION AND SIMPLIFICATION
-      if (setting == 22) {
+      if (setting == 23) {
         correctAnswer = p.answer;
       }
     }
@@ -23382,7 +23079,7 @@ function genProblems() {
     //   global = 1;
     //   setting = calArrAll(6, calArr);
     // }
-    setting = calArrAll(22, calArr, setting, 99, level);
+    setting = calArrAll(23, calArr, setting, 99, level);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       let thousands = genNumbers(9) + 1;
@@ -23580,8 +23277,20 @@ function genProblems() {
         symbol: ["+", "-", "x"][genNumbers(3)],
       };
     }
-    // FRACTIONS: ADDITION AND SUBTRACTION
+
+    //FRACTION: SHAPES
     if (setting == 21) {
+      return {
+        shapes: ["square", "triangle", "rectangle", "circle"][genNumbers(4)],
+        shaded: undefined,
+        total: undefined,
+        secondVar: ["total"][genNumbers(1)],
+        bigY: (genNumbers(5) + 10) * 10,
+      };
+    }
+
+    // FRACTIONS: ADDITION AND SUBTRACTION
+    if (setting == 22) {
       const gen_denoOne = genNumbers(9) + 2;
       const gen_denoTwo = genNumbers(8) + 3;
       return {
@@ -23593,7 +23302,7 @@ function genProblems() {
       };
     }
     // FRACTIONS: EXPAND AND SIMPLIFICATION
-    if (setting == 22) {
+    if (setting == 23) {
       const gen_deno = genNumbers(5) + 3;
       const gen_nume = genNumbers(gen_deno - 2) + 2;
       return {
@@ -27185,7 +26894,7 @@ function buttonLevelSetting() {
       if (
         ![
           1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-          21, 22, 99,
+          21, 22, 23, 99,
         ].includes(setting * 1) &&
         !setting.split("").includes("-")
       )

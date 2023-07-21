@@ -76,8 +76,9 @@ export const displayContent = (level) => {
     <hr>
     20. Money: Addition Subtraction and Multiplication</br>
     <hr>
-    21. Fractions: Addition and Subtraction</br>
-    22. Fractions: Expansion and simplification</br>
+    21. Fractions: Shapes</br>
+    22. Fractions: Addition and Subtraction</br>
+    23. Fractions: Expansion and simplification</br>
     <hr></hr>
     99. All`;
   }
