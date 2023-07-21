@@ -12788,6 +12788,34 @@ function updateProblems() {
         `;
       }
     }
+
+    //WHOLE AND PARTS ( UNITARY)
+    if (setting == 7) {
+      normalDisplay();
+      const person = boyNames[genNumbers(boyNames.length)];
+      const total = p.eachUnit * p.units + p.situation;
+      if (p.type == 0) {
+        displayProblem.innerHTML = `
+        ${person} had $${total} at first.</br>
+        He spents $${p.situation} and shared the remaining amount with ${p.units} of his children.</br>
+        How much did each children get?
+        `;
+      }
+      if (p.type == 1) {
+        displayProblem.innerHTML = `
+There were ${total} things inside a bag</br>
+${person} gave away ${p.situation} of it and put the rest into bags of ${p.eachUnit}.</br>
+How many bags are there?
+        `;
+      }
+      if (p.type == 2) {
+        displayProblem.innerHTML = `
+There were ${total} items inside a bag</br>
+${person} gave away ${p.situation} of it and put the rest into ${p.units} bags.</br>
+How many items are there in each bag?
+        `;
+      }
+    }
   }
   // display
   if (level == "heuThree") {
@@ -19358,6 +19386,11 @@ function handleSubmit(e) {
       ) {
         correctAnswer = p.each * p.packets + p.left;
       }
+
+      if (setting == 7) {
+        if (p.type == 0 || p.type == 2) correctAnswer = p.eachUnit;
+        if (p.type == 1) correctAnswer = p.units;
+      }
     }
 
     //  answer
@@ -20856,6 +20889,7 @@ function handleSubmit(e) {
         2.09,
         2.08,
         2.09,
+        3.09,
         3.12,
         3.13,
         3.14,
@@ -24374,7 +24408,7 @@ function genProblems() {
   }
   // settings
   if (level == "heuTwob") {
-    setting = calArrAll(6, calArr, setting, 9);
+    setting = calArrAll(7, calArr, setting, 9);
     setting = checkRange(setting, calArr);
     if (setting == 1) {
       return {
@@ -24463,6 +24497,16 @@ function genProblems() {
         each: perPacket,
         packets: genNumbers(5) + 2,
         left: genNumbers(perPacket - 1) + 1,
+      };
+    }
+
+    //WHOLE AND PARTS (UNITARY)
+    if (setting == 7) {
+      return {
+        eachUnit: genNumbers(5) + 2,
+        units: genNumbers(3) + 2,
+        situation: genNumbers(10) + 10,
+        type: genNumbers(3),
       };
     }
   }
