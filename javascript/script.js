@@ -1,4 +1,4 @@
-let setTime = 1;
+let setTime = 3;
 
 // const screenHeight = window.screen.availHeight;
 // const screenWidth = window.screen.availWidth;
@@ -9824,6 +9824,7 @@ function updateProblems() {
     if (setting == 14) {
       drawingDisplay();
       ctx.save(); //1st
+      const side = (genNumbers(50) + 75) * 2;
       if (p.shapes == "rectangle") {
         const neededHeight = 100 + p.bigY;
         if (neededHeight > 275) {
@@ -9832,12 +9833,15 @@ function updateProblems() {
           canvas.setAttribute("height", 275);
         }
       }
+      if (p.shapes == "triangle" || p.shapes == "square") {
+        adjustCanvasBreadth(side, side + 100);
+      }
       const startPoint = fillTextSplit(
         `What is the ratio of shaded to the ${
           p.secondVar == "unshaded" ? "unshaded part" : "total"
         } of the\n${p.shapes}?`
       );
-     
+
       let displayHeight = 275 + 20;
       if (p.shapes == "circle") {
         const radius = genNumbers(50) + 50;
@@ -9881,12 +9885,12 @@ function updateProblems() {
           );
           // ctx.closePath();
           if (genNumbers(2) == 1) {
-            ctx.save()
+            ctx.save();
             ctx.fillStyle = "grey";
             ctx.fill();
             ctx.stroke();
             p.shaded += 1;
-            ctx.restore()
+            ctx.restore();
           } else {
             ctx.stroke();
           }
@@ -9935,12 +9939,12 @@ function updateProblems() {
           );
           console.log(smallRow * i);
           if (genNumbers(2) == 1) {
-            ctx.save()
+            ctx.save();
             ctx.fillStyle = "grey";
             ctx.fill();
             ctx.stroke();
             p.shaded += 1;
-            ctx.restore()
+            ctx.restore();
           } else {
             // ctx.save();
 
@@ -9948,8 +9952,204 @@ function updateProblems() {
             // ctx.restore();
           }
         }
-        console.log(mediumColumn, smallRow, p.shaded, p.total);
       }
+      if (p.shapes == "triangle") {
+        p.shaded = 0;
+        p.total = 16;
+        ctx.translate((400 - side) / 2, startPoint);
+        //BIG TRIANGLE
+
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(side, 0);
+        ctx.lineTo(0, side);
+        ctx.closePath();
+        ctx.stroke();
+
+        //DRAW SQUARE
+        ctx.beginPath();
+        ctx.rect(0, 0, side / 2, side / 2);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(side / 2, 0);
+        ctx.lineTo(0, side / 2);
+        ctx.stroke();
+
+        //FIRST SMALL TRIANGLE
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(side / 4, 0);
+        ctx.lineTo(0, side / 4);
+        ctx.closePath();
+        if (genNumbers(2) == 1) {
+          ctx.save();
+          ctx.fillStyle = "grey";
+          ctx.fill();
+          ctx.stroke();
+          p.shaded += 1;
+          ctx.restore();
+        } else {
+          ctx.stroke();
+        }
+
+        //SECOND SMALL TRIANGLE
+        ctx.beginPath();
+        ctx.moveTo(side / 4, 0);
+        ctx.lineTo(side / 4, side / 4);
+        ctx.lineTo(0, side / 4);
+        ctx.closePath();
+        if (genNumbers(2) == 1) {
+          ctx.save();
+          ctx.fillStyle = "grey";
+          ctx.fill();
+          ctx.stroke();
+          p.shaded += 1;
+          ctx.restore();
+        } else {
+          ctx.stroke();
+        }
+        //THIRD SMALL TRIANGLE
+        ctx.beginPath();
+        ctx.moveTo(side / 4, 0);
+        ctx.lineTo(side / 2, 0);
+        ctx.lineTo(side / 4, side / 4);
+        ctx.closePath();
+        if (genNumbers(2) == 1) {
+          ctx.save();
+          ctx.fillStyle = "grey";
+          ctx.fill();
+          ctx.stroke();
+          p.shaded += 1;
+          ctx.restore();
+        } else {
+          ctx.stroke();
+        }
+        //FOURTH SMALL TRIANGLE
+        ctx.beginPath();
+        ctx.moveTo(0, side / 4);
+        ctx.lineTo(side / 4, side / 4);
+        ctx.lineTo(0, side / 2);
+        ctx.closePath();
+        if (genNumbers(2) == 1) {
+          ctx.save();
+          ctx.fillStyle = "grey";
+          ctx.fill();
+          ctx.stroke();
+          p.shaded += 1;
+          ctx.restore();
+        } else {
+          ctx.stroke();
+        }
+      }
+      if (p.shapes == "square") {
+        p.shaded = 0;
+        p.total = 32;
+        ctx.translate((400 - side) / 2, startPoint);
+        //BIG TRIANGLE
+
+        ctx.beginPath();
+        // ctx.moveTo(0, 0);
+        // ctx.lineTo(side, 0);
+        // ctx.lineTo(0, side);
+        // ctx.closePath();
+        ctx.rect(0, 0, side, side);
+        ctx.stroke();
+
+        //DRAW SQUARE
+        ctx.beginPath();
+        ctx.rect(0, 0, side / 2, side / 2);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(side, 0);
+        ctx.lineTo(0, side);
+        ctx.stroke();
+
+        //SHADING
+        const shift = genNumbers(3);
+        ctx.save(); //3rd
+        if (shift == 0) {
+          ctx.beginPath();
+          ctx.moveTo(side / 2, 0);
+          ctx.lineTo(0, side / 2);
+          ctx.stroke();
+        }
+        if (shift == 1) {
+          ctx.translate(side / 2, 0);
+        }
+        if (shift == 2) {
+          ctx.translate(0, side / 2);
+        }
+        //FIRST SMALL TRIANGLE
+
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(side / 4, 0);
+        ctx.lineTo(0, side / 4);
+        ctx.closePath();
+        if (genNumbers(2) == 1) {
+          ctx.save();
+          ctx.fillStyle = "grey";
+          ctx.fill();
+          ctx.stroke();
+          p.shaded += 1;
+          ctx.restore();
+        } else {
+          ctx.stroke();
+        }
+
+        //SECOND SMALL TRIANGLE
+        ctx.beginPath();
+        ctx.moveTo(side / 4, 0);
+        ctx.lineTo(side / 4, side / 4);
+        ctx.lineTo(0, side / 4);
+        ctx.closePath();
+        if (genNumbers(2) == 1) {
+          ctx.save();
+          ctx.fillStyle = "grey";
+          ctx.fill();
+          ctx.stroke();
+          p.shaded += 1;
+          ctx.restore();
+        } else {
+          ctx.stroke();
+        }
+        //THIRD SMALL TRIANGLE
+        ctx.beginPath();
+        ctx.moveTo(side / 4, 0);
+        ctx.lineTo(side / 2, 0);
+        ctx.lineTo(side / 4, side / 4);
+        ctx.closePath();
+        if (genNumbers(2) == 1) {
+          ctx.save();
+          ctx.fillStyle = "grey";
+          ctx.fill();
+          ctx.stroke();
+          p.shaded += 1;
+          ctx.restore();
+        } else {
+          ctx.stroke();
+        }
+        //FOURTH SMALL TRIANGLE
+        ctx.beginPath();
+        ctx.moveTo(0, side / 4);
+        ctx.lineTo(side / 4, side / 4);
+        ctx.lineTo(0, side / 2);
+        ctx.closePath();
+        if (genNumbers(2) == 1) {
+          ctx.save();
+          ctx.fillStyle = "grey";
+          ctx.fill();
+          ctx.stroke();
+          p.shaded += 1;
+          ctx.restore();
+        } else {
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+      // console.log(mediumColumn, smallRow, p.shaded, p.total);
       if (p.shaded == 0) {
         ctx.restore();
         return updateCalc();
@@ -23794,7 +23994,7 @@ function genProblems() {
     //REPEATED IDENTITY: SHAPES
     if (setting == 14) {
       return {
-        shapes: ["rectangle", "circle"][genNumbers(2)],
+        shapes: ["square", "triangle", "rectangle", "circle"][genNumbers(4)],
         shaded: undefined,
         total: undefined,
         secondVar: ["unshaded", "total"][genNumbers(2)],
@@ -27025,7 +27225,7 @@ function buttonLevelSetting() {
       // calBtn[4].addEventListener("click", function () {
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
-        99
+        14
       );
       if (
         ![...Array(37).keys(), 99].includes(setting * 1) &&
