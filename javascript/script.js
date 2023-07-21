@@ -9837,7 +9837,7 @@ function updateProblems() {
           p.secondVar == "unshaded" ? "unshaded part" : "total"
         } of the\n${p.shapes}?`
       );
-      ctx.fillStyle = "grey";
+     
       let displayHeight = 275 + 20;
       if (p.shapes == "circle") {
         const radius = genNumbers(50) + 50;
@@ -9881,9 +9881,12 @@ function updateProblems() {
           );
           // ctx.closePath();
           if (genNumbers(2) == 1) {
+            ctx.save()
+            ctx.fillStyle = "grey";
             ctx.fill();
             ctx.stroke();
             p.shaded += 1;
+            ctx.restore()
           } else {
             ctx.stroke();
           }
@@ -9921,7 +9924,7 @@ function updateProblems() {
         // }
         console.log(smallRow, smallX);
         p.total = smallRow * mediumColumn;
-        const chosenRow = genNumbers(mediumColumn + 1);
+        const chosenRow = genNumbers(mediumColumn);
         for (let i = 0; i < smallRow; i++) {
           ctx.beginPath();
           ctx.rect(
@@ -9932,9 +9935,12 @@ function updateProblems() {
           );
           console.log(smallRow * i);
           if (genNumbers(2) == 1) {
+            ctx.save()
+            ctx.fillStyle = "grey";
             ctx.fill();
             ctx.stroke();
             p.shaded += 1;
+            ctx.restore()
           } else {
             // ctx.save();
 
