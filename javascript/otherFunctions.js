@@ -1318,6 +1318,8 @@ function drawIntervals(start, intervals, eachInterval, question) {
   ctx.restore();
 }
 export function drawForFraction(object, type) {
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, 1000, 1000);
   console.log(object);
   // const p = object.drawProblem;
   const p = object.currentProblem;
@@ -1335,7 +1337,9 @@ export function drawForFraction(object, type) {
     adjustCanvasBreadth(side, side + 100);
   }
   const startPoint = fillTextSplit(
-    `What is the ${type} of the shaded part to the ${
+    `What is the ${type} of the ${
+      p.want == "shaded" ? "shaded" : "unshaded"
+    } part to the ${
       p.secondVar == "unshaded" ? "unshaded part" : "total"
     } of the\n${p.shapes}?`
   );
@@ -1647,6 +1651,11 @@ export function drawForFraction(object, type) {
     }
     ctx.restore();
   }
+  if (p.shaded == 0) {
+    ctx.restore();
+    return updateCalc();
+  }
+  ctx.restore(); //1st
 }
 export {
   // drawQuadrant,

@@ -8503,11 +8503,6 @@ function updateProblems() {
       drawingDisplay();
       drawForFraction(state, "fraction");
       // console.log(mediumColumn, smallRow, p.shaded, p.total);
-      if (p.shaded == 0) {
-        ctx.restore();
-        return updateCalc();
-      }
-      ctx.restore(); //1st
     }
 
     // FRACTIONS: ADDITION AND SUBTRACTION
@@ -18074,10 +18069,11 @@ function handleSubmit(e) {
         let shaded = p.shaded;
         let unshaded = p.total - shaded;
         [shaded, unshaded] = simplify(shaded, unshaded);
-        // if (p.secondVar == "unshaded") correctAnswer = `${shaded}/${unshaded}`;
-        if (p.secondVar == "total")
-          correctAnswer = `${shaded}/${shaded + unshaded}`;
 
+        if (p.want == "shaded")
+          correctAnswer = `${shaded}/${shaded + unshaded}`;
+        if (p.want == "unshaded")
+          correctAnswer = `${unshaded}/${shaded + unshaded}`;
         // }
       }
 
@@ -23285,6 +23281,7 @@ function genProblems() {
         shaded: undefined,
         total: undefined,
         secondVar: ["total"][genNumbers(1)],
+        want: ["shaded", "unshaded"][genNumbers(2)],
         bigY: (genNumbers(5) + 10) * 10,
       };
     }
@@ -23709,6 +23706,7 @@ function genProblems() {
         shaded: undefined,
         total: undefined,
         secondVar: ["unshaded", "total"][genNumbers(2)],
+        want: "shaded",
         bigY: (genNumbers(5) + 10) * 10,
       };
     }
