@@ -26978,7 +26978,7 @@ function buttonLevelSetting() {
       // calBtn[4].addEventListener("click", function () {
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
-        14
+        99
       );
       if (
         ![...Array(37).keys(), 99].includes(setting * 1) &&
