@@ -19006,6 +19006,7 @@ function handleSubmit(e) {
         if (p.rollType == "square2") {
           correctAnswer = 2 * (p.radius2 / 20) * (p.radius2 / 20);
         }
+        correctAnswer = accDecimal(correctAnswer)
       }
       // SPEED: AVERAGE SPEED OF WHOLE JOURNEY
       if (setting == 5) {
@@ -27013,7 +27014,7 @@ function buttonLevelSetting() {
 
     case "Cal.6b":
       level = "calSixb";
-      scoreNeeded = 10;
+      scoreNeeded = 5;
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
