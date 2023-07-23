@@ -10433,9 +10433,7 @@ function updateProblems() {
 
       ctx.save();
 
-      const secondShape = ["square", "rectangle", "square", "triangle"][
-        genNumbers(4)
-      ];
+      const secondShape = ["rectangle", "square", "triangle"][genNumbers(3)];
       let xOverLapStart = undefined;
       let yOverLapStart = undefined;
       let overLappingArea = undefined;
@@ -10443,7 +10441,7 @@ function updateProblems() {
       let unshadedFirst = undefined;
       let unshadedSecond = undefined;
       //NEXT SHAPE
-      if (p.secondShape == "square") {
+      if (secondShape == "square") {
         p.secRectBreadth = p.secRectLength;
       }
       if (p.secRecLength == p.secRectBreadth) secondShape = "square";
@@ -18701,29 +18699,13 @@ function handleSubmit(e) {
           console.log("Type 1");
           correctAnswer = (drain / Math.abs(p.netRate * 1000)).toFixed(2);
         }
-        // if (correctAnswer.toString().split(".")[1].length > 2) {
-        //   console.log("Type 3")
-        //   if (p.netRate > 0) {
-        //     // const quotient = Math.floor(fill / (p.netRate * 1000));
-        //     // let remainder = fill % (p.netRate * 1000);
-        //     // let denominator = p.netRate * 1000;
-        //     // [remainder, denominator] = simplify(remainder, denominator);
-        //     // correctAnswer = `${quotient} ${remainder}/${denominator}`;
-        //     // if (quotient == 0) correctAnswer = `${remainder}/${denominator}`;
-        //     correctAnswer = (fill / (p.netRate * 1000)).toFixed(2);
-        //   }
-        //   if (p.netRate < 0) {
-        //     console.log("Type 4")
-        //     p.netRate = Math.abs(p.netRate * 1000);
-        //     // const quotient = Math.floor(drain / (p.netRate * 1000));
-        //     // let remainder = drain % (p.netRate * 1000);
-        //     // let denominator = p.netRate * 1000;
-        //     // [remainder, denominator] = simplify(remainder, denominator);
-        //     // correctAnswer = `${quotient} ${remainder}/${denominator}`;
-        //     // if (quotient == 0) correctAnswer = `${remainder}/${denominator}`;
-        //     correctAnswer = (drain / (p.netRate * 1000)).toFixed(2);
-        //   }
-        // }
+        const str = correctAnswer.toString();
+        if (str.split(".")[1]) {
+          console.log("here!");
+          if (str.split(".")[1] < 3) {
+            correctAnswer = correctAnswer * 1;
+          }
+        }
       }
 
       //PERCENTAGE: PERCENTAGE OF
@@ -19066,7 +19048,7 @@ function handleSubmit(e) {
         }
       }
       // SPEED: MOVING APART
-      if (setting == 5) {
+      if (setting == 6) {
         if (p.version == "A") {
           correctAnswer = p.distance;
         }
@@ -19085,7 +19067,7 @@ function handleSubmit(e) {
         }
       }
       //PIE CHART
-      if (setting == 6) {
+      if (setting == 7) {
         if (p.choice == "fraction") correctAnswer = p.fractions;
         if (p.choice == "decimal") correctAnswer = p.decimals;
         if (p.choice == "ratio") correctAnswer = p.ratio;
