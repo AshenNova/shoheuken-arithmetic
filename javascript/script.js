@@ -14992,10 +14992,10 @@ How many items are there in each bag?
         unitBEnd
       );
       if (
-        unitAFirst == 0 ||
-        unitBFirst == 0 ||
-        unitAEnd == 0 ||
-        unitBEnd == 0
+        unitAFirst <= 0 ||
+        unitBFirst <= 0 ||
+        unitAEnd <= 0 ||
+        unitBEnd <= 0
       ) {
         console.log("Unit is zero");
         return updateCalc();
