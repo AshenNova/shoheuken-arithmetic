@@ -11208,7 +11208,7 @@ function updateProblems() {
           ? `The amount ${genderB} saves would become $${newSave}.`
           : `Thea amount ${genderB} saves would ${
               p.change > 0 ? "increase" : "decrease"
-            } by ${Math.abs(changeSaving)}.`
+            } by ${Math.abs(accDecimal(changeSaving))}.`
       }
       </br>
       What is ${gender} salary?
