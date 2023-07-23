@@ -11202,11 +11202,11 @@ function updateProblems() {
       ${person} saves ${p.saves}% of ${gender} salary.</br>
       If ${gender} salary ${
         p.change > 0 ? "increase" : "decrease"
-      } by ${Math.abs(p.change)}%</br>
+      } by $${Math.abs(accDecimal(p.change))}%</br>
       ${
         genNumbers(2) == 0
           ? `The amount ${genderB} saves would become $${newSave}.`
-          : `Thea amount ${genderB} saves would ${
+          : `Thea amount ${genderB} saves would $${
               p.change > 0 ? "increase" : "decrease"
             } by ${Math.abs(accDecimal(changeSaving))}.`
       }
@@ -18705,11 +18705,11 @@ function handleSubmit(e) {
           if (str.split(".")[1] < 3) {
             if (p.netRate > 0) {
               console.log("Type 1");
-              correctAnswer = (fill / (p.netRate * 1000));
+              correctAnswer = fill / (p.netRate * 1000);
             }
             if (p.netRate < 0) {
               console.log("Type 1");
-              correctAnswer = (drain / Math.abs(p.netRate * 1000));
+              correctAnswer = drain / Math.abs(p.netRate * 1000);
             }
           }
         }
@@ -19006,7 +19006,7 @@ function handleSubmit(e) {
         if (p.rollType == "square2") {
           correctAnswer = 2 * (p.radius2 / 20) * (p.radius2 / 20);
         }
-        correctAnswer = accDecimal(correctAnswer)
+        correctAnswer = accDecimal(correctAnswer);
       }
       // SPEED: AVERAGE SPEED OF WHOLE JOURNEY
       if (setting == 5) {
