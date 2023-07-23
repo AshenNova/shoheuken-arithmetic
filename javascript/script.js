@@ -18693,24 +18693,17 @@ function handleSubmit(e) {
         const drain = (capacity / p.deno) * p.nume;
         if (p.netRate > 0) {
           console.log("Type 1");
-          correctAnswer = (fill / (p.netRate * 1000)).toFixed(2);
+          correctAnswer = fill / (p.netRate * 1000);
         }
         if (p.netRate < 0) {
-          console.log("Type 1");
-          correctAnswer = (drain / Math.abs(p.netRate * 1000)).toFixed(2);
+          console.log("Type 2");
+          correctAnswer = drain / Math.abs(p.netRate * 1000);
         }
-        const str = correctAnswer.toString();
-        if (str.split(".")[1]) {
-          console.log("here!");
-          if (str.split(".")[1] < 3) {
-            if (p.netRate > 0) {
-              console.log("Type 1");
-              correctAnswer = fill / (p.netRate * 1000);
-            }
-            if (p.netRate < 0) {
-              console.log("Type 1");
-              correctAnswer = drain / Math.abs(p.netRate * 1000);
-            }
+
+        const str = correctAnswer.toString().split(".")[1];
+        if (str) {
+          if (str.length > 2) {
+            correctAnswer = correctAnswer.toFixed(2) * 1;
           }
         }
       }
