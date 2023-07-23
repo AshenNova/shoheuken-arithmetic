@@ -18703,7 +18703,14 @@ function handleSubmit(e) {
         if (str.split(".")[1]) {
           console.log("here!");
           if (str.split(".")[1] < 3) {
-            correctAnswer = correctAnswer * 1;
+            if (p.netRate > 0) {
+              console.log("Type 1");
+              correctAnswer = (fill / (p.netRate * 1000));
+            }
+            if (p.netRate < 0) {
+              console.log("Type 1");
+              correctAnswer = (drain / Math.abs(p.netRate * 1000));
+            }
           }
         }
       }
