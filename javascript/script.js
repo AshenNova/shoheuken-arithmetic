@@ -11203,7 +11203,7 @@ function updateProblems() {
       ${person} saves ${p.saves}% of ${gender} salary.</br>
       If ${gender} salary ${
         p.change > 0 ? "increase" : "decrease"
-      } by $${Math.abs(accDecimal(p.change))}%</br>
+      } by ${Math.abs(accDecimal(p.change))}%</br>
       ${
         genNumbers(2) == 0
           ? `The amount ${genderB} saves would become $${newSave}.`
@@ -11326,7 +11326,7 @@ function updateProblems() {
       console.log(p.start, p.end);
       const strArr = [];
       if (p.type == "average") {
-        const begin = p.start;
+        let begin = p.start;
         for (let i = 0; i < 3; i++) {
           strArr.push(begin);
           begin += 1;
