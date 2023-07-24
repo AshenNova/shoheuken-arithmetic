@@ -16,6 +16,7 @@ export const displayContent = (level) => {
 
   if (level == "heuFiveb") {
     return `
+    </p>
     1. Working Backwards (Type 1)</br>
     2. Working Backwards (Type 2)</br>
     3. Working Backwards (Type 3) Independent</br>
