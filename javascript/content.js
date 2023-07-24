@@ -103,6 +103,7 @@ export const displayContent = (level) => {
       15. Decimals: Division and Multiplication with splitting</br>
       16. Multiplication in Sets</br>
       17. Fractions: Unit with a Value
+      18. Fractions: Form
       <hr></hr>
       99. All
       `;

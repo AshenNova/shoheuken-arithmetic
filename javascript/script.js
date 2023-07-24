@@ -26941,7 +26941,7 @@ function buttonLevelSetting() {
         99
       );
       if (
-        ![Array.from(Array(18)).map((e, i) => i + 1), 99].includes(
+        ![Array.from(Array(19)).map((e, i) => i + 1), 99].includes(
           setting * 1
         ) &&
         !setting.split("").includes("-")
