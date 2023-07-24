@@ -10546,24 +10546,24 @@ function updateProblems() {
       const unitSentenceOne = genNumbers(3);
       if (unitSentenceOne == 0) {
         ctx.fillText(
-          `The ratio of the unshaded part of the rectangle to shaded part`,
+          `The ratio of the unshaded part of the top rectangle to shaded part`,
           10,
           0
         );
         ctx.fillText(
-          ` of the rectangle is ${unshadedFirst} : ${overFirst}.`,
+          ` of the top rectangle is ${unshadedFirst} : ${overFirst}.`,
           10,
           30
         );
       }
       if (unitSentenceOne == 1) {
         ctx.fillText(
-          `The ratio of the unshaded part to the rectangle is`,
+          `The ratio of the unshaded part of the top rectangle to the`,
           10,
           0
         );
         ctx.fillText(
-          `${unshadedFirst} : ${unshadedFirst + overFirst}.`,
+          `top rectangle is ${unshadedFirst} : ${unshadedFirst + overFirst}.`,
           10,
           30
         );
@@ -10575,7 +10575,7 @@ function updateProblems() {
           0
         );
         ctx.fillText(
-          ` of the rectangle is ${overFirst} : ${unshadedFirst}.`,
+          ` of the top rectangle is ${overFirst} : ${unshadedFirst}.`,
           10,
           30
         );
@@ -11207,9 +11207,9 @@ function updateProblems() {
       ${
         genNumbers(2) == 0
           ? `The amount ${genderB} saves would become $${newSave}.`
-          : `Thea amount ${genderB} saves would $${
+          : `Thea amount ${genderB} saves would ${
               p.change > 0 ? "increase" : "decrease"
-            } by ${Math.abs(accDecimal(changeSaving))}.`
+            } by $${Math.abs(accDecimal(changeSaving))}.`
       }
       </br>
       What is ${gender} salary?
