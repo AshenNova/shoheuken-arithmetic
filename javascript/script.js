@@ -11136,8 +11136,9 @@ function updateProblems() {
         // const bill = p.value + serviceCharge + gst;
         const furtherIncrease = (110 / 100) * 108;
         console.log(accDecimal(furtherIncrease));
-        const bill = (genNumbers(89) + 10) * furtherIncrease;
-        p.value = bill / furtherIncrease;
+        p.value = genNumbers(89) + 10;
+        const bill = p.value * furtherIncrease;
+        // p.value = bill / furtherIncrease;
         if (bill.toString().split(".")[1].length > 2) return updateCalc();
         displayProblem.innerHTML = `
         Person ${p.person} hosted a party at a ${
@@ -11145,7 +11146,7 @@ function updateProblems() {
         }.</p>
         There was a 10% service charge,</p>
         and GST of ${p.gst}%.</p>
-        The final bill was $${bill.toLocaleString("en-US")}.</p>
+        The final bill was $${bill.toFixed(2)}.</p>
         How much was cost of the sub-total?</p>
         `;
       }
