@@ -121,31 +121,32 @@ export const displayContent = (level) => {
       6. Fractions: Unlike Fraction with Permission</br>
       7. Fractions: Before and after like fractions</br>
       <hr></hr>
-      8. Geometry: Area of Triangle</br>
+      8. Geometry: Right angled Triangle</br>
+      9. Geometry: Area of Triangle</br>
       
       <hr></hr>
-      9. Volume: Dimensions and Surface Area</br>
-      10. Volume: Numerator with a Value</br>
+      10. Volume: Dimensions and Surface Area</br>
+      11. Volume: Numerator with a Value</br>
       <hr></hr>
-      11. Ratio: Simplification and Expansion</br>
-      12. Ratio: Shapes</br>
-      13. Ratio: Repeated Identity</br>
-      14. Ratio: Identical Total</br>
-      15. Ratio: Wipe on wipe off</br>
+      12. Ratio: Simplification and Expansion</br>
+      13. Ratio: Shapes</br>
+      14. Ratio: Repeated Identity</br>
+      15. Ratio: Identical Total</br>
+      16. Ratio: Wipe on wipe off</br>
       <hr></hr>
-      16. Rates: Part thereof part thereafter</br>
-      17. Rates: Taps</br>
+      17. Rates: Part thereof part thereafter</br>
+      18. Rates: Taps</br>
       <hr></hr>
-      18. Percentage: Percentage of</br>
-      19. Percentage: Perchange change</br>
-      20. Percentage: Repeated Identity</br>
+      19. Percentage: Percentage of</br>
+      20. Percentage: Perchange change</br>
+      21. Percentage: Repeated Identity</br>
       
-      21. Percentage: Remainder Concept</br>
-      22. Percentage: Simple and Further discount</br>
+      22. Percentage: Remainder Concept</br>
+      23. Percentage: Simple and Further discount</br>
 
       <hr></hr>
-      23. Average: Internal change</br>
-      24. Average: Triangle Numbers</br>
+      24. Average: Internal change</br>
+      25. Average: Triangle Numbers</br>
       <hr></hr>
       </p>99. All
       
