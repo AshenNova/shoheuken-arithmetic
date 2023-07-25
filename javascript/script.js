@@ -10265,128 +10265,183 @@ function updateProblems() {
         `;
       }
     }
-    // // GEOMETRY: AREA OF RIGHT ANGLED TRIANGLE
-    // if (setting == 25) {
-    //   drawingDisplay();
-    //   ctx.save();
-    //   const y = fillTextSplit("Find the area of the triangle.");
-    //   ctx.translate(0, y);
+    // GEOMETRY: AREA OF RIGHT ANGLED TRIANGLE
+    if (setting == 25) {
+      drawingDisplay();
+      ctx.font = "1em serif";
+      ctx.save();
+      const y = fillTextSplit("Find the area of the triangle.");
+      ctx.translate(0, y);
 
-    //   const height = p.height * 20;
-    //   const base = p.base * 20;
-    //   ctx.translate(40, height);
-    //   ctx.beginPath();
-    //   ctx.moveTo(0, 0);
-    //   ctx.lineTo(base, 0);
-    //   const Bx = genNumbers(base);
-    //   ctx.lineTo(Bx, -height);
-    //   ctx.closePath();
-    //   ctx.stroke();
+      const height = p.height * 20;
+      const base = p.base * 20;
+      ctx.translate(40, height);
 
-    //   //BOTTOM ARROW
-    //   // ctx.beginPath();
-    //   // ctx.moveTo(0, 5);
-    //   // ctx.lineTo(base, 5);
-    //   // ctx.stroke();
+      ctx.save();
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(base, 0);
+      const Bx = genNumbers(base - 50);
+      ctx.lineTo(Bx, -height);
+      ctx.closePath();
+      ctx.stroke();
 
-    //   // ctx.beginPath();
-    //   // ctx.moveTo(7, 0);
-    //   // ctx.lineTo(0, 5);
-    //   // ctx.lineTo(7, 10);
-    //   // ctx.stroke();
+      ctx.restore();
+      const coordAx = 0;
+      const coordAy = 0;
+      const coordBx = Bx;
+      const coordBy = -height;
+      const coordCx = base;
+      const coordCy = 0;
 
-    //   // ctx.beginPath();
-    //   // ctx.moveTo(base - 7, 0);
-    //   // ctx.lineTo(base, 5);
-    //   // ctx.lineTo(base - 7, 10);
-    //   // ctx.stroke();
-    //   const coordAx = 0;
-    //   const coordAy = 0;
-    //   const coordBx = Bx;
-    //   const coordBy = -height;
-    //   const coordCx = base;
-    //   const coordCy = 0;
+      console.log("A = " + coordAx + ", " + coordAy);
+      console.log("B = " + coordBx + ", " + coordBy);
+      console.log("C = " + coordCx + ", " + coordCy);
 
-    //   console.log("A = " + coordAx + ", " + coordAy);
-    //   console.log("B = " + coordBx + ", " + coordBy);
-    //   console.log("C = " + coordCx + ", " + coordCy);
-    //   // ctx.fillText(p.base, )
-    //   // function midPoint (y2, y1, x2, x1){
-    //   //   return ((y2-y1)/(x2-x1))
-    //   // }
-    //   ctx.fillText(
-    //     `${p.base} cm`,
-    //     (coordCx + coordAx) / 2,
-    //     (coordCy + coordAy) / 2 + 10
-    //   );
+      ctx.fillText(
+        `${p.base} cm`,
+        (coordCx + coordAx) / 2,
+        (coordCy + coordAy) / 2 + 14
+      );
 
-    //   const distanceAB = Math.floor(
-    //     Math.sqrt((coordBy * -1 - coordAy) ** 2 + (coordBx - coordAx) ** 2) / 20
-    //   );
-    //   ctx.fillText(
-    //     `${distanceAB} cm`,
-    //     (coordBx + coordAx) / 2 - 25,
-    //     (coordBy + coordAy) / 2
-    //   );
-    //   const distanceBC = Math.floor(
-    //     Math.sqrt((coordCy * -1 - coordBy) ** 2 + (coordCx - coordBx) ** 2) / 20
-    //   );
-    //   ctx.fillText(
-    //     `${distanceBC} cm`,
-    //     (coordBx + coordCx) / 2 + 15,
-    //     (coordBy + coordCy) / 2
-    //   );
+      const distanceAB = Math.floor(
+        Math.sqrt((coordBy * -1 - coordAy) ** 2 + (coordBx - coordAx) ** 2) / 20
+      );
+      ctx.fillText(
+        `${distanceAB} cm`,
+        (coordBx + coordAx) / 2 - 35,
+        (coordBy + coordAy) / 2
+      );
+      const distanceBC = Math.floor(
+        Math.sqrt((coordCy * -1 - coordBy) ** 2 + (coordCx - coordBx) ** 2) / 20
+      );
+      ctx.fillText(
+        `${distanceBC} cm`,
+        (coordBx + coordCx) / 2 + 15,
+        -(-coordBy + coordCy) / 2
+      );
 
-    //   // HEIGHTS
-    //   ctx.beginPath();
-    //   ctx.moveTo(coordBx, coordBy);
-    //   ctx.lineTo(coordBx, 0);
-    //   ctx.stroke();
+      // HEIGHTS
+      if (p.chosenHeight == "A") {
+        console.log("A");
+        ctx.beginPath();
+        ctx.moveTo(coordBx, coordBy);
+        ctx.lineTo(coordBx, 0);
+        ctx.stroke();
 
-    //   function findPerpendicularIntersection(line, point) {
-    //     // Get the slope of the line.
-    //     const m = (line[3] - line[1]) / (line[2] - line[0]);
+        ctx.fillText(`${-coordBy / 20} cm`, coordBx + 10, coordBy / 2 + 10);
+      }
+      //x1, y1, x2, y2
+      function findPerpendicularIntersection(line, point) {
+        // Get the slope of the line.
 
-    //     // const m = (line[2] - line[0]) / (line[3] - line[1]);
-    //     // Calculate the slope of the perpendicular line.
-    //     const m_perp = -1 / m;
+        const gradientA = (line.y2 - line.y1) / (line.x2 - line.x1);
+        console.log("Gradient of first line is " + gradientA);
 
-    //     // Calculate the y-coordinate of the perpendicular line at the point.
-    //     const y = point[1] - m_perp * point[0];
+        // const m = (line[2] - line[0]) / (line[3] - line[1]);
+        // Calculate the slope of the perpendicular line.
+        const gradientB = -1 / gradientA;
+        console.log("Gradient of second line is " + gradientB);
+        // Calculate the y-coordinate of the perpendicular line at the point.
+        //y = mx + c
+        // c = y - mx
+        const yInterceptA = line.y1 - gradientA * line.x1;
+        console.log("First intercept is " + yInterceptA);
+        // const yInterceptB = line[3] - gradientB * line[2];
+        const yInterceptB = point.y - gradientB * point.x;
 
-    //     // Calculate the x-coordinate of the intersection point.
-    //     const x = (y - line[0]) / m;
+        console.log("Second intercept is " + yInterceptB);
+        // Calculate the x-coordinate of the intersection point.
+        const x = (yInterceptB - yInterceptA) / (gradientA - gradientB);
 
-    //     // Return the coordinates of the intersection point.
-    //     return { x, y };
-    //   }
+        // Return the coordinates of the intersection point.
+        const y = gradientA * x + yInterceptA;
+        return { x, y };
+      }
 
-    //   // SECOND PERPENDICULAR LINE
-    //   //x1, y1, x2, y2
+      if (p.chosenHeight == "B") {
+        console.log("B");
+        const lineAB = {
+          x1: 0,
+          y1: 0,
+          x2: coordBx,
+          y2: -coordBy,
+        };
+        const pointC = {
+          x: coordCx,
+          y: 0,
+        };
+        const intersectionAB = findPerpendicularIntersection(lineAB, pointC);
+        console.log(intersectionAB);
+        ctx.beginPath();
+        ctx.moveTo(intersectionAB.x, -intersectionAB.y);
+        ctx.lineTo(coordCx, 0);
+        // ctx.closePath();
+        ctx.stroke();
 
-    //   const lineAB = [0, 0, coordBx, -coordBy];
-    //   const pointC = [coordCx, coordCy];
-    //   const intersectionAB = findPerpendicularIntersection(lineAB, pointC);
-    //   console.log(intersectionAB);
-    //   ctx.beginPath();
-    //   ctx.moveTo(intersectionAB.x, -intersectionAB.y);
-    //   ctx.lineTo(coordCx, 0);
-    //   // ctx.closePath();
-    //   ctx.stroke();
+        let lengthSecondHeight = Math.sqrt(
+          (intersectionAB.y - pointC.y) ** 2 +
+            (intersectionAB.x - pointC.x) ** 2
+        );
+        console.log(Math.floor(lengthSecondHeight / 20));
+        lengthSecondHeight = Math.floor(lengthSecondHeight / 20);
 
-    //   // THIRD PERPENDICULAR LINE
-    //   // const lineBC = [coordBx, -coordBy, coordCx, 0];
-    //   // const pointA = [0, 0];
+        ctx.fillText(
+          `${lengthSecondHeight} cm`,
+          (intersectionAB.x + pointC.x) / 2 + 5,
+          (-intersectionAB.y + pointC.y) / 2 - 5
+        );
+        p.lengthSecondH = lengthSecondHeight;
+        p.lengthAB = distanceAB;
+        if (distanceBC <= lengthSecondHeight) {
+          console.log("Obtuse Triangle");
+          return updateCalc();
+        }
+      }
 
-    //   // const intersectionBC = findPerpendicularIntersection(lineBC, pointA);
-    //   // console.log(intersectionBC);
-    //   // ctx.beginPath();
-    //   // ctx.moveTo(intersectionBC.x, intersectionBC.y);
-    //   // ctx.lineTo(0, 0);
-    //   // ctx.stroke();
+      if (p.chosenHeight == "C") {
+        // THIRD PERPENDICULAR LINE
+        console.log("C");
+        const lineBC = {
+          x1: coordBx,
+          y1: coordBy,
+          x2: coordCx,
+          y2: 0,
+        };
+        const pointA = {
+          x: 0,
+          y: 0,
+        };
+        const intersectionBC = findPerpendicularIntersection(lineBC, pointA);
+        console.log(intersectionBC);
+        ctx.beginPath();
+        ctx.moveTo(intersectionBC.x, intersectionBC.y);
+        ctx.lineTo(0, 0);
+        ctx.stroke();
 
-    //   ctx.restore();
-    // }
+        let lengthThirdHeight = Math.sqrt(
+          (intersectionBC.y - pointA.y) ** 2 +
+            (intersectionBC.x - pointA.x) ** 2
+        );
+        console.log(Math.floor(lengthThirdHeight / 20));
+        lengthThirdHeight = Math.floor(lengthThirdHeight / 20);
+
+        ctx.fillText(
+          `${lengthThirdHeight} cm`,
+          (intersectionBC.x + pointA.x) / 2,
+          (intersectionBC.y + pointA.y) / 2 + 10
+        );
+        p.lengthThirdH = lengthThirdHeight;
+        p.lengthBC = distanceBC;
+        if (lengthThirdHeight >= distanceBC) {
+          console.log("Too long");
+          return updateCalc();
+        }
+      }
+
+      ctx.restore();
+    }
   }
 
   if (level == "calFiveb") {
@@ -18890,6 +18945,14 @@ function handleSubmit(e) {
             (((p.end + p.start) * (p.end - p.start + 1)) / 2) * p.multiple;
         }
       }
+
+      if (setting == 25) {
+        if (p.chosenHeight == "A") correctAnswer = (1 / 2) * p.base * p.height;
+        if (p.chosenHeight == "B")
+          correctAnswer = (1 / 2) * p.lengthAB * p.lengthSecondH;
+        if (p.chosenHeight == "C")
+          correctAnswer = (1 / 2) * p.lengthBC * p.lengthThirdH;
+      }
     }
 
     if (level == "calFiveb") {
@@ -23990,19 +24053,18 @@ function genProblems() {
       };
     }
 
-    // // GEOMETRY: AREA OF RIGHT ANGLED TRIANGLE
-    // if (setting == 25) {
-    //   return {
-    //     // baseA: genNumbers(10) + 5,
-    //     // baseB: genNumbers(10) + 5,
-    //     // baseC: genNumbers(10) + 5,
-    //     // heightA: genNumbers(10) + 5,
-    //     // heightB: genNumbers(10) + 5,
-    //     // heightC: genNumbers(10) + 5,
-    //     base: genNumbers(10) + 5,
-    //     height: genNumbers(3) + 5,
-    //   };
-    // }
+    // GEOMETRY: AREA OF RIGHT ANGLED TRIANGLE
+    if (setting == 25) {
+      return {
+        base: genNumbers(10) + 5,
+        height: genNumbers(3) + 5,
+        chosenHeight: ["A", "B", "C"][genNumbers(3)],
+        lengthAB: undefined,
+        lengthSecondH: undefined,
+        lengthBC: undefined,
+        lengthThirdH: undefined,
+      };
+    }
   }
 
   if (level == "calFiveb") {
@@ -27106,7 +27168,7 @@ function buttonLevelSetting() {
         99
       );
       if (
-        ![...Array(25).keys(), 99].includes(setting * 1) &&
+        ![...Array(26).keys(), 99].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 99;
