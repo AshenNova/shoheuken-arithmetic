@@ -119,48 +119,59 @@ export const displayContent = (level) => {
       4. Fractions: Remainder Concept</br>
       5. Fractions: Identical Numerator</br>
       6. Fractions: Unlike Fraction with Permission</br>
-      7. Fractions: Identical Numerator (Type 2)</br>
-      8. Fractions: Before and after like fractions</br>
+      7. Fractions: Before and after like fractions</br>
       <hr></hr>
-      9. Geometry: Area of Triangle</br>
-      10. Geometry: Area of Figure: Using 2 different Units</br>
+      8. Geometry: Area of Triangle</br>
+      
       <hr></hr>
-      11. Volume: Dimensions and Surface Area</br>
-      12. Volume: Numerator with a Value</br>
+      9. Volume: Dimensions and Surface Area</br>
+      10. Volume: Numerator with a Value</br>
       <hr></hr>
-      13. Ratio: Simplification and Expansion</br>
-      14. Ratio: Shapes</br>
-      15. Ratio: Repeated Identity</br>
-      16. Ratio: Repeated Group</br>
-      17. Ratio: Identical Total</br>
-      18. Ratio: Unchanged Object</br>
-      19. Ratio: Unchanged Total</br>
-      20. Ratio: Unchanged Difference</br>
-      21. Ratio: Manipulation in units</br>
-      22. Ratio: Repeated Identity (Geometry)</br>
-      23. Ratio: Wipe on wipe off</br>
+      11. Ratio: Simplification and Expansion</br>
+      12. Ratio: Shapes</br>
+      13. Ratio: Repeated Identity</br>
+      14. Ratio: Identical Total</br>
+      15. Ratio: Wipe on wipe off</br>
       <hr></hr>
-      24. Rates: Part thereof part thereafter</br>
-      25. Rates: Taps</br>
+      16. Rates: Part thereof part thereafter</br>
+      17. Rates: Taps</br>
       <hr></hr>
-      26. Percentage: Percentage of</br>
-      27. Percentage: Perchange change</br>
-      28. Percentage: Repeated Identity</br>
-      29. Percentage: Repeated Group</br>
-      30. Percentage: Remainder Concept</br>
-      31. Percentage: Simple and Further discount</br>
-      32. Percentage: GST, discount and Service Charge</br>
-      33. Percentage: Identical Effect</br>
+      18. Percentage: Percentage of</br>
+      19. Percentage: Perchange change</br>
+      20. Percentage: Repeated Identity</br>
+      
+      21. Percentage: Remainder Concept</br>
+      22. Percentage: Simple and Further discount</br>
+
       <hr></hr>
-      34. Average: Internal change</br>
-      35. Average: External Change</br>
-      36. Average: Odd consecutive days</br>
-      37. Average: Triangle Numbers</br>
+      23. Average: Internal change</br>
+      24. Average: Triangle Numbers</br>
       <hr></hr>
       </p>99. All
       
       `;
-
+  if (level == "calFiveb") {
+    return `
+    </p>
+    1. Fractions: Identical Numerator (Type 2)</br>
+    <hr>
+    2. Geometry: Area of Figure: Using 2 different Units</br>
+    <hr>
+    3. Ratio: Repeated Group</br>
+    4. Ratio: Unchanged Object</br>
+    5. Ratio: Unchanged Total</br>
+    6. Ratio: Unchanged Difference</br>
+    7. Ratio: Manipulation in units</br>
+    8. Ratio: Repeated Identity (Geometry)</br>
+    <hr>
+    9. Percentage: Repeated Group</br>
+    10. Percentage: GST, discount and Service Charge</br>
+    11. Percentage: Identical Effect</br>
+    <hr>
+    12. Average: External Change</br>
+    13. Average: Odd consecutive days</br>
+    `;
+  }
   if (level == "calSix") {
     return `
     </p>
