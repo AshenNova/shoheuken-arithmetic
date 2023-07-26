@@ -13076,6 +13076,61 @@ function updateProblems() {
       }
       ctx.restore(); // FIRST RESTORE
     }
+    //GEOMETRY: MANIPULATION OF DIMENSION: OVERLAPPING AREA
+    if (setting == 7) {
+      drawingDisplay();
+
+      ctx.save(); //1st
+      ctx.font = "1em serif";
+      let y;
+      if (p.type == 1) {
+        y = fillTextSplit("Find the area of part A, B and C.");
+      }
+
+      // 1. DRAW FIRST RECTANGLE
+
+      ctx.translate((400 - 240) / 2, y + 20);
+
+      ctx.beginPath();
+      ctx.rect(0, 0, 240, 180);
+      ctx.stroke();
+
+      // 2. DRAW FIRST TRIANGLE
+      // const x1 = genNumbers(240)
+      const y1 = genNumbers(70) + 50;
+      ctx.beginPath();
+      ctx.moveTo(240, 180);
+      ctx.lineTo(0, 0);
+      ctx.lineTo(240, y1);
+      ctx.closePath();
+      ctx.stroke();
+
+      //QUADRILATERAL
+      const triangleA = (1 / 2) * p.rectLength * p.rectBreadth;
+      console.log(triangleA);
+      p.quadrilateral = genNumbers(triangleA / 2 - 100) + 100;
+      ctx.fillText(`${p.quadrilateral} cm2`, 240 / 2 + 15, 180 / 2 + 10);
+      // 3. DRAW SECOND TRIANGLE
+      const y2 = genNumbers(180 - y1) + y1;
+      ctx.beginPath();
+      ctx.moveTo(240, 0);
+      ctx.lineTo(0, 180);
+      ctx.lineTo(240, y1);
+      ctx.closePath();
+      ctx.stroke();
+
+      //LABELS
+      ctx.fillText(`${p.rectLength} cm`, 240 / 2, -10);
+      ctx.fillText(`${p.rectBreadth} cm`, 240 + 5, 180 / 2);
+
+      if (p.type == 1) {
+        ctx.fillText(`A`, 240 / 2, +20);
+        ctx.fillText(`B`, +30, 180 / 2);
+        ctx.fillText(`C`, 240 / 2, 180 - 20);
+      }
+      ctx.restore(); //1st
+    }
+    //END OF CALSIXB
   }
 
   if (level == "heuOne") {
@@ -19860,6 +19915,17 @@ function handleSubmit(e) {
           correctAnswer = triangleB - triangleA;
         }
       }
+
+      // GEOMETRY: MANIPULATION OF DIMENSION: OVERLAPPING TRIANGLE
+
+      if (setting == 7) {
+        const overlappingArea = (1 / 2) * p.rectLength * p.rectBreadth;
+        const unshaded = overlappingArea - p.quadrilateral;
+        const figure = p.rectLength * p.rectBreadth;
+        if (p.type == 1) {
+          correctAnswer = figure - unshaded;
+        }
+      }
     }
 
     // heuristics Answer
@@ -24885,7 +24951,7 @@ function genProblems() {
   // SETTINGS
   if (level == "calSixb") {
     normalDisplay();
-    setting = calArrAll(5, calArr, setting, 99);
+    setting = calArrAll(6, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     //MEET UP
@@ -24980,6 +25046,17 @@ function genProblems() {
         rectBreadth: genNumbers(2) + 3,
         triangleBase: genNumbers(4) + 5,
         triangle2ndBase: genNumbers(2) + 9,
+      };
+    }
+
+    //GEOMETRY: MANIPULATION OF DIMENSION: OVERLAPPING AREA
+    if (setting == 7) {
+      const gen_length = (genNumbers(20) + 20) * 4;
+      return {
+        type: [1][genNumbers(1)],
+        rectLength: gen_length,
+        rectBreadth: (gen_length / 4) * 3,
+        quadrilateral: undefined,
       };
     }
   }
@@ -27769,7 +27846,7 @@ function buttonLevelSetting() {
         99
       );
       if (
-        ![1, 2, 3, 4, 5, 6, 99].includes(setting * 1) &&
+        ![1, 2, 3, 4, 5, 6, 7, 99].includes(setting * 1) &&
         !setting.split("").includes("-")
       )
         setting = 99;
