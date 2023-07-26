@@ -102,8 +102,8 @@ export const displayContent = (level) => {
       14. Fractions to Decimal (Limit)</br>
       15. Decimals: Division and Multiplication with splitting</br>
       16. Multiplication in Sets</br>
-      17. Fractions: Unit with a Value
-      18. Fractions: Form
+      17. Fractions: Unit with a Value</br>
+      18. Fractions: Form</br>
       <hr></hr>
       99. All
       `;
@@ -156,21 +156,24 @@ export const displayContent = (level) => {
     </p>
     1. Fractions: Identical Numerator (Type 2)</br>
     <hr>
-    2. Geometry: Area of Figure: Using 2 different Units</br>
+    2. Geometry: Obtuse Triangle</br>
+    3. Geometry: Manipulation of Dimension</br>
+    4. Geometry: Manipulation of Dimension: level 2</br>
+    5. Geometry: Area of Figure: Using 2 different Units</br>
     <hr>
-    3. Ratio: Repeated Group</br>
-    4. Ratio: Unchanged Object</br>
-    5. Ratio: Unchanged Total</br>
-    6. Ratio: Unchanged Difference</br>
-    7. Ratio: Manipulation in units</br>
-    8. Ratio: Repeated Identity (Geometry)</br>
+    6. Ratio: Repeated Group</br>
+    7. Ratio: Unchanged Object</br>
+    8. Ratio: Unchanged Total</br>
+    9. Ratio: Unchanged Difference</br>
+    10. Ratio: Manipulation in units</br>
+    11. Ratio: Repeated Identity (Geometry)</br>
     <hr>
-    9. Percentage: Repeated Group</br>
-    10. Percentage: GST, discount and Service Charge</br>
-    11. Percentage: Identical Effect</br>
+    12. Percentage: Repeated Group</br>
+    13. Percentage: GST, discount and Service Charge</br>
+    14. Percentage: Identical Effect</br>
     <hr>
-    12. Average: External Change</br>
-    13. Average: Odd consecutive days</br>
+    15. Average: External Change</br>
+    16. Average: Odd consecutive days</br>
     `;
   }
   if (level == "calSix") {

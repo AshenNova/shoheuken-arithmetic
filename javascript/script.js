@@ -1,4 +1,4 @@
-let setTime = 3;
+let setTime = 0;
 
 // const screenHeight = window.screen.availHeight;
 // const screenWidth = window.screen.availWidth;
@@ -9558,7 +9558,7 @@ function updateProblems() {
     }
 
     // GEOMETRY: AREA OF RIGHT ANGLED TRIANGLE
-    if (setting == 25) {
+    if (setting == 8) {
       drawingDisplay();
       ctx.font = "1em serif";
       ctx.save();
@@ -9567,7 +9567,7 @@ function updateProblems() {
 
       const height = p.height * 20;
       const base = p.base * 20;
-      ctx.translate(40, height);
+      ctx.translate((400 - base) / 2, height);
 
       ctx.save();
       ctx.lineWidth = 2;
@@ -9617,10 +9617,13 @@ function updateProblems() {
       // HEIGHTS
       if (p.chosenHeight == "A") {
         console.log("A");
+        ctx.save();
+        ctx.setLineDash([5, 5]);
         ctx.beginPath();
         ctx.moveTo(coordBx, coordBy);
         ctx.lineTo(coordBx, 0);
         ctx.stroke();
+        ctx.restore();
 
         ctx.fillText(`${-coordBy / 20} cm`, coordBx + 10, coordBy / 2 + 10);
       }
@@ -9666,11 +9669,14 @@ function updateProblems() {
         };
         const intersectionAB = findPerpendicularIntersection(lineAB, pointC);
         console.log(intersectionAB);
+        ctx.save();
+        ctx.setLineDash([5, 5]);
         ctx.beginPath();
         ctx.moveTo(intersectionAB.x, -intersectionAB.y);
         ctx.lineTo(coordCx, 0);
         // ctx.closePath();
         ctx.stroke();
+        ctx.restore();
 
         let lengthSecondHeight = Math.sqrt(
           (intersectionAB.y - pointC.y) ** 2 +
@@ -9707,10 +9713,13 @@ function updateProblems() {
         };
         const intersectionBC = findPerpendicularIntersection(lineBC, pointA);
         console.log(intersectionBC);
+        ctx.save();
+        ctx.setLineDash([5, 5]);
         ctx.beginPath();
         ctx.moveTo(intersectionBC.x, intersectionBC.y);
         ctx.lineTo(0, 0);
         ctx.stroke();
+        ctx.restore();
 
         let lengthThirdHeight = Math.sqrt(
           (intersectionBC.y - pointA.y) ** 2 +
@@ -10447,6 +10456,7 @@ function updateProblems() {
   }
 
   if (level == "calFiveb") {
+    calculatorSymbol.classList.remove("hidden");
     //IDENTICAL NUMERATOR (TYPE 2)
     if (setting == 1) {
       normalDisplay();
@@ -10489,9 +10499,368 @@ function updateProblems() {
         p.answer = (p.numOne / (newDenoTwo - newDenoOne)) * (p.nume * multiOne);
       }
     }
-
-    // AREA OF FIGURE: DIFFERENT UNITS
+    // GEOMETRY: AREA OF RIGHT ANGLED TRIANGLE
     if (setting == 2) {
+      drawingDisplay();
+      ctx.font = "1em serif";
+      ctx.save();
+      const y = fillTextSplit("Find the area of the triangle.");
+      ctx.translate(0, y);
+
+      const height = p.height * 20;
+      const base = p.base * 20;
+      ctx.translate((400 - base) / 2, height);
+
+      ctx.save();
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(base, 0);
+      const Bx = [-(genNumbers(50) + 10), genNumbers(40) + base][genNumbers(2)];
+      ctx.lineTo(Bx, -height);
+      ctx.closePath();
+      ctx.stroke();
+
+      ctx.restore();
+      const coordAx = 0;
+      const coordAy = 0;
+      const coordBx = Bx;
+      const coordBy = -height;
+      const coordCx = base;
+      const coordCy = 0;
+
+      console.log("A = " + coordAx + ", " + coordAy);
+      console.log("B = " + coordBx + ", " + coordBy);
+      console.log("C = " + coordCx + ", " + coordCy);
+
+      if (coordBx == coordCx) {
+        console.log("To infinity and beyond!");
+        return updateCalc();
+      }
+      ctx.fillText(
+        `${p.base} cm`,
+        (coordCx + coordAx) / 2,
+        (coordCy + coordAy) / 2 + 14
+      );
+
+      const distanceAB = Math.floor(
+        Math.sqrt((coordBy * -1 - coordAy) ** 2 + (coordBx - coordAx) ** 2) / 20
+      );
+      ctx.fillText(
+        `${distanceAB} cm`,
+        (coordBx + coordAx) / 2 - 35,
+        (coordBy + coordAy) / 2
+      );
+      const distanceBC = Math.floor(
+        Math.sqrt((coordCy * -1 - coordBy) ** 2 + (coordCx - coordBx) ** 2) / 20
+      );
+      ctx.fillText(
+        `${distanceBC} cm`,
+        (coordBx + coordCx) / 2 + 15,
+        -(-coordBy + coordCy) / 2
+      );
+
+      // HEIGHTS
+      if (p.chosenHeight == "A") {
+        console.log("A");
+        ctx.save();
+        ctx.strokeStyle = "red";
+        ctx.fillStyle = "red";
+        ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+        ctx.moveTo(coordBx, coordBy);
+        ctx.lineTo(coordBx, 0);
+        ctx.stroke();
+
+        ctx.fillText(`${-coordBy / 20} cm`, coordBx + 10, coordBy / 2 + 10);
+        ctx.restore();
+        if (distanceBC == -coordBy / 20) {
+          console.log("Ugly");
+          return updateCalc();
+        }
+        if (distanceAB == -coordBy / 20) {
+          console.log("Ugly");
+          return updateCalc();
+        }
+      }
+      //x1, y1, x2, y2
+      function findPerpendicularIntersection(line, point) {
+        // Get the slope of the line.
+
+        const gradientA = (line.y2 - line.y1) / (line.x2 - line.x1);
+        console.log("Gradient of first line is " + gradientA);
+
+        // const m = (line[2] - line[0]) / (line[3] - line[1]);
+        // Calculate the slope of the perpendicular line.
+        const gradientB = -1 / gradientA;
+        console.log("Gradient of second line is " + gradientB);
+        // Calculate the y-coordinate of the perpendicular line at the point.
+        //y = mx + c
+        // c = y - mx
+        const yInterceptA = line.y1 - gradientA * line.x1;
+        console.log("First intercept is " + yInterceptA);
+        // const yInterceptB = line[3] - gradientB * line[2];
+        const yInterceptB = point.y - gradientB * point.x;
+
+        console.log("Second intercept is " + yInterceptB);
+        // Calculate the x-coordinate of the intersection point.
+        const x = (yInterceptB - yInterceptA) / (gradientA - gradientB);
+
+        // Return the coordinates of the intersection point.
+        const y = gradientA * x + yInterceptA;
+        return { x, y };
+      }
+
+      if (p.chosenHeight == "B") {
+        console.log("B");
+        const lineAB = {
+          x1: 0,
+          y1: 0,
+          x2: coordBx,
+          y2: -coordBy,
+        };
+        const pointC = {
+          x: coordCx,
+          y: 0,
+        };
+        const intersectionAB = findPerpendicularIntersection(lineAB, pointC);
+        console.log(intersectionAB);
+        ctx.save();
+        ctx.strokeStyle = "red";
+        ctx.fillStyle = "red";
+        ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+        ctx.moveTo(intersectionAB.x, -intersectionAB.y);
+        ctx.lineTo(coordCx, 0);
+        // ctx.closePath();
+        ctx.stroke();
+
+        let lengthSecondHeight = Math.sqrt(
+          (intersectionAB.y - pointC.y) ** 2 +
+            (intersectionAB.x - pointC.x) ** 2
+        );
+        console.log(Math.floor(lengthSecondHeight / 20));
+        lengthSecondHeight = Math.floor(lengthSecondHeight / 20);
+
+        ctx.fillText(
+          `${lengthSecondHeight} cm`,
+          (intersectionAB.x + pointC.x) / 2 + 5,
+          (-intersectionAB.y + pointC.y) / 2 + 10
+        );
+        p.lengthSecondH = lengthSecondHeight;
+        p.lengthAB = distanceAB;
+        ctx.restore();
+        if (lengthSecondHeight >= p.base) {
+          return updateCalc();
+        }
+      }
+
+      if (p.chosenHeight == "C") {
+        // THIRD PERPENDICULAR LINE
+        console.log("C");
+        const lineBC = {
+          x1: coordBx,
+          y1: coordBy,
+          x2: coordCx,
+          y2: 0,
+        };
+        const pointA = {
+          x: 0,
+          y: 0,
+        };
+        const intersectionBC = findPerpendicularIntersection(lineBC, pointA);
+        console.log(intersectionBC);
+        ctx.save();
+        ctx.strokeStyle = "red";
+        ctx.fillStyle = "red";
+        ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+        ctx.moveTo(intersectionBC.x, intersectionBC.y);
+        ctx.lineTo(0, 0);
+        ctx.stroke();
+
+        let lengthThirdHeight = Math.sqrt(
+          (intersectionBC.y - pointA.y) ** 2 +
+            (intersectionBC.x - pointA.x) ** 2
+        );
+        console.log(Math.floor(lengthThirdHeight / 20));
+        lengthThirdHeight = Math.floor(lengthThirdHeight / 20);
+
+        ctx.fillText(
+          `${lengthThirdHeight} cm`,
+          (intersectionBC.x + pointA.x) / 2,
+          (intersectionBC.y + pointA.y) / 2 + 20
+        );
+        ctx.restore();
+        p.lengthThirdH = lengthThirdHeight;
+        p.lengthBC = distanceBC;
+        if (lengthThirdHeight >= p.base) {
+          return updateCalc();
+        }
+      }
+
+      ctx.restore();
+    }
+
+    //GEOMETRY: MANIPULATION OF DIMENSION
+    if (setting == 3) {
+      drawingDisplay();
+      const y = fillTextSplit(
+        `Find the area of the ${
+          genNumbers(2) == 1 ? "shaded" : "unshaded"
+        } part.`
+      );
+      ctx.save();
+      ctx.font = "1em serif";
+      // 1) DRAW RECTANGLE
+      ctx.translate(0, y);
+      ctx.translate((400 - 240) / 2, 0);
+      ctx.beginPath();
+      ctx.rect(0, 0, 240, 180);
+      ctx.stroke();
+
+      // 2) LABEL RECTANGLE
+      ctx.fillText(`${p.breadth} cm`, -50, 180 / 2);
+      ctx.fillText(`${p.length} cm`, 240 / 2 - 10, 180 + 15);
+
+      //3) DRAW LINES IN THE RECTANGLE
+      const firstX = genNumbers(240 / 3 - 50) + 50;
+      const secondX = genNumbers(240 - firstX) + firstX;
+      const thirdX = genNumbers(240 - secondX) + secondX;
+
+      if (p.type == 1) {
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(firstX, 180);
+        ctx.lineTo(240, 0);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
+      }
+      if (p.type == 2) {
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(firstX, 180);
+        ctx.lineTo(secondX, 0);
+        ctx.lineTo(thirdX, 180);
+        ctx.lineTo(240, 0);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fill();
+      }
+
+      ctx.restore();
+    }
+
+    //GEOMETRY: MANIPULATION OF DIMENSION LEVEL 2
+    if (setting == 4) {
+      drawingDisplay();
+      // if (p.label == 1) {
+      if (p.givenLabel == "A") p.findPart = "C";
+      if (p.givenLabel == "B") p.findPart = "D";
+      if (p.givenLabel == "C") p.findPart = "A";
+      if (p.givenLabel == "D") p.findPart = "B";
+      // }
+      const y = fillTextSplit(`Find the area of the ${p.findPart}.`);
+      ctx.save();
+      ctx.font = "1em serif";
+      // 1) DRAW RECTANGLE
+      ctx.translate(0, y);
+      ctx.translate((400 - 240) / 2, 0);
+      ctx.beginPath();
+      ctx.rect(0, 0, 240, 180);
+      ctx.stroke();
+
+      // 2) LABEL RECTANGLE
+      if (p.label == 1) {
+        ctx.fillText(`${p.breadth} cm`, -50, 180 / 2);
+        ctx.fillText(`${p.length} cm`, 240 / 2 - 10, 180 + 15);
+      }
+
+      //3) DRAW TRIANGLES IN THE RECTANGLE
+      const x1 = genNumbers(80) + 80;
+      const y1 = genNumbers(60) + 60;
+
+      // 2) I) LABEL <- NEED COORDINATES FROM (3)
+      const figure = p.length * p.breadth;
+      const half = figure / 2;
+      p.areaA = Math.floor((half * y1) / 180);
+      p.areaC = half - p.areaA;
+      p.areaB = Math.floor((half * x1) / 240);
+      p.areaD = half - p.areaB;
+      if (p.label == 1) {
+        if (p.givenLabel == "A") {
+          ctx.fillText(`${p.areaA} cm2`, x1 - 30, (y1 - 0) / 2);
+          ctx.fillText(`C`, x1 - 30, (180 + y1) / 2);
+        }
+        if (p.givenLabel == "B") {
+          ctx.fillText(`${p.areaB} cm2`, (240 + x1) / 2 - 10, y1 + 5);
+          ctx.fillText(`D`, x1 / 2, y1 + 5);
+        }
+        if (p.givenLabel == "C") {
+          ctx.fillText(`${p.areaC} cm2`, x1 - 30, (180 + y1) / 2);
+          ctx.fillText(`A`, x1 - 30, (y1 - 0) / 2);
+        }
+        if (p.givenLabel == "D") {
+          ctx.fillText(`${p.areaD} cm2`, x1 / 2, y1 + 5);
+          ctx.fillText(`B`, (240 + x1) / 2, y1 + 5);
+        }
+      }
+      if (p.label == 2) {
+        // ctx.fillText(`${p.areaA} cm2`, x1 - 30, (y1 - 0) / 2);
+        // ctx.fillText(`${p.areaB} cm2`, (240 + x1) / 2 - 10, y1 + 5);
+        // ctx.fillText(`${p.areaC} cm2`, x1 - 30, (180 - y1) / 2);
+        // ctx.fillText(`${p.areaD} cm2`, x1 / 2, y1 + 5);
+        if (p.givenLabel == "A") {
+          ctx.fillText(`${p.areaA} cm2`, x1 - 30, (y1 - 0) / 2);
+          ctx.fillText(`${p.areaB} cm2`, (240 + x1) / 2 - 10, y1 + 5);
+          ctx.fillText(`C`, x1 - 30, (180 + y1) / 2);
+          ctx.fillText(`${p.areaD} cm2`, x1 / 2 - 5, y1 + 5);
+        }
+        if (p.givenLabel == "B") {
+          ctx.fillText(`${p.areaA} cm2`, x1 - 30, (y1 - 0) / 2);
+          ctx.fillText(`${p.areaB} cm2`, (240 + x1) / 2 - 10, y1 + 5);
+          ctx.fillText(`${p.areaC} cm2`, x1 - 30, (180 + y1) / 2);
+          ctx.fillText(`D`, x1 / 2, y1 + 5);
+        }
+        if (p.givenLabel == "C") {
+          ctx.fillText(`A`, x1 - 30, (y1 - 0) / 2);
+          ctx.fillText(`${p.areaB} cm2`, (240 + x1) / 2 - 10, y1 + 5);
+          ctx.fillText(`${p.areaC} cm2`, x1 - 30, (180 + y1) / 2);
+          ctx.fillText(`${p.areaD} cm2`, x1 / 2 - 5, y1 + 5);
+        }
+        if (p.givenLabel == "D") {
+          ctx.fillText(`${p.areaA} cm2`, x1 - 30, (y1 - 0) / 2);
+          ctx.fillText(`B`, (240 + x1) / 2, y1 + 5);
+          ctx.fillText(`${p.areaC} cm2`, x1 - 30, (180 + y1) / 2);
+          ctx.fillText(`${p.areaD} cm2`, x1 / 2 - 5, y1 + 5);
+        }
+      }
+      // ctx.fillText(`${areaA} cm2`, x1 - 30, y1 - 50);
+      // ctx.fillText(`${areaB} cm2`, x1 + 50, y1 + 5);
+      // ctx.fillText(`${areaC} cm2`, x1 - 30, y1 + 50);
+      // ctx.fillText(`${areaD} cm2`, x1 - 80, y1 + 5);
+
+      // 3) I) FIRST TRIANGLE
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(x1, y1);
+      ctx.lineTo(240, 0);
+      ctx.closePath();
+      ctx.stroke();
+
+      // 3) II) SECOND TRIANGLE
+      ctx.beginPath();
+      ctx.moveTo(0, 180);
+      ctx.lineTo(x1, y1);
+      ctx.lineTo(240, 180);
+      ctx.closePath();
+      ctx.stroke();
+
+      ctx.restore();
+    }
+    // AREA OF FIGURE: DIFFERENT UNITS
+    if (setting == 5) {
       drawingDisplay();
       ctx.save();
       ctx.font = "1em serif";
@@ -10613,7 +10982,7 @@ function updateProblems() {
     }
 
     //  REPEATED GROUP RATIO
-    if (setting == 3) {
+    if (setting == 6) {
       normalDisplay();
       let total = p.varA + p.varB + p.varC;
       let firstTotal = undefined;
@@ -10669,7 +11038,7 @@ function updateProblems() {
       }
     }
     //RATIO: UNCHANGED OBJECT
-    if (setting == 4) {
+    if (setting == 7) {
       normalDisplay();
       let unitAF = "";
       let unitBF = "";
@@ -10843,7 +11212,7 @@ function updateProblems() {
       `;
     }
     // RATIO: UNCHANGED TOTAL
-    if (setting == 5) {
+    if (setting == 8) {
       normalDisplay();
       let unitAF = "";
       let unitBF = "";
@@ -10961,7 +11330,7 @@ function updateProblems() {
       ${lineFour}`;
     }
     //RATIO: UNCHANGED DIFFERENCE
-    if (setting == 6) {
+    if (setting == 9) {
       normalDisplay();
       let unitAF = "";
       let unitBF = "";
@@ -11060,7 +11429,7 @@ function updateProblems() {
       `;
     }
     // RATIO: MANIPULATION IN UNITS
-    if (setting == 7) {
+    if (setting == 10) {
       normalDisplay();
       [p.ratioA, p.ratioB] = simplify(p.ratioA, p.ratioB);
       [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
@@ -11077,7 +11446,7 @@ function updateProblems() {
       `;
     }
     // REPEATED IDENTITY GEOMETRY
-    if (setting == 8) {
+    if (setting == 11) {
       drawingDisplay();
       const heightNeeded = 140 + p.rectBreadth * 10 + p.triangleHeight * 10;
       if (heightNeeded > 275) {
@@ -11306,7 +11675,7 @@ function updateProblems() {
       p.answer = `${newUnshadedFirst}:${newUnshadedSecond}`;
     }
     // RATIO: REPEATED GROUP
-    if (setting == 9) {
+    if (setting == 12) {
       normalDisplay();
       const displayA = p.percA;
       const displayB = p.percB;
@@ -11381,7 +11750,7 @@ function updateProblems() {
       `;
     }
     // PERCENTAGE: GST AND SERVICE CHARGE
-    if (setting == 10) {
+    if (setting == 13) {
       normalDisplay();
       if (p.optionOne == "simple gst") {
         displayProblem.innerHTML = `
@@ -11458,7 +11827,7 @@ function updateProblems() {
     }
 
     // PERCENTAGE: IDENTICAL EFFECT
-    if (setting == 11) {
+    if (setting == 14) {
       normalDisplay();
       const person = [...boyNames, ...girlNames][
         genNumbers(boyNames.length + girlNames.length)
@@ -11494,7 +11863,7 @@ function updateProblems() {
       `;
     }
     //AVERAGE: EXTERNAL CHANGE
-    if (setting == 12) {
+    if (setting == 15) {
       normalDisplay();
       if (p.changeQuantity == 0) return updateCalc();
       p.changeQuantity > 0 ? (p.situation = "joined") : (p.situation = "left");
@@ -11526,7 +11895,7 @@ function updateProblems() {
     }
 
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 13) {
+    if (setting == 16) {
       normalDisplay();
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
@@ -18686,6 +19055,7 @@ function handleSubmit(e) {
         correctAnswer = p.oneUnit * p.last_deno;
       }
 
+      // AREA OF RIGHT ANGLED TRIANGLE
       if (setting == 8) {
         if (p.chosenHeight == "A") correctAnswer = (1 / 2) * p.base * p.height;
         if (p.chosenHeight == "B")
@@ -18961,33 +19331,55 @@ function handleSubmit(e) {
       if (setting == 1) {
         correctAnswer = p.answer;
       }
-      // AREA OF FIGURE: DOUBLE UNITS
-      if (setting == 2) {
-        let pointDF = p.firstTriangleBase;
-        let pointCF = p.length - p.firstTriangleBase;
-        [pointDF, pointCF] = simplify(pointDF, pointCF);
-        let pointBE = p.thirdTriangleHeight;
-        let pointCE = p.breadth - p.thirdTriangleHeight;
-        [pointBE, pointCE] = simplify(pointBE, pointCE);
+    }
+    // AREA OF OBTUSE TRIANGLE
+    if (setting == 2) {
+      if (p.chosenHeight == "A") correctAnswer = (1 / 2) * p.base * p.height;
+      if (p.chosenHeight == "B")
+        correctAnswer = (1 / 2) * p.lengthAB * p.lengthSecondH;
+      if (p.chosenHeight == "C")
+        correctAnswer = (1 / 2) * p.lengthBC * p.lengthThirdH;
+    }
 
-        let firstTriangleNume = (pointDF * (pointBE + pointCE)) / 2;
-        // let firstTriangleDeno = 2;
-        let secondTriangleNume = (pointCF * pointCE) / 2;
-        // let secondTriangleDeno = 2;
-        let thirdTriangleNume = ((pointDF + pointCF) * pointBE) / 2;
-        // let thirdTriangleDeno = 2;
-        console.log(firstTriangleNume, secondTriangleNume, thirdTriangleNume);
-        let totalTriangle =
-          firstTriangleNume + secondTriangleNume + thirdTriangleNume;
-        //GET RID OF DECIMALS *2
-        let shaded =
-          (pointDF + pointCF) * (pointBE + pointCE) * 2 - totalTriangle * 2;
-        let area = (pointDF + pointCF) * (pointBE + pointCE) * 2;
-        [shaded, area] = simplify(shaded, area);
-        correctAnswer = `${shaded}/${area}`;
-      }
+    //GEOMETRY: MANIPULATION OF DIMENSION
+    if (setting == 3) {
+      correctAnswer = (1 / 2) * p.length * p.breadth;
+    }
+    if (setting == 4) {
+      // if (p.label == 1) {
+      const half = (1 / 2) * p.length * p.breadth;
+      if (p.givenLabel == "A") correctAnswer = half - p.areaA;
+      if (p.givenLabel == "B") correctAnswer = half - p.areaB;
+      if (p.givenLabel == "C") correctAnswer = half - p.areaC;
+      if (p.givenLabel == "D") correctAnswer = half - p.areaD;
+      // }
+    }
+    // AREA OF FIGURE: DOUBLE UNITS
+    if (setting == 5) {
+      let pointDF = p.firstTriangleBase;
+      let pointCF = p.length - p.firstTriangleBase;
+      [pointDF, pointCF] = simplify(pointDF, pointCF);
+      let pointBE = p.thirdTriangleHeight;
+      let pointCE = p.breadth - p.thirdTriangleHeight;
+      [pointBE, pointCE] = simplify(pointBE, pointCE);
+
+      let firstTriangleNume = (pointDF * (pointBE + pointCE)) / 2;
+      // let firstTriangleDeno = 2;
+      let secondTriangleNume = (pointCF * pointCE) / 2;
+      // let secondTriangleDeno = 2;
+      let thirdTriangleNume = ((pointDF + pointCF) * pointBE) / 2;
+      // let thirdTriangleDeno = 2;
+      console.log(firstTriangleNume, secondTriangleNume, thirdTriangleNume);
+      let totalTriangle =
+        firstTriangleNume + secondTriangleNume + thirdTriangleNume;
+      //GET RID OF DECIMALS *2
+      let shaded =
+        (pointDF + pointCF) * (pointBE + pointCE) * 2 - totalTriangle * 2;
+      let area = (pointDF + pointCF) * (pointBE + pointCE) * 2;
+      [shaded, area] = simplify(shaded, area);
+      correctAnswer = `${shaded}/${area}`;
       // RATIO: REPEATED GROUP
-      if (setting == 3) {
+      if (setting == 6) {
         p.answer = simplestForm(p.answer);
         console.log(p.answer);
         // if (p.firstScene == "total" && p.secondScene == "total") {
@@ -18995,7 +19387,7 @@ function handleSubmit(e) {
         // }
       }
       // RATIO: UNCHANGED OBJ
-      if (setting == 4) {
+      if (setting == 7) {
         console.log(p.valueAFirst, p.valueBFirst, p.valueAEnd, p.valueBEnd);
         // if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
         // if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
@@ -19004,21 +19396,21 @@ function handleSubmit(e) {
         correctAnswer = p.answer;
       }
       // RATIO: UNCHANGED TOTAL
-      if (setting == 5) {
+      if (setting == 8) {
         if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
         if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
         if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
         if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
       }
       // RATIO: UNCHANGED DIFFERENCE
-      if (setting == 6) {
+      if (setting == 9) {
         if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
         if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
         if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
         if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
       }
       // RATIO: MANIPULATION IN UNITS
-      if (setting == 7) {
+      if (setting == 10) {
         const commonNumber = commonDeno(p.denoA, p.denoB);
         let end_A = ((p.ratioA * (p.denoA - p.numeA)) / p.denoA) * commonNumber;
         let end_B = ((p.ratioB * (p.denoB - p.numeB)) / p.denoB) * commonNumber;
@@ -19026,10 +19418,10 @@ function handleSubmit(e) {
         correctAnswer = `${end_A}:${end_B}`;
       }
       // RATIO: REPEATED IDENTITY (GEOMETRY)
-      if (setting == 8) {
+      if (setting == 11) {
         correctAnswer = p.answer;
       }
-      if (setting == 9) {
+      if (setting == 12) {
         console.log(p.answer);
         // got to change to an array
         p.answer = p.answer.split(":");
@@ -19039,7 +19431,7 @@ function handleSubmit(e) {
       }
 
       // PERCENTAGE: GST, DISCOUNT AND SERVICE CHARGE
-      if (setting == 10) {
+      if (setting == 13) {
         if (p.optionOne == "simple gst") {
           if (p.optionTwo == "gst") {
             correctAnswer = (p.value / 100) * p.gst;
@@ -19067,8 +19459,8 @@ function handleSubmit(e) {
         }
       }
       // PERCENTAG: IDENTICAL EFFECT
-      if (setting == 11) correctAnswer = p.salary;
-      if (setting == 12) {
+      if (setting == 14) correctAnswer = p.salary;
+      if (setting == 15) {
         if (p.question == "at first") {
           correctAnswer = p.oldQuantity;
         }
@@ -19077,7 +19469,7 @@ function handleSubmit(e) {
         }
       }
       //AVERAGE: CONSECUTIVE DAYS
-      if (setting == 13) {
+      if (setting == 16) {
         correctAnswer = p.dayOne + p.increase * (p.chosen - 1);
       }
     }
@@ -24071,7 +24463,7 @@ function genProblems() {
   }
 
   if (level == "calFiveb") {
-    setting = calArrAll(13, calArr, setting, 99);
+    setting = calArrAll(16, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     // IDENTICAL NUMERATOR TYPE 2
@@ -24091,8 +24483,47 @@ function genProblems() {
         somethingElse: ["toys", "sweets", "games", "pens"][genNumbers(4)],
       };
     }
-    // AREA OF FIGURE: DIFFERENT UNITS
+
+    // GEOMETRY: OBTUSE TRIANGLE
     if (setting == 2) {
+      return {
+        base: genNumbers(9) + 5,
+        height: genNumbers(3) + 5,
+        chosenHeight: ["A", "B", "C"][genNumbers(3)],
+        lengthAB: undefined,
+        lengthSecondH: undefined,
+        lengthBC: undefined,
+        lengthThirdH: undefined,
+      };
+    }
+    // GEOMETRY: MANIPULATION OF DIMENSION
+    if (setting == 3) {
+      const gen_length = (genNumbers(10) + 10) * 4;
+      return {
+        type: [2, 1][genNumbers(2)],
+        length: gen_length,
+        breadth: (gen_length / 4) * 3,
+      };
+    }
+
+    // GEOMETRY: MANIPULATION OF DIMENSION LEVEL 2
+    if (setting == 4) {
+      const gen_length = (genNumbers(10) + 10) * 4;
+      return {
+        // part: ["A", "B", "C", "D"][genNumbers(4)],
+        label: [2, 1, 2][genNumbers(1)],
+        givenLabel: ["A", "B", "C", "D"][genNumbers(4)],
+        findPart: undefined,
+        length: gen_length,
+        breadth: (gen_length / 4) * 3,
+        areaA: undefined,
+        areaB: undefined,
+        areaC: undefined,
+        areaD: undefined,
+      };
+    }
+    // AREA OF FIGURE: DIFFERENT UNITS
+    if (setting == 5) {
       const gen_length = genNumbers(5) + 10;
       const gen_breadth = genNumbers(gen_length - 8) + 8;
       return {
@@ -24103,7 +24534,7 @@ function genProblems() {
       };
     }
     // REPEATED GROUP RATIO
-    if (setting == 3) {
+    if (setting == 6) {
       let A = genNumbers(10) + 1;
       return {
         varA: A,
@@ -24115,7 +24546,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 4) {
+    if (setting == 7) {
       // console.log("Unchanged Object");
       return {
         object: ["sweets", "toys", "books"][genNumbers(3)],
@@ -24130,7 +24561,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 5) {
+    if (setting == 8) {
       // console.log("Unchanged Total");
       const valueA = (genNumbers(40) + 10) * 5;
       const valueB = (genNumbers(40) + 10) * 5;
@@ -24149,7 +24580,7 @@ function genProblems() {
     }
 
     //RATIO: UNCHANGED DIFFERENCE
-    if (setting == 6) {
+    if (setting == 9) {
       // console.log("Unchanged Difference");
       const valueA = genNumbers(50) + 5;
       const valueB = genNumbers(50) + 5;
@@ -24168,7 +24599,7 @@ function genProblems() {
       };
     }
     // RATIO: MANIPULATION IN UNITS
-    if (setting == 7) {
+    if (setting == 10) {
       const gen_A = genNumbers(5) + 2;
       const gen_B = genNumbers(5) + 2;
       const genDeno_A = [genNumbers(gen_A - 2) + 2, gen_A * 2][genNumbers(2)];
@@ -24184,7 +24615,7 @@ function genProblems() {
     }
 
     // REPEATED IDENTITY (GEOMETRY)
-    if (setting == 8) {
+    if (setting == 11) {
       return {
         rectLength: genNumbers(5) + 5,
         rectBreadth: genNumbers(5) + 5,
@@ -24196,7 +24627,7 @@ function genProblems() {
       };
     }
     //PERCETAGE: REPEATED GROUP
-    if (setting == 9) {
+    if (setting == 12) {
       return {
         percA: (genNumbers(20) + 1) * 5,
         firstSentence: ["B and C", "the total"][genNumbers(2)],
@@ -24206,7 +24637,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: GST AND SERVICE CHARGE
-    if (setting == 10) {
+    if (setting == 13) {
       return {
         person: ["A", "B", "C"][genNumbers(3)],
         optionOne: ["discount gst", "service", "simple gst"][genNumbers(3)],
@@ -24218,7 +24649,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: IDENTICAL EFFECT
-    if (setting == 11) {
+    if (setting == 14) {
       return {
         saves: (genNumbers(8) + 1) * 5,
         change: [(genNumbers(4) + 1) * 5, -(genNumbers(4) + 1) * 5][
@@ -24227,7 +24658,7 @@ function genProblems() {
         salary: genNumbers(5000) + 5000,
       };
     }
-    if (setting == 12) {
+    if (setting == 15) {
       return {
         oldQuantity: genNumbers(6) + 3,
         oldAverage: genNumbers(40) + 10,
@@ -24240,7 +24671,7 @@ function genProblems() {
       };
     }
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 13) {
+    if (setting == 16) {
       return {
         dayOne: genNumbers(20) + 5,
         days: genNumbers(5) + 5,
@@ -27146,8 +27577,19 @@ function buttonLevelSetting() {
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
+      // if (
+      //   ![Array.from(Array(19)).map((e, i) => i + 1), 99].includes(
+      //     setting * 1
+      //   ) &&
+      //   !setting.split("").includes("-")
+      // )
+      // console.log(
+      //   ![...Array.from({ length: 18 }, (_, i) => i + 1), 99].includes(
+      //     setting * 1
+      //   )
+      // );
       if (
-        ![Array.from(Array(19)).map((e, i) => i + 1), 99].includes(
+        ![...Array.from({ length: 18 }, (_, i) => i + 1), 99].includes(
           setting * 1
         ) &&
         !setting.split("").includes("-")
@@ -27160,6 +27602,7 @@ function buttonLevelSetting() {
 
     case "Cal.5":
       level = "calFive";
+
       scoreNeeded = 10;
       optionsBox.classList.remove("hidden");
       optionsBox.textContent = `Available settings:`;
@@ -27177,34 +27620,32 @@ function buttonLevelSetting() {
         setting = 99;
       console.log(setting);
       document.querySelector("#user-input").setAttribute("type", "text");
-      // displayProblem.style.fontSize = "18px";
-      // displayProblem.style.textAlign = "left";
       break;
 
     case "Cal.5b":
       level = "calFiveb";
+      console.log(level);
       scoreNeeded = 10;
       optionsBox.classList.remove("hidden");
       optionsBox.textContent = `Available settings:`;
       optionsBox.insertAdjacentHTML("beforeend", displayContent(level));
-      // console.log(userInputOptions);
-      // calBtn[4].addEventListener("click", function () {
       setting = prompt(
         "What level?\nIf you are not sure, click 'Ok' to view the list then click 'Back'.",
         99
       );
       if (
-        ![Array.from(Array(14)).map((e, i) => i + 1), 99] &&
+        ![...Array.from({ length: 16 }, (_, i) => i + 1), 99].includes(
+          setting * 1
+        ) &&
         !setting.split("").includes("-")
       )
         setting = 99;
-      console.log(setting);
       document.querySelector("#user-input").setAttribute("type", "text");
-      // displayProblem.style.fontSize = "18px";
-      // displayProblem.style.textAlign = "left";
+      displayProblem.style.fontSize = "18px";
+      displayProblem.style.textAlign = "left";
       break;
-    // HEURISTICS SETTINGS
 
+    // HEURISTICS SETTINGS
     case "Cal.6":
       level = "calSix";
       scoreNeeded = 10;
