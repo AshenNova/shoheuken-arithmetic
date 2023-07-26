@@ -157,23 +157,24 @@ export const displayContent = (level) => {
     1. Fractions: Identical Numerator (Type 2)</br>
     <hr>
     2. Geometry: Obtuse Triangle</br>
-    3. Geometry: Manipulation of Dimension</br>
-    4. Geometry: Manipulation of Dimension: level 2</br>
-    5. Geometry: Area of Figure: Using 2 different Units</br>
+    3. Geometry: Area of Figure:  Cutting</br>
+    4. Geometry: Manipulation of Dimension</br>
+    5. Geometry: Manipulation of Dimension: level 2</br>
+    6. Geometry: Area of Figure: Using 2 different Units</br>
     <hr>
-    6. Ratio: Repeated Group</br>
-    7. Ratio: Unchanged Object</br>
-    8. Ratio: Unchanged Total</br>
-    9. Ratio: Unchanged Difference</br>
-    10. Ratio: Manipulation in units</br>
-    11. Ratio: Repeated Identity (Geometry)</br>
+    7. Ratio: Repeated Group</br>
+    8. Ratio: Unchanged Object</br>
+    9. Ratio: Unchanged Total</br>
+    10. Ratio: Unchanged Difference</br>
+    11. Ratio: Manipulation in units</br>
+    12. Ratio: Repeated Identity (Geometry)</br>
     <hr>
-    12. Percentage: Repeated Group</br>
-    13. Percentage: GST, discount and Service Charge</br>
-    14. Percentage: Identical Effect</br>
+    13. Percentage: Repeated Group</br>
+    14. Percentage: GST, discount and Service Charge</br>
+    15. Percentage: Identical Effect</br>
     <hr>
-    15. Average: External Change</br>
-    16. Average: Odd consecutive days</br>
+    16. Average: External Change</br>
+    17. Average: Odd consecutive days</br>
     `;
   }
   if (level == "calSix") {

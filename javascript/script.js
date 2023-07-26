@@ -537,6 +537,8 @@ function normalDisplay() {
   displayProblem.style.textAlign = "left";
 }
 function drawingDisplay() {
+  // ctx.setTransform(1, 0, 0, 1, 0, 0);
+  // ctx.clearRect(0, 0, 1000, 1000);
   firstCanvas.classList.remove("hidden");
   wholeNumberContainer.classList.add("hidden");
   fractionsContainer.classList.add("hidden");
@@ -10701,9 +10703,73 @@ function updateProblems() {
 
       ctx.restore();
     }
+    // GEOMETRY: AREA OF FIGURE : CUTTING
+    if (setting == 3) {
+      drawingDisplay();
+      ctx.save(); //1st
+      const y = fillTextSplit(
+        "The figure below is made up of 2 squares.\nFind the area of the shaded part."
+      );
+      ctx.font = "1em serif";
+      ctx.translate(0, y + 10);
+      p.valueA = Math.ceil(p.squareA / 10);
+      p.valueB = Math.ceil(p.squareB / 10);
+      // 1) FIRST SQUARE
+      ctx.translate((400 - (p.squareA + p.squareB)) / 2, 0);
+      ctx.beginPath();
+      ctx.rect(0, 0, p.squareA, p.squareA);
+      ctx.stroke();
+      ctx.fillText(`${p.valueA} cm`, -50, p.squareA / 2);
+
+      // 3) FIRST SHADED TRIANGLE
+      ctx.save(); //2nd
+      ctx.strokeStyle = "grey";
+      ctx.fillStyle = "grey";
+      const adjustY = [0, genNumbers(10) + 10][genNumbers(2)];
+
+      ctx.beginPath();
+      ctx.moveTo(p.squareA, p.squareA);
+      ctx.lineTo(0, 0);
+      ctx.lineTo(p.squareA, adjustY + p.squareB);
+      // ctx.closePath();
+      ctx.stroke();
+      ctx.fill();
+
+      //5: LABEL ADJUST
+      if (adjustY != 0) {
+        ctx.save(); //3rd
+        ctx.fillStyle = "black";
+        p.adjust = Math.ceil(adjustY / 10);
+        ctx.fillText(`${p.adjust} cm`, p.squareA + 10, adjustY / 2);
+        ctx.restore(); //3rd
+        if (p.valueA <= p.valueB + p.adjust) {
+          ctx.restore();
+          ctx.restore();
+          return updateCalc();
+        }
+      }
+
+      //4 ) SECOND SHADED TRIANGLE
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(p.squareA + p.squareB, adjustY + p.squareB);
+      ctx.lineTo(p.squareA, adjustY + p.squareB);
+      ctx.stroke();
+      // ctx.closePath();
+      ctx.fill();
+      ctx.restore(); // 2nd
+
+      // 2) SECOND SQUARE
+      ctx.translate(p.squareA, adjustY);
+      ctx.beginPath();
+      ctx.rect(0, 0, p.squareB, p.squareB);
+      ctx.stroke();
+      ctx.fillText(`${p.valueB} cm`, p.squareB + 5, p.squareB / 2);
+      ctx.restore(); // 1st
+    }
 
     //GEOMETRY: MANIPULATION OF DIMENSION
-    if (setting == 3) {
+    if (setting == 4) {
       drawingDisplay();
       const y = fillTextSplit(
         `Find the area of the ${
@@ -10753,7 +10819,7 @@ function updateProblems() {
     }
 
     //GEOMETRY: MANIPULATION OF DIMENSION LEVEL 2
-    if (setting == 4) {
+    if (setting == 5) {
       drawingDisplay();
       // if (p.label == 1) {
       if (p.givenLabel == "A") p.findPart = "C";
@@ -10860,7 +10926,7 @@ function updateProblems() {
       ctx.restore();
     }
     // AREA OF FIGURE: DIFFERENT UNITS
-    if (setting == 5) {
+    if (setting == 6) {
       drawingDisplay();
       ctx.save();
       ctx.font = "1em serif";
@@ -10982,7 +11048,7 @@ function updateProblems() {
     }
 
     //  REPEATED GROUP RATIO
-    if (setting == 6) {
+    if (setting == 7) {
       normalDisplay();
       let total = p.varA + p.varB + p.varC;
       let firstTotal = undefined;
@@ -11038,7 +11104,7 @@ function updateProblems() {
       }
     }
     //RATIO: UNCHANGED OBJECT
-    if (setting == 7) {
+    if (setting == 8) {
       normalDisplay();
       let unitAF = "";
       let unitBF = "";
@@ -11212,7 +11278,7 @@ function updateProblems() {
       `;
     }
     // RATIO: UNCHANGED TOTAL
-    if (setting == 8) {
+    if (setting == 9) {
       normalDisplay();
       let unitAF = "";
       let unitBF = "";
@@ -11330,7 +11396,7 @@ function updateProblems() {
       ${lineFour}`;
     }
     //RATIO: UNCHANGED DIFFERENCE
-    if (setting == 9) {
+    if (setting == 10) {
       normalDisplay();
       let unitAF = "";
       let unitBF = "";
@@ -11429,7 +11495,7 @@ function updateProblems() {
       `;
     }
     // RATIO: MANIPULATION IN UNITS
-    if (setting == 10) {
+    if (setting == 11) {
       normalDisplay();
       [p.ratioA, p.ratioB] = simplify(p.ratioA, p.ratioB);
       [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
@@ -11446,7 +11512,7 @@ function updateProblems() {
       `;
     }
     // REPEATED IDENTITY GEOMETRY
-    if (setting == 11) {
+    if (setting == 12) {
       drawingDisplay();
       const heightNeeded = 140 + p.rectBreadth * 10 + p.triangleHeight * 10;
       if (heightNeeded > 275) {
@@ -11675,7 +11741,7 @@ function updateProblems() {
       p.answer = `${newUnshadedFirst}:${newUnshadedSecond}`;
     }
     // RATIO: REPEATED GROUP
-    if (setting == 12) {
+    if (setting == 13) {
       normalDisplay();
       const displayA = p.percA;
       const displayB = p.percB;
@@ -11750,7 +11816,7 @@ function updateProblems() {
       `;
     }
     // PERCENTAGE: GST AND SERVICE CHARGE
-    if (setting == 13) {
+    if (setting == 14) {
       normalDisplay();
       if (p.optionOne == "simple gst") {
         displayProblem.innerHTML = `
@@ -11827,7 +11893,7 @@ function updateProblems() {
     }
 
     // PERCENTAGE: IDENTICAL EFFECT
-    if (setting == 14) {
+    if (setting == 15) {
       normalDisplay();
       const person = [...boyNames, ...girlNames][
         genNumbers(boyNames.length + girlNames.length)
@@ -11863,7 +11929,7 @@ function updateProblems() {
       `;
     }
     //AVERAGE: EXTERNAL CHANGE
-    if (setting == 15) {
+    if (setting == 16) {
       normalDisplay();
       if (p.changeQuantity == 0) return updateCalc();
       p.changeQuantity > 0 ? (p.situation = "joined") : (p.situation = "left");
@@ -11895,7 +11961,7 @@ function updateProblems() {
     }
 
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 16) {
+    if (setting == 17) {
       normalDisplay();
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
@@ -19331,55 +19397,62 @@ function handleSubmit(e) {
       if (setting == 1) {
         correctAnswer = p.answer;
       }
-    }
-    // AREA OF OBTUSE TRIANGLE
-    if (setting == 2) {
-      if (p.chosenHeight == "A") correctAnswer = (1 / 2) * p.base * p.height;
-      if (p.chosenHeight == "B")
-        correctAnswer = (1 / 2) * p.lengthAB * p.lengthSecondH;
-      if (p.chosenHeight == "C")
-        correctAnswer = (1 / 2) * p.lengthBC * p.lengthThirdH;
-    }
 
-    //GEOMETRY: MANIPULATION OF DIMENSION
-    if (setting == 3) {
-      correctAnswer = (1 / 2) * p.length * p.breadth;
-    }
-    if (setting == 4) {
-      // if (p.label == 1) {
-      const half = (1 / 2) * p.length * p.breadth;
-      if (p.givenLabel == "A") correctAnswer = half - p.areaA;
-      if (p.givenLabel == "B") correctAnswer = half - p.areaB;
-      if (p.givenLabel == "C") correctAnswer = half - p.areaC;
-      if (p.givenLabel == "D") correctAnswer = half - p.areaD;
-      // }
-    }
-    // AREA OF FIGURE: DOUBLE UNITS
-    if (setting == 5) {
-      let pointDF = p.firstTriangleBase;
-      let pointCF = p.length - p.firstTriangleBase;
-      [pointDF, pointCF] = simplify(pointDF, pointCF);
-      let pointBE = p.thirdTriangleHeight;
-      let pointCE = p.breadth - p.thirdTriangleHeight;
-      [pointBE, pointCE] = simplify(pointBE, pointCE);
-
-      let firstTriangleNume = (pointDF * (pointBE + pointCE)) / 2;
-      // let firstTriangleDeno = 2;
-      let secondTriangleNume = (pointCF * pointCE) / 2;
-      // let secondTriangleDeno = 2;
-      let thirdTriangleNume = ((pointDF + pointCF) * pointBE) / 2;
-      // let thirdTriangleDeno = 2;
-      console.log(firstTriangleNume, secondTriangleNume, thirdTriangleNume);
-      let totalTriangle =
-        firstTriangleNume + secondTriangleNume + thirdTriangleNume;
-      //GET RID OF DECIMALS *2
-      let shaded =
-        (pointDF + pointCF) * (pointBE + pointCE) * 2 - totalTriangle * 2;
-      let area = (pointDF + pointCF) * (pointBE + pointCE) * 2;
-      [shaded, area] = simplify(shaded, area);
-      correctAnswer = `${shaded}/${area}`;
-      // RATIO: REPEATED GROUP
+      // AREA OF OBTUSE TRIANGLE
+      if (setting == 2) {
+        if (p.chosenHeight == "A") correctAnswer = (1 / 2) * p.base * p.height;
+        if (p.chosenHeight == "B")
+          correctAnswer = (1 / 2) * p.lengthAB * p.lengthSecondH;
+        if (p.chosenHeight == "C")
+          correctAnswer = (1 / 2) * p.lengthBC * p.lengthThirdH;
+      }
+      //GEOMETRY: AREA OF FIGURE: CUTTING
+      if (setting == 3) {
+        const baseA = p.valueA - p.valueB - p.adjust;
+        const triangleA = (1 / 2) * baseA * p.valueA;
+        const triangleB = (1 / 2) * p.valueB * p.valueB;
+        correctAnswer = triangleA + triangleB;
+      }
+      //GEOMETRY: MANIPULATION OF DIMENSION
+      if (setting == 4) {
+        correctAnswer = (1 / 2) * p.length * p.breadth;
+      }
+      if (setting == 5) {
+        // if (p.label == 1) {
+        const half = (1 / 2) * p.length * p.breadth;
+        if (p.givenLabel == "A") correctAnswer = half - p.areaA;
+        if (p.givenLabel == "B") correctAnswer = half - p.areaB;
+        if (p.givenLabel == "C") correctAnswer = half - p.areaC;
+        if (p.givenLabel == "D") correctAnswer = half - p.areaD;
+        // }
+      }
+      // AREA OF FIGURE: DOUBLE UNITS
       if (setting == 6) {
+        let pointDF = p.firstTriangleBase;
+        let pointCF = p.length - p.firstTriangleBase;
+        [pointDF, pointCF] = simplify(pointDF, pointCF);
+        let pointBE = p.thirdTriangleHeight;
+        let pointCE = p.breadth - p.thirdTriangleHeight;
+        [pointBE, pointCE] = simplify(pointBE, pointCE);
+
+        let firstTriangleNume = (pointDF * (pointBE + pointCE)) / 2;
+        // let firstTriangleDeno = 2;
+        let secondTriangleNume = (pointCF * pointCE) / 2;
+        // let secondTriangleDeno = 2;
+        let thirdTriangleNume = ((pointDF + pointCF) * pointBE) / 2;
+        // let thirdTriangleDeno = 2;
+        console.log(firstTriangleNume, secondTriangleNume, thirdTriangleNume);
+        let totalTriangle =
+          firstTriangleNume + secondTriangleNume + thirdTriangleNume;
+        //GET RID OF DECIMALS *2
+        let shaded =
+          (pointDF + pointCF) * (pointBE + pointCE) * 2 - totalTriangle * 2;
+        let area = (pointDF + pointCF) * (pointBE + pointCE) * 2;
+        [shaded, area] = simplify(shaded, area);
+        correctAnswer = `${shaded}/${area}`;
+      }
+      // RATIO: REPEATED GROUP
+      if (setting == 7) {
         p.answer = simplestForm(p.answer);
         console.log(p.answer);
         // if (p.firstScene == "total" && p.secondScene == "total") {
@@ -19387,7 +19460,7 @@ function handleSubmit(e) {
         // }
       }
       // RATIO: UNCHANGED OBJ
-      if (setting == 7) {
+      if (setting == 8) {
         console.log(p.valueAFirst, p.valueBFirst, p.valueAEnd, p.valueBEnd);
         // if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
         // if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
@@ -19396,21 +19469,21 @@ function handleSubmit(e) {
         correctAnswer = p.answer;
       }
       // RATIO: UNCHANGED TOTAL
-      if (setting == 8) {
-        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
-        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
-        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
-        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
-      }
-      // RATIO: UNCHANGED DIFFERENCE
       if (setting == 9) {
         if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
         if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
         if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
         if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
       }
-      // RATIO: MANIPULATION IN UNITS
+      // RATIO: UNCHANGED DIFFERENCE
       if (setting == 10) {
+        if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
+        if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
+        if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
+        if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
+      }
+      // RATIO: MANIPULATION IN UNITS
+      if (setting == 11) {
         const commonNumber = commonDeno(p.denoA, p.denoB);
         let end_A = ((p.ratioA * (p.denoA - p.numeA)) / p.denoA) * commonNumber;
         let end_B = ((p.ratioB * (p.denoB - p.numeB)) / p.denoB) * commonNumber;
@@ -19418,10 +19491,10 @@ function handleSubmit(e) {
         correctAnswer = `${end_A}:${end_B}`;
       }
       // RATIO: REPEATED IDENTITY (GEOMETRY)
-      if (setting == 11) {
+      if (setting == 12) {
         correctAnswer = p.answer;
       }
-      if (setting == 12) {
+      if (setting == 13) {
         console.log(p.answer);
         // got to change to an array
         p.answer = p.answer.split(":");
@@ -19431,7 +19504,7 @@ function handleSubmit(e) {
       }
 
       // PERCENTAGE: GST, DISCOUNT AND SERVICE CHARGE
-      if (setting == 13) {
+      if (setting == 14) {
         if (p.optionOne == "simple gst") {
           if (p.optionTwo == "gst") {
             correctAnswer = (p.value / 100) * p.gst;
@@ -19459,8 +19532,8 @@ function handleSubmit(e) {
         }
       }
       // PERCENTAG: IDENTICAL EFFECT
-      if (setting == 14) correctAnswer = p.salary;
-      if (setting == 15) {
+      if (setting == 15) correctAnswer = p.salary;
+      if (setting == 16) {
         if (p.question == "at first") {
           correctAnswer = p.oldQuantity;
         }
@@ -19469,7 +19542,7 @@ function handleSubmit(e) {
         }
       }
       //AVERAGE: CONSECUTIVE DAYS
-      if (setting == 16) {
+      if (setting == 17) {
         correctAnswer = p.dayOne + p.increase * (p.chosen - 1);
       }
     }
@@ -24463,7 +24536,7 @@ function genProblems() {
   }
 
   if (level == "calFiveb") {
-    setting = calArrAll(16, calArr, setting, 99);
+    setting = calArrAll(17, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     // IDENTICAL NUMERATOR TYPE 2
@@ -24496,8 +24569,20 @@ function genProblems() {
         lengthThirdH: undefined,
       };
     }
-    // GEOMETRY: MANIPULATION OF DIMENSION
+    //GEOMETRY: AREA OF FIGURE: CUTTING
     if (setting == 3) {
+      const gen_squareA = genNumbers(50) + 100;
+      return {
+        squareA: gen_squareA,
+        squareB: genNumbers(gen_squareA - 10) + 10,
+        valueA: undefined,
+        valueB: undefined,
+        adjust: 0,
+      };
+    }
+
+    // GEOMETRY: MANIPULATION OF DIMENSION
+    if (setting == 4) {
       const gen_length = (genNumbers(10) + 10) * 4;
       return {
         type: [2, 1][genNumbers(2)],
@@ -24507,7 +24592,7 @@ function genProblems() {
     }
 
     // GEOMETRY: MANIPULATION OF DIMENSION LEVEL 2
-    if (setting == 4) {
+    if (setting == 5) {
       const gen_length = (genNumbers(10) + 10) * 4;
       return {
         // part: ["A", "B", "C", "D"][genNumbers(4)],
@@ -24523,7 +24608,7 @@ function genProblems() {
       };
     }
     // AREA OF FIGURE: DIFFERENT UNITS
-    if (setting == 5) {
+    if (setting == 6) {
       const gen_length = genNumbers(5) + 10;
       const gen_breadth = genNumbers(gen_length - 8) + 8;
       return {
@@ -24534,7 +24619,7 @@ function genProblems() {
       };
     }
     // REPEATED GROUP RATIO
-    if (setting == 6) {
+    if (setting == 7) {
       let A = genNumbers(10) + 1;
       return {
         varA: A,
@@ -24546,7 +24631,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 7) {
+    if (setting == 8) {
       // console.log("Unchanged Object");
       return {
         object: ["sweets", "toys", "books"][genNumbers(3)],
@@ -24561,7 +24646,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 8) {
+    if (setting == 9) {
       // console.log("Unchanged Total");
       const valueA = (genNumbers(40) + 10) * 5;
       const valueB = (genNumbers(40) + 10) * 5;
@@ -24580,7 +24665,7 @@ function genProblems() {
     }
 
     //RATIO: UNCHANGED DIFFERENCE
-    if (setting == 9) {
+    if (setting == 10) {
       // console.log("Unchanged Difference");
       const valueA = genNumbers(50) + 5;
       const valueB = genNumbers(50) + 5;
@@ -24599,7 +24684,7 @@ function genProblems() {
       };
     }
     // RATIO: MANIPULATION IN UNITS
-    if (setting == 10) {
+    if (setting == 11) {
       const gen_A = genNumbers(5) + 2;
       const gen_B = genNumbers(5) + 2;
       const genDeno_A = [genNumbers(gen_A - 2) + 2, gen_A * 2][genNumbers(2)];
@@ -24615,7 +24700,7 @@ function genProblems() {
     }
 
     // REPEATED IDENTITY (GEOMETRY)
-    if (setting == 11) {
+    if (setting == 12) {
       return {
         rectLength: genNumbers(5) + 5,
         rectBreadth: genNumbers(5) + 5,
@@ -24627,7 +24712,7 @@ function genProblems() {
       };
     }
     //PERCETAGE: REPEATED GROUP
-    if (setting == 12) {
+    if (setting == 13) {
       return {
         percA: (genNumbers(20) + 1) * 5,
         firstSentence: ["B and C", "the total"][genNumbers(2)],
@@ -24637,7 +24722,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: GST AND SERVICE CHARGE
-    if (setting == 13) {
+    if (setting == 14) {
       return {
         person: ["A", "B", "C"][genNumbers(3)],
         optionOne: ["discount gst", "service", "simple gst"][genNumbers(3)],
@@ -24649,7 +24734,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: IDENTICAL EFFECT
-    if (setting == 14) {
+    if (setting == 15) {
       return {
         saves: (genNumbers(8) + 1) * 5,
         change: [(genNumbers(4) + 1) * 5, -(genNumbers(4) + 1) * 5][
@@ -24658,7 +24743,7 @@ function genProblems() {
         salary: genNumbers(5000) + 5000,
       };
     }
-    if (setting == 15) {
+    if (setting == 16) {
       return {
         oldQuantity: genNumbers(6) + 3,
         oldAverage: genNumbers(40) + 10,
@@ -24671,7 +24756,7 @@ function genProblems() {
       };
     }
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 16) {
+    if (setting == 17) {
       return {
         dayOne: genNumbers(20) + 5,
         days: genNumbers(5) + 5,
@@ -27634,7 +27719,7 @@ function buttonLevelSetting() {
         99
       );
       if (
-        ![...Array.from({ length: 16 }, (_, i) => i + 1), 99].includes(
+        ![...Array.from({ length: 17 }, (_, i) => i + 1), 99].includes(
           setting * 1
         ) &&
         !setting.split("").includes("-")
