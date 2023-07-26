@@ -9103,7 +9103,7 @@ function updateProblems() {
   if (level == "calFive") {
     //ALLOW CALCULATOR
 
-    const calculatorNotAllowed = [0, 1, 2, 3, 11, 18, 19];
+    const calculatorNotAllowed = [0, 1, 2, 3, 19, 20];
     if (calculatorNotAllowed.includes(setting * 1)) {
       calculatorSymbol.classList.add("hidden");
       // calculatorSymbol.
@@ -13109,7 +13109,7 @@ function updateProblems() {
       const triangleA = (1 / 2) * p.rectLength * p.rectBreadth;
       console.log(triangleA);
       p.quadrilateral = genNumbers(triangleA / 2 - 100) + 100;
-      ctx.fillText(`${p.quadrilateral} cm2`, 240 / 2 + 15, 180 / 2 + 10);
+      ctx.fillText(`${p.quadrilateral} cm2`, 240 / 2 + 15, 180 / 2 + 5);
       // 3. DRAW SECOND TRIANGLE
       const y2 = genNumbers(180 - y1) + y1;
       ctx.beginPath();
