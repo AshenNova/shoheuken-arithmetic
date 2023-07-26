@@ -9550,7 +9550,7 @@ function updateProblems() {
         displayProblem.innerHTML = `
       Person ${p.person} gave away ${p.denoOne - p.numeOne}/${p.denoOne} of ${
           gender == "she" ? "her" : "his"
-        } of his money.</p>
+        } money.</p>
       ${gender} then spent another $${p.situation}, and now has ${p.numeTwo}/${
           p.denoTwo
         } of it left.</p>
@@ -12470,6 +12470,10 @@ function updateProblems() {
   
         `;
       }
+      displayProblem.insertAdjacentHTML(
+        "beforeend",
+        "<p><i>*Leave your answer in mixed fraction if needed.</i></p>"
+      );
     }
     // SPEED: MOVING APART
     if (setting == 6) {
@@ -19465,7 +19469,7 @@ function handleSubmit(e) {
       if (setting == 3) {
         const baseA = p.valueA - p.valueB - p.adjust;
         const triangleA = (1 / 2) * baseA * p.valueA;
-        const triangleB = (1 / 2) * p.valueB * p.valueB;
+        const triangleB = (1 / 2) * p.valueB * (p.valueB + p.adjust);
         correctAnswer = triangleA + triangleB;
       }
       //GEOMETRY: MANIPULATION OF DIMENSION
