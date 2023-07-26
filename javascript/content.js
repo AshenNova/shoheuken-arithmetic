@@ -195,12 +195,15 @@ export const displayContent = (level) => {
   if (level == "calSixb") {
     return `
     </p>
-    1. Speed: Meet up</p>
-    2. Speed: Catch up</p>
-    3. Speed: Double Triangle</p>
-    4. Volume: Grouping</p>
-    5. Volume: Meet Up</p>
+    1. Speed: Meet up</br>
+    2. Speed: Catch up</br>
+    3. Speed: Double Triangle</br>
+    <hr>
+    4. Volume: Grouping</br>
+    5. Volume: Meet Up</br>
+    <hr>
     6. Geometry: Repeated Identity Area
+    7. Geometry: Manipulation of Dimension: Overlapping Figure
     <hr>
     99. All`;
   }
