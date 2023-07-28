@@ -10459,8 +10459,110 @@ function updateProblems() {
 
   if (level == "calFiveb") {
     calculatorSymbol.classList.remove("hidden");
-    //IDENTICAL NUMERATOR (TYPE 2)
+
+    //REMAINDER CONCEPT: BEFORE AND AFTER
     if (setting == 1) {
+      normalDisplay();
+      [p.denoA, p.numeA] = simplify(p.denoA, p.numeA);
+      [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
+      let numeL = (p.denoA - p.numeA) * (p.denoB - p.numeB);
+      let numeD = p.denoA * p.denoB;
+      console.log(`${numeL}/${numeD}`);
+      [numeL, numeD] = simplify(numeL, numeD);
+      const denominator = commonDeno(p.denoA, numeD);
+      const multiplierA = denominator / p.denoA;
+      const multiplierL = denominator / numeD;
+      // const newNumeA = multiplierA * p.numeA;
+      const newNumeL = multiplierL * numeL;
+      // console.log(`${newNumeA}/${denominator}`);
+      console.log(`${numeL}/${denominator}`);
+      // const difference = newNumeA - newNumeL;
+      let finalDeno = denominator;
+      if (p.end == "the twice") finalDeno *= 2;
+      if (p.end == "the thrice") finalDeno *= 3;
+      const difference = finalDeno - newNumeL;
+      p.value = difference * p.oneUnit;
+      p.atFirstUnits = denominator;
+
+      const person = girlNames[genNumbers(girlNames.length)];
+      // let endSituation;
+      // if (p.end == "same") {
+      //   endSituation = "the same amount she had at first.";
+      // }
+      // if (p.end == "twice the") {
+      //   endSituation = "twice the amount she had at first.";
+      // }
+      // if (p.end == "thrice the") {
+      //   endSituation = "thrice the amount she had at first.";
+      // }
+      displayProblem.innerHTML = `
+      ${person} spent ${p.numeA}/${p.denoA} of her money on something.</br>
+She then spent ${p.numeB}/${p.denoB} ${
+        genNumbers(2) == 0 ? "of the remainder" : "of the amount left"
+      } on something else.</br>
+Her mother gave her another $${p.value} so she now has ${
+        p.end
+      } amount she had at first.</br>
+How much did ${person} have at first?
+
+      
+      `;
+    }
+    //REMAINDER CONCEPT: UNDER THE SAME UNIT
+    if (setting == 2) {
+      normalDisplay();
+      const person = boyNames[genNumbers(boyNames.length)];
+      [p.denoA, p.numeA] = simplify(p.denoA, p.numeA);
+      [p.numeB, p.denoB] = simplify(p.numeB, p.denoB);
+      [p.unitA, p.unitB] = simplify(p.unitA, p.unitB);
+
+      const totalUnits = p.quantityA * p.unitA + p.quantityB * p.unitB;
+
+      if (totalUnits % p.numeA != 0) {
+        console.log("ugly Units");
+        return updateCalc();
+      }
+      // console.log(p.unitA, p.quantityA, p.unitB, p.quantityB);
+      // console.log(totalUnits);
+
+      const oneTopNume = totalUnits / p.numeA;
+      if (oneTopNume % 1 != 0) {
+        console.log("ugly Units");
+        return updateCalc();
+      }
+      const oneTopOtherNume = oneTopNume * (p.denoA - p.numeA);
+      console.log(oneTopOtherNume);
+      const oneBottomNume = oneTopOtherNume / p.denoB;
+      if (oneBottomNume % 1 != 0) {
+        console.log("ugly Units");
+        return updateCalc();
+      }
+      const numberOfExtraUnitsUsed = oneBottomNume * p.numeB;
+      // console.log(`${numberOfExtraUnitsUsed} extra units`);
+      if (p.chosen == "A") p.extraBought = numberOfExtraUnitsUsed / p.unitA;
+      if (p.chosen == "B") p.extraBought = numberOfExtraUnitsUsed / p.unitB;
+
+      // console.log(p.extraBought);
+      if (p.extraBought <= 0) {
+        console.log("No extra bought");
+        return updateCalc();
+      }
+      displayProblem.innerHTML = `
+      A ${p.objectA} costs ${p.unitA}/${p.unitB} of a ${p.objectB}.</br>
+      ${person} bought ${p.quantityA} ${p.objectA} and ${p.quantityB} ${
+        p.objectB
+      }  with ${p.numeA}/${p.denoA} of his money.</br>
+      He then bought ${p.extraBought % 1 != 0 ? "as many" : "more"} ${
+        p.chosen == "A" ? p.objectA : p.objectB
+      } with ${p.numeB}/${p.denoB} of his remaining money.</br>
+      How many ${
+        p.chosen == "A" ? p.objectA : p.objectB
+      } did he have in the end?
+      `;
+    }
+
+    //IDENTICAL NUMERATOR (TYPE 2)
+    if (setting == 3) {
       normalDisplay();
       [p.nume, p.deno] = simplify(p.nume, p.deno);
       [p.numeTwo, p.denoTwo] = simplify(p.numeTwo, p.denoTwo);
@@ -10502,7 +10604,7 @@ function updateProblems() {
       }
     }
     // GEOMETRY: AREA OF RIGHT ANGLED TRIANGLE
-    if (setting == 2) {
+    if (setting == 4) {
       drawingDisplay();
       ctx.font = "1em serif";
       ctx.save();
@@ -10704,7 +10806,7 @@ function updateProblems() {
       ctx.restore();
     }
     // GEOMETRY: AREA OF FIGURE : CUTTING
-    if (setting == 3) {
+    if (setting == 5) {
       drawingDisplay();
       ctx.save(); //1st
       const y = fillTextSplit(
@@ -10769,7 +10871,7 @@ function updateProblems() {
     }
 
     //GEOMETRY: MANIPULATION OF DIMENSION
-    if (setting == 4) {
+    if (setting == 6) {
       drawingDisplay();
       const y = fillTextSplit(
         `Find the area of the ${
@@ -10819,7 +10921,7 @@ function updateProblems() {
     }
 
     //GEOMETRY: MANIPULATION OF DIMENSION LEVEL 2
-    if (setting == 5) {
+    if (setting == 7) {
       drawingDisplay();
       // if (p.label == 1) {
       if (p.givenLabel == "A") p.findPart = "C";
@@ -10926,7 +11028,7 @@ function updateProblems() {
       ctx.restore();
     }
     // AREA OF FIGURE: DIFFERENT UNITS
-    if (setting == 6) {
+    if (setting == 8) {
       drawingDisplay();
       ctx.save();
       ctx.font = "1em serif";
@@ -11048,7 +11150,7 @@ function updateProblems() {
     }
 
     //  REPEATED GROUP RATIO
-    if (setting == 7) {
+    if (setting == 9) {
       normalDisplay();
       let total = p.varA + p.varB + p.varC;
       let firstTotal = undefined;
@@ -11104,7 +11206,7 @@ function updateProblems() {
       }
     }
     //RATIO: UNCHANGED OBJECT
-    if (setting == 8) {
+    if (setting == 10) {
       normalDisplay();
       let unitAF = "";
       let unitBF = "";
@@ -11278,7 +11380,7 @@ function updateProblems() {
       `;
     }
     // RATIO: UNCHANGED TOTAL
-    if (setting == 9) {
+    if (setting == 11) {
       normalDisplay();
       let unitAF = "";
       let unitBF = "";
@@ -11396,7 +11498,7 @@ function updateProblems() {
       ${lineFour}`;
     }
     //RATIO: UNCHANGED DIFFERENCE
-    if (setting == 10) {
+    if (setting == 12) {
       normalDisplay();
       let unitAF = "";
       let unitBF = "";
@@ -11495,7 +11597,7 @@ function updateProblems() {
       `;
     }
     // RATIO: MANIPULATION IN UNITS
-    if (setting == 11) {
+    if (setting == 13) {
       normalDisplay();
       [p.ratioA, p.ratioB] = simplify(p.ratioA, p.ratioB);
       [p.numeA, p.denoA] = simplify(p.numeA, p.denoA);
@@ -11512,7 +11614,7 @@ function updateProblems() {
       `;
     }
     // REPEATED IDENTITY GEOMETRY
-    if (setting == 12) {
+    if (setting == 14) {
       drawingDisplay();
       const heightNeeded = 140 + p.rectBreadth * 10 + p.triangleHeight * 10;
       if (heightNeeded > 275) {
@@ -11741,7 +11843,7 @@ function updateProblems() {
       p.answer = `${newUnshadedFirst}:${newUnshadedSecond}`;
     }
     // RATIO: REPEATED GROUP
-    if (setting == 13) {
+    if (setting == 15) {
       normalDisplay();
       const displayA = p.percA;
       const displayB = p.percB;
@@ -11816,7 +11918,7 @@ function updateProblems() {
       `;
     }
     // PERCENTAGE: GST AND SERVICE CHARGE
-    if (setting == 14) {
+    if (setting == 16) {
       normalDisplay();
       if (p.optionOne == "simple gst") {
         displayProblem.innerHTML = `
@@ -11893,7 +11995,7 @@ function updateProblems() {
     }
 
     // PERCENTAGE: IDENTICAL EFFECT
-    if (setting == 15) {
+    if (setting == 17) {
       normalDisplay();
       const person = [...boyNames, ...girlNames][
         genNumbers(boyNames.length + girlNames.length)
@@ -11929,7 +12031,7 @@ function updateProblems() {
       `;
     }
     //AVERAGE: EXTERNAL CHANGE
-    if (setting == 16) {
+    if (setting == 18) {
       normalDisplay();
       if (p.changeQuantity == 0) return updateCalc();
       p.changeQuantity > 0 ? (p.situation = "joined") : (p.situation = "left");
@@ -11961,7 +12063,7 @@ function updateProblems() {
     }
 
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 17) {
+    if (setting == 19) {
       normalDisplay();
       displayProblem.style.fontSize = "18px";
       displayProblem.style.textAlign = "left";
@@ -11985,7 +12087,6 @@ function updateProblems() {
       How many ${obj}s were made on day ${p.chosen}?
       `;
     }
-
     // BOTTOM OF CALFIVEB
   }
 
@@ -19453,12 +19554,24 @@ function handleSubmit(e) {
     }
 
     if (level == "calFiveb") {
-      if (setting == 1) {
+
+       // FRACTIONS: REMAINDER CONCEPT: BEFORE AND AFTER
+       if (setting == 1) {
+        correctAnswer = p.atFirstUnits * p.oneUnit;
+      }
+      // FRACTIONS: REMAINDER CONCEPT: UNDER THE SAME UNIT
+      if (setting == 2) {
+        if (p.chosen == "A")
+          correctAnswer = p.quantityA + Math.floor(p.extraBought);
+        if (p.chosen == "B")
+          correctAnswer = p.quantityB + Math.floor(p.extraBought);
+      }
+      if (setting == 3) {
         correctAnswer = p.answer;
       }
 
       // AREA OF OBTUSE TRIANGLE
-      if (setting == 2) {
+      if (setting == 4) {
         if (p.chosenHeight == "A") correctAnswer = (1 / 2) * p.base * p.height;
         if (p.chosenHeight == "B")
           correctAnswer = (1 / 2) * p.lengthAB * p.lengthSecondH;
@@ -19466,17 +19579,17 @@ function handleSubmit(e) {
           correctAnswer = (1 / 2) * p.lengthBC * p.lengthThirdH;
       }
       //GEOMETRY: AREA OF FIGURE: CUTTING
-      if (setting == 3) {
+      if (setting == 5) {
         const baseA = p.valueA - p.valueB - p.adjust;
         const triangleA = (1 / 2) * baseA * p.valueA;
         const triangleB = (1 / 2) * p.valueB * (p.valueB + p.adjust);
         correctAnswer = triangleA + triangleB;
       }
       //GEOMETRY: MANIPULATION OF DIMENSION
-      if (setting == 4) {
+      if (setting == 6) {
         correctAnswer = (1 / 2) * p.length * p.breadth;
       }
-      if (setting == 5) {
+      if (setting == 7) {
         // if (p.label == 1) {
         const half = (1 / 2) * p.length * p.breadth;
         if (p.givenLabel == "A") correctAnswer = half - p.areaA;
@@ -19486,7 +19599,7 @@ function handleSubmit(e) {
         // }
       }
       // AREA OF FIGURE: DOUBLE UNITS
-      if (setting == 6) {
+      if (setting == 8) {
         let pointDF = p.firstTriangleBase;
         let pointCF = p.length - p.firstTriangleBase;
         [pointDF, pointCF] = simplify(pointDF, pointCF);
@@ -19511,7 +19624,7 @@ function handleSubmit(e) {
         correctAnswer = `${shaded}/${area}`;
       }
       // RATIO: REPEATED GROUP
-      if (setting == 7) {
+      if (setting == 9) {
         p.answer = simplestForm(p.answer);
         console.log(p.answer);
         // if (p.firstScene == "total" && p.secondScene == "total") {
@@ -19519,7 +19632,7 @@ function handleSubmit(e) {
         // }
       }
       // RATIO: UNCHANGED OBJ
-      if (setting == 8) {
+      if (setting == 10) {
         console.log(p.valueAFirst, p.valueBFirst, p.valueAEnd, p.valueBEnd);
         // if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
         // if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
@@ -19528,21 +19641,21 @@ function handleSubmit(e) {
         correctAnswer = p.answer;
       }
       // RATIO: UNCHANGED TOTAL
-      if (setting == 9) {
+      if (setting == 11) {
         if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
         if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
         if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
         if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
       }
       // RATIO: UNCHANGED DIFFERENCE
-      if (setting == 10) {
+      if (setting == 12) {
         if (p.question == "AF") correctAnswer = p.valueAFirst * p.multiplier;
         if (p.question == "BF") correctAnswer = p.valueBFirst * p.multiplier;
         if (p.question == "AE") correctAnswer = p.valueAEnd * p.multiplier;
         if (p.question == "BE") correctAnswer = p.valueBEnd * p.multiplier;
       }
       // RATIO: MANIPULATION IN UNITS
-      if (setting == 11) {
+      if (setting == 13) {
         const commonNumber = commonDeno(p.denoA, p.denoB);
         let end_A = ((p.ratioA * (p.denoA - p.numeA)) / p.denoA) * commonNumber;
         let end_B = ((p.ratioB * (p.denoB - p.numeB)) / p.denoB) * commonNumber;
@@ -19550,10 +19663,10 @@ function handleSubmit(e) {
         correctAnswer = `${end_A}:${end_B}`;
       }
       // RATIO: REPEATED IDENTITY (GEOMETRY)
-      if (setting == 12) {
+      if (setting == 14) {
         correctAnswer = p.answer;
       }
-      if (setting == 13) {
+      if (setting == 15) {
         console.log(p.answer);
         // got to change to an array
         p.answer = p.answer.split(":");
@@ -19563,7 +19676,7 @@ function handleSubmit(e) {
       }
 
       // PERCENTAGE: GST, DISCOUNT AND SERVICE CHARGE
-      if (setting == 14) {
+      if (setting == 16) {
         if (p.optionOne == "simple gst") {
           if (p.optionTwo == "gst") {
             correctAnswer = (p.value / 100) * p.gst;
@@ -19591,8 +19704,8 @@ function handleSubmit(e) {
         }
       }
       // PERCENTAG: IDENTICAL EFFECT
-      if (setting == 15) correctAnswer = p.salary;
-      if (setting == 16) {
+      if (setting == 17) correctAnswer = p.salary;
+      if (setting == 18) {
         if (p.question == "at first") {
           correctAnswer = p.oldQuantity;
         }
@@ -19601,7 +19714,7 @@ function handleSubmit(e) {
         }
       }
       //AVERAGE: CONSECUTIVE DAYS
-      if (setting == 17) {
+      if (setting == 19) {
         correctAnswer = p.dayOne + p.increase * (p.chosen - 1);
       }
     }
@@ -24606,11 +24719,50 @@ function genProblems() {
   }
 
   if (level == "calFiveb") {
-    setting = calArrAll(17, calArr, setting, 99);
+    setting = calArrAll(19, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
-    // IDENTICAL NUMERATOR TYPE 2
+    //REMAINDER CONCEPT: BEFORE AND AFTER
+
     if (setting == 1) {
+      const gen_denoA = genNumbers(6) + 2;
+      const gen_denoB = genNumbers(6) + 2;
+      return {
+        denoA: gen_denoA,
+        numeA: genNumbers(gen_denoA - 1) + 1,
+        denoB: gen_denoB,
+        numeB: genNumbers(gen_denoB - 1) + 1,
+        end: ["the same", "twice", "thrice"][genNumbers(3)],
+        oneUnit: genNumbers(200) + 100,
+        atFirstUnits: undefined,
+        value: undefined,
+      };
+    }
+
+    //REMAINDER CONCEPT: UNDER THE SAME UNIT
+    if (setting == 2) {
+      const gen_denoA = genNumbers(6) + 2;
+      const gen_denoB = genNumbers(6) + 2;
+      const gen_objPosition = genNumbers(2);
+      const gen_unitA = genNumbers(4) + 2;
+      return {
+        objectA: ["pens", "shirts"][gen_objPosition],
+        objectB: ["pencils", "pants"][gen_objPosition],
+        unitA: gen_unitA,
+        unitB: genNumbers(gen_unitA - 1) + 1,
+        quantityA: genNumbers(5) + 2,
+        quantityB: genNumbers(5) + 2,
+        denoA: gen_denoA,
+        numeA: genNumbers(gen_denoA - 1) + 1,
+        denoB: gen_denoB,
+        numeB: genNumbers(gen_denoB - 1) + 1,
+        chosen: ["A", "B"][genNumbers(2)],
+        extraBought: undefined,
+      };
+    }
+
+    // IDENTICAL NUMERATOR TYPE 2
+    if (setting == 3) {
       const denominator = genNumbers(6) + 2;
       const numerator = genNumbers(denominator - 1) + 1;
       const denominatorTwo = genNumbers(10) + 2;
@@ -24628,7 +24780,7 @@ function genProblems() {
     }
 
     // GEOMETRY: OBTUSE TRIANGLE
-    if (setting == 2) {
+    if (setting == 4) {
       return {
         base: genNumbers(9) + 5,
         height: genNumbers(3) + 5,
@@ -24640,7 +24792,7 @@ function genProblems() {
       };
     }
     //GEOMETRY: AREA OF FIGURE: CUTTING
-    if (setting == 3) {
+    if (setting == 5) {
       const gen_squareA = genNumbers(50) + 100;
       return {
         squareA: gen_squareA,
@@ -24652,7 +24804,7 @@ function genProblems() {
     }
 
     // GEOMETRY: MANIPULATION OF DIMENSION
-    if (setting == 4) {
+    if (setting == 6) {
       const gen_length = (genNumbers(10) + 10) * 4;
       return {
         type: [2, 1][genNumbers(2)],
@@ -24662,7 +24814,7 @@ function genProblems() {
     }
 
     // GEOMETRY: MANIPULATION OF DIMENSION LEVEL 2
-    if (setting == 5) {
+    if (setting == 7) {
       const gen_length = (genNumbers(10) + 10) * 4;
       return {
         // part: ["A", "B", "C", "D"][genNumbers(4)],
@@ -24678,7 +24830,7 @@ function genProblems() {
       };
     }
     // AREA OF FIGURE: DIFFERENT UNITS
-    if (setting == 6) {
+    if (setting == 8) {
       const gen_length = genNumbers(5) + 10;
       const gen_breadth = genNumbers(gen_length - 8) + 8;
       return {
@@ -24689,7 +24841,7 @@ function genProblems() {
       };
     }
     // REPEATED GROUP RATIO
-    if (setting == 7) {
+    if (setting == 9) {
       let A = genNumbers(10) + 1;
       return {
         varA: A,
@@ -24701,7 +24853,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 8) {
+    if (setting == 10) {
       // console.log("Unchanged Object");
       return {
         object: ["sweets", "toys", "books"][genNumbers(3)],
@@ -24716,7 +24868,7 @@ function genProblems() {
       };
     }
 
-    if (setting == 9) {
+    if (setting == 11) {
       // console.log("Unchanged Total");
       const valueA = (genNumbers(40) + 10) * 5;
       const valueB = (genNumbers(40) + 10) * 5;
@@ -24735,7 +24887,7 @@ function genProblems() {
     }
 
     //RATIO: UNCHANGED DIFFERENCE
-    if (setting == 10) {
+    if (setting == 12) {
       // console.log("Unchanged Difference");
       const valueA = genNumbers(50) + 5;
       const valueB = genNumbers(50) + 5;
@@ -24754,7 +24906,7 @@ function genProblems() {
       };
     }
     // RATIO: MANIPULATION IN UNITS
-    if (setting == 11) {
+    if (setting == 13) {
       const gen_A = genNumbers(5) + 2;
       const gen_B = genNumbers(5) + 2;
       const genDeno_A = [genNumbers(gen_A - 2) + 2, gen_A * 2][genNumbers(2)];
@@ -24770,7 +24922,7 @@ function genProblems() {
     }
 
     // REPEATED IDENTITY (GEOMETRY)
-    if (setting == 12) {
+    if (setting == 14) {
       return {
         rectLength: genNumbers(5) + 5,
         rectBreadth: genNumbers(5) + 5,
@@ -24782,7 +24934,7 @@ function genProblems() {
       };
     }
     //PERCETAGE: REPEATED GROUP
-    if (setting == 13) {
+    if (setting == 15) {
       return {
         percA: (genNumbers(20) + 1) * 5,
         firstSentence: ["B and C", "the total"][genNumbers(2)],
@@ -24792,7 +24944,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: GST AND SERVICE CHARGE
-    if (setting == 14) {
+    if (setting == 16) {
       return {
         person: ["A", "B", "C"][genNumbers(3)],
         optionOne: ["discount gst", "service", "simple gst"][genNumbers(3)],
@@ -24804,7 +24956,7 @@ function genProblems() {
       };
     }
     // PERCENTAGE: IDENTICAL EFFECT
-    if (setting == 15) {
+    if (setting == 17) {
       return {
         saves: (genNumbers(8) + 1) * 5,
         change: [(genNumbers(4) + 1) * 5, -(genNumbers(4) + 1) * 5][
@@ -24813,7 +24965,7 @@ function genProblems() {
         salary: genNumbers(5000) + 5000,
       };
     }
-    if (setting == 16) {
+    if (setting == 18) {
       return {
         oldQuantity: genNumbers(6) + 3,
         oldAverage: genNumbers(40) + 10,
@@ -24826,7 +24978,7 @@ function genProblems() {
       };
     }
     //AVERAGE: CONSECUTIVE DAYS
-    if (setting == 17) {
+    if (setting == 19) {
       return {
         dayOne: genNumbers(20) + 5,
         days: genNumbers(5) + 5,
@@ -27800,7 +27952,7 @@ function buttonLevelSetting() {
         99
       );
       if (
-        ![...Array.from({ length: 17 }, (_, i) => i + 1), 99].includes(
+        ![...Array.from({ length: 19 }, (_, i) => i + 1), 99].includes(
           setting * 1
         ) &&
         !setting.split("").includes("-")

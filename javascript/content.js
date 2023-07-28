@@ -154,27 +154,29 @@ export const displayContent = (level) => {
   if (level == "calFiveb") {
     return `
     </p>
-    1. Fractions: Identical Numerator (Type 2)</br>
+    1. Fractions: Before and After
+    2. Fractions: Under the same unit (Level 2)
+    3. Fractions: Identical Numerator (Type 2)</br>
     <hr>
-    2. Geometry: Obtuse Triangle</br>
-    3. Geometry: Area of Figure:  Cutting</br>
-    4. Geometry: Manipulation of Dimension</br>
-    5. Geometry: Manipulation of Dimension: level 2</br>
-    6. Geometry: Area of Figure: Using 2 different Units</br>
+    4. Geometry: Obtuse Triangle</br>
+    5. Geometry: Area of Figure:  Cutting</br>
+    6. Geometry: Manipulation of Dimension</br>
+    7. Geometry: Manipulation of Dimension: level 2</br>
+    8. Geometry: Area of Figure: Using 2 different Units</br>
     <hr>
-    7. Ratio: Repeated Group</br>
-    8. Ratio: Unchanged Object</br>
-    9. Ratio: Unchanged Total</br>
-    10. Ratio: Unchanged Difference</br>
-    11. Ratio: Manipulation in units</br>
-    12. Ratio: Repeated Identity (Geometry)</br>
+    9. Ratio: Repeated Group</br>
+    10. Ratio: Unchanged Object</br>
+    11. Ratio: Unchanged Total</br>
+    12. Ratio: Unchanged Difference</br>
+    13. Ratio: Manipulation in units</br>
+    14. Ratio: Repeated Identity (Geometry)</br>
     <hr>
-    13. Percentage: Repeated Group</br>
-    14. Percentage: GST, discount and Service Charge</br>
-    15. Percentage: Identical Effect</br>
+    15. Percentage: Repeated Group</br>
+    16. Percentage: GST, discount and Service Charge</br>
+    17. Percentage: Identical Effect</br>
     <hr>
-    16. Average: External Change</br>
-    17. Average: Odd consecutive days</br>
+    18. Average: External Change</br>
+    19. Average: Odd consecutive days</br>
     `;
   }
   if (level == "calSix") {
