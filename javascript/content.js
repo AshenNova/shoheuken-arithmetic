@@ -154,8 +154,8 @@ export const displayContent = (level) => {
   if (level == "calFiveb") {
     return `
     </p>
-    1. Fractions: Before and After
-    2. Fractions: Under the same unit (Level 2)
+    1. Fractions: Before and After</br>
+    2. Fractions: Under the same unit (Level 2)</br>
     3. Fractions: Identical Numerator (Type 2)</br>
     <hr>
     4. Geometry: Obtuse Triangle</br>
@@ -182,13 +182,15 @@ export const displayContent = (level) => {
   if (level == "calSix") {
     return `
     </p>
-    1. Fractions: Finding remainder</p>
-    2. Circles: Area and Perimeter</p>
+    1. Fractions: Finding remainder</br>
+    <hr>
+    2. Circles: Area and Perimeter</br>
     3. Circles: Inner Square</br>
     4. Circles: Others</br>
     <hr>
-    5. Speed: Average Speed</p>
-    6. Speed: Moving Apart</p>
+    5. Speed: Average Speed</br>
+    6. Speed: Moving Apart</br>
+    <hr>
     7. Pie Chart</br>
     <hr>
     99. All
@@ -204,8 +206,8 @@ export const displayContent = (level) => {
     4. Volume: Grouping</br>
     5. Volume: Meet Up</br>
     <hr>
-    6. Geometry: Repeated Identity Area
-    7. Geometry: Manipulation of Dimension: Overlapping Figure
+    6. Geometry: Repeated Identity Area</br>
+    7. Geometry: Manipulation of Dimension: Overlapping Figure</br>
     <hr>
     99. All`;
   }
