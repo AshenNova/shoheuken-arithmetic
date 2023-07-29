@@ -1,4 +1,4 @@
-let setTime = 0;
+let setTime = 3;
 
 // const screenHeight = window.screen.availHeight;
 // const screenWidth = window.screen.availWidth;
@@ -19554,9 +19554,8 @@ function handleSubmit(e) {
     }
 
     if (level == "calFiveb") {
-
-       // FRACTIONS: REMAINDER CONCEPT: BEFORE AND AFTER
-       if (setting == 1) {
+      // FRACTIONS: REMAINDER CONCEPT: BEFORE AND AFTER
+      if (setting == 1) {
         correctAnswer = p.atFirstUnits * p.oneUnit;
       }
       // FRACTIONS: REMAINDER CONCEPT: UNDER THE SAME UNIT
