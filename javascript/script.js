@@ -207,6 +207,7 @@ let calRange = [];
 let questionTimeForSummary = undefined;
 let summary = [];
 let extraPracticeArr = [];
+let regen = 0;
 let boyNames = [
   "Liam",
   "Noah",
@@ -866,6 +867,7 @@ function calArrAll(max, arr, setting, maxSetting, level) {
 
 const updateCalc = function () {
   skipGlobalUpdateProblem = 1;
+  regen += 1;
   console.log(
     `Updating! skipGlobalUpdateProblem set to ${skipGlobalUpdateProblem}`
   );
@@ -10457,7 +10459,14 @@ function updateProblems() {
     }
   }
 
+  //DISPLAY
   if (level == "calFiveb") {
+    // if (regen > 10) {
+    //   console.log("Regen activated!");
+    //   skipGlobalUpdateProblem = 0;
+    //   calArr.pop()
+    //   updateProblems();
+    // }
     calculatorSymbol.classList.remove("hidden");
 
     //REMAINDER CONCEPT: BEFORE AND AFTER
@@ -10497,13 +10506,13 @@ function updateProblems() {
       // }
       displayProblem.innerHTML = `
       ${person} spent ${p.numeA}/${p.denoA} of her money on something.</br>
-She then spent ${p.numeB}/${p.denoB} ${
+      She then spent ${p.numeB}/${p.denoB} ${
         genNumbers(2) == 0 ? "of the remainder" : "of the amount left"
       } on something else.</br>
-Her mother gave her another $${p.value} so she now has ${
+      Her mother gave her another $${p.value} so she now has ${
         p.end
       } amount she had at first.</br>
-How much did ${person} have at first?
+      How much did ${person} have at first?
 
       
       `;
@@ -11730,7 +11739,7 @@ How much did ${person} have at first?
       let overSecond = overLappingArea;
       [unshadedFirst, overFirst] = simplify(unshadedFirst, overFirst);
       [unshadedSecond, overSecond] = simplify(unshadedSecond, overSecond);
-      const maxUnit = 20;
+      const maxUnit = 30;
       if (
         unshadedFirst > maxUnit ||
         unshadedSecond > maxUnit ||
@@ -21529,6 +21538,7 @@ function handleSubmit(e) {
     ) {
       console.log("correct");
       // EXTRA PRACTICE CHECK
+      regen = 0;
       const extra = cutOffCheck(level, setting, questionSecs);
       if (extra) {
         if (!extraPracticeArr.includes(extra)) {
