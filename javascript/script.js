@@ -10479,7 +10479,7 @@ function updateProblems() {
       console.log(`${numeL}/${numeD}`);
       [numeL, numeD] = simplify(numeL, numeD);
       const denominator = commonDeno(p.denoA, numeD);
-      console.log(commonDeno(p.denoA, numeD))
+      console.log(commonDeno(p.denoA, numeD));
       const multiplierA = denominator / p.denoA;
       const multiplierL = denominator / numeD;
       const newNumeL = multiplierL * numeL;
@@ -12171,6 +12171,8 @@ function updateProblems() {
     }
     // CIRCLES
     if (setting == 2) {
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, 400, 275);
       drawingDisplay();
       //length: 400px breadth: 275px
       const canvasHeight = p.radius * 3 + 80;
@@ -12250,6 +12252,8 @@ function updateProblems() {
     }
     //CIRCLES: INNER SQUARE
     if (setting == 3) {
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, 400, 275);
       drawingDisplay();
       ctx.save();
       let y = 40;
@@ -12298,6 +12302,8 @@ function updateProblems() {
     }
 
     if (setting == 4) {
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, 400, 275);
       drawingDisplay();
       ctx.save();
       let x = 200;
