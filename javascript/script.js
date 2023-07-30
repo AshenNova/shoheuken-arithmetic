@@ -10479,17 +10479,16 @@ function updateProblems() {
       console.log(`${numeL}/${numeD}`);
       [numeL, numeD] = simplify(numeL, numeD);
       const denominator = commonDeno(p.denoA, numeD);
+      console.log(commonDeno(p.denoA, numeD))
       const multiplierA = denominator / p.denoA;
       const multiplierL = denominator / numeD;
-      // const newNumeA = multiplierA * p.numeA;
       const newNumeL = multiplierL * numeL;
-      // console.log(`${newNumeA}/${denominator}`);
       console.log(`${numeL}/${denominator}`);
-      // const difference = newNumeA - newNumeL;
       let finalDeno = denominator;
       if (p.end == "the twice") finalDeno *= 2;
       if (p.end == "the thrice") finalDeno *= 3;
       const difference = finalDeno - newNumeL;
+      console.log(`${difference} Units`);
       p.value = difference * p.oneUnit;
       p.atFirstUnits = denominator;
 
@@ -24741,7 +24740,7 @@ function genProblems() {
         numeA: genNumbers(gen_denoA - 1) + 1,
         denoB: gen_denoB,
         numeB: genNumbers(gen_denoB - 1) + 1,
-        end: ["the same", "twice", "thrice"][genNumbers(3)],
+        end: ["the same", "the twice", "the thrice"][genNumbers(3)],
         oneUnit: genNumbers(200) + 100,
         atFirstUnits: undefined,
         value: undefined,
