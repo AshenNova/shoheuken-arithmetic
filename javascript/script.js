@@ -13197,6 +13197,8 @@ function updateProblems() {
     }
     //GEOMETRY: MANIPULATION OF DIMENSION: OVERLAPPING AREA
     if (setting == 7) {
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, 400, 275);
       drawingDisplay();
 
       ctx.save(); //1st
