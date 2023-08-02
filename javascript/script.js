@@ -10556,7 +10556,9 @@ function updateProblems() {
         return updateCalc();
       }
       displayProblem.innerHTML = `
-      A ${p.objectA} costs ${p.unitA}/${p.unitB} of a ${p.objectB}.</br>
+      A ${p.objectA.slice(0, p.objectA.length - 1)} costs ${p.unitA}/${
+        p.unitB
+      } of a ${p.objectB.slice(0, p.objectB.length - 1)}.</br>
       ${person} bought ${p.quantityA} ${p.objectA} and ${p.quantityB} ${
         p.objectB
       }  with ${p.numeA}/${p.denoA} of his money.</br>
@@ -10571,7 +10573,7 @@ function updateProblems() {
     // FRACTIONS: OVERLAPPING MODEL
     if (setting == 3) {
       normalDisplay();
-      const stuff = ["pen", "pencils", "erasers", "stamps"][genNumbers(4)];
+      const stuff = ["pens", "pencils", "erasers", "stamps"][genNumbers(4)];
       const personA = boyNames[genNumbers(boyNames.length)];
       const personB = girlNames[genNumbers(girlNames.length)];
       let personC = boyNames[genNumbers(boyNames.length)];
@@ -20107,8 +20109,8 @@ function handleSubmit(e) {
           correctAnswer = ((p.speedA + p.speedB) * p.time) / 60;
       }
 
-       // SPEED: SURROGATE
-       if (setting == 8) {
+      // SPEED: SURROGATE
+      if (setting == 8) {
         if (p.question == "A") correctAnswer = p.speedA;
         if (p.question == "B") correctAnswer = p.speedB;
       }
@@ -20120,7 +20122,6 @@ function handleSubmit(e) {
         if (p.choice == "percentage") correctAnswer = p.percentage;
         if (p.choice == "angle") correctAnswer = p.angles;
       }
-     
     }
     // ANSWERS
     if (level == "calSixb") {
