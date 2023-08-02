@@ -156,27 +156,29 @@ export const displayContent = (level) => {
     </p>
     1. Fractions: Before and After</br>
     2. Fractions: Under the same unit (Level 2)</br>
-    3. Fractions: Identical Numerator (Type 2)</br>
+    3. Fractions: Overlapping Model</br>
+    4. Fractions: Identical Numerator (Type 2)</br>
     <hr>
-    4. Geometry: Obtuse Triangle</br>
-    5. Geometry: Area of Figure:  Cutting</br>
-    6. Geometry: Manipulation of Dimension</br>
-    7. Geometry: Manipulation of Dimension: level 2</br>
-    8. Geometry: Area of Figure: Using 2 different Units</br>
+    5. Geometry: Obtuse Triangle</br>
+    6. Geometry: Area of Figure:  Cutting</br>
+    7. Geometry: Manipulation of Dimension</br>
+    8. Geometry: Manipulation of Dimension: level 2</br>
+    9. Geometry: Area of Figure: Using 2 different Units</br>
     <hr>
-    9. Ratio: Repeated Group</br>
-    10. Ratio: Unchanged Object</br>
-    11. Ratio: Unchanged Total</br>
-    12. Ratio: Unchanged Difference</br>
-    13. Ratio: Manipulation in units</br>
-    14. Ratio: Repeated Identity (Geometry)</br>
+    10. Ratio: Repeated Group</br>
+    11. Ratio: Unchanged Object</br>
+    12. Ratio: Unchanged Total</br>
+    13. Ratio: Unchanged Difference</br>
+    14. Ratio: Manipulation in units</br>
+    15. Ratio: Repeated Identity (Geometry)</br>
     <hr>
-    15. Percentage: Repeated Group</br>
-    16. Percentage: GST, discount and Service Charge</br>
-    17. Percentage: Identical Effect</br>
+    16. Percentage: Repeated Group</br>
+    17. Percentage: Overlapping Model</br>
+    18. Percentage: GST, discount and Service Charge</br>
+    19. Percentage: Identical Effect</br>
     <hr>
-    18. Average: External Change</br>
-    19. Average: Odd consecutive days</br>
+    20. Average: External Change</br>
+    21. Average: Odd consecutive days</br>
     `;
   }
   if (level == "calSix") {
@@ -190,8 +192,9 @@ export const displayContent = (level) => {
     <hr>
     5. Speed: Average Speed</br>
     6. Speed: Moving Apart</br>
+    7. Speed: Difference in speed (Mid)</br>
     <hr>
-    7. Pie Chart</br>
+    8. Pie Chart</br>
     <hr>
     99. All
     `;
