@@ -12810,8 +12810,31 @@ How far is apart is Town A and Town B?
         );
     }
 
-    // PIECHART
+    // SPEED: SURROGATE
     if (setting == 8) {
+      normalDisplay();
+      const personA = boyNames[genNumbers(boyNames.length)];
+      const personB = girlNames[genNumbers(girlNames.length)];
+      p.speedB = p.speedA - p.diffSpeed;
+      const distance = (p.speedA * p.timeA) / 60;
+      const distanceB = (p.speedB * p.timeA) / 60;
+      const diffDistance = distance - distanceB;
+      const timeB = (distance / p.speedB) * 60;
+      const diffTime = timeB - p.timeA;
+      if (diffTime % 1 != 0) {
+        return updateCalc();
+      }
+
+      displayProblem.innerHTML = `
+      The distance between Town A and Town B is ${distance} km.</br>
+      ${personA} and ${personB} left Town A to Town B at the same time.</br>
+      After ${personA} reached Town B, ${personB} took another ${diffTime} mins to travel the remaining ${diffDistance} km.</br>
+      What is ${p.question == "A" ? personA : personB}'s speed?
+      `;
+    }
+
+    // PIECHART
+    if (setting == 9) {
       drawingDisplay();
       let types = ["fraction", "decimal", "ratio", "percentage", "angle"];
       const index = types.indexOf(p.choice);
@@ -12837,6 +12860,7 @@ How far is apart is Town A and Town B?
         }
       }
     }
+
     // BOTTOM OF CALSIX
   }
   // DISPLAY
@@ -20083,14 +20107,20 @@ function handleSubmit(e) {
           correctAnswer = ((p.speedA + p.speedB) * p.time) / 60;
       }
 
+       // SPEED: SURROGATE
+       if (setting == 8) {
+        if (p.question == "A") correctAnswer = p.speedA;
+        if (p.question == "B") correctAnswer = p.speedB;
+      }
       //PIE CHART
-      if (setting == 8) {
+      if (setting == 9) {
         if (p.choice == "fraction") correctAnswer = p.fractions;
         if (p.choice == "decimal") correctAnswer = p.decimals;
         if (p.choice == "ratio") correctAnswer = p.ratio;
         if (p.choice == "percentage") correctAnswer = p.percentage;
         if (p.choice == "angle") correctAnswer = p.angles;
       }
+     
     }
     // ANSWERS
     if (level == "calSixb") {
@@ -25212,7 +25242,7 @@ function genProblems() {
   }
   //SETTINGS
   if (level == "calSix") {
-    setting = calArrAll(8, calArr, setting, 99);
+    setting = calArrAll(9, calArr, setting, 99);
     setting = checkRange(setting, calArr);
 
     if (setting == 1) {
@@ -25322,8 +25352,20 @@ function genProblems() {
         question: ["A", "B", "total"][genNumbers(3)],
       };
     }
-    // PIECHART
+
+    // SPEED: SURROGATE
     if (setting == 8) {
+      return {
+        speedA: (genNumbers(5) + 5) * 10,
+        speedB: undefined,
+        diffSpeed: (genNumbers(2) + 1) * 10,
+        timeA: (genNumbers(10) + 1) * 15,
+        question: ["A", "B"][genNumbers(2)],
+      };
+    }
+
+    // PIECHART
+    if (setting == 9) {
       return {
         fractions: (genNumbers(10) + 1) * 4,
         decimals: (genNumbers(10) + 1) * 4,
@@ -28213,7 +28255,7 @@ function buttonLevelSetting() {
       );
       //IF THERE ARE 7 TYPES, PUT 6. SINCE THE MAP FUNCTION WILL +1
       if (
-        ![...Array.from(Array(8)).map((e, i) => i + 1), 99].includes(
+        ![...Array.from(Array(9)).map((e, i) => i + 1), 99].includes(
           setting * 1
         ) &&
         !setting.split("").includes("-")

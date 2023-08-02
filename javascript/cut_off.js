@@ -81,6 +81,14 @@ export function cutOffCheck(level, setting, time) {
   if (level == "calFiveb") {
     if (time > 240) push = "Yes";
   }
+
+  if (level == "calSix") {
+    if (time > 180) push = "Yes";
+  }
+
+  if (level == "calSixb") {
+    if (time > 240) push = "Yes";
+  }
   // HEURISTICS
 
   if (level == "heuTwob") {

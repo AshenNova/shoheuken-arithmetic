@@ -193,8 +193,9 @@ export const displayContent = (level) => {
     5. Speed: Average Speed</br>
     6. Speed: Moving Apart</br>
     7. Speed: Difference in speed (Mid)</br>
+    8. Speed: Surrogate</br>
     <hr>
-    8. Pie Chart</br>
+    9. Pie Chart</br>
     <hr>
     99. All
     `;
