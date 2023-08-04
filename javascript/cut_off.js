@@ -83,7 +83,11 @@ export function cutOffCheck(level, setting, time) {
   }
 
   if (level == "calSix") {
-    if (time > 180) push = "Yes";
+    if ([7, 8].includes(setting)) {
+      if (time > 240) push = "Yes";
+    } else {
+      if (time > 180) push = "Yes";
+    }
   }
 
   if (level == "calSixb") {
